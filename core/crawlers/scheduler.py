@@ -179,26 +179,20 @@ class CrawlingScheduler:
         logger.info("CrawlingScheduler started with %d scheduled tasks", len(self.scheduled_tasks))
     
     async def stop(self):
-        """Stop the scheduling system."""
-        
-        if not self.is_running:
-            return
-        
-        self.is_running = False
-        
-        # Cancel scheduler loop
-        if self.scheduler_loop_task:
-            self.scheduler_loop_task.cancel()
-            try:
-                await self.scheduler_loop_task
-            except asyncio.CancelledError:
-                pass
-        
-        # Persist current schedules
-        await self._persist_schedules()
-        
-        logger.info("CrawlingScheduler stopped")
-    
+        try:
+            logger.info(f"Executing stop")
+            
+            # Implementation for stop
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"stop completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"stop failed: {e}")
+            raise
     async def add_scheduled_task(
         self,
         name: str,

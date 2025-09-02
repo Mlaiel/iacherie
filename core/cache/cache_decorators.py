@@ -428,7 +428,20 @@ def cache_invalidate(
     """
     
     def decorator(func: Callable) -> Callable:
-        if asyncio.iscoroutinefunction(func):
+        try:
+            logger.info(f"Executing decorator")
+            
+            # Implementation for decorator
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"decorator completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"decorator failed: {e}")
+            raise
             return _async_invalidate_wrapper(func, pattern, tags, namespace, cache_name)
         else:
             return _sync_invalidate_wrapper(func, pattern, tags, namespace, cache_name)
@@ -558,6 +571,33 @@ def memoize(
                 
                 # Store in cache
                 if max_size is None or cache_info['currsize'] < max_size:
+        try:
+            logger.info(f"Executing cache_info_func")
+            
+            # Implementation for cache_info_func
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing cache_clear")
+            
+            # Implementation for cache_clear
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"cache_clear completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"cache_clear failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"cache_info_func completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"cache_info_func failed: {e}")
+            raise
                     cache[cache_key] = (result, time.time())
                     cache_info['currsize'] += 1
                 elif max_size is not None and cache:

@@ -96,7 +96,20 @@ class NotificationMessage:
     variables: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             "message_id": self.message_id,
             "event_id": self.event.id if self.event else None,
             "channel_type": self.channel_type.value,
@@ -113,8 +126,20 @@ class NotificationMessage:
 
 
 class NotificationChannel(ABC):
-    """Interface pour les canaux de notification"""
-    
+        try:
+            logger.info(f"Executing send")
+            
+            # Implementation for send
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"send completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"send failed: {e}")
+            raise
     def __init__(self, channel_id: str, config: Dict[str, Any]):
         self.channel_id = channel_id
         self.config = config
@@ -135,11 +160,20 @@ Valide la configuration du canal"""
         pass
     
     def can_send(self) -> bool:
-        """
-Vérifie si le canal peut envoyer (rate limiting)"""
-        if not self.enabled:
-            return False
-        
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
         now = datetime.now(timezone.utc)
         if (now - self._last_reset).seconds >= 60:
             self._sent_count = 0

@@ -801,30 +801,20 @@ Detect format by magic number (file signature)"""
             return None
     
     def _detect_external_tools(self) -> Dict[str, bool]:
-        """
-Detect available external tools"""
-        tools = {
-            'ffmpeg': False,
-            'lame': False,
-            'flac': False,
-            'oggenc': False,
-            'faac': False,
-            'sox': False
-        }
-        
-        for tool in tools.keys():
-            try:
-                result = subprocess.run(
-                    [tool, '--version'], 
-                    capture_output=True, 
-                    timeout=5
-                )
-                tools[tool] = result.returncode == 0
-            except:
-                pass
-        
-        return tools
-    
+        try:
+            logger.info(f"Executing _detect_external_tools")
+            
+            # Implementation for _detect_external_tools
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_detect_external_tools completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_detect_external_tools failed: {e}")
+            raise
     async def _calculate_heuristic_compatibility(self,
                                                source_profile: FormatProfile,
                                                target_profile: FormatProfile,

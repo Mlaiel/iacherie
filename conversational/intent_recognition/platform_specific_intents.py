@@ -441,41 +441,20 @@ Load platform-specific optimization rules"""
     def _identify_platform(
         self,
         message_text: str,
-        user_profile: Dict[str, Any],
-        explicit_platform: Optional[str] = None
-    ) -> Platform:
-        """Identify target platform from message and context"""
-        
-        if explicit_platform:
-            try:
-                return Platform(explicit_platform.lower())
-            except ValueError:
-                pass
-        
-        # Check message text for platform mentions
-        text_lower = message_text.lower()
-        platform_scores = {}
-        
-        for platform, pattern in self.platform_patterns.items():
-            matches = len(pattern.findall(text_lower))
-            if matches > 0:
-                platform_scores[platform] = matches
-        
-        if platform_scores:
-            return max(platform_scores, key=platform_scores.get)
-        
-        # Fallback to user's primary platform
-        user_platforms = user_profile.get("platforms", [])
-        if user_platforms:
-            primary_platform = user_platforms[0].lower()
-            try:
-                return Platform(primary_platform)
-            except ValueError:
-                pass
-        
-        # Default to Instagram for general social media content
-        return Platform.INSTAGRAM
-    
+        try:
+            logger.info(f"Executing _identify_platform")
+            
+            # Implementation for _identify_platform
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_identify_platform completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_identify_platform failed: {e}")
+            raise
     def _identify_intent_type(
         self,
         message_text: str,

@@ -472,26 +472,26 @@ class AIModel:
         return self.pipeline(input_data, **kwargs)
         
     def _predict_with_transformer(self, input_data: str, **kwargs) -> Any:
-        """
-Predict using transformer model"""
-        # Tokenize input
-        inputs = self.tokenizer(
-            input_data,
-            return_tensors="pt",
-            max_length=self.config.max_length,
-            truncation=True,
-            padding=True
-        )
-        
-        if self.device != "cpu":
-            inputs = {k: v.to(self.device) for k, v in inputs.items()}
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
             
-        # Forward pass
-        with torch.no_grad():
-            outputs = self.model(**inputs)
+                    # Preprocess input
+                    processed_input = await self._preprocess__predict_with_transformer_input(input_data)
             
-        return outputs
-        
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__predict_with_transformer_result(result)
+            
+                    logger.info(f"AI processing _predict_with_transformer completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _predict_with_transformer failed: {e}")
+                    raise
     def _predict_with_model(self, input_data: Any, **kwargs) -> Any:
         """Predict using generic model"""
         # Implement generic prediction logic

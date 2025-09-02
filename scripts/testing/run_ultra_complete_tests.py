@@ -323,76 +323,28 @@ class UltraCompleteTestRunner:
         return report
     
     def print_summary_report(self, report: Dict[str, Any]):
-        """Print a summary of the ultra-complete testing results."""
-        print("\n" + "=" * 80)
-        print("🔬 ULTRA-COMPLETE TESTING SUMMARY (0 mocks, 100% réel)")
-        print("=" * 80)
-        
-        summary = report["test_execution_summary"]
-        metrics = report["overall_metrics"]
-        compliance = report["requirements_compliance"]
-        validation = report["zero_mocks_validation"]
-        
-        print(f"📅 Execution Time: {summary['execution_time']}")
-        print(f"⏱️  Total Duration: {summary['total_duration_minutes']:.1f} minutes")
-        print(f"🎯 Performance Grade: {summary['performance_grade']}")
-        print()
-        
-        print("📊 OVERALL METRICS:")
-        print(f"   Test Suites: {metrics['total_test_suites']}")
-        print(f"   Total Tests: {metrics['total_tests']}")
-        print(f"   Passed: {metrics['total_passed']}")
-        print(f"   Failed: {metrics['total_failed']}")
-        print(f"   Success Rate: {metrics['overall_success_rate']:.1f}%")
-        print()
-        
-        print("✅ REQUIREMENTS COMPLIANCE:")
-        requirements = [
-            ("Unit Tests (95%+ coverage, 0 mocks)", compliance["unit_tests_95_coverage"]),
-            ("Integration Tests (API endpoints)", compliance["integration_tests_complete"]),
-            ("Load Tests (10K+ users)", compliance["load_tests_10k_users"]),
-            ("Stress Tests (Breaking point)", compliance["stress_tests_breaking_point"]),
-            ("Security Tests (OWASP Top 10)", compliance["security_tests_owasp"]),
-            ("Performance Tests (<100ms)", compliance["performance_tests_sub_100ms"]),
-            ("End-to-End Tests (User journeys)", compliance["e2e_tests_user_journeys"]),
-            ("Chaos Engineering (Resilience)", compliance["chaos_engineering_resilience"])
-        ]
-        
-        for req_name, status in requirements:
-            status_icon = "✅" if status else "❌"
-            print(f"   {status_icon} {req_name}")
-        print()
-        
-        print("🚫 ZERO MOCKS VALIDATION:")
-        print(f"   Zero Mocks Suites: {validation['zero_mocks_suites_count']}")
-        print(f"   Industrial Grade Suites: {validation['industrial_grade_suites_count']}")
-        print(f"   Zero Mocks Requirement: {'✅ MET' if validation['zero_mocks_requirement_met'] else '❌ NOT MET'}")
-        print(f"   Industrial Testing: {'✅ CONFIRMED' if validation['industrial_testing_confirmed'] else '❌ NOT CONFIRMED'}")
-        print()
-        
-        print("📋 DETAILED RESULTS:")
-        for result in report["detailed_results"]:
-            zero_icon = "🚫" if result["zero_mocks"] else "🔧"
-            industrial_icon = "🏭" if result["industrial_grade"] else "📋"
-            status_icon = "✅" if result["success_rate"] >= 70 else "❌"
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "print_summary_report",
+                        "value": report if report else 0,
+                        "tags": self._get_metric_tags()
+                    }
             
-            print(f"   {status_icon} {zero_icon} {industrial_icon} {result['suite_name']:<35} "
-                  f"{result['passed']:>3}/{result['tests']:<3} ({result['success_rate']:>5.1f}%) "
-                  f"{result['duration_seconds']:>6.1f}s")
-        
-        print("\n" + "=" * 80)
-        
-        # Final verdict
-        if (validation['zero_mocks_requirement_met'] and 
-            validation['industrial_testing_confirmed'] and 
-            metrics['overall_success_rate'] >= 80):
-            print("🎉 ULTRA-COMPLETE TESTING: ✅ SUCCESS - ALL REQUIREMENTS MET!")
-        else:
-            print("⚠️  ULTRA-COMPLETE TESTING: ❌ REQUIREMENTS NOT FULLY MET")
-        
-        print("=" * 80)
-
-
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric print_summary_report collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection print_summary_report failed: {e}")
+                    return None
 async def main():
     """Main execution function."""
     runner = UltraCompleteTestRunner()

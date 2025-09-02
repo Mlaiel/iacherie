@@ -143,43 +143,26 @@ Validateur spécialisé pour contenu audio"""
             )
     
     def _analyze_audio_quality(self, y: np.ndarray, sr: int, analysis_data: Dict) -> float:
-        """Analyse la qualité audio globale"""
-        scores = []
-        
-        # 1. Analyse du niveau RMS
-        rms = librosa.feature.rms(y=y)[0]
-        avg_rms = np.mean(rms)
-        analysis_data["rms_level"] = float(avg_rms)
-        
-        if 0.01 <= avg_rms <= 0.7:
-            scores.append(1.0)
-        elif avg_rms < 0.001:
-            scores.append(0.2)  # Trop faible
-        else:
-            scores.append(0.5)  # Trop fort
-        
-        # 2. Analyse de la bande passante
-        spectral_centroids = librosa.feature.spectral_centroid(y=y, sr=sr)[0]
-        avg_centroid = np.mean(spectral_centroids)
-        analysis_data["spectral_centroid"] = float(avg_centroid)
-        
-        if 1000 <= avg_centroid <= 4000:
-            scores.append(1.0)
-        else:
-            scores.append(0.7)
-        
-        # 3. Analyse de la richesse spectrale
-        spectral_rolloff = librosa.feature.spectral_rolloff(y=y, sr=sr)[0]
-        avg_rolloff = np.mean(spectral_rolloff)
-        analysis_data["spectral_rolloff"] = float(avg_rolloff)
-        
-        if avg_rolloff > sr * 0.3:
-            scores.append(1.0)
-        else:
-            scores.append(0.6)
-        
-        return np.mean(scores)
-    
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__analyze_audio_quality_input(y)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__analyze_audio_quality_result(result)
+            
+                    logger.info(f"AI processing _analyze_audio_quality completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _analyze_audio_quality failed: {e}")
+                    raise
     def _detect_silence_issues(self, y: np.ndarray, sr: int, warnings: List[str], analysis_data: Dict):
         """Détecte les problèmes de silence"""
         # Détection des segments silencieux

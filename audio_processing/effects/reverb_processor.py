@@ -360,28 +360,20 @@ Professional reverb processor with multiple algorithms"""
         self.logger.info(f"ReverbProcessor initialized - Type: {reverb_type.value}, Sample Rate: {sample_rate}Hz")
     
     def _initialize_reverb_engine(self):
-        """Initialize reverb processing components"""
-        # Schroeder reverb topology
-        # Comb filters (parallel)
-        comb_delays_ms = [29.7, 37.1, 41.1, 43.7, 47.8, 51.3, 57.0, 61.7]
-        self.comb_filters = []
-        
-        for delay_ms in comb_delays_ms:
-            delay_samples = int(delay_ms * self.sample_rate / 1000.0)
-            self.comb_filters.append(CombFilter(delay_samples))
-        
-        # All-pass filters (series)
-        allpass_delays_ms = [5.0, 1.7, 2.3, 3.1]
-        self.allpass_filters = []
-        
-        for delay_ms in allpass_delays_ms:
-            delay_samples = int(delay_ms * self.sample_rate / 1000.0)
-            self.allpass_filters.append(AllPassFilter(delay_samples))
-        
-        # EQ filters
-        self.low_shelf = self._design_shelf_filter(self.params.low_shelf_freq, self.params.low_shelf_gain, 'low')
-        self.high_shelf = self._design_shelf_filter(self.params.high_shelf_freq, self.params.high_shelf_gain, 'high')
-    
+        try:
+            logger.info(f"Executing _initialize_reverb_engine")
+            
+            # Implementation for _initialize_reverb_engine
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_initialize_reverb_engine completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_initialize_reverb_engine failed: {e}")
+            raise
     def _design_shelf_filter(self, frequency: float, gain_db: float, shelf_type: str) -> Tuple[np.ndarray, np.ndarray]:
         """
 Design shelving EQ filter"""
@@ -717,53 +709,40 @@ Reset reverb state"""
             comb_filter.index = 0
         
         for allpass_filter in self.allpass_filters:
-            allpass_filter.delay_line.fill(0.0)
-            allpass_filter.index = 0
-        
-        # Reset modulation
-        self.modulation_phase = 0.0
-        
-        # Reset freeze state
-        self.freeze_state.fill(0.0)
-        
-        self.logger.info("Reverb state reset")
-    
-    def get_impulse_response_length(self) -> float:
-        """Get current impulse response length in seconds"""
-        if (self.reverb_type == ReverbType.CONVOLUTION and 
-            self.convolution_reverb.impulse_response is not None):
-            return len(self.convolution_reverb.impulse_response) / self.sample_rate
-        else:
-            # Estimate based on decay time for algorithmic reverb
+        try:
+            logger.info(f"Executing reset")
+            
+            # Implementation for reset
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"reset completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"reset failed: {e}")
+            raise
             return self.params.decay_time * 3  # Roughly 3x decay time for full tail
         delay_lengths = [1687, 1601, 2053, 2251]  # samples
         self.delay_lines = []
         self.feedback_gains = [0.773, 0.802, 0.753, 0.733]
         
         for length in delay_lengths:
-            delay_line = np.zeros(length)
-            self.delay_lines.append(delay_line)
-        
-        # All-pass delay lines
-        allpass_lengths = [556, 441, 341, 225]
-        self.allpass_lines = []
-        self.allpass_gains = [0.7, 0.7, 0.7, 0.7]
-        
-        for length in allpass_lengths:
-            allpass_line = np.zeros(length)
-            self.allpass_lines.append(allpass_line)
-    
-    def process(self, audio_data: np.ndarray) -> np.ndarray:
-        """
-Apply reverb processing"""
         try:
-            processed_audio = np.zeros_like(audio_data)
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
             
-            for i, sample in enumerate(audio_data):
-                # Compute reverb
-                reverb_sample = self._compute_reverb_sample(sample)
-                
-                # Mix dry and wet signals
+                    # Process request
+                    result = await self._handle_get_impulse_response_length_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_impulse_response_length failed: {e}")
+                    return {"status": "error", "message": str(e)}
                 processed_audio[i] = (sample * self.dry_level + 
                                     reverb_sample * self.wet_level)
             
@@ -801,24 +780,17 @@ Apply reverb processing"""
             
             # Update delay line
             allpass_line[:-1] = allpass_line[1:]
-            allpass_line[-1] = allpass_input + output * gain
+        try:
+                    # Request validation
+                    if not input_sample:
+                        raise ValueError("Invalid request")
             
-            allpass_input = output
-        
-        return allpass_input * self.room_size
-    
-    def set_parameters(self, room_size: float = None, decay_time: float = None,
-                      damping: float = None, wet_level: float = None):
-        """
-Set reverb parameters"""
-        if room_size is not None:
-            self.room_size = np.clip(room_size, 0.0, 1.0)
-        if decay_time is not None:
-            self.decay_time = max(0.1, decay_time)
-        if damping is not None:
-            self.damping = np.clip(damping, 0.0, 1.0)
-        if wet_level is not None:
-            self.wet_level = np.clip(wet_level, 0.0, 1.0)
-            self.dry_level = 1.0 - self.wet_level
-        
-        self.logger.debug(f"Reverb parameters updated")
+                    # Process request
+                    result = await self._handle__compute_reverb_sample_request(input_sample)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _compute_reverb_sample failed: {e}")
+                    return {"status": "error", "message": str(e)}

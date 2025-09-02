@@ -357,11 +357,20 @@ Process audio in real-time"""
     
     @abstractmethod
     def get_latency_samples(self) -> int:
-        """
-Get processing latency in samples"""
-        pass
-
-
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_latency_samples_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_latency_samples failed: {e}")
+                    return {"status": "error", "message": str(e)}
 class EffectsRealTimeProcessor(RealTimeProcessor):
     """
 Real-time effects processor"""
@@ -876,6 +885,28 @@ Input stream callback"""
             
             # Update uptime
             if hasattr(self.metrics, 'start_time'):
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "monitor_performance",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric monitor_performance collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection monitor_performance failed: {e}")
+                    return None
                 self.metrics.uptime_seconds = current_time - self.metrics.start_time
             
         except Exception as e:

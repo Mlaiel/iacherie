@@ -719,12 +719,36 @@ Classify similarity match type."""
         return True
     
     async def _setup_monitoring_tasks(self, user_id: str, 
-                                    monitoring_config: Dict[str, Any]) -> None:
-        """
-Schedule automated monitoring tasks."""
-        # Placeholder - would setup Celery tasks
-        pass
-    
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_setup_monitoring_tasks",
+                        "value": user_id if user_id else 0,
+                        "tags": self._get_metric_tags()
+        try:
+            logger.info(f"Executing _setup_alert_system")
+            
+            # Implementation for _setup_alert_system
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_setup_alert_system completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_setup_alert_system failed: {e}")
+            raise
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _setup_monitoring_tasks collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _setup_monitoring_tasks failed: {e}")
+                    return None
     async def _setup_alert_system(self, user_id: str, 
                                 monitoring_config: Dict[str, Any]) -> None:
         """

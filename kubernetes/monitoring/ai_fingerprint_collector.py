@@ -192,19 +192,28 @@ class AIFingerprintMetricsCollector:
         logger.info("AI fingerprint metrics collection started")
     
     async def stop_collection(self):
-        """Stop metrics collection"""
-        self._running = False
-        if self._collection_task:
-            self._collection_task.cancel()
-            try:
-                await self._collection_task
-            except asyncio.CancelledError:
-                pass
-        
-        # Flush remaining metrics
-        await self._flush_metrics()
-        logger.info("AI fingerprint metrics collection stopped")
-    
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "stop_collection",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric stop_collection collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection stop_collection failed: {e}")
+                    return None
     async def _collection_loop(self):
         """Main collection loop"""
         while self._running:

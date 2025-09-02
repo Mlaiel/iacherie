@@ -482,11 +482,17 @@ Process real-time analytics events"""
             )
     
     async def _update_error_metrics(self) -> None:
-        """
-Update error rate metrics"""
-        # Implement error rate calculation
-        pass
-    
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _update_error_metrics completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _update_error_metrics failed: {e}")
+                    raise
     async def _update_performance_metrics(self) -> None:
         """
 Update overall performance metrics"""

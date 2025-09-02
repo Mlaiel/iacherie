@@ -837,39 +837,20 @@ Calcule la similarité de texture"""
     
     async def _compute_geometric_similarity(self, 
                                           geo1: GeometricFeatures, 
-                                          geo2: GeometricFeatures) -> float:
-        """
-Calcule la similarité géométrique"""
-        similarities = []
-        
-        # SIFT descriptor matching
-        if (geo1.sift_descriptors is not None and geo2.sift_descriptors is not None and
-            len(geo1.sift_descriptors) > 0 and len(geo2.sift_descriptors) > 0):
+        try:
+                    # Request validation
+                    if not geo1:
+                        raise ValueError("Invalid request")
             
-            # Use FLANN matcher for SIFT
-            FLANN_INDEX_KDTREE = 1
-            index_params = dict(algorithm=FLANN_INDEX_KDTREE, trees=5)
-            search_params = dict(checks=50)
-            flann = cv2.FlannBasedMatcher(index_params, search_params)
+                    # Process request
+                    result = await self._handle__compute_geometric_similarity_request(geo1)
             
-            try:
-                matches = flann.knnMatch(geo1.sift_descriptors, geo2.sift_descriptors, k=2)
-                good_matches = [m for m, n in matches if m.distance < 0.7 * n.distance]
-                
-                # Calculate similarity based on number of good matches
-                total_features = min(len(geo1.sift_descriptors), len(geo2.sift_descriptors))
-                sift_similarity = len(good_matches) / total_features if total_features > 0 else 0.0
-                similarities.append(min(1.0, sift_similarity))
-            except:
-                pass
-        
-        # Edge density similarity
-        edge_diff = abs(geo1.edge_density - geo2.edge_density)
-        edge_similarity = 1.0 - min(1.0, edge_diff)
-        similarities.append(edge_similarity)
-        
-        return np.mean(similarities) if similarities else 0.0
-    
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _compute_geometric_similarity failed: {e}")
+                    return {"status": "error", "message": str(e)}
     async def _compute_object_similarity(self, 
                                        objects1: List[Dict[str, Any]], 
                                        objects2: List[Dict[str, Any]]) -> float:

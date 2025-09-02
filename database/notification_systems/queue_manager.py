@@ -136,11 +136,33 @@ Traiter un message"""
     
     @abstractmethod
     def get_queue_type(self) -> QueueType:
-        """
-Retourner le type de queue supporté"""
-        pass
-
-
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_queue_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+                except Exception as e:
+                    logger.error(f"API handler get_queue_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
 class EmailProcessor(MessageProcessor):
     """
 Processeur de messages email"""
@@ -183,6 +205,38 @@ Traiter un message email"""
                 success=True,
                 processing_time=processing_time,
                 metadata={"email_id": result_id}
+        try:
+                    # Request validation
+                    if not data:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_queue_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_queue_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                status=ProcessingStatus.COMPLETED,
+                success=True,
+                processing_time=processing_time,
+                metadata={"email_id": result_id}
             )
             
         except Exception as e:
@@ -207,6 +261,35 @@ class PushProcessor(MessageProcessor):
     """Processeur de notifications push"""
     
     def __init__(self, push_manager):
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_queue_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_queue_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
         self.push_manager = push_manager
     
     async def process(self, message: QueueMessage) -> ProcessingResult:
@@ -252,6 +335,43 @@ Traiter une notification push"""
             
             return ProcessingResult(
                 message_id=message.id,
+                status=ProcessingStatus.FAILED,
+                success=False,
+                error_message=str(e),
+                error_type=type(e).__name__,
+                processing_time=processing_time
+            )
+    
+    def get_queue_type(self) -> QueueType:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+    def get_queue_type(self) -> QueueType:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_queue_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_queue_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
                 status=ProcessingStatus.FAILED,
                 success=False,
                 error_message=str(e),

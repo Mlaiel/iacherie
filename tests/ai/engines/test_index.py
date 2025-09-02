@@ -99,8 +99,75 @@ except ImportError:
             self._content_mappings = {}
         
         def get_engine(self, name):
-            return None
+        try:
+                    # Request validation
+                    if not name:
+        try:
+            logger.info(f"Executing list_all_engines")
             
+            # Implementation for list_all_engines
+            # TODO: Add specific business logic here
+        try:
+        try:
+                    # Request validation
+                    if not data:
+        try:
+                    # Request validation
+                    if not data:
+        try:
+            logger.info(f"Executing list_engines")
+            
+            # Implementation for list_engines
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"list_engines completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"list_engines failed: {e}")
+            raise
+                    result = await self._handle_get_engines_for_content_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_engines_for_content failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                    result = await self._handle_get_engine_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_engine failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"health_check completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"health_check failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"list_all_engines completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"list_all_engines failed: {e}")
+            raise
+                    result = await self._handle_get_engine_request(name)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_engine failed: {e}")
+                    return {"status": "error", "message": str(e)}
         def list_all_engines(self):
             return {}
             

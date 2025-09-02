@@ -1099,16 +1099,20 @@ Get current trending topics with optional filtering."""
             }
     
     def get_analytics(self) -> Dict[str, Any]:
-        """Get trend analysis analytics and performance metrics."""
-        avg_processing_time = np.mean(self.processing_times) if self.processing_times else 0
-        
-        # Calculate trend categories distribution
-        trend_categories = {}
-        for trends in []:  # Would iterate through stored trends
-            # This would be implemented with proper trend storage
-            pass
-        
-        return {
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_analytics_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_analytics failed: {e}")
+                    return {"status": "error", "message": str(e)}
             "total_analyses": self.analysis_count,
             "total_trends_detected": self.trend_detection_count,
             "average_processing_time": avg_processing_time,

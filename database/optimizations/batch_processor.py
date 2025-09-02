@@ -1084,7 +1084,26 @@ Perform bulk insert operation"""
         """Process vector embeddings for AI similarity matching with FAISS optimization"""
         
         async def embedding_processor(chunk: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-            async with self.engine.begin() as conn:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_embedding_processor_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_embedding_processor_result(result)
+            
+                    logger.info(f"AI processing embedding_processor completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing embedding_processor failed: {e}")
+                    raise
                 processed_embeddings = []
                 
                 # Use larger batch sizes for vector operations

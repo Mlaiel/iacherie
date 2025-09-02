@@ -100,8 +100,20 @@ Authenticate with Substack"""
             return False
     
     async def _login_with_credentials(self, email: str, password: str) -> bool:
-        """Login with email and password"""
         try:
+            logger.info(f"Executing _login_with_credentials")
+            
+            # Implementation for _login_with_credentials
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_login_with_credentials completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_login_with_credentials failed: {e}")
+            raise
             session = await self._get_session()
             
             login_data = {

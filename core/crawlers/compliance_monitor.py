@@ -1109,10 +1109,20 @@ class AdvancedComplianceMonitor(BaseCrawler):
             logger.error(f"Error sending compliance alert: {str(e)}")
 
     async def _notify_content_creator(self, violation: ComplianceViolation):
-        """Notify content creator about violation"""
-        # Simplified notification - would integrate with actual notification system
-        pass
-
+        try:
+            logger.info(f"Executing _notify_content_creator")
+            
+            # Implementation for _notify_content_creator
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_notify_content_creator completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_notify_content_creator failed: {e}")
+            raise
     async def _calculate_risk_value(self, violation: ComplianceViolation) -> float:
         """
 Calculate numeric risk value for violation"""

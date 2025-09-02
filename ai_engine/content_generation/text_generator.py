@@ -496,21 +496,20 @@ Process social media content"""
         return content
     
     async def _apply_general_improvements(self, content: str, context: ContentGenerationContext) -> str:
-        """
-Apply general content improvements"""
-        # Remove excessive whitespace
-        content = ' '.join(content.split())
-        
-        # Ensure proper sentence spacing
-        content = content.replace(' .', '.').replace(' ,', ',')
-        
-        # Apply brand-specific formatting if available
-        if context.brand_guidelines:
-            # Apply brand-specific formatting rules
-            pass
-        
-        return content
-    
+        try:
+            logger.info(f"Executing _apply_general_improvements")
+            
+            # Implementation for _apply_general_improvements
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_apply_general_improvements completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_apply_general_improvements failed: {e}")
+            raise
     def _get_general_template(self, format_type: str) -> str:
         """
 Get general template for content format"""

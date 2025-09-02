@@ -128,10 +128,43 @@ Abstract base class for forecast models"""
     
     @abstractmethod
     async def train(self, data: pd.DataFrame) -> None:
-        """
-Train the forecast model"""
-        pass
-    
+        try:
+            logger.info(f"Executing train")
+            
+            # Implementation for train
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"train completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_predict_input(horizon)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_predict_result(result)
+            
+                    logger.info(f"AI processing predict completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing predict failed: {e}")
+                    raise
+            return result
+            
+        except Exception as e:
+            logger.error(f"train failed: {e}")
+            raise
     @abstractmethod
     async def predict(self, horizon: int) -> np.ndarray:
         """

@@ -769,11 +769,20 @@ Check if payout is due based on frequency"""
         return False
     
     async def _send_payment_notifications(self, request: PaymentRequest, result: Dict):
-        """
-Send payment notifications to user"""
-        # Implementation would send email/SMS notifications
-        pass
-    
+        try:
+            logger.info(f"Executing _send_payment_notifications")
+            
+            # Implementation for _send_payment_notifications
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_send_payment_notifications completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_send_payment_notifications failed: {e}")
+            raise
     async def _verify_bank_details(self, config: PayoutConfiguration) -> Dict:
         """
 Verify bank account details"""

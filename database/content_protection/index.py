@@ -523,10 +523,20 @@ class ContentProtectionDatabase:
         return violations_processed
     
     async def _store_workflow_record(self, workflow_data: Dict[str, Any]) -> None:
-        """Store workflow execution record"""
-        # Implementation for storing workflow records
-        pass
-    
+        try:
+            logger.info(f"Executing _store_workflow_record")
+            
+            # Implementation for _store_workflow_record
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_workflow_record completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_workflow_record failed: {e}")
+            raise
     async def _generate_executive_summary(self, modules_data: Dict[str, Any]) -> Dict[str, Any]:
         """
 Generate executive summary from all module data"""

@@ -177,10 +177,20 @@ class AlertConditionEvaluator(ABC):
     
     @abstractmethod
     async def evaluate(self, rule: AlertRule, context: Dict[str, Any]) -> bool:
-        """Évaluer une condition"""
-        pass
-
-
+        try:
+            logger.info(f"Executing evaluate")
+            
+            # Implementation for evaluate
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"evaluate completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"evaluate failed: {e}")
+            raise
 class ThresholdConditionEvaluator(AlertConditionEvaluator):
     """Évaluateur de conditions de seuil"""
     

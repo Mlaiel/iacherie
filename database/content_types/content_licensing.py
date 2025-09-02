@@ -243,8 +243,20 @@ Database model for content licenses"""
     terminated_at = Column(DateTime(timezone=True), nullable=True)
     
     def __repr__(self) -> str:
-        return f"<ContentLicense(id={self.id}, type={self.license_type}, status={self.status})>"
-    
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     def get_terms(self) -> LicenseTerms:
         """Get license terms as typed object"""
         return LicenseTerms.from_dict(self.license_terms)
@@ -342,6 +354,31 @@ Database model for license usage tracking"""
     license = relationship("ContentLicense", back_populates="usage_records")
     
     def __repr__(self) -> str:
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
+    referrer_url = Column(Text, nullable=True)
+    device_type = Column(String(20), nullable=True)
+    
+    # Timestamps
+    usage_timestamp = Column(DateTime(timezone=True), nullable=False, default=datetime.utcnow, index=True)
+    created_at = Column(DateTime(timezone=True), nullable=False, default=datetime.utcnow)
+    
+    # Relationships
+    license = relationship("ContentLicense", back_populates="usage_records")
+    
+    def __repr__(self) -> str:
         return f"<LicenseUsage(id={self.id}, platform={self.platform}, type={self.usage_type})>"
 
 class RevenueTransaction(Base):
@@ -357,6 +394,55 @@ class RevenueTransaction(Base):
     transaction_reference = Column(String(100), nullable=True, unique=True)
     
     # Financial details
+    gross_amount = Column(DECIMAL(12, 2), nullable=False)
+    fee_amount = Column(DECIMAL(12, 2), nullable=False, default=0.00)
+    tax_amount = Column(DECIMAL(12, 2), nullable=False, default=0.00)
+    net_amount = Column(DECIMAL(12, 2), nullable=False)
+    currency = Column(String(3), nullable=False, default='EUR')
+    
+    # Payment information
+    payment_method = Column(String(50), nullable=True)
+    payment_processor = Column(String(50), nullable=True)
+    payment_reference = Column(String(100), nullable=True)
+    payment_status = Column(String(20), nullable=False, default='pending')
+    
+    # Recipient information
+    payer_id = Column(UUID(as_uuid=True), nullable=False)
+    payee_id = Column(UUID(as_uuid=True), nullable=False)
+    payout_schedule = Column(String(20), nullable=False, default='immediate')  # immediate, weekly, monthly
+    
+    # Processing details
+    processed_at = Column(DateTime(timezone=True), nullable=True)
+    settlement_date = Column(DateTime(timezone=True), nullable=True)
+    failure_reason = Column(Text, nullable=True)
+    retry_count = Column(Integer, nullable=False, default=0)
+    
+    # Metadata
+    transaction_metadata = Column(JSONB, nullable=False, default={})
+    
+    # Timestamps
+    created_at = Column(DateTime(timezone=True), nullable=False, default=datetime.utcnow)
+    updated_at = Column(DateTime(timezone=True), nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    # Relationships
+    license = relationship("ContentLicense")
+    usage = relationship("LicenseUsage")
+    
+    def __repr__(self) -> str:
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     gross_amount = Column(DECIMAL(12, 2), nullable=False)
     fee_amount = Column(DECIMAL(12, 2), nullable=False, default=0.00)
     tax_amount = Column(DECIMAL(12, 2), nullable=False, default=0.00)

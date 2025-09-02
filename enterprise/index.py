@@ -273,7 +273,28 @@ Initialize a single enterprise service"""
     async def _start_service_monitoring(self, service_id: str):
         """Start monitoring for a specific service"""
         async def monitor_service():
-            while not self._shutdown_event.is_set():
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "monitor_service",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric monitor_service collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection monitor_service failed: {e}")
+                    return None
                 try:
                     service_info = self.registry.get_service(service_id)
                     if service_info and service_info.instance:

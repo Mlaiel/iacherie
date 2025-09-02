@@ -112,10 +112,51 @@ Abstract base class for metric collectors"""
     
     @abstractmethod
     async def collect_metrics(self) -> List[MetricSnapshot]:
-        """
-Collect metrics from source"""
-        pass
-    
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "collect_metrics",
+                        "value": data if data else 0,
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_collector_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+                except Exception as e:
+                    logger.error(f"API handler get_collector_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric collect_metrics collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection collect_metrics failed: {e}")
+                    return None
     @abstractmethod
     def get_collector_name(self) -> str:
         """
@@ -130,7 +171,35 @@ Collector for engagement metrics"""
         self.platform_apis = platform_apis
     
     async def collect_metrics(self) -> List[MetricSnapshot]:
-        """
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_collector_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_collector_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
 Collect engagement metrics from platforms"""
         metrics = []
         timestamp = datetime.utcnow()
@@ -139,7 +208,20 @@ Collect engagement metrics from platforms"""
         platform_metrics = {
             'instagram': {
                 'likes_per_post': np.random.normal(1500, 300),
-                'comments_per_post': np.random.normal(150, 50),
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_collector_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_collector_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
                 'shares_per_post': np.random.normal(75, 25),
                 'engagement_rate': np.random.normal(4.5, 1.0)
             },
@@ -174,6 +256,20 @@ Collect engagement metrics from platforms"""
         return "engagement_collector"
 
 class SentimentMetricCollector(MetricCollector):
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_collector_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_collector_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
     """Collector for sentiment metrics"""
     
     def __init__(self, nlp_analyzer):
@@ -239,19 +335,28 @@ Initialize performance metric collector with monitoring capabilities"""
             'impression_rate': np.random.normal(8.5, 2.0),
             'click_through_rate': np.random.normal(1.8, 0.5),
             'conversion_rate': np.random.normal(0.85, 0.3),
-            'roi_percentage': np.random.normal(245, 75)
-        }
-        
-        for metric_name, value in performance_data.items():
-            metric = MetricSnapshot(
-                metric_name=metric_name,
-                value=max(0, value),
-                timestamp=timestamp,
-                tags={'type': 'performance'},
-                metadata={'collector': self.get_collector_name()}
-            )
-            metrics.append(metric)
-        
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "stop_monitoring",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric stop_monitoring collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection stop_monitoring failed: {e}")
+                    return None
         return metrics
     
     def get_collector_name(self) -> str:

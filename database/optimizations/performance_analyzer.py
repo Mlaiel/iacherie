@@ -829,16 +829,28 @@ Identify performance bottlenecks"""
         }
     
     async def stop_monitoring(self) -> None:
-        """Stop performance monitoring"""
-        if self._monitoring_task:
-            self._monitoring_task.cancel()
-            try:
-                await self._monitoring_task
-            except asyncio.CancelledError:
-                pass
-        
-        logger.info("Performance monitoring stopped")
-    
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "stop_monitoring",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric stop_monitoring collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection stop_monitoring failed: {e}")
+                    return None
     def clear_metrics(self, older_than_hours: int = 24) -> None:
         """Clear old metrics to prevent memory bloat"""
         cutoff_time = datetime.now() - timedelta(hours=older_than_hours)

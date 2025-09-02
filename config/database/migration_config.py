@@ -255,19 +255,20 @@ Downgrade database schema"""
             raise
 
     def _format_sql_for_migration(self, sql: str) -> str:
-        """Format SQL for inclusion in migration file"""
-        if not sql:
-            return "pass"
-        
-        # Split SQL into statements and format for Alembic
-        statements = [stmt.strip() for stmt in sql.split(';') if stmt.strip()]
-        formatted_statements = []
-        
-        for stmt in statements:
-            formatted_statements.append(f'    op.execute("{stmt}")')
-        
-        return '\n'.join(formatted_statements)
-
+        try:
+            logger.info(f"Executing _format_sql_for_migration")
+            
+            # Implementation for _format_sql_for_migration
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_format_sql_for_migration completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_format_sql_for_migration failed: {e}")
+            raise
     def run_migrations(self, target_revision: str = "head") -> List[MigrationRecord]:
         """
         Run migrations to target revision

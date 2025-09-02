@@ -449,10 +449,50 @@ class AutomatedLicensingEngine:
     
     # Helper methods for internal operations
     async def _get_content_info(self, content_id: str) -> Optional[Dict[str, Any]]:
-        """Retrieve content information"""
-        # Implementation for content info retrieval
-        pass
-    
+        try:
+                    # Request validation
+                    if not content_id:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_content_info_request(content_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+        try:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__analyze_market_pricing_input(license_type)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__analyze_market_pricing_result(result)
+            
+                    logger.info(f"AI processing _analyze_market_pricing completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _analyze_market_pricing failed: {e}")
+                    raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_verify_ownership_rights completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_verify_ownership_rights failed: {e}")
+            raise
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_content_info failed: {e}")
+                    return {"status": "error", "message": str(e)}
     async def _verify_ownership_rights(self, content_id: str) -> Dict[str, Any]:
         """
 Verify content ownership rights"""

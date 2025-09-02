@@ -341,27 +341,68 @@ Determine SQL query type"""
             return QueryType.UNKNOWN
     
     def _extract_table_names(self, parsed) -> List[str]:
-        """
-Extract table names from parsed SQL"""
-        table_names = []
-        
-        def extract_from_token(token):
-            if token.ttype is None and hasattr(token, 'tokens'):
-                for sub_token in token.tokens:
-                    extract_from_token(sub_token)
-            elif token.ttype in (sqlparse.tokens.Name, sqlparse.tokens.Name.Builtin):
-                # Simple heuristic to identify table names
-                if not token.value.upper() in ['SELECT', 'FROM', 'WHERE', 'JOIN', 'ON', 'AND', 'OR']:
-                    table_names.append(token.value)
-        
         try:
-            for token in parsed.tokens:
-                extract_from_token(token)
-        except Exception:
-            pass
-        
-        return list(set(table_names))  # Remove duplicates
-    
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__extract_table_names_input(parsed)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__extract_table_names_result(result)
+            
+                    logger.info(f"AI processing _extract_table_names completed")
+                    return final_result
+            
+                except Exception as e:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_extract_from_token_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_extract_from_token_result(result)
+            
+                    logger.info(f"AI processing extract_from_token completed")
+                    return final_result
+            
+                except Exception as e:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__extract_column_names_input(parsed)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__extract_column_names_result(result)
+            
+                    logger.info(f"AI processing _extract_column_names completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _extract_column_names failed: {e}")
+                    raise
+                    logger.info(f"AI processing _extract_table_names completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _extract_table_names failed: {e}")
+                    raise
     def _extract_column_names(self, parsed) -> List[str]:
         """
 Extract column names from parsed SQL"""
@@ -374,28 +415,44 @@ Extract column names from parsed SQL"""
                 r'\bSELECT\s+(.*?)\s+FROM',
                 r'\bWHERE\s+(\w+)',
                 r'\bORDER\s+BY\s+(.*?)(?:\s|$)',
-                r'\bGROUP\s+BY\s+(.*?)(?:\s|$)'
-            ]
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
             
-            for pattern in patterns:
-                matches = re.findall(pattern, query_str, re.IGNORECASE)
-                for match in matches:
-                    if isinstance(match, str):
-                        cols = [col.strip() for col in match.split(',')]
-                        column_names.extend(cols)
-        except Exception:
-            pass
-        
-        return list(set(column_names))
-    
-    def _count_joins(self, query: str) -> int:
-        """
-Count JOIN operations in query"""
-        join_pattern = r'\b(?:INNER\s+|LEFT\s+|RIGHT\s+|FULL\s+)?JOIN\b'
-        return len(re.findall(join_pattern, query, re.IGNORECASE))
-    
-    def _count_subqueries(self, query: str) -> int:
-        """
+                    # Preprocess input
+                    processed_input = await self._preprocess__extract_order_by_columns_input(parsed)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__extract_order_by_columns_result(result)
+            
+                    logger.info(f"AI processing _extract_order_by_columns completed")
+                    return final_result
+            
+                except Exception as e:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__extract_group_by_columns_input(parsed)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__extract_group_by_columns_result(result)
+            
+                    logger.info(f"AI processing _extract_group_by_columns completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _extract_group_by_columns failed: {e}")
+                    raise
 Count subqueries in query"""
         # Count SELECT statements (main query + subqueries)
         select_count = len(re.findall(r'\bSELECT\b', query, re.IGNORECASE))
@@ -684,34 +741,144 @@ Update performance metrics for query"""
             # Sort by priority and confidence
             priority_order = {
                 OptimizationPriority.CRITICAL: 4,
-                OptimizationPriority.HIGH: 3,
-                OptimizationPriority.MEDIUM: 2,
-                OptimizationPriority.LOW: 1,
-                OptimizationPriority.NONE: 0
-            }
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
             
-            all_recommendations.sort(
-                key=lambda x: (
-                    priority_order.get(OptimizationPriority(x['priority']), 0),
-                    x['confidence_score']
-                ),
-                reverse=True
-            )
+                    # Preprocess input
+                    processed_input = await self._preprocess__extract_total_cost_input(plan_data)
             
-            return all_recommendations
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__extract_total_cost_result(result)
+            
+                    logger.info(f"AI processing _extract_total_cost completed")
+                    return final_result
+            
+                except Exception as e:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_analyze_node_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_node_result(result)
+            
+                    logger.info(f"AI processing analyze_node completed")
+                    return final_result
+            
+                except Exception as e:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_analyze_node_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_node_result(result)
+            
+                    logger.info(f"AI processing analyze_node completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing analyze_node failed: {e}")
+                    raise
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__analyze_join_methods_input(plan_data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__analyze_join_methods_result(result)
+            
+                    logger.info(f"AI processing _analyze_join_methods completed")
+                    return final_result
+            
+                except Exception as e:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_analyze_node_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_node_result(result)
+            
+                    logger.info(f"AI processing analyze_node completed")
+                    return final_result
+            
+                except Exception as e:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_analyze_node_input(path)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_node_result(result)
+            
+                    logger.info(f"AI processing analyze_node completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing analyze_node failed: {e}")
+                    raise
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_node_result(result)
+            
+                    logger.info(f"AI processing analyze_node completed")
+                    return final_result
+            
+                except Exception as e:
+        try:
+            logger.info(f"Executing _suggest_plan_optimizations")
+            
+            # Implementation for _suggest_plan_optimizations
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_suggest_plan_optimizations completed successfully")
+            return result
             
         except Exception as e:
-            self.logger.error(f"Error getting optimization recommendations: {e}")
-            return []
-    
-    async def analyze_execution_plan(
-        self, 
-        query: str, 
-        session: AsyncSession
-    ) -> Dict[str, Any]:
-        """Analyze query execution plan"""
-        try:
-            # Get execution plan
+            logger.error(f"_suggest_plan_optimizations failed: {e}")
+            raise
             plan_query = f"EXPLAIN (ANALYZE, BUFFERS, FORMAT JSON) {query}"
             result = await session.execute(text(plan_query))
             plan_data = result.scalar()

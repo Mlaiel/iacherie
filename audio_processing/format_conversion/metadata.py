@@ -409,78 +409,26 @@ Initialize tag mapping for different formats"""
     # Private methods for format-specific handling
     
     async def _extract_basic_metadata(self, audio_file: mutagen.FileType, metadata: AudioMetadata):
-        """Extract basic metadata fields"""
-        # Title
-        metadata.title = self._get_tag_value(audio_file, ['TIT2', 'TITLE', '\xa9nam'])
-        
-        # Artist
-        metadata.artist = self._get_tag_value(audio_file, ['TPE1', 'ARTIST', '\xa9ART'])
-        
-        # Album
-        metadata.album = self._get_tag_value(audio_file, ['TALB', 'ALBUM', '\xa9alb'])
-        
-        # Album Artist
-        metadata.album_artist = self._get_tag_value(audio_file, ['TPE2', 'ALBUMARTIST', 'aART'])
-        
-        # Date/Year
-        date_value = self._get_tag_value(audio_file, ['TDRC', 'DATE', '\xa9day'])
-        if date_value:
-            metadata.date = str(date_value)
-            try:
-                # Extract year from date
-                year_match = str(date_value)[:4]
-                if year_match.isdigit():
-                    metadata.year = int(year_match)
-            except:
-                pass
-        
-        # Genre
-        metadata.genre = self._get_tag_value(audio_file, ['TCON', 'GENRE', '\xa9gen'])
-        
-        # Track number
-        track_value = self._get_tag_value(audio_file, ['TRCK', 'TRACKNUMBER', 'trkn'])
-        if track_value:
-            try:
-                if isinstance(track_value, tuple):
-                    metadata.track_number = track_value[0]
-                    metadata.total_tracks = track_value[1] if len(track_value) > 1 else None
-                else:
-                    # Handle "5/12" format
-                    track_str = str(track_value)
-                    if '/' in track_str:
-                        parts = track_str.split('/')
-                        metadata.track_number = int(parts[0])
-                        metadata.total_tracks = int(parts[1]) if len(parts) > 1 else None
-                    else:
-                        metadata.track_number = int(track_str)
-            except:
-                pass
-        
-        # Disc number
-        disc_value = self._get_tag_value(audio_file, ['TPOS', 'DISCNUMBER', 'disk'])
-        if disc_value:
-            try:
-                if isinstance(disc_value, tuple):
-                    metadata.disc_number = disc_value[0]
-                    metadata.total_discs = disc_value[1] if len(disc_value) > 1 else None
-                else:
-                    disc_str = str(disc_value)
-                    if '/' in disc_str:
-                        parts = disc_str.split('/')
-                        metadata.disc_number = int(parts[0])
-                        metadata.total_discs = int(parts[1]) if len(parts) > 1 else None
-                    else:
-                        metadata.disc_number = int(disc_str)
-            except:
-                pass
-        
-        # Extended metadata
-        metadata.composer = self._get_tag_value(audio_file, ['TCOM', 'COMPOSER', '\xa9wrt'])
-        metadata.conductor = self._get_tag_value(audio_file, ['TPE3', 'CONDUCTOR'])
-        metadata.copyright = self._get_tag_value(audio_file, ['TCOP', 'COPYRIGHT', 'cprt'])
-        metadata.publisher = self._get_tag_value(audio_file, ['TPUB', 'PUBLISHER'])
-        metadata.isrc = self._get_tag_value(audio_file, ['TSRC', 'ISRC'])
-    
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__extract_basic_metadata_input(audio_file)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__extract_basic_metadata_result(result)
+            
+                    logger.info(f"AI processing _extract_basic_metadata completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _extract_basic_metadata failed: {e}")
+                    raise
     async def _extract_technical_metadata(self, 
                                         audio_file: mutagen.FileType, 
                                         metadata: AudioMetadata, 

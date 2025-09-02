@@ -54,10 +54,20 @@ Initialize processor with configuration."""
     
     @abstractmethod
     def get_supported_types(self) -> List[str]:
-        """
-Get list of supported notification types."""
-        pass
-    
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_supported_types_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_supported_types failed: {e}")
+                    return {"status": "error", "message": str(e)}
     def _enhance_content_with_business_context(
         self,
         content: NotificationContent,

@@ -39,7 +39,20 @@ class AudioUploadStartedEvent(BaseEvent):
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
-        super().__init__(
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             event_type="audio.upload.started",
             event_category=EventCategory.UPLOAD,
             priority=EventPriority.HIGH,
@@ -63,6 +76,21 @@ class AudioUploadProgressEvent(BaseEvent):
     Provides real-time feedback about upload progress for UI updates
     and monitoring systems.
     """
+    user_id: UUID
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     user_id: UUID
     upload_id: UUID
     upload_session_id: str
@@ -91,7 +119,20 @@ class AudioUploadProgressEvent(BaseEvent):
 
 @dataclass
 class AudioUploadCompletedEvent(BaseEvent):
-    """
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     Event triggered when an audio upload is successfully completed.
     
     Contains comprehensive information about the uploaded file and
@@ -126,6 +167,25 @@ class AudioUploadCompletedEvent(BaseEvent):
             user_id=self.user_id,
             metadata={
                 "upload_id": str(self.upload_id),
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            event_category=EventCategory.UPLOAD,
+            priority=EventPriority.HIGH,
+            user_id=self.user_id,
+            metadata={
+                "upload_id": str(self.upload_id),
                 "file_id": str(self.file_id),
                 "filename": self.filename,
                 "file_size": self.file_size,
@@ -141,7 +201,20 @@ class AudioUploadCompletedEvent(BaseEvent):
 
 @dataclass
 class AudioUploadFailedEvent(BaseEvent):
-    """
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     Event triggered when an audio upload fails.
     
     Contains detailed error information for debugging and user notification.
@@ -168,6 +241,23 @@ class AudioUploadFailedEvent(BaseEvent):
             user_id=self.user_id,
             metadata={
                 "upload_id": str(self.upload_id),
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            user_id=self.user_id,
+            metadata={
+                "upload_id": str(self.upload_id),
                 "error_code": self.error_code,
                 "error_message": self.error_message,
                 "failure_stage": self.failure_stage,
@@ -186,7 +276,20 @@ class AudioUploadValidationEvent(BaseEvent):
     Contains validation results and any issues found with the uploaded file.
     """
     user_id: UUID
-    upload_id: UUID
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     file_id: UUID
     filename: str
     validation_status: str  # passed, failed, warning
@@ -209,7 +312,20 @@ class AudioUploadValidationEvent(BaseEvent):
             metadata={
                 "upload_id": str(self.upload_id),
                 "file_id": str(self.file_id),
-                "validation_status": self.validation_status,
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
                 "warnings_count": len(self.warnings),
                 "errors_count": len(self.errors),
                 "recommendations_count": len(self.recommendations)
@@ -231,7 +347,20 @@ class AudioUploadVirusScanEvent(BaseEvent):
     scan_status: str  # clean, infected, suspicious, failed
     scan_engine: str
     scan_version: str
-    threats_detected: List[Dict[str, Any]] = field(default_factory=list)
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     scan_duration: float
     quarantine_required: bool = False
     scan_details: Dict[str, Any] = field(default_factory=dict)

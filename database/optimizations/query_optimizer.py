@@ -181,7 +181,20 @@ class QueryParser:
 Advanced SQL query parser"""
     
     def __init__(self):
-        self._function_patterns = [
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
             r'\b(count|sum|avg|max|min|string_agg|array_agg)\s*\(',
             r'\b(upper|lower|trim|substring|length)\s*\(',
             r'\b(date_trunc|extract|now|current_timestamp)\s*\(',
@@ -208,6 +221,29 @@ Parse SQL query into components"""
             component.functions = self._extract_functions(query)
             component.limits, component.offset = self._extract_limit_offset(parsed)
             
+            return component
+            
+        except Exception as e:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_extract_from_token_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_extract_from_token_result(result)
+            
+                    logger.info(f"AI processing extract_from_token completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing extract_from_token failed: {e}")
+                    raise
             return component
             
         except Exception as e:

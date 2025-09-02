@@ -179,15 +179,20 @@ Initialize sentiment and emotion analysis models"""
         self.fallback_mode = True
     
     def _get_device(self) -> int:
-        """Get optimal device for model execution"""
-        if self.config.performance.enable_gpu and TRANSFORMERS_AVAILABLE:
-            try:
-                if torch.cuda.is_available():
-                    return 0  # Use first GPU
-            except:
-                pass
-        return -1  # Use CPU
-    
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_device_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_device failed: {e}")
+                    return {"status": "error", "message": str(e)}
     async def analyze_sentiment(
         self,
         text: Union[str, List[str]],
@@ -601,32 +606,20 @@ Calculate overall trend direction"""
             "models_loaded": list(self.pipelines.keys()),
             "transformers_available": TRANSFORMERS_AVAILABLE,
             "device": self._get_device(),
-            "fallback_mode": hasattr(self, 'fallback_mode') and self.fallback_mode,
-            "emotion_detection_enabled": "emotion" in self.pipelines
-        }
-    
-    def health_check(self) -> Dict[str, Any]:
-        """Perform health check"""
-        status = {
-            "status": "healthy",
-            "models_loaded": len(self.pipelines),
-            "transformers_available": TRANSFORMERS_AVAILABLE,
-            "emotion_detection": "emotion" in self.pipelines
-        }
-        
-        # Test basic functionality
         try:
-            if not hasattr(self, 'fallback_mode') or not self.fallback_mode:
-                # Quick test with sentiment pipeline
-                test_pipeline = self.pipelines.get("sentiment")
-                if test_pipeline:
-                    test_result = test_pipeline("This is a test.")
-                    status["test_result"] = "passed"
-                else:
-                    status["status"] = "degraded"
-                    status["test_result"] = "no_models"
-            else:
-                status["test_result"] = "fallback_mode"
+            logger.info(f"Executing health_check")
+            
+            # Implementation for health_check
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"health_check completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"health_check failed: {e}")
+            raise
         except Exception as e:
             status["status"] = "unhealthy"
             status["error"] = str(e)

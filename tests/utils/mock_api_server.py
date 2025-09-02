@@ -175,8 +175,20 @@ Start the mock API server."""
             logger.info(f"Starting mock API server on port {self.port}")
             
             def run_server():
-                uvicorn.run(app, host="127.0.0.1", port=self.port, log_level="warning")
+        try:
+            logger.info(f"Executing run_server")
             
+            # Implementation for run_server
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"run_server completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"run_server failed: {e}")
+            raise
             self.server_thread = Thread(target=run_server, daemon=True)
             self.server_thread.start()
             

@@ -490,9 +490,20 @@ Set up test environment"""
 Test exception handling decorator"""
         @self.error_handler.handle_exceptions
         async def function_that_raises():
-            raise PersonalizationDataError("Test data error")
-        
-        # Should catch and wrap the exception
+        try:
+            logger.info(f"Executing function_that_raises")
+            
+            # Implementation for function_that_raises
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"function_that_raises completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"function_that_raises failed: {e}")
+            raise
         with self.assertRaises(PersonalizationError):
             await function_that_raises()
 
@@ -551,6 +562,33 @@ Mock failing service"""
         ]
         
         for error in errors:
+        try:
+            logger.info(f"Executing primary_function")
+            
+            # Implementation for primary_function
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing fallback_function")
+            
+            # Implementation for fallback_function
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"fallback_function completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"fallback_function failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"primary_function completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"primary_function failed: {e}")
+            raise
             category = self.error_handler.categorize_error(error)
             severity = self.error_handler.get_error_severity(error)
             
@@ -589,6 +627,50 @@ Mock failing service"""
         
         self.assertEqual(len(results), 3)  # 3 successful items
         self.assertEqual(len(errors), 1)   # 1 error item
+        self.assertIn('processed_item1', results)
+
+
+class TestErrorRecovery(IsolatedAsyncioTestCase):
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_fallback_model_predict_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_fallback_model_predict_result(result)
+            
+                    logger.info(f"AI processing fallback_model_predict completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing fallback_model_predict failed: {e}")
+                    raise
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_failing_model_predict_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_failing_model_predict_result(result)
+            
+                    logger.info(f"AI processing failing_model_predict completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing failing_model_predict failed: {e}")
+                    raise
         self.assertIn('processed_item1', results)
 
 
@@ -761,6 +843,30 @@ Test different error logging formats"""
         alerts = await self.error_logger.get_active_alerts()
         self.assertGreater(len(alerts), 0)
 
+    async def test_error_metrics_collection(self):
+        try:
+        try:
+            logger.info(f"Executing recovery_operation")
+            
+            # Implementation for recovery_operation
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"recovery_operation completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"recovery_operation failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"complex_operation completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"complex_operation failed: {e}")
+            raise
     async def test_error_metrics_collection(self):
         """Test error metrics collection"""
         # Log various errors with different patterns

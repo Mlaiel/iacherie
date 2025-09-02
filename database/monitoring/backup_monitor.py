@@ -325,25 +325,28 @@ Load backup job configurations"""
         self.logger.info("Database backup monitoring started")
         
     async def stop_monitoring(self):
-        """Stop backup monitoring"""
-        self._monitoring_active = False
-        
-        if self._monitoring_task:
-            self._monitoring_task.cancel()
-            try:
-                await self._monitoring_task
-            except asyncio.CancelledError:
-                pass
-                
-        if self._backup_scheduler_task:
-            self._backup_scheduler_task.cancel()
-            try:
-                await self._backup_scheduler_task
-            except asyncio.CancelledError:
-                pass
-                
-        self.logger.info("Database backup monitoring stopped")
-        
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "stop_monitoring",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric stop_monitoring collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection stop_monitoring failed: {e}")
+                    return None
     async def _monitoring_loop(self, interval: int):
         """Main backup monitoring loop"""
         while self._monitoring_active:
@@ -1197,7 +1200,20 @@ class ReplicationHealthChecker:
         self.logger = logging.getLogger(__name__)
         
     async def check_replication_lag(self, replica_info: Dict[str, Any]) -> float:
-        """
+        try:
+            logger.info(f"Executing check_replication_lag")
+            
+            # Implementation for check_replication_lag
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"check_replication_lag completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"check_replication_lag failed: {e}")
+            raise
 Check replication lag in seconds"""
         # Implementation for detailed replication lag analysis
         pass

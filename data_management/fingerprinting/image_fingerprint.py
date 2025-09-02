@@ -215,8 +215,20 @@ class CLIPProcessor(ImageProcessor):
             raise
     
     def get_name(self) -> str:
-        return "clip"
-    
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
     async def _simulate_clip_processing(self, image_path: str, config: ImageFingerprintConfig) -> Dict[str, Any]:
         """Simulation du traitement CLIP pour la démo"""
         try:
@@ -408,7 +420,20 @@ class ImageHashProcessor(ImageProcessor):
             return {
                 "processor": "basic_image_hash",
                 "hashes": hashes,
-                "combined_hash": combined_hash,
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
                 "image_properties": image_analysis,
                 "hash_size": config.hash_size,
                 "processing_time": processing_time,
@@ -533,6 +558,29 @@ Initialise le processeur d'analyse perceptuelle"""
             texture_analysis = self._analyze_texture(gray_image, config)
             
             # Analyse géométrique
+            geometric_analysis = self._analyze_geometry(gray_image, config)
+            
+            # Analyse statistique
+            statistical_analysis = self._analyze_statistics(rgb_image, gray_image)
+            
+            processing_time = time.time() - start_time
+            
+            return {
+                "processor": "perceptual_analysis",
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
             geometric_analysis = self._analyze_geometry(gray_image, config)
             
             # Analyse statistique
@@ -757,6 +805,53 @@ Initialise le processeur d'analyse perceptuelle"""
             # Énergie de l'image
             analysis["energy"] = float(np.sum(gray_image.astype(np.float64) ** 2))
             
+            return analysis
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+            analysis["gray_min"] = float(np.min(gray_image))
+            analysis["gray_max"] = float(np.max(gray_image))
+            analysis["gray_range"] = float(np.max(gray_image) - np.min(gray_image))
+            
+            # Entropie globale
+            hist, _ = np.histogram(gray_image, bins=256)
+            hist = hist / hist.sum()
+            hist = hist[hist > 0]
+            analysis["entropy"] = float(-np.sum(hist * np.log2(hist)))
+            
+            # Énergie de l'image
+            analysis["energy"] = float(np.sum(gray_image.astype(np.float64) ** 2))
+            
+            return analysis
+            
+        except Exception as e:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
             return analysis
             
         except Exception as e:

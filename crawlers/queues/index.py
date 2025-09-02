@@ -369,7 +369,49 @@ Log information about system components"""
         """Start system health monitoring"""
         
         async def health_monitoring_loop():
-            while self.system_status == "operational":
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "health_monitoring_loop",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric health_monitoring_loop collected")
+                    return metrics
+            
+                except Exception as e:
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "performance_tracking_loop",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric performance_tracking_loop collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection performance_tracking_loop failed: {e}")
+                    return None
+                    return None
                 try:
                     health_status = await self.perform_system_health_check()
                     

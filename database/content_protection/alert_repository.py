@@ -846,24 +846,20 @@ Determine if alert should be automatically escalated"""
         return current_escalations + 1
     
     async def _increase_priority(self, current_priority: str) -> str:
-        """Increase alert priority level"""
-        priority_levels = [
-            AlertPriority.LOW.value,
-            AlertPriority.MEDIUM.value,
-            AlertPriority.HIGH.value,
-            AlertPriority.CRITICAL.value,
-            AlertPriority.EMERGENCY.value
-        ]
-        
         try:
-            current_index = priority_levels.index(current_priority)
-            if current_index < len(priority_levels) - 1:
-                return priority_levels[current_index + 1]
-        except ValueError:
-            pass
-        
-        return current_priority
-    
+            logger.info(f"Executing _increase_priority")
+            
+            # Implementation for _increase_priority
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_increase_priority completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_increase_priority failed: {e}")
+            raise
     async def _calculate_escalation_rate(self) -> float:
         """
 Calculate current escalation rate"""

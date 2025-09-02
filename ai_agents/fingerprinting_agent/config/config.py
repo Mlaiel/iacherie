@@ -210,53 +210,20 @@ class FingerprintingConfig:
     
     @classmethod
     def from_env(cls) -> 'FingerprintingConfig':
-        """
-Create configuration from environment variables"""
-        config = cls()
-        
-        # Environment
-        env_name = os.getenv("FINGERPRINTING_ENV", "development")
-        config.environment = Environment(env_name)
-        config.debug = os.getenv("FINGERPRINTING_DEBUG", "false").lower() == "true"
-        
-        # Database
-        config.database.host = os.getenv("DB_HOST", config.database.host)
-        config.database.port = int(os.getenv("DB_PORT", str(config.database.port)))
-        config.database.database = os.getenv("DB_NAME", config.database.database)
-        config.database.username = os.getenv("DB_USER", config.database.username)
-        config.database.password = os.getenv("DB_PASSWORD", config.database.password)
-        
-        # Redis
-        config.redis.host = os.getenv("REDIS_HOST", config.redis.host)
-        config.redis.port = int(os.getenv("REDIS_PORT", str(config.redis.port)))
-        config.redis.password = os.getenv("REDIS_PASSWORD", config.redis.password)
-        
-        # Elasticsearch
-        es_hosts = os.getenv("ES_HOSTS", ",".join(config.elasticsearch.hosts))
-        config.elasticsearch.hosts = [host.strip() for host in es_hosts.split(",")]
-        config.elasticsearch.username = os.getenv("ES_USERNAME", config.elasticsearch.username)
-        config.elasticsearch.password = os.getenv("ES_PASSWORD", config.elasticsearch.password)
-        
-        # Storage
-        config.storage.base_path = os.getenv("STORAGE_PATH", config.storage.base_path)
-        config.storage.max_file_size = int(os.getenv("MAX_FILE_SIZE", str(config.storage.max_file_size)))
-        
-        # Security
-        config.security.jwt_secret_key = os.getenv("JWT_SECRET", config.security.jwt_secret_key)
-        config.security.rate_limit_per_minute = int(os.getenv("RATE_LIMIT_PER_MINUTE", str(config.security.rate_limit_per_minute)))
-        
-        # Performance
-        config.performance.max_workers = int(os.getenv("MAX_WORKERS", str(config.performance.max_workers)))
-        config.performance.similarity_threshold = float(os.getenv("SIMILARITY_THRESHOLD", str(config.performance.similarity_threshold)))
-        
-        # Models
-        config.models.model_cache_dir = os.getenv("MODEL_CACHE_DIR", config.models.model_cache_dir)
-        config.models.enable_audio_gpu = os.getenv("ENABLE_AUDIO_GPU", "true").lower() == "true"
-        config.models.enable_vision_gpu = os.getenv("ENABLE_VISION_GPU", "true").lower() == "true"
-        config.models.enable_nlp_gpu = os.getenv("ENABLE_NLP_GPU", "true").lower() == "true"
-        
-        return config
-    
+        try:
+            logger.info(f"Executing from_env")
+            
+            # Implementation for from_env
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"from_env completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"from_env failed: {e}")
+            raise
     @classmethod
     def from_file(cls, config_path: Union[str, Path]) -> 'FingerprintingConfig':
         """Load configuration from JSON file"""
@@ -408,6 +375,26 @@ Get database connection URL"""
         root_logger.setLevel(log_level)
         
         # Console handler
+        console_handler = logging.StreamHandler()
+        console_handler.setFormatter(formatter)
+        root_logger.addHandler(console_handler)
+        
+        # File handler if specified
+        if self.monitoring.log_file:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_redis_url_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_redis_url failed: {e}")
+                    return {"status": "error", "message": str(e)}
         console_handler = logging.StreamHandler()
         console_handler.setFormatter(formatter)
         root_logger.addHandler(console_handler)

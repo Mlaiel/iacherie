@@ -904,29 +904,17 @@ Rank platforms by priority/importance"""
     async def _find_optimal_platform_time(
         self, 
         platform: Platform, 
-        target_audience: Dict[str, Any] = None
-    ) -> datetime:
-        """
-Find optimal posting time for specific platform"""
-        requirements = self.platform_analyzer.platform_requirements.get(platform)
-        
-        if not requirements or not requirements.best_posting_times:
-            # Default to 6 PM today or tomorrow if past
-            default_time = datetime.now().replace(hour=18, minute=0, second=0, microsecond=0)
-            if default_time <= datetime.now():
-                default_time += timedelta(days=1)
-            return default_time
-        
-        # Choose the first optimal time from the list
-        optimal_hour = requirements.best_posting_times[0]
-        optimal_time = datetime.now().replace(hour=optimal_hour, minute=0, second=0, microsecond=0)
-        
-        # If time has passed today, schedule for tomorrow
-        if optimal_time <= datetime.now():
-            optimal_time += timedelta(days=1)
-        
-        return optimal_time
-    
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _find_optimal_platform_time completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _find_optimal_platform_time failed: {e}")
+                    raise
     async def _predict_platform_reach(
         self, 
         content_variants: Dict[Platform, ContentVariant],

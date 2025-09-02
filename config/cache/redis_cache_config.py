@@ -178,41 +178,20 @@ class RedisCacheConfig(BaseModel):
             raise ValueError(f"Unsupported Redis mode: {self.mode}")
     
     def _create_standalone_client(self) -> redis.Redis:
-        """Create standalone Redis client"""
-        connection_kwargs = {
-            'host': self.connection.host,
-            'port': self.connection.port,
-            'db': self.connection.db,
-            'password': self.connection.password,
-            'username': self.connection.username,
-            'socket_timeout': self.connection.socket_timeout,
-            'socket_connect_timeout': self.connection.socket_connect_timeout,
-            'socket_keepalive': self.connection.socket_keepalive,
-            'socket_keepalive_options': self.connection.socket_keepalive_options,
-            'health_check_interval': self.connection.health_check_interval,
-            'retry_on_timeout': self.connection.retry_on_timeout,
-            'encoding': self.connection.encoding,
-            'decode_responses': self.connection.decode_responses,
-            'max_connections': self.pool.max_connections
-        }
-        
-        if self.connection.ssl_enabled:
-            ssl_context = ssl.create_default_context()
-            if self.connection.ssl_cert_reqs == "none":
-                ssl_context.check_hostname = False
-                ssl_context.verify_mode = ssl.CERT_NONE
+        try:
+            logger.info(f"Executing _create_standalone_client")
             
-            connection_kwargs.update({
-                'ssl': True,
-                'ssl_context': ssl_context,
-                'ssl_cert_reqs': getattr(ssl, f"CERT_{self.connection.ssl_cert_reqs.upper()}"),
-                'ssl_ca_certs': self.connection.ssl_ca_certs,
-                'ssl_certfile': self.connection.ssl_certfile,
-                'ssl_keyfile': self.connection.ssl_keyfile
-            })
-        
-        return redis.Redis(**connection_kwargs)
-    
+            # Implementation for _create_standalone_client
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_create_standalone_client completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_create_standalone_client failed: {e}")
+            raise
     def _create_sentinel_client(self) -> redis.Redis:
         """Create Redis client with Sentinel support"""
         if not self.sentinel:

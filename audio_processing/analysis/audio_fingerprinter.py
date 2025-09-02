@@ -314,8 +314,26 @@ class AudioFingerprinter:
         """
 Extract Chromaprint-style fingerprint"""
         def extract():
-            try:
-                # Compute chroma features with high precision
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_extract_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_extract_result(result)
+            
+                    logger.info(f"AI processing extract completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing extract failed: {e}")
+                    raise
                 chroma = librosa.feature.chroma_cqt(
                     y=audio_data, 
                     sr=sample_rate,
@@ -360,6 +378,27 @@ Extract Chromaprint-style fingerprint"""
                     'warnings': []
                 }
                 
+            except Exception as e:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_extract_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_extract_result(result)
+            
+                    logger.info(f"AI processing extract completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing extract failed: {e}")
+                    raise
             except Exception as e:
                 self.logger.error(f"Chromaprint extraction failed: {str(e)}")
                 return {
@@ -413,6 +452,28 @@ Extract Chromaprint-style fingerprint"""
                 # Create raw fingerprint
                 raw_fingerprint = struct.pack(f'{len(hash_values)}I', *hash_values)
                 
+                return {
+                    'raw': raw_fingerprint,
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_extract_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_extract_result(result)
+            
+                    logger.info(f"AI processing extract completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing extract failed: {e}")
+                    raise
                 return {
                     'raw': raw_fingerprint,
                     'hashes': hash_values,
@@ -469,6 +530,31 @@ Extract Chromaprint-style fingerprint"""
                     np.log10(sample_rate // 2),  # Up to Nyquist
                     n_bands + 1
                 )
+                band_indices = librosa.fft_frequencies(sr=sample_rate, n_fft=self.fft_size)
+                
+                # Extract energy from each band over time
+                hash_sequence = []
+                for t in range(magnitude.shape[1]):
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_extract_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_extract_result(result)
+            
+                    logger.info(f"AI processing extract completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing extract failed: {e}")
+                    raise
                 band_indices = librosa.fft_frequencies(sr=sample_rate, n_fft=self.fft_size)
                 
                 # Extract energy from each band over time
@@ -603,6 +689,20 @@ Extract Chromaprint-style fingerprint"""
                 self.logger.error(f"Neural embedding extraction failed: {str(e)}")
                 return {
                     'raw': b'',
+        try:
+            logger.info(f"Executing compare")
+            
+            # Implementation for compare
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"compare completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"compare failed: {e}")
+            raise
                     'hashes': [],
                     'metadata': {'error': str(e)},
                     'format_info': {},

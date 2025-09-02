@@ -919,10 +919,134 @@ Crée un cas d'investigation"""
             return None
 
     async def _notify_security_team(self, data: CrawlerNotificationData, investigation_id: str):
-        """
-Notifie l'équipe de sécurité"""
-        pass
-
+        try:
+            logger.info(f"Executing _notify_security_team")
+            
+            # Implementation for _notify_security_team
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _handle_rate_limiting")
+            
+            # Implementation for _handle_rate_limiting
+            # TODO: Add specific business logic here
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__analyze_content_detection_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__analyze_content_detection_result(result)
+            
+                    logger.info(f"AI processing _analyze_content_detection completed")
+                    return final_result
+            
+                except Exception as e:
+        try:
+            logger.info(f"Executing _send_sms_notification")
+            
+            # Implementation for _send_sms_notification
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_send_sms_notification completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_send_sms_notification failed: {e}")
+            raise
+                    async with self.db_session() as session:
+                        # Database operation
+                        result = await session.execute(update_query)
+                        await session.commit()
+                        logger.info(f"Database operation _update_dashboard_notification completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _update_dashboard_notification failed: {e}")
+                    raise
+                except Exception as e:
+        try:
+            logger.info(f"Executing _send_websocket_notification")
+            
+            # Implementation for _send_websocket_notification
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_send_websocket_notification completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_send_websocket_notification failed: {e}")
+            raise
+                    logger.info(f"AI processing _analyze_content_detection completed")
+                    return final_result
+            
+                except Exception as e:
+        try:
+            logger.info(f"Executing _send_push_notification")
+            
+            # Implementation for _send_push_notification
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_send_push_notification completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_send_push_notification failed: {e}")
+            raise
+                    final_result = await self._postprocess__analyze_content_detection_result(result)
+            
+                    logger.info(f"AI processing _analyze_content_detection completed")
+                    return final_result
+            
+                except Exception as e:
+        try:
+            logger.info(f"Executing _send_email_notification")
+            
+            # Implementation for _send_email_notification
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_send_email_notification completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_send_email_notification failed: {e}")
+            raise
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__analyze_content_detection_result(result)
+            
+                    logger.info(f"AI processing _analyze_content_detection completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _analyze_content_detection failed: {e}")
+                    raise
+            logger.info(f"_handle_rate_limiting completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_handle_rate_limiting failed: {e}")
+            raise
+            logger.info(f"_notify_security_team completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_notify_security_team failed: {e}")
+            raise
     async def _handle_rate_limiting(self, data: CrawlerNotificationData):
         """
 Gère la limitation de taux"""

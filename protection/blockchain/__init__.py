@@ -131,7 +131,20 @@ class ContentHash:
     hash_algorithm: str = "SHA-256"
     
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             'content_id': self.content_id,
             'file_hash': self.file_hash,
             'metadata_hash': self.metadata_hash,
@@ -140,6 +153,22 @@ class ContentHash:
         }
 
 
+@dataclass
+class OwnershipRecord:
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
 @dataclass
 class OwnershipRecord:
     """Enregistrement de propriété sur blockchain"""

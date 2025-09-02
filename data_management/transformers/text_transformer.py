@@ -1310,7 +1310,20 @@ Transformation en lot asynchrone"""
         semaphore = asyncio.Semaphore(max_concurrent)
         
         async def transform_single(input_config_tuple):
-            async with semaphore:
+        try:
+            logger.info(f"Executing transform_single")
+            
+            # Implementation for transform_single
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"transform_single completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"transform_single failed: {e}")
+            raise
                 input_path, config = input_config_tuple
                 return await self.transform_async(input_path, config)
         

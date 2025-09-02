@@ -317,69 +317,20 @@ Get vector collection configuration by name."""
         )
     
     def get_connection_config(self, database: Optional[VectorDatabase] = None) -> VectorStoreConnection:
-        """Get vector database connection configuration."""
-        db = database or self.DEFAULT_VECTOR_DB
-        
-        connections = {
-            VectorDatabase.FAISS: VectorStoreConnection(
-                database=VectorDatabase.FAISS,
-                # FAISS is file-based, no network connection needed
-                custom_config={
-                    "storage_path": self.VECTOR_STORAGE_PATH,
-                    "memory_mapping": True,
-                    "compression": True,
-                }
-            ),
+        try:
+                    # Request validation
+                    if not database:
+                        raise ValueError("Invalid request")
             
-            VectorDatabase.QDRANT: VectorStoreConnection(
-                database=VectorDatabase.QDRANT,
-                host=self.VECTOR_DB_HOST,
-                port=self.VECTOR_DB_PORT or 6333,
-                api_key=self.VECTOR_DB_API_KEY,
-                timeout=self.CONNECTION_TIMEOUT,
-                pool_size=self.CONNECTION_POOL_SIZE,
-                custom_config={
-                    "prefer_grpc": True,
-                    "https": False,
-                }
-            ),
+                    # Process request
+                    result = await self._handle_get_connection_config_request(database)
             
-            VectorDatabase.PINECONE: VectorStoreConnection(
-                database=VectorDatabase.PINECONE,
-                api_key=self.VECTOR_DB_API_KEY,
-                custom_config={
-                    "environment": "us-west1-gcp",
-                    "project_name": "ia-influencer",
-                }
-            ),
+                    # Return response
+                    return {"status": "success", "data": result}
             
-            VectorDatabase.WEAVIATE: VectorStoreConnection(
-                database=VectorDatabase.WEAVIATE,
-                host=self.VECTOR_DB_HOST,
-                port=self.VECTOR_DB_PORT or 8080,
-                username=self.VECTOR_DB_USERNAME,
-                password=self.VECTOR_DB_PASSWORD,
-                custom_config={
-                    "startup_period": 5,
-                    "additional_headers": {},
-                }
-            ),
-            
-            VectorDatabase.REDIS: VectorStoreConnection(
-                database=VectorDatabase.REDIS,
-                host=self.VECTOR_DB_HOST,
-                port=self.VECTOR_DB_PORT or 6379,
-                password=self.VECTOR_DB_PASSWORD,
-                database_name="0",
-                custom_config={
-                    "decode_responses": True,
-                    "health_check_interval": 30,
-                }
-            ),
-        }
-        
-        return connections.get(db, connections[VectorDatabase.FAISS])
-    
+                except Exception as e:
+                    logger.error(f"API handler get_connection_config failed: {e}")
+                    return {"status": "error", "message": str(e)}
     def get_search_config(self) -> Dict[str, Any]:
         """Get vector search configuration."""
         return {

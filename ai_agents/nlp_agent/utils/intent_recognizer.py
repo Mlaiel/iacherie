@@ -271,15 +271,20 @@ Load patterns for intent recognition"""
             ]
     
     def _get_device(self) -> int:
-        """Get optimal device for model execution"""
-        if self.config.performance.enable_gpu and TRANSFORMERS_AVAILABLE:
-            try:
-                if torch.cuda.is_available():
-                    return 0  # Use first GPU
-            except:
-                pass
-        return -1  # Use CPU
-    
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_device_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_device failed: {e}")
+                    return {"status": "error", "message": str(e)}
     async def recognize_intent(
         self,
         text: Union[str, List[str]],
@@ -645,26 +650,20 @@ Compare intents between two texts"""
         return list(self.intent_patterns.keys())
     
     def get_intent_patterns(self, intent: str) -> Dict[str, Any]:
-        """
-Get patterns for a specific intent"""
-        return self.intent_patterns.get(intent, {})
-    
-    def health_check(self) -> Dict[str, Any]:
-        """
-Perform health check"""
-        status = {
-            "status": "healthy",
-            "models_loaded": len(self.pipelines),
-            "patterns_loaded": len(self.intent_patterns),
-            "transformers_available": TRANSFORMERS_AVAILABLE,
-            "fallback_mode": hasattr(self, 'fallback_mode') and self.fallback_mode
-        }
-        
-        # Test basic functionality
         try:
-            test_result = asyncio.run(self.recognize_intent("This is a test message."))
-            status["test_result"] = "passed"
-            status["test_intent"] = test_result.primary_intent
+            logger.info(f"Executing health_check")
+            
+            # Implementation for health_check
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"health_check completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"health_check failed: {e}")
+            raise
         except Exception as e:
             status["status"] = "degraded"
             status["error"] = str(e)

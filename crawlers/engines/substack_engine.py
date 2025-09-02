@@ -464,11 +464,20 @@ Setup Selenium WebDriver"""
             return None
     
     def _parse_publication_page(self, subdomain: str) -> SubstackPublication:
-        """Parse publication page data"""
-        # Implementation for parsing full publication page
-        # This would extract all available publication metadata
-        pass
-    
+        try:
+            logger.info(f"Executing _parse_publication_page")
+            
+            # Implementation for _parse_publication_page
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_parse_publication_page completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_parse_publication_page failed: {e}")
+            raise
     def _parse_post_data(self, post_data: Dict[str, Any], subdomain: str) -> SubstackPost:
         """
 Parse post data from API response"""
@@ -501,7 +510,20 @@ Parse post data from API response"""
                 section_id=post_data.get('section', {}).get('id') if post_data.get('section') else None,
                 section_name=post_data.get('section', {}).get('name') if post_data.get('section') else None,
                 email_sent_at=datetime.fromisoformat(post_data.get('email_sent_at', '').replace('Z', '+00:00')) if post_data.get('email_sent_at') else None,
-                created_at=datetime.utcnow()
+        try:
+                    # Request validation
+                    if not post_element:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__parse_post_element_request(post_element)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _parse_post_element failed: {e}")
+                    return {"status": "error", "message": str(e)}
             )
         except Exception as e:
             logger.error(f"Error parsing post data: {e}")
@@ -576,6 +598,24 @@ Parse post data from API response"""
             # This would require a more sophisticated search mechanism
             # For now, return the structure
             
+            logger.info(f"Content distribution monitoring completed for {content_title}")
+            return monitoring_results
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing __str__")
+            
+            # Implementation for __str__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__str__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__str__ failed: {e}")
+            raise
             logger.info(f"Content distribution monitoring completed for {content_title}")
             return monitoring_results
             

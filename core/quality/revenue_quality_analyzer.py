@@ -91,7 +91,20 @@ class RevenueMetrics:
     platform_diversity_score: float = 0.0
     
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             'total_revenue': float(self.total_revenue),
             'monthly_revenue': float(self.monthly_revenue),
             'yearly_revenue': float(self.yearly_revenue),
@@ -109,7 +122,20 @@ class PlatformRevenueData:
     """
 Revenue data for specific platform"""
     platform: MonetizationPlatform
-    revenue_streams: Dict[RevenueStream, Decimal] = field(default_factory=dict)
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
     total_platform_revenue: Decimal = Decimal('0.00')
     monthly_growth: float = 0.0
     engagement_metrics: Dict[str, float] = field(default_factory=dict)
@@ -133,6 +159,22 @@ Calculate total revenue for this platform"""
         }
 
 
+@dataclass
+class RevenueOptimization:
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
 @dataclass
 class RevenueOptimization:
     """
@@ -169,7 +211,20 @@ Calculate percentage increase"""
             'estimated_timeline': self.estimated_timeline,
             'description': self.description,
             'action_steps': self.action_steps,
-            'priority_score': self.priority_score
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
         }
 
 

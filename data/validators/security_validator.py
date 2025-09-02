@@ -936,7 +936,20 @@ class SecurityValidator:
             semaphore = asyncio.Semaphore(max_workers)
             
             async def scan_item(item):
-                async with semaphore:
+        try:
+            logger.info(f"Executing scan_item")
+            
+            # Implementation for scan_item
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"scan_item completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"scan_item failed: {e}")
+            raise
                     return await self.scan_file(
                         file_path=item.get("file_path"),
                         file_data=item.get("file_data"),

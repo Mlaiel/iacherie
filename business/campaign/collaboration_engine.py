@@ -715,10 +715,26 @@ Get user's collaboration profile"""
         return self._participant_profiles[user_id]
     
     async def _store_collaboration_request(self, request: CollaborationRequest) -> None:
-        """Store collaboration request in database"""
-        # Implementation for storing request
-        pass
-    
+        try:
+            logger.info(f"Executing _store_collaboration_request")
+            
+            # Implementation for _store_collaboration_request
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _notify_potential_participants")
+            
+            # Implementation for _notify_potential_participants
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_notify_potential_participants completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_notify_potential_participants failed: {e}")
+            raise
+            raise
     async def _notify_potential_participants(
         self,
         request: CollaborationRequest,

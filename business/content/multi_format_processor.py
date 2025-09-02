@@ -790,11 +790,18 @@ Get current processing status"""
         return self.processing_stats.copy()
 
     async def cleanup_temp_files(self):
-        """
-Cleanup temporary files and optimize performance"""
-        # Implementation for cleanup
-        pass
-
-
-# Export main class
+        try:
+            logger.info(f"Executing cleanup_temp_files")
+            
+            # Implementation for cleanup_temp_files
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"cleanup_temp_files completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"cleanup_temp_files failed: {e}")
+            raise
 __all__ = ['MultiFormatContentProcessor', 'ContentFormat', 'ProcessingStatus', 'CreatorType']

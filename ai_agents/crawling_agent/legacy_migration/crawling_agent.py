@@ -1098,39 +1098,20 @@ Execute real-time monitoring for specified duration"""
         return results
 
     async def _check_surveillance_target(self, target: SurveillanceTarget) -> List[Dict]:
-        """Check specific surveillance target for matches"""
-        results = []
-        
-        # Check if enough time has passed since last scan
-        if target.last_scan:
-            hours_since_scan = (datetime.now() - target.last_scan).total_seconds() / 3600
-            if hours_since_scan < target.monitoring_frequency:
-                return results
-        
-        # Perform surveillance scan
-        for platform in target.platforms:
-            try:
-                platform_results = await self._monitor_platform(
-                    platform, target.content_fingerprint, target.search_keywords
-                )
-                
-                # Filter results by alert threshold
-                filtered_results = [
-                    r for r in platform_results 
-                    if r.get('similarity_score', 0) >= target.alert_threshold
-                ]
-                
-                results.extend(filtered_results)
-                
-            except Exception as e:
-                logger.error(f"Platform monitoring failed for {platform}: {str(e)}")
-        
-        # Update last scan time
-        target.last_scan = datetime.now()
-        await self._update_surveillance_target(target)
-        
-        return results
-
+        try:
+                    # Request validation
+                    if not target:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__check_surveillance_target_request(target)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _check_surveillance_target failed: {e}")
+                    return {"status": "error", "message": str(e)}
     async def _process_monitoring_results(self, results: List[Dict]) -> None:
         """Process monitoring results and trigger alerts"""
         for result in results:
@@ -1376,3 +1357,18 @@ Schedule recurring crawling task"""
         """
 Cancel scheduled task"""
         self.scheduled_tasks.pop(task_id, None)
+
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise

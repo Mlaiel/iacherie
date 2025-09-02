@@ -45,7 +45,20 @@ Bank account information structure."""
     metadata: Dict[str, Any] = None
     
     def __post_init__(self):
-        if self.metadata is None:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             self.metadata = {}
 
 
@@ -73,6 +86,21 @@ class BankConnectionResult:
 class DirectDebitResult:
     """
 Direct debit setup and execution result."""
+    success: bool
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     success: bool
     mandate_id: Optional[str] = None
     debit_id: Optional[str] = None
@@ -102,25 +130,20 @@ class BaseBankingProcessor(BaseProcessor):
         name: str,
         api_key: str,
         client_id: Optional[str] = None,
-        client_secret: Optional[str] = None,
-        environment: str = "production",
-        supported_countries: List[str] = None,
-        **kwargs
-    ):
-        """
-        Initialize Banking Direct processor.
-        
-        Args:
-            name: Processor name
-            api_key: API key for banking service
-            client_id: OAuth client ID (if applicable)
-            client_secret: OAuth client secret (if applicable)
-            environment: sandbox or production
-            supported_countries: List of supported country codes
-        """
-        super().__init__(name, api_key, environment, **kwargs)
-        self.client_id = client_id
-        self.client_secret = client_secret
+        try:
+            logger.info(f"Executing connect_bank_account")
+            
+            # Implementation for connect_bank_account
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"connect_bank_account completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"connect_bank_account failed: {e}")
+            raise
         self.supported_countries = supported_countries or ["US", "CA", "GB", "FR", "DE", "ES", "IT", "NL"]
         
         # Banking-specific configuration
@@ -132,49 +155,48 @@ class BaseBankingProcessor(BaseProcessor):
     async def connect_bank_account(
         self,
         user_id: str,
-        institution_id: Optional[str] = None,
-        public_token: Optional[str] = None,
-        **kwargs
-    ) -> BankConnectionResult:
-        """
-        Connect a bank account for the user.
-        
-        Args:
-            user_id: User identifier
-            institution_id: Bank/institution identifier
-            public_token: Public token from Link (Plaid) or OAuth flow
-            **kwargs: Additional provider-specific parameters
+        try:
+                    # Request validation
+                    if not user_id:
+                        raise ValueError("Invalid request")
             
-        Returns:
-            BankConnectionResult with connection details
-        """
-        pass
-    
+                    # Process request
+                    result = await self._handle_get_bank_accounts_request(user_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+        try:
+            logger.info(f"Executing verify_bank_account")
+            
+            # Implementation for verify_bank_account
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"verify_bank_account completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"verify_bank_account failed: {e}")
+            raise
     @abstractmethod
     async def get_bank_accounts(self, user_id: str, connection_id: Optional[str] = None) -> List[BankAccount]:
-        """
-        Get connected bank accounts for user.
-        
-        Args:
-            user_id: User identifier
-            connection_id: Specific connection ID (optional)
+        try:
+            logger.info(f"Executing setup_direct_debit")
             
-        Returns:
-            List of connected bank accounts
-        """
-        pass
-    
-    @abstractmethod
-    async def verify_bank_account(self, user_id: str, account_id: str, verification_amounts: Optional[List[Decimal]] = None) -> bool:
-        """
-        Verify bank account ownership.
-        
-        Args:
-            user_id: User identifier
-            account_id: Bank account identifier
-            verification_amounts: Micro-deposit amounts for verification
+            # Implementation for setup_direct_debit
+            # TODO: Add specific business logic here
             
-        Returns:
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"setup_direct_debit completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"setup_direct_debit failed: {e}")
+            raise
             True if verification successful
         """
         pass
@@ -187,23 +209,20 @@ class BaseBankingProcessor(BaseProcessor):
         amount: Decimal,
         currency: str = "USD",
         frequency: str = "monthly",
-        start_date: Optional[datetime] = None,
-        **kwargs
-    ) -> DirectDebitResult:
-        """
-        Setup recurring direct debit from bank account.
-        
-        Args:
-            user_id: User identifier
-            account_id: Bank account identifier
-            amount: Debit amount
-            currency: Currency code
-            frequency: Debit frequency (monthly, weekly, etc.)
-            start_date: First debit date
-            **kwargs: Additional parameters
+        try:
+            logger.info(f"Executing execute_direct_debit")
             
-        Returns:
-            DirectDebitResult with setup details
+            # Implementation for execute_direct_debit
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"execute_direct_debit completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"execute_direct_debit failed: {e}")
+            raise
         """
         pass
     

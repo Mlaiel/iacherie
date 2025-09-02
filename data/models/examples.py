@@ -63,58 +63,20 @@ Example: Set up database connection and session"""
 
 
 def example_create_user():
-    """
-Example: Create a new user with validation"""
-    
-    # User data
-    user_data = {
-        'id': str(uuid.uuid4()),
-        'username': 'tech_creator_2025',
-        'email': 'creator@techcontent.com',
-        'password_hash': 'hashed_password_here',
-        'first_name': 'Alex',
-        'last_name': 'Johnson',
-        'display_name': 'Tech Creator',
-        'bio': 'Professional technology content creator and educator',
-        'user_type': UserType.CREATOR.value,
-        'subscription_tier': SubscriptionTier.PREMIUM.value,
-        'status': UserStatus.ACTIVE.value,
-        'is_verified': True,
-        'phone_number': '+1234567890',
-        'country': 'US',
-        'timezone': 'America/New_York',
-        'language': 'en',
-        'date_of_birth': date(1990, 5, 15),
-        'profile_metadata': {
-            'social_links': {
-                'youtube': 'https://youtube.com/@techcreator',
-                'instagram': '@techcreator',
-                'tiktok': '@techcreator',
-                'linkedin': 'linkedin.com/in/alexjohnson'
-            },
-            'content_categories': ['technology', 'education', 'programming'],
-            'preferred_platforms': ['youtube', 'instagram', 'linkedin'],
-            'monetization_enabled': True,
-            'content_protection_level': 'high'
-        },
-        'subscription_start_date': date.today(),
-        'email_verified_at': datetime.utcnow(),
-        'last_login_at': datetime.utcnow()
-    }
-    
-    # Validate user data
-    validation_result = validate_user(user_data)
-    if not validation_result.is_valid:
-        print("Validation errors:", validation_result.get_error_messages())
-        return None
-    
-    # Create user instance
-    user = UserModel(**user_data)
-    
-    print(f"Created user: {user.display_name} ({user.username})")
-    return user
-
-
+        try:
+            logger.info(f"Executing example_create_user")
+            
+            # Implementation for example_create_user
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"example_create_user completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"example_create_user failed: {e}")
+            raise
 def example_create_content(user_id: str):
     """Example: Create video content with comprehensive metadata"""
     
@@ -665,6 +627,47 @@ def run_all_examples():
     session.add(analytics)
     session.flush()
     
+    print("\n7. Creating protection alert...")
+    protection = example_create_protection_alert(user.id, content.id, fingerprint.id)
+    session.add(protection)
+    session.flush()
+    
+    print("\n8. Creating licensing contract...")
+    licensing = example_create_licensing_contract(user.id, content.id)
+    session.add(licensing)
+    session.flush()
+    
+    # Commit all changes
+    session.commit()
+    
+    # Run complex queries
+    example_complex_queries(session)
+    
+    # Model manager examples
+    example_model_manager_usage()
+    
+    # Cleanup
+    session.close()
+    
+    print("\n" + "=" * 50)
+    print("All examples completed successfully!")
+
+
+if __name__ == "__main__":
+        try:
+            logger.info(f"Executing example_model_manager_usage")
+            
+            # Implementation for example_model_manager_usage
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"example_model_manager_usage completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"example_model_manager_usage failed: {e}")
+            raise
     print("\n7. Creating protection alert...")
     protection = example_create_protection_alert(user.id, content.id, fingerprint.id)
     session.add(protection)

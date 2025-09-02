@@ -377,11 +377,17 @@ Get default platform configurations"""
             self.performance.max_concurrent_requests = int(max_concurrent)
     
     def _update_config_from_dict(self, config_data: Dict[str, Any]):
-        """Update configuration from dictionary"""
-        # This method would update the config objects from parsed file data
-        # Implementation would depend on the specific file structure
-        pass
-    
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _update_config_from_dict completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _update_config_from_dict failed: {e}")
+                    raise
     def get_platform_config(self, platform: PlatformType) -> PlatformConfig:
         """
 Get configuration for specific platform"""

@@ -234,8 +234,20 @@ class CreatorCollaboration(Base):
     )
     
     def __repr__(self):
-        return f"<CreatorCollaboration(id={self.id}, title={self.title}, status={self.status.value})>"
-    
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     def to_dict(self) -> Dict[str, Any]:
         """Convert model to dictionary for API responses"""
         return {
@@ -347,6 +359,31 @@ class CollaborationTeamMember(Base):
     collaboration = relationship("CreatorCollaboration", back_populates="team_members")
     
     def __repr__(self):
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
+    earnings_to_date = Column(Numeric(18, 8), default=Decimal('0.0'))
+    
+    # Status flags
+    is_active = Column(Boolean, default=True)
+    is_lead = Column(Boolean, default=False)
+    can_invite_others = Column(Boolean, default=False)
+    
+    # Relationships
+    collaboration = relationship("CreatorCollaboration", back_populates="team_members")
+    
+    def __repr__(self):
         return f"<CollaborationTeamMember(id={self.id}, role={self.team_role.value}, share={self.revenue_share_percentage}%)>"
 
 
@@ -386,6 +423,76 @@ class CollaborationApplication(Base):
     experience_relevance_score = Column(Float, nullable=True)
     
     # Timestamps
+    applied_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False)
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
+            raise
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    collaboration_id = Column(UUID(as_uuid=True), ForeignKey('creator_collaborations.id'), nullable=False, index=True)
+    applicant_user_id = Column(UUID(as_uuid=True), ForeignKey('users.id'), nullable=False, index=True)
+    
+    # Application details
+    applied_role = Column(SQLEnum(TeamRole), nullable=False)
+    motivation_statement = Column(Text, nullable=False)
+    relevant_experience = Column(Text, nullable=True)
+    portfolio_links = Column(ARRAY(String), nullable=True)
+    
+    # Qualifications
+    skills_offered = Column(JSON, nullable=True)
+    skill_levels = Column(JSON, nullable=True)
+    availability_hours_per_week = Column(Integer, nullable=True)
+    preferred_revenue_share = Column(Float, nullable=True)
+    
+    # Application status
+    application_status = Column(String(50), default="pending")  # pending, reviewing, accepted, rejected
+    reviewed_by_user_id = Column(UUID(as_uuid=True), nullable=True)
+    review_notes = Column(Text, nullable=True)
+    
+    # AI scoring
+    ai_compatibility_score = Column(Float, nullable=True)
+    skill_match_score = Column(Float, nullable=True)
+    experience_relevance_score = Column(Float, nullable=True)
+    
+    # Timestamps
+    applied_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False)
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     applied_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False)
     reviewed_at = Column(DateTime(timezone=True), nullable=True)
     

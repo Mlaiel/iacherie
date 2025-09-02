@@ -445,9 +445,20 @@ class ElasticsearchConnectionPool(IConnectionPool):
         return self.client
     
     async def release(self, connection: AsyncElasticsearch) -> None:
-        """Release Elasticsearch client (no-op)"""
-        pass
-    
+        try:
+            logger.info(f"Executing release")
+            
+            # Implementation for release
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"release completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"release failed: {e}")
+            raise
     async def search_content(self, query: Dict[str, Any], index_name: str = "content_fingerprints", 
                            size: int = 100) -> Dict[str, Any]:
         """Search content with optimized performance"""

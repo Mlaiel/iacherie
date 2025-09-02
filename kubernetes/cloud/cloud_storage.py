@@ -942,11 +942,38 @@ Apply lifecycle policies to storage"""
             pass
     
     async def _setup_storage_monitoring(self, config: StorageConfiguration) -> None:
-        """
-Setup storage monitoring"""
-        # Implementation would setup monitoring with cloud provider
-        pass
-    
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_setup_storage_monitoring",
+                        "value": config if config else 0,
+        try:
+            logger.info(f"Executing _load_storage_configurations")
+            
+            # Implementation for _load_storage_configurations
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_load_storage_configurations completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_load_storage_configurations failed: {e}")
+            raise
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _setup_storage_monitoring collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _setup_storage_monitoring failed: {e}")
+                    return None
     async def _load_storage_configurations(self) -> None:
         """
 Load existing storage configurations"""
@@ -968,10 +995,28 @@ Storage monitoring loop"""
                 await asyncio.sleep(300)
     
     async def _lifecycle_management_loop(self) -> None:
-        """Lifecycle management loop"""
-        while True:
-            try:
-                # Apply lifecycle policies
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_collect_storage_metrics",
+                        "value": storage_id if storage_id else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _collect_storage_metrics collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _collect_storage_metrics failed: {e}")
+                    return None
                 for storage_id, config in self.storage_configs.items():
                     await self._process_lifecycle_policies(storage_id, config)
                 

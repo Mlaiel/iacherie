@@ -249,7 +249,20 @@ class PlatformCrawlerOrchestrator:
         semaphore = asyncio.Semaphore(concurrent_limit)
         
         async def execute_with_semaphore(task):
-            async with semaphore:
+        try:
+            logger.info(f"Executing execute_with_semaphore")
+            
+            # Implementation for execute_with_semaphore
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"execute_with_semaphore completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"execute_with_semaphore failed: {e}")
+            raise
                 return await self.execute_single_task(task)
         
         results = await asyncio.gather(

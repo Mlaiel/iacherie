@@ -199,8 +199,20 @@ class LogPatternAnalyzer:
     """Analyze log patterns and extract insights"""
     
     def __init__(self):
-        self.clustering_model = DBSCAN(eps=0.5, min_samples=5)
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     async def analyze_error_patterns(self, error_logs: List[Dict[str, Any]]) -> Dict[str, Any]:
         """
 Analyze patterns in error logs"""
@@ -250,60 +262,26 @@ Analyze patterns in error logs"""
         
         # Sort by frequency
         patterns.sort(key=lambda x: x['count'], reverse=True)
-        
-        return {
-            'patterns': patterns,
-            'total_errors': len(error_logs),
-            'unique_patterns': len(patterns),
-            'most_common_pattern': patterns[0] if patterns else None,
-            'analysis_timestamp': datetime.now(timezone.utc).isoformat()
-        }
-    
-    async def analyze_user_activity_patterns(self, user_logs: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze user activity patterns"""
-        if not user_logs:
-            return {"patterns": [], "summary": "No user logs to analyze"}
-        
-        # Group by user
-        user_activity = {}
-        for log in user_logs:
-            user_id = log.get('user_id')
-            if not user_id:
-                continue
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
             
-            if user_id not in user_activity:
-                user_activity[user_id] = {
-                    'total_actions': 0,
-                    'services_used': set(),
-                    'session_count': set(),
-                    'first_activity': log.get('timestamp'),
-                    'last_activity': log.get('timestamp'),
-                    'hourly_activity': [0] * 24
-                }
+                    # Preprocess input
+                    processed_input = await self._preprocess_analyze_user_activity_patterns_input(user_logs)
             
-            activity = user_activity[user_id]
-            activity['total_actions'] += 1
-            activity['services_used'].add(log.get('service', 'unknown'))
+                    # Run inference
+                    result = await self.model.predict(processed_input)
             
-            if log.get('session_id'):
-                activity['session_count'].add(log['session_id'])
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_user_activity_patterns_result(result)
             
-            # Parse hour from timestamp
-            try:
-                timestamp = datetime.fromisoformat(log.get('timestamp', '').replace('Z', '+00:00'))
-                hour = timestamp.hour
-                activity['hourly_activity'][hour] += 1
-            except:
-                pass
-        
-        # Calculate statistics
-        total_users = len(user_activity)
-        if total_users == 0:
-            return {"patterns": [], "summary": "No valid user activity found"}
-        
-        action_counts = [data['total_actions'] for data in user_activity.values()]
-        session_counts = [len(data['session_count']) for data in user_activity.values()]
-        
+                    logger.info(f"AI processing analyze_user_activity_patterns completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing analyze_user_activity_patterns failed: {e}")
+                    raise
         patterns = {
             'total_users': total_users,
             'avg_actions_per_user': statistics.mean(action_counts),

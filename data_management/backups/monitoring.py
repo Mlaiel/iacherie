@@ -745,12 +745,52 @@ class BackupMonitor:
         """Configure les callbacks par défaut"""
         # Callback pour évaluation alertes
         def evaluate_alerts(metrics: List[Metric]):
-            self.alert_manager.evaluate_metrics(metrics)
-        
-        self.add_metric_callback(evaluate_alerts)
-        
-        # Callback notification simple (log)
-        def log_alert(alert: Alert):
+        try:
+            logger.info(f"Executing evaluate_alerts")
+            
+            # Implementation for evaluate_alerts
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"evaluate_alerts completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing log_alert")
+            
+            # Implementation for log_alert
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"log_alert completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "stop_monitoring",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric stop_monitoring collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection stop_monitoring failed: {e}")
+                    return None
             logger.warning(f"ALERT [{alert.level.value.upper()}]: {alert.message}")
         
         self.alert_manager.add_notification_callback(log_alert)

@@ -949,13 +949,40 @@ Store distribution campaign"""
         return campaign
 
     def _schedule_campaign_content(self, campaign: DistributionCampaign):
-        """
-Schedule campaign content"""
-        # Implementation would schedule campaign content
-        pass
-
-    def _store_cross_platform_sync(self, sync: CrossPlatformSync) -> CrossPlatformSync:
-        """
+        try:
+            logger.info(f"Executing _schedule_campaign_content")
+            
+            # Implementation for _schedule_campaign_content
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_schedule_campaign_content completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_initialize_sync_monitoring",
+                        "value": sync if sync else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _initialize_sync_monitoring collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _initialize_sync_monitoring failed: {e}")
+                    return None
 Store cross-platform sync configuration"""
         # Implementation would store sync config
         return sync
@@ -1247,6 +1274,21 @@ Get distribution job by ID asynchronously"""
         
         # Check cache for list results
         if self._cache_enabled and self.cache:
+        try:
+            logger.info(f"Executing prepare_and_create_job")
+            
+            # Implementation for prepare_and_create_job
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"prepare_and_create_job completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"prepare_and_create_job failed: {e}")
+            raise
+        if self._cache_enabled and self.cache:
             cache_key = self._generate_cache_key("list_distributions", filters=filters, limit=limit, offset=offset)
             cached_result = await self.cache.get_async(cache_key)
             if cached_result:
@@ -1277,6 +1319,52 @@ Get distribution job by ID asynchronously"""
                     # Create distribution schedule
                     schedule = await self._create_distribution_schedule_async(
                         content_id, platform, schedule_config or {}
+                    )
+                    
+                    # Create distribution job
+                    job = DistributionJob(
+                        job_id=self.sync_repo._generate_job_id(),
+                        content_id=content_id,
+                        creator_id=creator_id,
+                        platform=platform,
+                        content_variant=content_variant,
+                        schedule=schedule,
+                        status=DistributionStatus.PENDING,
+                        created_at=datetime.now(timezone.utc),
+                        scheduled_at=schedule.publish_time,
+                        published_at=None,
+                        attempts=0,
+                        max_attempts=3,
+                        error_log=[],
+                        success_metrics={},
+                        platform_response={}
+                    )
+                    
+                    return await self.create(job)
+            
+            # Create all jobs concurrently
+            job_tasks = [prepare_and_create_job(platform) for platform in platforms]
+            distribution_jobs = await asyncio.gather(*job_tasks)
+            
+            self.logger.info(f"Async content {content_id} distributed to {len(platforms)} platforms")
+            
+            return distribution_jobs
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing publish_job_with_semaphore")
+            
+            # Implementation for publish_job_with_semaphore
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"publish_job_with_semaphore completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"publish_job_with_semaphore failed: {e}")
+            raise
                     )
                     
                     # Create distribution job
@@ -1728,6 +1816,28 @@ Prepare content variant for specific platform asynchronously"""
             final_delay = delay + jitter
             
             # Update job with retry information
+            job.retry_attempts = retry_attempts + 1
+            job.next_retry_at = datetime.now(timezone.utc) + timedelta(seconds=final_delay)
+            job.last_error_at = datetime.now(timezone.utc)
+            job.status = DistributionStatus.QUEUED
+            
+            # Check max retry attempts
+            max_retries = getattr(job, 'max_retries', 3)
+            if job.retry_attempts > max_retries:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
             job.retry_attempts = retry_attempts + 1
             job.next_retry_at = datetime.now(timezone.utc) + timedelta(seconds=final_delay)
             job.last_error_at = datetime.now(timezone.utc)

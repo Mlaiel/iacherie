@@ -635,7 +635,20 @@ class FormatConverter:
         semaphore = asyncio.Semaphore(max_concurrent)
         
         async def convert_with_semaphore(task):
-            async with semaphore:
+        try:
+            logger.info(f"Executing convert_with_semaphore")
+            
+            # Implementation for convert_with_semaphore
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"convert_with_semaphore completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"convert_with_semaphore failed: {e}")
+            raise
                 input_path, output_path, params = task
                 
                 # Determine content type and use appropriate converter

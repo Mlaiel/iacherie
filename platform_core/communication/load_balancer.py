@@ -109,8 +109,33 @@ Définition d'un serveur backend"""
     
     @property
     def url(self) -> str:
-        return f"http://{self.host}:{self.port}"
-        
+        try:
+            logger.info(f"Executing url")
+            
+            # Implementation for url
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing is_available")
+            
+            # Implementation for is_available
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"is_available completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"is_available failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"url completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"url failed: {e}")
+            raise
     @property
     def is_available(self) -> bool:
         return self.status in [ServerStatus.HEALTHY, ServerStatus.DEGRADED]
@@ -119,23 +144,20 @@ Définition d'un serveur backend"""
     def load_score(self) -> float:
         """Calcule un score de charge (plus bas = moins chargé)"""
         # Facteurs: connexions actives, temps de réponse, taux d'erreur
-        connection_factor = self.metrics.active_connections / max(self.max_connections, 1)
-        response_time_factor = min(self.metrics.average_response_time / 1000, 1.0)  # Normalisé à 1s
-        error_factor = 1 - self.metrics.success_rate
-        
-        return (connection_factor + response_time_factor + error_factor) / 3
-
-class HealthChecker:
-    """
-Vérificateur de santé des serveurs"""
-    
-    def __init__(self, session: Optional[aiohttp.ClientSession] = None):
-        self.session = session
-        self._own_session = session is None
-        self._health_tasks: Dict[str, asyncio.Task] = {}
-        
-    async def start(self):
-        """
+        try:
+            logger.info(f"Executing stop")
+            
+            # Implementation for stop
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"stop completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"stop failed: {e}")
+            raise
 Démarre le health checker"""
         if self._own_session:
             self.session = aiohttp.ClientSession(

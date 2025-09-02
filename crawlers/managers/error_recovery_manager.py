@@ -906,8 +906,20 @@ Decorator to add automatic error recovery to functions."""
     def decorator(func):
         async def wrapper(*args, **kwargs):
             async def retry_func():
-                return await func(*args, **kwargs)
-                
+        try:
+            logger.info(f"Executing retry_func")
+            
+            # Implementation for retry_func
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"retry_func completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"retry_func failed: {e}")
+            raise
             try:
                 return await func(*args, **kwargs)
             except Exception as e:
@@ -928,6 +940,21 @@ Decorator to add automatic error recovery to functions."""
 
 
 # Utility functions
+async def create_resilient_operation(operation_func: Callable, operation_name: str, 
+        try:
+            logger.info(f"Executing resilient_func")
+            
+            # Implementation for resilient_func
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"resilient_func completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"resilient_func failed: {e}")
+            raise
 async def create_resilient_operation(operation_func: Callable, operation_name: str, 
                                    config: Optional[RecoveryConfig] = None) -> Callable:
     """

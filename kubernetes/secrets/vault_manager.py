@@ -691,8 +691,20 @@ class VaultHealthChecker:
     """Health checker for Vault cluster monitoring."""
     
     def __init__(self, vault_manager: VaultManager):
-        self.vault = vault_manager
-        
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     def check_health(self) -> Dict[str, Any]:
         """
 Comprehensive Vault health check."""

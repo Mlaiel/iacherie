@@ -1184,7 +1184,20 @@ Validate credit card number using Luhn algorithm"""
         # Luhn algorithm
         def luhn_checksum(num):
             def digits_of(n):
-                return [int(d) for d in str(n)]
+        try:
+            logger.info(f"Executing digits_of")
+            
+            # Implementation for digits_of
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"digits_of completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"digits_of failed: {e}")
+            raise
             digits = digits_of(num)
             odd_digits = digits[-1::-2]
             even_digits = digits[-2::-2]

@@ -947,8 +947,20 @@ Monitor specific edX course."""
 # Example usage
 if __name__ == "__main__":
     async def test_educational_crawler():
-        async with EducationalCrawler() as crawler:
-            # Search for courses
+        try:
+            logger.info(f"Executing test_educational_crawler")
+            
+            # Implementation for test_educational_crawler
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"test_educational_crawler completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"test_educational_crawler failed: {e}")
+            raise
             courses = await crawler.search_courses("machine learning", "coursera", 10)
             print(f"Found {len(courses)} courses")
             

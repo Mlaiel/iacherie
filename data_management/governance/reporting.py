@@ -210,8 +210,20 @@ Generate compliance report"""
             raise ReportingError(f"Compliance report generation failed: {e}")
     
     def get_supported_formats(self) -> List[ReportFormat]:
-        return [ReportFormat.JSON, ReportFormat.CSV, ReportFormat.HTML]
-    
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_supported_formats_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_supported_formats failed: {e}")
+                    return {"status": "error", "message": str(e)}
     async def _collect_compliance_data(
         self,
         compliance_manager: ComplianceManager,
@@ -461,6 +473,22 @@ Generate policy violation report"""
                     request, violations
                 )
             else:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_supported_formats_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_supported_formats failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                )
+            else:
                 raise ReportingError(f"Unsupported format: {request.format}")
             
             return report_data, metadata
@@ -604,6 +632,20 @@ class ExecutiveSummaryGenerator(BaseReportGenerator):
     async def generate(
         self,
         request: ReportRequest,
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_supported_formats_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_supported_formats failed: {e}")
+                    return {"status": "error", "message": str(e)}
         data_sources: Dict[str, Any]
     ) -> Tuple[bytes, ReportMetadata]:
         """

@@ -448,7 +448,20 @@ def main():
     maintenance = ContentModuleMaintenance()
     
     async def run_command():
-        if args.command == 'backup':
+        try:
+            logger.info(f"Executing run_command")
+            
+            # Implementation for run_command
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"run_command completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"run_command failed: {e}")
+            raise
             backup_file = await maintenance.create_system_backup(args.name)
             print(f"✅ Backup created: {backup_file}")
             

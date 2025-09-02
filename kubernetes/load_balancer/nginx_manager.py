@@ -140,13 +140,39 @@ class SecurityConfig:
     referrer_policy: str = "strict-origin-when-cross-origin"
     
     def __post_init__(self):
-        if self.ssl_protocols is None:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             self.ssl_protocols = ["TLSv1.2", "TLSv1.3"]
 
 
 @dataclass
 class CacheConfig:
-    """Cache configuration for Nginx"""
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     enabled: bool = True
     cache_path: str = "/var/cache/nginx/influencer_agent"
     keys_zone_name: str = "influencer_cache"
@@ -765,58 +791,20 @@ Generate upstream configuration files"""
         
         # Static file serving for media server
         if config.get('static_files', False):
-            media_root = config.get('media_root', '/var/media')
-            lines.extend([
-                "    location /media/ {",
-                f"        alias {media_root}/;",
-                "        expires 1y;",
-                "        add_header Cache-Control 'public, immutable';",
-                "    }"
-            ])
-        
-        lines.append("}")
-        
-        # HTTP to HTTPS redirect
-        if config.get('ssl_enabled', False):
-            lines.extend([
-                "",
-                "server {",
-                "    listen 80;",
-                "    listen [::]:80;",
-                f"    server_name {config['server_name']};",
-                "    return 301 https://$server_name$request_uri;",
-                "}"
-            ])
-        
-        return "\n".join(lines)
-    
-    def _build_location_block(self, location: NginxLocationConfig) -> List[str]:
-        """Build location block configuration"""
-        lines = [f"    location {location.path} {{"]
-        
-        # Rate limiting
-        if location.rate_limit:
-            rate_config = self.rate_limit_configs.get(location.rate_limit)
-            if rate_config:
-                lines.append(f"        limit_req zone={rate_config.zone_name} burst={rate_config.burst}")
-                if rate_config.nodelay:
-                    lines[-1] += " nodelay"
-                lines[-1] += ";"
-        
-        # Proxy settings
-        lines.extend([
-            f"        proxy_pass http://{location.upstream_name};",
-            "        proxy_set_header Host $host;",
-            "        proxy_set_header X-Real-IP $remote_addr;",
-            "        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;",
-            "        proxy_set_header X-Forwarded-Proto $scheme;",
-            f"        proxy_read_timeout {location.proxy_read_timeout}s;",
-            f"        proxy_connect_timeout {location.proxy_connect_timeout}s;",
-            f"        proxy_send_timeout {location.proxy_send_timeout}s;",
-            f"        client_max_body_size {location.client_max_body_size};"
-        ])
-        
-        # WebSocket support
+        try:
+            logger.info(f"Executing _build_location_block")
+            
+            # Implementation for _build_location_block
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_build_location_block completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_build_location_block failed: {e}")
+            raise
         if location.websocket_support:
             lines.extend([
                 "        proxy_http_version 1.1;",

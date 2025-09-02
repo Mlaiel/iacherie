@@ -119,14 +119,20 @@ class EmailNotificationSender(NotificationSender):
     """Email notification sender"""
     
     def __init__(self, config: Dict[str, Any]):
-        self.smtp_host = config.get('smtp_host', 'localhost')
-        self.smtp_port = config.get('smtp_port', 587)
-        self.username = config.get('username')
-        self.password = config.get('password')
-        self.from_email = config.get('from_email')
-        self.to_emails = config.get('to_emails', [])
-        self.use_tls = config.get('use_tls', True)
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     async def send_notification(self, 
                                message: str,
                                subject: str,
@@ -357,6 +363,21 @@ class WebhookNotificationSender(NotificationSender):
             return False
 
 
+class TeamsNotificationSender(NotificationSender):
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
 class TeamsNotificationSender(NotificationSender):
     """Microsoft Teams notification sender"""
     
@@ -740,28 +761,20 @@ Process batch of logs for rule matching"""
         
         # Check module matching
         if "module:" in pattern_lower:
-            for part in pattern_lower.split():
-                if part.startswith("module:"):
-                    module = part.split(":", 1)[1]
-                    if log_entry.module and log_entry.module.lower() == module:
-                        return True
-        
-        # Check message content
-        if "message:" in pattern_lower:
-            for part in pattern_lower.split():
-                if part.startswith("message:"):
-                    message_pattern = part.split(":", 1)[1]
-                    if message_pattern.startswith("*") and message_pattern.endswith("*"):
-                        # Contains pattern
-                        search_term = message_pattern[1:-1]
-                        if search_term in log_entry.message.lower():
-                            return True
-        
-        return False
-    
-    async def _evaluate_rule_condition(self, 
-                                     rule: MonitoringRule, 
-                                     matching_logs: List[LogEntry]) -> bool:
+        try:
+            logger.info(f"Executing _evaluate_rule_condition")
+            
+            # Implementation for _evaluate_rule_condition
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_evaluate_rule_condition completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_evaluate_rule_condition failed: {e}")
+            raise
         """Evaluate rule condition"""
         # Parse condition (simplified)
         condition = rule.condition.lower()

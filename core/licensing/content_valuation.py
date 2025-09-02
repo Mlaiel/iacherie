@@ -959,10 +959,35 @@ Initialize content valuation engine"""
     # For brevity, showing the pattern and key structures
     
     async def _save_content_valuation(self, valuation: ContentValuation):
-        """Save content valuation to database"""
-        # Implementation would save to database
-        pass
-    
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _save_content_valuation completed")
+                        return True
+                
+                except Exception as e:
+        try:
+                    async with self.db_session() as session:
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _save_market_analysis completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _save_market_analysis failed: {e}")
+                    raise
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _save_pricing_recommendation failed: {e}")
+                    raise
+                    logger.error(f"Database operation _save_content_valuation failed: {e}")
+                    raise
     async def _save_pricing_recommendation(self, recommendation: PricingRecommendation):
         """
 Save pricing recommendation to database"""

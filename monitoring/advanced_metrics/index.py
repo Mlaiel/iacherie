@@ -374,11 +374,20 @@ Initialize data processors for metrics processing"""
         pass
     
     async def _setup_background_tasks(self) -> None:
-        """
-Setup background tasks for metrics processing"""
-        # Setup automated cleanup, aggregation, and alerting tasks
-        pass
-    
+        try:
+            logger.info(f"Executing _setup_background_tasks")
+            
+            # Implementation for _setup_background_tasks
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_setup_background_tasks completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_setup_background_tasks failed: {e}")
+            raise
     def _setup_prometheus_metrics(self) -> None:
         """
 Setup Prometheus metrics collectors"""
@@ -421,11 +430,44 @@ Setup Prometheus metrics collectors"""
         """Background loop for metrics aggregation"""
         while self.is_running:
             try:
-                await self._aggregate_metrics()
-                await asyncio.sleep(300)  # Aggregate every 5 minutes
-            except asyncio.CancelledError:
+        try:
+            logger.info(f"Executing _aggregate_metrics")
+            
+            # Implementation for _aggregate_metrics
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_aggregate_metrics completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_aggregate_metrics failed: {e}")
+            raise
                 break
             except Exception as e:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing aggregate_by_period")
+            
+            # Implementation for aggregate_by_period
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"aggregate_by_period completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"aggregate_by_period failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
                 self.logger.error(f"Error in aggregation loop: {e}")
                 await asyncio.sleep(60)
     

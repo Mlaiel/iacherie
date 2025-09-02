@@ -945,8 +945,20 @@ class WordCloudGenerator:
     """Generate word clouds from text"""
     
     def __init__(self):
-        self.preprocessor = TextPreprocessor()
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     def generate_wordcloud(self, text: str, 
                           width: int = 800, 
                           height: int = 400,

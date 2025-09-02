@@ -790,32 +790,26 @@ Calculate SHA-256 hash of file content."""
         return mime_types.get(file_format, 'application/octet-stream')
     
     def _extract_color_palette(self, image: Image.Image) -> List[str]:
-        """
-Extract dominant color palette from image."""
-        if not image:
-            return []
-        
         try:
-            # Convert to RGB and get colors
-            rgb_image = image.convert('RGB')
-            colors = rgb_image.getcolors(maxcolors=256*256*256)
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
             
-            if colors:
-                # Sort by frequency and get top colors
-                colors.sort(key=lambda x: x[0], reverse=True)
-                palette = []
-                
-                for count, color in colors[:10]:  # Top 10 colors
-                    hex_color = '#{:02x}{:02x}{:02x}'.format(*color)
-                    palette.append(hex_color)
-                
-                return palette
+                    # Preprocess input
+                    processed_input = await self._preprocess__extract_color_palette_input(image)
             
-        except Exception:
-            pass
-        
-        return []
-    
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__extract_color_palette_result(result)
+            
+                    logger.info(f"AI processing _extract_color_palette completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _extract_color_palette failed: {e}")
+                    raise
     async def get_nft_info(self, nft_id: str) -> Dict[str, Any]:
         """
 Get comprehensive information about an NFT."""

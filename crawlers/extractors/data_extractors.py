@@ -147,10 +147,25 @@ class JSONExtractor(BaseDataExtractor):
 Advanced JSON data extractor"""
     
     def __init__(self):
-        super().__init__("JSONExtractor", {'.json', '.jsonl', '.ndjson'})
-        
-    async def can_handle(self, request: ExtractionRequest) -> bool:
-        """Check if request contains JSON data"""
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing can_handle")
+            
+            # Implementation for can_handle
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"can_handle completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"can_handle failed: {e}")
+            raise
         if request.source_path:
             return Path(request.source_path).suffix.lower() in self.supported_formats
         
@@ -400,6 +415,35 @@ Extract JSON-specific metadata"""
         )
     
     def _extract_data_types(self, data: Any) -> Dict[str, str]:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_extract_types_input(path)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_extract_types_result(result)
+            
+                    logger.info(f"AI processing extract_types completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing extract_types failed: {e}")
+                    raise
+            record_count=len(data) if isinstance(data, list) else 1,
+            data_types=self._extract_data_types(data),
+            encoding='utf-8',
+            file_size=len(content.encode('utf-8')),
+            quality_score=await self._calculate_json_quality(data),
+            extracted_schema=await self.extract_schema(data)
+        )
+    
+    def _extract_data_types(self, data: Any) -> Dict[str, str]:
         """
 Extract data types from JSON structure"""
         types = {}
@@ -419,6 +463,21 @@ Extract data types from JSON structure"""
         extract_types(data)
         return types
     
+    async def _calculate_json_quality(self, data: Any) -> float:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     async def _calculate_json_quality(self, data: Any) -> float:
         """Calculate JSON data quality score"""
         score = 1.0
@@ -692,8 +751,20 @@ Detect column data type"""
         boolean_count = sum(1 for cell in non_empty 
                           if cell.lower() in boolean_values)
         if boolean_count / len(non_empty) > 0.8:
-            return 'boolean'
-        
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
         return 'string'
     
     def _is_date(self, value: str) -> bool:
@@ -963,7 +1034,20 @@ Extract RSS/Atom feed specific data"""
                 for item in items[:10]:  # Sample first 10 items
                     item_data = {
                         'title': self._get_element_text(item, 'title'),
-                        'description': self._get_element_text(item, 'description'),
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
                         'link': self._get_element_text(item, 'link'),
                         'pubDate': self._get_element_text(item, 'pubDate')
                     }

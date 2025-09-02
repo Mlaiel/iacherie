@@ -2036,11 +2036,44 @@ Setup Selenium WebDriver for web content"""
             return None
     
     def _parse_room_page(self) -> ClubhouseRoom:
-        """Parse room details from current page"""
-        # Implementation for parsing detailed room page
-        # This would extract all available room metadata
-        pass
-    
+        try:
+            logger.info(f"Executing _parse_room_page")
+            
+            # Implementation for _parse_room_page
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_parse_room_page completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+        try:
+            logger.info(f"Executing _parse_club_page")
+            
+            # Implementation for _parse_club_page
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_parse_club_page completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_parse_club_page failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_parse_user_profile completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_parse_user_profile failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"_parse_room_page failed: {e}")
+            raise
     def _parse_user_profile(self) -> ClubhouseUser:
         """
 Parse user profile from current page"""
@@ -2133,8 +2166,20 @@ Parse room element from search results"""
             ]
             
             for query in search_queries:
-                rooms = await self.search_rooms(query)
-                
+        try:
+            logger.info(f"Executing __str__")
+            
+            # Implementation for __str__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__str__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__str__ failed: {e}")
+            raise
                 for room in rooms:
                     if room.is_live:
                         protection_results['potential_violations'].append({

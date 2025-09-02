@@ -562,43 +562,26 @@ Perform basic content classification and metadata extraction"""
     async def _extract_technical_metadata(
         self,
         content: Any,
-        content_type: str
-    ) -> Dict[str, Any]:
-        """Extract technical metadata based on content type"""
-        metadata = {}
-        
         try:
-            if content_type == 'audio' and isinstance(content, bytes):
-                # Audio metadata extraction would go here
-                metadata['size'] = len(content)
-                metadata['format'] = 'audio'
-            elif content_type == 'image' and isinstance(content, bytes):
-                # Image metadata extraction would go here  
-                metadata['size'] = len(content)
-                metadata['format'] = 'image'
-            elif content_type == 'video' and isinstance(content, bytes):
-                # Video metadata extraction would go here
-                metadata['size'] = len(content)
-                metadata['format'] = 'video'
-            elif content_type == 'text' and isinstance(content, str):
-                metadata['size'] = len(content)
-                metadata['character_count'] = len(content)
-                metadata['word_count'] = len(content.split())
-                metadata['format'] = 'text'
-                
-                # Text readability metrics
-                try:
-                    metadata['flesch_score'] = flesch_reading_ease(content)
-                    metadata['flesch_kincaid_grade'] = flesch_kincaid_grade(content)
-                    metadata['readability_index'] = automated_readability_index(content)
-                except:
-                    pass
-                    
-        except Exception as e:
-            logger.warning(f"Technical metadata extraction failed: {e}")
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
             
-        return metadata
-    
+                    # Preprocess input
+                    processed_input = await self._preprocess__extract_technical_metadata_input(content)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__extract_technical_metadata_result(result)
+            
+                    logger.info(f"AI processing _extract_technical_metadata completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _extract_technical_metadata failed: {e}")
+                    raise
     async def _extract_audio_transcription(self, audio_content: bytes) -> Optional[str]:
         """Extract transcription from audio content"""
         # Implementation would use speech-to-text model

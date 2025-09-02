@@ -610,25 +610,20 @@ Get creator's current tier from database"""
         return PricingTier.PROFESSIONAL
         
     def _get_next_tier(self, current_tier: PricingTier) -> Optional[PricingTier]:
-        """
-Get the next tier up from current tier"""
-        tier_order = [
-            PricingTier.STARTER,
-            PricingTier.PROFESSIONAL,
-            PricingTier.PREMIUM,
-            PricingTier.ENTERPRISE,
-            PricingTier.CELEBRITY
-        ]
-        
         try:
-            current_index = tier_order.index(current_tier)
-            if current_index < len(tier_order) - 1:
-                return tier_order[current_index + 1]
-        except ValueError:
-            pass
+                    # Request validation
+                    if not current_tier:
+                        raise ValueError("Invalid request")
             
-        return None
-        
+                    # Process request
+                    result = await self._handle__get_next_tier_request(current_tier)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_next_tier failed: {e}")
+                    return {"status": "error", "message": str(e)}
     def _get_recommended_action(self, status: str, metric: UsageMetric) -> str:
         """
 Get recommended action based on usage status"""

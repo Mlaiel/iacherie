@@ -1413,8 +1413,20 @@ class TemplateLoader(BaseLoader):
 Custom Jinja2 template loader for notification templates"""
     
     def __init__(self, templates: Dict[str, str]):
-        self.templates = templates
-        
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     def get_source(self, environment, template):
         if template not in self.templates:
             raise TemplateError(f"Template not found: {template}")

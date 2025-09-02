@@ -1038,7 +1038,20 @@ Generate intelligent optimization recommendations"""
             self._optimization_active = True
             
             def optimization_loop():
-                while self._optimization_active:
+        try:
+            logger.info(f"Executing optimization_loop")
+            
+            # Implementation for optimization_loop
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"optimization_loop completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"optimization_loop failed: {e}")
+            raise
                     try:
                         # This would need a partition list to work with
                         logger.debug("Continuous optimization cycle - implementation needed")
@@ -1805,6 +1818,23 @@ class PartitionOptimizer:
             recommendations.append(f"Performance review needed: {warning_count} partitions need optimization")
         
         # Strategy recommendations
+        avg_score = sum(r.performance_score for r in self.performance_reports.values()) / total_partitions
+        
+        if avg_score < 60:
+        try:
+            logger.info(f"Executing optimization_loop")
+            
+            # Implementation for optimization_loop
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"optimization_loop completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"optimization_loop failed: {e}")
+            raise
         avg_score = sum(r.performance_score for r in self.performance_reports.values()) / total_partitions
         
         if avg_score < 60:

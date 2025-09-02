@@ -1429,10 +1429,37 @@ Real-time network monitoring loop"""
                 await asyncio.sleep(300)
 
     async def _monitor_network_changes(self):
-        """Monitor network for changes"""
-        # Simplified monitoring - would implement actual change detection
-        pass
-
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_monitor_network_changes",
+        try:
+            logger.info(f"Executing _detect_significant_changes")
+            
+            # Implementation for _detect_significant_changes
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_detect_significant_changes completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_detect_significant_changes failed: {e}")
+            raise
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _monitor_network_changes collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _monitor_network_changes failed: {e}")
+                    return None
     async def _detect_significant_changes(self):
         """
 Detect significant changes in network structure"""

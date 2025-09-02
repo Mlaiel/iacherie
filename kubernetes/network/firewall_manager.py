@@ -85,8 +85,20 @@ class IPRange:
     threat_level: ThreatLevel = ThreatLevel.LOW
     
     def __post_init__(self):
-        # Validate IP network
         try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             self.network_obj = ipaddress.ip_network(self.network, strict=False)
         except ValueError as e:
             raise ValueError(f"Invalid IP network: {self.network} - {e}")

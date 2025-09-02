@@ -645,32 +645,26 @@ Estimate total execution duration."""
     async def _analyze_execution_risks(
         self,
         graph: DependencyGraph,
-        nx_graph: nx.DiGraph
-    ) -> List[str]:
-        """
-Analyze potential execution risks."""
-        risks = []
-        
-        # Check for nodes with many dependencies
-        for node_id, node in graph.nodes.items():
-            if len(node.dependencies) > 5:
-                risks.append(f"Node {node_id} has many dependencies ({len(node.dependencies)})")
-        
-        # Check for bottleneck nodes
-        for node_id in nx_graph.nodes():
-            if nx_graph.out_degree(node_id) > 3:
-                risks.append(f"Node {node_id} is a potential bottleneck")
-        
-        # Check for long dependency chains
         try:
-            diameter = nx.diameter(nx_graph.to_undirected())
-            if diameter > 10:
-                risks.append(f"Long dependency chain detected (diameter: {diameter})")
-        except Exception:
-            pass
-        
-        return risks
-    
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__analyze_execution_risks_input(graph)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__analyze_execution_risks_result(result)
+            
+                    logger.info(f"AI processing _analyze_execution_risks completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _analyze_execution_risks failed: {e}")
+                    raise
     async def _calculate_resource_requirements(self, graph: DependencyGraph) -> Dict[str, Any]:
         """Calculate total resource requirements."""
         requirements = {

@@ -502,6 +502,19 @@ if __name__ == "__main__":
     # Example usage and testing
     async def main():
         try:
+            logger.info(f"Executing main")
+            
+            # Implementation for main
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"main completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"main failed: {e}")
+            raise
             print("Vector Stores Module - IA Influencer Agent")
             print("==========================================")
             

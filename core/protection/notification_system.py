@@ -753,10 +753,31 @@ Get user webhook URL"""
         return None
     
     async def _store_notification_log(self, content: NotificationContent, deliveries: Dict[str, NotificationDelivery]):
-        """
-Store notification log in database"""
-        pass
-    
+        try:
+            logger.info(f"Executing _store_notification_log")
+            
+            # Implementation for _store_notification_log
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _store_in_app_notification")
+            
+            # Implementation for _store_in_app_notification
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_in_app_notification completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_in_app_notification failed: {e}")
+            raise
+            logger.info(f"_store_notification_log completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_notification_log failed: {e}")
+            raise
     async def _store_in_app_notification(self, content: NotificationContent):
         """
 Store in-app notification in database"""

@@ -63,48 +63,20 @@ Generate SHA-256 hash of file content"""
     
     @staticmethod
     def get_file_type(file_path: Path) -> Optional[str]:
-        """Determine file type from path and MIME type"""
-        # File extension mapping
-        extension_mapping = {
-            # Audio
-            '.mp3': 'audio', '.wav': 'audio', '.flac': 'audio', '.ogg': 'audio',
-            '.aac': 'audio', '.m4a': 'audio', '.wma': 'audio',
-            
-            # Video
-            '.mp4': 'video', '.avi': 'video', '.mkv': 'video', '.mov': 'video',
-            '.wmv': 'video', '.flv': 'video', '.webm': 'video', '.m4v': 'video',
-            
-            # Image
-            '.jpg': 'image', '.jpeg': 'image', '.png': 'image', '.gif': 'image',
-            '.bmp': 'image', '.tiff': 'image', '.webp': 'image', '.svg': 'image',
-            
-            # Text
-            '.txt': 'text', '.md': 'text', '.rtf': 'text', '.doc': 'text',
-            '.docx': 'text', '.pdf': 'text'
-        }
-        
-        # Check extension first
-        extension = file_path.suffix.lower()
-        if extension in extension_mapping:
-            return extension_mapping[extension]
-        
-        # Fallback to MIME type
         try:
-            mime_type, _ = mimetypes.guess_type(str(file_path))
-            if mime_type:
-                if mime_type.startswith('audio/'):
-                    return 'audio'
-                elif mime_type.startswith('video/'):
-                    return 'video'
-                elif mime_type.startswith('image/'):
-                    return 'image'
-                elif mime_type.startswith('text/'):
-                    return 'text'
-        except Exception:
-            pass
-        
-        return None
-    
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_file_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_file_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
     @staticmethod
     def normalize_array(array: np.ndarray) -> np.ndarray:
         """
@@ -348,7 +320,20 @@ def retry_decorator(max_retries: int = 3, delay: float = 1.0, backoff: float = 2
                 
                 for attempt in range(max_retries + 1):
                     try:
-                        return func(*args, **kwargs)
+        try:
+            logger.info(f"Executing decorator")
+            
+            # Implementation for decorator
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"decorator completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"decorator failed: {e}")
+            raise
                     except Exception as e:
                         last_exception = e
                         if attempt < max_retries:

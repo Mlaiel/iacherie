@@ -131,7 +131,28 @@ Initialize the data collection manager."""
             semaphore = asyncio.Semaphore(self.max_concurrent_collections)
             
             async def limited_collect(task):
-                async with semaphore:
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "limited_collect",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric limited_collect collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection limited_collect failed: {e}")
+                    return None
                     return await task
             
             # Execute collections

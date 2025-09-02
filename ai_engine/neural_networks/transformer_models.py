@@ -77,9 +77,20 @@ class PositionalEncoding(nn.Module):
         self.register_buffer('pe', pe)
     
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        return x + self.pe[:, :x.size(1)]
-
-
+        try:
+            logger.info(f"Executing forward")
+            
+            # Implementation for forward
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"forward completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"forward failed: {e}")
+            raise
 class RotaryPositionalEmbedding(nn.Module):
     """
 Rotary Position Embedding (RoPE)"""
@@ -165,7 +176,20 @@ class MultiHeadAttention(nn.Module):
 
 
 class FeedForward(nn.Module):
-    """
+        try:
+            logger.info(f"Executing forward")
+            
+            # Implementation for forward
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"forward completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"forward failed: {e}")
+            raise
 Position-wise feed-forward network"""
     
     def __init__(self, d_model: int, d_ff: int, dropout: float = 0.1):

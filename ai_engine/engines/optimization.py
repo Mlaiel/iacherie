@@ -373,7 +373,20 @@ Remove entry from cache and update tracking"""
         """
 Start background maintenance thread"""
         def maintenance_worker():
-            while True:
+        try:
+            logger.info(f"Executing maintenance_worker")
+            
+            # Implementation for maintenance_worker
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"maintenance_worker completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"maintenance_worker failed: {e}")
+            raise
                 try:
                     time.sleep(300)  # 5 minutes
                     self._cleanup_expired()
@@ -522,6 +535,29 @@ Get current resource usage"""
             values = [value for _, value in recent_data]
             
             trends[resource_type] = {
+                "avg": sum(values) / len(values),
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "monitoring_worker",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric monitoring_worker collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection monitoring_worker failed: {e}")
+                    return None
                 "avg": sum(values) / len(values),
                 "min": min(values),
                 "max": max(values),
@@ -940,7 +976,20 @@ Combine parallel processing results"""
         
         # Function statistics
         function_stats = defaultdict(lambda: {"count": 0, "avg_time": 0, "success_count": 0})
-        
+        try:
+            logger.info(f"Executing tuning_worker")
+            
+            # Implementation for tuning_worker
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"tuning_worker completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"tuning_worker failed: {e}")
+            raise
         for metric in self.performance_history:
             func = metric["function"]
             function_stats[func]["count"] += 1

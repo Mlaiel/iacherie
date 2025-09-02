@@ -204,9 +204,20 @@ Base class for diagnostic checks"""
     
     @abstractmethod
     async def execute_check(self) -> DiagnosticResult:
-        """Execute the diagnostic check"""
-        pass
-    
+        try:
+            logger.info(f"Executing execute_check")
+            
+            # Implementation for execute_check
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"execute_check completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"execute_check failed: {e}")
+            raise
     async def run_check(self) -> DiagnosticResult:
         """
 Run the diagnostic check with error handling"""
@@ -554,6 +565,23 @@ class AIModelPerformanceCheck(BaseDiagnosticCheck):
             )
             
         except Exception as e:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+            )
+            
+        except Exception as e:
             raise Exception(f"AI model performance check failed: {str(e)}")
 
 
@@ -653,6 +681,21 @@ class SecurityComplianceCheck(BaseDiagnosticCheck):
                 "data_access_violations"
             ]
             
+            for event_type in security_events:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
             for event_type in security_events:
                 # This would integrate with actual security logging
                 metrics[f"{event_type}_last_24h"] = 0

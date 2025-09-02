@@ -1111,7 +1111,20 @@ Initialize quality assessment engine"""
             
             # Recursively convert numpy arrays
             def recursive_convert(data):
-                if isinstance(data, dict):
+        try:
+            logger.info(f"Executing recursive_convert")
+            
+            # Implementation for recursive_convert
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"recursive_convert completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"recursive_convert failed: {e}")
+            raise
                     return {k: recursive_convert(v) for k, v in data.items()}
                 elif isinstance(data, list):
                     return [recursive_convert(item) for item in data]

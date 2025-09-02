@@ -78,9 +78,20 @@ class EventHandler(ABC):
     
     @abstractmethod
     async def handle(self, event: Event) -> Any:
-        """Traite un événement"""
-        pass
-    
+        try:
+            logger.info(f"Executing handle")
+            
+            # Implementation for handle
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"handle completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"handle failed: {e}")
+            raise
     def can_handle(self, event: Event) -> bool:
         """
 Vérifie si ce handler peut traiter l'événement"""

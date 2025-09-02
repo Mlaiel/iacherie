@@ -354,7 +354,20 @@ Start async log processing"""
             content = '\n'.join(lines) + '\n'
             
             def write_to_file():
-                with open(log_file, 'a', encoding='utf-8') as f:
+        try:
+            logger.info(f"Executing write_to_file")
+            
+            # Implementation for write_to_file
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"write_to_file completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"write_to_file failed: {e}")
+            raise
                     f.write(content)
             
             # Execute in thread pool
@@ -754,6 +767,33 @@ Enrich log entry with additional context"""
         return log_entry
     
     async def _store_logs(self, logs: List[LogEntry]):
+        try:
+            logger.info(f"Executing _store_logs_to_file")
+            
+            # Implementation for _store_logs_to_file
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _store_logs_to_elasticsearch")
+            
+            # Implementation for _store_logs_to_elasticsearch
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_logs_to_elasticsearch completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_logs_to_elasticsearch failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_logs_to_file completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_logs_to_file failed: {e}")
+            raise
         """
 Store processed logs"""
         if self.storage_backend == 'file':
@@ -1561,6 +1601,20 @@ JSON log formatter"""
 
 
 class StructuredFormatter(logging.Formatter):
+        try:
+            logger.info(f"Executing __exit__")
+            
+            # Implementation for __exit__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__exit__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__exit__ failed: {e}")
+            raise
     """
 Structured text log formatter"""
     

@@ -271,27 +271,20 @@ Rotate session to avoid detection."""
         self.session_start_time = datetime.now()
         
     async def stealth_get(self, url: str, **kwargs) -> aiohttp.ClientResponse:
-        """Perform stealth GET request."""
-        await self._check_session_rotation()
-        await self._add_behavioral_delay()
-        
-        headers = self._generate_stealth_headers()
-        if 'headers' in kwargs:
-            headers.update(kwargs['headers'])
-        kwargs['headers'] = headers
-        
-        # Add proxy if available
-        if self.config.use_proxies and self.proxy_pool:
-            proxy = self._get_random_proxy()
-            if proxy:
-                proxy_url = f"{proxy.protocol}://"
-                if proxy.username and proxy.password:
-                    proxy_url += f"{proxy.username}:{proxy.password}@"
-                proxy_url += f"{proxy.host}:{proxy.port}"
-                kwargs['proxy'] = proxy_url
-                
-        return await self.session.get(url, **kwargs)
-        
+        try:
+                    # Request validation
+                    if not url:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_stealth_get_request(url)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler stealth_get failed: {e}")
+                    return {"status": "error", "message": str(e)}
     def _create_stealth_driver(self) -> webdriver.Chrome:
         """Create stealth Selenium driver."""
         options = uc.ChromeOptions()

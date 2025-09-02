@@ -502,11 +502,20 @@ Get creator profile for matching"""
                             content_tags=[], creation_frequency={}, quality_scores={})
     
     async def _get_creator_compatibility_profile(self, creator_id: int):
-        """
-Get creator compatibility profile"""
-        # Implementation would build compatibility profile
-        pass
-    
+        try:
+                    # Request validation
+                    if not creator_id:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_creator_compatibility_profile_request(creator_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_creator_compatibility_profile failed: {e}")
+                    return {"status": "error", "message": str(e)}
     def _apply_preferences_to_filters(
         self,
         filters: Dict[str, Any],

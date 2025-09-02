@@ -553,7 +553,20 @@ Serialize data with gzip compression."""
     def serialize_to_json(data: Any, indent: Optional[int] = None) -> str:
         """Serialize data to JSON with custom handling for numpy arrays."""
         def json_serializer(obj):
-            if isinstance(obj, np.ndarray):
+        try:
+            logger.info(f"Executing json_serializer")
+            
+            # Implementation for json_serializer
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"json_serializer completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"json_serializer failed: {e}")
+            raise
                 return {
                     '__numpy_array__': True,
                     'data': obj.tolist(),
@@ -590,34 +603,20 @@ Deserialize JSON with custom handling for numpy arrays."""
             elif isinstance(d, list):
                 return [process_dict(item) for item in d]
             else:
-                return d
-        
-        return process_dict(data)
-
-
-class SystemResourceMonitor:
-    """
-    Monitor system resources for optimal vector database performance.
-    """
-    
-    @staticmethod
-    def get_system_info() -> SystemResourceInfo:
-        """
-Get current system resource information."""
-        # CPU usage
-        cpu_usage = psutil.cpu_percent(interval=1)
-        
-        # Memory usage
-        memory = psutil.virtual_memory()
-        memory_usage = memory.percent
-        memory_available = memory.available / (1024**3)  # GB
-        
-        # Disk usage
-        disk = psutil.disk_usage('/')
-        disk_usage = (disk.used / disk.total) * 100
-        disk_free = disk.free / (1024**3)  # GB
-        
-        # GPU check (basic)
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_system_info_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_system_info failed: {e}")
+                    return {"status": "error", "message": str(e)}
         gpu_available = False
         gpu_memory = None
         

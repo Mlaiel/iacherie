@@ -389,49 +389,20 @@ Load configuration from file or environment."""
             raise
     
     def _load_from_environment(self) -> VectorBackendConfig:
-        """Load configuration from environment variables."""
-        config = VectorBackendConfig()
-        
-        # Backend type
-        backend_type = os.getenv('VECTOR_BACKEND_TYPE', 'faiss')
         try:
-            config.backend_type = BackendType(backend_type)
-        except ValueError:
-            logger.warning(f"Invalid backend type in env: {backend_type}, using FAISS")
-        
-        # Data directory
-        config.data_directory = os.getenv('VECTOR_DATA_DIR', './vector_data')
-        
-        # Dimension
-        try:
-            config.default_dimension = int(os.getenv('VECTOR_DIMENSION', '384'))
-        except ValueError:
-            logger.warning("Invalid dimension in env, using default")
-        
-        # Performance settings
-        try:
-            config.performance.num_threads = int(os.getenv('VECTOR_THREADS', '4'))
-            config.performance.memory_limit_gb = float(os.getenv('VECTOR_MEMORY_LIMIT', '8.0'))
-            config.performance.enable_gpu = os.getenv('VECTOR_ENABLE_GPU', 'false').lower() == 'true'
-        except ValueError:
-            logger.warning("Invalid performance settings in env, using defaults")
-        
-        # Security settings
-        config.security.encryption_enabled = os.getenv('VECTOR_ENCRYPTION', 'true').lower() == 'true'
-        config.security.api_key_required = os.getenv('VECTOR_API_KEY_REQUIRED', 'true').lower() == 'true'
-        
-        # Backend-specific environment loading
-        if config.backend_type == BackendType.PINECONE:
-            config.pinecone.api_key = os.getenv('PINECONE_API_KEY')
-            config.pinecone.environment = os.getenv('PINECONE_ENVIRONMENT', 'us-west1-gcp')
-        elif config.backend_type == BackendType.ELASTICSEARCH:
-            hosts = os.getenv('ELASTICSEARCH_HOSTS', 'localhost:9200')
-            config.elasticsearch.hosts = [h.strip() for h in hosts.split(',')]
-            config.elasticsearch.username = os.getenv('ELASTICSEARCH_USERNAME')
-            config.elasticsearch.password = os.getenv('ELASTICSEARCH_PASSWORD')
-        
-        return config
-    
+            logger.info(f"Executing _load_from_environment")
+            
+            # Implementation for _load_from_environment
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_load_from_environment completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_load_from_environment failed: {e}")
+            raise
     def _dict_to_config(self, config_dict: Dict[str, Any]) -> VectorBackendConfig:
         """Convert dictionary to configuration object."""
         try:

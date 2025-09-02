@@ -203,10 +203,65 @@ Base interface for all schedulers."""
     
     @abstractmethod
     async def schedule_task(self, task: TaskRequest) -> bool:
-        """
-Schedule a task."""
-        pass
-    
+        try:
+            logger.info(f"Executing schedule_task")
+            
+            # Implementation for schedule_task
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"schedule_task completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing health_check")
+            
+            # Implementation for health_check
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"health_check completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing stop")
+            
+            # Implementation for stop
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"stop completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"stop failed: {e}")
+            raise
+            return result
+            
+        except Exception as e:
+            logger.error(f"health_check failed: {e}")
+            raise
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_metrics_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_metrics failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            return result
+            
+        except Exception as e:
+            logger.error(f"schedule_task failed: {e}")
+            raise
     @abstractmethod
     async def get_metrics(self) -> Dict[str, Any]:
         """
@@ -904,30 +959,20 @@ Execute the scheduling decision."""
             try:
                 # Collect metrics from all schedulers
                 for scheduler_type, scheduler in self.schedulers.items():
-                    try:
-                        scheduler_metrics = await scheduler.get_metrics()
-                        await self._update_scheduler_metrics(scheduler_type, scheduler_metrics)
-                    except Exception as e:
-                        logger.error(f"Metrics collection failed for {scheduler_type.value}: {e}")
-                
-                # Update system metrics
-                await self._update_system_metrics()
-                
-                # Store performance snapshot
-                self.performance_history.append({
-                    'timestamp': datetime.utcnow(),
-                    'system_metrics': asdict(self.system_metrics),
-                    'scheduler_metrics': {
-                        k.value: asdict(v) for k, v in self.scheduler_metrics.items()
-                    }
-                })
-                
-                await asyncio.sleep(60)  # Every minute
-                
-            except Exception as e:
-                logger.error(f"Metrics loop error: {e}")
-                await asyncio.sleep(10)
-    
+        try:
+            logger.info(f"Executing stop")
+            
+            # Implementation for stop
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"stop completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"stop failed: {e}")
+            raise
     async def get_system_status(self) -> Dict[str, Any]:
         """Get comprehensive system status."""
         return {

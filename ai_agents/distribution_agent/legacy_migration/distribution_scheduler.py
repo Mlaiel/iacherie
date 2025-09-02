@@ -115,7 +115,20 @@ class ScheduleEntry:
     dependencies: List[str] = None
     
     def __post_init__(self):
-        if self.dependencies is None:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             self.dependencies = []
 
 
@@ -610,6 +623,34 @@ class DistributionScheduler(BaseAgent):
             dependencies JSON
         )
         """
+        await self.db.execute(create_table_sql)
+    
+    def _generate_schedule_id(self) -> str:
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                        result = await session.execute(insert_query)
+                        await session.commit()
+                        logger.info(f"Database operation _save_schedule_entry completed")
+                        return True
+                
+                except Exception as e:
+        try:
+            logger.info(f"Executing _add_scheduler_job")
+            
+            # Implementation for _add_scheduler_job
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_add_scheduler_job completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_add_scheduler_job failed: {e}")
+            raise
+                    logger.error(f"Database operation _save_schedule_entry failed: {e}")
+                    raise
         await self.db.execute(create_table_sql)
     
     def _generate_schedule_id(self) -> str:

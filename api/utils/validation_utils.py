@@ -128,8 +128,20 @@ class BaseValidator:
 Base validator class"""
     
     def __init__(self, strict_mode: bool = True):
-        self.strict_mode = strict_mode
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     def validate(self, value: Any, field_name: str = None) -> ValidationResult:
         """
 Validate value - base implementation"""
@@ -1142,6 +1154,20 @@ Create a content validation schema"""
                 'default': 'public'
             },
             'monetization_enabled': {
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
                 'type': 'boolean',
                 'default': False
             }

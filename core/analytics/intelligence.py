@@ -418,11 +418,17 @@ Initialize business intelligence system"""
         }
     
     async def _save_insights(self) -> None:
-        """
-Save generated insights"""
-        # Implementation for persisting insights
-        pass
-    
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _save_insights completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _save_insights failed: {e}")
+                    raise
     async def _analyze_revenue_performance(self, period: str) -> List[BusinessInsight]:
         """
 Analyze revenue performance and generate insights"""
@@ -1078,6 +1084,18 @@ Initialize predictive analytics system"""
         self.models['users'] = RandomForestRegressor()
         self.models['content'] = LinearRegression()
     
+    async def _save_models(self) -> None:
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _save_models completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _save_models failed: {e}")
+                    raise
     async def _save_models(self) -> None:
         """
 Save trained models"""

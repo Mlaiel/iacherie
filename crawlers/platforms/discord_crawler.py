@@ -278,8 +278,20 @@ Initialize the crawler and Discord bot."""
         
         @self.bot.event
         async def on_member_join(member):
-            await self._analyze_new_member(member)
+        try:
+            logger.info(f"Executing on_member_join")
             
+            # Implementation for on_member_join
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"on_member_join completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"on_member_join failed: {e}")
+            raise
     async def _start_monitoring_tasks(self):
         """Start background monitoring tasks."""
         if not hasattr(self, '_monitoring_started'):
@@ -848,8 +860,33 @@ class DiscordCrawler(BaseCrawler):
     async def authenticate(self, bot_token: str = None, user_token: str = None) -> bool:
         """Authenticate with Discord API using bot token or user token"""
         try:
-            if bot_token:
-                # Initialize Discord bot client
+        try:
+            logger.info(f"Executing on_ready")
+            
+            # Implementation for on_ready
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing on_message")
+            
+            # Implementation for on_message
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"on_message completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"on_message failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"on_ready completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"on_ready failed: {e}")
+            raise
                 intents = discord.Intents.default()
                 intents.message_content = True
                 intents.guilds = True

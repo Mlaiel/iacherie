@@ -231,8 +231,20 @@ Test getting list of available agents"""
 Test registering a custom agent type"""
         class CustomTestAgent:
             def __init__(self):
-                self.agent_type = "custom_test"
-        
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
         factory.register_agent('custom_test', CustomTestAgent)
         available = factory.get_available_agents()
         assert 'custom_test' in available

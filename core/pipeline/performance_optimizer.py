@@ -826,66 +826,20 @@ Generate recommendations for specific bottleneck"""
     async def _enhance_recommendation_details(
         self,
         recommendation: OptimizationRecommendation,
-        profile: PerformanceProfile
-    ):
-        """Enhance recommendation with implementation details"""
-        # Add implementation steps based on optimization type
-        if recommendation.optimization_type == OptimizationType.CACHING:
-            recommendation.implementation_steps = [
-                "Identify cacheable operations",
-                "Implement cache layer with appropriate TTL",
-                "Add cache invalidation logic",
-                "Monitor cache hit rates",
-                "Tune cache size and policies"
-            ]
+        try:
+            logger.info(f"Executing _enhance_recommendation_details")
             
-            recommendation.configuration_changes = {
-                "cache_enabled": True,
-                "cache_size": "1GB",
-                "cache_ttl": 3600,
-                "cache_policy": "LRU"
-            }
-        
-        elif recommendation.optimization_type == OptimizationType.PARALLELIZATION:
-            recommendation.implementation_steps = [
-                "Identify parallelizable tasks",
-                "Implement task partitioning",
-                "Add thread/process pool management",
-                "Implement result aggregation",
-                "Monitor concurrency metrics"
-            ]
+            # Implementation for _enhance_recommendation_details
+            # TODO: Add specific business logic here
             
-            recommendation.configuration_changes = {
-                "max_workers": 8,
-                "parallel_execution": True,
-                "task_batch_size": 100
-            }
-        
-        elif recommendation.optimization_type == OptimizationType.MEMORY:
-            recommendation.implementation_steps = [
-                "Profile memory usage patterns",
-                "Implement object pooling",
-                "Add memory monitoring",
-                "Optimize data structures",
-                "Implement garbage collection tuning"
-            ]
+            result = None  # Replace with actual implementation
             
-            recommendation.configuration_changes = {
-                "memory_pool_enabled": True,
-                "max_memory_usage": "2GB",
-                "gc_threshold": 0.8
-            }
-        
-        # Add success criteria
-        recommendation.success_criteria = [
-            f"Improve {list(recommendation.impact_estimate.keys())[0]} by target percentage",
-            "No degradation in other metrics",
-            "System stability maintained",
-            "Performance tests pass"
-        ]
-        
-        # Add rollback plan
-        recommendation.rollback_plan = [
+            logger.info(f"_enhance_recommendation_details completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_enhance_recommendation_details failed: {e}")
+            raise
             "Revert configuration changes",
             "Restore previous implementation",
             "Validate system functionality",
@@ -2036,13 +1990,28 @@ class RealTimePerformanceMonitor:
                 network = psutil.net_io_counters()
                 network_bytes = network.bytes_sent + network.bytes_recv
             except:
-                network_bytes = 0
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "stop_monitoring",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
             
-            metrics = {
-                "cpu_usage": cpu_percent,
-                "memory_usage": memory.percent,
-                "disk_usage": (disk.used / disk.total) * 100,
-                "memory_available_gb": memory.available / (1024**3),
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric stop_monitoring collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection stop_monitoring failed: {e}")
+                    return None
                 "disk_free_gb": disk.free / (1024**3),
                 "network_bytes_total": network_bytes,
                 "timestamp": time.time()

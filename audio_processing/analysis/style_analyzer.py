@@ -440,7 +440,26 @@ class StyleAnalyzer:
                                     sample_rate: int) -> Dict[str, np.ndarray]:
         """Extract comprehensive features for style analysis"""
         def extract():
-            try:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_extract_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_extract_result(result)
+            
+                    logger.info(f"AI processing extract completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing extract failed: {e}")
+                    raise
                 features = {}
                 
                 # Spectral features
@@ -487,6 +506,33 @@ class StyleAnalyzer:
                 features['percussive_energy'] = np.mean(percussive**2)
                 
                 # Pitch features
+                pitches, magnitudes = librosa.piptrack(y=audio_data, sr=sample_rate)
+                features['pitch_mean'] = np.mean(pitches[pitches > 0]) if np.any(pitches > 0) else 0
+                features['pitch_std'] = np.std(pitches[pitches > 0]) if np.any(pitches > 0) else 0
+                
+                return features
+                
+            except Exception as e:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_classify_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_classify_result(result)
+            
+                    logger.info(f"AI processing classify completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing classify failed: {e}")
+                    raise
                 pitches, magnitudes = librosa.piptrack(y=audio_data, sr=sample_rate)
                 features['pitch_mean'] = np.mean(pitches[pitches > 0]) if np.any(pitches > 0) else 0
                 features['pitch_std'] = np.std(pitches[pitches > 0]) if np.any(pitches > 0) else 0
@@ -544,6 +590,27 @@ class StyleAnalyzer:
                         style_scores = {k: v / max_score for k, v in style_scores.items()}
                 
                 # Get top styles
+                sorted_styles = sorted(style_scores.items(), key=lambda x: x[1], reverse=True)
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_classify_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_classify_result(result)
+            
+                    logger.info(f"AI processing classify completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing classify failed: {e}")
+                    raise
                 sorted_styles = sorted(style_scores.items(), key=lambda x: x[1], reverse=True)
                 
                 if sorted_styles:

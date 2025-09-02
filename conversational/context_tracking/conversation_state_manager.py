@@ -67,7 +67,20 @@ class StateTransition:
     duration: Optional[float] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             "transition_id": self.transition_id,
             "from_state": self.from_state,
             "to_state": self.to_state,
@@ -81,6 +94,20 @@ class StateTransition:
 
 @dataclass
 class WorkflowStep:
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
     """Individual workflow step"""
     step_id: str
     step_name: str
@@ -114,7 +141,20 @@ class ConversationWorkflow:
     creator_type: str
     steps: List[WorkflowStep]
     current_step_index: int = 0
-    started_at: datetime = field(default_factory=datetime.utcnow)
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
     estimated_completion: Optional[datetime] = None
     actual_completion: Optional[datetime] = None
     
@@ -165,8 +205,20 @@ class ConversationState:
     current_phase: ConversationPhase
     current_workflow: Optional[ConversationWorkflow] = None
     state_context: Dict[str, Any] = field(default_factory=dict)
-    
-    # State history
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
     state_history: List[StateTransition] = field(default_factory=list)
     phase_durations: Dict[str, float] = field(default_factory=dict)
     

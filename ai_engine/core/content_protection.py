@@ -127,7 +127,20 @@ class ContentFingerprint:
     expires_at: Optional[datetime] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             "fingerprint_id": self.fingerprint_id,
             "content_id": self.content_id,
             "fingerprint_type": self.fingerprint_type.value,
@@ -150,7 +163,20 @@ class ProtectionRecord:
     owner_id: str
     content_type: ContentType
     protection_level: ProtectionLevel
-    fingerprints: List[ContentFingerprint]
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
     copyright_info: Dict[str, Any]
     ownership_proof: Dict[str, Any]
     protection_settings: Dict[str, Any] = field(default_factory=dict)
@@ -178,7 +204,20 @@ class ProtectionRecord:
             "protected_platforms": self.protected_platforms,
             "violation_history": self.violation_history,
             "revenue_tracking": self.revenue_tracking,
-            "created_at": self.created_at.isoformat(),
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             "updated_at": self.updated_at.isoformat()
         }
 
@@ -317,6 +356,26 @@ class AudioFingerprintGenerator:
             features_quantized = (features_normalized > 0).astype(int)
             
             # Hash
+            fingerprint_bytes = features_quantized.tobytes()
+            fingerprint_hash = hashlib.sha256(fingerprint_bytes).hexdigest()
+            
+            return base64.b64encode(fingerprint_hash.encode()).decode()
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
             fingerprint_bytes = features_quantized.tobytes()
             fingerprint_hash = hashlib.sha256(fingerprint_bytes).hexdigest()
             

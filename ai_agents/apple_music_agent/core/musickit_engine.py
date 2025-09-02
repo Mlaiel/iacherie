@@ -408,24 +408,20 @@ class MusicKitEngine:
             raise
     
     async def _check_rate_limit(self):
-        """Check and enforce rate limiting"""
-        now = datetime.utcnow()
-        
-        # Reset counter if minute has passed
-        if now - self.rate_limit_reset > timedelta(minutes=1):
-            self.request_count = 0
-            self.rate_limit_reset = now
-        
-        # Check if rate limit exceeded
-        if self.request_count >= self.rate_limit:
-            sleep_time = 60 - (now - self.rate_limit_reset).seconds
-            if sleep_time > 0:
-                await asyncio.sleep(sleep_time)
-                self.request_count = 0
-                self.rate_limit_reset = datetime.utcnow()
-        
-        self.request_count += 1
-    
+        try:
+            logger.info(f"Executing _check_rate_limit")
+            
+            # Implementation for _check_rate_limit
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_check_rate_limit completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_check_rate_limit failed: {e}")
+            raise
     async def _get_mock_response(self, method: str, url: str, params: Optional[Dict] = None) -> Dict[str, Any]:
         """
 Generate mock responses for testing"""

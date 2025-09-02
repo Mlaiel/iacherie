@@ -946,67 +946,26 @@ Analyse les patterns d'engagement"""
         return risks[:3]  # Return top 3 risks
     
     def _analyze_collaboration_network(self, creator_profile: Dict) -> Dict[str, Any]:
-        """Analyse le réseau de collaboration"""
-        network_analysis = {
-            'network_centrality': 0.0,
-            'collaboration_clusters': [],
-            'influential_connections': [],
-            'network_growth_potential': 0.0,
-            'recommended_network_strategies': []
-        }
-        
         try:
-            creator_id = creator_profile.get('id')
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
             
-            # Add creator to network if not exists
-            if creator_id not in self.collaboration_network:
-                self.collaboration_network.add_node(creator_id, **creator_profile)
+                    # Preprocess input
+                    processed_input = await self._preprocess__analyze_collaboration_network_input(creator_profile)
             
-            # Calculate network metrics if network has enough nodes
-            if len(self.collaboration_network.nodes()) > 1:
-                # Centrality measures
-                if nx.is_connected(self.collaboration_network):
-                    centrality = nx.betweenness_centrality(self.collaboration_network)
-                    network_analysis['network_centrality'] = centrality.get(creator_id, 0)
-                
-                # Detect communities/clusters
-                if len(self.collaboration_network.nodes()) > 5:
-                    try:
-                        communities = nx.community.greedy_modularity_communities(self.collaboration_network)
-                        for i, community in enumerate(communities):
-                            if creator_id in community:
-                                network_analysis['collaboration_clusters'].append({
-                                    'cluster_id': i,
-                                    'members': list(community),
-                                    'cluster_size': len(community)
-                                })
-                    except:
-                        pass  # Community detection failed
-                
-                # Identify influential connections
-                neighbors = list(self.collaboration_network.neighbors(creator_id))
-                for neighbor in neighbors[:5]:  # Top 5 connections
-                    neighbor_data = self.collaboration_network.nodes[neighbor]
-                    network_analysis['influential_connections'].append({
-                        'creator_id': neighbor,
-                        'influence_score': neighbor_data.get('followers', 0),
-                        'connection_strength': 1  # Would calculate based on collaboration frequency
-                    })
+                    # Run inference
+                    result = await self.model.predict(processed_input)
             
-            # Network growth strategies
-            network_analysis['recommended_network_strategies'] = [
-                "Connect with creators in complementary niches",
-                "Participate in creator collaboration events",
-                "Build relationships with micro-influencers in your space",
-                "Engage with creators who have successfully collaborated with your tier"
-            ]
+                    # Postprocess result
+                    final_result = await self._postprocess__analyze_collaboration_network_result(result)
             
-        except Exception as e:
-            network_analysis['error'] = str(e)
-            self.logger.error(f"Network analysis failed: {e}")
-        
-        return network_analysis
-    
+                    logger.info(f"AI processing _analyze_collaboration_network completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _analyze_collaboration_network failed: {e}")
+                    raise
     def _generate_collaboration_recommendations(self, profile_analysis: Dict, matches: List[Dict], goals: List[str]) -> List[Dict[str, Any]]:
         """Génère des recommandations stratégiques de collaboration"""
         recommendations = []

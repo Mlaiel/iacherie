@@ -972,7 +972,20 @@ Batch verify multiple copyright claims"""
         semaphore = asyncio.Semaphore(max_concurrent)
         
         async def verify_single(claim, evidence_files):
-            async with semaphore:
+        try:
+            logger.info(f"Executing verify_single")
+            
+            # Implementation for verify_single
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"verify_single completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"verify_single failed: {e}")
+            raise
                 return await self.verify_copyright_ownership(claim, evidence_files)
         
         # Prepare evidence files for each claim

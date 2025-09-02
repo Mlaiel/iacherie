@@ -322,23 +322,17 @@ class CertificateManager:
     def save_certificate_and_key(
         self,
         certificate: x509.Certificate,
-        private_key: Any,
-        name: str,
-        password: Optional[bytes] = None
-    ) -> Tuple[str, str]:
-        """
-        Save certificate and private key to files
-        
-        Args:
-            certificate: Certificate to save
-            private_key: Private key to save
-            name: Base name for files
-            password: Password for private key encryption
-            
-        Returns:
-            Tuple of (certificate_path, private_key_path)
-        """
         try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation save_certificate_and_key completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation save_certificate_and_key failed: {e}")
+                    raise
             cert_path = self.cert_dir / f"{name}.crt"
             key_path = self.key_dir / f"{name}.key"
             

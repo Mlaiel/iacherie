@@ -570,13 +570,28 @@ class VoiceProcessingConfig:
                     os.chmod(key_file, 0o600)  # Read-write for owner only
     
     def _setup_monitoring(self) -> None:
-        """Setup monitoring and logging."""
-        if self.monitoring.performance_metrics:
-            # Initialize performance monitoring
-            pass
-        
-        if self.monitoring.health_check_interval > 0:
-            # Setup health checks
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_setup_monitoring",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _setup_monitoring collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _setup_monitoring failed: {e}")
+                    return None
             pass
     
     @classmethod

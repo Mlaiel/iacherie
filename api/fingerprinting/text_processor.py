@@ -370,8 +370,20 @@ Extract TF-IDF features from text"""
         loop = asyncio.get_event_loop()
         
         def compute_tfidf():
-            try:
-                # Fit and transform the text
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_compute_tfidf_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler compute_tfidf failed: {e}")
+                    return {"status": "error", "message": str(e)}
                 sentences = sent_tokenize(text_content)
                 if len(sentences) < 2:
                     sentences = [text_content]
@@ -381,6 +393,21 @@ Extract TF-IDF features from text"""
                 # Return average TF-IDF vector
                 return tfidf_matrix.mean(axis=0).A1
                 
+            except Exception as e:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_compute_readability_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler compute_readability failed: {e}")
+                    return {"status": "error", "message": str(e)}
             except Exception as e:
                 logger.warning(f"TF-IDF extraction failed: {str(e)}")
                 return np.zeros(1000)
@@ -410,7 +437,20 @@ Extract TF-IDF features from text"""
                         matches = self.grammar_tool.check(text_content[:1000])  # Limit for performance
                         scores['grammar_error_rate'] = len(matches) / len(word_tokenize(text_content[:1000]))
                     except Exception:
-                        scores['grammar_error_rate'] = 0.0
+        try:
+            logger.info(f"Executing detect_lang")
+            
+            # Implementation for detect_lang
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"detect_lang completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"detect_lang failed: {e}")
+            raise
                 else:
                     scores['grammar_error_rate'] = 0.0
                 

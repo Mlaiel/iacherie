@@ -545,11 +545,20 @@ Form RabbitMQ cluster from deployed nodes"""
         """Setup connection pool for high-performance messaging"""
         try:
             async def get_connection():
-                primary_node = self.config.nodes[0]
-                protocol = "amqps" if self.config.ssl_enabled else "amqp"
-                url = f"{protocol}://{self.config.username}:{self.config.password}@{primary_node.host}:{primary_node.port}{self.config.virtual_host}"
-                return await aio_pika.connect_robust(url)
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
             
+                    # Process request
+                    result = await self._handle_get_connection_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_connection failed: {e}")
+                    return {"status": "error", "message": str(e)}
             self.connection_pool = Pool(get_connection, max_size=20)
             logger.info("Connection pool setup completed")
             

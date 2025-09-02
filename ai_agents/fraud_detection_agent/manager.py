@@ -646,40 +646,26 @@ except ImportError as e:
             return {"confidence": min(confidence, 1.0), "risk_factors": risk_factors}
         
         async def _analyze_metadata_manipulation(self, metadata):
-            """Analyze metadata for signs of manipulation"""
-            confidence = 0.0
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
             
-            # Check for missing or inconsistent EXIF data
-            if 'exif_data' in metadata:
-                exif = metadata['exif_data']
-                
-                # Missing standard fields
-                standard_fields = ['DateTime', 'Software', 'Camera']
-                missing_fields = [field for field in standard_fields if field not in exif]
-                if len(missing_fields) > 1:
-                    confidence += 0.2
-                
-                # Suspicious software signatures
-                if 'Software' in exif:
-                    suspicious_software = ['deepface', 'faceswap', 'synthetic']
-                    if any(sus in exif['Software'].lower() for sus in suspicious_software):
-                        confidence += 0.8
+                    # Preprocess input
+                    processed_input = await self._preprocess__analyze_metadata_manipulation_input(metadata)
             
-            # Check creation timestamp consistency
-            if 'creation_time' in metadata and 'file_modified_time' in metadata:
-                import dateutil.parser
-                try:
-                    created = dateutil.parser.parse(metadata['creation_time'])
-                    modified = dateutil.parser.parse(metadata['file_modified_time'])
-                    
-                    # Modified time before creation time (impossible)
-                    if modified < created:
-                        confidence += 0.6
-                except:
-                    pass
+                    # Run inference
+                    result = await self.model.predict(processed_input)
             
-            return {"confidence": min(confidence, 1.0)}
-    
+                    # Postprocess result
+                    final_result = await self._postprocess__analyze_metadata_manipulation_result(result)
+            
+                    logger.info(f"AI processing _analyze_metadata_manipulation completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _analyze_metadata_manipulation failed: {e}")
+                    raise
     class ThreatIntelligenceEngine:
         def __init__(self, config=None):
             self.config = config or {}

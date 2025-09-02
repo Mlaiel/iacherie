@@ -145,8 +145,52 @@ class DatabaseSettings(BaseSettings):
     
     @property
     def postgres_url(self) -> str:
-        return f"postgresql://{self.postgres_user}:{self.postgres_password}@{self.postgres_host}:{self.postgres_port}/{self.postgres_db}?sslmode={self.postgres_ssl_mode}"
-    
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_postgres_url_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+        try:
+            logger.info(f"Executing mongodb_url")
+            
+            # Implementation for mongodb_url
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"mongodb_url completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"mongodb_url failed: {e}")
+            raise
+        try:
+            logger.info(f"Executing redis_url")
+            
+            # Implementation for redis_url
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"redis_url completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"redis_url failed: {e}")
+            raise
+                    result = await self._handle_postgres_url_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler postgres_url failed: {e}")
+                    return {"status": "error", "message": str(e)}
     @property
     def redis_url(self) -> str:
         auth = f":{self.redis_password}@" if self.redis_password else ""

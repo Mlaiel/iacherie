@@ -270,7 +270,26 @@ class ContentAnalyzer:
             semaphore = asyncio.Semaphore(concurrent_limit)
             
             async def analyze_single(content_item):
-                async with semaphore:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_analyze_single_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_single_result(result)
+            
+                    logger.info(f"AI processing analyze_single completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing analyze_single failed: {e}")
+                    raise
                     return await self.analyze_content(content_item, creator_type)
             
             # Process all items concurrently
@@ -385,42 +404,26 @@ class ContentAnalyzer:
         """
 Detect content type from data analysis."""
         if isinstance(content_data, str):
-            return ContentType.TEXT
-        elif isinstance(content_data, bytes):
-            # Check magic bytes for common formats
-            if content_data.startswith(b'\xff\xfb') or content_data.startswith(b'ID3'):
-                return ContentType.AUDIO
-            elif content_data.startswith(b'\x89PNG'):
-                return ContentType.IMAGE
-            elif content_data.startswith(b'\xff\xd8\xff'):
-                return ContentType.IMAGE
-            elif content_data.startswith(b'GIF8'):
-                return ContentType.IMAGE
-            elif b'ftypmp4' in content_data[:50]:
-                return ContentType.VIDEO
-        
-        return ContentType.UNKNOWN
-    
-    async def _extract_metadata(self, content_data: Any, content_type: ContentType) -> ContentMetadata:
-        """
-Extract comprehensive metadata from content."""
-        metadata = ContentMetadata(
-            file_name="unknown",
-            file_size=len(content_data) if isinstance(content_data, bytes) else len(str(content_data)),
-            file_type=content_type.value,
-            mime_type="application/octet-stream",
-            checksum=hashlib.md5(str(content_data).encode() if isinstance(content_data, str) else content_data).hexdigest()
-        )
-        
         try:
-            if content_type == ContentType.IMAGE and isinstance(content_data, bytes):
-                # Extract image metadata
-                image = Image.open(io.BytesIO(content_data))
-                metadata.dimensions = image.size
-                metadata.resolution = f"{image.size[0]}x{image.size[1]}"
-                
-                # Extract EXIF data
-                if hasattr(image, '_getexif') and image._getexif():
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__extract_metadata_input(content_data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__extract_metadata_result(result)
+            
+                    logger.info(f"AI processing _extract_metadata completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _extract_metadata failed: {e}")
+                    raise
                     exif = image._getexif()
                     for tag_id, value in exif.items():
                         tag = ExifTags.TAGS.get(tag_id, tag_id)

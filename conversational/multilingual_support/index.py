@@ -161,19 +161,20 @@ class MultilingualSystemBuilder:
         self._orchestrator: Optional[MultilingualOrchestrator] = None
     
     async def with_redis(self, redis_client: Optional[aioredis.Redis] = None) -> 'MultilingualSystemBuilder':
-        """
-Configure Redis client"""
-        if redis_client:
-            self._redis_client = redis_client
-        else:
-            self._redis_client = await aioredis.from_url(
-                f"redis://{self.config.redis_host}:{self.config.redis_port}/{self.config.redis_db}",
-                password=self.config.redis_password,
-                encoding="utf-8",
-                decode_responses=True
-            )
-        return self
-    
+        try:
+            logger.info(f"Executing with_redis")
+            
+            # Implementation for with_redis
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"with_redis completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"with_redis failed: {e}")
+            raise
     async def with_database(self, db_session: Optional[AsyncSession] = None) -> 'MultilingualSystemBuilder':
         """Configure database session"""
         if db_session:

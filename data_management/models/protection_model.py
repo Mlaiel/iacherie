@@ -50,7 +50,20 @@ class ProtectionModel:
     created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             "protection_id": self.protection_id,
             "content_id": self.content_id,
             "creator_id": self.creator_id,
@@ -68,6 +81,20 @@ class ProtectionModel:
 
 @dataclass
 class ViolationModel:
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
     violation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     protection_id: str = ""
     fingerprint_id: str = ""
@@ -80,6 +107,20 @@ class ViolationModel:
     created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def to_dict(self) -> Dict[str, Any]:
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
         return {
             "violation_id": self.violation_id,
             "protection_id": self.protection_id,

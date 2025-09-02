@@ -275,8 +275,20 @@ class SpanContext:
     """
     
     def __init__(self):
-        self._local = threading.local()
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     def get_current_span(self) -> Optional[Span]:
         """
 Get the current active span"""
@@ -571,6 +583,77 @@ Get tracing metrics"""
         return {
             **self.metrics,
             'active_traces': len(self.active_traces),
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+        try:
+            logger.info(f"Executing add_event")
+            
+            # Implementation for add_event
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing set_attribute")
+            
+            # Implementation for set_attribute
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing set_attributes")
+            
+            # Implementation for set_attributes
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing record_exception")
+            
+            # Implementation for record_exception
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"record_exception completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"record_exception failed: {e}")
+            raise
+            logger.info(f"set_attributes completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"set_attributes failed: {e}")
+            raise
+            logger.info(f"set_attribute completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"set_attribute failed: {e}")
+            raise
+            logger.info(f"add_event completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"add_event failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"finish completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"finish failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
             'completed_traces': len(self.completed_traces),
             'sampling_rate': self.sampling_rate
         }
@@ -693,6 +776,20 @@ Get the current active span"""
         return _span_context.get_current_span()
     
     def get_current_trace_id(self) -> Optional[str]:
+        try:
+            logger.info(f"Executing async_wrapper")
+            
+            # Implementation for async_wrapper
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"async_wrapper completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"async_wrapper failed: {e}")
+            raise
         """
 Get the current trace ID"""
         return _span_context.get_trace_id()
@@ -701,6 +798,25 @@ Get the current trace ID"""
                    status_message: Optional[str] = None):
         """
 Finish a span"""
+        self.span_manager.finish_span(span, status, status_message)
+        
+        # Clear current span if it's this one
+        current_span = _span_context.get_current_span()
+        if current_span and current_span.span_id == span.span_id:
+        try:
+            logger.info(f"Executing wrapper")
+            
+            # Implementation for wrapper
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"wrapper completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"wrapper failed: {e}")
+            raise
         self.span_manager.finish_span(span, status, status_message)
         
         # Clear current span if it's this one
@@ -1495,6 +1611,23 @@ Trace AI model inference operations"""
                         }
                     )
                 
+                self.tracer.finish_span(span, SpanStatus.OK)
+                
+            except Exception as e:
+        try:
+            logger.info(f"Executing noop")
+            
+            # Implementation for noop
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"noop completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"noop failed: {e}")
+            raise
                 self.tracer.finish_span(span, SpanStatus.OK)
                 
             except Exception as e:

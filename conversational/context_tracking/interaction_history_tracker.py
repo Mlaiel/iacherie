@@ -112,7 +112,20 @@ class InteractionEvent:
     satisfaction_indicator: Optional[float] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             "event_id": self.event_id,
             "user_id": self.user_id,
             "session_id": self.session_id,
@@ -231,6 +244,32 @@ Calculate session engagement score"""
         return min(engagement_score, 1.0)
     
     def to_dict(self) -> Dict[str, Any]:
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
+        business_score = min(self.business_value_generated / 100, 1.0)  # Normalize to 100
+        
+        engagement_score = (
+            interaction_variety * 0.3 +
+            success_rate * 0.3 +
+            duration_score * 0.2 +
+            business_score * 0.2
+        )
+        
+        return min(engagement_score, 1.0)
+    
+    def to_dict(self) -> Dict[str, Any]:
         return {
             "session_id": self.session_id,
             "user_id": self.user_id,
@@ -252,7 +291,20 @@ Calculate session engagement score"""
             "business_value_generated": self.business_value_generated,
             "satisfaction_score": self.satisfaction_score,
             "frustration_indicators": self.frustration_indicators,
-            "help_requests": self.help_requests,
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             "engagement_score": self.calculate_engagement_score()
         }
 
@@ -1382,10 +1434,17 @@ class InteractionHistoryTracker:
         """
 Background task for analytics processing"""
         while True:
-            try:
-                await asyncio.sleep(300)  # Run every 5 minutes
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
                 
-                # Process interaction buffer
+                        await session.commit()
+                        logger.info(f"Database operation _update_all_user_profiles completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _update_all_user_profiles failed: {e}")
+                    raise
                 if self.interaction_buffer:
                     await self._process_interaction_buffer()
                 

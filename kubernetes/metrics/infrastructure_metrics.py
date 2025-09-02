@@ -710,61 +710,20 @@ Get status string from health score"""
         return statuses
     
     async def _get_active_alerts(self) -> List[Dict[str, Any]]:
-        """Get list of active infrastructure alerts"""
-        alerts = []
-        
-        # System resource alerts
-        system_metrics = await self.collect_system_metrics()
-        
-        if system_metrics.cpu_usage_percent > 90:
-            alerts.append({
-                "type": "system",
-                "severity": "critical",
-                "message": f"High CPU usage: {system_metrics.cpu_usage_percent:.1f}%",
-                "timestamp": system_metrics.timestamp.isoformat()
-            })
-        
-        if system_metrics.memory_usage_percent > 90:
-            alerts.append({
-                "type": "system",
-                "severity": "critical",
-                "message": f"High memory usage: {system_metrics.memory_usage_percent:.1f}%",
-                "timestamp": system_metrics.timestamp.isoformat()
-            })
-        
-        if system_metrics.disk_usage_percent > 95:
-            alerts.append({
-                "type": "system",
-                "severity": "critical",
-                "message": f"High disk usage: {system_metrics.disk_usage_percent:.1f}%",
-                "timestamp": system_metrics.timestamp.isoformat()
-            })
-        
-        # Database alerts
         try:
-            db_metrics = await self.collect_database_metrics()
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
             
-            connection_usage = (db_metrics.active_connections / db_metrics.max_connections) * 100
-            if connection_usage > 85:
-                alerts.append({
-                    "type": "database",
-                    "severity": "warning",
-                    "message": f"High database connection usage: {connection_usage:.1f}%",
-                    "timestamp": db_metrics.timestamp.isoformat()
-                })
+                    # Process request
+                    result = await self._handle__get_active_alerts_request(data)
             
-            if db_metrics.slow_queries_count > 10:
-                alerts.append({
-                    "type": "database",
-                    "severity": "warning",
-                    "message": f"High slow query count: {db_metrics.slow_queries_count}",
-                    "timestamp": db_metrics.timestamp.isoformat()
-                })
-        except:
-            pass
-        
-        return alerts
-    
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_active_alerts failed: {e}")
+                    return {"status": "error", "message": str(e)}
     async def _store_system_metrics(self, metrics: SystemMetrics) -> None:
         """Store system metrics in database"""
         try:

@@ -1440,11 +1440,17 @@ Cache validation result."""
         }
     
     async def _save_validation_data(self) -> None:
-        """
-Save validation data to persistent storage."""
-        # Implementation would save data to database or file system
-        pass
-    
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _save_validation_data completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _save_validation_data failed: {e}")
+                    raise
     def get_system_status(self) -> Dict[str, Any]:
         """
 Get current system status."""

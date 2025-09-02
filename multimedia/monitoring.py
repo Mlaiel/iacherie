@@ -177,13 +177,51 @@ Base class for platform crawlers"""
     async def search_content(
         self, 
         query: str,
-        content_type: Optional[str] = None,
-        max_results: int = 100
-    ) -> List[SearchResult]:
-        """
-Search for content on platform"""
-        pass
-    
+        try:
+            logger.info(f"Executing search_content")
+            
+            # Implementation for search_content
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"search_content completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+        try:
+                    # Request validation
+                    if not url:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_content_metadata_request(url)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_content_metadata failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                    processed_input = await self._preprocess_extract_content_input(url)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_extract_content_result(result)
+            
+                    logger.info(f"AI processing extract_content completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing extract_content failed: {e}")
+                    raise
+            logger.error(f"search_content failed: {e}")
+            raise
     @abstractmethod
     async def extract_content(self, url: str) -> Optional[bytes]:
         """

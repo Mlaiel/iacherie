@@ -153,37 +153,20 @@ Analyser la priorité d'un domaine métier"""
     }
 
 def _estimate_implementation_effort(file_item: Dict) -> float:
-    """
-Estimer l'effort d'implémentation en jours"""
-    
-    # Facteurs d'effort
-    base_effort = 0.5  # Minimum 0.5 jour par fichier
-    
-    # Effort basé sur les gaps
-    todo_effort = file_item['todo_count'] * 0.1  # 0.1 jour par TODO
-    empty_method_effort = file_item['empty_methods'] * 0.3  # 0.3 jour par méthode vide
-    not_impl_effort = file_item['not_implemented_errors'] * 0.5  # 0.5 jour par NotImplemented
-    
-    # Multiplicateur de complexité
-    complexity_multiplier = 1.0
-    if file_item['external_apis']:
-        complexity_multiplier += len(file_item['external_apis']) * 0.2
-    if file_item['critical_methods']:
-        complexity_multiplier += len(file_item['critical_methods']) * 0.1
-    
-    # Multiplicateur d'impact business
-    impact_multiplier = {
-        'critical': 1.5,
-        'high': 1.2,
-        'medium': 1.0,
-        'low': 0.8,
-        'minimal': 0.5
-    }.get(file_item['business_impact'], 1.0)
-    
-    total_effort = (base_effort + todo_effort + empty_method_effort + not_impl_effort) * complexity_multiplier * impact_multiplier
-    
-    return round(total_effort, 1)
-
+        try:
+            logger.info(f"Executing _estimate_implementation_effort")
+            
+            # Implementation for _estimate_implementation_effort
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_estimate_implementation_effort completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_estimate_implementation_effort failed: {e}")
+            raise
 def _generate_business_rationale(file_item: Dict) -> str:
     """
 Générer la justification business pour un fichier"""

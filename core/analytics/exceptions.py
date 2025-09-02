@@ -103,7 +103,46 @@ class AnalyticsError(AnalyticsBaseError):
     """General analytics operation error"""
     
     def __init__(self, message: str, **kwargs):
-        super().__init__(
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+            raise
+            raise
             message,
             category=ErrorCategory.PROCESSING,
             **kwargs
@@ -387,6 +426,27 @@ Resource limitation error"""
         super().__init__(
             message,
             category=ErrorCategory.RESOURCE,
+            severity=ErrorSeverity.HIGH,
+            details=details,
+            **kwargs
+        )
+
+
+class ExternalServiceError(AnalyticsBaseError):
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
             severity=ErrorSeverity.HIGH,
             details=details,
             **kwargs

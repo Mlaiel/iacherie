@@ -436,11 +436,28 @@ Initialize video platform monitoring."""
         await self._perform_video_platform_search(target)
     
     async def _init_webhook_monitor(self, target: MonitoringTarget) -> None:
-        """
-Initialize webhook monitoring."""
-        # Webhook monitoring is passive - handled by receive_webhook
-        pass
-    
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_init_webhook_monitor",
+                        "value": target if target else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _init_webhook_monitor collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _init_webhook_monitor failed: {e}")
+                    return None
     async def _perform_web_search(self, target: MonitoringTarget) -> None:
         """
 Perform web search for potential violations."""
@@ -468,22 +485,20 @@ Perform web search for potential violations."""
                     await self._analyze_search_result(target, result, f"social_{platform}")
             
             except Exception as e:
-                self.logger.error(f"Social media search failed for {platform}: {e}")
-    
-    async def _perform_video_platform_search(self, target: MonitoringTarget) -> None:
-        """Perform video platform search."""
-        platforms = ['youtube', 'vimeo', 'dailymotion']
-        
-        for platform in platforms:
-            try:
-                results = await self._search_video_platform(platform, target.keywords)
-                
-                for result in results:
-                    await self._analyze_search_result(target, result, f"video_{platform}")
+        try:
+            logger.info(f"Executing _search_web")
             
-            except Exception as e:
-                self.logger.error(f"Video platform search failed for {platform}: {e}")
-    
+            # Implementation for _search_web
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_search_web completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_search_web failed: {e}")
+            raise
     async def _search_web(self, query: str, content_type: str) -> List[Dict[str, Any]]:
         """Search the web for content."""
         # Implement web search using search engines or custom crawlers
@@ -491,26 +506,32 @@ Perform web search for potential violations."""
         search_results = []
         
         try:
-            # Example using a search API (would need real implementation)
-            async with aiohttp.ClientSession() as session:
-                # Placeholder for actual search implementation
-                pass
+        try:
+            logger.info(f"Executing _search_social_platform")
+            
+            # Implementation for _search_social_platform
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_search_social_platform completed successfully")
+            return result
             
         except Exception as e:
-            self.logger.error(f"Web search error: {e}")
-        
-        return search_results
-    
-    async def _search_social_platform(self, platform: str, keywords: List[str]) -> List[Dict[str, Any]]:
-        """Search social media platform."""
-        # Implement platform-specific search
-        # This would use platform APIs or web scraping
-        results = []
-        
         try:
-            # Platform-specific implementation needed
-            pass
+            logger.info(f"Executing _search_video_platform")
             
+            # Implementation for _search_video_platform
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_search_video_platform completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_search_video_platform failed: {e}")
+            raise
         except Exception as e:
             self.logger.error(f"Social platform search error for {platform}: {e}")
         

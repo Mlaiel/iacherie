@@ -63,8 +63,20 @@ class PostgreSQLCredentials:
     ssl_ca_path: Optional[str] = None
 
     def get_decrypted_password(self) -> str:
-        """Decrypt password using encryption key"""
         try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_decrypted_password_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_decrypted_password failed: {e}")
+                    return {"status": "error", "message": str(e)}
             fernet = Fernet(self.encryption_key.encode())
             return fernet.decrypt(self.password_encrypted.encode()).decode()
         except Exception as e:

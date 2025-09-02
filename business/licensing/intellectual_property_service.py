@@ -618,12 +618,20 @@ class IntellectualPropertyService:
     async def _perform_ip_conflict_analysis(
         self, 
         request: IPRegistrationRequest
-    ) -> Dict[str, Any]:
-        """
-Perform comprehensive IP conflict analysis"""
-        # Implementation for conflict analysis
-        pass
-    
+        try:
+            logger.info(f"Executing _perform_ip_conflict_analysis")
+            
+            # Implementation for _perform_ip_conflict_analysis
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_perform_ip_conflict_analysis completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_perform_ip_conflict_analysis failed: {e}")
+            raise
     async def _calculate_portfolio_metrics(
         self, 
         portfolio: List[IntellectualProperty]

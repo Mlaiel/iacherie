@@ -556,8 +556,33 @@ class CommissionCalculationDB(Base):
     paid_at = Column(DateTime)
     
     def __repr__(self):
-        return f"<CommissionCalculation(id={self.id}, creator_id={self.creator_id}, amount={self.commission_amount})>"
-
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
 class CommissionTransactionDB(Base):
     """SQLAlchemy model for commission transactions"""
     __tablename__ = "commission_transactions"
@@ -583,6 +608,70 @@ class CommissionTransactionDB(Base):
     processing_fee = Column(Numeric(12, 4), nullable=False, default=0)
     transfer_fee = Column(Numeric(12, 4), nullable=False, default=0)
     total_fees = Column(Numeric(12, 4), nullable=False, default=0)
+    net_amount = Column(Numeric(12, 4), nullable=False)
+    
+    metadata = Column(JSONB)
+    failure_reason = Column(Text)
+    retry_count = Column(Integer, nullable=False, default=0)
+    
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
+    processed_at = Column(DateTime)
+    completed_at = Column(DateTime)
+    
+    def __repr__(self):
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
+            raise
+    total_fees = Column(Numeric(12, 4), nullable=False, default=0)
+    net_amount = Column(Numeric(12, 4), nullable=False)
+    
+    metadata = Column(JSONB)
+    failure_reason = Column(Text)
+    retry_count = Column(Integer, nullable=False, default=0)
+    
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
+    processed_at = Column(DateTime)
+    completed_at = Column(DateTime)
+    
+    def __repr__(self):
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     net_amount = Column(Numeric(12, 4), nullable=False)
     
     metadata = Column(JSONB)

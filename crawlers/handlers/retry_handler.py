@@ -117,11 +117,39 @@ Information about a retry attempt."""
     metadata: Dict[str, Any] = None
     
     def __post_init__(self):
-        if self.metadata is None:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             self.metadata = {}
 
 
 @dataclass
+class RetryResult:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
 class RetryResult:
     """
 Result of retry operation."""
@@ -266,7 +294,20 @@ Calculate linear backoff delay."""
         delay = min(delay, max_delay)
         
         if jitter:
-            jitter_amount = delay * random.uniform(0, jitter_max)
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
             delay += jitter_amount
         
         return delay
@@ -767,7 +808,20 @@ Main retry handler orchestrating all retry operations."""
         config: Optional[RetryConfig] = None,
         circuit_breaker_name: Optional[str] = None,
         context: Optional[Dict[str, Any]] = None
-    ) -> Any:
+        try:
+            logger.info(f"Executing operation")
+            
+            # Implementation for operation
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"operation completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"operation failed: {e}")
+            raise
         """
         Retry operation and return result or raise exception.
         

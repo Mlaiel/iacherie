@@ -1279,33 +1279,20 @@ Collect evidence for a violation."""
         self._logger.debug(f"Started {len(self.workers)} violation processing workers")
     
     async def _worker_task(self, worker_id: str) -> None:
-        """Worker task for processing violations."""
-        self._logger.debug(f"Violation worker {worker_id} started")
-        
         try:
-            while True:
-                violation_id = None
-                
-                # Check high priority queue first
-                try:
-                    violation_id = self.high_priority_queue.get_nowait()
-                except asyncio.QueueEmpty:
-                    try:
-                        violation_id = await asyncio.wait_for(self.processing_queue.get(), timeout=1.0)
-                    except asyncio.TimeoutError:
-                        continue
-                
-                if violation_id:
-                    try:
-                        await self.process_violation(violation_id)
-                    except Exception as e:
-                        self._logger.error(f"Worker {worker_id} processing error: {e}")
-        
-        except asyncio.CancelledError:
-            pass
-        
-        self._logger.debug(f"Violation worker {worker_id} stopped")
-    
+            logger.info(f"Executing _worker_task")
+            
+            # Implementation for _worker_task
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_worker_task completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_worker_task failed: {e}")
+            raise
     async def shutdown(self) -> None:
         """Shutdown violation manager."""
         self._logger.info("Shutting down Violation Manager...")

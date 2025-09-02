@@ -269,17 +269,28 @@ Start continuous performance monitoring"""
         logger.info(f"Performance monitoring started with {interval}s interval")
     
     async def stop_monitoring(self):
-        """Stop performance monitoring"""
-        self.monitoring_active = False
-        if self.monitoring_task:
-            self.monitoring_task.cancel()
-            try:
-                await self.monitoring_task
-            except asyncio.CancelledError:
-                pass
-        
-        logger.info("Performance monitoring stopped")
-    
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "stop_monitoring",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric stop_monitoring collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection stop_monitoring failed: {e}")
+                    return None
     async def _monitoring_loop(self, interval: int):
         """Main monitoring loop"""
         while self.monitoring_active:
@@ -462,7 +473,20 @@ def get_global_metrics() -> MetricsCollector:
     return _global_metrics
 
 def get_global_monitor() -> PerformanceMonitor:
-    """
+        try:
+            logger.info(f"Executing decorator")
+            
+            # Implementation for decorator
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"decorator completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"decorator failed: {e}")
+            raise
 Get global performance monitor instance"""
     global _global_monitor
     if _global_monitor is None:

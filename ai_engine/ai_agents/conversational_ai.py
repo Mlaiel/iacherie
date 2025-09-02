@@ -213,6 +213,133 @@ class ConversationalAIAgent(BaseAIAgent):
         """Create mock NLP processor for testing compatibility"""
         class MockConversationalNLP:
             async def analyze_intent(self, text): return "general_inquiry"
+        try:
+        try:
+        try:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_analyze_context_input(messages)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_context_result(result)
+            
+                    logger.info(f"AI processing analyze_context completed")
+                    return final_result
+            
+                except Exception as e:
+        try:
+            logger.info(f"Executing detect_emotions")
+            
+            # Implementation for detect_emotions
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"detect_emotions completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"detect_emotions failed: {e}")
+            raise
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_context_result(result)
+            
+                    logger.info(f"AI processing analyze_context completed")
+                    return final_result
+            
+                except Exception as e:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_analyze_sentiment_input(text)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_sentiment_result(result)
+            
+                    logger.info(f"AI processing analyze_sentiment completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing analyze_sentiment failed: {e}")
+                    raise
+                    processed_input = await self._preprocess_analyze_context_input(messages)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_context_result(result)
+            
+                    logger.info(f"AI processing analyze_context completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing analyze_context failed: {e}")
+                    raise
+            logger.info(f"Executing detect_language")
+            
+            # Implementation for detect_language
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"detect_language completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"detect_language failed: {e}")
+            raise
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_extract_entities_input(text)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_extract_entities_result(result)
+            
+                    logger.info(f"AI processing extract_entities completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing extract_entities failed: {e}")
+                    raise
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_analyze_intent_input(text)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_intent_result(result)
+            
+                    logger.info(f"AI processing analyze_intent completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing analyze_intent failed: {e}")
+                    raise
             async def extract_entities(self, text): return []
             async def detect_language(self, text): return "en"
             async def analyze_context(self, messages): return {}

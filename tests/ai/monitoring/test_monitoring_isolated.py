@@ -57,7 +57,20 @@ Mock metric for testing."""
         self.tags = {}
     
     def to_dict(self):
-        return {
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             "name": self.name,
             "value": self.value,
             "timestamp": self.timestamp.isoformat(),

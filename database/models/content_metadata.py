@@ -318,8 +318,20 @@ class ContentMetadata(Base):
     )
     
     def __repr__(self):
-        return f"<ContentMetadata(id={self.id}, field_name='{self.field_name}', type={self.metadata_type.value}, schema={self.metadata_schema.value})>"
-    
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     def to_dict(self, include_binary: bool = False, include_ai_features: bool = False) -> Dict[str, Any]:
         """Convert model to dictionary for API responses"""
         base_dict = {

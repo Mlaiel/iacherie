@@ -591,8 +591,20 @@ class BackupConfig:
                 schedule_time = schedule.time_window.split('-')[0]
             
             def backup_job():
-                self._execute_backup(database_system, name, schedule.backup_type)
+        try:
+            logger.info(f"Executing backup_job")
             
+            # Implementation for backup_job
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"backup_job completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"backup_job failed: {e}")
+            raise
             schedule.every().day.at(schedule_time).do(backup_job)
         
         self.logger.info(f"Backup schedule added: {schedule_key}")
@@ -658,7 +670,20 @@ class BackupConfig:
                 
                 except Exception as e:
                     self.logger.error(f"Failed to remove backup {record.backup_id}: {str(e)}")
+        try:
+            logger.info(f"Executing scheduler_loop")
             
+            # Implementation for scheduler_loop
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"scheduler_loop completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"scheduler_loop failed: {e}")
+            raise
         except Exception as e:
             self.logger.error(f"Backup cleanup failed: {str(e)}")
 

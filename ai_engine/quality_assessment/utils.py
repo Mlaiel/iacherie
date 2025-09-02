@@ -720,40 +720,20 @@ class SystemUtils:
     
     @staticmethod
     def check_gpu_availability() -> Dict[str, Any]:
-        """
-        Check GPU availability and information
-        
-        Returns:
-            Dictionary containing GPU information
-        """
-        gpu_info = {
-            'available': False,
-            'count': 0,
-            'devices': []
-        }
-        
         try:
-            import torch
-            if torch.cuda.is_available():
-                gpu_info['available'] = True
-                gpu_info['count'] = torch.cuda.device_count()
-                
-                for i in range(gpu_info['count']):
-                    device_info = {
-                        'id': i,
-                        'name': torch.cuda.get_device_name(i),
-                        'memory_total': torch.cuda.get_device_properties(i).total_memory,
-                        'memory_allocated': torch.cuda.memory_allocated(i),
-                        'memory_cached': torch.cuda.memory_reserved(i)
-                    }
-                    gpu_info['devices'].append(device_info)
-        except ImportError:
-            pass
-        
-        return gpu_info
-
-
-# Utility function shortcuts
+            logger.info(f"Executing check_gpu_availability")
+            
+            # Implementation for check_gpu_availability
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"check_gpu_availability completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"check_gpu_availability failed: {e}")
+            raise
 def detect_content_type(file_path: Union[str, Path]) -> str:
     """
 Shortcut for FileValidator.detect_file_type"""

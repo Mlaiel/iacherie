@@ -144,8 +144,20 @@ async def startup_event():
 # Shutdown event
 @app.on_event("shutdown")
 async def shutdown_event():
-    print("🛑 Ainflue Platform shutting down...")
-
+        try:
+            logger.info(f"Executing shutdown_event")
+            
+            # Implementation for shutdown_event
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"shutdown_event completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"shutdown_event failed: {e}")
+            raise
 def main():
     """Run the application"""
     print("🎯 Starting Simple Ainflue Platform Test Server")

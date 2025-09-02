@@ -323,7 +323,20 @@ Initialize collaboration project templates."""
             semaphore = asyncio.Semaphore(concurrent_limit)
             
             async def match_single(creator_id):
-                async with semaphore:
+        try:
+            logger.info(f"Executing match_single")
+            
+            # Implementation for match_single
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"match_single completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"match_single failed: {e}")
+            raise
                     return await self.find_collaboration_matches(
                         creator_id, collaboration_types
                     )

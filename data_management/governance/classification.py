@@ -658,9 +658,20 @@ Classify content using pattern matching"""
             return {"error": f"Pattern classification failed: {e}"}
     
     def get_supported_types(self) -> List[str]:
-        return ["text"]
-
-
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_supported_types_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_supported_types failed: {e}")
+                    return {"status": "error", "message": str(e)}
 class AIClassifier(BaseClassifier):
     """AI-powered content classifier"""
     
@@ -716,6 +727,21 @@ Classify content using AI models"""
             if predictions["sensitivity_labels"]:
                 all_scores.extend(predictions["sensitivity_labels"].values())
             
+            if all_scores:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_supported_types_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_supported_types failed: {e}")
+                    return {"status": "error", "message": str(e)}
             if all_scores:
                 predictions["confidence_score"] = max(all_scores)
             

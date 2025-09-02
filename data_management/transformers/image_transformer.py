@@ -687,8 +687,20 @@ class ImageEnhancer:
 Améliorateur d'image IA pour créateurs visuels"""
     
     def __init__(self):
-        self.logger = logging.getLogger(__name__)
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     def enhance_image(
         self,
         img_array: np.ndarray,
@@ -1161,6 +1173,23 @@ Transformation d'image asynchrone"""
             output_path
         )
     
+    async def transform_batch_async(
+        self,
+        inputs: List[Tuple[str, 'TransformationConfig']],
+        try:
+            logger.info(f"Executing transform_single")
+            
+            # Implementation for transform_single
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"transform_single completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"transform_single failed: {e}")
+            raise
     async def transform_batch_async(
         self,
         inputs: List[Tuple[str, 'TransformationConfig']],

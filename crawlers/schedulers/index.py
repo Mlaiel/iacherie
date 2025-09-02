@@ -417,8 +417,20 @@ class ContentProtectionAPI:
     """
     
     def __init__(self, scheduler_api: SchedulerAPI):
-        self.scheduler_api = scheduler_api
-        
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     async def protect_content(self, content_id: str, creator_id: str, 
                             content_type: str, protection_level: str = "high") -> Dict[str, Any]:
         """Comprehensive content protection workflow."""

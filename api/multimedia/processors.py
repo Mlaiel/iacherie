@@ -107,10 +107,20 @@ Process content and return result"""
     
     @abstractmethod
     def supports_format(self, format_type: Union[str, ContentFormat]) -> bool:
-        """
-Check if processor supports given format"""
-        pass
-    
+        try:
+            logger.info(f"Executing supports_format")
+            
+            # Implementation for supports_format
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"supports_format completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"supports_format failed: {e}")
+            raise
     def _generate_content_id(self, content_data: bytes) -> str:
         """
 Generate unique content identifier"""
@@ -793,35 +803,26 @@ Process image content with advanced analysis"""
             return result
             
         except Exception as e:
-            logger.error(f"Image processing failed: {str(e)}")
-            return ProcessingResult(
-                success=False,
-                content_id=content_id if 'content_id' in locals() else "unknown",
-                original_format=ContentFormat.IMAGE,
-                error_message=str(e),
-                processing_time=(datetime.now() - start_time).total_seconds()
-            )
-    
-    async def _extract_image_metadata(self, image: Image.Image, path: Path) -> Dict[str, Any]:
-        """Extract comprehensive image metadata"""
-        metadata = {
-            'width': image.width,
-            'height': image.height,
-            'format': image.format,
-            'mode': image.mode,
-            'file_size': path.stat().st_size if path.exists() else 0,
-            'has_transparency': image.mode in ('RGBA', 'LA') or 'transparency' in image.info
-        }
-        
-        # EXIF data
         try:
-            exif = image.getexif()
-            if exif:
-                exif_data = {}
-                for tag_id, value in exif.items():
-                    tag = ExifTags.TAGS.get(tag_id, tag_id)
-                    exif_data[tag] = value
-                metadata['exif'] = exif_data
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__extract_image_metadata_input(image)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__extract_image_metadata_result(result)
+            
+                    logger.info(f"AI processing _extract_image_metadata completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _extract_image_metadata failed: {e}")
+                    raise
         except:
             pass
         

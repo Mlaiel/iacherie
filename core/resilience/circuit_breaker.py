@@ -109,8 +109,37 @@ class CircuitBreaker:
         if asyncio.iscoroutinefunction(func):
             @wraps(func)
             async def async_wrapper(*args, **kwargs):
-                async with self:
+        try:
+            logger.info(f"Executing async_wrapper")
+            
+            # Implementation for async_wrapper
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"async_wrapper completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"async_wrapper failed: {e}")
+            raise
                     return await func(*args, **kwargs)
+            return async_wrapper
+        else:
+        try:
+            logger.info(f"Executing async_call")
+            
+            # Implementation for async_call
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"async_call completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"async_call failed: {e}")
+            raise
             return async_wrapper
         else:
             @wraps(func)

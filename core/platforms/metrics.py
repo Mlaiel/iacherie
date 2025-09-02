@@ -432,21 +432,28 @@ Start metrics collection"""
         logger.info(f"Started metrics collection for {len(platforms)} platforms")
     
     async def stop_collection(self):
-        """Stop metrics collection"""
-        if not self.collection_active:
-            return
-        
-        self.collection_active = False
-        
-        if self.collection_task:
-            self.collection_task.cancel()
-            try:
-                await self.collection_task
-            except asyncio.CancelledError:
-                pass
-        
-        logger.info("Stopped metrics collection")
-    
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "stop_collection",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric stop_collection collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection stop_collection failed: {e}")
+                    return None
     async def _collection_loop(self, platforms: List[PlatformBase]):
         """Main collection loop"""
         try:

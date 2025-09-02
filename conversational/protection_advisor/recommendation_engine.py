@@ -774,10 +774,20 @@ Validate inputs for recommendation generation."""
         return None  # Simplified for now
 
     async def _cache_recommendation_results(self, user_id, risk_assessment, recommendations, scope):
-        """
-Cache recommendation results."""
-        pass  # Simplified for now
-
+        try:
+            logger.info(f"Executing _cache_recommendation_results")
+            
+            # Implementation for _cache_recommendation_results
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_cache_recommendation_results completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_cache_recommendation_results failed: {e}")
+            raise
     async def _apply_personalization(self, recommendations, personalization_factors):
         """
 Apply personalization to recommendations."""

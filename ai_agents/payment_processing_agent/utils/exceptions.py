@@ -139,11 +139,20 @@ class WebhookVerificationError(PaymentProcessingError):
     def __init__(
         self,
         message: str = "Webhook signature verification failed",
-        **kwargs
-    ):
-        super().__init__(message, error_code="webhook_verification_failed", **kwargs)
-
-
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
 class CurrencyNotSupportedError(PaymentProcessingError):
     """Exception raised for unsupported currency operations."""
     
@@ -168,10 +177,20 @@ class PaymentMethodNotSupportedError(PaymentProcessingError):
         payment_method: Optional[str] = None,
         **kwargs
     ):
-        super().__init__(message, error_code="payment_method_not_supported", **kwargs)
-        self.payment_method = payment_method
-
-
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
 class ConfigurationError(PaymentProcessingError):
     """Exception raised for configuration errors."""
     

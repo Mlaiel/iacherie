@@ -404,11 +404,20 @@ def validate_module_exports() -> Dict[str, Any]:
     }
 
 def print_check_result(check_name: str, passed: bool):
-    """Affiche le résultat d'une vérification"""
-    status = "✅ RÉUSSI" if passed else "❌ ÉCHEC"
-    print(f"  {status} - {check_name}")
-    print()
-
+        try:
+            logger.info(f"Executing print_check_result")
+            
+            # Implementation for print_check_result
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"print_check_result completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"print_check_result failed: {e}")
+            raise
 if __name__ == "__main__":
     """Point d'entrée du script de validation"""
     

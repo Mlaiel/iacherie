@@ -138,37 +138,20 @@ Initialize HTTP session with authentication."""
         )
         
     async def _get_auth_headers(self) -> Dict[str, str]:
-        """
-Generate authentication headers."""
-        headers = {}
-        
-        if self.config.auth_type == 'api_key':
-            if self.config.api_key:
-                headers['Authorization'] = f'Bearer {self.config.api_key}'
-                
-        elif self.config.auth_type == 'basic':
-            if self.config.api_key and self.config.secret_key:
-                credentials = base64.b64encode(
-                    f'{self.config.api_key}:{self.config.secret_key}'.encode()
-                ).decode()
-                headers['Authorization'] = f'Basic {credentials}'
-                
-        elif self.config.auth_type == 'jwt':
-            if self.config.secret_key:
-                payload = {
-                    'iss': 'ia-influencer-agent',
-                    'iat': int(time.time()),
-                    'exp': int(time.time()) + 3600  # 1 hour
-                }
-                token = jwt.encode(payload, self.config.secret_key, algorithm='HS256')
-                headers['Authorization'] = f'Bearer {token}'
-                
-        elif self.config.auth_type == 'oauth':
-            # OAuth implementation would go here
-            pass
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
             
-        return headers
-        
+                    # Process request
+                    result = await self._handle__get_auth_headers_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_auth_headers failed: {e}")
+                    return {"status": "error", "message": str(e)}
     async def _check_rate_limit(self, endpoint: str):
         """
 Check and enforce rate limiting."""
@@ -395,7 +378,20 @@ Handle paginated API requests."""
         return results
         
     async def webhook_handler(self, webhook_data: Dict[str, Any]) -> Dict[str, Any]:
-        """
+        try:
+            logger.info(f"Executing make_single_request")
+            
+            # Implementation for make_single_request
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"make_single_request completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"make_single_request failed: {e}")
+            raise
 Handle incoming webhook data."""
         try:
             # Validate webhook (implement signature verification if needed)

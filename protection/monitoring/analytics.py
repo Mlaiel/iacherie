@@ -749,10 +749,99 @@ Run individual collector in background"""
             logger.error(f"Error in collector {collector_name}: {str(e)}")
     
     async def _collect_infringement_metrics(self):
-        """Collect real-time infringement detection metrics"""
-        # Implementation for infringement detection
-        pass
-    
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_collect_infringement_metrics",
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_collect_performance_metrics",
+                        "value": data if data else 0,
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_collect_activity_metrics",
+                        "value": data if data else 0,
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_collect_health_metrics",
+                        "value": data if data else 0,
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_collect_security_metrics",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _collect_security_metrics collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _collect_security_metrics failed: {e}")
+                    return None
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _collect_health_metrics collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _collect_health_metrics failed: {e}")
+                    return None
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _collect_activity_metrics collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _collect_activity_metrics failed: {e}")
+                    return None
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _collect_performance_metrics collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _collect_performance_metrics failed: {e}")
+                    return None
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _collect_infringement_metrics collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _collect_infringement_metrics failed: {e}")
+                    return None
     async def _collect_performance_metrics(self):
         """
 Collect real-time performance metrics"""

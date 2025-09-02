@@ -307,8 +307,20 @@ class ProtectionPolicy(Base):
     content = relationship("UserContent", back_populates="protection_policies")
     
     def __repr__(self):
-        return f"<ProtectionPolicy(id={self.id}, name={self.name}, type={self.policy_type.value})>"
-    
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     @classmethod
     def create_default_policy(
         cls, 

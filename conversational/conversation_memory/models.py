@@ -417,8 +417,20 @@ class ContentContext(ConversationContext):
     collaboration_needs: List[str] = field(default_factory=list)
     
     def __post_init__(self):
-        self.context_type = ContextType.CONTENT_CONTEXT
-    
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
         base_dict = super().to_dict()
@@ -458,7 +470,20 @@ class ContentContext(ConversationContext):
 
 @dataclass
 class CollaborationContext(ConversationContext):
-    """Context for collaboration conversations"""
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     collaboration_type: str = ""  # cross_promotion, joint_content, skill_sharing, resource_sharing
     partner_types: List[str] = field(default_factory=list)  # musician, blogger, photographer, etc.
     collaboration_scope: str = ""  # local, national, international
@@ -502,6 +527,24 @@ class CollaborationContext(ConversationContext):
             revenue_sharing=data.get("revenue_sharing", {}),
             legal_considerations=data.get("legal_considerations", []),
             communication_preferences=data.get("communication_preferences", {}),
+            metadata=data.get("metadata", {})
+        )
+        
+        if data.get("created_at"):
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             metadata=data.get("metadata", {})
         )
         

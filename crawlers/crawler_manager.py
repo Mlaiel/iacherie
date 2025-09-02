@@ -472,7 +472,20 @@ Initialize crawler manager."""
             semaphore = asyncio.Semaphore(max_concurrent)
             
             async def search_with_semaphore(search_config):
-                async with semaphore:
+        try:
+            logger.info(f"Executing search_with_semaphore")
+            
+            # Implementation for search_with_semaphore
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"search_with_semaphore completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"search_with_semaphore failed: {e}")
+            raise
                     return await self.search_platform_content(
                         search_config["platform"],
                         search_config["query"],

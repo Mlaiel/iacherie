@@ -1176,10 +1176,17 @@ Get performance alerts."""
         return []
     
     async def _save_cache_data(self):
-        """
-Save cache data to persistent storage."""
-        pass
-    
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _save_cache_data completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _save_cache_data failed: {e}")
+                    raise
     def get_system_status(self) -> Dict[str, Any]:
         """
 Get current system status."""

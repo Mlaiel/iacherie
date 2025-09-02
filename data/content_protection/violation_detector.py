@@ -578,11 +578,35 @@ Validate detection configuration"""
         return True
     
     async def _store_detection_config(self, config: DetectionConfig):
-        """
-Store detection configuration in database"""
-        # Implementation would store config in database
-        pass
-    
+        try:
+            logger.info(f"Executing _store_detection_config")
+            
+            # Implementation for _store_detection_config
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_detection_config completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _initialize_detection_fingerprints")
+            
+            # Implementation for _initialize_detection_fingerprints
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_initialize_detection_fingerprints completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_initialize_detection_fingerprints failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"_store_detection_config failed: {e}")
+            raise
     async def _initialize_detection_fingerprints(self, config: DetectionConfig):
         """
 Initialize detection fingerprints for content"""
@@ -712,7 +736,20 @@ Scan TikTok for violations"""
         return violations
     
     async def _scan_twitter_violations(self, content_id: str, fingerprints: Dict,
-                                     config: DetectionConfig) -> List[ViolationAlert]:
+        try:
+            logger.info(f"Executing _store_violation_alert")
+            
+            # Implementation for _store_violation_alert
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_violation_alert completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_violation_alert failed: {e}")
+            raise
         """
 Scan Twitter for violations"""
         violations = []
@@ -807,9 +844,20 @@ Collect webpage metadata as evidence"""
                             elif name == 'keywords':
                                 metadata['keywords'] = content
                             elif name == 'author':
-                                metadata['author'] = content
-                        
-                        evidence = ViolationEvidence(
+        try:
+            logger.info(f"Executing _store_violation_evidence")
+            
+            # Implementation for _store_violation_evidence
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_violation_evidence completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_violation_evidence failed: {e}")
+            raise
                             evidence_id=str(uuid.uuid4()),
                             violation_id='',  # Will be set by caller
                             evidence_type='metadata',

@@ -832,8 +832,44 @@ Convert priority to numeric score."""
         )
     
     async def _get_content_metadata(self, user_id: str, content_id: str) -> Dict[str, Any]:
-        return {"id": content_id, "type": "video", "title": "Sample Content"}  # Simplified
-    
+        try:
+                    # Request validation
+                    if not user_id:
+        try:
+            logger.info(f"Executing _build_user_context")
+            
+            # Implementation for _build_user_context
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _build_policy_context")
+            
+            # Implementation for _build_policy_context
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_build_policy_context completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_build_policy_context failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_build_user_context completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_build_user_context failed: {e}")
+            raise
+                    result = await self._handle__get_content_metadata_request(user_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_content_metadata failed: {e}")
+                    return {"status": "error", "message": str(e)}
     async def _build_user_context(self, user_id: str, scope: Dict[str, Any]) -> Dict[str, Any]:
         return {"user_id": user_id, "protection_maturity": "intermediate"}  # Simplified
     

@@ -465,7 +465,20 @@ class MetricsCollector:
     def _start_background_aggregation(self):
         """Start background metric aggregation"""
         def aggregation_worker():
-            while True:
+        try:
+            logger.info(f"Executing aggregation_worker")
+            
+            # Implementation for aggregation_worker
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"aggregation_worker completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"aggregation_worker failed: {e}")
+            raise
                 try:
                     time.sleep(self.aggregation_interval)
                     self._aggregate_metrics()

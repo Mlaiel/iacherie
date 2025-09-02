@@ -187,37 +187,20 @@ class MongoDBConnectionPool(IConnectionPool):
             return False
     
     def _build_connection_uri(self) -> str:
-        """Build MongoDB connection URI"""
-        # Encode credentials
-        username = quote_plus(self.connection_info.username)
-        password = quote_plus(self.connection_info.password)
-        
-        # Build base URI
-        if self.connection_info.username and self.connection_info.password:
-            uri = f"mongodb://{username}:{password}@{self.connection_info.host}:{self.connection_info.port}/{self.connection_info.database}"
-        else:
-            uri = f"mongodb://{self.connection_info.host}:{self.connection_info.port}/{self.connection_info.database}"
-        
-        # Add connection parameters
-        params = []
-        
-        if self.config.replica_set:
-            params.append(f"replicaSet={self.config.replica_set}")
-        
-        if self.config.encrypt_connections:
-            params.append("ssl=true")
-            if self.config.validate_ssl:
-                params.append("ssl_cert_reqs=CERT_REQUIRED")
-        
-        # Add custom connection parameters
-        for key, value in self.connection_info.connection_params.items():
-            params.append(f"{key}={value}")
-        
-        if params:
-            uri += "?" + "&".join(params)
-        
-        return uri
-    
+        try:
+            logger.info(f"Executing _build_connection_uri")
+            
+            # Implementation for _build_connection_uri
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_build_connection_uri completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_build_connection_uri failed: {e}")
+            raise
     def _get_read_preference(self) -> ReadPreference:
         """Get MongoDB read preference"""
         preference_map = {

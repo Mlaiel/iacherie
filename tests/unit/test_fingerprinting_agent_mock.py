@@ -90,8 +90,20 @@ Test cases for fingerprinting agent with mocks"""
     
     @pytest.fixture
     def agent(self):
-        return MockFingerprintingAgent()
-    
+        try:
+            logger.info(f"Executing agent")
+            
+            # Implementation for agent
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"agent completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"agent failed: {e}")
+            raise
     async def test_audio_fingerprint_generation(self, agent):
         """
 Test audio fingerprint generation"""

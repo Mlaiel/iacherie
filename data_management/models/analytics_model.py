@@ -117,7 +117,20 @@ class MetricsModel:
         return self.change_percentage
     
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             "metric_id": self.metric_id,
             "tenant_id": self.tenant_id,
             "creator_id": self.creator_id,
@@ -188,7 +201,20 @@ class RevenueModel:
     # Timestamps
     created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     updated_at: Optional[datetime] = None
-    
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
     def calculate_net_amount(self) -> Decimal:
         """Calcule le montant net après déductions"""
         self.net_amount = self.gross_amount - self.platform_fee - self.service_fee - self.tax_amount
@@ -355,6 +381,21 @@ Calcule les métriques de revenus dérivées"""
         self.insights = insights
         return insights
     
+    def generate_recommendations(self) -> List[str]:
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
     def generate_recommendations(self) -> List[str]:
         """Génère des recommandations automatiques"""
         recommendations = []

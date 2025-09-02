@@ -477,10 +477,88 @@ Get fallback gateway"""
         return None  # Simplified implementation
     
     async def _store_transaction(self, transaction: PaymentTransaction):
-        """
-Store transaction"""
-        pass  # Simplified implementation
-    
+        try:
+            logger.info(f"Executing _store_transaction")
+            
+            # Implementation for _store_transaction
+            # TODO: Add specific business logic here
+        try:
+                    # Request validation
+                    if not transaction:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__trigger_post_payment_actions_request(transaction)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+        try:
+            logger.info(f"Executing _alert_fraud_team")
+            
+            # Implementation for _alert_fraud_team
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_alert_fraud_team completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_monitor_ethereum_transactions",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _monitor_ethereum_transactions collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _monitor_ethereum_transactions failed: {e}")
+                    return None
+                        "metric_name": "_monitor_bitcoin_transactions",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _monitor_bitcoin_transactions collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _monitor_bitcoin_transactions failed: {e}")
+                    return None
+        except Exception as e:
+            logger.error(f"_alert_fraud_team failed: {e}")
+            raise
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _trigger_post_payment_actions failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            logger.info(f"_store_transaction completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_transaction failed: {e}")
+            raise
     async def _trigger_post_payment_actions(self, transaction: PaymentTransaction):
         """
 Trigger post-payment actions"""

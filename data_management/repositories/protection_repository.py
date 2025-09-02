@@ -1072,8 +1072,59 @@ class AsyncProtectionRepository(AsyncBaseRepository[ProtectionModel]):
         return protection
     
     async def get_by_id(self, protection_id: str) -> Optional[ProtectionModel]:
-        return None
-    
+        try:
+                    # Request validation
+                    if not protection_id:
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation update completed")
+                        return True
+                
+                except Exception as e:
+        try:
+            logger.info(f"Executing list")
+            
+            # Implementation for list
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"list completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"list failed: {e}")
+            raise
+                except Exception as e:
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation delete completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation delete failed: {e}")
+                    raise
+                        await session.commit()
+                        logger.info(f"Database operation update completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation update failed: {e}")
+                    raise
+                    result = await self._handle_get_by_id_request(protection_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_by_id failed: {e}")
+                    return {"status": "error", "message": str(e)}
     async def update(self, protection: ProtectionModel) -> ProtectionModel:
         return protection
     

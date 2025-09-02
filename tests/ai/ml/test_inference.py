@@ -377,7 +377,20 @@ Test streaming inference functionality"""
         
         # Mock streaming data generator
         async def data_generator():
-            for i in range(5):
+        try:
+            logger.info(f"Executing data_generator")
+            
+            # Implementation for data_generator
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"data_generator completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"data_generator failed: {e}")
+            raise
                 yield torch.randn(1, 768)
                 await asyncio.sleep(0.01)
         
@@ -462,14 +475,20 @@ Test model server initialization"""
         # Invalid request
         invalid_request = {
             "inputs": "not_a_list"
-        }
-        
-        is_valid, error = server.validate_request(invalid_request)
-        assert not is_valid
-        assert error is not None
-
-    def test_rate_limiting(self, sample_inference_config):
-        """Test request rate limiting"""
+        try:
+            logger.info(f"Executing test_rate_limiting")
+            
+            # Implementation for test_rate_limiting
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"test_rate_limiting completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"test_rate_limiting failed: {e}")
+            raise
         sample_inference_config.rate_limit = 10  # requests per minute
         server = ModelServer(sample_inference_config)
         

@@ -74,7 +74,20 @@ Definition of a quality metric"""
     thresholds: Dict[str, float] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             'name': self.name,
             'type': self.metric_type.value,
             'category': self.category.value,
@@ -87,6 +100,20 @@ Definition of a quality metric"""
 
 @dataclass
 class MetricSummary:
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
     """
 Statistical summary of metric values"""
     count: int

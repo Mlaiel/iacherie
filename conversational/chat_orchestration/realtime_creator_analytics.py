@@ -1196,10 +1196,53 @@ Calculate trend direction from data points"""
     
     # Storage methods (placeholder implementations)
     async def _store_analytics_data_point(self, data_point: AnalyticsDataPoint) -> None:
-        """Store analytics data point in database"""
-        # Implementation would insert into time-series database
-        pass
-    
+        try:
+            logger.info(f"Executing _store_analytics_data_point")
+            
+            # Implementation for _store_analytics_data_point
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _store_creator_insights")
+            
+            # Implementation for _store_creator_insights
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_creator_insights completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _store_real_time_alert")
+            
+            # Implementation for _store_real_time_alert
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_real_time_alert completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_real_time_alert failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_alert_rule completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_alert_rule failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"_store_creator_insights failed: {e}")
+            raise
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_analytics_data_point failed: {e}")
+            raise
     async def _store_creator_insights(self, insights: CreatorInsights) -> None:
         """
 Store creator insights in database"""

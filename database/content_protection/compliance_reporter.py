@@ -500,12 +500,20 @@ class ComplianceReporter:
     
     async def _get_consent_management_metrics(
         self, start_date: datetime, end_date: datetime
-    ) -> Dict[str, Any]:
-        """
-Get consent management metrics"""
-        # Implementation for consent metrics calculation
-        pass
-    
+        try:
+                    # Request validation
+                    if not start_date:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_consent_management_metrics_request(start_date)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_consent_management_metrics failed: {e}")
+                    return {"status": "error", "message": str(e)}
     async def _calculate_gdpr_compliance_score(self) -> float:
         """
 Calculate overall GDPR compliance score"""

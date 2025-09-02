@@ -16,10 +16,52 @@ except ImportError:
     # Fallback for when base agent is not available
     class BaseAIAgent:
         def __init__(self, config=None):
-            self.config = config or {}
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
 from ..models.behavior_models import (
     BehaviorAnalysisRequest,
     BehaviorAnalysisResult,
+    UserSegmentProfile,
+    BehaviorPrediction,
+    UserSegmentType,
+    BehaviorPatternType
+)
+# Use fallback imports for compatibility
+try:
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "collect_user_behavior_metrics",
+                        "value": user_id if user_id else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric collect_user_behavior_metrics collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection collect_user_behavior_metrics failed: {e}")
+                    return None
     UserSegmentProfile,
     BehaviorPrediction,
     UserSegmentType,

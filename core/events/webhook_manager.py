@@ -83,7 +83,20 @@ class WebhookEndpoint:
     updated_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             "endpoint_id": self.endpoint_id,
             "url": self.url,
             "name": self.name,
@@ -155,8 +168,20 @@ class WebhookDelivery:
     attempts: int = 0
     max_attempts: int = 3
     next_attempt: Optional[datetime] = None
-    
-    # Résultats
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
     response_status: Optional[int] = None
     response_body: Optional[str] = None
     response_headers: Optional[Dict[str, str]] = None

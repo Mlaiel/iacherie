@@ -80,9 +80,31 @@ class BaseExplainer(ABC):
     
     @abstractmethod
     def explain_global(self, X: np.ndarray) -> Dict[str, Any]:
-        """Generate global explanation"""
-        pass
-    
+        try:
+            logger.info(f"Executing explain_global")
+            
+            # Implementation for explain_global
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing explain_local")
+            
+            # Implementation for explain_local
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"explain_local completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"explain_local failed: {e}")
+            raise
+            logger.info(f"explain_global completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"explain_global failed: {e}")
+            raise
     @abstractmethod
     def explain_local(self, X: np.ndarray, instance_idx: int = 0) -> Dict[str, Any]:
         """Generate local explanation for a specific instance"""

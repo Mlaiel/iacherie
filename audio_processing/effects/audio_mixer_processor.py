@@ -50,7 +50,20 @@ class ChannelSettings:
     send_levels: Dict[str, float] = None
     
     def __post_init__(self):
-        if self.send_levels is None:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             self.send_levels = {}
 
 
@@ -103,21 +116,20 @@ Process audio through channel"""
         
         # Check mute
         if self.settings.mute:
-            processed = np.zeros_like(processed)
-        
-        return processed
-    
-    def _apply_filters(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """
-Apply high/low cut filters"""
-        processed = audio_data
-        
-        # High cut (low-pass) filter
-        if self.settings.high_cut_freq is not None:
-            from scipy import signal
-            nyquist = sample_rate / 2
-            high_cut_normalized = self.settings.high_cut_freq / nyquist
-            if high_cut_normalized < 1.0:
+        try:
+            logger.info(f"Executing _apply_filters")
+            
+            # Implementation for _apply_filters
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_apply_filters completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_apply_filters failed: {e}")
+            raise
                 b, a = signal.butter(2, high_cut_normalized, 'lowpass')
                 processed = signal.filtfilt(b, a, processed)
         

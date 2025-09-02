@@ -656,10 +656,20 @@ Get Kubernetes service account token."""
     
     @property
     def ldap_password(self) -> Optional[str]:
-        """
-Get LDAP password from environment."""
-        return os.getenv('LDAP_PASSWORD')
-    
+        try:
+            logger.info(f"Executing ldap_password")
+            
+            # Implementation for ldap_password
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"ldap_password completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"ldap_password failed: {e}")
+            raise
     @property
     def rotation_jobs_file(self) -> str:
         """

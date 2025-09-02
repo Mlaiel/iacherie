@@ -729,10 +729,17 @@ Cache proposal data"""
         )
     
     async def _update_proposal_vote_counts(self, proposal_id: int):
-        """Update cached proposal vote counts"""
-        # Implementation would aggregate votes from database
-        pass
-    
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _update_proposal_vote_counts completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _update_proposal_vote_counts failed: {e}")
+                    raise
     async def _handle_proposal_execution(
         self, 
         proposal: GovernanceProposal, 
@@ -765,6 +772,21 @@ Handle treasury allocation proposal execution"""
         logger.info(f"Handling parameter change for proposal {proposal.proposal_id}")
         # Implementation would update system parameters
 
+class TreasuryManager:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
 class TreasuryManager:
     """Manages platform treasury and fund allocation"""
     

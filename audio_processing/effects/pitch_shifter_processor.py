@@ -740,33 +740,20 @@ Reset processor state"""
         self.logger.info("Pitch shifter processor reset")
     
     def __del__(self):
-        """Cleanup"""
-        if hasattr(self, 'processing_lock'):
-            with self.processing_lock:
-                pass  # Ensure any ongoing processing completes
-        self.logger = logging.getLogger(self.__class__.__name__)
-        self.sample_rate = sample_rate
-        
-        # Processing parameters
-        self.pitch_shift_cents = 0  # -1200 to +1200 cents
-        self.formant_preserve = True
-        self.time_stretch_compensation = True
-        self.algorithm = PitchShiftAlgorithm.PHASE_VOCODER
-        
-        # Frame processing parameters
-        self.frame_size = 2048
-        self.hop_size = self.frame_size // 4
-        self.overlap_factor = 4
-        
-        # Initialize processing buffers
-        self._init_buffers()
-        
-        # PSOLA parameters
-        self.pitch_marks = []
-        self.target_pitch_marks = []
-        
-        self.logger.info("PitchShifterProcessor initialized")
-    
+        try:
+            logger.info(f"Executing __del__")
+            
+            # Implementation for __del__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__del__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__del__ failed: {e}")
+            raise
     def _init_buffers(self):
         """Initialize processing buffers"""
         self.input_buffer = np.zeros(self.frame_size * 2)

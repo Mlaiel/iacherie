@@ -625,14 +625,20 @@ Estimate identity verification completion time."""
         return "5-10 business days"
         
     def _get_required_documents(self, document_type: DocumentType) -> List[str]:
-        """Get list of required documents for verification type."""
-        requirements = {
-            DocumentType.PASSPORT: ["passport_front", "selfie"],
-            DocumentType.DRIVERS_LICENSE: ["license_front", "license_back", "selfie"],
-            DocumentType.NATIONAL_ID: ["id_front", "id_back", "selfie"]
-        }
-        return requirements.get(document_type, ["document", "selfie"])
-        
+        try:
+                    # Request validation
+                    if not document_type:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_required_documents_request(document_type)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_required_documents failed: {e}")
+                    return {"status": "error", "message": str(e)}
     async def _calculate_verification_level(
         self,
         client_id: UUID,
@@ -739,8 +745,17 @@ Get next steps for improving verification level."""
         return {"status": "verified"}
         
     async def _queue_manual_social_verification(self, verification: SocialVerification) -> Dict[str, Any]:
-        """Queue social verification for manual review."""
-        # Implementation would queue for manual review
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _update_client_verification_level completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _update_client_verification_level failed: {e}")
+                    raise
         return {"status": "queued"}
         
     async def _update_client_verification_level(self, client_id: UUID) -> None:

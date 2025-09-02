@@ -787,10 +787,80 @@ Traite un nouveau match"""
         pass
 
     async def _track_proposal(self, data: CollaborationNotificationData):
-        """
-Suit une proposition"""
-        pass
-
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_track_proposal",
+        try:
+            logger.info(f"Executing _initialize_project")
+            
+            # Implementation for _initialize_project
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _setup_collaboration_environment")
+            
+            # Implementation for _setup_collaboration_environment
+            # TODO: Add specific business logic here
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                        result = await session.execute(update_query)
+                        await session.commit()
+                        logger.info(f"Database operation _update_project_progress completed")
+                        return True
+                
+                except Exception as e:
+        try:
+        try:
+            logger.info(f"Executing _register_skill_opportunity")
+            
+            # Implementation for _register_skill_opportunity
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_register_skill_opportunity completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_register_skill_opportunity failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_finalize_project completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_finalize_project failed: {e}")
+            raise
+                except Exception as e:
+                    logger.error(f"Database operation _update_project_progress failed: {e}")
+                    raise
+            logger.info(f"_setup_collaboration_environment completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_setup_collaboration_environment failed: {e}")
+            raise
+            logger.info(f"_initialize_project completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_initialize_project failed: {e}")
+            raise
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _track_proposal collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _track_proposal failed: {e}")
+                    return None
     async def _initialize_project(self, data: CollaborationNotificationData):
         """
 Initialise un projet"""

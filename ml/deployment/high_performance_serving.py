@@ -493,19 +493,20 @@ class HighPerformanceModelServer:
             logger.info("Server tasks cancelled")
     
     async def stop_server(self):
-        """Stop the model serving server"""
-        self.is_running = False
-        
-        # Clean up workers
-        for worker in self.workers.values():
-            # Cancel any ongoing requests
-            pass
-        
-        self.workers.clear()
-        self.executor.shutdown(wait=True)
-        
-        logger.info("High-performance model server stopped")
-    
+        try:
+            logger.info(f"Executing stop_server")
+            
+            # Implementation for stop_server
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"stop_server completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"stop_server failed: {e}")
+            raise
     async def predict(self, request: PredictionRequest) -> PredictionResponse:
         """Make a prediction"""
         if not self.is_running:

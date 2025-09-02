@@ -269,8 +269,20 @@ class UserModel(Base):
     licenses = relationship("LicensingModel", back_populates="user")
     
     def __repr__(self):
-        return f"<UserModel(id='{self.id}', username='{self.username}', type='{self.user_type}')>"
-    
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     def to_dict(self, include_sensitive: bool = False) -> Dict[str, Any]:
         """Convert model to dictionary representation"""
         base_data = {
@@ -382,16 +394,32 @@ Check if subscription is active"""
     
     @property
     def platform_count(self) -> int:
-        """
-Count connected platforms"""
-        platforms = [
-            self.spotify_id, self.youtube_id, self.instagram_id,
-            self.tiktok_id, self.twitter_id, self.soundcloud_id, self.twitch_id
-        ]
-        return sum(1 for platform in platforms if platform)
-    
-    def set_password(self, password: str):
-        """
+        try:
+            logger.info(f"Executing set_password")
+            
+            # Implementation for set_password
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"set_password completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing verify_password")
+            
+            # Implementation for verify_password
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"verify_password completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"verify_password failed: {e}")
+            raise
 Set user password with salt and hash"""
         import secrets
         self.salt = secrets.token_hex(32)

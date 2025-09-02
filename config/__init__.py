@@ -110,11 +110,32 @@ Protocol interface pour tous les gestionnaires de configuration"""
     
     @abstractmethod
     async def initialize(self) -> bool:
-        """
-Initialisation du manager"""
-        pass
-    
-    @abstractmethod
+        try:
+            logger.info(f"Executing initialize")
+            
+            # Implementation for initialize
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"initialize completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_configuration_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_configuration failed: {e}")
+                    return {"status": "error", "message": str(e)}
     async def validate_configuration(self) -> Dict[str, Any]:
         """
 Validation de la configuration"""

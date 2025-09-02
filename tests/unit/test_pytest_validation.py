@@ -42,8 +42,20 @@ Test basic Python functionality"""
 def test_async_functionality():
     """Test async functionality works"""
     async def async_test():
-        return "async works"
-    
+        try:
+            logger.info(f"Executing async_test")
+            
+            # Implementation for async_test
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"async_test completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"async_test failed: {e}")
+            raise
     result = asyncio.run(async_test())
     assert result == "async works"
 

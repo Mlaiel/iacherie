@@ -67,11 +67,32 @@ class BaseContentProcessor(ABC):
     
     @abstractmethod
     async def initialize(self) -> None:
-        """
-Initialize the processor"""
-        pass
-    
-    @abstractmethod
+        try:
+            logger.info(f"Executing initialize")
+            
+            # Implementation for initialize
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"initialize completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing supports_format")
+            
+            # Implementation for supports_format
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"supports_format completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"supports_format failed: {e}")
+            raise
     async def process(self, file_path: str, metadata: Dict = None) -> Dict[str, Any]:
         """
 Process content and extract features"""

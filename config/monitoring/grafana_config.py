@@ -77,12 +77,33 @@ class GrafanaConfig:
     """Professional Grafana configuration for IA-Influencer platform"""
     
     def __init__(self):
-        self.grafana_url = os.getenv("GRAFANA_URL", "http://grafana:3000")
-        self.grafana_admin_user = os.getenv("GRAFANA_ADMIN_USER", "admin")
-        self.grafana_admin_password = os.getenv("GRAFANA_ADMIN_PASSWORD", "admin")
-        self.prometheus_url = os.getenv("PROMETHEUS_URL", "http://prometheus:9090")
-        self.organization_name = os.getenv("GRAFANA_ORG_NAME", "IA-Influencer")
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     def get_datasource_config(self) -> Dict[str, Any]:
         """Get Prometheus datasource configuration"""
         return {

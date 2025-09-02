@@ -162,49 +162,29 @@ class FingerprintConfig:
     def update_config(self, new_config: Dict[str, Any]):
         """Update configuration with new values"""
         def deep_update(base_dict, update_dict):
-            for key, value in update_dict.items():
-                if isinstance(value, dict) and key in base_dict:
-                    deep_update(base_dict[key], value)
-                else:
-                    base_dict[key] = value
-        
-        deep_update(self.config, new_config)
-    
-    def _apply_env_overrides(self):
-        """
-Apply environment variable overrides"""
-        env_mappings = {
-            'IA_SIMILARITY_THRESHOLD': ('similarity_threshold', float),
-            'IA_MAX_FILE_SIZE': ('max_file_size', int),
-            'IA_BATCH_SIZE': ('batch_size', int),
-            'IA_MAX_CONCURRENT': ('max_concurrent', int),
-            'IA_DUPLICATE_ACTION': ('duplicate_action', str),
-            'IA_ENABLE_PARALLEL': ('enable_parallel_processing', lambda x: x.lower() == 'true'),
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation deep_update completed")
+                        return True
+                
+                except Exception as e:
+        try:
+            logger.info(f"Executing _apply_env_overrides")
             
-            # Database overrides
-            'IA_DB_HOST': ('database.host', str),
-            'IA_DB_PORT': ('database.port', int),
-            'IA_DB_NAME': ('database.database', str),
-            'IA_DB_USER': ('database.user', str),
-            'IA_DB_PASSWORD': ('database.password', str),
-            'IA_DB_MIN_CONNECTIONS': ('database.min_connections', int),
-            'IA_DB_MAX_CONNECTIONS': ('database.max_connections', int),
+            # Implementation for _apply_env_overrides
+            # TODO: Add specific business logic here
             
-            # Audio overrides
-            'IA_AUDIO_SAMPLE_RATE': ('audio.sample_rate', int),
-            'IA_AUDIO_N_MFCC': ('audio.n_mfcc', int),
-            'IA_AUDIO_SIMILARITY_THRESHOLD': ('audio.similarity_threshold', float),
+            result = None  # Replace with actual implementation
             
-            # Video overrides
-            'IA_VIDEO_SAMPLE_FRAMES': ('video.sample_frames', int),
-            'IA_VIDEO_SIMILARITY_THRESHOLD': ('video.similarity_threshold', float),
+            logger.info(f"_apply_env_overrides completed successfully")
+            return result
             
-            # Image overrides
-            'IA_IMAGE_RESIZE_WIDTH': ('image.resize_width', int),
-            'IA_IMAGE_RESIZE_HEIGHT': ('image.resize_height', int),
-            'IA_IMAGE_SIMILARITY_THRESHOLD': ('image.similarity_threshold', float),
-            
-            # Text overrides
+        except Exception as e:
+            logger.error(f"_apply_env_overrides failed: {e}")
+            raise
             'IA_TEXT_SIMILARITY_THRESHOLD': ('text.similarity_threshold', float),
             'IA_TEXT_MAX_LENGTH': ('text.max_text_length', int),
             
@@ -356,13 +336,20 @@ Get global configuration instance"""
     return _global_config
 
 def set_global_config(config: FingerprintConfig):
-    """
-Set global configuration instance"""
-    global _global_config
-    _global_config = config
-
-def load_config_from_file(config_file: Path) -> FingerprintConfig:
-    """
+        try:
+            logger.info(f"Executing __str__")
+            
+            # Implementation for __str__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__str__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__str__ failed: {e}")
+            raise
 Load configuration from file and set as global"""
     config = FingerprintConfig(config_file=config_file)
     set_global_config(config)

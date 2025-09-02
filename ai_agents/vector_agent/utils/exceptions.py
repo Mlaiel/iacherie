@@ -76,7 +76,34 @@ class VectorProcessingError(VectorAgentBaseException):
     """General vector processing error"""
     
     def __init__(self, message: str, **kwargs):
-        super().__init__(
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+            logger.error(f"__init__ failed: {e}")
+            raise
             message,
             error_code=kwargs.get("error_code", "VECTOR_PROCESSING_ERROR"),
             **kwargs
@@ -147,6 +174,21 @@ class VectorIndexError(VectorAgentBaseException):
         )
 
 
+class FAISSIndexError(VectorIndexError):
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
 class FAISSIndexError(VectorIndexError):
     """FAISS-specific indexing errors"""
     
@@ -277,6 +319,66 @@ class SearchOptimizationError(VectorAgentBaseException):
 # STORAGE & PERSISTENCE ERRORS
 # ===============================
 
+class VectorStorageError(VectorAgentBaseException):
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+            message,
+            error_code=kwargs.get("error_code", "SEARCH_OPTIMIZATION_ERROR"),
+            context=context,
+            recovery_suggestions=kwargs.get("recovery_suggestions", [
+                "Clear search optimization cache",
+                "Adjust optimization parameters",
+                "Disable optimization temporarily if needed"
+            ]),
+            **kwargs
+        )
+
+
+# ===============================
+# STORAGE & PERSISTENCE ERRORS
+# ===============================
+
+class VectorStorageError(VectorAgentBaseException):
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
 class VectorStorageError(VectorAgentBaseException):
     """Vector storage and persistence errors"""
     
@@ -433,6 +535,20 @@ class InvalidConfigurationError(VectorConfigurationError):
             message,
             config_parameter=parameter,
             context={"parameter": parameter, "value": value, "reason": reason},
+        try:
+            logger.info(f"Executing wrapper")
+            
+            # Implementation for wrapper
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"wrapper completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"wrapper failed: {e}")
+            raise
             error_code="INVALID_CONFIGURATION",
             recovery_suggestions=[
                 f"Correct the '{parameter}' configuration parameter",

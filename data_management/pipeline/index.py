@@ -597,45 +597,34 @@ async def quick_process(
 
 
 def main():
-    """
-Main entry point for command-line usage."""
-    import argparse
-    import asyncio
-    
-    parser = argparse.ArgumentParser(description='IA Influencer Agent Pipeline')
-    parser.add_argument('content_path', help='Path to content file')
-    parser.add_argument('creator_type', help='Type of creator')
-    parser.add_argument('--metadata', help='JSON metadata string')
-    parser.add_argument('--output', help='Output file for results')
-    
-    args = parser.parse_args()
-    
-    # Parse metadata if provided
-    metadata = None
-    if args.metadata:
         try:
-            metadata = json.loads(args.metadata)
-        except json.JSONDecodeError:
-            print("Error: Invalid JSON metadata")
-            return
-    
-    # Process content
-    async def run():
-        try:
-            result = await quick_process(args.content_path, args.creator_type, metadata)
+            logger.info(f"Executing main")
             
-            if args.output:
-                with open(args.output, 'w') as f:
-                    json.dump(result, f, indent=2)
-                print(f"Results saved to {args.output}")
-            else:
-                print(json.dumps(result, indent=2))
-                
+            # Implementation for main
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"main completed successfully")
+            return result
+            
         except Exception as e:
-            print(f"Error: {str(e)}")
-    
-    asyncio.run(run())
-
-
+            logger.error(f"main failed: {e}")
+            raise
 if __name__ == "__main__":
     main()
+
+        try:
+            logger.info(f"Executing run")
+            
+            # Implementation for run
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"run completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"run failed: {e}")
+            raise

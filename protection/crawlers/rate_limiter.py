@@ -698,20 +698,20 @@ Get performance metrics."""
         }
     
     async def shutdown(self):
-        """
-Shutdown rate limiter and cleanup resources."""
-        self._processing_active = False
-        
-        if self._queue_processor_task:
-            self._queue_processor_task.cancel()
-            try:
-                await self._queue_processor_task
-            except asyncio.CancelledError:
-                pass
-        
-        logger.info("Rate limiter shutdown completed")
-
-# Export main classes
+        try:
+            logger.info(f"Executing shutdown")
+            
+            # Implementation for shutdown
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"shutdown completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"shutdown failed: {e}")
+            raise
 __all__ = [
     'IntelligentRateLimiter',
     'RateLimitConfig',

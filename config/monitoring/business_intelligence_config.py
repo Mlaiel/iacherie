@@ -123,51 +123,33 @@ class BusinessIntelligenceConfig:
     """
     
     def __init__(self):
-        """
-Initialize business intelligence configuration"""
-        self._kpis = {}
-        self._reports = {}
-        self._competitive_intelligence = {}
-        self._dashboards = {}
-        
-        # Configuration from environment
-        self.config = {
-            "bi_database_url": os.getenv("BI_DATABASE_URL", "postgresql://bi_user:password@localhost:5432/business_intelligence"),
-            "data_warehouse_url": os.getenv("DATA_WAREHOUSE_URL", "postgresql://dw_user:password@localhost:5432/data_warehouse"),
-            "analytics_api_key": os.getenv("ANALYTICS_API_KEY", ""),
+        try:
+            logger.info(f"Executing __init__")
             
-            # Business configuration
-            "company_name": os.getenv("COMPANY_NAME", "IA-Influencer Agent"),
-            "fiscal_year_start": os.getenv("FISCAL_YEAR_START", "01-01"),
-            "reporting_currency": os.getenv("REPORTING_CURRENCY", "EUR"),
-            "business_timezone": os.getenv("BUSINESS_TIMEZONE", "Europe/Berlin"),
+            # Implementation for __init__
+            # TODO: Add specific business logic here
             
-            # Reporting settings
-            "report_storage_path": os.getenv("REPORT_STORAGE_PATH", "/opt/reports"),
-            "report_retention_days": int(os.getenv("REPORT_RETENTION_DAYS", "365")),
-            "automated_reporting": os.getenv("AUTOMATED_REPORTING", "true").lower() == "true",
+            result = None  # Replace with actual implementation
             
-            # Data processing
-            "etl_schedule": os.getenv("ETL_SCHEDULE", "0 2 * * *"),  # Daily at 2 AM
-            "data_quality_threshold": float(os.getenv("DATA_QUALITY_THRESHOLD", "0.95")),
-            "outlier_detection_threshold": float(os.getenv("OUTLIER_DETECTION_THRESHOLD", "3.0")),
+            logger.info(f"__init__ completed successfully")
+            return result
             
-            # External integrations
-            "google_analytics_id": os.getenv("GOOGLE_ANALYTICS_ID", ""),
-            "mixpanel_project_id": os.getenv("MIXPANEL_PROJECT_ID", ""),
-            "segment_write_key": os.getenv("SEGMENT_WRITE_KEY", ""),
-            "hubspot_api_key": os.getenv("HUBSPOT_API_KEY", ""),
-        }
-        
-        self._setup_revenue_kpis()
-        self._setup_user_engagement_kpis()
-        self._setup_content_performance_kpis()
-        self._setup_growth_kpis()
-        self._setup_operational_kpis()
-        self._setup_customer_satisfaction_kpis()
-        self._setup_business_reports()
-        self._setup_competitive_intelligence()
-    
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     def _setup_revenue_kpis(self):
         """Setup revenue-related KPIs"""
         # Monthly Recurring Revenue

@@ -316,8 +316,20 @@ class SubscriptionPlan(Base):
     )
     
     def __repr__(self):
-        return f"<SubscriptionPlan(id={self.id}, name={self.name}, tier={self.tier.value}, price={self.price})>"
-    
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     @classmethod
     def create_basic_plan(cls) -> 'SubscriptionPlan':
         """Create a basic subscription plan"""

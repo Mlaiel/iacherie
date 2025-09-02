@@ -582,13 +582,26 @@ Validate sync license request"""
     async def _analyze_content_sync_suitability(
         self, 
         content_id: str, 
-        request: SyncLicenseRequest
-    ) -> Dict[str, Any]:
-        """
-Analyze content suitability for sync placement"""
-        # Implementation for content analysis
-        pass
-    
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__analyze_content_sync_suitability_input(content_id)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__analyze_content_sync_suitability_result(result)
+            
+                    logger.info(f"AI processing _analyze_content_sync_suitability completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _analyze_content_sync_suitability failed: {e}")
+                    raise
     async def _generate_sync_pricing_analysis(
         self, 
         request: SyncLicenseRequest, 

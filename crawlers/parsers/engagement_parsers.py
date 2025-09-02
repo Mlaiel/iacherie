@@ -51,10 +51,37 @@ Async context manager exit"""
     
     @abstractmethod
     async def parse_engagement(self, content_id: str, **kwargs) -> Dict[str, Any]:
-        """
-Parse engagement data for specific content"""
-        pass
-    
+        try:
+            logger.info(f"Executing parse_engagement")
+            
+            # Implementation for parse_engagement
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"parse_engagement completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_platform_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_platform_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            return result
+            
+        except Exception as e:
+            logger.error(f"parse_engagement failed: {e}")
+            raise
     @abstractmethod
     def get_platform_name(self) -> str:
         """
@@ -86,7 +113,20 @@ Classify engagement level based on rate"""
         """Basic sentiment analysis of comments"""
         if not comments:
             return {'positive': 0, 'negative': 0, 'neutral': 0, 'total': 0}
-        
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_platform_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_platform_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
         positive_words = ['good', 'great', 'amazing', 'awesome', 'love', 'excellent', 'fantastic', 'wonderful']
         negative_words = ['bad', 'terrible', 'awful', 'hate', 'worst', 'horrible', 'disgusting', 'stupid']
         
@@ -129,38 +169,20 @@ Parser for YouTube engagement metrics"""
                 'content_type': 'video',
                 'data': parsed_engagement,
                 'parsed_at': datetime.now(timezone.utc).isoformat()
-            }
+        try:
+                    # Request validation
+                    if not video_id:
+                        raise ValueError("Invalid request")
             
-        except Exception as e:
-            raise EngagementParsingError(
-                f"YouTube engagement parsing failed: {str(e)}",
-                platform="youtube",
-                content_id=video_id,
-                parser_type="YouTubeEngagementParser"
-            )
-    
-    async def _get_video_data(self, video_id: str) -> Dict[str, Any]:
-        """Get video statistics from YouTube Data API"""
-        url = "https://www.googleapis.com/youtube/v3/videos"
-        params = {
-            'id': video_id,
-            'part': 'statistics,snippet',
-            'key': self.config.platform['youtube'].api_key
-        }
-        
-        async with self.session.get(url, params=params) as response:
-            if response.status == 403:
-                raise AuthenticationError(
-                    "YouTube API quota exceeded or invalid key",
-                    platform="youtube",
-                    auth_type="api_key"
-                )
+                    # Process request
+                    result = await self._handle__get_comments_data_request(video_id)
             
-            response.raise_for_status()
-            data = await response.json()
+                    # Return response
+                    return {"status": "success", "data": result}
             
-            if not data.get('items'):
-                raise EngagementParsingError(
+                except Exception as e:
+                    logger.error(f"API handler _get_comments_data failed: {e}")
+                    return {"status": "error", "message": str(e)}
                     f"Video not found: {video_id}",
                     platform="youtube",
                     content_id=video_id
@@ -245,7 +267,20 @@ Parser for YouTube engagement metrics"""
                 'likes_per_view': round(likes / views * 1000, 2) if views > 0 else 0,
                 'comments_per_view': round(comment_count / views * 1000, 2) if views > 0 else 0,
                 'avg_comment_likes': round(avg_comment_likes, 2)
-            },
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_platform_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_platform_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
             'comments_analysis': {
                 'total_comments_analyzed': len(comments_data),
                 'sentiment': sentiment_analysis,
@@ -272,25 +307,20 @@ Parser for Instagram engagement metrics"""
     async def parse_engagement(self, media_id: str, **kwargs) -> Dict[str, Any]:
         """Parse Instagram media engagement"""
         try:
-            media_data = await self._get_media_data(media_id)
-            comments_data = await self._get_media_comments(media_id)
+        try:
+                    # Request validation
+                    if not media_id:
+                        raise ValueError("Invalid request")
             
-            parsed_engagement = await self._parse_instagram_engagement(media_data, comments_data)
+                    # Process request
+                    result = await self._handle__get_media_comments_request(media_id)
             
-            return {
-                'platform': self.get_platform_name(),
-                'content_id': media_id,
-                'content_type': media_data.get('media_type', 'unknown'),
-                'data': parsed_engagement,
-                'parsed_at': datetime.now(timezone.utc).isoformat()
-            }
+                    # Return response
+                    return {"status": "success", "data": result}
             
-        except Exception as e:
-            raise EngagementParsingError(
-                f"Instagram engagement parsing failed: {str(e)}",
-                platform="instagram",
-                content_id=media_id,
-                parser_type="InstagramEngagementParser"
+                except Exception as e:
+                    logger.error(f"API handler _get_media_comments failed: {e}")
+                    return {"status": "error", "message": str(e)}
             )
     
     async def _get_media_data(self, media_id: str) -> Dict[str, Any]:
@@ -356,6 +386,20 @@ Parser for Instagram engagement metrics"""
                 'media_type': media_data.get('media_type', 'unknown')
             },
             'interactions': {
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_platform_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_platform_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
                 'like_to_comment_ratio': round(likes / comments_count, 2) if comments_count > 0 else 0,
                 'avg_comment_likes': round(avg_comment_likes, 2)
             },
@@ -381,26 +425,20 @@ Parser for Instagram engagement metrics"""
 
 
 class FacebookEngagementParser(BaseEngagementParser):
-    """
-Parser for Facebook engagement metrics"""
-    
-    def get_platform_name(self) -> str:
-        return "facebook"
-    
-    async def parse_engagement(self, post_id: str, **kwargs) -> Dict[str, Any]:
-        """Parse Facebook post engagement"""
         try:
-            post_data = await self._get_post_data(post_id)
-            comments_data = await self._get_post_comments(post_id)
-            reactions_data = await self._get_post_reactions(post_id)
+                    # Request validation
+                    if not post_id:
+                        raise ValueError("Invalid request")
             
-            parsed_engagement = await self._parse_facebook_engagement(post_data, comments_data, reactions_data)
+                    # Process request
+                    result = await self._handle__get_post_comments_request(post_id)
             
-            return {
-                'platform': self.get_platform_name(),
-                'content_id': post_id,
-                'content_type': 'post',
-                'data': parsed_engagement,
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_post_comments failed: {e}")
+                    return {"status": "error", "message": str(e)}
                 'parsed_at': datetime.now(timezone.utc).isoformat()
             }
             
@@ -483,6 +521,25 @@ Parser for Facebook engagement metrics"""
         sentiment_analysis = self._analyze_sentiment(comment_texts)
         
         # Comment engagement
+        comment_likes = sum(comment.get('like_count', 0) for comment in comments_data)
+        avg_comment_likes = comment_likes / len(comments_data) if comments_data else 0
+        
+        return {
+            'overview': {
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_platform_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_platform_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
         comment_likes = sum(comment.get('like_count', 0) for comment in comments_data)
         avg_comment_likes = comment_likes / len(comments_data) if comments_data else 0
         
@@ -587,13 +644,55 @@ Parser for Twitter engagement metrics"""
         hashtags = re.findall(r'#\w+', text)
         mentions = re.findall(r'@\w+', text)
         urls = re.findall(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', text)
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_platform_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_platform_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
+        retweets = public_metrics.get('retweet_count', 0)
+        likes = public_metrics.get('like_count', 0)
+        replies = public_metrics.get('reply_count', 0)
+        quotes = public_metrics.get('quote_count', 0)
+        impressions = public_metrics.get('impression_count', 0)
+        
+        total_interactions = retweets + likes + replies + quotes
+        engagement_rate = self._calculate_engagement_rate(total_interactions, impressions)
+        engagement_level = self._classify_engagement_level(engagement_rate)
+        
+        # Analyze tweet content
+        text = data.get('text', '')
+        hashtags = re.findall(r'#\w+', text)
+        mentions = re.findall(r'@\w+', text)
+        urls = re.findall(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', text)
         
         return {
             'overview': {
                 'impressions': impressions,
                 'retweets': retweets,
                 'likes': likes,
-                'replies': replies,
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_platform_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_platform_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
                 'quotes': quotes,
                 'total_interactions': total_interactions,
                 'engagement_rate': round(engagement_rate, 2),

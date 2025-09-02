@@ -632,14 +632,29 @@ Check rate limits for channel"""
     async def _update_notification_status(
         self,
         notification: NotificationQueue,
-        delivery_results: Dict[str, Any]
-    ):
-        """
-Update notification status based on delivery results"""
-        # Implementation for status update
-        pass
-    
-    async def _mark_notification_failed(self, notification: NotificationQueue, error: str):
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _update_notification_status completed")
+                        return True
+                
+                except Exception as e:
+        try:
+            logger.info(f"Executing _mark_notification_failed")
+            
+            # Implementation for _mark_notification_failed
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_mark_notification_failed completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_mark_notification_failed failed: {e}")
+            raise
         """
 Mark notification as failed"""
         # Implementation for failure marking

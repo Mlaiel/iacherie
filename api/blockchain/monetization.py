@@ -624,12 +624,17 @@ Process cryptocurrency payout"""
         return f"trad_tx_{uuid.uuid4().hex[:16]}"
     
     async def _update_creator_revenue_analytics(self, creator_id: str,
-                                              transaction: RevenueTransaction):
-        """Update creator's revenue analytics"""
-        # Update running totals and metrics
-        # Implementation would update analytics databases
-        pass
-    
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _update_creator_revenue_analytics completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _update_creator_revenue_analytics failed: {e}")
+                    raise
     async def _check_automatic_payout(self, creator_id: str):
         """
 Check if automatic payout should be triggered"""

@@ -47,7 +47,20 @@ class ProcessingResult:
     processing_time: float = 0.0
     
     def __post_init__(self):
-        if self.metadata is None:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             self.metadata = {}
 
 
@@ -564,6 +577,20 @@ Process deadline extension request"""
             data=request,
             metadata={
                 'action': 'deadline_extended',
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
                 'extension_days': extension_days,
                 'new_expiry': request.expires_at.isoformat() if request.expires_at else None,
                 'reason': reason

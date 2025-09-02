@@ -176,8 +176,20 @@ class VideoMetadataExtractor:
 Extract comprehensive video metadata"""
     
     def __init__(self):
-        self.supported_formats = ['.mp4', '.avi', '.mov', '.mkv', '.wmv', '.flv', '.webm', '.m4v']
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     def extract_metadata(self, video_path: str) -> VideoMetadata:
         """
 Extract video metadata"""
@@ -258,6 +270,23 @@ Extract video metadata"""
             ]
             
             result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+            return json.loads(result.stdout)
+            
+        except (subprocess.CalledProcessError, json.JSONDecodeError, FileNotFoundError) as e:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
             return json.loads(result.stdout)
             
         except (subprocess.CalledProcessError, json.JSONDecodeError, FileNotFoundError) as e:
@@ -387,8 +416,20 @@ Extract frames from video"""
                     frame_features.append(hist.flatten())
                     
         finally:
-            cap.release()
-        
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
         if len(frame_features) == 0:
             return []
         

@@ -780,13 +780,28 @@ Calculate average detection confidence for period"""
         return 0.88
     
     async def _store_analytics_report(self, report: AnalyticsReport):
-        """
-Store analytics report in database"""
-        # Implementation would store report
-        pass
-    
-    # Additional helper methods
-    
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_store_analytics_report",
+                        "value": report if report else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _store_analytics_report collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _store_analytics_report failed: {e}")
+                    return None
     async def _get_user_monitored_platforms(self, user_id: str) -> List[str]:
         """
 Get user's monitored platforms"""

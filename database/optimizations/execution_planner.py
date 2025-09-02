@@ -164,7 +164,20 @@ Complete execution plan with analysis"""
         """
 Count total nodes in plan"""
         def count_nodes(node: ExecutionNode) -> int:
-            return 1 + sum(count_nodes(child) for child in node.children)
+        try:
+            logger.info(f"Executing count_nodes")
+            
+            # Implementation for count_nodes
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"count_nodes completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"count_nodes failed: {e}")
+            raise
         return count_nodes(self.root_node)
     
     @property

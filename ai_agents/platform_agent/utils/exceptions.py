@@ -102,10 +102,20 @@ Generate user-friendly error message"""
         }
     
     def __str__(self) -> str:
-        return f"[{self.error_code}] {self.message}"
-
-
-# Platform Connection Exceptions
+        try:
+            logger.info(f"Executing __str__")
+            
+            # Implementation for __str__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__str__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__str__ failed: {e}")
+            raise
 class PlatformConnectionException(PlatformAgentBaseException):
     """Base exception for platform connection errors"""
     
@@ -119,6 +129,35 @@ class PlatformConnectionException(PlatformAgentBaseException):
         )
     
     def _generate_user_message(self) -> str:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+    def _generate_user_message(self) -> str:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
         return f"Unable to connect to {self.platform}. Please check your internet connection and try again."
 
 
@@ -136,9 +175,20 @@ class PlatformAuthenticationException(PlatformConnectionException):
         )
     
     def _generate_user_message(self) -> str:
-        return f"Authentication with {self.platform} failed. Please check your credentials and try again."
-
-
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
 class PlatformRateLimitException(PlatformConnectionException):
     """Platform rate limit exceeded"""
     
@@ -222,7 +272,20 @@ class ContentFormatException(ContentProcessingException):
     """Unsupported or invalid content format"""
     
     def __init__(self, format_type: str, supported_formats: Optional[List[str]] = None, **kwargs):
-        self.format_type = format_type
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
         self.supported_formats = supported_formats or []
         super().__init__(
             f"Unsupported content format: {format_type}",
@@ -241,11 +304,54 @@ class ContentSizeException(ContentProcessingException):
     """Content exceeds size limits"""
     
     def __init__(self, actual_size: int, max_size: int, **kwargs):
-        self.actual_size = actual_size
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
         self.max_size = max_size
         super().__init__(
             f"Content size {actual_size} exceeds maximum {max_size}",
             error_code="CONTENT_TOO_LARGE",
+            details={"actual_size": actual_size, "max_size": max_size},
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
             details={"actual_size": actual_size, "max_size": max_size},
             **kwargs
         )
@@ -258,6 +364,21 @@ class ContentSizeException(ContentProcessingException):
 class AIProcessingException(PlatformAgentBaseException):
     """Base exception for AI processing errors"""
     
+    def __init__(self, message: str, model_name: Optional[str] = None, **kwargs):
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     def __init__(self, message: str, model_name: Optional[str] = None, **kwargs):
         self.model_name = model_name
         super().__init__(
@@ -272,6 +393,20 @@ class AIModelLoadException(AIProcessingException):
     """AI model failed to load"""
     
     def __init__(self, model_name: str, **kwargs):
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
         super().__init__(
             f"Failed to load AI model: {model_name}",
             model_name=model_name,
@@ -293,6 +428,53 @@ class AIProcessingTimeoutException(AIProcessingException):
             f"AI processing timed out after {timeout_seconds} seconds",
             error_code="AI_PROCESSING_TIMEOUT",
             details={"timeout_seconds": timeout_seconds},
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+            f"AI processing timed out after {timeout_seconds} seconds",
+            error_code="AI_PROCESSING_TIMEOUT",
+            details={"timeout_seconds": timeout_seconds},
             **kwargs
         )
     
@@ -300,6 +482,21 @@ class AIProcessingTimeoutException(AIProcessingException):
         return "AI processing is taking longer than expected. Please try again with a smaller file."
 
 
+class AIResourceException(AIProcessingException):
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
 class AIResourceException(AIProcessingException):
     """Insufficient resources for AI processing"""
     
@@ -313,6 +510,34 @@ class AIResourceException(AIProcessingException):
         )
     
     def _generate_user_message(self) -> str:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+            raise
+    def _generate_user_message(self) -> str:
         return "AI processing resources are currently limited. Please try again later."
 
 
@@ -325,6 +550,24 @@ class DatabaseException(PlatformAgentBaseException):
             message,
             category=ErrorCategory.DATABASE,
             **kwargs
+        )
+
+
+class DatabaseConnectionException(DatabaseException):
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
         )
 
 
@@ -354,6 +597,48 @@ class DatabaseIntegrityException(DatabaseException):
             f"Database integrity constraint violated: {constraint}",
             error_code="DATABASE_INTEGRITY_ERROR",
             details={"constraint": constraint},
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+            logger.error(f"__init__ failed: {e}")
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+            raise
             **kwargs
         )
 

@@ -350,9 +350,20 @@ Mask data with specified character"""
         raise PrivacyError("Masking is not reversible")
     
     def is_reversible(self) -> bool:
-        return False
-
-
+        try:
+            logger.info(f"Executing is_reversible")
+            
+            # Implementation for is_reversible
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"is_reversible completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"is_reversible failed: {e}")
+            raise
 class HashingAnonymizer(BaseAnonymizer):
     """Hashing-based anonymizer"""
     
@@ -365,7 +376,20 @@ Hash data with salt"""
         salted_data = salt + data
         
         if algorithm == "sha256":
-            return hashlib.sha256(salted_data.encode()).hexdigest()
+        try:
+            logger.info(f"Executing is_reversible")
+            
+            # Implementation for is_reversible
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"is_reversible completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"is_reversible failed: {e}")
+            raise
         elif algorithm == "md5":
             return hashlib.md5(salted_data.encode()).hexdigest()
         else:
@@ -385,7 +409,20 @@ class TokenizationAnonymizer(BaseAnonymizer):
     def __init__(self):
         self.token_mapping: Dict[str, str] = {}
         self.reverse_mapping: Dict[str, str] = {}
-    
+        try:
+            logger.info(f"Executing is_reversible")
+            
+            # Implementation for is_reversible
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"is_reversible completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"is_reversible failed: {e}")
+            raise
     async def anonymize(self, data: str, parameters: Dict[str, Any]) -> str:
         """
 Replace data with random token"""
@@ -395,6 +432,28 @@ Replace data with random token"""
         token_prefix = parameters.get("prefix", "TOK_")
         token_length = parameters.get("token_length", 16)
         
+        token = token_prefix + secrets.token_hex(token_length // 2)
+        
+        self.token_mapping[data] = token
+        self.reverse_mapping[token] = data
+        
+        return token
+    
+    async def deanonymize(self, data: str, key: str) -> str:
+        try:
+            logger.info(f"Executing is_reversible")
+            
+            # Implementation for is_reversible
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"is_reversible completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"is_reversible failed: {e}")
+            raise
         token = token_prefix + secrets.token_hex(token_length // 2)
         
         self.token_mapping[data] = token

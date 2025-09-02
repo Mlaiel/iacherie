@@ -310,7 +310,20 @@ Test basic text-to-speech generation"""
         
         with patch.object(generator, '_stream_synthesis') as mock_stream:
             async def mock_stream_generator():
-                for i, chunk in enumerate(text_stream):
+        try:
+            logger.info(f"Executing mock_stream_generator")
+            
+            # Implementation for mock_stream_generator
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"mock_stream_generator completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"mock_stream_generator failed: {e}")
+            raise
                     yield {
                         "chunk_id": i,
                         "audio_chunk": b"mock_audio_chunk",

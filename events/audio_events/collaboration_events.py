@@ -85,7 +85,20 @@ class AudioCollaborationRequestEvent(BaseEvent):
     exclusive_collaboration: bool = False
     
     def __post_init__(self):
-        super().__init__(
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             event_type="audio.collaboration.request",
             event_category=EventCategory.COLLABORATION,
             priority=EventPriority.HIGH,
@@ -112,7 +125,20 @@ class AudioCollaborationAcceptedEvent(BaseEvent):
     target_artist_id: UUID
     requester_id: UUID
     collaboration_id: UUID
-    original_file_id: UUID
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     collaboration_type: CollaborationType
     accepted_terms: Dict[str, Any]
     final_revenue_split: Dict[UUID, float]
@@ -135,7 +161,20 @@ class AudioCollaborationAcceptedEvent(BaseEvent):
                 "requester_id": str(self.requester_id),
                 "workspace_id": str(self.collaboration_workspace_id),
                 "collaboration_type": self.collaboration_type.value,
-                "participants_count": len(self.final_revenue_split),
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
                 "real_time_enabled": self.real_time_collaboration
             }
         )
@@ -168,6 +207,20 @@ class AudioCollaborationRejectedEvent(BaseEvent):
             user_id=self.target_artist_id,
             metadata={
                 "collaboration_id": str(self.collaboration_id),
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
                 "requester_id": str(self.requester_id),
                 "rejection_category": self.rejection_category,
                 "has_counter_proposal": self.counter_proposal is not None,
@@ -195,7 +248,20 @@ class AudioRemixCreatedEvent(BaseEvent):
     original_duration: float
     tempo_change: float
     key_change: str
-    genre_fusion: List[str]
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     elements_preserved: List[str]
     elements_modified: List[str]
     new_elements_added: List[str]
@@ -225,6 +291,22 @@ class AudioRemixCreatedEvent(BaseEvent):
 
 @dataclass
 class AudioVersionCreatedEvent(BaseEvent):
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
+@dataclass
+class AudioVersionCreatedEvent(BaseEvent):
     """
     Event triggered when a new version of a collaborative work is created.
     
@@ -245,8 +327,20 @@ class AudioVersionCreatedEvent(BaseEvent):
     approval_status: str = "pending"
     merge_conflicts: List[str] = field(default_factory=list)
     diff_summary: Dict[str, Any] = field(default_factory=dict)
-    rollback_available: bool = True
-    
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     def __post_init__(self):
         super().__init__(
             event_type="audio.collaboration.version_created",
@@ -274,7 +368,20 @@ class AudioCollaborationFeedbackEvent(BaseEvent):
     """
     reviewer_id: UUID
     collaboration_id: UUID
-    version_id: UUID
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     feedback_id: UUID
     feedback_type: str  # review, suggestion, approval, rejection
     feedback_content: str
@@ -301,7 +408,20 @@ class AudioCollaborationFeedbackEvent(BaseEvent):
                 "has_rating": self.rating is not None,
                 "suggestions_count": len(self.suggested_changes),
                 "actionable_items_count": len(self.actionable_items)
-            }
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
         )
 
 

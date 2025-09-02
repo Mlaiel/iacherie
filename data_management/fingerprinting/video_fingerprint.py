@@ -233,8 +233,20 @@ Initialise le processeur OpenCV"""
             raise
     
     def get_name(self) -> str:
-        return "opencv"
-    
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
     def _calculate_quality_metrics(self, frames_data: List[Dict[str, Any]]) -> Dict[str, float]:
         """Calcule les métriques de qualité vidéo"""
         try:
@@ -277,6 +289,25 @@ Initialise le processeur OpenCV"""
             return float(np.mean(consistency_scores))
             
         except Exception:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+                consistency_scores.append(consistency)
+            
+            return float(np.mean(consistency_scores))
+            
+        except Exception:
             return 0.5
 
 class PerceptualHashProcessor(VideoProcessor):
@@ -313,6 +344,21 @@ class PerceptualHashProcessor(VideoProcessor):
                 if config.phash_enabled:
                     frame_hash["phash"] = str(imagehash.phash(pil_image, hash_size=config.hash_size))
                 
+                if config.dhash_enabled:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
                 if config.dhash_enabled:
                     frame_hash["dhash"] = str(imagehash.dhash(pil_image, hash_size=config.hash_size))
                 
@@ -420,8 +466,20 @@ class YOLOFrameProcessor(VideoProcessor):
     async def process(self, video_path: str, config: VideoFingerprintConfig) -> Dict[str, Any]:
         """Détecte les objets dans les frames vidéo"""
         try:
-            start_time = time.time()
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
             
+                    # Process request
+                    result = await self._handle_get_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
             if not self.model_loaded:
                 # Mode simulation si YOLO n'est pas disponible
                 return await self._simulate_yolo_processing(video_path, config)
@@ -642,7 +700,20 @@ Initialise le processeur de vecteurs de mouvement"""
                 gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
                 
                 if p0 is not None and len(p0) > 0:
-                    # Calcul de l'optical flow
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
                     p1, st, err = cv2.calcOpticalFlowPyrLK(prev_gray, gray, p0, None, **lk_params)
                     
                     # Sélection des bons points

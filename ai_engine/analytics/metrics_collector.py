@@ -255,7 +255,20 @@ Main metrics collection and aggregation engine"""
     def _start_auto_flush(self):
         """Start auto-flush thread"""
         def auto_flush():
-            while self.running:
+        try:
+            logger.info(f"Executing auto_flush")
+            
+            # Implementation for auto_flush
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"auto_flush completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"auto_flush failed: {e}")
+            raise
                 try:
                     time.sleep(self.auto_flush_seconds)
                     if self.running:
@@ -695,6 +708,21 @@ Check if metric triggers any alerts"""
 class TimerContext:
     """Context manager for timing operations"""
     
+    def __init__(self, collector: MetricsCollector, name: str, 
+        try:
+            logger.info(f"Executing __exit__")
+            
+            # Implementation for __exit__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__exit__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__exit__ failed: {e}")
+            raise
     def __init__(self, collector: MetricsCollector, name: str, 
                  tags: Optional[Dict[str, str]] = None):
         self.collector = collector

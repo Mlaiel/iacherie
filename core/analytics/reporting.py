@@ -864,11 +864,28 @@ Process scheduled reports"""
                 await asyncio.sleep(60)
     
     async def _complete_pending_reports(self) -> None:
-        """Complete any pending report generations"""
-        # Placeholder for cleanup logic
-        pass
-
-
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_complete_pending_reports",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _complete_pending_reports collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _complete_pending_reports failed: {e}")
+                    return None
 class PerformanceReporter:
     """
     Specialized performance reporting system.

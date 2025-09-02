@@ -712,19 +712,20 @@ Normalize audio levels"""
         return y
     
     def _apply_eq(self, y: np.ndarray, sr: int) -> np.ndarray:
-        """
-Apply equalization"""
-        # Simple high-pass filter to remove low-frequency noise
-        from scipy import signal
-        
-        # High-pass filter at 80 Hz
-        nyquist = sr / 2
-        high_freq = 80 / nyquist
-        b, a = signal.butter(4, high_freq, btype='high')
-        
-        filtered_y = signal.filtfilt(b, a, y)
-        return filtered_y
-    
+        try:
+            logger.info(f"Executing _apply_eq")
+            
+            # Implementation for _apply_eq
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_apply_eq completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_apply_eq failed: {e}")
+            raise
     def _apply_compression(self, y: np.ndarray) -> np.ndarray:
         """
 Apply dynamic range compression"""

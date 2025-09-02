@@ -551,10 +551,20 @@ Initialize blockchain connection"""
         }
     
     async def _store_local_record(self, record: WatermarkRecord):
-        """Stores record locally for caching"""
-        # Implementation would store in local database
-        pass
-    
+        try:
+            logger.info(f"Executing _store_local_record")
+            
+            # Implementation for _store_local_record
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_local_record completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_local_record failed: {e}")
+            raise
     async def _get_local_ownership_history(self, content_hash: str) -> List[Dict[str, Any]]:
         """
 Local fallback for ownership history"""

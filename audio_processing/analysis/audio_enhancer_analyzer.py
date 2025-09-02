@@ -515,7 +515,26 @@ class AudioEnhancerAnalyzer:
     async def _analyze_signal_quality(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, float]:
         """Analyze signal quality metrics"""
         def analyze():
-            try:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_analyze_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_result(result)
+            
+                    logger.info(f"AI processing analyze completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing analyze failed: {e}")
+                    raise
                 results = {}
                 
                 # Basic signal metrics
@@ -540,6 +559,34 @@ class AudioEnhancerAnalyzer:
                 results['snr'] = float(max(snr, 0))
                 
                 # Clipping detection
+                clipping_threshold = 0.99
+                clipped_samples = np.sum(np.abs(audio_data) >= clipping_threshold)
+                clipping_percentage = (clipped_samples / len(audio_data)) * 100
+                results['clipping_percentage'] = float(clipping_percentage)
+                
+                return results
+                
+            except Exception as e:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_analyze_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_result(result)
+            
+                    logger.info(f"AI processing analyze completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing analyze failed: {e}")
+                    raise
                 clipping_threshold = 0.99
                 clipped_samples = np.sum(np.abs(audio_data) >= clipping_threshold)
                 clipping_percentage = (clipped_samples / len(audio_data)) * 100
@@ -596,6 +643,118 @@ class AudioEnhancerAnalyzer:
                 balance_deviations = [
                     abs(low_percentage - ideal_distribution),
                     abs(mid_percentage - ideal_distribution),
+                    abs(high_percentage - ideal_distribution)
+                ]
+                max_deviation = np.mean(balance_deviations)
+                balance_score = max(0, 100 - max_deviation * 2)  # Scale appropriately
+                results['balance_score'] = float(balance_score)
+                
+                # Spectral features
+                spectral_centroid = np.mean(librosa.feature.spectral_centroid(y=audio_data, sr=sample_rate)[0])
+                spectral_rolloff = np.mean(librosa.feature.spectral_rolloff(y=audio_data, sr=sample_rate)[0])
+                
+                results['spectral_centroid'] = float(spectral_centroid)
+                results['spectral_rolloff'] = float(spectral_rolloff)
+                
+                return results
+                
+            except Exception as e:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_analyze_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_result(result)
+            
+                    logger.info(f"AI processing analyze completed")
+                    return final_result
+            
+                except Exception as e:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_analyze_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_result(result)
+            
+                    logger.info(f"AI processing analyze completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing analyze failed: {e}")
+                    raise
+                    logger.info(f"AI processing analyze completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing analyze failed: {e}")
+                    raise
+                low_bands = ['sub_bass', 'bass', 'low_mids']
+                mid_bands = ['mids', 'high_mids']
+                high_bands = ['presence', 'brilliance']
+                
+                low_energy = sum(band_energies.get(b, 0) for b in low_bands)
+                mid_energy = sum(band_energies.get(b, 0) for b in mid_bands)
+                high_energy = sum(band_energies.get(b, 0) for b in high_bands)
+                
+                # Normalize to percentages
+                low_percentage = (low_energy / total_energy) * 100
+                mid_percentage = (mid_energy / total_energy) * 100
+                high_percentage = (high_energy / total_energy) * 100
+                
+                results['low_balance'] = float(low_percentage)
+                results['mid_balance'] = float(mid_percentage)
+                results['high_balance'] = float(high_percentage)
+                
+                # Calculate overall balance score (closer to equal distribution = better)
+                ideal_distribution = 100 / 3  # ~33.33% each
+                balance_deviations = [
+                    abs(low_percentage - ideal_distribution),
+                    abs(mid_percentage - ideal_distribution),
+                    abs(high_percentage - ideal_distribution)
+                ]
+                max_deviation = np.mean(balance_deviations)
+                balance_score = max(0, 100 - max_deviation * 2)  # Scale appropriately
+                results['balance_score'] = float(balance_score)
+                
+                # Spectral features
+                spectral_centroid = np.mean(librosa.feature.spectral_centroid(y=audio_data, sr=sample_rate)[0])
+                spectral_rolloff = np.mean(librosa.feature.spectral_rolloff(y=audio_data, sr=sample_rate)[0])
+                
+                results['spectral_centroid'] = float(spectral_centroid)
+                results['spectral_rolloff'] = float(spectral_rolloff)
+                
+                return results
+                
+            except Exception as e:
+        try:
+            logger.info(f"Executing detect")
+            
+            # Implementation for detect
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"detect completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"detect failed: {e}")
+            raise
                     abs(high_percentage - ideal_distribution)
                 ]
                 max_deviation = np.mean(balance_deviations)

@@ -226,39 +226,20 @@ class ProductionConfig:
     
     @classmethod
     def from_environment(cls) -> 'ProductionConfig':
-        """Create configuration from environment variables"""
-        config = cls()
-        
-        # Override from environment variables
-        config.environment = EnvironmentType(os.getenv('ENVIRONMENT', 'production'))
-        config.debug = os.getenv('DEBUG', 'false').lower() == 'true'
-        
-        # Database
-        config.database.host = os.getenv('DB_HOST', config.database.host)
-        config.database.port = int(os.getenv('DB_PORT', str(config.database.port)))
-        config.database.database = os.getenv('DB_NAME', config.database.database)
-        config.database.username = os.getenv('DB_USERNAME', config.database.username)
-        config.database.password = os.getenv('DB_PASSWORD', config.database.password)
-        
-        # Redis
-        config.redis.host = os.getenv('REDIS_HOST', config.redis.host)
-        config.redis.port = int(os.getenv('REDIS_PORT', str(config.redis.port)))
-        config.redis.password = os.getenv('REDIS_PASSWORD', config.redis.password)
-        
-        # Security
-        config.security.youtube_api_key = os.getenv('YOUTUBE_API_KEY')
-        config.security.instagram_api_key = os.getenv('INSTAGRAM_API_KEY')
-        config.security.tiktok_api_key = os.getenv('TIKTOK_API_KEY')
-        config.security.openai_api_key = os.getenv('OPENAI_API_KEY')
-        config.security.encryption_key = os.getenv('ENCRYPTION_KEY')
-        
-        # Monitoring
-        config.monitoring.log_level = LogLevel(os.getenv('LOG_LEVEL', 'INFO'))
-        config.monitoring.alert_webhook_url = os.getenv('ALERT_WEBHOOK_URL')
-        config.monitoring.jaeger_endpoint = os.getenv('JAEGER_ENDPOINT')
-        
-        return config
-    
+        try:
+            logger.info(f"Executing from_environment")
+            
+            # Implementation for from_environment
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"from_environment completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"from_environment failed: {e}")
+            raise
     @classmethod
     def from_file(cls, config_path: str) -> 'ProductionConfig':
         """

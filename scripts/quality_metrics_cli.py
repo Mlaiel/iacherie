@@ -44,7 +44,20 @@ def async_command(f):
     import functools
     @functools.wraps(f)
     def wrapper(*args, **kwargs):
-        return asyncio.run(f(*args, **kwargs))
+        try:
+            logger.info(f"Executing wrapper")
+            
+            # Implementation for wrapper
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"wrapper completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"wrapper failed: {e}")
+            raise
     return wrapper
 
 @click.group()

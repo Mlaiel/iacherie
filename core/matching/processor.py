@@ -1187,25 +1187,66 @@ Prepare data for presenting match to creators"""
     async def _send_email_notifications(
         self,
         metadata: MatchMetadata,
-        presentation_data: Dict[str, Any]
-    ) -> None:
-        """
-Send email notifications to creators"""
-        # Implementation would send emails
-        pass
-    
-    async def _send_push_notifications(
-        self,
+        try:
+            logger.info(f"Executing _send_email_notifications")
+            
+            # Implementation for _send_email_notifications
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_send_email_notifications completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _send_push_notifications")
+            
+            # Implementation for _send_push_notifications
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_send_push_notifications completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _create_in_app_notifications")
+            
+            # Implementation for _create_in_app_notifications
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _send_completion_notifications")
+            
+            # Implementation for _send_completion_notifications
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_send_completion_notifications completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_send_completion_notifications failed: {e}")
+            raise
+            logger.error(f"_create_in_app_notifications failed: {e}")
+            raise
         metadata: MatchMetadata,
-        presentation_data: Dict[str, Any]
-    ) -> None:
-        """
-Send push notifications to creators"""
-        # Implementation would send push notifications
-        pass
-    
-    async def _create_in_app_notifications(
-        self,
+        try:
+            logger.info(f"Executing _store_creator_response")
+            
+            # Implementation for _store_creator_response
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_creator_response completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_creator_response failed: {e}")
+            raise
         metadata: MatchMetadata,
         presentation_data: Dict[str, Any]
     ) -> None:
@@ -1217,6 +1258,20 @@ Create in-app notifications"""
     async def _send_completion_notifications(
         self,
         metadata: MatchMetadata,
+        try:
+            logger.info(f"Executing _archive_match_data")
+            
+            # Implementation for _archive_match_data
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_archive_match_data completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_archive_match_data failed: {e}")
+            raise
         completion_report: Dict[str, Any]
     ) -> None:
         """

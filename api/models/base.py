@@ -38,13 +38,39 @@ Base model class with common functionality for all models"""
     
     @declared_attr
     def __tablename__(cls):
-        return cls.__name__.lower() + 's'
-    
+        try:
+            logger.info(f"Executing __tablename__")
+            
+            # Implementation for __tablename__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__tablename__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__tablename__ failed: {e}")
+            raise
     def to_dict(self) -> Dict[str, Any]:
         """
 Convert model instance to dictionary"""
         return {
             column.name: getattr(self, column.name) 
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
             for column in self.__table__.columns
         }
     

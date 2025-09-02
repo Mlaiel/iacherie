@@ -806,11 +806,20 @@ Process a single file"""
         logger.info("Database connection would be initialized here")
         
     async def _persist_job(self, job: BatchJob):
-        """Persist job to database"""
-        # This would implement job persistence
-        # For now, this is a placeholder
-        pass
-        
+        try:
+            logger.info(f"Executing _persist_job")
+            
+            # Implementation for _persist_job
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_persist_job completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_persist_job failed: {e}")
+            raise
     async def _load_job_from_database(self, job_id: str) -> Optional[BatchJob]:
         """
 Load job from database"""

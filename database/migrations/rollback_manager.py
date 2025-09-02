@@ -783,9 +783,75 @@ Generate rollback recommendations"""
     # Additional placeholder methods for complete implementation
     
     async def _execute_rollback_with_monitoring(self, execution: RollbackExecution, dry_run: bool):
-        """Execute rollback with comprehensive monitoring"""
-        pass
-    
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+        try:
+            logger.info(f"Executing _execute_emergency_recovery")
+            
+            # Implementation for _execute_emergency_recovery
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _record_rollback_execution")
+            
+            # Implementation for _record_rollback_execution
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_record_rollback_execution completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_record_rollback_execution failed: {e}")
+            raise
+            logger.info(f"_execute_emergency_recovery completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _execute_rollback_cancellation")
+            
+            # Implementation for _execute_rollback_cancellation
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_execute_rollback_cancellation completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _record_recovery_point")
+            
+            # Implementation for _record_recovery_point
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_record_recovery_point completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_record_recovery_point failed: {e}")
+            raise
+            raise
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _execute_rollback_with_monitoring collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _execute_rollback_with_monitoring failed: {e}")
+                    return None
     async def _execute_emergency_recovery(self, execution: RollbackExecution):
         """
 Execute emergency recovery procedures"""

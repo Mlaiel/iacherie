@@ -653,9 +653,49 @@ Initialize compliance rules for different jurisdictions"""
     # Additional helper methods would be implemented here...
     
     async def _get_content_rights(self, content_id: str) -> List[ContentRights]:
-        """Get content rights from database"""
-        pass
-    
+        try:
+                    # Request validation
+                    if not content_id:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_content_rights_request(content_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__analyze_licensing_requirements_input(uses)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__analyze_licensing_requirements_result(result)
+            
+                    logger.info(f"AI processing _analyze_licensing_requirements completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _analyze_licensing_requirements failed: {e}")
+                    raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_detect_copyright_issues completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_detect_copyright_issues failed: {e}")
+            raise
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_content_rights failed: {e}")
+                    return {"status": "error", "message": str(e)}
     async def _detect_copyright_issues(self, metadata, existing_rights) -> List[str]:
         """
 Detect potential copyright issues"""

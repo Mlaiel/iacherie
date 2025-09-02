@@ -452,16 +452,20 @@ Determine if takedown should be escalated."""
         return False
     
     def get_next_escalation_level(self, current_level: str) -> Optional[str]:
-        """Get next escalation level."""
-        levels = self.escalation.escalation_levels
         try:
-            current_index = levels.index(current_level)
-            if current_index + 1 < len(levels):
-                return levels[current_index + 1]
-        except ValueError:
-            pass
-        return None
-    
+                    # Request validation
+                    if not current_level:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_next_escalation_level_request(current_level)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_next_escalation_level failed: {e}")
+                    return {"status": "error", "message": str(e)}
     def validate_configuration(self) -> List[str]:
         """
 Validate current configuration and return any issues."""

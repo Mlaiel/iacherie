@@ -566,49 +566,26 @@ Search using TikTok's discover/trending page"""
             return None
     
     async def _extract_video_metadata_from_page(self) -> Dict[str, Any]:
-        """Extract detailed metadata from video page"""
-        metadata = {}
-        
         try:
-            # Try to find JSON-LD structured data
-            script_elements = self.selenium_driver.find_elements(By.XPATH, "//script[@type='application/ld+json']")
-            for script in script_elements:
-                try:
-                    json_data = json.loads(script.get_attribute('innerHTML'))
-                    if isinstance(json_data, dict) and json_data.get('@type') == 'VideoObject':
-                        metadata.update({
-                            'title': json_data.get('name', ''),
-                            'description': json_data.get('description', ''),
-                            'thumbnail_url': json_data.get('thumbnailUrl', ''),
-                            'upload_date': json_data.get('uploadDate', ''),
-                            'duration': json_data.get('duration', ''),
-                            'author': json_data.get('author', {}).get('name', '')
-                        })
-                        break
-                except:
-                    continue
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
             
-            # Extract from meta tags if JSON-LD not available
-            if not metadata:
-                meta_tags = {
-                    'og:title': 'title',
-                    'og:description': 'description',
-                    'og:image': 'thumbnail_url',
-                    'og:video': 'video_url'
-                }
-                
-                for property_name, metadata_key in meta_tags.items():
-                    try:
-                        meta_elem = self.selenium_driver.find_element(By.XPATH, f"//meta[@property='{property_name}']")
-                        metadata[metadata_key] = meta_elem.get_attribute('content')
-                    except:
-                        pass
+                    # Preprocess input
+                    processed_input = await self._preprocess__extract_video_metadata_from_page_input(data)
             
-        except Exception as e:
-            self.logger.error(f"Error extracting video metadata from page: {str(e)}")
-        
-        return metadata
-    
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__extract_video_metadata_from_page_result(result)
+            
+                    logger.info(f"AI processing _extract_video_metadata_from_page completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _extract_video_metadata_from_page failed: {e}")
+                    raise
     async def _extract_video_download_url(self, video_url: str) -> Optional[str]:
         """Attempt to extract video download URL"""
         try:

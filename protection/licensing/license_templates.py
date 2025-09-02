@@ -791,16 +791,20 @@ Generate usage instructions for the template."""
         return instructions
     
     def _get_template_overview(self, language: LanguageCode) -> str:
-        """
-Get template overview in specified language."""
-        overviews = {
-            LanguageCode.ENGLISH: "This template provides a legally compliant license agreement framework. Fill in the required variables and customize clauses as needed for your specific use case.",
-            LanguageCode.GERMAN: "Diese Vorlage bietet einen rechtlich konformen Rahmen für Lizenzvereinbarungen. Füllen Sie die erforderlichen Variablen aus und passen Sie die Klauseln nach Bedarf an.",
-            LanguageCode.FRENCH: "Ce modèle fournit un cadre d'accord de licence juridiquement conforme. Remplissez les variables requises et personnalisez les clauses selon vos besoins."
-        }
-        
-        return overviews.get(language, overviews[LanguageCode.ENGLISH])
-    
+        try:
+                    # Request validation
+                    if not language:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_template_overview_request(language)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_template_overview failed: {e}")
+                    return {"status": "error", "message": str(e)}
     def _get_variable_instructions(self, template_variables: Dict[str, Any], language: LanguageCode) -> List[str]:
         """Get variable filling instructions."""
         instructions = []

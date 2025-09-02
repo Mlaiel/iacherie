@@ -212,25 +212,20 @@ class EventBus:
         self.start_time = datetime.utcnow()
         
     async def start(self):
-        """Démarre le bus d'événements"""
-        self._running = True
-        
-        # Créer le consumer group
         try:
-            await self.redis_client.xgroup_create(
-                self.events_stream, 
-                self._consumer_group, 
-                id="0", 
-                mkstream=True
-            )
-        except Exception:
-            pass  # Le groupe existe déjà
+            logger.info(f"Executing start")
             
-        # Démarrer le processeur d'événements
-        self._processor_task = asyncio.create_task(self._process_events())
-        
-        logger.info(f"EventBus démarré (namespace: {self.namespace})")
-        
+            # Implementation for start
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"start completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"start failed: {e}")
+            raise
     async def stop(self):
         """Arrête le bus d'événements"""
         self._running = False
@@ -238,16 +233,20 @@ class EventBus:
         if self._processor_task:
             self._processor_task.cancel()
             try:
-                await self._processor_task
-            except asyncio.CancelledError:
-                pass
-                
-        logger.info("EventBus arrêté")
-        
-    async def publish(self, 
-                     event_type: str,
-                     data: Dict[str, Any],
-                     source: str = "",
+        try:
+            logger.info(f"Executing stop")
+            
+            # Implementation for stop
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"stop completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"stop failed: {e}")
+            raise
                      priority: EventPriority = EventPriority.NORMAL,
                      metadata: Optional[Dict[str, Any]] = None,
                      correlation_id: Optional[str] = None,

@@ -331,50 +331,28 @@ Generate a cryptographically secure random key."""
         return secrets.token_urlsafe(length)
     
     def print_report(self) -> None:
-        """
-Print validation report."""
-        print("=" * 80)
-        print("AINFLUE PRODUCTION SECURITY VALIDATION REPORT")
-        print("=" * 80)
-        
-        # Count results by severity
-        severity_counts = {'critical': 0, 'high': 0, 'medium': 0, 'low': 0}
-        passed_count = 0
-        
-        for result in self.validation_results:
-            if result.passed:
-                passed_count += 1
-            else:
-                severity_counts[result.severity] += 1
-        
-        # Print summary
-        total_checks = len(self.validation_results)
-        print(f"\nSUMMARY:")
-        print(f"Total checks: {total_checks}")
-        print(f"Passed: {passed_count}")
-        print(f"Failed: {total_checks - passed_count}")
-        print(f"Critical issues: {severity_counts['critical']}")
-        print(f"High issues: {severity_counts['high']}")
-        print(f"Medium issues: {severity_counts['medium']}")
-        print(f"Low issues: {severity_counts['low']}")
-        
-        # Print detailed results
-        print(f"\nDETAILED RESULTS:")
-        print("-" * 80)
-        
-        for result in sorted(self.validation_results, key=lambda x: (x.severity, x.check_name)):
-            status = "✅ PASS" if result.passed else f"❌ FAIL ({result.severity.upper()})"
-            print(f"{status}: {result.check_name}")
-            print(f"  Message: {result.message}")
-            if result.recommendation:
-                print(f"  Recommendation: {result.recommendation}")
-            print()
-        
-        # Exit with appropriate code
-        critical_issues = severity_counts['critical']
-        high_issues = severity_counts['high']
-        
-        if critical_issues > 0:
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "print_report",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric print_report collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection print_report failed: {e}")
+                    return None
             print(f"❌ VALIDATION FAILED: {critical_issues} critical security issues found!")
             sys.exit(1)
         elif high_issues > 0:

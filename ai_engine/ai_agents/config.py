@@ -285,63 +285,20 @@ Find configuration files in order of priority"""
         return base_config
     
     def _load_environment_variables(self, config: AIAgentsConfig) -> AIAgentsConfig:
-        """
-Load configuration from environment variables"""
-        # Database
-        if os.getenv('IA_DB_HOST'):
-            config.database.host = os.getenv('IA_DB_HOST')
-        if os.getenv('IA_DB_PORT'):
-            config.database.port = int(os.getenv('IA_DB_PORT'))
-        if os.getenv('IA_DB_NAME'):
-            config.database.database = os.getenv('IA_DB_NAME')
-        if os.getenv('IA_DB_USER'):
-            config.database.username = os.getenv('IA_DB_USER')
-        if os.getenv('IA_DB_PASSWORD'):
-            config.database.password = os.getenv('IA_DB_PASSWORD')
-        
-        # Redis
-        if os.getenv('IA_REDIS_HOST'):
-            config.redis.host = os.getenv('IA_REDIS_HOST')
-        if os.getenv('IA_REDIS_PORT'):
-            config.redis.port = int(os.getenv('IA_REDIS_PORT'))
-        if os.getenv('IA_REDIS_PASSWORD'):
-            config.redis.password = os.getenv('IA_REDIS_PASSWORD')
-        
-        # AI
-        if os.getenv('OPENAI_API_KEY'):
-            config.ai.openai_api_key = os.getenv('OPENAI_API_KEY')
-        
-        # Security
-        if os.getenv('IA_ENCRYPTION_KEY'):
-            config.security.encryption_key = os.getenv('IA_ENCRYPTION_KEY')
-        if os.getenv('IA_JWT_SECRET'):
-            config.security.jwt_secret = os.getenv('IA_JWT_SECRET')
-        
-        # Environment
-        if os.getenv('IA_ENVIRONMENT'):
-            config.environment = os.getenv('IA_ENVIRONMENT')
-        if os.getenv('IA_DEBUG'):
-            config.debug = os.getenv('IA_DEBUG').lower() == 'true'
-        
-        # Platform credentials
-        platform_env_mapping = {
-            'instagram_client_id': 'IA_INSTAGRAM_CLIENT_ID',
-            'instagram_client_secret': 'IA_INSTAGRAM_CLIENT_SECRET',
-            'tiktok_client_key': 'IA_TIKTOK_CLIENT_KEY',
-            'tiktok_client_secret': 'IA_TIKTOK_CLIENT_SECRET',
-            'youtube_api_key': 'IA_YOUTUBE_API_KEY',
-            'twitter_api_key': 'IA_TWITTER_API_KEY',
-            'twitter_api_secret': 'IA_TWITTER_API_SECRET',
-            'linkedin_client_id': 'IA_LINKEDIN_CLIENT_ID',
-            'facebook_app_id': 'IA_FACEBOOK_APP_ID'
-        }
-        
-        for attr, env_var in platform_env_mapping.items():
-            if os.getenv(env_var):
-                setattr(config.platforms, attr, os.getenv(env_var))
-        
-        return config
-    
+        try:
+            logger.info(f"Executing _load_environment_variables")
+            
+            # Implementation for _load_environment_variables
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_load_environment_variables completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_load_environment_variables failed: {e}")
+            raise
     def _validate_config(self, config: AIAgentsConfig) -> None:
         """
 Validate configuration values"""

@@ -108,8 +108,20 @@ class AgentMessage:
     max_delivery_attempts: int = 3
     
     def __post_init__(self):
-        if self.expires_at is None and self.requires_response:
-            # Default expiry for messages requiring response
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             self.expires_at = self.created_at + timedelta(minutes=30)
     
     @property

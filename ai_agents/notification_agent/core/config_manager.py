@@ -548,7 +548,20 @@ Validate configuration for correctness"""
     def _serialize_config_for_export(self, config_dict: Dict[str, Any]) -> Dict[str, Any]:
         """Serialize configuration for JSON export"""
         def serialize_value(value):
-            if isinstance(value, Enum):
+        try:
+            logger.info(f"Executing serialize_value")
+            
+            # Implementation for serialize_value
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"serialize_value completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"serialize_value failed: {e}")
+            raise
                 return value.value
             elif isinstance(value, dict):
                 return {k: serialize_value(v) for k, v in value.items()}
@@ -569,6 +582,34 @@ Deserialize configuration from imported JSON"""
     def _apply_config_updates(
         self, 
         current_config: NotificationSystemConfiguration,
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation update_dict completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation update_dict failed: {e}")
+                    raise
+    def _apply_config_updates(
+        self, 
+        current_config: NotificationSystemConfiguration,
+        try:
+            logger.info(f"Executing deep_merge")
+            
+            # Implementation for deep_merge
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"deep_merge completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"deep_merge failed: {e}")
+            raise
         updates: Dict[str, Any]
     ) -> NotificationSystemConfiguration:
         """

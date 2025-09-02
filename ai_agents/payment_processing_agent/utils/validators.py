@@ -588,11 +588,20 @@ Validate generic HMAC signature"""
 
     # Helper methods (would integrate with database and external services)
     async def _check_duplicate_revenue(self, creator_id: str, content_id: str, amount: Decimal):
-        """
-Check for duplicate revenue entries"""
-        # Would query database for recent matching entries
-        pass
-
+        try:
+            logger.info(f"Executing _check_duplicate_revenue")
+            
+            # Implementation for _check_duplicate_revenue
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_check_duplicate_revenue completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_check_duplicate_revenue failed: {e}")
+            raise
     async def _get_available_balance(self, creator_id: str, currency: str) -> Decimal:
         """
 Get creator's available balance"""

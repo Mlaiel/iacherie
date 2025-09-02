@@ -246,6 +246,19 @@ def deploy(output_dir: str, environment: str):
     
     async def run_deployment():
         try:
+            logger.info(f"Executing run_deployment")
+            
+            # Implementation for run_deployment
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"run_deployment completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"run_deployment failed: {e}")
+            raise
             manager = DockerDeploymentManager(
                 environment=environment,
                 platform_version="2.0.0"

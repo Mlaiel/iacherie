@@ -127,8 +127,33 @@ class ModelFactory:
     """Factory for creating and managing model instances"""
     
     def __init__(self, registry: ModelRegistry):
-        self.registry = registry
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     def create_content(self, creator_id: str, tenant_id: str, **kwargs) -> ContentModel:
         """
 Create a new content model instance"""

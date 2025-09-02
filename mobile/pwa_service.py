@@ -34,8 +34,31 @@ try:
 except ImportError:
     # Fallback for standalone operation
     def get_logger(name: str):
-        return logging.getLogger(name)
-    
+        try:
+                    # Request validation
+                    if not data:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_settings_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_settings failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                    result = await self._handle_get_logger_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_logger failed: {e}")
+                    return {"status": "error", "message": str(e)}
     def get_settings():
         return {"pwa_enabled": True}
 

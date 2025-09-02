@@ -893,11 +893,112 @@ Get violation data from primary store"""
         return None
     
     async def _store_fingerprint_primary(self, fingerprint: ContentFingerprint) -> None:
-        """
-Store fingerprint in primary databases"""
-        # Implementation would store in MongoDB and Elasticsearch
-        pass
-    
+        try:
+            logger.info(f"Executing _store_fingerprint_primary")
+            
+            # Implementation for _store_fingerprint_primary
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_fingerprint_primary completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _replicate_fingerprint_to_secondaries")
+            
+            # Implementation for _replicate_fingerprint_to_secondaries
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_replicate_fingerprint_to_secondaries completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _replicate_violation_immediate")
+            
+            # Implementation for _replicate_violation_immediate
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_replicate_violation_immediate completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _batch_sync_all_data")
+            
+            # Implementation for _batch_sync_all_data
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_batch_sync_all_data completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _check_connection_health")
+            
+            # Implementation for _check_connection_health
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_check_connection_health completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_check_connection_health failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_batch_revenue_sync completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_batch_revenue_sync failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"_batch_sync_all_data failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_sync_revenue_data completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_sync_revenue_data failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"_replicate_violation_immediate failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_replicate_violation_to_secondaries completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_replicate_violation_to_secondaries failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"_replicate_fingerprint_to_secondaries failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_violation_primary completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_violation_primary failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"_store_fingerprint_primary failed: {e}")
+            raise
     async def _store_violation_primary(self, violation: ViolationAlert) -> None:
         """
 Store violation in primary databases"""

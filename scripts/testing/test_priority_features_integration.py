@@ -24,7 +24,33 @@ except ImportError as e:
     # Create mock classes for testing
     class MockService:
         async def __aenter__(self):
-            return self
+        try:
+            logger.info(f"Executing __aenter__")
+            
+            # Implementation for __aenter__
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing __aexit__")
+            
+            # Implementation for __aexit__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__aexit__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__aexit__ failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__aenter__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__aenter__ failed: {e}")
+            raise
         async def __aexit__(self, *args):
             pass
 

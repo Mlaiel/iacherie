@@ -793,7 +793,17 @@ async def get_metrics():
 async def websocket_processing_updates(processing_id: str):
     """WebSocket endpoint for real-time processing status updates"""
     async def send_updates(websocket):
-        while True:
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation send_updates completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation send_updates failed: {e}")
+                    raise
             status = await orchestrator.get_processing_status(processing_id)
             if status:
                 await websocket.send_json(status)

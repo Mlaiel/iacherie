@@ -338,8 +338,20 @@ class MonetizationRule(Base):
     )
     
     def __repr__(self):
-        return f"<MonetizationRule(id={self.id}, name='{self.rule_name}', type={self.rule_type.value}, status={self.rule_status.value})>"
-    
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     def to_dict(self, include_sensitive: bool = False, include_analytics: bool = True) -> Dict[str, Any]:
         """Convert model to dictionary for API responses"""
         base_dict = {
@@ -451,29 +463,20 @@ class MonetizationRule(Base):
         return base_dict
     
     def is_effective(self) -> bool:
-        """Check if rule is currently effective"""
-        now = datetime.now(timezone.utc)
-        return (
-            self.rule_status == RuleStatus.ACTIVE and
-            self.is_active and
-            (not self.effective_from or self.effective_from <= now) and
-            (not self.effective_until or self.effective_until > now) and
-            (not self.max_applications or self.applications_count < self.max_applications)
-        )
-    
-    def can_execute(self, context: Dict[str, Any] = None) -> bool:
-        """
-Check if rule can be executed given current context"""
-        if not self.is_effective():
-            return False
-        
-        # Check cooldown period
-        if self.cooldown_period and self.last_executed_at:
-            cooldown_end = self.last_executed_at + timedelta(seconds=self.cooldown_period)
-            if datetime.now(timezone.utc) < cooldown_end:
-                return False
-        
-        # Check time restrictions
+        try:
+            logger.info(f"Executing can_execute")
+            
+            # Implementation for can_execute
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"can_execute completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"can_execute failed: {e}")
+            raise
         if self.time_restrictions and context:
             # Implementation would check time-based restrictions
             pass

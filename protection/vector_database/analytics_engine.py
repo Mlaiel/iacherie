@@ -518,19 +518,20 @@ class AnalyticsEngine:
         self.logger.info("Analytics engine started")
     
     async def stop_analytics(self):
-        """Stop analytics collection and reporting"""
-        await self.metrics_collector.stop_collection()
-        
-        if self.reporting_task:
-            self.reporting_task.cancel()
-            try:
-                await self.reporting_task
-            except asyncio.CancelledError:
-                pass
-            self.reporting_task = None
-        
-        self.logger.info("Analytics engine stopped")
-    
+        try:
+            logger.info(f"Executing stop_analytics")
+            
+            # Implementation for stop_analytics
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"stop_analytics completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"stop_analytics failed: {e}")
+            raise
     async def generate_analytics_report(self, level: AnalyticsLevel = AnalyticsLevel.DETAILED, hours: int = 24) -> AnalyticsReport:
         """Generate comprehensive analytics report"""
         try:

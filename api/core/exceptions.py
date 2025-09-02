@@ -82,10 +82,20 @@ class AuthenticationException(BaseApplicationException):
     def __init__(
         self,
         message: str = "Authentication failed",
-        error_code: ErrorCode = ErrorCode.AUTHENTICATION_FAILED,
-        details: Optional[Dict[str, Any]] = None
-    ):
-        super().__init__(
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
             message=message,
             error_code=error_code,
             details=details,
@@ -94,15 +104,49 @@ class AuthenticationException(BaseApplicationException):
 
 
 class AuthorizationException(BaseApplicationException):
-    """Authorization related errors."""
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     def __init__(
         self,
         message: str = "Insufficient privileges",
-        error_code: ErrorCode = ErrorCode.INSUFFICIENT_PRIVILEGES,
-        details: Optional[Dict[str, Any]] = None
-    ):
-        super().__init__(
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
             message=message,
             error_code=error_code,
             details=details,
@@ -111,8 +155,32 @@ class AuthorizationException(BaseApplicationException):
 
 
 class BusinessLogicException(BaseApplicationException):
-    """Business logic and validation errors."""
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     def __init__(
         self,
         message: str,

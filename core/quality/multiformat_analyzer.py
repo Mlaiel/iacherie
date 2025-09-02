@@ -119,7 +119,20 @@ class TechnicalSpecs:
     compression_ratio: Optional[float] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             'file_size': self.file_size,
             'duration': self.duration,
             'dimensions': self.dimensions,
@@ -178,7 +191,66 @@ Calculate weighted overall quality score"""
         return round(score, 2)
     
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
+            self.content_quality_score * weights['content'] +
+            self.aesthetic_quality_score * weights['aesthetic'] +
+            self.uniqueness_score * weights['uniqueness'] +
+            self.engagement_potential_score * weights['engagement'] +
+            self.protection_readiness_score * weights['protection'] +
+            self.seo_optimization_score * weights['seo'] +
+            self.platform_compatibility_score * weights['platform']
+        )
+        
+        return round(score, 2)
+    
+    def to_dict(self) -> Dict[str, Any]:
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
+            self.platform_compatibility_score * weights['platform']
+        )
+        
+        return round(score, 2)
+    
+    def to_dict(self) -> Dict[str, Any]:
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             'technical_quality_score': self.technical_quality_score,
             'content_quality_score': self.content_quality_score,
             'aesthetic_quality_score': self.aesthetic_quality_score,
@@ -237,6 +309,20 @@ class OptimizationRecommendation:
     estimated_time: str = "unknown"
     
     def to_dict(self) -> Dict[str, Any]:
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
         return {
             'recommendation_id': self.recommendation_id,
             'category': self.category,

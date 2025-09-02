@@ -126,31 +126,20 @@ Check if path requires an active session"""
         return False
     
     def _get_session_id(self, request: Request) -> Optional[str]:
-        """
-Extract session ID from request"""
-        
-        # Try header first
-        session_id = request.headers.get(self.session_header_name)
-        if session_id:
-            return session_id
-        
-        # Try cookie
-        session_id = request.cookies.get(self.session_cookie_name)
-        if session_id:
-            return session_id
-        
-        # Try JWT token
-        auth_header = request.headers.get("Authorization")
-        if auth_header and auth_header.startswith("Bearer "):
-            token = auth_header[7:]
-            try:
-                payload = jwt.decode(token, self.jwt_secret, algorithms=["HS256"])
-                return payload.get("session_id")
-            except jwt.InvalidTokenError:
-                pass
-        
-        return None
-    
+        try:
+                    # Request validation
+                    if not request:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_session_id_request(request)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_session_id failed: {e}")
+                    return {"status": "error", "message": str(e)}
     async def _load_session(self, session_id: str) -> Optional[Dict[str, Any]]:
         """Load session data from backend"""
         

@@ -501,7 +501,20 @@ Test cache key generation"""
         errors = []
         
         def cache_operations(thread_id):
-            try:
+        try:
+            logger.info(f"Executing cache_operations")
+            
+            # Implementation for cache_operations
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"cache_operations completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"cache_operations failed: {e}")
+            raise
                 for i in range(10):
                     input_data = f"thread_{thread_id}_input_{i}"
                     config = {"thread": thread_id, "iteration": i}
@@ -1039,6 +1052,26 @@ Test model registration"""
         assert len(health["issues"]) > 0
     
     def test_concurrent_model_operations(self):
+        try:
+            logger.info(f"Executing register_and_operate")
+            
+            # Implementation for register_and_operate
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"register_and_operate completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"register_and_operate failed: {e}")
+            raise
+        health = self.engine.health_check()
+        
+        assert health["status"] in ["degraded", "unhealthy"]
+        assert len(health["issues"]) > 0
+    
+    def test_concurrent_model_operations(self):
         """Test concurrent model operations"""
         results = []
         errors = []
@@ -1169,6 +1202,21 @@ Setup for decorator tests"""
         mock_pipeline.return_value = mock_pipeline_instance
         
         @ai_inference_decorator("decorator-test", input_key="text")
+        def process_text(text, **kwargs):
+        try:
+            logger.info(f"Executing failing_function")
+            
+            # Implementation for failing_function
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"failing_function completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"failing_function failed: {e}")
+            raise
         def process_text(text, **kwargs):
             inference_result = kwargs.get("decorator-test_result")
             return {"processed": text, "ai_result": inference_result}

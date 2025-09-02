@@ -233,7 +233,20 @@ async def get_collaboration_requests(
         
         # Format results
         def format_collaboration(collab, request_type):
-            return {
+        try:
+            logger.info(f"Executing format_collaboration")
+            
+            # Implementation for format_collaboration
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"format_collaboration completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"format_collaboration failed: {e}")
+            raise
                 "collaboration_id": str(collab.id),
                 "title": collab.title,
                 "description": collab.description,

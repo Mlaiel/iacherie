@@ -675,7 +675,26 @@ Benchmark protection analysis performance"""
         video_data = sample_video_content
         
         async def analyze_protection():
-            return await protection_integrator.analyze_content_protection(
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_analyze_protection_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_protection_result(result)
+            
+                    logger.info(f"AI processing analyze_protection completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing analyze_protection failed: {e}")
+                    raise
                 content_data=video_data,
                 content_type=ContentType.VIDEO,
                 platform=Platform.YOUTUBE,

@@ -845,9 +845,62 @@ class MultiPlatformDistributor:
 
     # Additional implementation methods...
     async def _get_video_info(self, file_path: str) -> Dict[str, Any]:
-        """Get video file information"""
-        pass
-
+        try:
+                    # Request validation
+                    if not file_path:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_video_info_request(file_path)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+        try:
+                    # Request validation
+                    if not file_path:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_file_size_request(file_path)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+        try:
+                    # Request validation
+                    if not file_path:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_video_resolution_request(file_path)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_video_resolution failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_file_size failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                    if not file_path:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_video_duration_request(file_path)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_video_duration failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_video_info failed: {e}")
+                    return {"status": "error", "message": str(e)}
     async def _get_video_duration(self, file_path: str) -> float:
         """
 Get video duration in seconds"""
@@ -1520,8 +1573,32 @@ class PlatformManager:
         # Add call-to-action based on platform
         cta_templates = {
             "youtube": "Don't forget to like and subscribe!",
-            "instagram": "Double tap if you agree! 💙",
-            "tiktok": "Follow for more! #fyp",
+        try:
+            logger.info(f"Executing _resize_video")
+            
+            # Implementation for _resize_video
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_resize_video completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _resize_image")
+            
+            # Implementation for _resize_image
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_resize_image completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_resize_image failed: {e}")
+            raise
             "twitter": "Retweet if you found this helpful!",
             "facebook": "Share your thoughts in the comments!",
             "linkedin": "What's your experience with this? Let's discuss!"
@@ -1748,6 +1825,29 @@ class DistributionPipeline:
                 ).all()
             
             analytics = {
+                "user_id": user_id,
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_setup_performance_tracking",
+                        "value": campaign_id if campaign_id else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _setup_performance_tracking collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _setup_performance_tracking failed: {e}")
+                    return None
                 "user_id": user_id,
                 "period_days": period_days,
                 "total_campaigns": len(campaigns),

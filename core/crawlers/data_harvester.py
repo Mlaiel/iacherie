@@ -640,18 +640,26 @@ Initialise les templates d'extraction prédéfinis"""
             return []
 
     def _extract_number(self, text: str) -> Optional[float]:
-        """Extrait un nombre d'un texte"""
         try:
-            # Nettoyage du texte
-            clean_text = re.sub(r'[^\d.,]', '', text)
-            clean_text = clean_text.replace(',', '.')
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
             
-            if clean_text:
-                return float(clean_text)
-        except:
-            pass
-        return None
-
+                    # Preprocess input
+                    processed_input = await self._preprocess__extract_number_input(text)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__extract_number_result(result)
+            
+                    logger.info(f"AI processing _extract_number completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _extract_number failed: {e}")
+                    raise
     def _parse_date(self, text: str) -> Optional[str]:
         """
 Parse une date depuis un texte"""
@@ -1198,7 +1206,26 @@ Sauvegarde un fichier CSV"""
             return media_paths
             
         except Exception as e:
-            self.logger.error(f"Erreur sauvegarde médias: {e}")
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_extract_recursive_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_extract_recursive_result(result)
+            
+                    logger.info(f"AI processing extract_recursive completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing extract_recursive failed: {e}")
+                    raise
             return []
 
     def _extract_media_urls(self, data: Dict[str, Any]) -> List[str]:

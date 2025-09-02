@@ -623,7 +623,26 @@ class TestTrendAnalysisPerformance:
         """
 Benchmark trend analysis performance"""
         async def analyze_trends():
-            return await trend_analyzer.analyze_current_trends(
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_analyze_trends_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_trends_result(result)
+            
+                    logger.info(f"AI processing analyze_trends completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing analyze_trends failed: {e}")
+                    raise
                 platforms=[Platform.YOUTUBE, Platform.TIKTOK],
                 limit=10
             )

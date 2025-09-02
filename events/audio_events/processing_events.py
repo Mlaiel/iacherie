@@ -66,7 +66,20 @@ class AudioProcessingStartedEvent(BaseEvent):
     parallel_processing: bool = True
     
     def __post_init__(self):
-        super().__init__(
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             event_type="audio.processing.started",
             event_category=EventCategory.PROCESSING,
             priority=EventPriority.HIGH,
@@ -94,7 +107,20 @@ class AudioProcessingProgressEvent(BaseEvent):
     """
     user_id: UUID
     file_id: UUID
-    processing_id: UUID
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     current_stage: ProcessingStage
     stage_progress: float  # 0.0 to 1.0
     overall_progress: float  # 0.0 to 1.0
@@ -126,7 +152,20 @@ class AudioProcessingProgressEvent(BaseEvent):
 
 @dataclass
 class AudioProcessingCompletedEvent(BaseEvent):
-    """
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     Event triggered when audio processing is successfully completed.
     
     Contains comprehensive results and metrics from the processing pipeline.
@@ -159,6 +198,23 @@ class AudioProcessingCompletedEvent(BaseEvent):
             user_id=self.user_id,
             metadata={
                 "file_id": str(self.file_id),
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            user_id=self.user_id,
+            metadata={
+                "file_id": str(self.file_id),
                 "processing_id": str(self.processing_id),
                 "processed_file_id": str(self.processed_file_id),
                 "processing_duration": self.processing_duration,
@@ -182,7 +238,20 @@ class AudioProcessingFailedEvent(BaseEvent):
     failed_stage: ProcessingStage
     error_code: str
     error_message: str
-    error_details: Dict[str, Any]
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     stack_trace: Optional[str] = None
     processing_duration: float
     stages_completed: List[str]
@@ -218,6 +287,23 @@ class AudioQualityAnalysisEvent(BaseEvent):
     Contains comprehensive quality metrics and recommendations.
     """
     user_id: UUID
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
+    Contains comprehensive quality metrics and recommendations.
+    """
+    user_id: UUID
     file_id: UUID
     analysis_id: UUID
     quality_score: float  # 0.0 to 1.0
@@ -238,6 +324,20 @@ class AudioQualityAnalysisEvent(BaseEvent):
     comparable_references: List[Dict[str, Any]] = field(default_factory=list)
     
     def __post_init__(self):
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
         super().__init__(
             event_type="audio.processing.quality_analysis",
             event_category=EventCategory.ANALYSIS,
@@ -264,6 +364,20 @@ class AudioFormatConversionEvent(BaseEvent):
     Handles conversion between different audio formats and quality levels.
     """
     user_id: UUID
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     file_id: UUID
     conversion_id: UUID
     source_format: str
@@ -290,7 +404,20 @@ class AudioFormatConversionEvent(BaseEvent):
             metadata={
                 "file_id": str(self.file_id),
                 "conversion_id": str(self.conversion_id),
-                "source_format": self.source_format,
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
                 "target_format": self.target_format,
                 "sample_rate_change": f"{self.source_sample_rate}->{self.target_sample_rate}",
                 "bit_depth_change": f"{self.source_bit_depth}->{self.target_bit_depth}",

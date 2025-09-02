@@ -1719,9 +1719,28 @@ Execute search using Elasticsearch"""
             return creator
         
     async def _track_trending_discovery(self, time_window: str, category: Optional[str], count: int) -> None:
-        """Track trending discovery analytics"""
-        pass
-        
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_track_trending_discovery",
+                        "value": time_window if time_window else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _track_trending_discovery collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _track_trending_discovery failed: {e}")
+                    return None
     async def _find_nearby_creators(self, latitude: float, longitude: float, radius_km: float, creator_types: Optional[List[str]]) -> List[Dict[str, Any]]:
         """
 Find creators within geographic radius"""

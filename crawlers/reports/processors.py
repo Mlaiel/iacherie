@@ -449,7 +449,20 @@ Validate data types in the input data."""
         
         try:
             def check_missing_recursive(obj, path=""):
-                if isinstance(obj, dict):
+        try:
+            logger.info(f"Executing check_missing_recursive")
+            
+            # Implementation for check_missing_recursive
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"check_missing_recursive completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"check_missing_recursive failed: {e}")
+            raise
                     for key, value in obj.items():
                         current_path = f"{path}.{key}" if path else key
                         if value is None or value == "":
@@ -558,8 +571,26 @@ Count missing or null fields in nested data structure."""
                 issues.extend(date_issues)
             
         except Exception as e:
-            issues.append(f"Consistency check error: {e}")
-        
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_extract_dates_input(path)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_extract_dates_result(result)
+            
+                    logger.info(f"AI processing extract_dates completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing extract_dates failed: {e}")
+                    raise
         return issues
     
     def _validate_dates(self, data: Dict[str, Any]) -> List[str]:
@@ -600,10 +631,50 @@ Count missing or null fields in nested data structure."""
                         issues.append(f"Future date detected: {path} = {date}")
             
         except Exception as e:
-            issues.append(f"Date validation error: {e}")
-        
+        try:
+            logger.info(f"Executing clean_recursive")
+            
+            # Implementation for clean_recursive
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"clean_recursive completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"clean_recursive failed: {e}")
+            raise
         return issues
     
+    async def clean_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
+        try:
+            logger.info(f"Executing normalize_recursive")
+            
+            # Implementation for normalize_recursive
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"normalize_recursive completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"normalize_recursive failed: {e}")
+        try:
+            logger.info(f"Executing clean_numeric_recursive")
+            
+            # Implementation for clean_numeric_recursive
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"clean_numeric_recursive completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"clean_numeric_recursive failed: {e}")
+            raise
     async def clean_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Clean and normalize the input data."""
         try:
@@ -619,6 +690,26 @@ Count missing or null fields in nested data structure."""
             cleaned_data = self._clean_numeric_fields(cleaned_data)
             
             # Standardize date formats
+            cleaned_data = self._standardize_dates(cleaned_data)
+            
+            self.logger.debug("Data cleaning completed successfully")
+            return cleaned_data
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing standardize_dates_recursive")
+            
+            # Implementation for standardize_dates_recursive
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"standardize_dates_recursive completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"standardize_dates_recursive failed: {e}")
+            raise
             cleaned_data = self._standardize_dates(cleaned_data)
             
             self.logger.debug("Data cleaning completed successfully")

@@ -933,14 +933,20 @@ class AsyncRevenueRepository(AsyncBaseRepository[RevenueEntry]):
             raise
     
     async def get_revenue_summary_async(self, creator_id: str, 
-                                      period_start: datetime = None,
-                                      period_end: datetime = None,
-                                      currency: Currency = Currency.EUR) -> RevenueSummary:
-        """Get revenue summary asynchronously"""
-        # Async implementation of get_revenue_summary
-        # Would be similar to sync version but with async database calls
-        pass
-    
+        try:
+                    # Request validation
+                    if not creator_id:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_revenue_summary_async_request(creator_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_revenue_summary_async failed: {e}")
+                    return {"status": "error", "message": str(e)}
     async def process_payout_async(self, creator_id: str, 
                                  currency: Currency = Currency.EUR,
                                  payment_method: str = "bank_transfer",

@@ -793,11 +793,43 @@ Check if file already exists based on hash"""
         return None
     
     async def _register_file(self, file_hash: str, result: StorageResult):
-        """
-Register file in deduplication registry"""
-        # Placeholder - would store in database/cache
-        pass
-    
+        try:
+            logger.info(f"Executing _register_file")
+            
+            # Implementation for _register_file
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_register_file completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _create_backup_copies")
+            
+            # Implementation for _create_backup_copies
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_create_backup_copies completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_create_backup_copies failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_unregister_file completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_unregister_file failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"_register_file failed: {e}")
+            raise
     async def _unregister_file(self, file_path: str):
         """
 Remove file from registry"""

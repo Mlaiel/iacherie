@@ -737,10 +737,33 @@ Convert to dictionary with optional sensitive data inclusion"""
         return base_data
     
     def __repr__(self) -> str:
-        return f"CreatorModel(id={self.creator_id}, type={self.creator_type.value}, status={self.creator_status.value})"
-
-
-# Creator utility functions
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
 def generate_username(display_name: str, creator_type: CreatorType) -> str:
     """Generate unique username suggestion"""
     base = display_name.lower().replace(' ', '_')

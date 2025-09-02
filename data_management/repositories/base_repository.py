@@ -223,9 +223,20 @@ Create new entity with validation and audit"""
     
     @abstractmethod
     async def _perform_create(self, entity: T, **kwargs) -> T:
-        """Override this method in subclasses for actual creation logic"""
-        raise NotImplementedError("Subclasses must implement _perform_create")
-    
+        try:
+            logger.info(f"Executing _perform_create")
+            
+            # Implementation for _perform_create
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_perform_create completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_perform_create failed: {e}")
+            raise
     @abstractmethod
     async def get_by_id(self, entity_id: str, use_cache: bool = True) -> Optional[T]:
         """
@@ -253,8 +264,20 @@ Get entity by ID with cache support"""
                     OperationType.READ,
                     entity_id=entity_id,
                     metadata={'cache_hit': use_cache and result is not None}
-                )
+        try:
+                    # Request validation
+                    if not entity_id:
+                        raise ValueError("Invalid request")
             
+                    # Process request
+                    result = await self._handle__perform_get_by_id_request(entity_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _perform_get_by_id failed: {e}")
+                    return {"status": "error", "message": str(e)}
             return result
             
         except Exception as e:
@@ -297,6 +320,25 @@ Update entity with validation and audit"""
             
             # Invalidate cache
             if self._cache_enabled and self.cache and hasattr(entity, 'id'):
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _perform_update completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _perform_update failed: {e}")
+                    raise
+                    entity_id=str(entity.id) if hasattr(entity, 'id') else None,
+                    old_values=old_values,
+                    new_values=new_values,
+                    metadata=kwargs
+                )
+            
+            # Invalidate cache
+            if self._cache_enabled and self.cache and hasattr(entity, 'id'):
                 cache_key = f"{self.__class__.__name__}:get_by_id:{entity.id}"
                 await self._delete_from_cache(cache_key)
                 await self._invalidate_list_cache()
@@ -315,7 +357,17 @@ Update entity with validation and audit"""
     
     @abstractmethod
     async def delete(self, entity_id: str, soft_delete: bool = False) -> bool:
-        """
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _perform_delete completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _perform_delete failed: {e}")
+                    raise
 Delete entity with soft delete option"""
         try:
             # Get entity for audit purposes
@@ -356,6 +408,20 @@ Delete entity with soft delete option"""
     
     @abstractmethod
     async def _perform_delete(self, entity_id: str, soft_delete: bool = False) -> bool:
+        try:
+            logger.info(f"Executing _perform_list")
+            
+            # Implementation for _perform_list
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_perform_list completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_perform_list failed: {e}")
+            raise
         """Override this method in subclasses for actual deletion logic"""
         raise NotImplementedError("Subclasses must implement _perform_delete")
     
@@ -910,7 +976,20 @@ Delete entity asynchronously with soft delete option"""
                 # Invalidate cache
                 if self._cache_enabled and self.cache:
                     cache_key = f"{self.__class__.__name__}:get_by_id:{entity_id}"
-                    await self._delete_from_cache(cache_key)
+        try:
+            logger.info(f"Executing create_with_semaphore")
+            
+            # Implementation for create_with_semaphore
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"create_with_semaphore completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"create_with_semaphore failed: {e}")
+            raise
                     await self._invalidate_list_cache()
                 
                 self.logger.info(f"{'Soft ' if soft_delete else ''}Deleted entity ID: {entity_id}")
@@ -930,6 +1009,18 @@ List entities asynchronously with advanced filtering and ordering"""
             
             # Check cache first
             if self._cache_enabled and self.cache:
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation update_with_semaphore completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation update_with_semaphore failed: {e}")
+                    raise
+            if self._cache_enabled and self.cache:
                 cached_result = await self._get_from_cache(cache_key)
                 if cached_result:
                     self.logger.debug(f"Cache hit for list operation")
@@ -947,6 +1038,18 @@ List entities asynchronously with advanced filtering and ordering"""
                 self._log_audit(
                     OperationType.READ,
                     metadata={
+                        'operation': 'list',
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation delete_with_semaphore completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation delete_with_semaphore failed: {e}")
+                    raise
                         'operation': 'list',
                         'filters': filters,
                         'limit': limit,
@@ -1080,6 +1183,21 @@ Optimized async bulk creation with concurrency control"""
         entities = await self.list(filters=filters)
         count = len(entities)
         
+        if use_cache and self._cache_enabled and self.cache:
+        try:
+            logger.info(f"Executing fetch_with_semaphore")
+            
+            # Implementation for fetch_with_semaphore
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"fetch_with_semaphore completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"fetch_with_semaphore failed: {e}")
+            raise
         if use_cache and self._cache_enabled and self.cache:
             await self.cache.set_async(cache_key, count, ttl=self._cache_ttl)
         

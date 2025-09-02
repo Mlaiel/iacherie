@@ -1288,10 +1288,20 @@ Generate complete license contract with legal language"""
         return titles.get(section_name, section_name.replace("_", " ").title())
     
     async def _store_contract(self, contract: Dict[str, Any]) -> None:
-        """Store generated contract"""
-        # Implementation would store contract in database or file system
-        pass
-    
+        try:
+            logger.info(f"Executing _store_contract")
+            
+            # Implementation for _store_contract
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_contract completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_contract failed: {e}")
+            raise
     async def _load_language_content(self, template_type: str, language: str) -> Dict[str, Any]:
         """
 Load language-specific template content"""

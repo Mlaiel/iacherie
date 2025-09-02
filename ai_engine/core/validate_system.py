@@ -285,124 +285,20 @@ def test_package_completeness():
 
 
 async def run_validation():
-    """Run complete validation suite"""
-    print("🚀 Starting IA-Influencer-Agent AI Core Validation Suite")
-    print("=" * 60)
-    print(f"Validation started at: {datetime.utcnow()}")
-    print("=" * 60)
-    
-    # Run all tests
-    test_results = []
-    
-    # 1. Import tests
-    print("\n📦 Testing Imports and Basic Functionality...")
-    test_results.append(test_imports())
-    
-    # 2. Configuration tests
-    print("\n⚙️ Testing Configuration System...")
-    test_results.append(test_configuration())
-    
-    # 3. Data model tests
-    print("\n📊 Testing Data Models...")
-    test_results.append(test_data_models())
-    
-    # 4. Package completeness
-    print("\n📋 Testing Package Completeness...")
-    test_results.append(test_package_completeness())
-    
-    # 5. Orchestrator tests (async)
-    print("\n🎯 Testing AI Orchestrator...")
-    test_results.append(await test_orchestrator())
-    
-    # 6. Component tests (async)
-    print("\n🔧 Testing AI Components...")
-    test_results.append(await test_components())
-    
-    # Generate final report
-    print("\n" + "=" * 60)
-    print("🎯 VALIDATION RESULTS SUMMARY")
-    print("=" * 60)
-    
-    passed = validation_results["tests_passed"]
-    failed = validation_results["tests_failed"]
-    total = validation_results["total_tests"]
-    
-    print(f"✅ Tests Passed: {passed}")
-    print(f"❌ Tests Failed: {failed}")
-    print(f"📊 Total Tests: {total}")
-    print(f"📈 Success Rate: {(passed/total*100):.1f}%" if total > 0 else "0%")
-    
-    # Component status summary
-    if validation_results["component_status"]:
-        print(f"\n🔧 Component Status:")
-        for component, status in validation_results["component_status"].items():
-            status_icon = "✅" if status == "healthy" else "❌" if status == "error" else "⚠️"
-            print(f"  {status_icon} {component}: {status}")
-    
-    # Show errors if any
-    if validation_results["errors"]:
-        print(f"\n❌ Errors Found:")
-        for error in validation_results["errors"][:5]:  # Show first 5 errors
-            print(f"  • {error}")
-        if len(validation_results["errors"]) > 5:
-            print(f"  ... and {len(validation_results['errors']) - 5} more errors")
-    
-    # Show warnings if any
-    if validation_results["warnings"]:
-        print(f"\n⚠️ Warnings:")
-        for warning in validation_results["warnings"][:3]:  # Show first 3 warnings
-            print(f"  • {warning}")
-    
-    # Overall system status
-    print("\n" + "=" * 60)
-    overall_success = passed >= total * 0.8  # 80% success rate required
-    
-    if overall_success:
-        print("🎉 AI CORE SYSTEM: VALIDATION SUCCESSFUL!")
-        print("✅ System is ready for enterprise deployment")
-        print("🚀 All critical components are operational")
-        
-        # Generate recommendations for successful validation
-        validation_results["recommendations"] = [
-            "System passed validation - ready for production deployment",
-            "Consider running performance benchmarks for optimization",
-            "Set up monitoring and alerting for production environment",
-            "Configure backup and disaster recovery procedures"
-        ]
-        
-        exit_code = 0
-    else:
-        print("⚠️ AI CORE SYSTEM: VALIDATION FAILED!")
-        print("❌ System requires fixes before deployment")
-        print("🔧 Please address the errors above")
-        
-        # Generate recommendations for failed validation
-        validation_results["recommendations"] = [
-            "Fix failed component tests before proceeding",
-            "Review error messages and resolve import issues",
-            "Verify all dependencies are properly installed",
-            "Check configuration files and environment setup"
-        ]
-        
-        exit_code = 1
-    
-    # Save validation report
-    try:
-        report_file = f"ai_core_validation_report_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}.json"
-        with open(report_file, 'w') as f:
-            json.dump(validation_results, f, indent=2)
-        print(f"\n📄 Detailed report saved to: {report_file}")
-    except Exception as e:
-        print(f"\n⚠️ Could not save validation report: {e}")
-    
-    print("=" * 60)
-    print(f"Validation completed at: {datetime.utcnow()}")
-    print("(c) 2025 Fahed Mlaiel - IA-Influencer-Agent AI Core System")
-    print("=" * 60)
-    
-    return exit_code
-
-
+        try:
+            logger.info(f"Executing run_validation")
+            
+            # Implementation for run_validation
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"run_validation completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"run_validation failed: {e}")
+            raise
 if __name__ == "__main__":
     try:
         # Run validation

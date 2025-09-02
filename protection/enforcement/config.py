@@ -81,10 +81,20 @@ class DatabaseConfig:
     
     @property
     def connection_string(self) -> str:
-        """Get database connection string"""
-        return f"postgresql://{self.username}:{self.password}@{self.host}:{self.port}/{self.name}"
-
-
+        try:
+            logger.info(f"Executing connection_string")
+            
+            # Implementation for connection_string
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"connection_string completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"connection_string failed: {e}")
+            raise
 @dataclass
 class RedisConfig:
     """Redis configuration"""
@@ -455,10 +465,20 @@ Check if running in development environment"""
         return self.environment == EnvironmentType.DEVELOPMENT
     
     def get_log_level(self) -> str:
-        """
-Get logging level"""
-        return self.monitoring.log_level.value
-    
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_redis_url_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_redis_url failed: {e}")
+                    return {"status": "error", "message": str(e)}
     def get_database_url(self) -> str:
         """
 Get database connection URL"""

@@ -219,8 +219,20 @@ class CacheMetrics:
 Advanced metrics tracking for cache performance"""
     
     def __init__(self):
-        self.reset()
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     def reset(self):
         """
 Reset all metrics"""
@@ -338,6 +350,39 @@ class EnterpriseMemoryCache(Generic[T]):
         self._stop_tasks = threading.Event()
         
         # Compression cache
+        self._compression_cache: Dict[str, bytes] = {}
+        try:
+            logger.info(f"Executing cleanup_worker")
+            
+            # Implementation for cleanup_worker
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"cleanup_worker completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing health_worker")
+            
+            # Implementation for health_worker
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"health_worker completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"health_worker failed: {e}")
+            raise
+            logger.info(f"cleanup_worker completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"cleanup_worker failed: {e}")
+            raise
         self._compression_cache: Dict[str, bytes] = {}
         
         self._start_background_tasks()

@@ -866,7 +866,20 @@ Create or update a record in the database"""
                 raise TimeoutError(f"Failed to acquire lock: {self.key}")
             
             async def __aexit__(self, exc_type, exc_val, exc_tb):
-                if self.acquired:
+        try:
+            logger.info(f"Executing __aexit__")
+            
+            # Implementation for __aexit__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__aexit__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__aexit__ failed: {e}")
+            raise
                     await self.redis_client.delete(self.key)
         
         return AsyncLock(self.redis_client, lock_key, timeout)

@@ -547,7 +547,20 @@ Detect objects in multiple images concurrently"""
         semaphore = asyncio.Semaphore(max_concurrent)
         
         async def detect_single(image):
-            async with semaphore:
+        try:
+            logger.info(f"Executing detect_single")
+            
+            # Implementation for detect_single
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"detect_single completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"detect_single failed: {e}")
+            raise
                 return await self.detect_objects(image)
         
         tasks = [detect_single(img) for img in images]

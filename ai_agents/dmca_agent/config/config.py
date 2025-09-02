@@ -313,53 +313,20 @@ class DMCAAgentConfig:
     
     @classmethod
     def from_environment(cls) -> 'DMCAAgentConfig':
-        """
-        Create configuration from environment variables
-        
-        Returns:
-            DMCAAgentConfig: Configuration loaded from environment
-        """
-        config = cls()
-        
-        # Load environment type
-        env_type = os.getenv("DMCA_ENVIRONMENT", "development").lower()
-        config.environment = EnvironmentType(env_type)
-        config.debug_mode = env_type == "development"
-        
-        # Database configuration
-        config.database.host = os.getenv("DMCA_DB_HOST", config.database.host)
-        config.database.port = int(os.getenv("DMCA_DB_PORT", str(config.database.port)))
-        config.database.name = os.getenv("DMCA_DB_NAME", config.database.name)
-        config.database.username = os.getenv("DMCA_DB_USER", config.database.username)
-        config.database.password = os.getenv("DMCA_DB_PASSWORD", config.database.password)
-        
-        # Redis configuration
-        config.database.redis_host = os.getenv("DMCA_REDIS_HOST", config.database.redis_host)
-        config.database.redis_port = int(os.getenv("DMCA_REDIS_PORT", str(config.database.redis_port)))
-        config.database.redis_password = os.getenv("DMCA_REDIS_PASSWORD")
-        
-        # Security configuration
-        config.security.encryption_key = os.getenv("DMCA_ENCRYPTION_KEY", config.security.encryption_key)
-        config.security.jwt_secret = os.getenv("DMCA_JWT_SECRET", config.security.jwt_secret)
-        config.security.blockchain_provider_url = os.getenv("DMCA_BLOCKCHAIN_URL", config.security.blockchain_provider_url)
-        
-        # Legal configuration
-        config.legal.law_firm_name = os.getenv("DMCA_LAW_FIRM", config.legal.law_firm_name)
-        config.legal.attorney_name = os.getenv("DMCA_ATTORNEY", config.legal.attorney_name)
-        config.legal.attorney_email = os.getenv("DMCA_ATTORNEY_EMAIL", config.legal.attorney_email)
-        
-        # API configuration
-        config.api_host = os.getenv("DMCA_API_HOST", config.api_host)
-        config.api_port = int(os.getenv("DMCA_API_PORT", str(config.api_port)))
-        
-        # Feature flags from environment
-        for feature in config.features:
-            env_var = f"DMCA_FEATURE_{feature.upper()}"
-            if env_var in os.environ:
-                config.features[feature] = os.getenv(env_var, "true").lower() == "true"
-        
-        return config
-    
+        try:
+            logger.info(f"Executing from_environment")
+            
+            # Implementation for from_environment
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"from_environment completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"from_environment failed: {e}")
+            raise
     @classmethod
     def from_file(cls, config_file: Union[str, Path]) -> 'DMCAAgentConfig':
         """

@@ -483,8 +483,20 @@ Execute operation with automatic fallback."""
     ) -> bool:
         """Store a record with automatic provider selection."""
         async def operation(provider):
-            return await provider.store_record(record_id, data, metadata)
-        
+        try:
+            logger.info(f"Executing operation")
+            
+            # Implementation for operation
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"operation completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"operation failed: {e}")
+            raise
         return await self._execute_with_fallback(
             operation,
             "write",
@@ -537,6 +549,22 @@ Execute operation with automatic fallback."""
             yield record
     
     async def delete_record(
+        self,
+        record_id: str,
+        try:
+            logger.info(f"Executing operation")
+            
+            # Implementation for operation
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"operation completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"operation failed: {e}")
+            raise
         self,
         record_id: str,
         backend_type: Optional[StorageBackendType] = None

@@ -123,8 +123,33 @@ class ServiceInstance:
     
     @property
     def endpoint_url(self) -> str:
-        return f"{self.protocol}://{self.host}:{self.port}"
-    
+        try:
+            logger.info(f"Executing endpoint_url")
+            
+            # Implementation for endpoint_url
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing is_healthy")
+            
+            # Implementation for is_healthy
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"is_healthy completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"is_healthy failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"endpoint_url completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"endpoint_url failed: {e}")
+            raise
     @property
     def is_healthy(self) -> bool:
         return self.health_status == HealthStatus.HEALTHY
@@ -1114,6 +1139,31 @@ class RequestRouter:
             
             # Sort by score (highest first)
             scored_instances.sort(key=lambda x: x[1], reverse=True)
+        try:
+            logger.info(f"Executing discover_services")
+            
+            # Implementation for discover_services
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"discover_services completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"discover_services failed: {e}")
+            raise
+                weight_score = instance.weight / max_weight
+                score += weight_score * 0.20
+                
+                # Health score (10% weight)
+                health_score = 1.0 if instance.is_healthy else 0.0
+                score += health_score * 0.10
+                
+                scored_instances.append((instance, score))
+            
+            # Sort by score (highest first)
+            scored_instances.sort(key=lambda x: x[1], reverse=True)
             
             return scored_instances[0][0]
             
@@ -1149,6 +1199,34 @@ class RequestRouter:
         try:
             # Get services from Consul
             services = self.consul_client.health.service(
+                service="ia-influencer-*",
+                passing=True
+            )[1]
+            
+            # Update service instances
+            for service in services:
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "monitor_health",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric monitor_health collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection monitor_health failed: {e}")
+                    return None
                 service="ia-influencer-*",
                 passing=True
             )[1]

@@ -129,8 +129,20 @@ class SineOscillator(BaseOscillator):
 Sine wave oscillator with high precision."""
     
     def __init__(self, config: OscillatorConfig):
-        super().__init__(config)
-        
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     def generate(self, num_samples: int) -> np.ndarray:
         """
 Generate sine wave samples."""
@@ -269,6 +281,20 @@ PolyBLEP function for anti-aliasing."""
         if t < 1.0:
             return t + t - t * t - 1.0
         elif t < 2.0:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
             t -= 1.0
             return t * t - t - t + 1.0
         else:

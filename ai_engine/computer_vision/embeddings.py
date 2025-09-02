@@ -796,10 +796,26 @@ class BaseFeatureExtractor(ABC):
     
     @abstractmethod
     def extract(self, image: np.ndarray) -> np.ndarray:
-        """
-Extract features from image"""
-        pass
-
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_extract_input(image)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_extract_result(result)
+            
+                    logger.info(f"AI processing extract completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing extract failed: {e}")
+                    raise
 class DeepFeatureExtractor(BaseFeatureExtractor):
     """
 Deep learning-based feature extractor"""

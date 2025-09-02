@@ -250,12 +250,17 @@ Train the RL agent"""
             return np.random.rand(self.action_dim)
     
     def update_reward(self, state: np.ndarray, action: np.ndarray, reward: float) -> None:
-        """Update with reward feedback"""
-        # This would update the agent with new experience
-        # Implementation depends on the specific RL algorithm
-        pass
-
-
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation update_reward completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation update_reward failed: {e}")
+                    raise
 class MetaLearner:
     """
 Meta-learning for few-shot adaptation"""

@@ -671,22 +671,26 @@ Create new conversation context"""
         }
     
     async def _analyze_problem_type(self, message: str, context: ConversationContext) -> str:
-        """Analyze problem type from message"""
-        message_lower = message.lower()
-        
-        if any(keyword in message_lower for keyword in ["upload", "file", "upload error", "can't upload"]):
-            return "upload_error"
-        elif any(keyword in message_lower for keyword in ["login", "password", "can't login", "sign in"]):
-            return "login_problem"
-        elif any(keyword in message_lower for keyword in ["audio", "music", "sound", "processing"]):
-            return "audio_processing"
-        elif any(keyword in message_lower for keyword in ["copyright", "protection", "fingerprint"]):
-            return "copyright_protection"
-        elif any(keyword in message_lower for keyword in ["collaboration", "sharing", "invite"]):
-            return "collaboration"
-        
-        return "default"
-    
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__analyze_problem_type_input(message)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__analyze_problem_type_result(result)
+            
+                    logger.info(f"AI processing _analyze_problem_type completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _analyze_problem_type failed: {e}")
+                    raise
     async def _persist_context(self, context: ConversationContext):
         """Persist conversation context to Redis"""
         try:

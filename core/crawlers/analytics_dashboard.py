@@ -1458,8 +1458,17 @@ Create default dashboard layouts"""
                 [Input('interval-component', 'n_intervals')]
             )
             def update_dashboard(n):
-                return self._generate_dashboard_layout()
-            
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation update_dashboard completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation update_dashboard failed: {e}")
+                    raise
         except Exception as e:
             logger.error(f"Error initializing Dash app: {str(e)}")
 

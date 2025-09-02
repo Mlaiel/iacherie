@@ -692,8 +692,20 @@ class MetadataOptimizer(BaseEngine):
     """Advanced metadata optimization"""
     
     def __init__(self, config: Dict[str, Any]):
-        super().__init__(config)
-        
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     async def optimize_metadata(
         self,
         content_type: ContentType,
@@ -787,7 +799,20 @@ Optimize metadata for multiple platforms"""
         
         mapping = {
             ContentType.AUDIO: "Music",
-            ContentType.VIDEO: "Entertainment",
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
             ContentType.PODCAST: "Education",
             ContentType.BLOG: "People & Blogs"
         }

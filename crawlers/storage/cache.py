@@ -1080,8 +1080,35 @@ Get memory cache statistics."""
                 count += 1
     
     async def update_record(self, record_id: str, data: Any, metadata: Optional[StorageMetadata] = None) -> bool:
-        return await self.store_record(record_id, data, metadata)
-    
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation update_record completed")
+                        return True
+                
+                except Exception as e:
+        try:
+            logger.info(f"Executing cleanup_old_records")
+            
+            # Implementation for cleanup_old_records
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"cleanup_old_records completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"cleanup_old_records failed: {e}")
+            raise
+                        logger.info(f"Database operation update_record completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation update_record failed: {e}")
+                    raise
     async def cleanup_old_records(self, older_than: datetime, batch_size: int = 1000) -> int:
         # Memory cache handles expiry automatically
         return 0

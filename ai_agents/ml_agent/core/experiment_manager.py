@@ -308,9 +308,20 @@ Initialize experiment tracking backends"""
         )
         
         def objective(trial):
-            return asyncio.run(self._optuna_objective(trial, config, training_data, target_data, results))
-        
-        # Run optimization
+        try:
+            logger.info(f"Executing objective")
+            
+            # Implementation for objective
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"objective completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"objective failed: {e}")
+            raise
         study.optimize(objective, n_trials=config.max_trials, timeout=config.timeout)
         
         return results

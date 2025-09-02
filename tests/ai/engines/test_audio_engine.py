@@ -91,8 +91,34 @@ Create and initialize audio processing engine"""
                 return True
                 
             async def analyze_monetization_potential(self, content):
-                return {"revenue_potential": 85.5, "monetization_score": 0.85}
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
                 
+                        await session.commit()
+                        logger.info(f"Database operation find_collaboration_opportunities completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation find_collaboration_opportunities failed: {e}")
+                    raise
+                    processed_input = await self._preprocess_analyze_monetization_potential_input(content)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_monetization_potential_result(result)
+            
+                    logger.info(f"AI processing analyze_monetization_potential completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing analyze_monetization_potential failed: {e}")
+                    raise
             async def find_collaboration_opportunities(self, content):
                 return [{"brand": "test_brand", "type": "audio_sponsorship", "value": 1000}]
                 

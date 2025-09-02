@@ -122,10 +122,48 @@ Base class for platform-specific SEO adapters"""
     
     @abstractmethod
     def get_config(self) -> PlatformSEOConfig:
-        """
-Get platform-specific configuration"""
-        pass
-    
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_config_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+        try:
+            logger.info(f"Executing optimize_content")
+            
+            # Implementation for optimize_content
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"optimize_content completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"optimize_content failed: {e}")
+            raise
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_config failed: {e}")
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_config_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_config failed: {e}")
+                    return {"status": "error", "message": str(e)}
     @abstractmethod
     def optimize_content(self, content: str, keywords: List[str]) -> str:
         """
@@ -215,6 +253,21 @@ Generate Instagram hashtags"""
                 hashtags.append(hashtag)
         
         return hashtags[:30]  # Instagram limit
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_config_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_config failed: {e}")
+                    return {"status": "error", "message": str(e)}
+        return hashtags[:30]  # Instagram limit
     
     def calculate_seo_score(self, content: str, metadata: Dict[str, Any]) -> float:
         """Calculate Instagram SEO score"""
@@ -292,6 +345,20 @@ YouTube SEO adapter"""
         for keyword in keywords:
             hashtag = f"#{keyword.replace(' ', '').lower()}"
             if hashtag not in hashtags:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_config_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_config failed: {e}")
+                    return {"status": "error", "message": str(e)}
                 hashtags.append(hashtag)
         
         # Add YouTube-specific hashtags
@@ -365,7 +432,20 @@ Twitter SEO adapter"""
         """Optimize content for Twitter"""
         # Ensure content fits character limit
         if len(content) > 250:  # Leave room for hashtags
-            sentences = content.split('.')
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_config_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_config failed: {e}")
+                    return {"status": "error", "message": str(e)}
             optimized = sentences[0] + '.'
             
             # Add more sentences if they fit

@@ -714,10 +714,20 @@ class ProtectionRulesRepository:
         return f"RULE-{type_prefix}-{timestamp}-{hash_suffix}"
     
     async def _test_rule_execution(self, rule: ProtectionRule) -> Dict[str, Any]:
-        """Test rule execution with sample data"""
-        # Implementation would test rule with sample violation data
-        return {"test_passed": True, "execution_time_ms": 10}
-    
+        try:
+            logger.info(f"Executing _test_rule_execution")
+            
+            # Implementation for _test_rule_execution
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_test_rule_execution completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_test_rule_execution failed: {e}")
+            raise
     async def _validate_rule_for_activation(self, rule: ProtectionRule) -> None:
         """Validate rule is ready for activation"""
         if rule.status == RuleStatus.DEPRECATED.value:

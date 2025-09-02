@@ -325,14 +325,26 @@ class UniswapV3Manager:
         return tick_lower, tick_upper
     
     def _extract_token_id_from_receipt(self, receipt) -> int:
-        """
-Extract NFT token ID from transaction receipt"""
-        # Parse logs to find IncreaseLiquidity event
-        for log in receipt.logs:
-            # Simplified - in production, properly decode logs
-            pass
-        return 1  # Placeholder
-    
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__extract_token_id_from_receipt_input(receipt)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__extract_token_id_from_receipt_result(result)
+            
+                    logger.info(f"AI processing _extract_token_id_from_receipt completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _extract_token_id_from_receipt failed: {e}")
+                    raise
     def _extract_collected_fees(self, receipt) -> Tuple[Decimal, Decimal]:
         """
 Extract collected fee amounts from receipt"""

@@ -373,8 +373,20 @@ class PaymentTransaction(Base):
     collaboration_request = relationship("CollaborationRequest", back_populates="payment_transactions")
     
     def __repr__(self):
-        return f"<PaymentTransaction(id={self.id}, type={self.transaction_type.value}, amount={self.amount}, status={self.status.value})>"
-    
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     @classmethod
     def create_payment(
         cls, 

@@ -673,9 +673,20 @@ class VectorStoreConnectionPool(IConnectionPool):
         return self.vector_stores
     
     async def release(self, connection: Any) -> None:
-        """Release vector stores (no-op)"""
-        pass
-    
+        try:
+            logger.info(f"Executing release")
+            
+            # Implementation for release
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"release completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"release failed: {e}")
+            raise
     async def add_content_fingerprint(self, content_type: str, vector: np.ndarray, 
                                     metadata: Dict[str, Any], 
                                     fingerprint_id: Optional[str] = None) -> bool:

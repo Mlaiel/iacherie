@@ -194,62 +194,20 @@ class LinkedInCrawlerEngine(BaseCrawlerEngine):
     """
     def __init__(self, 
                  username: Optional[str] = None,
-                 password: Optional[str] = None,
-                 access_token: Optional[str] = None,
-                 use_selenium: bool = True,
-                 headless: bool = True,
-                 proxy_config: Optional[Dict] = None,
-                 rate_limit_config: Optional[Dict] = None):
-        """
-        Initialize LinkedIn crawler engine.
-        
-        Args:
-            username: LinkedIn username/email
-            password: LinkedIn password
-            access_token: LinkedIn API access token
-            use_selenium: Whether to use Selenium for scraping
-            headless: Run browser in headless mode
-            proxy_config: Proxy configuration
-            rate_limit_config: Rate limiting configuration
-        """
-        super().__init__()
-        
-        # Authentication
-        self.username = username or settings.LINKEDIN_USERNAME
-        self.password = password or settings.LINKEDIN_PASSWORD
-        self.access_token = access_token or settings.LINKEDIN_ACCESS_TOKEN
-        
-        # LinkedIn API client
-        self.api_client = None
-        if self.username and self.password:
-            try:
-                self.api_client = Linkedin(self.username, self.password)
-            except Exception as e:
-                logger.warning(f"Failed to initialize LinkedIn API client: {e}")
-        
-        # Selenium setup
-        self.use_selenium = use_selenium
-        self.headless = headless
-        self.driver = None
-        
-        # Rate limiting (LinkedIn is very strict)
-        rate_config = rate_limit_config or {
-            'requests_per_hour': 100,  # Very conservative
-            'requests_per_day': 1000,
-            'burst_limit': 20,
-            'delay_between_requests': 3
-        }
-        self.rate_limiter = RateLimiter(**rate_config)
-        
-        # Cache manager
-        self.cache_manager = CacheManager(
-            cache_type='redis',
-            ttl=7200,  # 2 hour cache
-            key_prefix='linkedin_'
-        )
-        
-        # Proxy manager
-        if proxy_config:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
             self.proxy_manager = ProxyManager(proxy_config)
         else:
             self.proxy_manager = None

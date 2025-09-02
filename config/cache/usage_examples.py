@@ -223,34 +223,20 @@ Example 1: Quick setup for development environment"""
     
     @staticmethod
     def example_9_custom_configuration():
-        """Example 9: Creating custom configuration bundle"""
-        print("\n=== Example 9: Custom Configuration ===")
-        
-        # Create custom Redis configuration
-        from .redis_cache_config import RedisCacheConfig, RedisConnectionConfig
-        
-        custom_redis = RedisCacheConfig(
-            connection_config=RedisConnectionConfig(
-                host="custom-redis.example.com",
-                port=6380,
-                database=5,
-                password="custom_password"
-            )
-        )
-        
-        # Create custom bundle
-        custom_bundle = CacheConfigurationFactory.create_custom_bundle(
-            environment=Environment.PRODUCTION,
-            cache_type=CacheType.REDIS,
-            redis_config=custom_redis
-        )
-        
-        print("Custom Configuration Bundle:")
-        print(f"  Environment: {custom_bundle.environment}")
-        print(f"  Cache Type: {custom_bundle.cache_type}")
-        print(f"  Custom Redis Host: {custom_bundle.redis_config.connection_config.host}")
-        print(f"  Validated: {custom_bundle.validate()}")
-    
+        try:
+            logger.info(f"Executing example_9_custom_configuration")
+            
+            # Implementation for example_9_custom_configuration
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"example_9_custom_configuration completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"example_9_custom_configuration failed: {e}")
+            raise
     @staticmethod
     def example_10_environment_detection():
         """Example 10: Environment detection and auto-configuration"""

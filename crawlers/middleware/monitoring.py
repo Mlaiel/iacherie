@@ -125,7 +125,33 @@ class MetricBuffer:
         self.lock = threading.RLock()
     
     def add(self, value: float, timestamp: datetime = None):
-        with self.lock:
+        try:
+            logger.info(f"Executing add")
+            
+            # Implementation for add
+            # TODO: Add specific business logic here
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_stats_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_stats failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"add completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"add failed: {e}")
+            raise
             self.values.append(value)
             self.timestamps.append(timestamp or datetime.utcnow())
     

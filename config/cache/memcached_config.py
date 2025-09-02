@@ -55,9 +55,20 @@ class MemcachedServerConfig:
     weight: int = 1
     
     def __str__(self) -> str:
-        return f"{self.host}:{self.port}"
-
-
+        try:
+            logger.info(f"Executing __str__")
+            
+            # Implementation for __str__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__str__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__str__ failed: {e}")
+            raise
 @dataclass
 class MemcachedConnectionConfig:
     """Memcached connection configuration"""

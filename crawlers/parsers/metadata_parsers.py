@@ -31,8 +31,42 @@ class BaseMetadataParser(ABC):
 Abstract base class for metadata parsers"""
     
     def __init__(self, config: ParserConfig):
-        self.config = config
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing parse")
+            
+            # Implementation for parse
+            # TODO: Add specific business logic here
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_parser_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_parser_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            logger.info(f"parse completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"parse failed: {e}")
+            raise
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     @abstractmethod
     async def parse(self, html: str, base_url: Optional[str] = None) -> Dict[str, Any]:
         """
@@ -46,6 +80,20 @@ Get the type of metadata this parser handles"""
         pass
     
     def _normalize_url(self, url: str, base_url: Optional[str] = None) -> str:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_parser_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_parser_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
         """
 Normalize relative URLs to absolute URLs"""
         if not url:
@@ -161,9 +209,20 @@ class OpenGraphParser(BaseMetadataParser):
         for prop in image_props:
             key = prop.replace('image:', '')
             if prop in og_data:
-                structured['image'][key] = og_data[prop]
-        
-        # Video properties
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_parser_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_parser_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
         video_props = ['video:secure_url', 'video:type', 'video:width', 'video:height']
         for prop in video_props:
             key = prop.replace('video:', '')
@@ -243,7 +302,20 @@ Parser for Twitter Card metadata"""
                 'data': twitter_data,
                 'card_type': card_type,
                 'validation': validation_result,
-                'parsed_at': datetime.now(timezone.utc).isoformat()
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_parser_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_parser_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
             }
             
         except Exception as e:
@@ -378,6 +450,20 @@ Parse Microdata structured data"""
             props = item.find_all(attrs={'itemprop': True})
             
             for prop in props:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_parser_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_parser_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
                 prop_name = prop.get('itemprop')
                 
                 # Get property value based on element type
@@ -418,9 +504,20 @@ Parse RDFa structured data"""
                 'type': element.get('typeof', ''),
                 'about': element.get('about', ''),
                 'properties': {}
-            }
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
             
-            # Find properties with 'property' attribute
+                    # Process request
+                    result = await self._handle_get_parser_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_parser_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
             props = element.find_all(attrs={'property': True})
             
             for prop in props:
@@ -507,7 +604,20 @@ class MetaTagParser(BaseMetadataParser):
         return "meta_tags"
     
     async def parse(self, html: str, base_url: Optional[str] = None) -> Dict[str, Any]:
-        """Parse standard meta tags from HTML"""
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_parser_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_parser_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
         try:
             soup = BeautifulSoup(html, 'html.parser')
             meta_data = {
@@ -592,7 +702,20 @@ Parse robots meta tag content"""
             elif directive.startswith('max-snippet:'):
                 robots['max_snippet'] = directive.split(':')[1]
             elif directive.startswith('max-image-preview:'):
-                robots['max_image_preview'] = directive.split(':')[1]
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_parser_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_parser_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
             elif directive.startswith('max-video-preview:'):
                 robots['max_video_preview'] = directive.split(':')[1]
         

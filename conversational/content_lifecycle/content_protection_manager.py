@@ -841,10 +841,67 @@ Generate encryption key for sensitive data"""
     
     # Helper methods (implementation details)
     async def _get_content_info(self, content_id: str) -> Dict[str, Any]:
-        """Get content information from database"""
-        # Implementation for retrieving content info
-        pass
-    
+        try:
+                    # Request validation
+                    if not content_id:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_content_info_request(content_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+        try:
+        try:
+            logger.info(f"Executing _store_fingerprint_securely")
+            
+            # Implementation for _store_fingerprint_securely
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_fingerprint_securely completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _store_rights_manifest_securely")
+            
+            # Implementation for _store_rights_manifest_securely
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_rights_manifest_securely completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_rights_manifest_securely failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_watermark_securely completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_watermark_securely failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"_store_fingerprint_securely failed: {e}")
+            raise
+                    result = await self._handle__get_user_info_request(user_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_user_info failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_content_info failed: {e}")
+                    return {"status": "error", "message": str(e)}
     async def _get_user_info(self, user_id: str) -> Dict[str, Any]:
         """
 Get user information from database"""

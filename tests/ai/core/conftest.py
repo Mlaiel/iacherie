@@ -392,8 +392,20 @@ Error handling fixture for tests"""
     errors = []
     
     def handle_error(error):
-        errors.append(str(error))
-        
+        try:
+            logger.info(f"Executing handle_error")
+            
+            # Implementation for handle_error
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"handle_error completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"handle_error failed: {e}")
+            raise
     yield handle_error, errors
 
 

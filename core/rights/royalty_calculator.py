@@ -564,10 +564,20 @@ Initialize royalty calculation engine."""
     # Helper methods
     
     async def _get_content_record(self, content_id: str) -> Optional[Any]:
-        """Get content record from database."""
-        # Database query implementation
-        pass
-    
+        try:
+                    # Request validation
+                    if not content_id:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_content_record_request(content_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_content_record failed: {e}")
+                    return {"status": "error", "message": str(e)}
     async def _validate_calculation_access(self, content: Any, user_id: str) -> bool:
         """
 Validate user access for royalty calculation."""

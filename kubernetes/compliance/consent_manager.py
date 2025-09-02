@@ -637,10 +637,60 @@ class ConsentManager:
             logger.error(f"Failed to send consent confirmation: {str(e)}")
 
     async def _stop_analytics_tracking(self, user_id: str) -> None:
-        """Stop analytics tracking for user"""
-        # Implementation for stopping analytics tracking
-        pass
-
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_stop_analytics_tracking",
+        try:
+            logger.info(f"Executing _remove_from_marketing_lists")
+            
+            # Implementation for _remove_from_marketing_lists
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_remove_from_marketing_lists completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _adjust_protection_settings")
+            
+            # Implementation for _adjust_protection_settings
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_adjust_protection_settings completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_adjust_protection_settings failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_reset_personalization_data completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_reset_personalization_data failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"_remove_from_marketing_lists failed: {e}")
+            raise
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _stop_analytics_tracking collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _stop_analytics_tracking failed: {e}")
+                    return None
     async def _remove_from_marketing_lists(self, user_id: str) -> None:
         """
 Remove user from marketing lists"""

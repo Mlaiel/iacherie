@@ -140,11 +140,20 @@ class PipelineStageBase(ABC):
     @abstractmethod
     async def execute(self, 
                      input_data: Any, 
-                     context: Dict[str, Any]) -> StageResult:
-        """
-Execute the pipeline stage"""
-        pass
-    
+        try:
+            logger.info(f"Executing execute")
+            
+            # Implementation for execute
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"execute completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"execute failed: {e}")
+            raise
     def set_config(self, config: Dict[str, Any]):
         """
 Set stage configuration"""
@@ -552,6 +561,25 @@ class ConvertFormatStage(PipelineStageBase):
                 stage_type=self.stage_type,
                 success=False,
                 error_message=str(e),
+                processing_time=time.time() - start_time
+            )
+
+
+class SaveResultsStage(PipelineStageBase):
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
                 processing_time=time.time() - start_time
             )
 

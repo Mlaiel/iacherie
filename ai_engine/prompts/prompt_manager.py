@@ -74,7 +74,20 @@ class PromptVariable:
     validation_rules: Dict[str, Any] = None
     
     def __post_init__(self):
-        if self.validation_rules is None:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             self.validation_rules = {}
 
 
@@ -111,6 +124,20 @@ Template definition for prompts"""
 class PromptExecution:
     """Record of prompt execution"""
     execution_id: str
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     template_id: str
     input_variables: Dict[str, Any]
     generated_prompt: str
@@ -816,8 +843,62 @@ Get quality grade based on average quality score"""
         elif avg_quality >= 0.7:
             return "C"
         elif avg_quality >= 0.6:
-            return "D"
-        else:
+        try:
+            logger.info(f"Executing _load_existing_templates")
+            
+            # Implementation for _load_existing_templates
+            # TODO: Add specific business logic here
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _save_template completed")
+                        return True
+                
+                except Exception as e:
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+        try:
+            logger.info(f"Executing _start_optimization_tasks")
+            
+            # Implementation for _start_optimization_tasks
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_start_optimization_tasks completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_start_optimization_tasks failed: {e}")
+            raise
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _setup_monitoring collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _setup_monitoring failed: {e}")
+                    return None
+                    logger.error(f"Database operation _save_template failed: {e}")
+                    raise
+            logger.info(f"_load_existing_templates completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_load_existing_templates failed: {e}")
+            raise
             return "F"
     
     async def _get_optimization_recommendations(

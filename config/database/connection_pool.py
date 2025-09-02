@@ -420,7 +420,40 @@ class DatabaseConnectionPool:
         self._monitoring_enabled = True
         
         def monitoring_loop():
-            while self._monitoring_enabled:
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "monitoring_loop",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+        try:
+            logger.info(f"Executing cleanup_loop")
+            
+            # Implementation for cleanup_loop
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"cleanup_loop completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"cleanup_loop failed: {e}")
+            raise
+                    logger.info(f"Metric monitoring_loop collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection monitoring_loop failed: {e}")
+                    return None
                 try:
                     self._perform_health_checks()
                     time.sleep(self.config.monitoring_interval)

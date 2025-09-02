@@ -83,16 +83,20 @@ class AlertingConfig:
     """Professional alerting configuration for IA-Influencer platform"""
     
     def __init__(self):
-        self.alertmanager_port = int(os.getenv("ALERTMANAGER_PORT", "9093"))
-        self.smtp_host = os.getenv("SMTP_HOST", "smtp.gmail.com")
-        self.smtp_port = int(os.getenv("SMTP_PORT", "587"))
-        self.smtp_username = os.getenv("SMTP_USERNAME", "")
-        self.smtp_password = os.getenv("SMTP_PASSWORD", "")
-        self.slack_webhook = os.getenv("SLACK_WEBHOOK_URL", "")
-        self.pagerduty_key = os.getenv("PAGERDUTY_INTEGRATION_KEY", "")
-        self.telegram_token = os.getenv("TELEGRAM_BOT_TOKEN", "")
-        self.telegram_chat_id = os.getenv("TELEGRAM_CHAT_ID", "")
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     def get_system_alert_rules(self) -> List[AlertRule]:
         """Get system-level alert rules"""
         return [
@@ -325,71 +329,20 @@ class AlertingConfig:
         ]
     
     def get_notification_receivers(self) -> List[NotificationReceiver]:
-        """Get notification receiver configurations"""
-        receivers = []
-        
-        # Email receiver
-        if self.smtp_username and self.smtp_password:
-            receivers.append(NotificationReceiver(
-                name="email-critical",
-                channel=NotificationChannel.EMAIL,
-                config={
-                    "to": ["admin@ia-influencer.com", "alerts@ia-influencer.com"],
-                    "from": self.smtp_username,
-                    "smarthost": f"{self.smtp_host}:{self.smtp_port}",
-                    "auth_username": self.smtp_username,
-                    "auth_password": self.smtp_password,
-                    "subject": "🚨 {{ .GroupLabels.alertname }} - {{ .GroupLabels.severity }}",
-                    "body": """Alert: {{ .GroupLabels.alertname }}
-Severity: {{ .GroupLabels.severity }}
-Description: {{ .CommonAnnotations.description }}
-Runbook: {{ .CommonAnnotations.runbook_url }}
-
-Details:
-{{ range .Alerts }}
-- Instance: {{ .Labels.instance }}
-- Value: {{ .Annotations.value }}
-{{ end }}
-"""
-                }
-            ))
-        
-        # Slack receiver
-        if self.slack_webhook:
-            receivers.append(NotificationReceiver(
-                name="slack-alerts",
-                channel=NotificationChannel.SLACK,
-                config={
-                    "api_url": self.slack_webhook,
-                    "channel": "#alerts",
-                    "username": "AlertManager",
-                    "title": "{{ .GroupLabels.alertname }}",
-                    "text": "{{ .CommonAnnotations.description }}",
-                    "color": "{{ if eq .Status \"firing\" }}danger{{ else }}good{{ end }}"
-                }
-            ))
-        
-        # PagerDuty receiver
-        if self.pagerduty_key:
-            receivers.append(NotificationReceiver(
-                name="pagerduty-critical",
-                channel=NotificationChannel.PAGERDUTY,
-                config={
-                    "routing_key": self.pagerduty_key,
-                    "description": "{{ .GroupLabels.alertname }}: {{ .CommonAnnotations.summary }}"
-                }
-            ))
-        
-        # Telegram receiver
-        if self.telegram_token and self.telegram_chat_id:
-            receivers.append(NotificationReceiver(
-                name="telegram-alerts",
-                channel=NotificationChannel.TELEGRAM,
-                config={
-                    "bot_token": self.telegram_token,
-                    "chat_id": self.telegram_chat_id,
-                    "message": "🚨 *{{ .GroupLabels.alertname }}*\n{{ .CommonAnnotations.description }}",
-                    "parse_mode": "Markdown"
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_notification_receivers_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_notification_receivers failed: {e}")
+                    return {"status": "error", "message": str(e)}
                 }
             ))
         

@@ -199,7 +199,26 @@ class MelodyExtractor:
                                              audio_data: np.ndarray) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         """Extract fundamental frequencies using selected method"""
         def extract_f0():
-            if self.extraction_method == MelodyExtractionMethod.PYIN:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_extract_f0_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_extract_f0_result(result)
+            
+                    logger.info(f"AI processing extract_f0 completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing extract_f0 failed: {e}")
+                    raise
                 return self._pyin_extraction(audio_data)
             elif self.extraction_method == MelodyExtractionMethod.YIN:
                 return self._yin_extraction(audio_data)

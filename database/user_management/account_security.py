@@ -143,8 +143,31 @@ class UserSecurity(Base):
     api_keys = relationship("APIKey", back_populates="user_security")
 
     def __repr__(self):
-        return f"<UserSecurity({self.user_id})>"
-    
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing is_password_expired")
+            
+            # Implementation for is_password_expired
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"is_password_expired completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"is_password_expired failed: {e}")
+            raise
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     def is_password_expired(self) -> bool:
         """Vérifie si le mot de passe a expiré."""
         if not self.password_expires_at:
@@ -212,6 +235,21 @@ class UserSecurityLog(Base):
     # Géolocalisation
     country_code = Column(String(3))
     city = Column(String(100))
+    coordinates = Column(JSON)  # {"lat": 48.8566, "lng": 2.3522}
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     coordinates = Column(JSON)  # {"lat": 48.8566, "lng": 2.3522}
     
     # Détails de l'événement
@@ -284,6 +322,131 @@ class TrustedDevice(Base):
     user_security = relationship("UserSecurity", back_populates="trusted_devices")
 
     def __repr__(self):
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
+    device_fingerprint = Column(String(255), nullable=False, unique=True)
+    device_name = Column(String(255))
+    device_type = Column(Enum(DeviceType), default=DeviceType.UNKNOWN)
+    
+    # Informations techniques
+    browser = Column(String(100))
+    operating_system = Column(String(100))
+    screen_resolution = Column(String(20))
+    timezone = Column(String(50))
+    
+    # Localisation
+    country_code = Column(String(3))
+    city = Column(String(100))
+    last_ip = Column(String(45))
+    
+    # État et sécurité
+    is_active = Column(Boolean, default=True)
+    is_trusted = Column(Boolean, default=False)
+    trust_score = Column(Decimal(5, 2), default=0.00)
+    
+    # Usage
+    first_seen = Column(DateTime, default=datetime.utcnow)
+    last_seen = Column(DateTime, default=datetime.utcnow)
+    login_count = Column(Integer, default=0)
+    
+    # Expiration
+    expires_at = Column(DateTime)
+    auto_trust_enabled = Column(Boolean, default=False)
+    
+    # Timestamps
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    # Relations
+    user_security = relationship("UserSecurity", back_populates="trusted_devices")
+
+    def __repr__(self):
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
+    timezone = Column(String(50))
+    
+    # Localisation
+    country_code = Column(String(3))
+    city = Column(String(100))
+    last_ip = Column(String(45))
+    
+    # État et sécurité
+    is_active = Column(Boolean, default=True)
+    is_trusted = Column(Boolean, default=False)
+    trust_score = Column(Decimal(5, 2), default=0.00)
+    
+    # Usage
+    first_seen = Column(DateTime, default=datetime.utcnow)
+    last_seen = Column(DateTime, default=datetime.utcnow)
+    login_count = Column(Integer, default=0)
+    
+    # Expiration
+    expires_at = Column(DateTime)
+    auto_trust_enabled = Column(Boolean, default=False)
+    
+    # Timestamps
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    # Relations
+    user_security = relationship("UserSecurity", back_populates="trusted_devices")
+
+    def __repr__(self):
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing create_user_security")
+            
+            # Implementation for create_user_security
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"create_user_security completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"create_user_security failed: {e}")
+            raise
+            raise
+    expires_at = Column(DateTime)
+    auto_trust_enabled = Column(Boolean, default=False)
+    
+    # Timestamps
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    # Relations
+    user_security = relationship("UserSecurity", back_populates="trusted_devices")
+
+    def __repr__(self):
         return f"<TrustedDevice({self.device_name}, {self.device_type.value})>"
     
     def is_expired(self) -> bool:
@@ -301,71 +464,20 @@ Met à jour la dernière utilisation de l'appareil."""
 
 
 class APIKey(Base):
-    """
-    Clés API pour l'accès programmatique.
-    """
-    __tablename__ = "api_keys"
-    
-    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
-    user_security_id = Column(String, ForeignKey("user_security.id"), nullable=False)
-    
-    # Identifiants
-    key_name = Column(String(255), nullable=False)
-    key_hash = Column(String(255), nullable=False, unique=True)
-    key_prefix = Column(String(10))  # Premiers caractères visibles
-    
-    # Permissions et limites
-    permissions = Column(JSON)  # Liste des permissions
-    rate_limit_per_hour = Column(Integer, default=1000)
-    rate_limit_per_day = Column(Integer, default=10000)
-    
-    # Restrictions
-    allowed_ips = Column(JSON)  # IPs autorisées
-    allowed_domains = Column(JSON)  # Domaines autorisés
-    restricted_endpoints = Column(JSON)  # Endpoints restreints
-    
-    # État
-    is_active = Column(Boolean, default=True)
-    is_master_key = Column(Boolean, default=False)
-    
-    # Usage
-    created_at = Column(DateTime, default=datetime.utcnow)
-    last_used = Column(DateTime)
-    expires_at = Column(DateTime)
-    usage_count = Column(Integer, default=0)
-    
-    # Sécurité
-    last_used_ip = Column(String(45))
-    suspicious_usage = Column(Boolean, default=False)
-    
-    # Relations
-    user_security = relationship("UserSecurity", back_populates="api_keys")
-    usage_logs = relationship("APIUsageLog", back_populates="api_key")
-
-    def __repr__(self):
-        return f"<APIKey({self.key_name}, {self.key_prefix}...)>"
-    
-    def is_expired(self) -> bool:
-        """Vérifie si la clé API a expiré."""
-        if not self.expires_at:
-            return False
-        return datetime.utcnow() > self.expires_at
-    
-    def can_access_endpoint(self, endpoint: str) -> bool:
-        """
-Vérifie si la clé peut accéder à un endpoint."""
-        if not self.is_active or self.is_expired():
-            return False
-        
-        if self.is_master_key:
-            return True
-        
-        restricted = self.restricted_endpoints or []
-        return endpoint not in restricted
-    
-    def record_usage(self, ip_address: str, endpoint: str):
-        """
-Enregistre une utilisation de la clé."""
+        try:
+            logger.info(f"Executing verify_password")
+            
+            # Implementation for verify_password
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"verify_password completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"verify_password failed: {e}")
+            raise
         self.last_used = datetime.utcnow()
         self.last_used_ip = ip_address
         self.usage_count += 1
@@ -422,15 +534,20 @@ class SecurityRepository:
         Crée le profil de sécurité pour un nouvel utilisateur.
         
         Args:
-            user_id: ID de l'utilisateur
-            password: Mot de passe en clair
-            
-        Returns:
-            UserSecurity: Profil de sécurité créé
-        """
         try:
-            # Génération du sel et hachage du mot de passe
-            salt = secrets.token_hex(32)
+            logger.info(f"Executing change_password")
+            
+            # Implementation for change_password
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"change_password completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"change_password failed: {e}")
+            raise
             password_hash = self._hash_password(password, salt)
             
             # Création du profil de sécurité
@@ -657,6 +774,21 @@ class SecurityRepository:
             # Génération de la clé
             api_key = f"ak_{secrets.token_urlsafe(32)}"
             key_hash = hashlib.sha256(api_key.encode()).hexdigest()
+            key_prefix = api_key[:8]
+        try:
+            logger.info(f"Executing _hash_password")
+            
+            # Implementation for _hash_password
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_hash_password completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_hash_password failed: {e}")
+            raise
             key_prefix = api_key[:8]
             
             # Création de l'enregistrement

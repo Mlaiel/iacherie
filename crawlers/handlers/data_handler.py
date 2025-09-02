@@ -127,7 +127,20 @@ class DataSchema:
     metadata: Dict[str, Any] = None
     
     def __post_init__(self):
-        if self.metadata is None:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             self.metadata = {}
 
 
@@ -245,7 +258,20 @@ class AnalyticsDataModel(BaseModel):
     platform: Optional[str] = None
     dimensions: Dict[str, Any] = {}
     metadata: Dict[str, Any] = {}
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     @validator('metric_name')
     def validate_metric_name(cls, v):
         if not re.match(r'^[a-zA-Z][a-zA-Z0-9_]*$', v):

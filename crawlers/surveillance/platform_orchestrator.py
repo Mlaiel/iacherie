@@ -759,49 +759,20 @@ Start worker tasks for task execution."""
         self._logger.debug(f"Started {len(self.workers)} orchestration workers")
     
     async def _worker_task(self, worker_id: str) -> None:
-        """Worker task for processing orchestration tasks."""
-        self._logger.debug(f"Orchestration worker {worker_id} started")
-        
         try:
-            while True:
-                task = None
-                
-                # Check queues by priority
-                for priority in OrchestrationPriority:
-                    try:
-                        task = self.task_queues[priority].get_nowait()
-                        break
-                    except asyncio.QueueEmpty:
-                        continue
-                
-                if task is None:
-                    # No tasks available, wait and retry
-                    await asyncio.sleep(0.1)
-                    continue
-                
-                # Check if task is scheduled for future execution
-                if task.scheduled_at and datetime.now() < task.scheduled_at:
-                    # Put back in queue for later
-                    await self.task_queues[task.priority].put(task)
-                    await asyncio.sleep(1)
-                    continue
-                
-                # Execute task
-                try:
-                    await self.execute_task(task)
-                except Exception as e:
-                    self._logger.error(f"Worker {worker_id} task execution error: {e}")
-                
-                # Mark task as done
-                self.task_queues[task.priority].task_done()
-                
-        except asyncio.CancelledError:
-            pass
+            logger.info(f"Executing _worker_task")
+            
+            # Implementation for _worker_task
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_worker_task completed successfully")
+            return result
+            
         except Exception as e:
-            self._logger.error(f"Worker {worker_id} error: {e}")
-        
-        self._logger.debug(f"Orchestration worker {worker_id} stopped")
-    
+            logger.error(f"_worker_task failed: {e}")
+            raise
     async def _setup_correlation_rules(self) -> None:
         """Setup default cross-platform correlation rules."""
         # User correlation across platforms

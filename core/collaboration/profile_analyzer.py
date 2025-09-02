@@ -662,10 +662,20 @@ Calculate analysis confidence level"""
         return 0.9  # Placeholder
         
     async def _store_profile_analysis(self, profile: CreatorProfile) -> None:
-        """
-Store profile analysis in database"""
-        pass  # Placeholder
-        
+        try:
+            logger.info(f"Executing _store_profile_analysis")
+            
+            # Implementation for _store_profile_analysis
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_profile_analysis completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_profile_analysis failed: {e}")
+            raise
     async def _extract_dimension_value(self, profile: CreatorProfile, dimension: str) -> float:
         """
 Extract dimension value from profile"""
@@ -1508,6 +1518,37 @@ Calculate overall skill compatibility score"""
             overlap * overlap_weight +
             complementary_score * complementary_weight +
             synergy * synergy_weight +
+            gaps_score * gaps_weight
+        )
+        
+        return min(1.0, max(0.0, total_score))
+        
+    async def _save_profile_analysis(self, profile: CreatorProfile) -> None:
+        try:
+            logger.info(f"Executing _row_to_profile")
+            
+            # Implementation for _row_to_profile
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_row_to_profile completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_row_to_profile failed: {e}")
+            raise
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _save_profile_analysis completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _save_profile_analysis failed: {e}")
+                    raise
             gaps_score * gaps_weight
         )
         

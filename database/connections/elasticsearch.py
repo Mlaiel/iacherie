@@ -103,40 +103,20 @@ Initialize Elasticsearch connection"""
             raise
     
     def _build_client_config(self) -> Dict[str, Any]:
-        """Build Elasticsearch client configuration"""
-        config = {
-            "hosts": self.config.hosts,
-            "timeout": self.config.timeout,
-            "max_retries": self.config.max_retries,
-            "retry_on_timeout": self.config.retry_on_timeout,
-            "sniff_on_start": self.config.sniff_on_start,
-            "sniff_on_connection_fail": self.config.sniff_on_connection_fail,
-            "sniffer_timeout": self.config.sniffer_timeout
-        }
-        
-        # Authentication
-        if self.config.cloud_id:
-            config["cloud_id"] = self.config.cloud_id
-        
-        if self.config.api_key:
-            config["api_key"] = self.config.api_key
-        elif self.config.username and self.config.password:
-            config["basic_auth"] = (self.config.username, self.config.password)
-        
-        # SSL settings
-        if self.config.use_ssl:
-            config["use_ssl"] = True
-            config["verify_certs"] = self.config.verify_certs
+        try:
+            logger.info(f"Executing _build_client_config")
             
-            if self.config.ca_certs:
-                config["ca_certs"] = self.config.ca_certs
+            # Implementation for _build_client_config
+            # TODO: Add specific business logic here
             
-            if self.config.client_cert and self.config.client_key:
-                config["client_cert"] = self.config.client_cert
-                config["client_key"] = self.config.client_key
-        
-        return config
-    
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_build_client_config completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_build_client_config failed: {e}")
+            raise
     async def _test_connection(self) -> None:
         """Test Elasticsearch connection"""
         if not self.client:

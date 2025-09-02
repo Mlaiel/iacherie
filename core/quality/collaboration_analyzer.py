@@ -125,7 +125,20 @@ class CreatorProfile:
     language_preferences: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             'creator_id': self.creator_id,
             'name': self.name,
             'category': self.category.value,
@@ -195,13 +208,52 @@ Calculate weighted overall compatibility score"""
         return round(score, 2)
     
     def to_dict(self) -> Dict[str, Any]:
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
+            self.content_synergy_score * weights['content'] +
+            self.brand_compatibility_score * weights['brand'] +
+            self.schedule_compatibility_score * weights['schedule'] +
+            self.communication_compatibility_score * weights['communication'] +
+            self.budget_compatibility_score * weights['budget'] +
+            self.geographic_compatibility_score * weights['geographic'] +
+            self.experience_level_compatibility * weights['experience']
+        )
+        
+        return round(score, 2)
+    
+    def to_dict(self) -> Dict[str, Any]:
         return {
             'audience_alignment_score': self.audience_alignment_score,
             'content_synergy_score': self.content_synergy_score,
             'brand_compatibility_score': self.brand_compatibility_score,
             'schedule_compatibility_score': self.schedule_compatibility_score,
             'communication_compatibility_score': self.communication_compatibility_score,
-            'budget_compatibility_score': self.budget_compatibility_score,
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             'geographic_compatibility_score': self.geographic_compatibility_score,
             'experience_level_compatibility': self.experience_level_compatibility,
             'overall_compatibility': self.calculate_overall_compatibility(),
@@ -240,6 +292,20 @@ Specific collaboration opportunity recommendation"""
     content_ideas: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
         return {
             'opportunity_id': self.opportunity_id,
             'collaboration_type': self.collaboration_type.value,

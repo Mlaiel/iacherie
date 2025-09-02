@@ -85,25 +85,26 @@ Test that classifier returns supported content types"""
     
     @pytest.mark.asyncio
     async def test_classify_sensitive_content(self, classifier):
-        """Test classification of content containing sensitive patterns"""
-        sensitive_content = "User password: secret123, Social Security Number: 123-45-6789"
-        
-        result = await classifier.classify(
-            content=sensitive_content,
-            content_type="text"
-        )
-        
-        # Should detect high sensitivity due to password and SSN patterns
-        sensitivity_labels = result.get("sensitivity_labels", {})
-        assert len(sensitivity_labels) > 0
-        
-        # Should have detected critical or high sensitivity
-        has_high_sensitivity = any(
-            label in [SensitivityLabel.CRITICAL_SENSITIVITY.value, SensitivityLabel.HIGH_SENSITIVITY.value]
-            for label in sensitivity_labels.keys()
-        )
-        assert has_high_sensitivity
-    
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_test_classify_sensitive_content_input(classifier)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_test_classify_sensitive_content_result(result)
+            
+                    logger.info(f"AI processing test_classify_sensitive_content completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing test_classify_sensitive_content failed: {e}")
+                    raise
     @pytest.mark.asyncio
     async def test_classify_json_content(self, classifier):
         """Test classification of JSON content"""

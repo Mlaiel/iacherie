@@ -1622,10 +1622,20 @@ Evaluate permission conditions against request context"""
             self.roles[role_id] = role
     
     async def _create_default_policies(self) -> None:
-        """Create default permission policies"""
-        # Implementation would create default policies for different resource types
-        pass
-    
+        try:
+            logger.info(f"Executing _create_default_policies")
+            
+            # Implementation for _create_default_policies
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_create_default_policies completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_create_default_policies failed: {e}")
+            raise
     async def _get_default_actions(
         self,
         permission_level: PermissionLevel,
@@ -1748,10 +1758,35 @@ Log access attempts for audit trail"""
             'timestamp': request.timestamp.isoformat(),
             'request_id': request.request_id,
             'subject_id': request.subject_id,
-            'resource_type': request.resource_type.value,
-            'resource_id': request.resource_id,
-            'action': request.action.value,
-            'usage_right': request.usage_right.value if request.usage_right else None,
+        try:
+            logger.info(f"Executing _log_role_change")
+            
+            # Implementation for _log_role_change
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_log_role_change completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _log_role_assignment")
+            
+            # Implementation for _log_role_assignment
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_log_role_assignment completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_log_role_assignment failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"_log_role_change failed: {e}")
+            raise
             'granted': grant.granted,
             'reason': grant.reason
         }

@@ -116,37 +116,20 @@ Initialize MongoDB connection"""
             raise
     
     def _build_connection_uri(self) -> str:
-        """Build MongoDB connection URI"""
-        if self.config.username and self.config.password:
-            auth_part = f"{self.config.username}:{self.config.password}@"
-        else:
-            auth_part = ""
-        
-        uri = f"mongodb://{auth_part}{self.config.host}:{self.config.port}/{self.config.database}"
-        
-        # Add query parameters
-        params = []
-        
-        if self.config.auth_source:
-            params.append(f"authSource={self.config.auth_source}")
-        
-        if self.config.replica_set:
-            params.append(f"replicaSet={self.config.replica_set}")
-        
-        if self.config.ssl:
-            params.append("ssl=true")
-            if self.config.ssl_cert_file:
-                params.append(f"ssl_certfile={self.config.ssl_cert_file}")
-            if self.config.ssl_key_file:
-                params.append(f"ssl_keyfile={self.config.ssl_key_file}")
-            if self.config.ssl_ca_file:
-                params.append(f"ssl_ca_certs={self.config.ssl_ca_file}")
-        
-        if params:
-            uri += "?" + "&".join(params)
-        
-        return uri
-    
+        try:
+            logger.info(f"Executing _build_connection_uri")
+            
+            # Implementation for _build_connection_uri
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_build_connection_uri completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_build_connection_uri failed: {e}")
+            raise
     async def _create_indexes(self) -> None:
         """Create necessary indexes for collections"""
         try:

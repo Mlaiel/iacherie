@@ -130,7 +130,20 @@ Cryptocurrency payment request"""
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             'request_id': self.request_id,
             'user_id': self.user_id,
             'service_type': self.service_type,
@@ -155,6 +168,21 @@ class PriceOracle:
     """
 Cryptocurrency price oracle for real-time rates"""
     
+    def __init__(self, api_keys: Dict[str, str]):
+        try:
+            logger.info(f"Executing __aexit__")
+            
+            # Implementation for __aexit__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__aexit__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__aexit__ failed: {e}")
+            raise
     def __init__(self, api_keys: Dict[str, str]):
         self.api_keys = api_keys
         self.price_cache: Dict[str, Tuple[Decimal, datetime]] = {}

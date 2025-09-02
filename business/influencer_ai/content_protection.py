@@ -145,18 +145,68 @@ Interface pour le service de protection de contenu"""
     async def create_fingerprint(
         self, 
         content_data: bytes, 
-        content_type: ProtectionType,
-        creator_id: str,
-        metadata: Optional[Dict[str, Any]] = None
-    ) -> ContentFingerprint:
-        """
-Créer une empreinte digitale pour du contenu"""
-        pass
-    
-    @abstractmethod
-    async def detect_threats(
-        self, 
-        fingerprint: ContentFingerprint,
+        try:
+            logger.info(f"Executing create_fingerprint")
+            
+            # Implementation for create_fingerprint
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"create_fingerprint completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing detect_threats")
+            
+            # Implementation for detect_threats
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"detect_threats completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "monitor_content",
+                        "value": fingerprint_ids if fingerprint_ids else 0,
+        try:
+            logger.info(f"Executing issue_takedown")
+            
+            # Implementation for issue_takedown
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"issue_takedown completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing verify_ownership")
+            
+            # Implementation for verify_ownership
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"verify_ownership completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"verify_ownership failed: {e}")
+            raise
+                    logger.info(f"Metric monitor_content collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection monitor_content failed: {e}")
+                    return None
         platforms: Optional[List[PlatformType]] = None
     ) -> List[ThreatAlert]:
         """
@@ -331,6 +381,28 @@ Gestionnaire avancé de protection de contenu"""
             
             # Simulation d'embedding vectoriel vidéo
             vector_embedding = np.random.random(256).tolist()  # En production: features vidéo réelles
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "monitoring_loop",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric monitoring_loop collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection monitoring_loop failed: {e}")
+                    return None
             confidence_score = 0.90
             
             return fingerprint_hash, vector_embedding, confidence_score

@@ -538,8 +538,20 @@ class AdvancedABTesting:
     """Advanced A/B testing features"""
     
     def __init__(self, ab_engine: ABTestingEngine):
-        self.ab_engine = ab_engine
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     def create_sequential_experiment(
         self,
         base_experiment_id: str,

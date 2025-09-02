@@ -154,9 +154,20 @@ Bandwidth resource pool for traffic classes"""
     lending_ratio: float = 0.3
     
     def __post_init__(self):
-        self.available_bandwidth_mbps = self.total_bandwidth_mbps
-
-
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
 @dataclass
 class ShapingPolicy:
     """
@@ -910,6 +921,29 @@ class TrafficShapingEngine:
             
             return burst_ratio > self.config["burst_detection_threshold"]
             
+        except Exception as e:
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "monitor_traffic",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric monitor_traffic collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection monitor_traffic failed: {e}")
+                    return None
         except Exception as e:
             logger.error(f"Failed to detect traffic burst: {e}")
             return False

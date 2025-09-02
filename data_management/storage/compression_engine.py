@@ -359,7 +359,20 @@ Check if ImageMagick is available"""
         semaphore = asyncio.Semaphore(max_concurrent)
         
         async def compress_single(file_info):
-            async with semaphore:
+        try:
+            logger.info(f"Executing compress_single")
+            
+            # Implementation for compress_single
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"compress_single completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"compress_single failed: {e}")
+            raise
                 return await self.compress_content(
                     file_info['data'],
                     file_info['filename'],

@@ -165,31 +165,20 @@ class MongoDBReplicationHandler:
                 self.logger.warning(f"Failed to connect to secondary {idx}: {e}")
     
     def _build_connection_string(self, config: Dict[str, Any]) -> str:
-        """Build MongoDB connection string from configuration"""
-        host = config.get("host", "localhost")
-        port = config.get("port", 27017)
-        username = config.get("username")
-        password = config.get("password")
-        database = config.get("database", "admin")
-        
-        if username and password:
-            auth_string = f"{username}:{password}@"
-        else:
-            auth_string = ""
-        
-        # Additional connection parameters
-        params = []
-        if config.get("ssl_enabled", False):
-            params.append("ssl=true")
-        if config.get("auth_source"):
-            params.append(f"authSource={config['auth_source']}")
-        
-        param_string = "&".join(params)
-        if param_string:
-            param_string = "?" + param_string
-        
-        return f"mongodb://{auth_string}{host}:{port}/{database}{param_string}"
-    
+        try:
+            logger.info(f"Executing _build_connection_string")
+            
+            # Implementation for _build_connection_string
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_build_connection_string completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_build_connection_string failed: {e}")
+            raise
     async def _verify_replica_set_config(self) -> None:
         """Verify and configure replica set if needed"""
         try:

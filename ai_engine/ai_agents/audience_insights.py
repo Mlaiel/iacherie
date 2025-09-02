@@ -177,6 +177,106 @@ class AudienceInsightsAgent(BaseAIAgent):
         """Create mock audience analyzer for testing compatibility"""
         class MockAudienceAnalyzer:
             async def analyze_demographics(self, data): return {}
+        try:
+        try:
+        try:
+            logger.info(f"Executing segment_audience")
+            
+            # Implementation for segment_audience
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"segment_audience completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_predict_engagement_input(demographic_data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_predict_engagement_result(result)
+            
+                    logger.info(f"AI processing predict_engagement completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing predict_engagement failed: {e}")
+                    raise
+            logger.info(f"segment_audience completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_predict_demographics_input(behavioral_data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_predict_demographics_result(result)
+            
+                    logger.info(f"AI processing predict_demographics completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing predict_demographics failed: {e}")
+                    raise
+            logger.info(f"segment_audience completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"segment_audience failed: {e}")
+            raise
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_analyze_behavior_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_behavior_result(result)
+            
+                    logger.info(f"AI processing analyze_behavior completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing analyze_behavior failed: {e}")
+                    raise
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_analyze_demographics_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_demographics_result(result)
+            
+                    logger.info(f"AI processing analyze_demographics completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing analyze_demographics failed: {e}")
+                    raise
             async def analyze_behavior(self, data): return {}
             async def segment_audience(self, data, criteria): return []
         return MockAudienceAnalyzer()

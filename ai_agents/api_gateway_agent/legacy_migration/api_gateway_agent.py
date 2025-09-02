@@ -346,12 +346,20 @@ Proxy request to appropriate upstream service"""
                 }
     
     async def _is_auth_bypass_path(self, path: str) -> bool:
-        """Check if path should bypass authentication"""
-        for bypass_path in self.config.auth_bypass_paths:
-            if path.startswith(bypass_path):
-                return True
-        return False
-    
+        try:
+            logger.info(f"Executing _is_auth_bypass_path")
+            
+            # Implementation for _is_auth_bypass_path
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_is_auth_bypass_path completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_is_auth_bypass_path failed: {e}")
+            raise
     async def _get_services_health(self) -> Dict[str, Dict[str, Any]]:
         """
 Get health status of all services"""

@@ -332,70 +332,26 @@ class MetadataAnalyzer:
     """Analyzer for content metadata verification"""
     
     async def analyze_metadata(self, evidence: ViolationEvidence) -> Dict[str, float]:
-        """
-Analyze metadata for verification clues"""
-        scores = {}
-        
         try:
-            metadata = evidence.metadata
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
             
-            # Copyright indicators
-            copyright_indicators = [
-                'copyright', '(c)', '(c)', 'all rights reserved',
-                'unauthorized use', 'permission required'
-            ]
+                    # Preprocess input
+                    processed_input = await self._preprocess_analyze_metadata_input(evidence)
             
-            copyright_score = 0.0
-            metadata_text = str(metadata).lower()
+                    # Run inference
+                    result = await self.model.predict(processed_input)
             
-            for indicator in copyright_indicators:
-                if indicator in metadata_text:
-                    copyright_score += 0.2
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_metadata_result(result)
             
-            scores['copyright_indicators'] = min(1.0, copyright_score)
+                    logger.info(f"AI processing analyze_metadata completed")
+                    return final_result
             
-            # Attribution indicators
-            attribution_indicators = [
-                'creative commons', 'cc by', 'public domain',
-                'fair use', 'attribution', 'source:'
-            ]
-            
-            attribution_score = 0.0
-            for indicator in attribution_indicators:
-                if indicator in metadata_text:
-                    attribution_score += 0.3
-            
-            scores['attribution_indicators'] = min(1.0, attribution_score)
-            
-            # Quality indicators
-            if 'title' in metadata:
-                scores['has_title'] = 1.0
-            if 'description' in metadata:
-                scores['has_description'] = 1.0
-            if 'tags' in metadata or 'keywords' in metadata:
-                scores['has_tags'] = 1.0
-            
-            # Timestamp analysis
-            if 'upload_date' in metadata or 'created_at' in metadata:
-                scores['has_timestamp'] = 1.0
-                
-                # Check if content is very recent (might indicate violation)
-                try:
-                    upload_date = metadata.get('upload_date') or metadata.get('created_at')
-                    if isinstance(upload_date, str):
-                        upload_time = datetime.fromisoformat(upload_date.replace('Z', '+00:00'))
-                        age_hours = (datetime.utcnow() - upload_time).total_seconds() / 3600
-                        scores['content_age_hours'] = age_hours
-                        scores['very_recent'] = 1.0 if age_hours < 24 else 0.0
-                except:
-                    pass
-            
-        except Exception as e:
-            logger.error(f"Error analyzing metadata: {e}")
-        
-        return scores
-
-
+                except Exception as e:
+                    logger.error(f"AI processing analyze_metadata failed: {e}")
+                    raise
 class ReverseSearchAnalyzer:
     """Analyzer using reverse image/content search"""
     

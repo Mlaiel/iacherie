@@ -71,10 +71,37 @@ Async context manager exit"""
     
     @abstractmethod
     async def parse_for_fingerprint(self, content_path: str, **kwargs) -> Dict[str, Any]:
-        """
-Parse content and prepare fingerprint data"""
-        pass
-    
+        try:
+            logger.info(f"Executing parse_for_fingerprint")
+            
+            # Implementation for parse_for_fingerprint
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"parse_for_fingerprint completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_content_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_content_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            return result
+            
+        except Exception as e:
+            logger.error(f"parse_for_fingerprint failed: {e}")
+            raise
     @abstractmethod
     def get_content_type(self) -> str:
         """
@@ -93,6 +120,20 @@ Get the content type this parser handles"""
             return hashlib.sha256(data).hexdigest()
     
     def _extract_file_metadata(self, file_path: str) -> Dict[str, Any]:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_content_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_content_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
         """Extract basic file metadata"""
         file_stats = os.stat(file_path)
         file_path_obj = Path(file_path)
@@ -270,7 +311,20 @@ Parser for audio content fingerprinting"""
             return {
                 'algorithm': 'mfcc_spectral_peaks',
                 'segments': fingerprint_segments,
-                'spectral_peaks': peaks[:1000],  # Limit to prevent excessive data
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_content_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_content_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
                 'total_segments': len(fingerprint_segments),
                 'fingerprint_quality': self._assess_fingerprint_quality(audio_data, sample_rate)
             }
@@ -524,6 +578,24 @@ Assess the quality of visual fingerprint"""
         texture_variation = np.std(texture_scores)
         
         # Quality score based on visual richness
+        quality_score = min(100, (avg_contrast / 50 + avg_edge_density * 100 + texture_variation / 10) * 20)
+        
+        return {
+            'quality_score': float(quality_score),
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_content_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_content_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
         quality_score = min(100, (avg_contrast / 50 + avg_edge_density * 100 + texture_variation / 10) * 20)
         
         return {
@@ -786,6 +858,36 @@ Extract visual features from image"""
         gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
         
         # Calculate edge density
+        edges = cv2.Canny(gray, 50, 150)
+        edge_density = np.sum(edges > 0) / edges.size
+        
+        # Calculate texture (using standard deviation as simple measure)
+        texture_score = np.std(gray)
+        
+        # Calculate brightness and contrast
+        brightness = np.mean(gray)
+        contrast = np.std(gray)
+        
+        # Calculate sharpness (using Laplacian variance)
+        laplacian = cv2.Laplacian(gray, cv2.CV_64F)
+        sharpness = laplacian.var()
+        
+        return {
+            'edge_density': float(edge_density),
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_content_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_content_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
         edges = cv2.Canny(gray, 50, 150)
         edge_density = np.sum(edges > 0) / edges.size
         

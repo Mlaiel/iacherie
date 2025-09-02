@@ -685,48 +685,26 @@ Initialize advanced authorship analyzer"""
         return features
     
     async def _extract_stylistic_features(self, text: str) -> Dict[str, float]:
-        """Extract stylistic features"""
-        features = {}
-        
         try:
-            # Writing style indicators
-            features['first_person_ratio'] = self._count_pattern(text, r'\b(?:i|me|my|mine|myself)\b') / len(text.split())
-            features['second_person_ratio'] = self._count_pattern(text, r'\b(?:you|your|yours|yourself)\b') / len(text.split())
-            features['third_person_ratio'] = self._count_pattern(text, r'\b(?:he|she|it|they|him|her|them|his|hers|its|their|theirs)\b') / len(text.split())
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
             
-            # Passive voice detection
-            features['passive_voice_ratio'] = self._count_pattern(text, r'\b(?:was|were|been|being)\s+\w+ed\b') / max(len([s for s in text.split('.') if s.strip()]), 1)
+                    # Preprocess input
+                    processed_input = await self._preprocess__extract_stylistic_features_input(text)
             
-            # Contraction usage
-            contractions = ["n't", "'re", "'ve", "'ll", "'d", "'s"]
-            contraction_count = sum(text.lower().count(cont) for cont in contractions)
-            features['contraction_ratio'] = contraction_count / len(text.split())
+                    # Run inference
+                    result = await self.model.predict(processed_input)
             
-            # Formality indicators
-            formal_words = ['therefore', 'furthermore', 'consequently', 'nevertheless', 'moreover', 'however']
-            formal_count = sum(1 for word in text.lower().split() if word.strip(string.punctuation) in formal_words)
-            features['formality_ratio'] = formal_count / len(text.split())
+                    # Postprocess result
+                    final_result = await self._postprocess__extract_stylistic_features_result(result)
             
-            # Hedging and boosting
-            hedges = ['perhaps', 'maybe', 'possibly', 'probably', 'might', 'could', 'seems', 'appears']
-            boosters = ['definitely', 'certainly', 'absolutely', 'clearly', 'obviously', 'undoubtedly']
-            hedge_count = sum(1 for word in text.lower().split() if word.strip(string.punctuation) in hedges)
-            booster_count = sum(1 for word in text.lower().split() if word.strip(string.punctuation) in boosters)
-            features['hedge_ratio'] = hedge_count / len(text.split())
-            features['booster_ratio'] = booster_count / len(text.split())
+                    logger.info(f"AI processing _extract_stylistic_features completed")
+                    return final_result
             
-            # Question patterns
-            features['rhetorical_question_ratio'] = text.count('?') / max(len([s for s in text.split('.') if s.strip()]), 1)
-            
-            # Emphasis patterns
-            features['capitalization_emphasis'] = len(re.findall(r'\b[A-Z]{2,}\b', text)) / len(text.split())
-            features['exclamation_emphasis'] = text.count('!') / len(text.split())
-            
-        except Exception as e:
-            logger.warning(f"Error in stylistic feature extraction: {e}")
-        
-        return features
-    
+                except Exception as e:
+                    logger.error(f"AI processing _extract_stylistic_features failed: {e}")
+                    raise
     async def _extract_structural_features(self, text: str) -> Dict[str, float]:
         """Extract structural features"""
         features = {}
@@ -861,19 +839,20 @@ Aggregate features across multiple samples"""
         # Collect all feature values
         feature_values = defaultdict(list)
         for feature_dict in feature_list:
-            for name, value in feature_dict.items():
-                feature_values[name].append(value)
-        
-        # Calculate statistics
-        aggregated = {}
-        for name, values in feature_values.items():
-            if values:
-                aggregated[f"{name}_mean"] = np.mean(values)
-                aggregated[f"{name}_std"] = np.std(values)
-                aggregated[f"{name}_median"] = np.median(values)
-                if len(values) > 1:
-                    aggregated[f"{name}_range"] = max(values) - min(values)
-        
+        try:
+            logger.info(f"Executing _categorize_feature")
+            
+            # Implementation for _categorize_feature
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_categorize_feature completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_categorize_feature failed: {e}")
+            raise
         return aggregated
     
     async def _generate_author_embeddings(self, profile: AuthorshipProfile, text_samples: List[str]):

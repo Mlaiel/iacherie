@@ -156,10 +156,45 @@ class LifecycleStageManager(ABC):
     
     @abstractmethod
     async def can_transition_to(self, stage: LifecycleStage, entry: ArchiveEntry) -> bool:
-        """
-Check if transition to stage is possible"""
-        pass
-    
+        try:
+            logger.info(f"Executing can_transition_to")
+            
+            # Implementation for can_transition_to
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"can_transition_to completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+                    # Request validation
+                    if not entry:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_stage_cost_request(entry)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_stage_cost failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"transition_to_stage completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"transition_to_stage failed: {e}")
+            raise
+            return result
+            
+        except Exception as e:
+            logger.error(f"can_transition_to failed: {e}")
+            raise
     @abstractmethod
     async def transition_to_stage(self, entry: ArchiveEntry, target_stage: LifecycleStage) -> bool:
         """

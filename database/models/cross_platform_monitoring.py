@@ -198,8 +198,20 @@ class PlatformMonitoring(Base):
     )
     
     def __repr__(self):
-        return f"<PlatformMonitoring(id={self.id}, platform={self.platform.value}, status={self.monitoring_status.value})>"
-    
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     def to_dict(self) -> Dict[str, Any]:
         """Convert model to dictionary for API responses"""
         return {
@@ -292,6 +304,31 @@ class ScanResult(Base):
     platform_monitoring = relationship("PlatformMonitoring", back_populates="scan_results")
     
     def __repr__(self):
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
+    errors_encountered = Column(JSON, nullable=True)  # Any errors during scan
+    
+    # Status and flags
+    scan_completed_successfully = Column(Boolean, default=True)
+    requires_manual_review = Column(Boolean, default=False)
+    has_high_priority_matches = Column(Boolean, default=False)
+    
+    # Relationships
+    platform_monitoring = relationship("PlatformMonitoring", back_populates="scan_results")
+    
+    def __repr__(self):
         return f"<ScanResult(id={self.id}, matches={self.potential_matches_found}, duration={self.scan_duration_seconds}s)>"
 
 
@@ -334,6 +371,39 @@ class ViolationDetection(Base):
     # Response tracking
     automated_response_sent = Column(Boolean, default=False)
     response_action_taken = Column(SQLEnum(ResponseAction), nullable=True)
+    response_sent_at = Column(DateTime(timezone=True), nullable=True)
+    
+    # Status tracking
+    violation_status = Column(String(50), default="detected")  # detected, reported, resolved, dismissed
+    resolution_method = Column(String(100), nullable=True)
+    resolved_at = Column(DateTime(timezone=True), nullable=True)
+    
+    # Financial impact
+    estimated_revenue_loss = Column(Numeric(18, 8), nullable=True)
+    views_at_detection = Column(Integer, default=0)
+    projected_damages = Column(Numeric(18, 8), nullable=True)
+    
+    # Priority and classification
+    violation_severity = Column(String(20), default="medium")  # low, medium, high, critical
+    requires_immediate_action = Column(Boolean, default=False)
+    legal_action_recommended = Column(Boolean, default=False)
+    
+    # Timestamps
+    detected_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False)
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     response_sent_at = Column(DateTime(timezone=True), nullable=True)
     
     # Status tracking

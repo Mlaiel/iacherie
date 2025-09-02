@@ -130,13 +130,33 @@ class BaseProtector(ABC):
     
     @abstractmethod
     async def apply_watermark(self, content_path: Path, watermark_config: WatermarkConfig,
-                             output_path: Optional[Path] = None) -> ProtectionResult:
-        """
-Apply watermark to content"""
-        pass
-    
-    @abstractmethod
-    async def generate_fingerprint(self, content_path: Path, fingerprint_config: FingerprintConfig) -> str:
+        try:
+            logger.info(f"Executing apply_watermark")
+            
+            # Implementation for apply_watermark
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"apply_watermark completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"apply_watermark failed: {e}")
+        try:
+            logger.info(f"Executing supports_format")
+            
+            # Implementation for supports_format
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"supports_format completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"supports_format failed: {e}")
+            raise
         """
 Generate digital fingerprint for content"""
         pass
@@ -936,6 +956,22 @@ Generate image fingerprint using perceptual hashing"""
                 
                 # Edge-based hash
                 gray = cv2.cvtColor(image_array, cv2.COLOR_RGB2GRAY)
+                edges = cv2.Canny(gray, 50, 150)
+                edges_hash = hashlib.sha256(edges.tobytes()).hexdigest()[:8]
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
                 edges = cv2.Canny(gray, 50, 150)
                 edges_hash = hashlib.sha256(edges.tobytes()).hexdigest()[:8]
                 fingerprint_components.append(edges_hash)

@@ -766,8 +766,20 @@ class PersonalizedContentGenerator:
     """
     
     def __init__(self):
-        self.logger = logging.getLogger(__name__)
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     async def generate_personalized_version(
         self,
         content: ContentItem,
@@ -875,7 +887,20 @@ Personalize content tags based on user interests"""
         user_interests = list(user_profile.preferred_genres.keys())
         
         for interest in user_interests[:3]:  # Add up to 3 relevant tags
-            if interest not in personalized_tags:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
                 personalized_tags.append(interest)
         
         return personalized_tags
@@ -1238,7 +1263,20 @@ Calculate content engagement score"""
         content: ContentItem,
         all_content: List[ContentItem],
         user_profile: UserProfile
-    ) -> float:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
         """
 Calculate diversity score to avoid too similar content"""
         

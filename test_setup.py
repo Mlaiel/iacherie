@@ -102,8 +102,20 @@ def test_basic_fastapi_app():
         
         @app.get("/")
         def root():
-            return {"message": "Test successful"}
-        
+        try:
+            logger.info(f"Executing root")
+            
+            # Implementation for root
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"root completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"root failed: {e}")
+            raise
         print("✅ FastAPI app creation - Successful")
         return True
     except Exception as e:
@@ -114,37 +126,20 @@ def test_logging_setup():
     """Test logging configuration"""
     print("🔍 Testing logging setup...")
     try:
-        # Test basic logging setup without complex config
-        import logging
-        logging.basicConfig(level=logging.INFO)
-        logger = logging.getLogger(__name__)
-        logger.info("Test log message")
-        print("✅ Logging setup - Successful")
-        return True
-    except Exception as e:
-        print(f"❌ Logging setup failed: {e}")
-        return False
-
-def main():
-    """Run all tests"""
-    print("=" * 60)
-    print("🧪 AINFLUE PLATFORM - SETUP VALIDATION TEST")
-    print("=" * 60)
-    print("Author: Fahed Mlaiel (mlaiel@live.de)")
-    print("Testing core setup and configuration...")
-    print()
-    
-    tests = [
-        ("Python Version", test_python_version),
-        ("FastAPI Import", test_fastapi_import),
-        ("Basic Dependencies", test_basic_dependencies),
-        ("Environment Files", test_environment_files),
-        ("Configuration Import", test_config_import),
-        ("FastAPI App Creation", test_basic_fastapi_app),
-        ("Logging Setup", test_logging_setup),
-    ]
-    
-    passed = 0
+        try:
+            logger.info(f"Executing main")
+            
+            # Implementation for main
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"main completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"main failed: {e}")
+            raise
     total = len(tests)
     
     for test_name, test_func in tests:

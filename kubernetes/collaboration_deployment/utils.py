@@ -513,9 +513,53 @@ Validate Kubernetes cluster configuration and health."""
     
     @staticmethod
     async def _check_cluster_connectivity(cluster_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Check Kubernetes cluster connectivity."""
-        return {"passed": True, "message": "Cluster connectivity verified"}
-    
+        try:
+            logger.info(f"Executing _check_cluster_connectivity")
+            
+            # Implementation for _check_cluster_connectivity
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _check_cluster_resources")
+            
+            # Implementation for _check_cluster_resources
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _check_security_policies")
+            
+            # Implementation for _check_security_policies
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _check_cluster_networking")
+            
+            # Implementation for _check_cluster_networking
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_check_cluster_networking completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_check_cluster_networking failed: {e}")
+            raise
+            logger.info(f"_check_security_policies completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_check_security_policies failed: {e}")
+            raise
+            logger.info(f"_check_cluster_resources completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_check_cluster_resources failed: {e}")
+            raise
+            logger.info(f"_check_cluster_connectivity completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_check_cluster_connectivity failed: {e}")
+            raise
     @staticmethod
     async def _check_cluster_resources(cluster_config: Dict[str, Any]) -> Dict[str, Any]:
         """Check cluster resource availability."""
@@ -670,209 +714,20 @@ Extract error messages from logs using patterns."""
         log_lines = logs.split('\n')
         
         for line in log_lines:
-            for pattern in error_patterns:
-                if re.search(pattern, line, re.IGNORECASE):
-                    errors.append(line.strip())
-                    break
-        
-        return errors
-
-
-# Global utilities instance
-deployment_utils = DeploymentUtils()
-creator_utils = CreatorDeploymentUtilities()
-advanced_utils = AdvancedDeploymentUtilities()
-
-
-# Convenience functions for common operations
-def generate_unique_id(prefix: str = "ia-influencer") -> str:
-    """Generate unique identifier with optional prefix."""
-    return f"{prefix}-{uuid.uuid4()}"
-
-
-def current_timestamp() -> str:
-    """Get current timestamp in ISO format."""
-    return datetime.utcnow().isoformat()
-
-
-def safe_get(dictionary: Dict[str, Any], key_path: str, default: Any = None) -> Any:
-    """
-Safely get nested dictionary value using dot notation."""
-    keys = key_path.split('.')
-    value = dictionary
-    
-    try:
-        for key in keys:
-            value = value[key]
-        return value
-    except (KeyError, TypeError):
-        return default
-
-
-def retry_on_failure(max_retries: int = 3, delay: float = 1.0):
-    """
-Decorator for retrying functions on failure."""
-    def decorator(func):
-        @functools.wraps(func)
-        async def wrapper(*args, **kwargs):
-            last_exception = None
-            
-            for attempt in range(max_retries + 1):
-                try:
-                    return await func(*args, **kwargs)
-                except Exception as e:
-                    last_exception = e
-                    if attempt < max_retries:
-                        logger.warning(f"Attempt {attempt + 1} failed, retrying in {delay}s: {e}")
-                        await asyncio.sleep(delay)
-                    else:
-                        logger.error(f"All {max_retries + 1} attempts failed: {e}")
-            
-            raise last_exception
-        
-        return wrapper
-    return decorator
-    
-    @staticmethod
-    def generate_deployment_id() -> str:
-        """Generate unique deployment ID."""
-        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
-        random_suffix = secrets.token_hex(4)
-        return f"deploy-{timestamp}-{random_suffix}"
-    
-    @staticmethod
-    def generate_resource_name(base_name: str, environment: str, suffix: str = None) -> str:
-        """Generate consistent resource names."""
-        parts = [base_name, environment]
-        if suffix:
-            parts.append(suffix)
-        
-        name = "-".join(parts)
-        # Ensure name meets Kubernetes naming requirements
-        name = re.sub(r'[^a-z0-9\-]', '-', name.lower())
-        name = re.sub(r'-+', '-', name)
-        name = name.strip('-')
-        
-        # Limit to 63 characters (Kubernetes limit)
-        if len(name) > 63:
-            name = name[:59] + hashlib.md5(name.encode()).hexdigest()[:4]
-        
-        return name
-    
-    @staticmethod
-    def generate_secret_value(length: int = 32) -> str:
-        """Generate secure random secret value."""
-        return secrets.token_urlsafe(length)
-    
-    @staticmethod
-    def encode_base64(data: Union[str, bytes]) -> str:
-        """
-Encode data to base64."""
-        if isinstance(data, str):
-            data = data.encode('utf-8')
-        return base64.b64encode(data).decode('utf-8')
-    
-    @staticmethod
-    def decode_base64(data: str) -> str:
-        """
-Decode base64 data."""
-        return base64.b64decode(data).decode('utf-8')
-    
-    @staticmethod
-    def sanitize_label_value(value: str) -> str:
-        """
-Sanitize value for Kubernetes labels."""
-        # Kubernetes label values must be 63 characters or less
-        # and match the regex [a-z0-9A-Z]([a-z0-9A-Z\-\_\.]*[a-z0-9A-Z])?
-        sanitized = re.sub(r'[^a-zA-Z0-9\-_.]', '-', value)
-        sanitized = re.sub(r'^[^a-zA-Z0-9]', '', sanitized)
-        sanitized = re.sub(r'[^a-zA-Z0-9]$', '', sanitized)
-        
-        if len(sanitized) > 63:
-            sanitized = sanitized[:63]
-        
-        return sanitized or "default"
-    
-    @staticmethod
-    def parse_resource_string(resource_str: str) -> Dict[str, Union[int, float]]:
-        """Parse Kubernetes resource string (e.g., '1Gi', '500m')."""
-        if not resource_str:
-            return {"value": 0, "unit": ""}
-        
-        # Memory resources
-        memory_units = {
-            'Ki': 1024,
-            'Mi': 1024**2,
-            'Gi': 1024**3,
-            'Ti': 1024**4,
-            'K': 1000,
-            'M': 1000**2,
-            'G': 1000**3,
-            'T': 1000**4
-        }
-        
-        # CPU resources (millicores)
-        if resource_str.endswith('m'):
-            return {
-                "value": int(resource_str[:-1]),
-                "unit": "millicores",
-                "normalized_value": int(resource_str[:-1]) / 1000
-            }
-        
-        # Memory resources
-        for unit, multiplier in memory_units.items():
-            if resource_str.endswith(unit):
-                value = float(resource_str[:-len(unit)])
-                return {
-                    "value": value,
-                    "unit": unit,
-                    "normalized_value": value * multiplier
-                }
-        
-        # Plain number (CPU cores)
         try:
-            value = float(resource_str)
-            return {
-                "value": value,
-                "unit": "cores",
-                "normalized_value": value
-            }
-        except ValueError:
-            return {"value": 0, "unit": "unknown"}
-    
-    @staticmethod
-    def format_duration(seconds: float) -> str:
-        """Format duration in human-readable format."""
-        if seconds < 1:
-            return f"{seconds*1000:.0f}ms"
-        elif seconds < 60:
-            return f"{seconds:.1f}s"
-        elif seconds < 3600:
-            return f"{seconds/60:.1f}m"
-        else:
-            return f"{seconds/3600:.1f}h"
-    
-    @staticmethod
-    def calculate_resource_percentage(used: str, total: str) -> float:
-        """Calculate resource usage percentage."""
-        used_parsed = DeploymentUtils.parse_resource_string(used)
-        total_parsed = DeploymentUtils.parse_resource_string(total)
-        
-        if total_parsed["normalized_value"] == 0:
-            return 0.0
-        
-        return (used_parsed["normalized_value"] / total_parsed["normalized_value"]) * 100
-    
-    @staticmethod
-    async def run_kubectl_command(command: List[str], namespace: str = None) -> Dict[str, Any]:
-        """Run kubectl command and return result."""
-        if namespace:
-            command.extend(["-n", namespace])
-        
-        try:
-            process = await asyncio.create_subprocess_exec(
-                "kubectl", *command,
-                stdout=asyncio.subprocess.PIPE,
+            logger.info(f"Executing retry_on_failure")
+            
+            # Implementation for retry_on_failure
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"retry_on_failure completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"retry_on_failure failed: {e}")
+            raise
                 stderr=asyncio.subprocess.PIPE
             )
             
@@ -1300,6 +1155,21 @@ Add validation result."""
             )
 
 
+class DeploymentOrchestrator:
+        try:
+            logger.info(f"Executing add_validation_result")
+            
+            # Implementation for add_validation_result
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"add_validation_result completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"add_validation_result failed: {e}")
+            raise
 class DeploymentOrchestrator:
     """
     Advanced deployment orchestration with step management.

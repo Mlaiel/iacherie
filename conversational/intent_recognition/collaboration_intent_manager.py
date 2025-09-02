@@ -1006,8 +1006,20 @@ class TeamWorkflowIntents:
     """Team workflow intent processor"""
     
     def __init__(self, config: IntentRecognitionConfig):
-        self.config = config
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     def process_team_workflow_intent(
         self,
         message_text: str,
@@ -1043,6 +1055,28 @@ Process team workflow specific intents"""
             if any(keyword in text_lower for keyword in keywords):
                 roles_needed.append(role)
         
+        return TeamWorkflowIntent(
+            workflow_type=workflow_type,
+            team_size=team_size,
+            roles_needed=roles_needed
+        )
+
+
+class PermissionIntentHandler:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
         return TeamWorkflowIntent(
             workflow_type=workflow_type,
             team_size=team_size,

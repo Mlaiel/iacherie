@@ -750,10 +750,20 @@ Create WebRTC peer connection"""
             return False
             
     async def handle_offer(self, stream_id: str, offer: Any) -> Any:
-        """Handle WebRTC offer"""
-        # Implementation for handling WebRTC offers
-        pass
-        
+        try:
+            logger.info(f"Executing handle_offer")
+            
+            # Implementation for handle_offer
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"handle_offer completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"handle_offer failed: {e}")
+            raise
     async def handle_answer(self, stream_id: str, answer: Any) -> bool:
         """
 Handle WebRTC answer"""

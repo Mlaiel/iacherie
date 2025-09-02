@@ -568,56 +568,26 @@ Comprehensive SEO analysis engine"""
         return min(score, 100.0)
     
     def _analyze_description(self, description: str, keywords: List[KeywordData]) -> float:
-        """
-Analyze description quality"""
-        if not description:
-            return 0.0
-        
-        score = 0.0
-        
-        # Length check (optimal: 150-300 characters)
-        if 100 <= len(description) <= 400:
-            score += 30
-        elif 50 <= len(description) <= 500:
-            score += 20
-        else:
-            score += 10
-        
-        # Keyword inclusion with natural density
-        desc_lower = description.lower()
-        keyword_matches = 0
-        
-        for keyword_data in keywords[:10]:  # Check top 10 keywords
-            if keyword_data.keyword.lower() in desc_lower:
-                keyword_matches += 1
-        
-        keyword_density = keyword_matches / max(len(keywords[:10]), 1)
-        if 0.2 <= keyword_density <= 0.6:
-            score += 30
-        elif keyword_density > 0.6:
-            score += 10  # Penalize keyword stuffing
-        else:
-            score += 20
-        
-        # Sentiment analysis
         try:
-            sentiment = self.sentiment_analyzer(description[:512])[0]  # Limit text length
-            if sentiment['label'] == 'POSITIVE' and sentiment['score'] > 0.7:
-                score += 20
-            elif sentiment['label'] == 'NEGATIVE' and sentiment['score'] > 0.7:
-                score -= 10
-        except Exception:
-            pass
-        
-        # Call-to-action presence
-        cta_phrases = ['listen', 'subscribe', 'follow', 'share', 'comment', 'like']
-        for phrase in cta_phrases:
-            if phrase in desc_lower:
-                score += 10
-                break
-        
-        return min(score, 100.0)
-    
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__analyze_description_input(description)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__analyze_description_result(result)
+            
+                    logger.info(f"AI processing _analyze_description completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _analyze_description failed: {e}")
+                    raise
     def _analyze_tags(self, tags: List[str], keywords: List[KeywordData]) -> float:
         """
 Analyze tag relevance"""
@@ -741,61 +711,26 @@ Analyze overall keyword density"""
         
         # Content type specific factors
         if content_type == ContentType.MUSIC:
-            music_engagement = [
-                'live', 'acoustic', 'remix', 'cover', 'collaboration',
-                'featuring', 'ft.', 'duet'
-            ]
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
             
-            combined_text = f"{metadata.title} {metadata.description}".lower()
-            for term in music_engagement:
-                if term in combined_text:
-                    score += 15
-        
-        # Artist recognition (simplified)
-        if metadata.artist_name:
-            # Popular artist patterns (simplified check)
-            if len(metadata.artist_name.split()) == 1:  # Single name artists tend to be established
-                score += 20
-        
-        # Release timing
-        if metadata.release_date:
-            days_since_release = (datetime.now() - metadata.release_date).days
-            if days_since_release <= 7:  # New release
-                score += 25
-            elif days_since_release <= 30:
-                score += 15
-        
-        return min(score, 100.0)
-    
-    def _analyze_discoverability(self, 
-                               metadata: ContentMetadata,
-                               keywords: List[KeywordData],
-                               platforms: List[PlatformType]) -> float:
-        """Analyze content discoverability"""
-        score = 0.0
-        
-        # Long-tail keyword usage
-        long_tail_keywords = [k for k in keywords if len(k.keyword.split()) >= 3]
-        if long_tail_keywords:
-            score += 30
-        
-        # Genre specificity
-        if metadata.genre:
-            score += 15
+                    # Preprocess input
+                    processed_input = await self._preprocess__analyze_engagement_potential_input(metadata)
             
-            # Niche genres may have less competition
-            niche_genres = ['ambient', 'experimental', 'folk', 'indie', 'acoustic']
-            if metadata.genre.lower() in niche_genres:
-                score += 10
-        
-        # Multi-platform optimization
-        platform_specific_score = len(platforms) * 10
-        score += min(platform_specific_score, 30)
-        
-        # Unique content indicators
-        unique_indicators = ['original', 'exclusive', 'unreleased', 'premiere']
-        combined_text = f"{metadata.title} {metadata.description}".lower()
-        
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__analyze_engagement_potential_result(result)
+            
+                    logger.info(f"AI processing _analyze_engagement_potential completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _analyze_engagement_potential failed: {e}")
+                    raise
         for indicator in unique_indicators:
             if indicator in combined_text:
                 score += 15

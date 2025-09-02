@@ -173,8 +173,20 @@ class SyncConfiguration(BaseModel):
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     
     def __repr__(self):
-        return f"<SyncConfiguration(platform={self.platform_name}, strategy={self.sync_strategy.value})>"
-    
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     @property
     def is_due_for_sync(self) -> bool:
         """Vérifie si une synchronisation est due."""
@@ -305,6 +317,31 @@ class SyncExecution(BaseModel):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     
     def __repr__(self):
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
+    performance_metrics = Column(JSONB, default=dict)
+    debug_information = Column(JSONB, default=dict)
+    
+    # Contexte d'exécution
+    triggered_by = Column(String(50))  # system, user, webhook, schedule
+    trigger_context = Column(JSONB, default=dict)
+    execution_environment = Column(String(50), default="production")
+    
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    
+    def __repr__(self):
         return f"<SyncExecution(platform={self.platform_name}, status={self.sync_status.value})>"
     
     @property
@@ -375,10 +412,72 @@ class SyncFieldMapping(BaseModel):
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     
     def __repr__(self):
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
+    Définit comment mapper les champs de données
+    entre notre système et les plateformes externes.
+    """
+    
+    __tablename__ = "sync_field_mappings"
+    
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    sync_configuration_id = Column(UUID(as_uuid=True), nullable=False, index=True)
+    platform_name = Column(String(50), nullable=False, index=True)
+    
+    # Définition du mapping
+    source_field = Column(String(100), nullable=False)
+    target_field = Column(String(100), nullable=False)
+    field_type = Column(String(30), nullable=False)  # string, number, boolean, date, object, array
+    
+    # Transformation et validation
+    is_required = Column(Boolean, default=False)
+    is_readonly = Column(Boolean, default=False)
+    default_value = Column(JSONB)
+    transformation_rules = Column(JSONB, default=list)
+    validation_rules = Column(JSONB, default=dict)
+    
+    # Direction du mapping
+    sync_direction = Column(SQLEnum(SyncDirection), nullable=False)
+    priority = Column(Integer, default=0)  # Priorité pour l'ordre de traitement
+    
+    # Métadonnées
+    description = Column(Text)
+    examples = Column(JSONB, default=list)
+    notes = Column(Text)
+    
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    
+    def __repr__(self):
         return f"<SyncFieldMapping(platform={self.platform_name}, {self.source_field}->{self.target_field})>"
     
     def apply_transformation(self, value: Any) -> Any:
-        """Applique les règles de transformation à une valeur."""
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
         if not self.transformation_rules:
             return value
         
@@ -415,6 +514,20 @@ class SyncFieldMapping(BaseModel):
                     transformed_value = transformed_value[:max_length]
             
             elif rule_type == "default_if_empty":
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
                 if not transformed_value:
                     transformed_value = rule.get("default", "")
         
@@ -646,6 +759,29 @@ logger = logging.getLogger(__name__)
 
 
 class SyncDirection(str, Enum):
+        try:
+            logger.info(f"Executing should_run_now")
+            
+            # Implementation for should_run_now
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"should_run_now completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"should_run_now failed: {e}")
+            raise
+from datetime import datetime, timedelta
+from enum import Enum
+
+from backend.database.models.base import BaseModel
+
+logger = logging.getLogger(__name__)
+
+
+class SyncDirection(str, Enum):
     """Directions de synchronisation."""
 
     IMPORT = "import"  # Depuis la plateforme vers notre système
@@ -743,6 +879,70 @@ class SyncConfiguration(BaseModel):
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     
     def __repr__(self):
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
+    data_filters = Column(JSONB, default=dict)
+    field_mapping = Column(JSONB, default=dict)
+    transformation_rules = Column(JSONB, default=dict)
+    
+    # Gestion des conflits
+    conflict_resolution = Column(String(20), default="latest")  # latest, merge, manual
+    duplicate_handling = Column(String(20), default="skip")  # skip, update, create_new
+    
+    # Limites et performance
+    batch_size = Column(Integer, default=100)
+    max_retries = Column(Integer, default=3)
+    retry_delay_seconds = Column(Integer, default=60)
+    rate_limit_per_minute = Column(Integer, default=60)
+    
+    # Validation et qualité des données
+    validation_rules = Column(JSONB, default=dict)
+    quality_checks = Column(JSONB, default=dict)
+    
+    # Statut et monitoring
+    is_active = Column(Boolean, default=True)
+    last_sync = Column(DateTime(timezone=True))
+    next_sync = Column(DateTime(timezone=True))
+    
+    # Métriques
+    total_syncs = Column(Integer, default=0)
+    successful_syncs = Column(Integer, default=0)
+    failed_syncs = Column(Integer, default=0)
+    
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    
+    def __repr__(self):
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    
+    def __repr__(self):
         return f"<SyncConfiguration(name={self.config_name}, platform={self.platform_name})>"
     
     @property
@@ -762,6 +962,20 @@ Vérifie si la synchronisation doit être exécutée maintenant."""
         
         # Vérification de la fenêtre de synchronisation
         if self.sync_window_start and self.sync_window_end:
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
             current_time = now.strftime("%H:%M")
             if not (self.sync_window_start <= current_time <= self.sync_window_end):
                 return False
@@ -788,7 +1002,20 @@ Vérifie si la synchronisation doit être exécutée maintenant."""
         now = datetime.utcnow()
         
         if self.schedule_type == "interval":
-            base_time = self.last_sync or now
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
             return base_time + timedelta(minutes=self.interval_minutes)
         elif self.schedule_type == "cron" and self.cron_expression:
             # Logique cron à implémenter

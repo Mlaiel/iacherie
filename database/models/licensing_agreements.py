@@ -340,8 +340,20 @@ class LicensingAgreement(Base):
     )
     
     def __repr__(self):
-        return f"<LicensingAgreement(id={self.id}, agreement_number='{self.agreement_number}', type={self.license_type.value}, status={self.license_status.value})>"
-    
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     def to_dict(self, include_sensitive: bool = False, include_analytics: bool = True) -> Dict[str, Any]:
         """Convert model to dictionary for API responses"""
         base_dict = {

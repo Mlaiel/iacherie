@@ -1187,30 +1187,20 @@ Format HTML content for email delivery"""
         return valid_results
     
     async def get_document_by_id(self, document_id: str) -> Optional[GeneratedDocument]:
-        """Retrieve generated document by ID"""
         try:
-            # Check cache first
-            for cached_data in self.document_cache.values():
-                if (cached_data["document"].document_id == document_id and 
-                    cached_data["expires_at"] > datetime.now()):
-                    return cached_data["document"]
+                    # Request validation
+                    if not document_id:
+                        raise ValueError("Invalid request")
             
-            # Query database
-            with get_db_session() as session:
-                db_document = session.query(LegalDocument).filter(
-                    LegalDocument.document_id == document_id
-                ).first()
-                
-                if db_document:
-                    # Convert back to GeneratedDocument
-                    # This would require implementing database-to-object conversion
-                    pass
-                    
-        except Exception as e:
-            self.logger.error(f"Document retrieval failed: {str(e)}")
-        
-        return None
-    
+                    # Process request
+                    result = await self._handle_get_document_by_id_request(document_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_document_by_id failed: {e}")
+                    return {"status": "error", "message": str(e)}
     async def get_generation_statistics(self) -> Dict[str, Any]:
         """Get document generation statistics"""
         try:

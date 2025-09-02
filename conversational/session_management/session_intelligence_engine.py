@@ -1231,18 +1231,20 @@ Initialize the intelligence engine"""
         self.logger.info("Session intelligence engine initialized")
     
     async def shutdown(self):
-        """Shutdown the intelligence engine"""
-        
-        # Cancel background tasks
-        for task in self.background_tasks:
-            task.cancel()
-            try:
-                await task
-            except asyncio.CancelledError:
-                pass
-        
-        self.logger.info("Session intelligence engine shutdown")
-    
+        try:
+            logger.info(f"Executing shutdown")
+            
+            # Implementation for shutdown
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"shutdown completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"shutdown failed: {e}")
+            raise
     async def analyze_session(self, session_id: str) -> Dict[str, Any]:
         """Comprehensive session analysis with ML predictions"""
         

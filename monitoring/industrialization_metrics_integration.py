@@ -34,8 +34,74 @@ except ImportError:
     # Mock classes for standalone operation
     class BusinessKPICollector:
         async def collect_metrics(self):
-            return {}
-    
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_current_metrics_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_kpi_results_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_kpi_results failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                    return {"status": "success", "data": result}
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_performance_summary_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_performance_summary failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                    result = await self._handle_get_current_metrics_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_current_metrics failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric collect_metrics collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection collect_metrics failed: {e}")
+                    return None
     class TechnicalPerformanceMonitor:
         async def get_current_metrics(self):
             return {}

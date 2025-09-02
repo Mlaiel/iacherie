@@ -458,11 +458,28 @@ Trigger automated enforcement for violation."""
                 await asyncio.sleep(60)  # Retry after 1 minute
     
     async def _optimize_monitoring_intervals(self) -> None:
-        """Optimize monitoring intervals based on system performance."""
-        # Implementation for intelligent interval optimization
-        # This would analyze system load, violation patterns, etc.
-        pass
-    
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_optimize_monitoring_intervals",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _optimize_monitoring_intervals collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _optimize_monitoring_intervals failed: {e}")
+                    return None
     async def _cleanup_completed_sessions(self) -> None:
         """
 Clean up completed or error sessions."""

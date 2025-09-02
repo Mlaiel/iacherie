@@ -277,8 +277,20 @@ class TeamManagement(Base):
     )
     
     def __repr__(self):
-        return f"<TeamManagement(id={self.id}, name={self.name}, type={self.team_type.value}, status={self.status.value})>"
-    
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     @classmethod
     def create_team(
         cls,
@@ -528,6 +540,31 @@ class TeamMember(Base):
     )
     
     def __repr__(self):
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
+    team = relationship("TeamManagement", backref="members")
+    
+    # Unique constraint
+    __table_args__ = (
+        Index('idx_team_members_team_user', 'team_id', 'user_id', unique=True),
+        Index('idx_team_members_role_status', 'role', 'status'),
+        Index('idx_team_members_joined_active', 'joined_at', 'last_active_at'),
+        Index('idx_team_members_added_by', 'added_by'),
+    )
+    
+    def __repr__(self):
         return f"<TeamMember(team_id={self.team_id}, user_id={self.user_id}, role={self.role.value})>"
 
 
@@ -544,6 +581,27 @@ class TeamInvitation(Base):
     invitation_token = Column(String(64), unique=True, nullable=False, index=True)
     
     # Invitation details
+    team_id = Column(UUID(as_uuid=True), ForeignKey('team_management.id'), nullable=False, index=True)
+    email = Column(String(255), nullable=False, index=True)
+    role = Column(SQLEnum(MemberRole), nullable=False)
+    status = Column(SQLEnum(InvitationStatus), nullable=False, default=InvitationStatus.PENDING, index=True)
+    
+    # Timeline
+    created_at = Column(DateTime(timezone=True), nullable=False, default=lambda: datetime.now(timezone.utc), index=True)
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     team_id = Column(UUID(as_uuid=True), ForeignKey('team_management.id'), nullable=False, index=True)
     email = Column(String(255), nullable=False, index=True)
     role = Column(SQLEnum(MemberRole), nullable=False)

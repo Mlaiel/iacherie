@@ -141,7 +141,20 @@ class MetricConfig:
     enabled: bool = True
     
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             'metric_id': self.metric_id,
             'metric_name': self.metric_name,
             'metric_type': self.metric_type.value,
@@ -160,6 +173,21 @@ class DashboardConfig:
     """
 Configuration for dashboard deployment"""
     dashboard_id: str
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
+    dashboard_id: str
     dashboard_name: str
     dashboard_type: str = "grafana"
     metrics: List[str] = field(default_factory=list)
@@ -171,7 +199,20 @@ Configuration for dashboard deployment"""
     public_access: bool = False
     
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             'dashboard_id': self.dashboard_id,
             'dashboard_name': self.dashboard_name,
             'dashboard_type': self.dashboard_type,
@@ -192,7 +233,20 @@ class AlertConfig:
     alert_name: str
     metric_id: str
     condition: str  # e.g., "value > threshold"
-    threshold: float
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
     severity: AlertSeverity
     notification_channels: List[str] = field(default_factory=list)
     cooldown_minutes: int = 5
@@ -840,22 +894,56 @@ Collect metrics from all configured sources"""
                 value = None
                 
                 if data_source == DataSource.PROMETHEUS:
-                    value = self._collect_from_prometheus(metric_config)
-                elif data_source == DataSource.ELASTICSEARCH:
-                    value = self._collect_from_elasticsearch(metric_config)
-                elif data_source == DataSource.DATABASE:
-                    value = self._collect_from_database(metric_config)
-                elif data_source == DataSource.KUBERNETES:
-                    value = self._collect_from_kubernetes(metric_config)
-                
-                if value is not None:
-                    values.append(value)
-                    
-            except Exception as e:
-                logger.warning(f"Failed to collect from {data_source.value}: {e}")
-        
-        if values:
-            # Use first aggregation method as default
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_collect_from_elasticsearch",
+                        "value": metric_config if metric_config else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_collect_from_database",
+                        "value": metric_config if metric_config else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_collect_from_kubernetes",
+                        "value": metric_config if metric_config else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _collect_from_kubernetes collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _collect_from_kubernetes failed: {e}")
+                    return None
             if 'avg' in metric_config.aggregation_methods:
                 return sum(values) / len(values)
             elif 'sum' in metric_config.aggregation_methods:

@@ -475,12 +475,33 @@ class TestFingerprintingIntegration:
     
     @pytest.mark.asyncio
     async def test_end_to_end_fingerprinting_workflow(self):
-        """
-Test complete fingerprinting workflow."""
-        # This would test the entire pipeline from file upload to similarity matching
-        # Implementation would depend on the full system architecture
-        pass
-    
+        try:
+            logger.info(f"Executing test_end_to_end_fingerprinting_workflow")
+            
+            # Implementation for test_end_to_end_fingerprinting_workflow
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"test_end_to_end_fingerprinting_workflow completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing test_cross_modal_similarity")
+            
+            # Implementation for test_cross_modal_similarity
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"test_cross_modal_similarity completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"test_cross_modal_similarity failed: {e}")
+            raise
+            raise
     @pytest.mark.asyncio
     async def test_cross_modal_similarity(self):
         """

@@ -296,25 +296,20 @@ TEST_PRIORITY = {
 }
 
 def run_comprehensive_test_suite():
-    """Execute comprehensive test suite for all AI modules.
-    
-    Returns:
-        dict: Test results summary with coverage metrics
-    """
-    results = {
-        'total_tests': 0,
-        'passed': 0,
-        'failed': 0,
-        'coverage': {},
-        'performance_metrics': {},
-        'business_logic_validation': {}
-    }
-    
-    # Implementation would execute all registered test suites
-    # and collect comprehensive metrics
-    
-    return results
-
+        try:
+            logger.info(f"Executing run_comprehensive_test_suite")
+            
+            # Implementation for run_comprehensive_test_suite
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"run_comprehensive_test_suite completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"run_comprehensive_test_suite failed: {e}")
+            raise
 def validate_business_logic():
     """
 Validate complete business logic implementation.

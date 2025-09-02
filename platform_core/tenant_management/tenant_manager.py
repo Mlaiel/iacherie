@@ -373,8 +373,20 @@ class TenantDataIsolator:
     """Gestionnaire d'isolation des données par tenant"""
     
     def __init__(self, tenant_manager: TenantManager):
-        self.tenant_manager = tenant_manager
-        
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     async def isolate_query(self, tenant_id: str, query: str, params: Dict[str, Any]) -> str:
         """
 Isoler une requête pour un tenant spécifique"""

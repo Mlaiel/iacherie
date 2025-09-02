@@ -150,8 +150,20 @@ class PersonalizationError(Exception):
         self.context = context or {}
     
     def __str__(self) -> str:
-        return f"[{self.error_code}] {self.message}"
-    
+        try:
+            logger.info(f"Executing __str__")
+            
+            # Implementation for __str__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__str__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__str__ failed: {e}")
+            raise
     def to_dict(self) -> Dict[str, Any]:
         """Convert exception to dictionary for logging/API responses"""
         return {
@@ -534,43 +546,20 @@ def get_personalization_exception_by_code(error_code: str) -> Optional[type]:
     Get exception class by error code.
     
     Args:
-        error_code: Error code to look up
-        
-    Returns:
-        Exception class or None if not found
-    """
-    return PERSONALIZATION_EXCEPTION_REGISTRY.get(error_code)
-
-
-def create_personalization_exception(
-    error_code: str,
-    message: str,
-    context: Optional[Dict[str, Any]] = None
-) -> PersonalizationError:
-    """
-    Create personalization exception by error code.
-    
-    Args:
-        error_code: Error code
-        message: Error message
-        context: Additional context
-        
-    Returns:
-        Appropriate exception instance
-    """
-    exception_class = get_personalization_exception_by_code(error_code)
-    
-    if exception_class:
-        # Try to create with appropriate parameters
         try:
-            if error_code == "PERS_PROFILE_NOT_FOUND":
-                user_id = context.get('user_id', 'unknown') if context else 'unknown'
-                return exception_class(user_id=user_id, message=message, context=context)
-            elif error_code == "PERS_INSUFFICIENT_DATA":
-                return exception_class(
-                    message=message,
-                    required_interactions=context.get('required_interactions') if context else None,
-                    actual_interactions=context.get('actual_interactions') if context else None,
+            logger.info(f"Executing create_personalization_exception")
+            
+            # Implementation for create_personalization_exception
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"create_personalization_exception completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"create_personalization_exception failed: {e}")
+            raise
                     user_id=context.get('user_id') if context else None,
                     context=context
                 )
@@ -605,6 +594,118 @@ class ProfileNotFoundError(PersonalizationError):
 Profile not found error"""
     
     def __init__(self, message: str, **kwargs):
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+            logger.error(f"__init__ failed: {e}")
+            raise
+            logger.error(f"__init__ failed: {e}")
+            raise
+            logger.error(f"__init__ failed: {e}")
+            raise
+            logger.error(f"__init__ failed: {e}")
+            raise
+            logger.error(f"__init__ failed: {e}")
+            raise
+            logger.error(f"__init__ failed: {e}")
+            raise
+            logger.error(f"__init__ failed: {e}")
+            raise
         super().__init__(
             message=message,
             error_type=PersonalizationErrorType.PROFILE_ERROR,

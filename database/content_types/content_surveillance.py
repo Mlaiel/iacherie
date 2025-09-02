@@ -176,8 +176,20 @@ Database model for content violations"""
     fingerprint = relationship("ContentFingerprint", back_populates="violations")
     
     def __repr__(self) -> str:
-        return f"<ContentViolation(id={self.id}, platform={self.platform}, severity={self.alert_severity})>"
-
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
 class SurveillanceLog(Base):
     """Database model for surveillance activity logs"""
     __tablename__ = "surveillance_logs"
@@ -201,6 +213,29 @@ class SurveillanceLog(Base):
     error_message = Column(Text, nullable=True)
     
     # Metadata
+    scan_metadata = Column(JSONB, nullable=False, default={})
+    results_summary = Column(JSONB, nullable=False, default={})
+    
+    # Timestamps
+    started_at = Column(DateTime(timezone=True), nullable=False, default=datetime.utcnow)
+    completed_at = Column(DateTime(timezone=True), nullable=True)
+    created_at = Column(DateTime(timezone=True), nullable=False, default=datetime.utcnow)
+    
+    def __repr__(self) -> str:
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     scan_metadata = Column(JSONB, nullable=False, default={})
     results_summary = Column(JSONB, nullable=False, default={})
     
@@ -396,7 +431,20 @@ class YouTubeCrawler(PlatformCrawler):
                         'video_id': video_id,
                         'search_query': query,
                         'platform_response': item
-                    }
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
                 )
                 
                 results.append(result)

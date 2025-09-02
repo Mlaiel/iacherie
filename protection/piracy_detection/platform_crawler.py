@@ -651,7 +651,28 @@ class IntelligentPlatformCrawler:
             Async task for monitoring
         """
         async def monitoring_loop():
-            while True:
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "monitoring_loop",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric monitoring_loop collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection monitoring_loop failed: {e}")
+                    return None
                 try:
                     platforms = monitoring_config.get('platforms', [])
                     queries = monitoring_config.get('search_queries', [])

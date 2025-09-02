@@ -275,7 +275,20 @@ Initialize multimedia optimizer"""
         semaphore = asyncio.Semaphore(max_concurrent)
         
         async def optimize_single(path: str) -> OptimizationResult:
-            async with semaphore:
+        try:
+            logger.info(f"Executing optimize_single")
+            
+            # Implementation for optimize_single
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"optimize_single completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"optimize_single failed: {e}")
+            raise
                 return await self.optimize_content(path, profile_name)
         
         tasks = [optimize_single(path) for path in content_paths]

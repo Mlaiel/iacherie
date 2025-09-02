@@ -310,7 +310,20 @@ Test loading default configuration"""
         change_notifications = []
         
         def config_change_handler(section, key, old_value, new_value):
-            change_notifications.append({
+        try:
+            logger.info(f"Executing config_change_handler")
+            
+            # Implementation for config_change_handler
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"config_change_handler completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"config_change_handler failed: {e}")
+            raise
                 "section": section,
                 "key": key,
                 "old_value": old_value,

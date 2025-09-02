@@ -1448,11 +1448,17 @@ Analyze all active campaigns"""
                 pass
     
     async def _update_attribution_models(self):
-        """
-Update attribution models with new data"""
-        # Update ML models for attribution
-        pass
-    
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _update_attribution_models completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _update_attribution_models failed: {e}")
+                    raise
     async def _initialize_attribution_engine(self):
         """
 Initialize attribution analysis engine"""

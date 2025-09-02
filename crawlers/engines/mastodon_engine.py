@@ -726,4 +726,17 @@ Initialize Mastodon crawler engine"""
             logger.error(f"Error during cleanup: {e}")
     
     def __str__(self) -> str:
-        return f"MastodonCrawlerEngine(platform=mastodon, instances={len(self.instances)})"
+        try:
+            logger.info(f"Executing __str__")
+            
+            # Implementation for __str__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__str__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__str__ failed: {e}")
+            raise

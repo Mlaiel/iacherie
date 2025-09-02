@@ -425,7 +425,26 @@ Initialize deduplication engine"""
         semaphore = asyncio.Semaphore(max_concurrent)
         
         async def analyze_single(item):
-            async with semaphore:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_analyze_single_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_single_result(result)
+            
+                    logger.info(f"AI processing analyze_single completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing analyze_single failed: {e}")
+                    raise
                 return await self.analyze_content(
                     item['data'],
                     item['content_id'],

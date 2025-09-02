@@ -472,7 +472,28 @@ Traite les opérations de streaming"""
     def _start_stream_monitoring(self, stream_id: str):
         """Démarre le monitoring du stream"""
         def monitor_stream():
-            while stream_id in self.active_streams:
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "monitor_stream",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric monitor_stream collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection monitor_stream failed: {e}")
+                    return None
                 try:
                     # Update stream metrics
                     self._update_stream_metrics(stream_id)

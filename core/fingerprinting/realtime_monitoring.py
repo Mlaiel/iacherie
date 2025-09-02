@@ -580,60 +580,27 @@ class RealTimeMonitoringSystem:
 
 # Example usage and demo
 async def demo_monitoring_system():
-    """Demonstrate the real-time monitoring system."""
-    print("🚀 Initializing Real-Time Violation Monitoring System...")
-    
-    # Configuration for demo
-    config = {
-        "similarity_threshold": 0.85,
-        "auto_takedown": True,
-        "platforms": [
-            {"name": "youtube", "scan_interval": 10},
-            {"name": "instagram", "scan_interval": 15},
-            {"name": "tiktok", "scan_interval": 20},
-            {"name": "facebook", "scan_interval": 30},
-            {"name": "twitter", "scan_interval": 25}
-        ]
-    }
-    
-    # Initialize monitoring system
-    monitoring_system = RealTimeMonitoringSystem(config)
-    
-    # Mock fingerprint pipeline (normally would import from ml_production.py)
-    class MockFingerprintPipeline:
-        pass
-    
-    await monitoring_system.initialize(MockFingerprintPipeline())
-    
-    # Add alert callback
-    async def violation_alert_handler(violation: ViolationAlert):
-        print(f"🚨 VIOLATION ALERT: {violation.severity.value.upper()} on {violation.platform}")
-        print(f"   Content ID: {violation.content_id}")
-        print(f"   Similarity: {violation.similarity_score:.2%}")
-        print(f"   Estimated Loss: ${violation.estimated_revenue_loss:.2f}")
-    
-    monitoring_system.add_alert_callback(violation_alert_handler)
-    
-    print(f"📡 Starting monitoring for {len(config['platforms'])} platforms...")
-    
-    # Start monitoring (run for demo duration)
-    monitoring_task = asyncio.create_task(monitoring_system.start_monitoring())
-    
-    # Let it run for a short demo period
-    try:
-        await asyncio.wait_for(monitoring_task, timeout=30)  # 30 seconds demo
-    except asyncio.TimeoutError:
-        print("\n⏰ Demo completed - stopping monitoring...")
-        await monitoring_system.stop_monitoring()
-    
-    # Show final status
-    status = monitoring_system.get_monitoring_status()
-    print(f"\n📊 Final Monitoring Statistics:")
-    print(f"   Platforms Monitored: {status['platforms_monitored']}")
-    print(f"   Content Scanned: {status['metrics']['total_scanned']}")
-    print(f"   Violations Detected: {status['metrics']['violations_detected']}")
-    print(f"   Takedowns Successful: {status['metrics']['takedowns_successful']}")
-    print(f"   System Uptime: {status['metrics']['uptime_percentage']:.1f}%")
-
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "demo_monitoring_system",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric demo_monitoring_system collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection demo_monitoring_system failed: {e}")
+                    return None
 if __name__ == "__main__":
     asyncio.run(demo_monitoring_system())

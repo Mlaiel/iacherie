@@ -189,40 +189,26 @@ Analyze similarity between original and detected content"""
             return ContentType.TEXT
     
     async def _analyze_image_from_url(self, url: str) -> List[FingerprintResult]:
-        """
-Analyze image content from URL"""
         try:
-            async with aiohttp.ClientSession() as session:
-                async with session.get(url) as response:
-                    if response.status == 200:
-                        image_data = await response.read()
-                        image = Image.open(io.BytesIO(image_data))
-                        
-                        # Save temporarily for analysis
-                        temp_path = Path(f"/tmp/detected_image_{hashlib.md5(image_data).hexdigest()}.png")
-                        image.save(temp_path)
-                        
-                        # Generate fingerprints
-                        from .fingerprint_engine import ImageFingerprinter
-                        image_fingerprinter = ImageFingerprinter()
-                        
-                        fingerprints = []
-                        fingerprints.append(await image_fingerprinter.generate_perceptual_fingerprint(temp_path))
-                        
-                        try:
-                            fingerprints.append(await image_fingerprinter.generate_clip_fingerprint(temp_path))
-                        except:
-                            pass  # CLIP might not be available
-                        
-                        # Cleanup
-                        temp_path.unlink()
-                        
-                        return fingerprints
-        except Exception as e:
-            logger.error(f"Error analyzing image from URL: {e}")
-        
-        return []
-    
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__analyze_image_from_url_input(url)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__analyze_image_from_url_result(result)
+            
+                    logger.info(f"AI processing _analyze_image_from_url completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _analyze_image_from_url failed: {e}")
+                    raise
     async def _analyze_video_from_url(self, url: str) -> List[FingerprintResult]:
         """Analyze video content from URL (placeholder implementation)"""
         # In production, this would download video thumbnails or extract frames

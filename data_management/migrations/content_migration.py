@@ -201,8 +201,20 @@ class ContentAnalyzer:
 Advanced content analysis and metadata extraction"""
     
     def __init__(self):
-        self.magic_detector = magic.Magic(mime=True)
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     async def analyze_content(self, file_path: Path) -> ContentMetadata:
         """
 Analyze content and extract comprehensive metadata"""
@@ -346,6 +358,21 @@ Analyze content and extract comprehensive metadata"""
 Calculate SHA-256 checksum for file integrity"""
         hash_sha256 = hashlib.sha256()
         
+        with open(file_path, 'rb') as f:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
         with open(file_path, 'rb') as f:
             for chunk in iter(lambda: f.read(4096), b""):
                 hash_sha256.update(chunk)

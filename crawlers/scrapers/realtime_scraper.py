@@ -474,8 +474,20 @@ Stream events as they occur."""
         
         # Register temporary handler
         def temp_handler(event: RealtimeEvent):
-            asyncio.create_task(temp_queue.put(event))
+        try:
+            logger.info(f"Executing temp_handler")
             
+            # Implementation for temp_handler
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"temp_handler completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"temp_handler failed: {e}")
+            raise
         for event_type in self.event_handlers:
             self.register_event_handler(event_type, temp_handler)
             

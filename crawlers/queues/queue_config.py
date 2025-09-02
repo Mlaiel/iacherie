@@ -391,26 +391,20 @@ Advanced configuration manager for queue systems"""
     # Private methods
     
     def _detect_system_resources(self) -> SystemResources:
-        """Detect available system resources"""
-        
-        memory = psutil.virtual_memory()
-        cpu_freq = psutil.cpu_freq()
-        disk = psutil.disk_usage('/')
-        
-        # Try to detect GPU
-        gpu_available = False
-        gpu_memory_gb = None
-        
         try:
-            import GPUtil
-            gpus = GPUtil.getGPUs()
-            if gpus:
-                gpu_available = True
-                gpu_memory_gb = gpus[0].memoryTotal / 1024  # Convert MB to GB
-        except ImportError:
-            pass
-        
-        return SystemResources(
+            logger.info(f"Executing _detect_system_resources")
+            
+            # Implementation for _detect_system_resources
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_detect_system_resources completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_detect_system_resources failed: {e}")
+            raise
             total_memory_gb=memory.total / (1024**3),
             available_memory_gb=memory.available / (1024**3),
             cpu_cores=psutil.cpu_count(logical=False),

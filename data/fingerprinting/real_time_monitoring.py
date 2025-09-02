@@ -420,7 +420,51 @@ Start real-time monitoring system"""
         """Start background monitoring tasks"""
         # System metrics monitoring
         async def monitor_system_metrics():
-            while self.running:
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "monitor_system_metrics",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric monitor_system_metrics collected")
+                    return metrics
+            
+                except Exception as e:
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation send_websocket_updates completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation send_websocket_updates failed: {e}")
+        try:
+            logger.info(f"Executing cleanup_old_data")
+            
+            # Implementation for cleanup_old_data
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"cleanup_old_data completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"cleanup_old_data failed: {e}")
+            raise
+                    return None
                 try:
                     await self._collect_system_metrics()
                     await asyncio.sleep(5)  # 5 second intervals

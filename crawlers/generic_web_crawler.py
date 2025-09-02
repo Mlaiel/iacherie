@@ -34,8 +34,38 @@ class GenericWebCrawler:
 Generic web crawler for content discovery"""
     
     def __init__(self):
-        self.session = None
-        
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing __aexit__")
+            
+            # Implementation for __aexit__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__aexit__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__aexit__ failed: {e}")
+            raise
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     async def __aenter__(self):
         self.session = aiohttp.ClientSession()
         return self

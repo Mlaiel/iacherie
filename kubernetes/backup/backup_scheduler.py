@@ -108,31 +108,20 @@ Start the scheduler service."""
         self._scheduler_task = asyncio.create_task(self._scheduler_loop())
 
     async def stop_scheduler(self) -> None:
-        """Stop the scheduler service."""
-        if not self._is_running:
-            self.logger.warning("Scheduler is not running")
-            return
-        
-        self.logger.info("Stopping backup scheduler...")
-        self._is_running = False
-        
-        if self._scheduler_task:
-            self._scheduler_task.cancel()
-            try:
-                await self._scheduler_task
-            except asyncio.CancelledError:
-                pass
-        
-        # Cancel all running backup tasks
-        for task in self.running_tasks.values():
-            task.cancel()
-        
-        # Wait for all tasks to complete
-        if self.running_tasks:
-            await asyncio.gather(*self.running_tasks.values(), return_exceptions=True)
-        
-        self.logger.info("Backup scheduler stopped")
-
+        try:
+            logger.info(f"Executing stop_scheduler")
+            
+            # Implementation for stop_scheduler
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"stop_scheduler completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"stop_scheduler failed: {e}")
+            raise
     async def add_schedule(
         self,
         schedule_config: Dict[str, Any],

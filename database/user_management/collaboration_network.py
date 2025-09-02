@@ -283,8 +283,20 @@ class CollaborationNetworkRepository:
     Repository pour la gestion des réseaux de collaboration.
     """
     def __init__(self, db_session: Session):
-        self.db = db_session
-
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     def create_network(self, creator_id: str, network_data: Dict[str, Any]) -> CollaborationNetwork:
         """
 Créer un nouveau réseau de collaboration."""

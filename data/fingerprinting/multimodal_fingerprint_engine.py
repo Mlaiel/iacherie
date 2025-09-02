@@ -472,77 +472,20 @@ class MultiModalFingerprintEngine:
     def _get_optimized_methods(
         self,
         creator_type: str,
-        content_format: ContentFormat,
-        protection_level: str
-    ) -> List[FingerprintMethod]:
-        """Obtient méthodes optimisées selon type créateur et niveau protection."""
-        
-        # Méthodes par type de créateur
-        creator_methods = {
-            'musician': {
-                ContentFormat.AUDIO: [
-                    FingerprintMethod.CHROMAPRINT,
-                    FingerprintMethod.MFCC,
-                    FingerprintMethod.SPECTRAL_CENTROID,
-                    FingerprintMethod.ESSENTIA_SPECTRAL
-                ],
-                ContentFormat.VIDEO: [
-                    FingerprintMethod.PERCEPTUAL_HASH,
-                    FingerprintMethod.FRAME_DIFFERENCE
-                ]
-            },
-            'influencer': {
-                ContentFormat.VIDEO: [
-                    FingerprintMethod.PERCEPTUAL_HASH,
-                    FingerprintMethod.FRAME_DIFFERENCE,
-                    FingerprintMethod.YOLO_FEATURES
-                ],
-                ContentFormat.IMAGE: [
-                    FingerprintMethod.CLIP_EMBEDDING,
-                    FingerprintMethod.PHASH,
-                    FingerprintMethod.DHASH
-                ]
-            },
-            'photographer': {
-                ContentFormat.IMAGE: [
-                    FingerprintMethod.CLIP_EMBEDDING,
-                    FingerprintMethod.PHASH,
-                    FingerprintMethod.DHASH,
-                    FingerprintMethod.WHASH,
-                    FingerprintMethod.SIFT_FEATURES
-                ]
-            },
-            'blogger': {
-                ContentFormat.TEXT: [
-                    FingerprintMethod.BERT_EMBEDDING,
-                    FingerprintMethod.ROBERTA_EMBEDDING,
-                    FingerprintMethod.SEMANTIC_HASH,
-                    FingerprintMethod.TF_IDF
-                ]
-            },
-            'comedian': {
-                ContentFormat.VIDEO: [
-                    FingerprintMethod.PERCEPTUAL_HASH,
-                    FingerprintMethod.FRAME_DIFFERENCE
-                ],
-                ContentFormat.AUDIO: [
-                    FingerprintMethod.CHROMAPRINT,
-                    FingerprintMethod.MFCC
-                ]
-            }
-        }
-        
-        methods = creator_methods.get(creator_type, {}).get(content_format, [])
-        
-        # Ajustement selon niveau protection
-        if protection_level == 'basic':
-            methods = methods[:2]  # Méthodes rapides seulement
-        elif protection_level == 'enterprise':
-            # Toutes les méthodes disponibles pour précision maximale
-            pass
-        
-        return methods or self._get_default_methods(content_format)
-    
+        try:
+                    # Request validation
+                    if not creator_type:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_optimized_methods_request(creator_type)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_optimized_methods failed: {e}")
+                    return {"status": "error", "message": str(e)}
     def _get_default_methods(self, content_format: ContentFormat) -> List[FingerprintMethod]:
         """
 Méthodes par défaut selon format."""

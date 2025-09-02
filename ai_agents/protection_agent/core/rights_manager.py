@@ -70,7 +70,20 @@ class RightsBundle:
     metadata: Dict = field(default_factory=dict)
     
     def __post_init__(self):
-        if self.expires_at < self.created_at:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             raise ValueError("Expiration date cannot be before creation date")
 
 
@@ -84,7 +97,20 @@ class License:
     license_type: LicenseType
     usage_types: Set[UsageType]
     territory: List[str]
-    duration: timedelta
+        try:
+            logger.info(f"Executing is_expired")
+            
+            # Implementation for is_expired
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"is_expired completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"is_expired failed: {e}")
+            raise
     granted_at: datetime
     expires_at: datetime
     royalty_rate: float = 0.0

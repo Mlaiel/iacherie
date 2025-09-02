@@ -190,22 +190,20 @@ class DistributionResult:
     next_actions: List[Dict[str, Any]]
     
     def get_success_probability(self) -> float:
-        """
-Calculate overall success probability"""
-        platform_scores = []
-        
-        for platform in self.distribution_plan.target_platforms:
-            platform_name = platform.value
-            validation_passed, _ = self.validation_results.get(platform_name, (False, []))
-            optimization_score = self.optimization_results.get(platform_name, {}).get('score', 0.0)
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
             
-            platform_score = 0.5 if validation_passed else 0.0
-            platform_score += optimization_score * 0.5
+                    # Process request
+                    result = await self._handle_get_success_probability_request(data)
             
-            platform_scores.append(platform_score)
-        
-        return np.mean(platform_scores) if platform_scores else 0.0
-
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_success_probability failed: {e}")
+                    return {"status": "error", "message": str(e)}
 class DistributionPreparationHandler(BaseEventHandler):
     """
     Enterprise-grade distribution preparation event handler

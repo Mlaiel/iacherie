@@ -59,7 +59,20 @@ Geographic region configuration for load balancing"""
     timezone: str = "UTC"
     
     def __post_init__(self):
-        if self.compliance_requirements is None:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             self.compliance_requirements = []
 
 
@@ -67,6 +80,20 @@ Geographic region configuration for load balancing"""
 class ServerEndpoint:
     """Geographic server endpoint configuration"""
     host: str
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     port: int
     region: str
     datacenter: str
@@ -740,7 +767,28 @@ Calculate score based on server latency"""
             return 0.5
     
     async def _get_fallback_server(self) -> Optional[ServerEndpoint]:
-        """Get fallback server when optimal selection fails"""
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "monitor_latency",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric monitor_latency collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection monitor_latency failed: {e}")
+                    return None
         try:
             # Use global region as fallback
             if "global" in self.servers:
@@ -784,6 +832,28 @@ Calculate score based on server latency"""
     async def _measure_all_server_latencies(self) -> None:
         """Measure latency to all servers"""
         try:
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "monitor_health",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric monitor_health collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection monitor_health failed: {e}")
+                    return None
             tasks = []
             
             for region, servers in self.servers.items():

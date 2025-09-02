@@ -247,7 +247,20 @@ Enterprise webhook notification service with intelligent delivery and comprehens
         semaphore = asyncio.Semaphore(self.max_concurrent_webhooks)
         
         async def send_single_webhook(endpoint_id: str, payload: WebhookPayload):
-            async with semaphore:
+        try:
+            logger.info(f"Executing send_single_webhook")
+            
+            # Implementation for send_single_webhook
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"send_single_webhook completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"send_single_webhook failed: {e}")
+            raise
                 return await self.send_webhook(endpoint_id, payload)
         
         # Send all webhooks concurrently
@@ -456,6 +469,159 @@ Schedule webhook retry with appropriate delay."""
             await self.metrics.histogram(
                 "webhook_delivery_time_ms",
                 result.delivery_time_ms,
+                tags={"event": result.event.value}
+        try:
+        try:
+            logger.info(f"Executing _check_endpoint_health")
+            
+            # Implementation for _check_endpoint_health
+            # TODO: Add specific business logic here
+        try:
+        try:
+                    # Request validation
+                    if not endpoint_id:
+        try:
+                    # Request validation
+                    if not endpoint_id:
+        try:
+                    # Request validation
+                    if not start_date:
+        try:
+                    # Request validation
+                    if not start_date:
+        try:
+                    # Request validation
+                    if not start_date:
+        try:
+                    # Request validation
+                    if not start_date:
+        try:
+                    # Request validation
+                    if not start_date:
+        try:
+                    # Request validation
+                    if not start_date:
+        try:
+                    # Request validation
+                    if not start_date:
+        try:
+                    # Request validation
+                    if not start_date:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_peak_usage_times_request(start_date)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_peak_usage_times failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                    result = await self._handle__get_failure_reasons_request(start_date)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_failure_reasons failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                    result = await self._handle__get_retry_analysis_request(start_date)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_retry_analysis failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                    result = await self._handle__get_endpoint_performance_request(start_date)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_endpoint_performance failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                    result = await self._handle__get_event_breakdown_request(start_date)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_event_breakdown failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                    result = await self._handle__get_average_delivery_time_request(start_date)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_average_delivery_time failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                    result = await self._handle__get_delivery_success_rate_request(start_date)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_delivery_success_rate failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                    result = await self._handle__get_total_sent_request(start_date)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_total_sent failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                    result = await self._handle__get_average_response_time_request(endpoint_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_average_response_time failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                    result = await self._handle__get_success_rate_request(endpoint_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_success_rate failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                    if not endpoint_id:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_recent_deliveries_request(endpoint_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_recent_deliveries failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_check_endpoint_health completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_check_endpoint_health failed: {e}")
+            raise
+                    if not endpoint_id:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_rate_limit_status_request(endpoint_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_rate_limit_status failed: {e}")
+                    return {"status": "error", "message": str(e)}
                 tags={"event": result.event.value}
             )
         

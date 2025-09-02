@@ -580,7 +580,26 @@ class SimilarityEngine:
     async def _extract_spectral_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, np.ndarray]:
         """Extract spectral features for similarity analysis"""
         def extract():
-            try:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_extract_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_extract_result(result)
+            
+                    logger.info(f"AI processing extract completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing extract failed: {e}")
+                    raise
                 features = {}
                 
                 # MFCC features
@@ -616,6 +635,36 @@ class SimilarityEngine:
                 return features
                 
             except Exception as e:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_extract_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_extract_result(result)
+            
+                    logger.info(f"AI processing extract completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing extract failed: {e}")
+                    raise
+                    [np.mean(spectral_bandwidth), np.std(spectral_bandwidth)],
+                    np.mean(spectral_contrast, axis=1)
+                ])
+                
+                features['spectral_features'] = spectral_features
+                features['spectral_contrast'] = np.mean(spectral_contrast, axis=1)
+                
+                return features
+                
+            except Exception as e:
                 self.logger.error(f"Spectral feature extraction failed: {str(e)}")
                 return {}
         
@@ -625,9 +674,26 @@ class SimilarityEngine:
         """Extract rhythmic features for similarity analysis"""
         def extract():
             try:
-                features = {}
-                
-                # Tempo and beat tracking
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_extract_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_extract_result(result)
+            
+                    logger.info(f"AI processing extract completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing extract failed: {e}")
+                    raise
                 tempo, beats = librosa.beat.beat_track(y=audio_data, sr=sample_rate)
                 features['tempo'] = float(tempo)
                 
@@ -657,6 +723,35 @@ class SimilarityEngine:
                 rhythm_patterns = np.array([
                     tempo / 120.0,  # Tempo relative to 120 BPM
                     1.0 if 60 <= tempo <= 80 else 0.0,   # Slow
+                    1.0 if 80 <= tempo <= 120 else 0.0,  # Medium  
+                    1.0 if 120 <= tempo <= 160 else 0.0, # Fast
+                    1.0 if tempo > 160 else 0.0          # Very fast
+                ])
+                features['rhythm_patterns'] = rhythm_patterns
+                
+                return features
+                
+            except Exception as e:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_extract_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_extract_result(result)
+            
+                    logger.info(f"AI processing extract completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing extract failed: {e}")
+                    raise
                     1.0 if 80 <= tempo <= 120 else 0.0,  # Medium  
                     1.0 if 120 <= tempo <= 160 else 0.0, # Fast
                     1.0 if tempo > 160 else 0.0          # Very fast

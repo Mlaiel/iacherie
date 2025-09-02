@@ -362,18 +362,28 @@ Initialize machine learning models for analytics."""
         )
     
     async def _collect_compliance_status(self) -> MetricDataPoint:
-        """Collect compliance monitoring metrics."""
-        current_time = datetime.utcnow()
-        
-        compliance_data = {
-            "kyc_completion_rate": np.random.uniform(0.8, 0.95),
-            "aml_checks_passed": np.random.randint(950, 1000),
-            "regulatory_violations": np.random.randint(0, 5),
-            "audit_trail_completeness": np.random.uniform(0.95, 1.0),
-            "data_privacy_compliance": np.random.uniform(0.9, 1.0)
-        }
-        
-        return MetricDataPoint(
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_collect_compliance_status",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _collect_compliance_status collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _collect_compliance_status failed: {e}")
+                    return None
             metric_type=AnalyticsMetric.COMPLIANCE_STATUS,
             timestamp=current_time,
             value=compliance_data["kyc_completion_rate"],

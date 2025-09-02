@@ -99,54 +99,52 @@ class DatabaseHealthChecker:
         self._mongodb_client = None
 
     async def _get_postgres_pool(self):
-        """Get or create PostgreSQL connection pool"""
-        if self._postgres_pool is None:
-            try:
-                self._postgres_pool = await asyncpg.create_pool(
-                    host=self.postgres_config.get("host"),
-                    port=self.postgres_config.get("port", 5432),
-                    user=self.postgres_config.get("username"),
-                    password=self.postgres_config.get("password"),
-                    database=self.postgres_config.get("database"),
-                    min_size=2,
-                    max_size=10
-                )
-            except Exception as e:
-                self.logger.error(f"Failed to create PostgreSQL pool: {str(e)}")
-                raise
-        return self._postgres_pool
-
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_postgres_pool_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_postgres_pool failed: {e}")
+                    return {"status": "error", "message": str(e)}
     async def _get_redis_client(self):
         """Get or create Redis client"""
         if self._redis_client is None:
             try:
-                self._redis_client = await aioredis.from_url(
-                    f"redis://{self.redis_config.get('host')}:{self.redis_config.get('port', 6379)}",
-                    password=self.redis_config.get("password"),
-                    db=self.redis_config.get("db", 0)
-                )
-            except Exception as e:
-                self.logger.error(f"Failed to create Redis client: {str(e)}")
-                raise
-        return self._redis_client
-
-    async def _get_mongodb_client(self):
-        """Get or create MongoDB client"""
-        if self._mongodb_client is None:
-            try:
-                connection_string = (
-                    f"mongodb://{self.mongodb_config.get('username')}:"
-                    f"{self.mongodb_config.get('password')}@"
-                    f"{self.mongodb_config.get('host')}:"
-                    f"{self.mongodb_config.get('port', 27017)}/"
-                    f"{self.mongodb_config.get('database')}"
-                )
-                self._mongodb_client = AsyncIOMotorClient(connection_string)
-            except Exception as e:
-                self.logger.error(f"Failed to create MongoDB client: {str(e)}")
-                raise
-        return self._mongodb_client
-
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_redis_client_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_redis_client failed: {e}")
+                    return {"status": "error", "message": str(e)}
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_mongodb_client_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_mongodb_client failed: {e}")
+                    return {"status": "error", "message": str(e)}
     async def check_postgresql_health(self) -> HealthCheckResult:
         """
         Check PostgreSQL database health and performance

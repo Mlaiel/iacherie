@@ -400,8 +400,20 @@ class RevenueAnalytics:
     """Analytics avancées de revenus"""
     
     def __init__(self, database_client: Optional[Any] = None):
-        self.database_client = database_client
-        
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     async def calculate_mrr(self, as_of_date: Optional[datetime] = None) -> Dict[str, Any]:
         """
 Calcule le Monthly Recurring Revenue"""

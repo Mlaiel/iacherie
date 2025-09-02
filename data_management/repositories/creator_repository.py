@@ -904,10 +904,26 @@ class AsyncCreatorRepository(AsyncBaseRepository[CreatorModel]):
             raise
     
     async def _analyze_creator_skills_async(self, creator: CreatorModel) -> CreatorSkills:
-        """Analyze creator skills asynchronously"""
-        # Async version of skill analysis
-        pass
-    
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__analyze_creator_skills_async_input(creator)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__analyze_creator_skills_async_result(result)
+            
+                    logger.info(f"AI processing _analyze_creator_skills_async completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _analyze_creator_skills_async failed: {e}")
+                    raise
     async def _calculate_creator_analytics_async(self, creator_id: str) -> CreatorAnalytics:
         """
 Calculate creator analytics asynchronously"""

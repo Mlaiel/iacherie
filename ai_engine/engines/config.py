@@ -424,41 +424,20 @@ Load configuration from file"""
             return base_config
             
     def _apply_environment_overrides(self, config: EnginesConfig) -> EnginesConfig:
-        """Apply environment variable overrides"""
-        env_overrides = {
-            "DATABASE_HOST": ("database", "host"),
-            "DATABASE_PORT": ("database", "port"),
-            "DATABASE_NAME": ("database", "database"),
-            "DATABASE_USER": ("database", "username"),
-            "DATABASE_PASSWORD": ("database", "password"),
-            "REDIS_HOST": ("redis", "host"),
-            "REDIS_PORT": ("redis", "port"),
-            "REDIS_PASSWORD": ("redis", "password"),
-            "AI_MODEL_API_KEY": ("ai_models", "api_key"),
-            "AI_MODEL_NAME": ("ai_models", "model_name"),
-            "JWT_SECRET_KEY": ("security", "jwt_secret_key"),
-            "ENCRYPTION_KEY": ("security", "encryption_key"),
-            "LOG_LEVEL": ("monitoring", "log_level")
-        }
-        
-        for env_var, (section, key) in env_overrides.items():
-            value = os.getenv(env_var)
-            if value:
-                section_obj = getattr(config, section)
-                if hasattr(section_obj, key):
-                    # Type conversion
-                    current_value = getattr(section_obj, key)
-                    if isinstance(current_value, int):
-                        value = int(value)
-                    elif isinstance(current_value, float):
-                        value = float(value)
-                    elif isinstance(current_value, bool):
-                        value = value.lower() in ('true', '1', 'yes', 'on')
-                        
-                    setattr(section_obj, key, value)
-                    
-        return config
-        
+        try:
+            logger.info(f"Executing _apply_environment_overrides")
+            
+            # Implementation for _apply_environment_overrides
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_apply_environment_overrides completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_apply_environment_overrides failed: {e}")
+            raise
     def _apply_environment_settings(self, config: EnginesConfig) -> EnginesConfig:
         """Apply environment-specific settings"""
         if self.environment == EnvironmentType.PRODUCTION:

@@ -754,9 +754,31 @@ Save data to cache"""
     # Additional helper methods would be implemented here...
     
     async def _store_distribution_calculation(self, calculation: DistributionCalculation):
-        """Store distribution calculation in database"""
-        pass
-    
+        try:
+            logger.info(f"Executing _store_distribution_calculation")
+            
+            # Implementation for _store_distribution_calculation
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_distribution_calculation completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _update_distribution_status completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _update_distribution_status failed: {e}")
+                    raise
+            logger.error(f"_store_distribution_calculation failed: {e}")
+            raise
     async def _get_distribution_calculation(self, distribution_id: str) -> Optional[DistributionCalculation]:
         """
 Get distribution calculation from database"""

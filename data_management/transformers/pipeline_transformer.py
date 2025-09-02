@@ -278,8 +278,20 @@ Valide la configuration d'extraction"""
         return errors
     
     def get_stage_type(self) -> PipelineStageType:
-        return PipelineStageType.EXTRACTION
-
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_stage_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_stage_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
 class DataValidationStage(PipelineStageBase):
     """Étape de validation de données"""
     
@@ -328,40 +340,20 @@ Valide les données selon les règles configurées"""
             raise PipelineError(f"Échec validation: {str(e)}")
     
     def _validate_schema(self, data: Any) -> List[str]:
-        """Valide les données contre un schéma"""
-        errors = []
-        
         try:
-            import jsonschema
-            jsonschema.validate(data, self.schema)
+            logger.info(f"Executing _apply_validation_rule")
+            
+            # Implementation for _apply_validation_rule
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_apply_validation_rule completed successfully")
+            return result
+            
         except Exception as e:
-            errors.append(f"Erreur schéma: {str(e)}")
-        
-        return errors
-    
-    async def _apply_validation_rule(self, data: Any, rule: Dict[str, Any]) -> Tuple[List[str], List[str]]:
-        """Applique une règle de validation"""
-        errors = []
-        warnings = []
-        
-        rule_type = rule.get('type')
-        rule_config = rule.get('config', {})
-        
-        if rule_type == 'not_empty':
-            if not data or (hasattr(data, '__len__') and len(data) == 0):
-                errors.append("Données vides")
-        
-        elif rule_type == 'min_length':
-            min_len = rule_config.get('min_length', 1)
-            if hasattr(data, '__len__') and len(data) < min_len:
-                errors.append(f"Longueur minimale non respectée: {len(data)} < {min_len}")
-        
-        elif rule_type == 'max_size':
-            max_size = rule_config.get('max_size_mb', 100)
-            data_size_mb = self._calculate_size_mb(data)
-            if data_size_mb > max_size:
-                errors.append(f"Taille maximale dépassée: {data_size_mb}MB > {max_size}MB")
-        
+            logger.error(f"_apply_validation_rule failed: {e}")
+            raise
         elif rule_type == 'format_check':
             expected_format = rule_config.get('format')
             if not self._check_format(data, expected_format):
@@ -446,6 +438,23 @@ class DataTransformationStage(PipelineStageBase):
         super().__init__(stage_id, config)
         self.transformation_type = config.get('transformation_type')
         self.transformation_params = config.get('transformation_params', {})
+        self.output_format = config.get('output_format')
+    
+    async def execute(self, input_data: Any, context: Dict[str, Any]) -> Tuple[Any, Dict[str, Any]]:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_stage_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_stage_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
         self.output_format = config.get('output_format')
     
     async def execute(self, input_data: Any, context: Dict[str, Any]) -> Tuple[Any, Dict[str, Any]]:
@@ -582,38 +591,26 @@ Agrégation de données"""
                 # Groupement par type de données
                 grouped = {}
                 for item in data:
-                    item_type = type(item).__name__
-                    if item_type not in grouped:
-                        grouped[item_type] = []
-                    grouped[item_type].append(item)
-                return grouped
-        
-        return data
-    
-    async def _extract_features(self, data: Any) -> Any:
-        """
-Extraction de caractéristiques"""
-        if isinstance(data, str):
-            features = {
-                'length': len(data),
-                'word_count': len(data.split()),
-                'char_frequency': {},
-                'language_detected': 'unknown'
-            }
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
             
-            # Fréquence des caractères
-            for char in data:
-                features['char_frequency'][char] = features['char_frequency'].get(char, 0) + 1
+                    # Preprocess input
+                    processed_input = await self._preprocess__extract_features_input(data)
             
-            # Détection de langue simple
-            try:
-                from langdetect import detect
-                features['language_detected'] = detect(data)
-            except:
-                pass
+                    # Run inference
+                    result = await self.model.predict(processed_input)
             
-            return features
-        
+                    # Postprocess result
+                    final_result = await self._postprocess__extract_features_result(result)
+            
+                    logger.info(f"AI processing _extract_features completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _extract_features failed: {e}")
+                    raise
         elif isinstance(data, dict):
             return {
                 'key_count': len(data.keys()),
@@ -666,8 +663,20 @@ Valide la configuration de transformation"""
         return PipelineStageType.TRANSFORMATION
 
 class DataEnrichmentStage(PipelineStageBase):
-    """Étape d'enrichissement de données avec IA"""
-    
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_stage_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_stage_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
     def __init__(self, stage_id: str, config: Dict[str, Any]):
         super().__init__(stage_id, config)
         self.enrichment_type = config.get('enrichment_type')
@@ -863,6 +872,23 @@ Compte les champs d'enrichissement ajoutés"""
     def validate_config(self) -> List[str]:
         """
 Valide la configuration d'enrichissement"""
+        errors = []
+        
+        if not self.enrichment_type:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_stage_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_stage_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
         errors = []
         
         if not self.enrichment_type:
@@ -1092,7 +1118,20 @@ Exécute un pipeline complet"""
                 
                 # Gestion d'erreur selon configuration
                 if config.error_handling == 'stop':
-                    break
+        try:
+            logger.info(f"Executing execute_with_semaphore")
+            
+            # Implementation for execute_with_semaphore
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"execute_with_semaphore completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"execute_with_semaphore failed: {e}")
+            raise
                 elif config.error_handling == 'skip':
                     continue
         

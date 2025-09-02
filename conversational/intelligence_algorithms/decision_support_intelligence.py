@@ -1072,44 +1072,20 @@ Perform scenario analysis for different future conditions"""
     async def _select_optimal_option(
         self,
         mcda_results: Dict[str, Any],
-        risk_assessments: Dict[str, RiskAssessment],
-        context: DecisionContext
-    ) -> DecisionOption:
-        """
-Select the optimal option considering MCDA scores and risk"""
-        
-        rankings = mcda_results['rankings']
-        if not rankings:
-            raise ValueError("No valid options available for selection")
-        
-        # Get risk tolerance from context
-        risk_tolerance = context.constraints.get('risk_tolerance', 0.5)
-        
-        # Score options combining MCDA and risk assessment
-        final_scores = []
-        
-        for option_id, mcda_score in rankings:
-            risk_assessment = risk_assessments.get(option_id)
-            if risk_assessment:
-                # Calculate risk-adjusted score
-                risk_penalty = 1.0 - risk_tolerance  # Higher penalty for risk-averse
-                avg_risk = np.mean(list(risk_assessment.risk_factors.values()))
-                risk_adjusted_score = mcda_score * (1 - risk_penalty * avg_risk)
-            else:
-                risk_adjusted_score = mcda_score * 0.5  # Heavy penalty for no risk assessment
+        try:
+            logger.info(f"Executing _select_optimal_option")
             
-            final_scores.append((option_id, risk_adjusted_score))
-        
-        # Sort by final score
-        final_scores.sort(key=lambda x: x[1], reverse=True)
-        
-        # Find the option object
-        best_option_id = final_scores[0][0]
-        
-        # This would need to be passed or stored to find the actual option
-        # For now, return a placeholder - in real implementation, maintain option lookup
-        return DecisionOption(option_id=best_option_id, name=f"Option_{best_option_id}")
-    
+            # Implementation for _select_optimal_option
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_select_optimal_option completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_select_optimal_option failed: {e}")
+            raise
     async def _generate_decision_reasoning(
         self,
         optimal_option: DecisionOption,

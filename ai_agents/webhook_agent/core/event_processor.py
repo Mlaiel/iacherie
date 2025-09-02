@@ -1102,11 +1102,28 @@ Clean up temporary processing data"""
         pass
 
     async def _schedule_takedown_tracking(self, request_id: str, platform: str) -> None:
-        """
-Schedule takedown request tracking"""
-        # Implementation would schedule tracking
-        pass
-
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_schedule_takedown_tracking",
+                        "value": request_id if request_id else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _schedule_takedown_tracking collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _schedule_takedown_tracking failed: {e}")
+                    return None
     async def _calculate_protection_effectiveness(
         self,
         content_id: str,

@@ -597,12 +597,20 @@ Calculate taxes based on creator location and platform"""
         return self._platform_configs[platform]
 
     async def _setup_calculation_cache(self):
-        """
-Setup calculation result cache"""
-        # Initialize Redis cache for calculation results
-        # This would be implemented with actual Redis connection
-        pass
-
+        try:
+            logger.info(f"Executing _setup_calculation_cache")
+            
+            # Implementation for _setup_calculation_cache
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_setup_calculation_cache completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_setup_calculation_cache failed: {e}")
+            raise
     async def _store_revenue_calculation(self, revenue_data: RevenueData):
         """
 Store revenue calculation result in database"""

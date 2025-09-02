@@ -770,11 +770,20 @@ Scale resource to new capacity"""
                 await asyncio.sleep(300)
     
     async def _check_scheduled_scaling(self, service_name: str, config: ScalingConfiguration) -> None:
-        """Check and execute scheduled scaling"""
-        # Implementation would parse cron schedules and execute scaling
-        # For now, just log scheduled scaling checks
-        pass
-    
+        try:
+            logger.info(f"Executing _check_scheduled_scaling")
+            
+            # Implementation for _check_scheduled_scaling
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_check_scheduled_scaling completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_check_scheduled_scaling failed: {e}")
+            raise
     async def add_scaling_config(self, service_name: str, config: ScalingConfiguration) -> bool:
         """
         Add scaling configuration for a service.

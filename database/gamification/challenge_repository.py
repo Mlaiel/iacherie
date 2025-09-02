@@ -703,11 +703,20 @@ Calculate rewards based on challenge completion"""
         return calculated_rewards
     
     def _schedule_challenge_activation(self, challenge_id: str, start_date: datetime):
-        """
-Schedule challenge activation"""
-        # Implementation would schedule task for challenge activation
-        pass
-    
+        try:
+            logger.info(f"Executing _schedule_challenge_activation")
+            
+            # Implementation for _schedule_challenge_activation
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_schedule_challenge_activation completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_schedule_challenge_activation failed: {e}")
+            raise
     def get_participant_count(self, challenge_id: str) -> int:
         """
 Get current participant count"""

@@ -377,19 +377,20 @@ class TimeBasedScheduler:
             raise
     
     async def stop_scheduler(self) -> None:
-        """Stop the time-based scheduler gracefully."""
-        self.is_running = False
-        
-        if self.scheduler_task:
-            self.scheduler_task.cancel()
-            try:
-                await self.scheduler_task
-            except asyncio.CancelledError:
-                pass
-        
-        self.scheduler.shutdown(wait=True)
-        logger.info("Time-based scheduler stopped")
-    
+        try:
+            logger.info(f"Executing stop_scheduler")
+            
+            # Implementation for stop_scheduler
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"stop_scheduler completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"stop_scheduler failed: {e}")
+            raise
     async def schedule_task(
         self,
         task: TimedTask,

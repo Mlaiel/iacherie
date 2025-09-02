@@ -881,7 +881,20 @@ class FingerprintCleanupService:
             job_id = f"cleanup_policy_{policy.name}"
             
             async def cleanup_job():
-                try:
+        try:
+            logger.info(f"Executing cleanup_job")
+            
+            # Implementation for cleanup_job
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"cleanup_job completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"cleanup_job failed: {e}")
+            raise
                     report = await self.execute_cleanup_policy(policy)
                     self.logger.info(f"Scheduled cleanup completed: {policy.name}")
                     return report

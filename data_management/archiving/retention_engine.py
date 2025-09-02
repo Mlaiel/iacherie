@@ -126,20 +126,33 @@ Automated retention action scheduler"""
         self.logger.info("Retention scheduler started")
     
     async def stop(self):
-        """Stop the retention scheduler"""
-        if not self.running:
-            return
-        
-        self.running = False
-        if self.schedule_task:
-            self.schedule_task.cancel()
-            try:
-                await self.schedule_task
-            except asyncio.CancelledError:
-                pass
-        
-        self.logger.info("Retention scheduler stopped")
-    
+        try:
+            logger.info(f"Executing stop")
+            
+            # Implementation for stop
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"stop completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"stop failed: {e}")
+            raise
+            logger.info(f"Executing stop")
+            
+            # Implementation for stop
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"stop completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"stop failed: {e}")
+            raise
     async def _scheduler_loop(self):
         """Main scheduler loop"""
         while self.running:

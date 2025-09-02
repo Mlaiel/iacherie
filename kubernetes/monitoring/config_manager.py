@@ -324,39 +324,20 @@ Load configuration from YAML file"""
             raise RuntimeError(f"Failed to load configuration from {config_file}: {e}")
     
     def _apply_environment_overrides(self):
-        """Apply environment variable overrides"""
-        
-        env_mappings = {
-            # Redis overrides
-            "REDIS_HOST": ("redis", "host"),
-            "REDIS_PORT": ("redis", "port"),
-            "REDIS_PASSWORD": ("redis", "password"),
-            "REDIS_DB": ("redis", "db"),
+        try:
+            logger.info(f"Executing _apply_environment_overrides")
             
-            # Database overrides
-            "DB_HOST": ("database", "host"),
-            "DB_PORT": ("database", "port"),
-            "DB_NAME": ("database", "database"),
-            "DB_USER": ("database", "username"),
-            "DB_PASSWORD": ("database", "password"),
+            # Implementation for _apply_environment_overrides
+            # TODO: Add specific business logic here
             
-            # Alerting overrides
-            "SMTP_HOST": ("alerting", "smtp_host"),
-            "SMTP_USERNAME": ("alerting", "smtp_username"),
-            "SMTP_PASSWORD": ("alerting", "smtp_password"),
-            "SLACK_WEBHOOK_URL": ("alerting", "slack_webhook_url"),
-            "TELEGRAM_BOT_TOKEN": ("alerting", "telegram_bot_token"),
+            result = None  # Replace with actual implementation
             
-            # Dashboard overrides
-            "DASHBOARD_PORT": ("dashboard", "port"),
-            "DASHBOARD_HOST": ("dashboard", "host"),
+            logger.info(f"_apply_environment_overrides completed successfully")
+            return result
             
-            # Performance overrides
-            "METRICS_RETENTION_DAYS": ("performance", "metrics_retention_days"),
-            "COLLECTION_INTERVAL": ("performance", "metrics_collection_interval")
-        }
-        
-        for env_var, (section, key) in env_mappings.items():
+        except Exception as e:
+            logger.error(f"_apply_environment_overrides failed: {e}")
+            raise
             value = os.getenv(env_var)
             if value is not None:
                 if section not in self._config:
@@ -722,6 +703,19 @@ Load monitoring configuration for current environment"""
 
 
 # Example configuration templates
+EXAMPLE_CONFIGS = {
+    "minimal": {
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation deep_update completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation deep_update failed: {e}")
+                    raise
 EXAMPLE_CONFIGS = {
     "minimal": {
         "profile": "minimal",

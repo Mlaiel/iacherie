@@ -730,11 +730,26 @@ Optimize platform order for distribution."""
         return sorted(request.platforms, key=lambda p: platform_scores.get(p, 0), reverse=True)
     
     async def _analyze_distribution_result(self, platform: str, result: Dict[str, Any]) -> None:
-        """
-Analyze distribution result for optimization."""
-        # This would analyze results and update optimization parameters
-        pass
-    
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__analyze_distribution_result_input(platform)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__analyze_distribution_result_result(result)
+            
+                    logger.info(f"AI processing _analyze_distribution_result completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _analyze_distribution_result failed: {e}")
+                    raise
     def _is_critical_platform(self, platform: str) -> bool:
         """
 Check if platform is critical for distribution."""

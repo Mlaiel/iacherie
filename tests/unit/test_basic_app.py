@@ -62,7 +62,38 @@ class TestResponse(BaseModel):
 
 @app.get("/", response_model=TestResponse)
 async def root():
-    return TestResponse(
+        try:
+            logger.info(f"Executing root")
+            
+            # Implementation for root
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"root completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing health_check")
+            
+            # Implementation for health_check
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"health_check completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"health_check failed: {e}")
+            raise
+            logger.info(f"root completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"root failed: {e}")
+            raise
         message="Ainflue Platform is running!",
         status="success"
     )

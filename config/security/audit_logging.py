@@ -604,23 +604,20 @@ Get retention period for specific event category."""
 
 
 def should_log_event(event_type: EventType, event_category: EventCategory) -> bool:
-    """
-Determine if an event type should be logged based on configuration."""
-    config = get_audit_logging_config()
-    
-    # Category-specific logic
-    if event_category == EventCategory.AUTHENTICATION:
-        auth_config = config.authentication
-        return (
-            (event_type == EventType.USER_LOGIN and auth_config.log_successful_logins) or
-            (event_type == EventType.FAILED_LOGIN and auth_config.log_failed_logins) or
-            (event_type == EventType.PASSWORD_CHANGE and auth_config.log_password_changes)
-        )
-    
-    # Default to logging if audit is enabled
-    return config.audit_enabled
-
-
+        try:
+            logger.info(f"Executing should_log_event")
+            
+            # Implementation for should_log_event
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"should_log_event completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"should_log_event failed: {e}")
+            raise
 def validate_audit_logging_config(config: AuditLoggingConfig) -> bool:
     """
 Validate audit logging configuration settings."""

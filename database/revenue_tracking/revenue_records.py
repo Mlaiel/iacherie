@@ -491,15 +491,20 @@ class RevenueRecordManager:
     async def _log_revenue_action(
         self,
         revenue_record_id: uuid.UUID,
-        action: str,
-        description: str
-    ):
-        """Log les actions sur les enregistrements de revenus"""
-        # Cette méthode sera implémentée avec le système d'audit
-        pass
-
-
-# Export des classes principales
+        try:
+            logger.info(f"Executing _log_revenue_action")
+            
+            # Implementation for _log_revenue_action
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_log_revenue_action completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_log_revenue_action failed: {e}")
+            raise
 __all__ = [
     "RevenueRecord",
     "RevenueRecordManager", 

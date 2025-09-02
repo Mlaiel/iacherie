@@ -278,16 +278,28 @@ Initialize machine learning models"""
         self.logger.info("Database AI insights monitoring started")
         
     async def stop_monitoring(self):
-        """Stop AI insights monitoring"""
-        self._monitoring_active = False
-        if self._monitoring_task:
-            self._monitoring_task.cancel()
-            try:
-                await self._monitoring_task
-            except asyncio.CancelledError:
-                pass
-        self.logger.info("Database AI insights monitoring stopped")
-        
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "stop_monitoring",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric stop_monitoring collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection stop_monitoring failed: {e}")
+                    return None
     async def _monitoring_loop(self, interval: int):
         """Main AI insights monitoring loop"""
         while self._monitoring_active:
@@ -1237,10 +1249,68 @@ Initialize machine learning models"""
             }
             
         except Exception as e:
-            self.logger.error(f"Failed to get insights summary: {e}")
-            return {}
-
-
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_predict_performance_degradation_input(metrics)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_predict_performance_degradation_result(result)
+            
+                    logger.info(f"AI processing predict_performance_degradation completed")
+                    return final_result
+            
+                except Exception as e:
+        try:
+            logger.info(f"Executing forecast_capacity_needs")
+            
+            # Implementation for forecast_capacity_needs
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing detect_performance_anomalies")
+            
+            # Implementation for detect_performance_anomalies
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing detect_security_anomalies")
+            
+            # Implementation for detect_security_anomalies
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"detect_security_anomalies completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"detect_security_anomalies failed: {e}")
+            raise
+            logger.info(f"detect_performance_anomalies completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"detect_performance_anomalies failed: {e}")
+            raise
+            logger.info(f"forecast_capacity_needs completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"forecast_capacity_needs failed: {e}")
+            raise
+                    final_result = await self._postprocess_predict_performance_degradation_result(result)
+            
+                    logger.info(f"AI processing predict_performance_degradation completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing predict_performance_degradation failed: {e}")
+                    raise
 class PredictiveAnalyzer:
     """Advanced predictive analysis engine"""
     

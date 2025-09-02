@@ -565,54 +565,28 @@ Initialize Spotify tracker."""
             return []
     
     async def _tracking_loop(self) -> None:
-        """Main tracking loop."""
-        self._logger.info("Spotify tracking loop started")
-        
         try:
-            while self._tracking_active:
-                try:
-                    tracking_start_time = datetime.now()
-                    
-                    # Track monitored artists
-                    for artist_id in self.monitored_artists:
-                        if not self._tracking_active:
-                            break
-                        await self.track_artist(artist_id)
-                    
-                    # Track monitored tracks
-                    for track_id in self.monitored_tracks:
-                        if not self._tracking_active:
-                            break
-                        await self.track_track(track_id)
-                    
-                    # Track monitored playlists
-                    for playlist_id in self.monitored_playlists:
-                        if not self._tracking_active:
-                            break
-                        await self.track_playlist(playlist_id)
-                    
-                    # Check for new copyright violations
-                    await self._check_all_copyright_matches()
-                    
-                    # Update metrics
-                    tracking_duration = (datetime.now() - tracking_start_time).total_seconds()
-                    self.metrics.tracking_duration_seconds += tracking_duration
-                    self.metrics.last_tracking_cycle = datetime.now()
-                    
-                    # Wait before next tracking cycle
-                    await asyncio.sleep(self.tracking_interval_seconds)
-                    
-                except asyncio.CancelledError:
-                    break
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_tracking_loop",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _tracking_loop collected")
+                    return metrics
+            
                 except Exception as e:
-                    self._logger.error(f"Error in tracking loop: {e}")
-                    await asyncio.sleep(300)  # Wait 5 minutes before retrying
-        
-        except asyncio.CancelledError:
-            pass
-        
-        self._logger.info("Spotify tracking loop stopped")
-    
+                    logger.error(f"Metric collection _tracking_loop failed: {e}")
+                    return None
     async def _fetch_artist_data(self, artist_id: str) -> Optional[Dict[str, Any]]:
         """Fetch Spotify artist data."""
         try:

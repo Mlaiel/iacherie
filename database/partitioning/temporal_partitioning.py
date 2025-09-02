@@ -597,7 +597,28 @@ class TemporalPartitionManager:
         """
 Start monitoring and maintenance"""
         def monitoring_loop():
-            while self.monitoring_enabled:
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "monitoring_loop",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric monitoring_loop collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection monitoring_loop failed: {e}")
+                    return None
                 try:
                     self._maintenance_cycle()
                     time.sleep(self.monitoring_interval)

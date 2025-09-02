@@ -744,12 +744,18 @@ class AudioConfig:
         return asdict(self)
 
     def import_settings(self, settings: Dict[str, Any]):
-        """
-Import configuration from dictionary"""
-        # This would update the configuration from provided settings
-        # Implementation would handle enum conversions and validation
-        pass
-
-
-# Global configuration instance
+        try:
+            logger.info(f"Executing import_settings")
+            
+            # Implementation for import_settings
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"import_settings completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"import_settings failed: {e}")
+            raise
 audio_config = AudioConfig.from_env()

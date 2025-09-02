@@ -225,9 +225,66 @@ Abstract base class for storage backends"""
     
     @abstractmethod
     async def store_data(self, record_id: str, data: bytes, metadata: Dict[str, Any] = None) -> str:
-        """Store data and return file path"""
-        pass
-    
+        try:
+            logger.info(f"Executing store_data")
+            
+            # Implementation for store_data
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing retrieve_data")
+            
+            # Implementation for retrieve_data
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"retrieve_data completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing list_files")
+            
+            # Implementation for list_files
+            # TODO: Add specific business logic here
+        try:
+                    # Request validation
+                    if not file_path:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_file_info_request(file_path)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_file_info failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            logger.info(f"list_files completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"list_files failed: {e}")
+            raise
+                        await session.commit()
+                        logger.info(f"Database operation delete_data completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation delete_data failed: {e}")
+                    raise
+            return result
+            
+        except Exception as e:
+            logger.error(f"retrieve_data failed: {e}")
+            raise
+            logger.info(f"store_data completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"store_data failed: {e}")
+            raise
     @abstractmethod
     async def retrieve_data(self, file_path: str) -> bytes:
         """
@@ -740,6 +797,25 @@ Delete data by record ID"""
                 json.dumps(record.metadata),
                 record.checksum,
                 record.retention_policy,
+                json.dumps(list(record.tags))
+            ))
+            conn.commit()
+    
+    async def _get_record_metadata(self, record_id: str) -> Optional[DataRecord]:
+        try:
+            logger.info(f"Executing stop_lifecycle_management")
+            
+            # Implementation for stop_lifecycle_management
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"stop_lifecycle_management completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"stop_lifecycle_management failed: {e}")
+            raise
                 json.dumps(list(record.tags))
             ))
             conn.commit()

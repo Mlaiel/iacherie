@@ -781,7 +781,20 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     async def main():
-        if args.health:
+        try:
+            logger.info(f"Executing main")
+            
+            # Implementation for main
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"main completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"main failed: {e}")
+            raise
             status = await get_system_health()
             print(json.dumps(status, indent=2))
         

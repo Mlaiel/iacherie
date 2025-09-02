@@ -790,10 +790,20 @@ Initialize monitoring configuration manager"""
             return False
     
     async def _apply_alert_rule(self, alert_rule: Dict[str, Any]) -> None:
-        """Apply alert rule to monitoring system"""
-        # Implementation would update Prometheus alert rules
-        pass
-    
+        try:
+            logger.info(f"Executing _apply_alert_rule")
+            
+            # Implementation for _apply_alert_rule
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_apply_alert_rule completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_apply_alert_rule failed: {e}")
+            raise
     async def create_dashboard(
         self,
         name: str,
@@ -825,6 +835,20 @@ Initialize monitoring configuration manager"""
             await self._deploy_dashboard(dashboard)
             
             self.logger.info(f"Dashboard created: {name}")
+        try:
+            logger.info(f"Executing _deploy_dashboard")
+            
+            # Implementation for _deploy_dashboard
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_deploy_dashboard completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_deploy_dashboard failed: {e}")
+            raise
             return True
             
         except Exception as e:

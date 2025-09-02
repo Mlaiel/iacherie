@@ -910,11 +910,73 @@ Get response time hours for protection level"""
     
     # Database operations
     async def _store_protection_rule(self, rule: ProtectionRule) -> None:
-        """
-Store protection rule in database"""
-        # Implementation would insert into database
-        pass
-    
+        try:
+            logger.info(f"Executing _store_protection_rule")
+            
+            # Implementation for _store_protection_rule
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_protection_rule completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _store_legal_document")
+            
+            # Implementation for _store_legal_document
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_legal_document completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_store_protection_report",
+                        "value": report if report else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _store_protection_report collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _store_protection_report failed: {e}")
+                    return None
+                        await session.commit()
+                        logger.info(f"Database operation _update_legal_document completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _update_legal_document failed: {e}")
+                    raise
+        except Exception as e:
+            logger.error(f"_store_legal_document failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_threat completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_threat failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"_store_protection_rule failed: {e}")
+            raise
     async def _store_threat(self, threat: ContentThreat) -> None:
         """
 Store threat in database"""
@@ -1074,11 +1136,38 @@ Calculate response time metrics"""
         creator_id: str,
         threats: List[ContentThreat],
         legal_actions: List[LegalDocument]
-    ) -> List[str]:
-        """Generate protection recommendations"""
-        
-        recommendations = []
-        
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_submit_platform_report",
+                        "value": threat if threat else 0,
+        try:
+            logger.info(f"Executing _send_threat_notification")
+            
+            # Implementation for _send_threat_notification
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_send_threat_notification completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_send_threat_notification failed: {e}")
+            raise
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _submit_platform_report collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _submit_platform_report failed: {e}")
+                    return None
         if len(threats) > 10:
             recommendations.append("Consider upgrading to higher protection level due to high threat volume")
         

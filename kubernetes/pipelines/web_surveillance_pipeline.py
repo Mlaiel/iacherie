@@ -125,7 +125,20 @@ class SurveillanceTarget:
     metadata: Dict[str, Any] = None
     
     def __post_init__(self):
-        if self.metadata is None:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             self.metadata = {}
 
 @dataclass
@@ -134,13 +147,39 @@ class ContentMatch:
 Detected content match result"""
     match_id: str
     target_id: str
-    platform: Platform
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     detected_url: str
     content_title: str
     content_description: str
     uploader_handle: str
     upload_date: datetime
-    similarity_score: float
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     violation_type: ViolationType
     evidence_data: Dict[str, Any]
     screenshot_path: Optional[str] = None
@@ -511,7 +550,20 @@ class TwitterCrawler:
                 'query': query,
                 'max_results': min(max_results, 100),
                 'tweet.fields': 'created_at,author_id,public_metrics,context_annotations',
-                'user.fields': 'username,name,verified',
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
                 'expansions': 'author_id'
             }
             

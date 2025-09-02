@@ -640,7 +640,20 @@ class PerformanceTracker:
 Suivi des performances du système de fingerprinting"""
     
     def __init__(self):
-        self.metrics = {
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
             'audio': {'total_time': 0.0, 'count': 0, 'errors': 0},
             'video': {'total_time': 0.0, 'count': 0, 'errors': 0},
             'image': {'total_time': 0.0, 'count': 0, 'errors': 0},

@@ -30,7 +30,20 @@ class EnterpriseMonetizationClient:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        if self.session:
+        try:
+            logger.info(f"Executing __aexit__")
+            
+            # Implementation for __aexit__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__aexit__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__aexit__ failed: {e}")
+            raise
             await self.session.close()
     
     async def _request(self, method: str, endpoint: str, **kwargs) -> dict:

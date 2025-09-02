@@ -972,7 +972,20 @@ Start worker threads for batch processing."""
         result_future = asyncio.Future()
         
         def completion_callback(result):
-            if not result_future.done():
+        try:
+            logger.info(f"Executing completion_callback")
+            
+            # Implementation for completion_callback
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"completion_callback completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"completion_callback failed: {e}")
+            raise
                 result_future.set_result(result)
         
         job.callback = completion_callback

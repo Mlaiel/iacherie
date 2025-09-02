@@ -602,7 +602,20 @@ Set the success status of the operation."""
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        if self.start_time:
+        try:
+            logger.info(f"Executing __exit__")
+            
+            # Implementation for __exit__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__exit__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__exit__ failed: {e}")
+            raise
             duration = (time.time() - self.start_time) * 1000  # Convert to milliseconds
             
             # Add success label

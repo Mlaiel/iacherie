@@ -87,7 +87,20 @@ class AudioMonetizationStartedEvent(BaseEvent):
     dynamic_pricing: bool = False
     
     def __post_init__(self):
-        super().__init__(
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             event_type="audio.monetization.started",
             event_category=EventCategory.MONETIZATION,
             priority=EventPriority.HIGH,
@@ -120,7 +133,20 @@ class AudioLicenseCreatedEvent(BaseEvent):
     license_fee: Decimal = Decimal('0.00')
     royalty_percentage: float = 0.0
     license_duration: Optional[int] = None  # days
-    usage_rights: List[str] = field(default_factory=list)
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     geographical_scope: List[str] = field(default_factory=list)
     medium_restrictions: List[str] = field(default_factory=list)
     exclusive_license: bool = False
@@ -152,7 +178,20 @@ class AudioLicenseCreatedEvent(BaseEvent):
 
 @dataclass
 class AudioRevenueGeneratedEvent(BaseEvent):
-    """
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     Event triggered when revenue is generated from audio content.
     
     Tracks all revenue streams and payment processing.
@@ -185,6 +224,23 @@ class AudioRevenueGeneratedEvent(BaseEvent):
             user_id=self.user_id,
             metadata={
                 "file_id": str(self.file_id),
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            user_id=self.user_id,
+            metadata={
+                "file_id": str(self.file_id),
                 "revenue_id": str(self.revenue_id),
                 "revenue_source": self.revenue_source.value,
                 "gross_amount": float(self.gross_amount),
@@ -208,7 +264,20 @@ class AudioRoyaltyDistributedEvent(BaseEvent):
     currency: str = "EUR"
     distribution_period_start: datetime
     distribution_period_end: datetime
-    rights_holders: Dict[UUID, Dict[str, Any]]  # user_id -> {percentage, amount, role}
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     distribution_method: str  # automated, manual
     payment_processor: str
     payment_batch_id: str
@@ -244,6 +313,23 @@ class AudioSaleCompletedEvent(BaseEvent):
     Handles individual sales and purchase confirmations.
     """
     seller_id: UUID
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
+    Handles individual sales and purchase confirmations.
+    """
+    seller_id: UUID
     buyer_id: UUID
     file_id: UUID
     sale_id: UUID
@@ -271,6 +357,22 @@ class AudioSaleCompletedEvent(BaseEvent):
             user_id=self.seller_id,
             metadata={
                 "sale_id": str(self.sale_id),
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            metadata={
+                "sale_id": str(self.sale_id),
                 "buyer_id": str(self.buyer_id),
                 "file_id": str(self.file_id),
                 "sale_type": self.sale_type,
@@ -295,7 +397,20 @@ class AudioStreamingRevenueEvent(BaseEvent):
     streaming_period_end: datetime
     total_streams: int
     total_revenue: Decimal
-    currency: str = "EUR"
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     platform_breakdown: Dict[str, Dict[str, Any]] = field(default_factory=dict)  # platform -> {streams, revenue}
     geographical_breakdown: Dict[str, Dict[str, Any]] = field(default_factory=dict)
     demographic_breakdown: Dict[str, Dict[str, Any]] = field(default_factory=dict)
@@ -326,6 +441,22 @@ class AudioStreamingRevenueEvent(BaseEvent):
         )
 
 
+@dataclass
+class AudioSyncLicenseRequestEvent(BaseEvent):
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
 @dataclass
 class AudioSyncLicenseRequestEvent(BaseEvent):
     """

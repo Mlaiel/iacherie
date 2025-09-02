@@ -148,9 +148,37 @@ Abstract base class for all extractors"""
     
     @abstractmethod
     async def can_handle(self, request: ExtractionRequest) -> bool:
-        """Check if extractor can handle the request"""
-        pass
-    
+        try:
+            logger.info(f"Executing can_handle")
+            
+            # Implementation for can_handle
+            # TODO: Add specific business logic here
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_extract_input(request)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_extract_result(result)
+            
+                    logger.info(f"AI processing extract completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing extract failed: {e}")
+                    raise
+            logger.info(f"can_handle completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"can_handle failed: {e}")
+            raise
     @abstractmethod
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
         """

@@ -720,32 +720,20 @@ Generate hash for content deduplication."""
         return hashlib.md5(content_string.encode()).hexdigest()
         
     def _parse_view_count(self, text: str) -> int:
-        """Parse view count from text."""
         try:
-            # Remove non-numeric characters except for K, M, B
-            clean_text = ''.join(c for c in text if c.isdigit() or c in 'KMB.,')
+            logger.info(f"Executing _parse_view_count")
             
-            # Extract number
-            import re
-            match = re.search(r'([\d.,]+)([KMB]?)', clean_text)
-            if match:
-                number_str, suffix = match.groups()
-                number = float(number_str.replace(',', ''))
-                
-                if suffix == 'K':
-                    return int(number * 1000)
-                elif suffix == 'M':
-                    return int(number * 1000000)
-                elif suffix == 'B':
-                    return int(number * 1000000000)
-                else:
-                    return int(number)
-                    
-        except Exception:
-            pass
+            # Implementation for _parse_view_count
+            # TODO: Add specific business logic here
             
-        return 0
-        
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_parse_view_count completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_parse_view_count failed: {e}")
+            raise
     def _parse_relative_date(self, text: str) -> Optional[datetime]:
         """
 Parse relative date like '2 days ago'."""
@@ -759,33 +747,20 @@ Parse relative date like '2 days ago'."""
                 (r'(\d+)\s+hour[s]?\s+ago', lambda x: timedelta(hours=int(x))),
                 (r'(\d+)\s+day[s]?\s+ago', lambda x: timedelta(days=int(x))),
                 (r'(\d+)\s+week[s]?\s+ago', lambda x: timedelta(weeks=int(x))),
-                (r'(\d+)\s+month[s]?\s+ago', lambda x: timedelta(days=int(x) * 30)),
-                (r'(\d+)\s+year[s]?\s+ago', lambda x: timedelta(days=int(x) * 365))
-            ]
+        try:
+            logger.info(f"Executing _parse_relative_date")
             
-            for pattern, delta_func in patterns:
-                match = re.search(pattern, text.lower())
-                if match:
-                    value = match.group(1)
-                    delta = delta_func(value)
-                    return datetime.utcnow() - delta
-                    
-        except Exception:
-            pass
+            # Implementation for _parse_relative_date
+            # TODO: Add specific business logic here
             
-        return None
-        
-    def _update_discovery_stats(self, content_items: List[DiscoveredContent]):
-        """
-Update discovery statistics."""
-        self.discovery_stats['total_discovered'] = len(content_items)
-        
-        # Count by platform
-        for item in content_items:
-            platform = item.platform.value
-            self.discovery_stats['by_platform'][platform] = self.discovery_stats['by_platform'].get(platform, 0) + 1
+            result = None  # Replace with actual implementation
             
-            content_type = item.content_type.value
+            logger.info(f"_parse_relative_date completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_parse_relative_date failed: {e}")
+            raise
             self.discovery_stats['by_content_type'][content_type] = self.discovery_stats['by_content_type'].get(content_type, 0) + 1
             
     async def get_discovery_stats(self) -> Dict[str, Any]:

@@ -613,11 +613,35 @@ Store task state in Redis for persistence."""
             logger.error("Failed to store statistics: %s", str(e))
     
     async def _store_violation(self, violation: Dict[str, Any]):
-        """Store violation in database."""
-        # Implementation depends on database schema
-        # This would integrate with the protection/detection system
-        pass
-    
+        try:
+            logger.info(f"Executing _store_violation")
+            
+            # Implementation for _store_violation
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_violation completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _send_violation_notification")
+            
+            # Implementation for _send_violation_notification
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_send_violation_notification completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_send_violation_notification failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"_store_violation failed: {e}")
+            raise
     async def _send_violation_notification(self, violation: Dict[str, Any]):
         """
 Send violation notification via configured channels."""

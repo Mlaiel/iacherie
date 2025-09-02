@@ -586,9 +586,83 @@ class SEOOptimizationManager:
 
     # Méthodes de traitement spécialisé
     async def _track_ranking_improvement(self, data: SEONotificationData):
-        """Suit l'amélioration du classement"""
-        pass
-
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+        try:
+            logger.info(f"Executing _investigate_ranking_drop")
+            
+            # Implementation for _investigate_ranking_drop
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _evaluate_keyword_opportunity")
+            
+            # Implementation for _evaluate_keyword_opportunity
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _prioritize_optimizations")
+            
+            # Implementation for _prioritize_optimizations
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _capitalize_on_trend")
+            
+            # Implementation for _capitalize_on_trend
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _schedule_technical_fix")
+            
+            # Implementation for _schedule_technical_fix
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_schedule_technical_fix completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_schedule_technical_fix failed: {e}")
+            raise
+            logger.info(f"_capitalize_on_trend completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_capitalize_on_trend failed: {e}")
+            raise
+            logger.info(f"_prioritize_optimizations completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_prioritize_optimizations failed: {e}")
+            raise
+            logger.info(f"_evaluate_keyword_opportunity completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_evaluate_keyword_opportunity failed: {e}")
+            raise
+            logger.info(f"_investigate_ranking_drop completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_investigate_ranking_drop failed: {e}")
+            raise
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _track_ranking_improvement collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _track_ranking_improvement failed: {e}")
+                    return None
     async def _investigate_ranking_drop(self, data: SEONotificationData):
         """
 Enquête sur la chute de classement"""

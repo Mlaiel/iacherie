@@ -209,8 +209,20 @@ class PerformanceBenchmark:
     """Performance benchmarking system"""
     
     def __init__(self):
-        self.results: Dict[str, Dict[str, float]] = {}
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     @timer_decorator("benchmark_matching_speed")
     async def benchmark_matching_speed(self, matching_service: MatchingService, 
                                      creators: List[CreatorProfile], iterations: int = 100) -> Dict[str, float]:

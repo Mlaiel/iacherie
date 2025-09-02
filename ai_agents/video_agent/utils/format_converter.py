@@ -403,7 +403,20 @@ class VideoFormatConverter:
         semaphore = asyncio.Semaphore(self.concurrent_jobs)
         
         async def convert_single_job(job):
-            async with semaphore:
+        try:
+            logger.info(f"Executing convert_single_job")
+            
+            # Implementation for convert_single_job
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"convert_single_job completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"convert_single_job failed: {e}")
+            raise
                 try:
                     return await self.convert_video(
                         input_path=job["input_path"],

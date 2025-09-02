@@ -837,9 +837,20 @@ Get database connection pool configuration."""
         return {"allow_ports": [80, 443, 22], "deny_all": False, "rate_limit": True}
 
     async def _get_security_policies(self) -> Dict[str, Any]:
-        """Get security policies configuration."""
-        return {"password_policy": "strong", "mfa_required": True, "session_timeout": 1800}
-
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_security_policies_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_security_policies failed: {e}")
+                    return {"status": "error", "message": str(e)}
     async def _get_audit_config(self) -> Dict[str, Any]:
         """Get audit configuration."""
         return {"enabled": True, "log_all": True, "retention": 365}
@@ -847,7 +858,20 @@ Get database connection pool configuration."""
     async def _get_intrusion_detection_config(self) -> Dict[str, Any]:
         """Get intrusion detection configuration."""
         return {"enabled": True, "threshold": 5, "block_duration": 3600}
-
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_grafana_config_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_grafana_config failed: {e}")
+                    return {"status": "error", "message": str(e)}
     async def _get_certificate_config(self) -> Dict[str, Any]:
         """Get SSL certificate configuration."""
         return {"auto_renew": True, "provider": "letsencrypt", "key_size": 2048}

@@ -864,7 +864,20 @@ class NotificationConfig:
     def _apply_config_override(self, override_config: Dict[str, Any]):
         """Apply configuration override."""
         def deep_merge(base: Dict, override: Dict):
-            for key, value in override.items():
+        try:
+            logger.info(f"Executing deep_merge")
+            
+            # Implementation for deep_merge
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"deep_merge completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"deep_merge failed: {e}")
+            raise
                 if key in base and isinstance(base[key], dict) and isinstance(value, dict):
                     deep_merge(base[key], value)
                 else:
@@ -985,25 +998,20 @@ Check if analytics are enabled."""
         return self.analytics.enabled
     
     def is_workflows_enabled(self) -> bool:
-        """
-Check if workflows are enabled."""
-        return self.workflows.enabled
-    
-    def update_config(self, updates: Dict[str, Any]):
-        """
-Update configuration at runtime."""
-        self._apply_config_override(updates)
-        self._initialize_component_configs()
-        logger.info("Configuration updated at runtime")
-    
-    def export_config(self, include_secrets: bool = False) -> Dict[str, Any]:
-        """Export configuration for debugging or backup."""
-        config_copy = self._config.copy()
-        
-        if not include_secrets:
-            # Remove sensitive information
-            sensitive_keys = ["api_key", "api_secret", "jwt_secret", "password"]
+        try:
+            logger.info(f"Executing export_config")
             
+            # Implementation for export_config
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"export_config completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"export_config failed: {e}")
+            raise
             def remove_sensitive(obj):
                 if isinstance(obj, dict):
                     return {

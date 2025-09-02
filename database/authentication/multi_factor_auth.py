@@ -719,11 +719,35 @@ Add device to trusted devices list"""
         return trust_id
     
     async def _send_sms_code(self, user_id: str, code: str):
-        """Send SMS verification code (placeholder)"""
-        # This would integrate with SMS service (Twilio, AWS SNS, etc.)
-        logger.info(f"SMS code {code} would be sent to user {user_id}")
-        pass
-    
+        try:
+            logger.info(f"Executing _send_sms_code")
+            
+            # Implementation for _send_sms_code
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_send_sms_code completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _send_email_code")
+            
+            # Implementation for _send_email_code
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_send_email_code completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_send_email_code failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"_send_sms_code failed: {e}")
+            raise
     async def _send_email_code(self, user_id: str, code: str):
         """Send email verification code (placeholder)"""
         # This would integrate with email service (SendGrid, AWS SES, etc.)

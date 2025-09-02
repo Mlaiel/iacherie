@@ -205,16 +205,28 @@ Load GeoIP database for location tracking"""
         self.logger.info("Database security monitoring started")
         
     async def stop_monitoring(self):
-        """Stop security monitoring"""
-        self._monitoring_active = False
-        if self._monitoring_task:
-            self._monitoring_task.cancel()
-            try:
-                await self._monitoring_task
-            except asyncio.CancelledError:
-                pass
-        self.logger.info("Database security monitoring stopped")
-        
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "stop_monitoring",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric stop_monitoring collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection stop_monitoring failed: {e}")
+                    return None
     async def _monitoring_loop(self, interval: int):
         """Main monitoring loop"""
         while self._monitoring_active:
@@ -834,10 +846,86 @@ Analyze access patterns for anomalies"""
             }
             
         except Exception as e:
-            self.logger.error(f"Failed to get security summary: {e}")
-            return {}
-
-
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_analyze_user_behavior_input(username)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_user_behavior_result(result)
+            
+                    logger.info(f"AI processing analyze_user_behavior completed")
+                    return final_result
+            
+                except Exception as e:
+        try:
+            logger.info(f"Executing detect_anomalies")
+            
+            # Implementation for detect_anomalies
+            # TODO: Add specific business logic here
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_analyze_events_input(events)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_events_result(result)
+            
+                    logger.info(f"AI processing analyze_events completed")
+                    return final_result
+            
+                except Exception as e:
+        try:
+            logger.info(f"Executing correlate_events")
+            
+            # Implementation for correlate_events
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"correlate_events completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"correlate_events failed: {e}")
+            raise
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_events_result(result)
+            
+                    logger.info(f"AI processing analyze_events completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing analyze_events failed: {e}")
+                    raise
+            logger.info(f"detect_anomalies completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"detect_anomalies failed: {e}")
+            raise
+                    final_result = await self._postprocess_analyze_user_behavior_result(result)
+            
+                    logger.info(f"AI processing analyze_user_behavior completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing analyze_user_behavior failed: {e}")
+                    raise
 class AccessPatternAnalyzer:
     """Advanced access pattern analysis engine"""
     

@@ -405,7 +405,20 @@ class CachePreloader:
             return
         
         async def preload_loop():
-            while True:
+        try:
+            logger.info(f"Executing preload_loop")
+            
+            # Implementation for preload_loop
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"preload_loop completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"preload_loop failed: {e}")
+            raise
                 try:
                     # Execute pending tasks
                     await self._try_execute_tasks()

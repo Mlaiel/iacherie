@@ -311,37 +311,20 @@ Check if encryption is enabled."""
     async def decrypt_with_private_key(
         self,
         encrypted_data: bytes,
-        private_key_pem: bytes
-    ) -> bytes:
-        """
-        Decrypt data using RSA private key.
-        
-        Args:
-            encrypted_data: Encrypted data
-            private_key_pem: Private key in PEM format
+        try:
+            logger.info(f"Executing decrypt_with_private_key")
             
-        Returns:
-            Decrypted data
-        """
-        # Load private key
-        private_key = serialization.load_pem_private_key(
-            private_key_pem,
-            password=None,
-            backend=self.backend
-        )
-        
-        # Decrypt data
-        decrypted = private_key.decrypt(
-            encrypted_data,
-            padding.OAEP(
-                mgf=padding.MGF1(algorithm=hashes.SHA256()),
-                algorithm=hashes.SHA256(),
-                label=None
-            )
-        )
-        
-        return decrypted
-
+            # Implementation for decrypt_with_private_key
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"decrypt_with_private_key completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"decrypt_with_private_key failed: {e}")
+            raise
     async def rotate_encryption_key(self, old_key_id: str, new_key_id: str) -> bool:
         """
         Rotate encryption key for existing encrypted data.

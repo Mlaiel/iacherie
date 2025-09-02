@@ -249,8 +249,20 @@ Test retry recovery strategy."""
         )
         
         async def failing_operation():
-            raise Exception("Temporary failure")
-        
+        try:
+            logger.info(f"Executing failing_operation")
+            
+            # Implementation for failing_operation
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"failing_operation completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"failing_operation failed: {e}")
+            raise
         with patch.object(manager, '_execute_with_backoff') as mock_backoff:
             mock_backoff.return_value = "Success after retry"
             
@@ -260,9 +272,82 @@ Test retry recovery strategy."""
 
     @pytest.mark.asyncio
     async def test_fallback_strategy(self):
+        try:
+            logger.info(f"Executing primary_operation")
+            
+            # Implementation for primary_operation
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing fallback_operation")
+            
+            # Implementation for fallback_operation
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"fallback_operation completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"fallback_operation failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"primary_operation completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"primary_operation failed: {e}")
+            raise
         """Test fallback recovery strategy."""
         manager = ErrorRecoveryManager()
         
+        error = CrawlerError(
+            error_id="fallback-001",
+            message="Primary source unavailable",
+            category=ErrorCategory.NETWORK,
+            severity=ErrorSeverity.HIGH
+        )
+        
+        async def primary_operation():
+        try:
+            logger.info(f"Executing failing_operation")
+            
+            # Implementation for failing_operation
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"failing_operation completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"failing_operation failed: {e}")
+            raise
+        manager = ErrorRecoveryManager()
+        
+        error = CrawlerError(
+            error_id="fallback-001",
+            message="Primary source unavailable",
+            category=ErrorCategory.NETWORK,
+            severity=ErrorSeverity.HIGH
+        )
+        
+        async def primary_operation():
+        try:
+            logger.info(f"Executing critical_operation")
+            
+            # Implementation for critical_operation
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"critical_operation completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"critical_operation failed: {e}")
+            raise
         error = CrawlerError(
             error_id="fallback-001",
             message="Primary source unavailable",
@@ -454,6 +539,21 @@ Test error collection."""
         
         # High frequency of errors should trigger alert
         for i in range(20):
+        try:
+            logger.info(f"Executing failed_operation")
+            
+            # Implementation for failed_operation
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"failed_operation completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"failed_operation failed: {e}")
+            raise
+        for i in range(20):
             error = CrawlerError(
                 f"alert-{i}",
                 "Frequent error",
@@ -496,6 +596,48 @@ Test error collection."""
         old_error.timestamp = datetime.now() - timedelta(hours=25)  # Older than 24h
         
         # Create recent error
+        recent_error = CrawlerError(
+            "recent-001",
+            "Recent error",
+            ErrorCategory.VALIDATION,
+            ErrorSeverity.MEDIUM
+        )
+        
+        aggregator.error_buffer = [old_error, recent_error]
+        aggregator.cleanup_old_errors()
+        
+        assert len(aggregator.error_buffer) == 1
+        assert aggregator.error_buffer[0] == recent_error
+
+
+class TestIntegration:
+        try:
+            logger.info(f"Executing network_operation")
+            
+            # Implementation for network_operation
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing auth_operation")
+            
+            # Implementation for auth_operation
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"auth_operation completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"auth_operation failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"network_operation completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"network_operation failed: {e}")
+            raise
         recent_error = CrawlerError(
             "recent-001",
             "Recent error",

@@ -42,48 +42,26 @@ class ImplementationScanner:
         return dict(self.incomplete_files)
     
     def _analyze_file(self, file_path: Path) -> List[str]:
-        """Analyze a single file for incomplete implementations"""
-        issues = []
-        
         try:
-            with open(file_path, 'r', encoding='utf-8') as f:
-                content = f.read()
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
             
-            lines = content.split('\n')
+                    # Preprocess input
+                    processed_input = await self._preprocess__analyze_file_input(file_path)
             
-            # Find actual TODOs (not in comments about TODOs)
-            for i, line in enumerate(lines, 1):
-                stripped = line.strip()
-                
-                # Real TODO comments that need implementation
-                if 'TODO:' in line and not any(skip in line.lower() for skip in [
-                    'test that', 'check that', 'verify that', 'todo still present', 'todo patterns'
-                ]):
-                    issues.append(f"Line {i}: TODO - {stripped}")
-                
-                # Methods with just pass (but not abstract methods)
-                if stripped == 'pass' and i > 1:
-                    prev_lines = [lines[j].strip() for j in range(max(0, i-5), i-1)]
-                    
-                    # Skip if it's an abstract method or in exception handling
-                    if not any('@abstractmethod' in prev or 'except' in prev for prev in prev_lines):
-                        # Check if it's a simple method definition
-                        for j in range(i-3, i):
-                            if j >= 0 and 'def ' in lines[j] and ':' in lines[j]:
-                                issues.append(f"Line {i}: Empty method - {lines[j].strip()}")
-                                break
-                
-                # NotImplementedError in non-abstract methods
-                if 'raise NotImplementedError' in line:
-                    prev_lines = [lines[j].strip() for j in range(max(0, i-5), i-1)]
-                    if not any('@abstractmethod' in prev for prev in prev_lines):
-                        issues.append(f"Line {i}: NotImplementedError in concrete method")
-        
-        except Exception as e:
-            print(f"Error analyzing {file_path}: {e}")
-        
-        return issues
-    
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__analyze_file_result(result)
+            
+                    logger.info(f"AI processing _analyze_file completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _analyze_file failed: {e}")
+                    raise
     def print_report(self):
         """Print analysis report"""
         print("\n" + "="*80)

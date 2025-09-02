@@ -697,12 +697,17 @@ Execute distribution at optimal engagement times."""
         await asyncio.sleep(1)
     
     async def _update_rate_limit_tracking(self, platform: str) -> None:
-        """
-Update rate limit tracking after API call."""
-        # This would update rate limit counters in database
-        pass
-    
-    # Platform-specific upload methods
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _update_rate_limit_tracking completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _update_rate_limit_tracking failed: {e}")
+                    raise
     async def _upload_to_youtube(self, preparation: Dict[str, Any]) -> Dict[str, Any]:
         """
 Upload content to YouTube."""

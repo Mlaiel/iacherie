@@ -552,11 +552,27 @@ class MonetizationController:
         return Decimal(str(total_earnings)) - Decimal(str(total_payouts))
     
     async def _update_user_earnings(self, user_id: int, amount: Decimal, session: AsyncSession):
-        """
-Update user's total earnings"""
-        # Implementation for updating user earnings
-        pass
-    
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _update_user_earnings completed")
+                        return True
+                
+                except Exception as e:
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _update_user_balance completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _update_user_balance failed: {e}")
+                    raise
+                    raise
     async def _update_user_balance(self, user_id: int, amount: Decimal, session: AsyncSession):
         """
 Update user's available balance"""

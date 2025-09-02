@@ -166,13 +166,49 @@ class StageHandler(ABC):
     async def execute(
         self,
         stage: StageDefinition,
-        context: CoordinationContext,
-        input_data: Dict[str, Any]
-    ) -> StageResult:
-        """
-Execute stage"""
-        pass
-    
+        try:
+            logger.info(f"Executing execute")
+            
+            # Implementation for execute
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"execute completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_stage_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_stage_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_stage_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_stage_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            logger.error(f"execute failed: {e}")
+            raise
     @abstractmethod
     def get_stage_type(self) -> str:
         """
@@ -213,7 +249,20 @@ Content processing stage handler"""
             result.state = StageState.COMPLETED
             result.result_data = {
                 "processed": True,
-                "format": "mp4",
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_stage_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_stage_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
                 "quality": "high",
                 "duration": 120.5,
                 "size_mb": 50.2
@@ -277,6 +326,29 @@ class AIAnalysisStageHandler(StageHandler):
             result.state = StageState.COMPLETED
             result.result_data = {
                 "analysis_complete": True,
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_stage_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_stage_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            result.progress = 0.6
+            await asyncio.sleep(0.4)
+            
+            result.progress = 1.0
+            
+            # Generate analysis results
+            result.state = StageState.COMPLETED
+            result.result_data = {
+                "analysis_complete": True,
                 "sentiment_score": 0.85,
                 "category": "music",
                 "quality_score": 0.89,
@@ -311,6 +383,21 @@ class AIAnalysisStageHandler(StageHandler):
         return result
 
 
+class ProtectionStageHandler(StageHandler):
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_stage_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_stage_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
 class ProtectionStageHandler(StageHandler):
     """Protection stage handler"""
     
@@ -358,6 +445,22 @@ class ProtectionStageHandler(StageHandler):
             
             result.artifacts = ["content_fingerprint.bin", "protection_cert.json", "security_report.pdf"]
             
+            result.metrics = {
+                "protection_strength": 0.96,
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_stage_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_stage_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
             result.metrics = {
                 "protection_strength": 0.96,
                 "scan_coverage": 1.0,
@@ -872,6 +975,26 @@ class StageCoordinator:
         )
         
         try:
+        try:
+            logger.info(f"Executing execute_with_semaphore")
+            
+            # Implementation for execute_with_semaphore
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"execute_with_semaphore completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"execute_with_semaphore failed: {e}")
+            raise
+            stages=stages,
+            global_data=global_data or {},
+            strategy=strategy or CoordinationStrategy(self.config["coordination"]["default_strategy"])
+        )
+        
+        try:
             self.logger.info(f"Starting stage coordination: {context_id}")
             self.active_coordinations[context_id] = context
             
@@ -1006,6 +1129,24 @@ Execute stages sequentially"""
                 if stage and await self._can_start_stage(stage, context):
                     task = asyncio.create_task(self._execute_single_stage(stage, context))
                     stage_tasks[stage_id] = task
+                    running_stages.add(stage_id)
+        
+        # Wait for stages to complete and start dependent stages
+        while running_stages:
+        try:
+            logger.info(f"Executing execute_with_semaphore")
+            
+            # Implementation for execute_with_semaphore
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"execute_with_semaphore completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"execute_with_semaphore failed: {e}")
+            raise
                     running_stages.add(stage_id)
         
         # Wait for stages to complete and start dependent stages

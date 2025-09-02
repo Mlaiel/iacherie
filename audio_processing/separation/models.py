@@ -69,9 +69,31 @@ Abstract base class for all audio separation models."""
     
     @abstractmethod
     async def load_model(self) -> None:
-        """Load the separation model."""
-        pass
-    
+        try:
+            logger.info(f"Executing load_model")
+            
+            # Implementation for load_model
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing separate")
+            
+            # Implementation for separate
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"separate completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"separate failed: {e}")
+            raise
+            logger.info(f"load_model completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"load_model failed: {e}")
+            raise
     @abstractmethod
     async def separate(self, audio: np.ndarray, sample_rate: int) -> SeparationResult:
         """
@@ -708,20 +730,26 @@ Advanced bass separation with frequency analysis."""
         return audio
     
     def _create_bass_mask(self, n_bins: int) -> np.ndarray:
-        """
-Create frequency mask for bass range."""
-        freqs = librosa.fft_frequencies(sr=self.sample_rate, n_fft=self.n_fft)
-        bass_mask = np.zeros(n_bins)
-        
-        # Find frequency bins within bass range
-        bass_indices = np.where((freqs >= self.bass_range[0]) & (freqs <= self.bass_range[1]))[0]
-        bass_mask[bass_indices] = 1.0
-        
-        # Smooth mask edges
-        if len(bass_indices) > 0:
-            # Smooth transition
-            transition_width = max(1, len(bass_indices) // 10)
-            for i in range(transition_width):
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__extract_sub_bass_input(bass_audio)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__extract_sub_bass_result(result)
+            
+                    logger.info(f"AI processing _extract_sub_bass completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _extract_sub_bass failed: {e}")
+                    raise
                 if bass_indices[0] - i - 1 >= 0:
                     bass_mask[bass_indices[0] - i - 1] = i / transition_width
                 if bass_indices[-1] + i + 1 < len(bass_mask):

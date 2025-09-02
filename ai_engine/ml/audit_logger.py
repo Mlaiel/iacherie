@@ -446,9 +446,20 @@ class DatabaseAuditStorage(AuditStorage):
 Database-based audit storage (placeholder for SQLAlchemy integration)"""
     
     def __init__(self, database_url: str):
-        self.database_url = database_url
-        # In production, initialize SQLAlchemy session here
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     async def store_event(self, event: AuditEvent) -> bool:
         """
 Store event to database"""
@@ -1106,6 +1117,23 @@ def audit_decorator(category: AuditCategory,
                     **audit_data
                 )
                 
+                raise
+            
+            finally:
+        try:
+            logger.info(f"Executing sync_wrapper")
+            
+            # Implementation for sync_wrapper
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"sync_wrapper completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"sync_wrapper failed: {e}")
+            raise
                 raise
             
             finally:

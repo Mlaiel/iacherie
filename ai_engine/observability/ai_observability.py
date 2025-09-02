@@ -315,9 +315,51 @@ Abstract base class for model monitors"""
         
     @abstractmethod
     async def collect_metrics(self) -> ModelMetrics:
-        """Collect model performance metrics"""
-        pass
-    
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "collect_metrics",
+        try:
+            logger.info(f"Executing detect_drift")
+            
+            # Implementation for detect_drift
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"detect_drift completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing detect_bias")
+            
+            # Implementation for detect_bias
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"detect_bias completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"detect_bias failed: {e}")
+            raise
+            logger.error(f"detect_drift failed: {e}")
+            raise
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric collect_metrics collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection collect_metrics failed: {e}")
+                    return None
     @abstractmethod
     async def detect_drift(self, reference_data: np.ndarray, 
                           current_data: np.ndarray) -> List[DriftDetectionResult]:
@@ -679,6 +721,36 @@ Collect fingerprinting model metrics"""
                     results.append(result)
         
         except Exception as e:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+                        drift_type=DriftType.FEATURE_DRIFT,
+                        drift_score=drift_score,
+                        threshold=0.1,
+                        is_drifting=True,
+                        drift_magnitude=drift_score,
+                        drift_direction="feature_distribution_shift",
+                        recommended_actions=[
+                            "Retrain fingerprinting model",
+                            "Update feature extraction pipeline",
+                            "Validate audio/visual preprocessing"
+                        ],
+                        severity=AlertSeverity.HIGH
+                    )
+                    results.append(result)
+        
+        except Exception as e:
             self.logger.error(f"Error in fingerprinting drift detection: {str(e)}")
         
         return results
@@ -999,16 +1071,28 @@ Calculate explanation consistency score"""
         if result.explanation_quality > 0.8 and result.interpretability_score > 0.6:
             explanation += "✅ Model meets explainability requirements for regulatory compliance.\n"
         else:
-            explanation += "⚠️ Model may require additional documentation for regulatory compliance.\n"
-        
-        explanation += "\nRecommendations for compliance:\n"
-        if result.explanation_quality < 0.8:
-            explanation += "- Improve feature importance documentation\n"
-        if result.interpretability_score < 0.6:
-            explanation += "- Consider simpler model architectures\n"
-        if result.consistency_score < 0.7:
-            explanation += "- Validate decision consistency across use cases\n"
-        
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "stop_monitoring",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric stop_monitoring collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection stop_monitoring failed: {e}")
+                    return None
         return explanation
 
 

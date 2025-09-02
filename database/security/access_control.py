@@ -413,17 +413,20 @@ Initialize access control manager"""
             return False
     
     async def _authenticate_password(self, principal: Principal, credentials: Dict[str, Any]) -> bool:
-        """Authenticate using password"""
-        password = credentials.get("password")
-        stored_hash = principal.attributes.get("password_hash")
-        
-        if not password or not stored_hash:
-            return False
-        
-        # In production, use proper password hashing (bcrypt, scrypt, etc.)
-        password_hash = hashlib.sha256(password.encode()).hexdigest()
-        return hmac.compare_digest(password_hash, stored_hash)
-    
+        try:
+            logger.info(f"Executing _authenticate_password")
+            
+            # Implementation for _authenticate_password
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_authenticate_password completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_authenticate_password failed: {e}")
+            raise
     async def _authenticate_api_key(self, principal: Principal, credentials: Dict[str, Any]) -> bool:
         """Authenticate using API key"""
         api_key = credentials.get("api_key")

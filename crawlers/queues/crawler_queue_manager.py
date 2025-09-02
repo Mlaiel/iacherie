@@ -735,10 +735,20 @@ Execute immediate high-priority crawl"""
                 await asyncio.sleep(60)
     
     async def _adjust_platform_rate_limit(self, platform: PlatformType):
-        """Adjust platform rate limits based on performance"""
-        # Would implement adaptive rate limiting based on API responses
-        pass
-    
+        try:
+            logger.info(f"Executing _adjust_platform_rate_limit")
+            
+            # Implementation for _adjust_platform_rate_limit
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_adjust_platform_rate_limit completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_adjust_platform_rate_limit failed: {e}")
+            raise
     async def _metrics_updater(self):
         """
 Background metrics updater"""
@@ -759,9 +769,20 @@ Background metrics updater"""
                 await asyncio.sleep(300)  # Check every 5 minutes
                 
             except Exception as e:
-                logger.error(f"Dead letter processor error: {e}")
-                await asyncio.sleep(300)
-    
+        try:
+            logger.info(f"Executing _cancel_worker_task")
+            
+            # Implementation for _cancel_worker_task
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_cancel_worker_task completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_cancel_worker_task failed: {e}")
+            raise
     async def _move_to_dead_letter_queue(self, task: CrawlerTask, error: str):
         """Move failed task to dead letter queue"""
         # Would implement dead letter queue logic

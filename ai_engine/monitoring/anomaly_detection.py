@@ -176,21 +176,33 @@ Start anomaly detection monitoring"""
         logger.info("Anomaly detection started successfully")
         
     async def stop_detection(self) -> None:
-        """Stop anomaly detection monitoring"""
-        if not self.is_detecting:
-            return
+        try:
+            logger.info(f"Executing stop_detection")
             
-        self.is_detecting = False
-        
-        if self._detection_task:
-            self._detection_task.cancel()
-            try:
-                await self._detection_task
-            except asyncio.CancelledError:
-                pass
-                
-        logger.info("Anomaly detection stopped")
-        
+            # Implementation for stop_detection
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"stop_detection completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"stop_detection failed: {e}")
+            raise
+            logger.info(f"Executing stop_detection")
+            
+            # Implementation for stop_detection
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"stop_detection completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"stop_detection failed: {e}")
+            raise
     def add_detection_model(self, model: DetectionModel) -> None:
         """Add a new anomaly detection model"""
         self.detection_models[model.model_id] = model

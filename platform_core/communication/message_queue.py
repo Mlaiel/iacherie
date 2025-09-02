@@ -187,102 +187,20 @@ File d'attente de messages avec Redis Streams"""
         
     async def get(self, 
                   timeout: Optional[float] = None,
-                  consumer_name: Optional[str] = None) -> Optional[QueueMessage]:
-        """Récupère un message de la queue (par priorité)"""
-        
-        consumer_name = consumer_name or f"consumer-{uuid.uuid4().hex[:8]}"
-        group_name = f"{self.queue_name}:group"
-        
-        # Essayer de créer le consumer group
         try:
-            for priority in sorted(MessagePriority, key=lambda x: x.value, reverse=True):
-                stream_key = f"{self.queue_name}:p{priority.value}"
-                try:
-                    await self.redis_client.xgroup_create(
-                        stream_key, group_name, id="0", mkstream=True
-                    )
-                except Exception:
-                    pass  # Le groupe existe déjà
-                    
-        except Exception as e:
-            logger.debug(f"Consumer group setup: {e}")
+                    # Request validation
+                    if not timeout:
+                        raise ValueError("Invalid request")
             
-        # Lire les messages par ordre de priorité
-        streams = {}
-        for priority in sorted(MessagePriority, key=lambda x: x.value, reverse=True):
-            stream_key = f"{self.queue_name}:p{priority.value}"
-            streams[stream_key] = ">"
+                    # Process request
+                    result = await self._handle_get_request(timeout)
             
-        try:
-            # Traiter d'abord les messages en attente
-            pending_result = await self.redis_client.xreadgroup(
-                group_name,
-                consumer_name,
-                streams=streams,
-                count=1,
-                block=0
-            )
+                    # Return response
+                    return {"status": "success", "data": result}
             
-            if not pending_result:
-                # Lire de nouveaux messages
-                block_time = int(timeout * 1000) if timeout else 0
-                result = await self.redis_client.xreadgroup(
-                    group_name,
-                    consumer_name,
-                    streams=streams,
-                    count=1,
-                    block=block_time
-                )
-            else:
-                result = pending_result
-                
-            if result:
-                stream_key, messages = result[0]
-                if messages:
-                    message_id, fields = messages[0]
-                    message_data = json.loads(fields[b"message"])
-                    message = QueueMessage.from_dict(message_data)
-                    
-                    # Vérifier l'expiration
-                    if message.expires_at and datetime.utcnow() > message.expires_at:
-                        await self._ack_message(stream_key, group_name, message_id)
-                        logger.debug(f"Message expiré ignoré: {message.message_id}")
-                        return await self.get(timeout, consumer_name)
-                        
-                    # Vérifier la planification
-                    if message.scheduled_at and datetime.utcnow() < message.scheduled_at:
-                        # Remettre en queue pour plus tard
-                        await self._reschedule_message(message)
-                        await self._ack_message(stream_key, group_name, message_id)
-                        return await self.get(timeout, consumer_name)
-                        
-                    # Marquer comme en traitement
-                    message.status = MessageStatus.PROCESSING
-                    message.processed_by = consumer_name
-                    message.processed_at = datetime.utcnow()
-                    
-                    # Stocker dans la liste de traitement
-                    processing_data = {
-                        "message": json.dumps(message.to_dict()),
-                        "stream_key": stream_key,
-                        "message_id": message_id,
-                        "started_at": datetime.utcnow().isoformat()
-                    }
-                    
-                    await self.redis_client.hset(
-                        self.processing_key,
-                        message.message_id,
-                        json.dumps(processing_data)
-                    )
-                    
-                    await self._update_stats("get", message)
-                    return message
-                    
-        except Exception as e:
-            logger.error(f"Erreur lors de la lecture de queue {self.queue_name}: {e}")
-            
-        return None
-        
+                except Exception as e:
+                    logger.error(f"API handler get failed: {e}")
+                    return {"status": "error", "message": str(e)}
     async def ack(self, message: QueueMessage, success: bool = True, error: Optional[str] = None):
         """Accuse réception d'un message traité"""
         
@@ -602,3 +520,17 @@ Démarre le gestionnaire de queues"""
             total_stats["queue_details"][queue_name] = await queue.get_queue_info()
             
         return total_stats
+        try:
+            logger.info(f"Executing stop")
+            
+            # Implementation for stop
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"stop completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"stop failed: {e}")
+            raise

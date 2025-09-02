@@ -529,17 +529,20 @@ class RealtimeExchangeRateEngine:
         return rates
     
     async def _fetch_generic_rates(self, session: aiohttp.ClientSession, config: Dict) -> List[ExchangeRate]:
-        """Generic rate fetching for other providers"""
-        rates = []
         try:
-            # Implementation depends on specific provider format
-            # This is a placeholder for extensibility
-            pass
+            logger.info(f"Executing _fetch_generic_rates")
+            
+            # Implementation for _fetch_generic_rates
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_fetch_generic_rates completed successfully")
+            return result
+            
         except Exception as e:
-            logger.error(f"Error fetching generic rates: {e}")
-        
-        return rates
-    
+            logger.error(f"_fetch_generic_rates failed: {e}")
+            raise
     async def get_exchange_rate(
         self, 
         from_currency: str, 

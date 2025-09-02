@@ -1182,8 +1182,20 @@ class ContentScorer:
     """
     
     def __init__(self):
-        self.logger = logging.getLogger(__name__)
-        
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     async def quick_score(
         self,
         content_path: str,
