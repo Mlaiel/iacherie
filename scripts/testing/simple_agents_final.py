@@ -121,22 +121,89 @@ class ProtectionAgent(BaseAgent):
 
 # Simple supporting classes for compatibility
 class NotificationService:
-    """Simple notification service"""
+    """Simple notification service with advanced features"""
     def __init__(self):
-        pass
+        self.notification_queue = []
+        self.delivery_stats = {"sent": 0, "failed": 0}
+        self.notification_history = []
     
-    async def send(self, message: str, recipient: str) -> bool:
-        logger.info(f"Notification sent to {recipient}: {message}")
-        return True
+    async def send(self, message: str, recipient: str, priority: str = "normal") -> bool:
+        """Send notification with priority handling"""
+        try:
+            notification = {
+                "id": len(self.notification_history) + 1,
+                "message": message,
+                "recipient": recipient,
+                "priority": priority,
+                "timestamp": datetime.now().isoformat(),
+                "status": "sent"
+            }
+            
+            self.notification_history.append(notification)
+            self.delivery_stats["sent"] += 1
+            
+            logger.info(f"[{priority.upper()}] Notification sent to {recipient}: {message}")
+            return True
+        except Exception as e:
+            self.delivery_stats["failed"] += 1
+            logger.error(f"Failed to send notification: {e}")
+            return False
+    
+    def get_delivery_stats(self) -> dict:
+        """Get notification delivery statistics"""
+        return self.delivery_stats.copy()
 
 class RightsManager:
-    """Simple rights manager"""
+    """Advanced rights manager with verification and tracking"""
     def __init__(self):
-        pass
+        self.rights_cache = {}
+        self.verification_history = []
+        self.rights_database = {
+            # Sample rights data
+            "content_1": {"owner": "user_1", "license": "exclusive", "valid": True},
+            "content_2": {"owner": "user_2", "license": "standard", "valid": True},
+        }
     
-    async def verify_rights(self, content_id: str) -> bool:
-        logger.info(f"Rights verified for content {content_id}")
-        return True
+    async def verify_rights(self, content_id: str, requester_id: str = None) -> bool:
+        """Verify content rights with caching and detailed validation"""
+        try:
+            # Check cache first
+            cache_key = f"{content_id}:{requester_id}"
+            if cache_key in self.rights_cache:
+                cached_result = self.rights_cache[cache_key]
+                logger.info(f"Rights verification from cache for {content_id}: {cached_result}")
+                return cached_result
+            
+            # Perform verification
+            rights_info = self.rights_database.get(content_id)
+            if not rights_info:
+                logger.warning(f"No rights information found for content {content_id}")
+                result = False
+            else:
+                result = rights_info.get("valid", False)
+                if requester_id and requester_id != rights_info.get("owner"):
+                    # Check if requester has permission
+                    result = rights_info.get("license") in ["standard", "public"]
+            
+            # Cache and log the result
+            self.rights_cache[cache_key] = result
+            self.verification_history.append({
+                "content_id": content_id,
+                "requester_id": requester_id,
+                "result": result,
+                "timestamp": datetime.now().isoformat()
+            })
+            
+            logger.info(f"Rights verified for content {content_id}: {result}")
+            return result
+            
+        except Exception as e:
+            logger.error(f"Error verifying rights for {content_id}: {e}")
+            return False
+    
+    def get_verification_history(self) -> list:
+        """Get rights verification history"""
+        return self.verification_history.copy()
 
 __all__ = [
     'BaseAgent',
