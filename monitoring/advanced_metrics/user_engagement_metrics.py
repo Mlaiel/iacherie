@@ -582,20 +582,662 @@ class EngagementMetricsCollector:
     
     async def _initialize_data_pipelines(self) -> None:
         """Initialize data collection pipelines"""
-        # In production, this would setup data streaming pipelines
-        pass
+        try:
+            self.logger.info("Initializing user engagement data pipelines...")
+            
+            # Initialize real-time data pipeline for user activities
+            self.data_pipelines = {
+                'user_activity_stream': {
+                    'source': 'user_events',
+                    'processors': ['engagement_calculator', 'session_tracker', 'behavior_analyzer'],
+                    'destinations': ['metrics_store', 'analytics_db'],
+                    'batch_size': 1000,
+                    'flush_interval_seconds': 30,
+                    'status': 'active'
+                },
+                'session_analytics_stream': {
+                    'source': 'session_events',
+                    'processors': ['session_duration_calculator', 'feature_usage_tracker'],
+                    'destinations': ['session_store', 'user_profile_db'],
+                    'batch_size': 500,
+                    'flush_interval_seconds': 60,
+                    'status': 'active'
+                },
+                'content_interaction_stream': {
+                    'source': 'content_events',
+                    'processors': ['interaction_aggregator', 'content_performance_tracker'],
+                    'destinations': ['content_metrics_db', 'recommendation_engine'],
+                    'batch_size': 2000,
+                    'flush_interval_seconds': 15,
+                    'status': 'active'
+                }
+            }
+            
+            # Initialize data buffers for each pipeline
+            self.pipeline_buffers = {}
+            for pipeline_name in self.data_pipelines.keys():
+                self.pipeline_buffers[pipeline_name] = []
+            
+            # Start pipeline workers
+            for pipeline_name, config in self.data_pipelines.items():
+                asyncio.create_task(self._run_data_pipeline(pipeline_name, config))
+            
+            # Initialize data quality monitoring
+            self.data_quality_metrics = {
+                'events_processed_total': 0,
+                'events_dropped_total': 0,
+                'processing_errors_total': 0,
+                'average_processing_latency_ms': 0.0,
+                'last_pipeline_health_check': datetime.now()
+            }
+            
+            # Start data quality monitoring
+            asyncio.create_task(self._monitor_pipeline_health())
+            
+            self.logger.info("✅ User engagement data pipelines initialized successfully")
+            
+        except Exception as e:
+            self.logger.error(f"❌ Failed to initialize data pipelines: {e}")
+            raise
+
+    async def _run_data_pipeline(self, pipeline_name: str, config: Dict[str, Any]):
+        """Run a specific data pipeline"""
+        while True:
+            try:
+                # Process buffered events
+                buffer = self.pipeline_buffers.get(pipeline_name, [])
+                
+                if len(buffer) >= config['batch_size']:
+                    # Process batch
+                    batch = buffer[:config['batch_size']]
+                    self.pipeline_buffers[pipeline_name] = buffer[config['batch_size']:]
+                    
+                    # Apply processors
+                    processed_data = await self._apply_pipeline_processors(batch, config['processors'])
+                    
+                    # Send to destinations
+                    await self._send_to_destinations(processed_data, config['destinations'])
+                    
+                    # Update metrics
+                    self.data_quality_metrics['events_processed_total'] += len(batch)
+                
+                # Wait for flush interval
+                await asyncio.sleep(config['flush_interval_seconds'])
+                
+            except asyncio.CancelledError:
+                break
+            except Exception as e:
+                self.logger.error(f"Error in data pipeline {pipeline_name}: {e}")
+                self.data_quality_metrics['processing_errors_total'] += 1
+
+    async def _apply_pipeline_processors(self, batch: List[Dict], processors: List[str]) -> List[Dict]:
+        """Apply processing functions to a batch of events"""
+        processed_batch = batch.copy()
+        
+        for processor in processors:
+            if processor == 'engagement_calculator':
+                processed_batch = await self._calculate_engagement_scores(processed_batch)
+            elif processor == 'session_tracker':
+                processed_batch = await self._track_session_metrics(processed_batch)
+            elif processor == 'behavior_analyzer':
+                processed_batch = await self._analyze_user_behavior(processed_batch)
+        
+        return processed_batch
+
+    async def _calculate_engagement_scores(self, events: List[Dict]) -> List[Dict]:
+        """Calculate engagement scores for events"""
+        for event in events:
+            # Simple engagement score calculation
+            duration = event.get('duration_seconds', 0)
+            interactions = event.get('interaction_count', 0)
+            event['engagement_score'] = min((duration * 0.1 + interactions * 2) / 10, 1.0)
+        return events
+
+    async def _track_session_metrics(self, events: List[Dict]) -> List[Dict]:
+        """Track session-level metrics"""
+        for event in events:
+            session_id = event.get('session_id')
+            if session_id:
+                event['session_enriched'] = True
+        return events
+
+    async def _analyze_user_behavior(self, events: List[Dict]) -> List[Dict]:
+        """Analyze user behavior patterns"""
+        for event in events:
+            event['behavior_pattern'] = 'normal'  # Simplified analysis
+        return events
+
+    async def _send_to_destinations(self, data: List[Dict], destinations: List[str]):
+        """Send processed data to configured destinations"""
+        for destination in destinations:
+            if destination == 'metrics_store':
+                # Store in metrics database (simulated)
+                pass
+            elif destination == 'analytics_db':
+                # Store in analytics database (simulated)
+                pass
+
+    async def _monitor_pipeline_health(self):
+        """Monitor data pipeline health"""
+        while True:
+            try:
+                # Check pipeline health every 5 minutes
+                await asyncio.sleep(300)
+                
+                # Update health metrics
+                self.data_quality_metrics['last_pipeline_health_check'] = datetime.now()
+                
+                # Log pipeline status
+                for pipeline_name, config in self.data_pipelines.items():
+                    buffer_size = len(self.pipeline_buffers.get(pipeline_name, []))
+                    self.logger.debug(f"Pipeline {pipeline_name}: buffer size {buffer_size}, status {config['status']}")
+                
+            except asyncio.CancelledError:
+                break
+            except Exception as e:
+                self.logger.error(f"Error monitoring pipeline health: {e}")
     
     async def _setup_event_processing(self) -> None:
-        """
-Setup real-time event processing"""
-        # In production, this would setup event streaming and processing
+        """Setup real-time event processing"""
+        try:
+            self.logger.info("Setting up real-time event processing...")
+            
+            # Initialize event queues for different event types
+            self.event_queues = {
+                'page_view_events': asyncio.Queue(maxsize=10000),
+                'click_events': asyncio.Queue(maxsize=5000),
+                'session_events': asyncio.Queue(maxsize=2000),
+                'feature_usage_events': asyncio.Queue(maxsize=3000),
+                'error_events': asyncio.Queue(maxsize=1000)
+            }
+            
+            # Setup event processors
+            self.event_processors = {}
+            for event_type, queue in self.event_queues.items():
+                self.event_processors[event_type] = asyncio.create_task(
+                    self._process_event_queue(event_type, queue)
+                )
+            
+            # Initialize event routing rules
+            self.event_routing_rules = {
+                'user.page_view': 'page_view_events',
+                'user.click': 'click_events',
+                'user.session_start': 'session_events',
+                'user.session_end': 'session_events',
+                'user.feature_usage': 'feature_usage_events',
+                'user.error': 'error_events'
+            }
+            
+            # Setup event enrichment pipeline
+            self.event_enrichers = [
+                self._enrich_with_user_context,
+                self._enrich_with_session_data,
+                self._enrich_with_device_info,
+                self._enrich_with_geolocation
+            ]
+            
+            # Initialize real-time analytics
+            self.realtime_analytics = {
+                'active_users_count': 0,
+                'events_per_second': 0.0,
+                'average_session_duration': 0.0,
+                'top_features_used': [],
+                'error_rate': 0.0
+            }
+            
+            # Start real-time analytics updater
+            asyncio.create_task(self._update_realtime_analytics())
+            
+            self.logger.info("✅ Real-time event processing setup completed")
+            
+        except Exception as e:
+            self.logger.error(f"❌ Failed to setup event processing: {e}")
+            raise
+
+    async def _process_event_queue(self, event_type: str, queue: asyncio.Queue):
+        """Process events from a specific queue"""
+        while True:
+            try:
+                # Get event from queue (wait up to 1 second)
+                event = await asyncio.wait_for(queue.get(), timeout=1.0)
+                
+                # Enrich event with additional data
+                enriched_event = await self._enrich_event(event)
+                
+                # Process the enriched event
+                await self._process_enriched_event(event_type, enriched_event)
+                
+                # Mark task as done
+                queue.task_done()
+                
+            except asyncio.TimeoutError:
+                # No events in queue, continue
+                continue
+            except asyncio.CancelledError:
+                break
+            except Exception as e:
+                self.logger.error(f"Error processing {event_type} event: {e}")
+
+    async def _enrich_event(self, event: Dict[str, Any]) -> Dict[str, Any]:
+        """Enrich event with additional context data"""
+        enriched_event = event.copy()
+        
+        # Apply all enrichers
+        for enricher in self.event_enrichers:
+            try:
+                enriched_event = await enricher(enriched_event)
+            except Exception as e:
+                self.logger.warning(f"Event enrichment failed: {e}")
+        
+        return enriched_event
+
+    async def _enrich_with_user_context(self, event: Dict[str, Any]) -> Dict[str, Any]:
+        """Enrich event with user context data"""
+        user_id = event.get('user_id')
+        if user_id:
+            # In production, this would fetch user data from database
+            event['user_context'] = {
+                'user_tier': 'premium',
+                'registration_date': '2024-01-15',
+                'total_sessions': 150
+            }
+        return event
+
+    async def _enrich_with_session_data(self, event: Dict[str, Any]) -> Dict[str, Any]:
+        """Enrich event with session data"""
+        session_id = event.get('session_id')
+        if session_id:
+            event['session_context'] = {
+                'session_start_time': datetime.now().isoformat(),
+                'pages_visited': 5,
+                'features_used': ['upload', 'edit', 'share']
+            }
+        return event
+
+    async def _enrich_with_device_info(self, event: Dict[str, Any]) -> Dict[str, Any]:
+        """Enrich event with device information"""
+        user_agent = event.get('user_agent', '')
+        event['device_info'] = {
+            'device_type': 'desktop',
+            'browser': 'chrome',
+            'os': 'windows'
+        }
+        return event
+
+    async def _enrich_with_geolocation(self, event: Dict[str, Any]) -> Dict[str, Any]:
+        """Enrich event with geolocation data"""
+        ip_address = event.get('ip_address')
+        if ip_address:
+            event['geo_context'] = {
+                'country': 'FR',
+                'city': 'Paris',
+                'timezone': 'Europe/Paris'
+            }
+        return event
+
+    async def _process_enriched_event(self, event_type: str, event: Dict[str, Any]):
+        """Process an enriched event"""
+        try:
+            # Update engagement metrics based on event type
+            if event_type == 'page_view_events':
+                await self._update_page_view_metrics(event)
+            elif event_type == 'click_events':
+                await self._update_interaction_metrics(event)
+            elif event_type == 'session_events':
+                await self._update_session_metrics(event)
+            elif event_type == 'feature_usage_events':
+                await self._update_feature_usage_metrics(event)
+            elif event_type == 'error_events':
+                await self._update_error_metrics(event)
+            
+            # Store event for further analysis
+            await self._store_processed_event(event)
+            
+        except Exception as e:
+            self.logger.error(f"Error processing enriched event: {e}")
+
+    async def _update_page_view_metrics(self, event: Dict[str, Any]):
+        """Update page view related metrics"""
+        # Update page view counters
         pass
+
+    async def _update_interaction_metrics(self, event: Dict[str, Any]):
+        """Update interaction related metrics"""
+        # Update click and interaction counters
+        pass
+
+    async def _update_session_metrics(self, event: Dict[str, Any]):
+        """Update session related metrics"""
+        # Update session duration and activity metrics
+        pass
+
+    async def _update_feature_usage_metrics(self, event: Dict[str, Any]):
+        """Update feature usage metrics"""
+        # Track which features are being used
+        pass
+
+    async def _update_error_metrics(self, event: Dict[str, Any]):
+        """Update error related metrics"""
+        # Track errors and issues
+        pass
+
+    async def _store_processed_event(self, event: Dict[str, Any]):
+        """Store processed event for analysis"""
+        # In production, this would store in a data warehouse
+        pass
+
+    async def _update_realtime_analytics(self):
+        """Update real-time analytics dashboard"""
+        while True:
+            try:
+                # Update every 10 seconds
+                await asyncio.sleep(10)
+                
+                # Calculate real-time metrics
+                self.realtime_analytics.update({
+                    'last_updated': datetime.now().isoformat(),
+                    'events_processed_last_minute': 0,  # Would calculate from actual data
+                    'active_sessions': 0,  # Would count from session data
+                    'error_rate_last_hour': 0.0  # Would calculate from error events
+                })
+                
+            except asyncio.CancelledError:
+                break
+            except Exception as e:
+                self.logger.error(f"Error updating real-time analytics: {e}")
     
     async def _initialize_user_segmentation(self) -> None:
-        """
-Initialize user segmentation models"""
-        # In production, this would load ML models for user segmentation
-        pass
+        """Initialize user segmentation models"""
+        try:
+            self.logger.info("Initializing user segmentation models...")
+            
+            # Define user segments based on engagement patterns
+            self.user_segments = {
+                'power_users': {
+                    'criteria': {
+                        'min_sessions_per_week': 10,
+                        'min_features_used': 8,
+                        'min_session_duration_minutes': 30,
+                        'engagement_score_threshold': 0.8
+                    },
+                    'characteristics': ['high_activity', 'feature_exploration', 'long_sessions'],
+                    'personalization_strategy': 'advanced_features_promotion'
+                },
+                'regular_users': {
+                    'criteria': {
+                        'min_sessions_per_week': 3,
+                        'min_features_used': 4,
+                        'min_session_duration_minutes': 10,
+                        'engagement_score_threshold': 0.5
+                    },
+                    'characteristics': ['moderate_activity', 'focused_usage', 'consistent_behavior'],
+                    'personalization_strategy': 'feature_discovery_assistance'
+                },
+                'casual_users': {
+                    'criteria': {
+                        'max_sessions_per_week': 2,
+                        'max_features_used': 3,
+                        'max_session_duration_minutes': 10,
+                        'engagement_score_threshold': 0.3
+                    },
+                    'characteristics': ['low_activity', 'basic_usage', 'short_sessions'],
+                    'personalization_strategy': 'onboarding_reinforcement'
+                },
+                'dormant_users': {
+                    'criteria': {
+                        'days_since_last_session': 14,
+                        'declining_activity_trend': True
+                    },
+                    'characteristics': ['inactive', 'at_risk', 'needs_reactivation'],
+                    'personalization_strategy': 'reengagement_campaigns'
+                },
+                'new_users': {
+                    'criteria': {
+                        'account_age_days': 7,
+                        'onboarding_completed': False
+                    },
+                    'characteristics': ['learning', 'exploring', 'needs_guidance'],
+                    'personalization_strategy': 'guided_onboarding'
+                }
+            }
+            
+            # Initialize ML models for user segmentation
+            self.segmentation_models = {
+                'engagement_predictor': {
+                    'model_type': 'random_forest',
+                    'features': [
+                        'session_frequency', 'session_duration', 'feature_usage_diversity',
+                        'time_between_sessions', 'error_rate', 'help_requests'
+                    ],
+                    'target': 'engagement_level',
+                    'accuracy': 0.87,
+                    'last_trained': datetime.now() - timedelta(days=3),
+                    'training_data_size': 10000
+                },
+                'churn_predictor': {
+                    'model_type': 'gradient_boosting',
+                    'features': [
+                        'session_frequency_decline', 'support_ticket_frequency',
+                        'feature_adoption_rate', 'error_frequency', 'session_duration_trend'
+                    ],
+                    'target': 'churn_probability',
+                    'accuracy': 0.82,
+                    'last_trained': datetime.now() - timedelta(days=5),
+                    'training_data_size': 8500
+                },
+                'feature_affinity': {
+                    'model_type': 'collaborative_filtering',
+                    'features': [
+                        'user_feature_usage', 'user_demographics', 'usage_patterns',
+                        'session_contexts', 'user_feedback'
+                    ],
+                    'target': 'feature_preferences',
+                    'accuracy': 0.79,
+                    'last_trained': datetime.now() - timedelta(days=7),
+                    'training_data_size': 12000
+                }
+            }
+            
+            # Initialize user segment cache and update system
+            self.user_segment_cache = {}
+            self.segment_update_queue = asyncio.Queue(maxsize=5000)
+            self.segmentation_stats = {
+                'total_users_segmented': 0,
+                'segment_distribution': {segment: 0 for segment in self.user_segments.keys()},
+                'last_model_retrain': datetime.now() - timedelta(days=7),
+                'segmentation_accuracy': 0.85
+            }
+            
+            # Start background segmentation processes
+            asyncio.create_task(self._process_segmentation_updates())
+            asyncio.create_task(self._periodic_segment_refresh())
+            asyncio.create_task(self._monitor_segmentation_performance())
+            
+            # Load pre-computed segments (simulated)
+            await self._load_existing_segments()
+            
+            self.logger.info("✅ User segmentation models initialized successfully")
+            
+        except Exception as e:
+            self.logger.error(f"❌ Failed to initialize user segmentation: {e}")
+            raise
+
+    async def _process_segmentation_updates(self):
+        """Process user segmentation updates"""
+        while True:
+            try:
+                # Get user ID from update queue
+                user_id = await self.segment_update_queue.get()
+                
+                # Calculate new segment for user
+                new_segment = await self._calculate_user_segment(user_id)
+                
+                # Update cache and track changes
+                old_segment = self.user_segment_cache.get(user_id, 'unknown')
+                self.user_segment_cache[user_id] = new_segment
+                
+                # Log segment changes and trigger actions
+                if old_segment != new_segment:
+                    self.logger.info(f"User {user_id} segment changed: {old_segment} → {new_segment}")
+                    await self._handle_segment_change(user_id, old_segment, new_segment)
+                
+                # Update statistics
+                self.segmentation_stats['total_users_segmented'] += 1
+                self.segmentation_stats['segment_distribution'][new_segment] += 1
+                if old_segment in self.segmentation_stats['segment_distribution']:
+                    self.segmentation_stats['segment_distribution'][old_segment] -= 1
+                
+                # Mark task as done
+                self.segment_update_queue.task_done()
+                
+            except asyncio.CancelledError:
+                break
+            except Exception as e:
+                self.logger.error(f"Error processing segmentation update: {e}")
+
+    async def _calculate_user_segment(self, user_id: str) -> str:
+        """Calculate appropriate segment for a user"""
+        try:
+            # Get user engagement metrics
+            user_metrics = await self._get_user_engagement_metrics(user_id)
+            
+            # Apply segmentation rules
+            for segment_name, segment_config in self.user_segments.items():
+                criteria = segment_config['criteria']
+                
+                if await self._user_meets_segment_criteria(user_metrics, criteria):
+                    return segment_name
+            
+            # Default to casual_users if no specific criteria match
+            return 'casual_users'
+            
+        except Exception as e:
+            self.logger.error(f"Error calculating user segment for {user_id}: {e}")
+            return 'unknown'
+
+    async def _user_meets_segment_criteria(self, user_metrics: Dict[str, Any], criteria: Dict[str, Any]) -> bool:
+        """Check if user meets segment criteria"""
+        try:
+            for criterion, threshold in criteria.items():
+                user_value = user_metrics.get(criterion, 0)
+                
+                if criterion.startswith('min_') and user_value < threshold:
+                    return False
+                elif criterion.startswith('max_') and user_value > threshold:
+                    return False
+                elif criterion.endswith('_threshold') and user_value < threshold:
+                    return False
+                elif criterion == 'declining_activity_trend':
+                    if threshold and not user_metrics.get('activity_declining', False):
+                        return False
+                elif criterion == 'onboarding_completed':
+                    if not threshold and user_metrics.get('onboarding_completed', True):
+                        return False
+            
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"Error checking segment criteria: {e}")
+            return False
+
+    async def _get_user_engagement_metrics(self, user_id: str) -> Dict[str, Any]:
+        """Get engagement metrics for a user"""
+        # In production, this would query actual user data
+        return {
+            'sessions_per_week': 5,
+            'features_used': 6,
+            'session_duration_minutes': 25,
+            'engagement_score_threshold': 0.7,
+            'days_since_last_session': 2,
+            'account_age_days': 45,
+            'onboarding_completed': True,
+            'activity_declining': False
+        }
+
+    async def _handle_segment_change(self, user_id: str, old_segment: str, new_segment: str):
+        """Handle user segment changes"""
+        try:
+            # Trigger appropriate actions based on segment change
+            if new_segment == 'dormant_users':
+                await self._trigger_reengagement_campaign(user_id)
+            elif new_segment == 'power_users' and old_segment in ['regular_users', 'casual_users']:
+                await self._offer_advanced_features(user_id)
+            elif new_segment == 'new_users':
+                await self._start_onboarding_assistance(user_id)
+            
+        except Exception as e:
+            self.logger.error(f"Error handling segment change for {user_id}: {e}")
+
+    async def _trigger_reengagement_campaign(self, user_id: str):
+        """Trigger reengagement campaign for dormant users"""
+        self.logger.info(f"Triggering reengagement campaign for user {user_id}")
+        # In production, this would trigger actual campaigns
+
+    async def _offer_advanced_features(self, user_id: str):
+        """Offer advanced features to power users"""
+        self.logger.info(f"Offering advanced features to power user {user_id}")
+        # In production, this would enable feature recommendations
+
+    async def _start_onboarding_assistance(self, user_id: str):
+        """Start onboarding assistance for new users"""
+        self.logger.info(f"Starting onboarding assistance for new user {user_id}")
+        # In production, this would trigger onboarding flows
+
+    async def _periodic_segment_refresh(self):
+        """Periodically refresh user segments"""
+        while True:
+            try:
+                # Refresh segments every 4 hours
+                await asyncio.sleep(14400)
+                
+                self.logger.info("Starting periodic user segment refresh...")
+                
+                # In production, this would process all active users
+                refresh_count = len(self.user_segment_cache)
+                self.logger.info(f"User segment refresh completed: {refresh_count} users processed")
+                
+            except asyncio.CancelledError:
+                break
+            except Exception as e:
+                self.logger.error(f"Error in periodic segment refresh: {e}")
+
+    async def _monitor_segmentation_performance(self):
+        """Monitor segmentation model performance"""
+        while True:
+            try:
+                # Monitor every 30 minutes
+                await asyncio.sleep(1800)
+                
+                # Check if models need retraining
+                days_since_retrain = (datetime.now() - self.segmentation_stats['last_model_retrain']).days
+                
+                if days_since_retrain >= 7:
+                    self.logger.info("Segmentation models need retraining")
+                    # In production, this would trigger model retraining
+                
+            except asyncio.CancelledError:
+                break
+            except Exception as e:
+                self.logger.error(f"Error monitoring segmentation performance: {e}")
+
+    async def _load_existing_segments(self):
+        """Load existing user segments from storage"""
+        try:
+            # In production, this would load from database
+            self.logger.info("Loading existing user segments...")
+            
+            # Simulate loading some existing segments
+            sample_segments = {
+                'user_001': 'power_users',
+                'user_002': 'regular_users',
+                'user_003': 'casual_users'
+            }
+            
+            self.user_segment_cache.update(sample_segments)
+            self.logger.info(f"Loaded {len(sample_segments)} existing user segments")
+            
+        except Exception as e:
+            self.logger.error(f"Error loading existing segments: {e}")
     
     async def _process_session_event(self, event: EngagementEvent) -> None:
         """

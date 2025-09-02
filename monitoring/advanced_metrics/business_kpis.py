@@ -163,6 +163,22 @@ class BusinessKPICollector:
         self.collection_cache = {}
         self.data_sources = {}
         
+        # Initialize data for collection scheduling
+        self.collection_stats = {}
+        self.kpi_metrics = []
+        self.revenue_metrics = RevenueMetrics(
+            total_revenue=Decimal('0'),
+            revenue_by_source={},
+            monthly_recurring_revenue=Decimal('0'),
+            annual_recurring_revenue=Decimal('0'),
+            revenue_growth_rate=0.0,
+            average_revenue_per_user=Decimal('0'),
+            customer_lifetime_value=Decimal('0'),
+            revenue_per_content_piece=Decimal('0')
+        )
+        self.user_acquisition_data = []
+        self.content_creation_data = []
+        
         # Business KPI targets from industrialization requirements
         self.business_kpi_targets = {
             "time_to_market_days": 1.0,  # <1 jour time to market
@@ -509,8 +525,214 @@ class BusinessKPICollector:
     
     async def _setup_collection_schedules(self) -> None:
         """Setup automated collection schedules"""
-        # In production, this would setup scheduled tasks for data collection
-        pass
+        try:
+            self.logger.info("Setting up KPI collection schedules...")
+            
+            # Schedule revenue metrics collection (every 5 minutes)
+            asyncio.create_task(self._schedule_collection_task(
+                task_name="revenue_metrics",
+                collection_func=self._collect_revenue_metrics,
+                interval_seconds=300  # 5 minutes
+            ))
+            
+            # Schedule user acquisition metrics (every 15 minutes)
+            asyncio.create_task(self._schedule_collection_task(
+                task_name="user_acquisition",
+                collection_func=self._collect_user_acquisition_metrics,
+                interval_seconds=900  # 15 minutes
+            ))
+            
+            # Schedule content creation metrics (every 10 minutes)
+            asyncio.create_task(self._schedule_collection_task(
+                task_name="content_creation",
+                collection_func=self._collect_content_creation_metrics,
+                interval_seconds=600  # 10 minutes
+            ))
+            
+            # Schedule platform growth metrics (every 30 minutes)
+            asyncio.create_task(self._schedule_collection_task(
+                task_name="platform_growth",
+                collection_func=self._collect_platform_growth_metrics,
+                interval_seconds=1800  # 30 minutes
+            ))
+            
+            # Schedule operational efficiency metrics (every hour)
+            asyncio.create_task(self._schedule_collection_task(
+                task_name="operational_efficiency",
+                collection_func=self._collect_operational_efficiency_metrics,
+                interval_seconds=3600  # 1 hour
+            ))
+            
+            self.logger.info("✅ KPI collection schedules setup completed")
+            
+        except Exception as e:
+            self.logger.error(f"❌ Failed to setup collection schedules: {e}")
+            raise
+
+    async def _schedule_collection_task(self, task_name: str, collection_func, interval_seconds: int):
+        """Schedule a periodic collection task"""
+        try:
+            while True:
+                try:
+                    start_time = datetime.now()
+                    await collection_func()
+                    
+                    # Update collection statistics
+                    collection_time = (datetime.now() - start_time).total_seconds()
+                    self.collection_stats[task_name] = {
+                        'last_collection': start_time.isoformat(),
+                        'collection_duration_seconds': collection_time,
+                        'status': 'success'
+                    }
+                    
+                    self.logger.debug(f"✅ Completed {task_name} collection in {collection_time:.2f}s")
+                    
+                except Exception as e:
+                    self.logger.error(f"❌ Failed {task_name} collection: {e}")
+                    self.collection_stats[task_name] = {
+                        'last_collection': datetime.now().isoformat(),
+                        'error': str(e),
+                        'status': 'failed'
+                    }
+                
+                # Wait for next collection interval
+                await asyncio.sleep(interval_seconds)
+                
+        except asyncio.CancelledError:
+            self.logger.info(f"🛑 Collection task {task_name} cancelled")
+            raise
+        except Exception as e:
+            self.logger.error(f"❌ Collection task {task_name} failed: {e}")
+            raise
+
+    async def _collect_revenue_metrics(self):
+        """Collect current revenue metrics"""
+        try:
+            # Calculate total revenue
+            total_revenue = sum(self.revenue_metrics.revenue_by_source.values())
+            
+            # Create revenue KPI metric
+            revenue_kpi = KPIMetric(
+                metric_id="total_revenue",
+                name="Total Revenue",
+                category=KPICategory.REVENUE,
+                value=total_revenue,
+                unit="EUR",
+                timestamp=datetime.now(),
+                aggregation_type=KPIAggregationType.SUM,
+                metadata={'collection_method': 'automated'}
+            )
+            
+            # Store metric
+            await self.record_kpi_metric(revenue_kpi)
+            
+        except Exception as e:
+            self.logger.error(f"Failed to collect revenue metrics: {e}")
+            raise
+
+    async def _collect_user_acquisition_metrics(self):
+        """Collect user acquisition metrics"""
+        try:
+            # Mock data - in production this would query actual user database
+            new_users_today = len([u for u in self.user_acquisition_data 
+                                 if u.get('registration_date', datetime.min).date() == datetime.now().date()])
+            
+            user_acquisition_kpi = KPIMetric(
+                metric_id="daily_new_users",
+                name="Daily New Users",
+                category=KPICategory.USER_ACQUISITION,
+                value=new_users_today,
+                unit="users",
+                timestamp=datetime.now(),
+                aggregation_type=KPIAggregationType.COUNT,
+                metadata={'collection_method': 'automated'}
+            )
+            
+            await self.record_kpi_metric(user_acquisition_kpi)
+            
+        except Exception as e:
+            self.logger.error(f"Failed to collect user acquisition metrics: {e}")
+            raise
+
+    async def _collect_content_creation_metrics(self):
+        """Collect content creation metrics"""
+        try:
+            # Mock data - in production this would query content database
+            content_created_today = len([c for c in self.content_creation_data 
+                                       if c.get('creation_date', datetime.min).date() == datetime.now().date()])
+            
+            content_kpi = KPIMetric(
+                metric_id="daily_content_creation",
+                name="Daily Content Creation",
+                category=KPICategory.CONTENT_CREATION,
+                value=content_created_today,
+                unit="pieces",
+                timestamp=datetime.now(),
+                aggregation_type=KPIAggregationType.COUNT,
+                metadata={'collection_method': 'automated'}
+            )
+            
+            await self.record_kpi_metric(content_kpi)
+            
+        except Exception as e:
+            self.logger.error(f"Failed to collect content creation metrics: {e}")
+            raise
+
+    async def _collect_platform_growth_metrics(self):
+        """Collect platform growth metrics"""
+        try:
+            # Calculate platform growth rate
+            current_users = len(self.user_acquisition_data)
+            if hasattr(self, '_previous_user_count'):
+                growth_rate = ((current_users - self._previous_user_count) / 
+                             max(self._previous_user_count, 1)) * 100
+            else:
+                growth_rate = 0.0
+            
+            self._previous_user_count = current_users
+            
+            growth_kpi = KPIMetric(
+                metric_id="platform_growth_rate",
+                name="Platform Growth Rate",
+                category=KPICategory.PLATFORM_GROWTH,
+                value=growth_rate,
+                unit="percentage",
+                timestamp=datetime.now(),
+                aggregation_type=KPIAggregationType.GROWTH_RATE,
+                metadata={'collection_method': 'automated'}
+            )
+            
+            await self.record_kpi_metric(growth_kpi)
+            
+        except Exception as e:
+            self.logger.error(f"Failed to collect platform growth metrics: {e}")
+            raise
+
+    async def _collect_operational_efficiency_metrics(self):
+        """Collect operational efficiency metrics"""
+        try:
+            # Calculate average processing time from stored metrics
+            processing_times = [m.value for m in self.kpi_metrics 
+                              if 'processing_time' in m.metadata.get('type', '')]
+            
+            avg_processing_time = statistics.mean(processing_times) if processing_times else 0.0
+            
+            efficiency_kpi = KPIMetric(
+                metric_id="operational_efficiency",
+                name="Average Processing Time",
+                category=KPICategory.OPERATIONAL_EFFICIENCY,
+                value=avg_processing_time,
+                unit="seconds",
+                timestamp=datetime.now(),
+                aggregation_type=KPIAggregationType.AVERAGE,
+                metadata={'collection_method': 'automated'}
+            )
+            
+            await self.record_kpi_metric(efficiency_kpi)
+            
+        except Exception as e:
+            self.logger.error(f"Failed to collect operational efficiency metrics: {e}")
+            raise
 
 
 class BusinessKPIAnalyzer:

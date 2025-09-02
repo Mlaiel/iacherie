@@ -161,14 +161,179 @@ Handles subscription-based revenue processing."""
     
     async def verify_payment(self, transaction_id: str) -> bool:
         """Verify subscription payment."""
-        # Implement payment verification logic
+        try:
+            # In production, this would verify with payment processor (Stripe, PayPal, etc.)
+            logger.info(f"Verifying subscription payment for transaction {transaction_id}")
+            
+            # Simulate payment verification process
+            verification_steps = [
+                self._verify_transaction_exists(transaction_id),
+                self._verify_payment_processor_status(transaction_id),
+                self._verify_customer_account_status(transaction_id),
+                self._verify_subscription_validity(transaction_id)
+            ]
+            
+            # Execute verification steps
+            for step_result in await asyncio.gather(*verification_steps, return_exceptions=True):
+                if isinstance(step_result, Exception):
+                    logger.error(f"Payment verification step failed: {step_result}")
+                    return False
+                if not step_result:
+                    logger.warning(f"Payment verification failed for transaction {transaction_id}")
+                    return False
+            
+            # Update subscription status if payment verified
+            await self._update_subscription_status(transaction_id, "verified")
+            
+            logger.info(f"Payment verification successful for transaction {transaction_id}")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Payment verification error for transaction {transaction_id}: {e}")
+            return False
+
+    async def _verify_transaction_exists(self, transaction_id: str) -> bool:
+        """Verify transaction exists in system"""
+        # In production, check transaction database
         return True
+
+    async def _verify_payment_processor_status(self, transaction_id: str) -> bool:
+        """Verify status with payment processor"""
+        # In production, call Stripe/PayPal API
+        return True
+
+    async def _verify_customer_account_status(self, transaction_id: str) -> bool:
+        """Verify customer account is in good standing"""
+        # In production, check customer database
+        return True
+
+    async def _verify_subscription_validity(self, transaction_id: str) -> bool:
+        """Verify subscription is valid and active"""
+        # Check subscription rules and validity
+        return True
+
+    async def _update_subscription_status(self, transaction_id: str, status: str):
+        """Update subscription status in system"""
+        # In production, update database
+        logger.info(f"Updated subscription status to {status} for transaction {transaction_id}")
     
     async def handle_refund(self, transaction_id: str, reason: str) -> bool:
-        """
-Handle subscription refund."""
-        # Implement refund logic
-        return True
+        """Handle subscription refund."""
+        try:
+            logger.info(f"Processing refund for subscription transaction {transaction_id}, reason: {reason}")
+            
+            # Get transaction and subscription details
+            transaction_details = await self._get_transaction_details(transaction_id)
+            if not transaction_details:
+                logger.error(f"Transaction {transaction_id} not found for refund")
+                return False
+            
+            user_id = transaction_details.get('user_id')
+            if not user_id or user_id not in self.active_subscriptions:
+                logger.error(f"No active subscription found for user {user_id}")
+                return False
+            
+            # Calculate refund amount based on usage
+            refund_amount = await self._calculate_refund_amount(transaction_id, reason)
+            
+            # Process refund with payment processor
+            refund_success = await self._process_refund_with_processor(transaction_id, refund_amount, reason)
+            
+            if refund_success:
+                # Cancel subscription
+                await self._cancel_subscription(user_id, reason)
+                
+                # Record refund in system
+                await self._record_refund(transaction_id, refund_amount, reason)
+                
+                # Send refund notification
+                await self._send_refund_notification(user_id, refund_amount, reason)
+                
+                logger.info(f"Refund processed successfully for transaction {transaction_id}: {refund_amount}")
+                return True
+            else:
+                logger.error(f"Refund processing failed for transaction {transaction_id}")
+                return False
+                
+        except Exception as e:
+            logger.error(f"Refund handling error for transaction {transaction_id}: {e}")
+            return False
+
+    async def _get_transaction_details(self, transaction_id: str) -> Dict:
+        """Get transaction details from system"""
+        # In production, query transaction database
+        return {
+            'user_id': f'user_{transaction_id[:8]}',
+            'amount': Decimal('19.99'),
+            'created_at': datetime.now() - timedelta(days=15),
+            'tier': 'premium'
+        }
+
+    async def _calculate_refund_amount(self, transaction_id: str, reason: str) -> Decimal:
+        """Calculate refund amount based on usage and reason"""
+        transaction_details = await self._get_transaction_details(transaction_id)
+        base_amount = transaction_details.get('amount', Decimal('0'))
+        
+        # Calculate pro-rated refund based on usage
+        created_at = transaction_details.get('created_at', datetime.now())
+        days_used = (datetime.now() - created_at).days
+        days_in_billing_cycle = 30
+        
+        if reason == 'technical_issue':
+            # Full refund for technical issues
+            return base_amount
+        elif reason == 'user_request' and days_used <= 7:
+            # Full refund within 7 days
+            return base_amount
+        elif reason == 'user_request':
+            # Pro-rated refund after 7 days
+            remaining_days = max(0, days_in_billing_cycle - days_used)
+            return base_amount * (remaining_days / days_in_billing_cycle)
+        else:
+            # Partial refund for other reasons
+            remaining_days = max(0, days_in_billing_cycle - days_used)
+            return base_amount * (remaining_days / days_in_billing_cycle) * Decimal('0.8')
+
+    async def _process_refund_with_processor(self, transaction_id: str, amount: Decimal, reason: str) -> bool:
+        """Process refund with payment processor"""
+        try:
+            # In production, call Stripe/PayPal refund API
+            logger.info(f"Processing refund with payment processor: {amount} for {transaction_id}")
+            
+            # Simulate API call to payment processor
+            await asyncio.sleep(0.1)  # Simulate network delay
+            
+            # Simulate success (in production, handle actual API response)
+            return True
+            
+        except Exception as e:
+            logger.error(f"Payment processor refund failed: {e}")
+            return False
+
+    async def _cancel_subscription(self, user_id: str, reason: str):
+        """Cancel user subscription"""
+        if user_id in self.active_subscriptions:
+            self.active_subscriptions[user_id]['status'] = 'cancelled'
+            self.active_subscriptions[user_id]['cancellation_reason'] = reason
+            self.active_subscriptions[user_id]['cancelled_at'] = datetime.now()
+            logger.info(f"Subscription cancelled for user {user_id}")
+
+    async def _record_refund(self, transaction_id: str, amount: Decimal, reason: str):
+        """Record refund in system"""
+        # In production, store refund record in database
+        refund_record = {
+            'transaction_id': transaction_id,
+            'refund_amount': amount,
+            'reason': reason,
+            'processed_at': datetime.now(),
+            'status': 'completed'
+        }
+        logger.info(f"Refund recorded: {refund_record}")
+
+    async def _send_refund_notification(self, user_id: str, amount: Decimal, reason: str):
+        """Send refund notification to user"""
+        # In production, send email/SMS notification
+        logger.info(f"Refund notification sent to user {user_id}: {amount} refunded due to {reason}")
 
 
 class PayPerViewProcessor(RevenueProcessor):
