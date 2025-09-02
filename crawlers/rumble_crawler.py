@@ -1135,80 +1135,893 @@ Calculate content safety score"""
         
         return max(score, 0.0)
     
-    # Placeholder methods for complex analysis (would need more data/API access)
+    # Enhanced parsing methods for complex analysis
     async def _parse_channel_page(self, html_content: str, channel_id: str) -> Dict:
-        """
-Parse channel page HTML"""
-        return {'channel_id': channel_id}
+        """Parse channel page HTML for comprehensive channel data"""
+        try:
+            soup = BeautifulSoup(html_content, 'html.parser')
+            channel_data = {'channel_id': channel_id}
+            
+            # Extract channel name
+            name_elem = soup.find(['h1', 'h2'], class_=re.compile(r'channel-name|user-name|title'))
+            if name_elem:
+                channel_data['name'] = name_elem.get_text(strip=True)
+            
+            # Extract username from URL or breadcrumbs
+            username_elem = soup.find(['span', 'div'], class_=re.compile(r'username|handle'))
+            if username_elem:
+                channel_data['username'] = username_elem.get_text(strip=True).replace('@', '')
+            else:
+                channel_data['username'] = channel_id
+            
+            # Extract description
+            desc_elem = soup.find(['div', 'p'], class_=re.compile(r'description|about|bio'))
+            if desc_elem:
+                channel_data['description'] = desc_elem.get_text(strip=True)
+            
+            # Extract subscriber count
+            subscriber_elem = soup.find(['span', 'div'], text=re.compile(r'subscriber|follower', re.I))
+            if subscriber_elem:
+                parent = subscriber_elem.find_parent()
+                if parent:
+                    sub_text = parent.get_text(strip=True)
+                    channel_data['subscriber_count'] = self._parse_count(sub_text)
+            
+            # Extract video count
+            video_count_elem = soup.find(['span', 'div'], text=re.compile(r'video|upload', re.I))
+            if video_count_elem:
+                parent = video_count_elem.find_parent()
+                if parent:
+                    video_text = parent.get_text(strip=True)
+                    channel_data['video_count'] = self._parse_count(video_text)
+            
+            # Extract total views
+            views_elem = soup.find(['span', 'div'], text=re.compile(r'total view|channel view', re.I))
+            if views_elem:
+                parent = views_elem.find_parent()
+                if parent:
+                    views_text = parent.get_text(strip=True)
+                    channel_data['total_views'] = self._parse_count(views_text)
+            
+            # Check for verification status
+            verified_elem = soup.find(['span', 'img'], class_=re.compile(r'verified|check'))
+            channel_data['verified'] = verified_elem is not None
+            
+            # Check for partner status
+            partner_elem = soup.find(['span', 'img'], class_=re.compile(r'partner|pro'))
+            channel_data['partner'] = partner_elem is not None
+            
+            # Extract avatar URL
+            avatar_elem = soup.find('img', class_=re.compile(r'avatar|profile|channel-image'))
+            if avatar_elem and avatar_elem.get('src'):
+                channel_data['avatar_url'] = avatar_elem['src']
+            
+            # Extract banner URL
+            banner_elem = soup.find('img', class_=re.compile(r'banner|header|cover'))
+            if banner_elem and banner_elem.get('src'):
+                channel_data['banner_url'] = banner_elem['src']
+            
+            # Set channel URL
+            channel_data['channel_url'] = f"{self.base_url}/c/{channel_id}"
+            
+            # Extract creation date if available
+            created_elem = soup.find(['span', 'time'], class_=re.compile(r'joined|created|since'))
+            if created_elem:
+                date_text = created_elem.get_text(strip=True)
+                channel_data['created_date'] = self._parse_date(date_text)
+            else:
+                channel_data['created_date'] = datetime.utcnow()
+            
+            # Extract social links
+            social_links = {}
+            social_elems = soup.find_all('a', href=True)
+            for elem in social_elems:
+                href = elem['href']
+                if 'twitter.com' in href or 'x.com' in href:
+                    social_links['twitter'] = href
+                elif 'instagram.com' in href:
+                    social_links['instagram'] = href
+                elif 'youtube.com' in href:
+                    social_links['youtube'] = href
+                elif 'facebook.com' in href:
+                    social_links['facebook'] = href
+                elif 'tiktok.com' in href:
+                    social_links['tiktok'] = href
+            
+            channel_data['social_links'] = social_links
+            
+            # Extract website if available
+            website_elem = soup.find('a', href=True, text=re.compile(r'website|site|link', re.I))
+            if website_elem:
+                channel_data['website'] = website_elem['href']
+            
+            # Extract categories/tags
+            category_elems = soup.find_all(['a', 'span'], class_=re.compile(r'category|tag'))
+            channel_data['categories'] = [elem.get_text(strip=True) for elem in category_elems[:5]]
+            
+            return channel_data
+            
+        except Exception as e:
+            logger.error(f"Error parsing channel page: {str(e)}")
+            return {'channel_id': channel_id}
     
     async def _create_channel_model(self, channel_data: Dict) -> Optional[RumbleChannel]:
-        """
-Create RumbleChannel model"""
-        return None
+        """Create RumbleChannel model from parsed data"""
+        try:
+            # Calculate derived metrics
+            upload_frequency = 0.0
+            average_views = 0.0
+            engagement_rate = 0.0
+            growth_rate = 0.0
+            
+            # Calculate average views per video
+            if channel_data.get('video_count', 0) > 0 and channel_data.get('total_views', 0) > 0:
+                average_views = channel_data['total_views'] / channel_data['video_count']
+            
+            # Estimate upload frequency (videos per week) based on channel age
+            if channel_data.get('created_date') and channel_data.get('video_count', 0) > 0:
+                channel_age_days = (datetime.utcnow() - channel_data['created_date']).days
+                if channel_age_days > 0:
+                    upload_frequency = (channel_data['video_count'] * 7) / channel_age_days
+            
+            # Basic engagement rate estimation
+            if channel_data.get('total_views', 0) > 0:
+                # Rough estimate: engagement is typically 1-5% of views
+                engagement_rate = min(0.03, max(0.001, 
+                    channel_data.get('subscriber_count', 0) / channel_data['total_views']))
+            
+            # Growth rate estimation based on recent activity
+            growth_rate = min(upload_frequency * 0.1, 1.0)  # Basic estimation
+            
+            channel = RumbleChannel(
+                channel_id=channel_data.get('channel_id', ''),
+                name=channel_data.get('name', ''),
+                username=channel_data.get('username', ''),
+                description=channel_data.get('description'),
+                subscriber_count=channel_data.get('subscriber_count', 0),
+                video_count=channel_data.get('video_count', 0),
+                total_views=channel_data.get('total_views', 0),
+                created_date=channel_data.get('created_date', datetime.utcnow()),
+                verified=channel_data.get('verified', False),
+                partner=channel_data.get('partner', False),
+                avatar_url=channel_data.get('avatar_url'),
+                banner_url=channel_data.get('banner_url'),
+                channel_url=channel_data.get('channel_url', ''),
+                website=channel_data.get('website'),
+                categories=channel_data.get('categories', []),
+                social_links=channel_data.get('social_links', {}),
+                upload_frequency=upload_frequency,
+                average_views=average_views,
+                engagement_rate=engagement_rate,
+                growth_rate=growth_rate,
+                content_style=self._analyze_content_style_from_categories(
+                    channel_data.get('categories', [])
+                )
+            )
+            
+            return channel
+            
+        except Exception as e:
+            logger.error(f"Error creating channel model: {str(e)}")
+            return None
     
     async def _parse_channel_videos_page(self, html_content: str) -> List[Dict]:
-        """
-Parse channel videos page"""
-        return []
+        """Parse channel videos page to extract video data"""
+        try:
+            soup = BeautifulSoup(html_content, 'html.parser')
+            videos = []
+            
+            # Look for video containers in channel videos page
+            video_containers = soup.find_all(['div', 'article'], 
+                class_=re.compile(r'video-item|media-listing|listing-video|video-card'))
+            
+            for container in video_containers:
+                try:
+                    video_data = {}
+                    
+                    # Extract video ID and URL
+                    link_elem = container.find('a', href=True)
+                    if link_elem:
+                        href = link_elem['href']
+                        video_data['url'] = urljoin(self.base_url, href)
+                        video_data['video_id'] = self._extract_video_id_from_url(href)
+                        video_data['video_url'] = video_data['url']
+                        video_data['embed_url'] = f"{self.base_url}/embed/{video_data['video_id']}"
+                    
+                    # Extract title
+                    title_elem = container.find(['h3', 'h4', 'span', 'a'], 
+                        class_=re.compile(r'title|video-title|media-heading'))
+                    if title_elem:
+                        video_data['title'] = title_elem.get_text(strip=True)
+                    
+                    # Extract thumbnail
+                    img_elem = container.find('img', src=True)
+                    if img_elem:
+                        video_data['thumbnail_url'] = img_elem['src']
+                    
+                    # Extract view count
+                    views_elem = container.find(['span', 'div'], 
+                        class_=re.compile(r'views|view-count'))
+                    if views_elem:
+                        views_text = views_elem.get_text(strip=True)
+                        video_data['view_count'] = self._parse_count(views_text)
+                    
+                    # Extract duration
+                    duration_elem = container.find(['span', 'div'], 
+                        class_=re.compile(r'duration|time|length'))
+                    if duration_elem:
+                        duration_text = duration_elem.get_text(strip=True)
+                        video_data['duration'] = self._parse_duration(duration_text)
+                    
+                    # Extract upload date
+                    date_elem = container.find(['span', 'time'], 
+                        class_=re.compile(r'date|uploaded|ago|time'))
+                    if date_elem:
+                        date_text = date_elem.get_text(strip=True)
+                        video_data['upload_date'] = self._parse_relative_date(date_text)
+                    
+                    # Extract like count if available
+                    like_elem = container.find(['span', 'div'], 
+                        class_=re.compile(r'like|thumb-up'))
+                    if like_elem:
+                        like_text = like_elem.get_text(strip=True)
+                        video_data['like_count'] = self._parse_count(like_text)
+                    
+                    # Extract description if available
+                    desc_elem = container.find(['p', 'div'], 
+                        class_=re.compile(r'description|summary'))
+                    if desc_elem:
+                        video_data['description'] = desc_elem.get_text(strip=True)
+                    
+                    # Only add if we have essential data
+                    if video_data.get('video_id') and video_data.get('title'):
+                        videos.append(video_data)
+                        
+                except Exception as e:
+                    logger.debug(f"Error parsing channel video: {str(e)}")
+                    continue
+            
+            return videos
+            
+        except Exception as e:
+            logger.error(f"Error parsing channel videos page: {str(e)}")
+            return []
     
     async def _parse_trending_page(self, html_content: str) -> List[Dict]:
-        """
-Parse trending page"""
-        return []
+        """Parse trending page to extract trending videos data"""
+        try:
+            soup = BeautifulSoup(html_content, 'html.parser')
+            videos = []
+            
+            # Look for trending video containers
+            video_containers = soup.find_all(['div', 'article'], 
+                class_=re.compile(r'trending-video|featured-video|hot-video|listing-video|video-item'))
+            
+            # Fallback to generic video containers if specific ones not found
+            if not video_containers:
+                video_containers = soup.find_all(['div'], 
+                    class_=re.compile(r'video|media'))
+            
+            for container in video_containers:
+                try:
+                    video_data = {}
+                    
+                    # Extract video link and ID
+                    link_elem = container.find('a', href=True)
+                    if link_elem:
+                        href = link_elem['href']
+                        video_data['url'] = urljoin(self.base_url, href)
+                        video_data['video_id'] = self._extract_video_id_from_url(href)
+                        video_data['video_url'] = video_data['url']
+                        video_data['embed_url'] = f"{self.base_url}/embed/{video_data['video_id']}"
+                    
+                    # Extract title
+                    title_elem = container.find(['h1', 'h2', 'h3', 'h4', 'span', 'a'], 
+                        class_=re.compile(r'title|heading|name'))
+                    if not title_elem:
+                        title_elem = container.find(['a'], string=True)
+                    if title_elem:
+                        video_data['title'] = title_elem.get_text(strip=True)
+                    
+                    # Extract uploader/channel
+                    uploader_elem = container.find(['span', 'a', 'div'], 
+                        class_=re.compile(r'channel|uploader|author|creator'))
+                    if uploader_elem:
+                        video_data['uploader'] = uploader_elem.get_text(strip=True)
+                        if uploader_elem.name == 'a' and uploader_elem.get('href'):
+                            video_data['channel_id'] = self._extract_channel_id_from_url(uploader_elem['href'])
+                    
+                    # Extract view count
+                    views_elem = container.find(['span', 'div'], 
+                        class_=re.compile(r'view|watch'))
+                    if views_elem:
+                        views_text = views_elem.get_text(strip=True)
+                        video_data['view_count'] = self._parse_count(views_text)
+                    
+                    # Extract thumbnail
+                    img_elem = container.find('img', src=True)
+                    if img_elem:
+                        video_data['thumbnail_url'] = img_elem['src']
+                    
+                    # Extract duration
+                    duration_elem = container.find(['span', 'div'], 
+                        class_=re.compile(r'duration|time|length'))
+                    if duration_elem:
+                        duration_text = duration_elem.get_text(strip=True)
+                        video_data['duration'] = self._parse_duration(duration_text)
+                    
+                    # Extract upload date
+                    date_elem = container.find(['span', 'time'], 
+                        class_=re.compile(r'date|uploaded|ago|time'))
+                    if date_elem:
+                        date_text = date_elem.get_text(strip=True)
+                        video_data['upload_date'] = self._parse_relative_date(date_text)
+                    else:
+                        video_data['upload_date'] = datetime.utcnow()
+                    
+                    # Calculate trending score based on position
+                    trending_score = max(1.0 - (len(videos) * 0.1), 0.1)
+                    video_data['trending_score'] = trending_score
+                    
+                    # Extract likes if available
+                    like_elem = container.find(['span', 'div'], 
+                        class_=re.compile(r'like|thumb'))
+                    if like_elem:
+                        like_text = like_elem.get_text(strip=True)
+                        video_data['like_count'] = self._parse_count(like_text)
+                    
+                    # Only add if we have essential data
+                    if video_data.get('video_id') and video_data.get('title'):
+                        videos.append(video_data)
+                        
+                except Exception as e:
+                    logger.debug(f"Error parsing trending video: {str(e)}")
+                    continue
+            
+            return videos
+            
+        except Exception as e:
+            logger.error(f"Error parsing trending page: {str(e)}")
+            return []
     
     async def _parse_live_streams_page(self, html_content: str) -> List[Dict]:
-        """
-Parse live streams page"""
-        return []
+        """Parse live streams page to extract active stream data"""
+        try:
+            soup = BeautifulSoup(html_content, 'html.parser')
+            streams = []
+            
+            # Look for live stream containers
+            stream_containers = soup.find_all(['div', 'article'], 
+                class_=re.compile(r'live-stream|stream-item|live-video|live-card'))
+            
+            # Fallback to containers with "live" indicators
+            if not stream_containers:
+                live_indicators = soup.find_all(['span', 'div'], 
+                    class_=re.compile(r'live|streaming'), text=re.compile(r'LIVE|Live', re.I))
+                stream_containers = [indicator.find_parent() for indicator in live_indicators if indicator.find_parent()]
+            
+            for container in stream_containers:
+                try:
+                    stream_data = {}
+                    
+                    # Extract stream link and ID
+                    link_elem = container.find('a', href=True)
+                    if link_elem:
+                        href = link_elem['href']
+                        stream_data['stream_url'] = urljoin(self.base_url, href)
+                        stream_data['stream_id'] = self._extract_video_id_from_url(href)
+                    
+                    # Extract title
+                    title_elem = container.find(['h1', 'h2', 'h3', 'h4', 'span'], 
+                        class_=re.compile(r'title|heading|name'))
+                    if title_elem:
+                        stream_data['title'] = title_elem.get_text(strip=True)
+                    
+                    # Extract streamer name
+                    streamer_elem = container.find(['span', 'a', 'div'], 
+                        class_=re.compile(r'channel|streamer|author|creator'))
+                    if streamer_elem:
+                        stream_data['streamer'] = streamer_elem.get_text(strip=True)
+                        if streamer_elem.name == 'a' and streamer_elem.get('href'):
+                            stream_data['streamer_id'] = self._extract_channel_id_from_url(streamer_elem['href'])
+                    
+                    # Extract current viewer count
+                    viewers_elem = container.find(['span', 'div'], 
+                        class_=re.compile(r'viewer|watching|audience'))
+                    if viewers_elem:
+                        viewers_text = viewers_elem.get_text(strip=True)
+                        stream_data['current_viewers'] = self._parse_count(viewers_text)
+                    
+                    # Extract thumbnail
+                    img_elem = container.find('img', src=True)
+                    if img_elem:
+                        stream_data['thumbnail_url'] = img_elem['src']
+                    
+                    # Extract category/tags
+                    category_elem = container.find(['span', 'div'], 
+                        class_=re.compile(r'category|tag|genre'))
+                    if category_elem:
+                        stream_data['category'] = category_elem.get_text(strip=True)
+                    
+                    # Check for mature content indicators
+                    mature_elem = container.find(['span', 'div'], 
+                        class_=re.compile(r'mature|adult|18\+'))
+                    stream_data['mature_content'] = mature_elem is not None
+                    
+                    # Set stream status and start time
+                    stream_data['stream_status'] = 'live'
+                    stream_data['start_time'] = datetime.utcnow()  # Approximate
+                    
+                    # Extract quality options if available
+                    quality_elems = container.find_all(['span'], 
+                        text=re.compile(r'\d+p|HD|4K', re.I))
+                    if quality_elems:
+                        stream_data['quality_options'] = [elem.get_text(strip=True) for elem in quality_elems]
+                    else:
+                        stream_data['quality_options'] = ['720p']  # Default
+                    
+                    # Only add if we have essential data
+                    if stream_data.get('stream_id') and stream_data.get('title'):
+                        streams.append(stream_data)
+                        
+                except Exception as e:
+                    logger.debug(f"Error parsing live stream: {str(e)}")
+                    continue
+            
+            return streams
+            
+        except Exception as e:
+            logger.error(f"Error parsing live streams page: {str(e)}")
+            return []
     
     async def _create_live_stream_model(self, stream_data: Dict) -> Optional[RumbleLiveStream]:
-        """
-Create RumbleLiveStream model"""
-        return None
+        """Create RumbleLiveStream model from parsed data"""
+        try:
+            stream = RumbleLiveStream(
+                stream_id=stream_data.get('stream_id', ''),
+                title=stream_data.get('title', ''),
+                description=stream_data.get('description'),
+                streamer=stream_data.get('streamer', ''),
+                streamer_id=stream_data.get('streamer_id'),
+                start_time=stream_data.get('start_time', datetime.utcnow()),
+                current_viewers=stream_data.get('current_viewers', 0),
+                peak_viewers=stream_data.get('current_viewers', 0),  # Assume current is peak for now
+                total_viewers=stream_data.get('current_viewers', 0),  # Estimate
+                stream_url=stream_data.get('stream_url', ''),
+                thumbnail_url=stream_data.get('thumbnail_url'),
+                quality_options=stream_data.get('quality_options', []),
+                category=stream_data.get('category'),
+                mature_content=stream_data.get('mature_content', False),
+                stream_status=stream_data.get('stream_status', 'live'),
+                language=stream_data.get('language', 'en')  # Default to English
+            )
+            
+            return stream
+            
+        except Exception as e:
+            logger.error(f"Error creating live stream model: {str(e)}")
+            return None
     
-    # Additional placeholder methods for comprehensive analysis
+    # Advanced analysis methods implementation
     def _calculate_growth_velocity(self, video: RumbleVideo) -> float:
-        """
-Calculate growth velocity"""
-        return 0.0
+        """Calculate growth velocity based on video performance metrics"""
+        try:
+            if video.view_count < 100:
+                return 0.0
+            
+            video_age_hours = (datetime.utcnow() - video.upload_date).total_seconds() / 3600
+            if video_age_hours <= 0:
+                video_age_hours = 1
+            
+            # Views per hour
+            views_per_hour = video.view_count / video_age_hours
+            
+            # Engagement velocity (likes + comments per hour)
+            engagement_per_hour = (video.like_count + video.comment_count) / video_age_hours
+            
+            # Combine metrics with weights
+            velocity = (views_per_hour * 0.7) + (engagement_per_hour * 1000 * 0.3)
+            
+            # Normalize to 0-10 scale
+            return min(velocity / 1000, 10.0)
+            
+        except Exception as e:
+            logger.debug(f"Error calculating growth velocity: {str(e)}")
+            return 0.0
     
     def _estimate_revenue_potential(self, video: RumbleVideo) -> float:
-        """
-Estimate revenue potential"""
-        return 0.0
+        """Estimate revenue potential based on video metrics"""
+        try:
+            base_cpm = 2.0  # Base CPM for Rumble
+            
+            # Factors affecting revenue
+            view_factor = min(video.view_count / 1000, 1000)  # Views in thousands
+            engagement_factor = (video.like_count + video.comment_count) / max(video.view_count, 1)
+            quality_factor = self._calculate_quality_score(video)
+            safety_factor = self._calculate_content_safety_score(video)
+            
+            # Duration factor (longer videos generally earn more)
+            duration_factor = 1.0
+            if video.duration > 600:  # 10+ minutes
+                duration_factor = 1.5
+            elif video.duration > 300:  # 5+ minutes
+                duration_factor = 1.2
+            
+            # Calculate estimated revenue
+            estimated_revenue = (
+                view_factor * base_cpm * 
+                (1 + engagement_factor) * 
+                quality_factor * 
+                safety_factor * 
+                duration_factor
+            )
+            
+            return round(estimated_revenue, 2)
+            
+        except Exception as e:
+            logger.debug(f"Error estimating revenue potential: {str(e)}")
+            return 0.0
     
     def _assess_advertiser_friendliness(self, video: RumbleVideo) -> float:
-        """
-Assess advertiser friendliness"""
-        return 0.5
+        """Assess how advertiser-friendly the content is"""
+        try:
+            score = 1.0  # Start with perfect score
+            
+            # Age restriction reduces advertiser friendliness
+            if video.age_restricted:
+                score -= 0.4
+            
+            # Content warnings reduce score
+            warning_penalty = len(video.content_warnings) * 0.1
+            score -= warning_penalty
+            
+            # Controversial keywords in title/description
+            controversial_keywords = [
+                'war', 'violence', 'death', 'kill', 'weapon', 'blood',
+                'suicide', 'depression', 'drug', 'alcohol', 'gambling',
+                'sex', 'porn', 'nude', 'adult', 'mature'
+            ]
+            
+            content_text = f"{video.title} {video.description}".lower()
+            for keyword in controversial_keywords:
+                if keyword in content_text:
+                    score -= 0.05
+            
+            # Very short videos are less advertiser-friendly
+            if video.duration < 60:
+                score -= 0.1
+            
+            # Quality affects advertiser appeal
+            quality_bonus = (self._calculate_quality_score(video) - 0.5) * 0.2
+            score += quality_bonus
+            
+            return max(min(score, 1.0), 0.0)
+            
+        except Exception as e:
+            logger.debug(f"Error assessing advertiser friendliness: {str(e)}")
+            return 0.5
     
     async def _analyze_demographic_appeal(self, video: RumbleVideo) -> Dict:
-        """
-Analyze demographic appeal"""
-        return {}
+        """Analyze demographic appeal based on content characteristics"""
+        try:
+            demographics = {
+                'age_groups': {},
+                'interests': [],
+                'geographic_appeal': {},
+                'language_preference': 'en'
+            }
+            
+            # Analyze content for age appeal
+            if video.age_restricted or any(word in video.title.lower() + video.description.lower() 
+                                         for word in ['mature', 'adult', '18+', 'explicit']):
+                demographics['age_groups'] = {
+                    '18-24': 0.3,
+                    '25-34': 0.4,
+                    '35-44': 0.2,
+                    '45+': 0.1
+                }
+            elif any(word in video.title.lower() + video.description.lower() 
+                    for word in ['kid', 'child', 'family', 'cartoon', 'animation']):
+                demographics['age_groups'] = {
+                    '13-17': 0.3,
+                    '18-24': 0.2,
+                    '25-34': 0.3,
+                    '35-44': 0.2
+                }
+            else:
+                # General content
+                demographics['age_groups'] = {
+                    '13-17': 0.1,
+                    '18-24': 0.3,
+                    '25-34': 0.3,
+                    '35-44': 0.2,
+                    '45+': 0.1
+                }
+            
+            # Extract interests from categories and tags
+            interest_mapping = {
+                'gaming': ['game', 'gaming', 'esports', 'stream'],
+                'politics': ['political', 'politics', 'election', 'government'],
+                'news': ['news', 'breaking', 'current', 'events'],
+                'entertainment': ['entertainment', 'comedy', 'funny', 'humor'],
+                'education': ['educational', 'tutorial', 'how-to', 'learn'],
+                'technology': ['tech', 'technology', 'gadget', 'software'],
+                'lifestyle': ['lifestyle', 'vlog', 'daily', 'personal'],
+                'music': ['music', 'song', 'concert', 'album'],
+                'sports': ['sport', 'football', 'basketball', 'soccer']
+            }
+            
+            content_text = f"{video.title} {video.description} {' '.join(video.categories)} {' '.join(video.tags)}".lower()
+            
+            for interest, keywords in interest_mapping.items():
+                if any(keyword in content_text for keyword in keywords):
+                    demographics['interests'].append(interest)
+            
+            # Geographic appeal based on language and content
+            if any(word in content_text for word in ['america', 'usa', 'trump', 'biden']):
+                demographics['geographic_appeal']['US'] = 0.6
+                demographics['geographic_appeal']['Canada'] = 0.2
+                demographics['geographic_appeal']['UK'] = 0.1
+                demographics['geographic_appeal']['Other'] = 0.1
+            else:
+                demographics['geographic_appeal']['Global'] = 1.0
+            
+            return demographics
+            
+        except Exception as e:
+            logger.debug(f"Error analyzing demographic appeal: {str(e)}")
+            return {}
     
     async def _analyze_geographic_performance(self, video: RumbleVideo) -> Dict:
-        """
-Analyze geographic performance"""
-        return {}
+        """Analyze geographic performance patterns"""
+        try:
+            # Since we don't have access to actual geographic data, 
+            # we'll make educated estimates based on content
+            performance = {
+                'primary_markets': [],
+                'growth_regions': [],
+                'performance_by_region': {}
+            }
+            
+            content_text = f"{video.title} {video.description}".lower()
+            
+            # Determine primary markets based on content
+            if any(word in content_text for word in ['america', 'usa', 'trump', 'biden', 'american']):
+                performance['primary_markets'] = ['United States', 'Canada']
+                performance['performance_by_region'] = {
+                    'North America': 0.7,
+                    'Europe': 0.2,
+                    'Asia': 0.05,
+                    'Other': 0.05
+                }
+            elif any(word in content_text for word in ['europe', 'eu', 'brexit', 'european']):
+                performance['primary_markets'] = ['United Kingdom', 'Germany', 'France']
+                performance['performance_by_region'] = {
+                    'Europe': 0.6,
+                    'North America': 0.3,
+                    'Asia': 0.05,
+                    'Other': 0.05
+                }
+            else:
+                # Global content
+                performance['primary_markets'] = ['Global']
+                performance['performance_by_region'] = {
+                    'North America': 0.4,
+                    'Europe': 0.3,
+                    'Asia': 0.2,
+                    'Other': 0.1
+                }
+            
+            # Identify growth regions based on trending topics
+            if video.trending_score > 0.7:
+                performance['growth_regions'] = ['Asia', 'South America']
+            
+            return performance
+            
+        except Exception as e:
+            logger.debug(f"Error analyzing geographic performance: {str(e)}")
+            return {}
     
     async def _analyze_discovery_sources(self, video: RumbleVideo) -> Dict:
-        """
-Analyze discovery sources"""
-        return {}
+        """Analyze how users likely discovered this video"""
+        try:
+            sources = {
+                'search': 0.0,
+                'suggested': 0.0,
+                'direct': 0.0,
+                'external': 0.0,
+                'social_media': 0.0
+            }
+            
+            # High view count suggests good search optimization
+            if video.view_count > 10000:
+                sources['search'] = 0.4
+                sources['suggested'] = 0.3
+            else:
+                sources['search'] = 0.3
+                sources['suggested'] = 0.2
+            
+            # High engagement suggests social sharing
+            engagement_rate = (video.like_count + video.comment_count) / max(video.view_count, 1)
+            if engagement_rate > 0.05:
+                sources['social_media'] = 0.3
+                sources['external'] = 0.2
+            else:
+                sources['social_media'] = 0.1
+                sources['external'] = 0.1
+            
+            # Viral content gets more direct traffic
+            if video.trending_score > 0.8:
+                sources['direct'] = 0.3
+            else:
+                sources['direct'] = 0.1
+            
+            # Normalize to sum to 1.0
+            total = sum(sources.values())
+            if total > 0:
+                sources = {k: v/total for k, v in sources.items()}
+            
+            return sources
+            
+        except Exception as e:
+            logger.debug(f"Error analyzing discovery sources: {str(e)}")
+            return {}
     
     def _generate_video_optimization_recommendations(self, video: RumbleVideo) -> List[str]:
-        """
-Generate video optimization recommendations"""
+        """Generate video optimization recommendations based on analysis"""
         recommendations = []
         
-        if len(video.title) < 40:
-            recommendations.append("Consider expanding the title for better SEO")
+        try:
+            # Title optimization
+            if len(video.title) < 40:
+                recommendations.append("Consider expanding the title to 40-60 characters for better SEO")
+            elif len(video.title) > 100:
+                recommendations.append("Consider shortening the title for better readability")
+            
+            # Description optimization
+            if len(video.description) < 100:
+                recommendations.append("Add more detailed description (aim for 200+ characters)")
+            
+            # Tags optimization
+            if len(video.tags) < 5:
+                recommendations.append("Add more relevant tags (aim for 5-10 tags)")
+            elif len(video.tags) > 15:
+                recommendations.append("Consider reducing tags to most relevant ones")
+            
+            # Duration optimization
+            if video.duration < 60:
+                recommendations.append("Consider creating longer content for better engagement")
+            elif video.duration > 3600:
+                recommendations.append("Consider breaking long content into series")
+            
+            # Engagement optimization
+            engagement_rate = (video.like_count + video.comment_count) / max(video.view_count, 1)
+            if engagement_rate < 0.01:
+                recommendations.append("Encourage viewer interaction with calls-to-action")
+            
+            # Quality optimization
+            quality_score = self._calculate_quality_score(video)
+            if quality_score < 0.7:
+                recommendations.append("Consider uploading in higher quality (1080p+)")
+            
+            # Content safety
+            if video.age_restricted:
+                recommendations.append("Review content guidelines to improve advertiser appeal")
+            
+            # Trending potential
+            if video.trending_score < 0.3:
+                recommendations.append("Focus on trending topics and keywords")
+            
+            # Upload timing
+            video_age_days = (datetime.utcnow() - video.upload_date).days
+            if video_age_days < 1 and video.view_count < 100:
+                recommendations.append("Promote video on social media and other platforms")
+            
+            return recommendations
+            
+        except Exception as e:
+            logger.debug(f"Error generating recommendations: {str(e)}")
+            return ["Unable to generate recommendations"]
+    
+    def _analyze_content_style_from_categories(self, categories: List[str]) -> List[str]:
+        """Analyze content style from categories"""
+        styles = []
         
-        if len(video.description) < 100:
-            recommendations.append("Add more detailed description")
+        category_text = ' '.join(categories).lower()
         
-        if len(video.tags) < 5:
-            recommendations.append("Add more relevant tags")
+        if any(word in category_text for word in ['educational', 'tutorial', 'how-to']):
+            styles.append('educational')
+        if any(word in category_text for word in ['entertainment', 'comedy', 'funny']):
+            styles.append('entertainment')
+        if any(word in category_text for word in ['news', 'political', 'current']):
+            styles.append('news')
+        if any(word in category_text for word in ['gaming', 'game', 'esports']):
+            styles.append('gaming')
+        if any(word in category_text for word in ['music', 'song', 'concert']):
+            styles.append('music')
+        if any(word in category_text for word in ['lifestyle', 'vlog', 'personal']):
+            styles.append('lifestyle')
         
-        return recommendations
+        return styles if styles else ['general']
+    
+    # Additional advanced analysis methods for comprehensive platform insights
+    def _analyze_content_consistency(self, videos: List[RumbleVideo]) -> Dict[str, Any]:
+        """Analyze content consistency across videos"""
+        try:
+            if not videos:
+                return {}
+            
+            # Analyze duration consistency
+            durations = [v.duration for v in videos if v.duration > 0]
+            avg_duration = sum(durations) / len(durations) if durations else 0
+            duration_variance = sum((d - avg_duration) ** 2 for d in durations) / len(durations) if durations else 0
+            
+            # Analyze upload frequency
+            upload_dates = [v.upload_date for v in videos]
+            upload_dates.sort()
+            intervals = []
+            for i in range(1, len(upload_dates)):
+                interval = (upload_dates[i] - upload_dates[i-1]).days
+                intervals.append(interval)
+            
+            avg_interval = sum(intervals) / len(intervals) if intervals else 0
+            
+            # Analyze quality consistency
+            quality_scores = [self._calculate_quality_score(v) for v in videos]
+            avg_quality = sum(quality_scores) / len(quality_scores)
+            
+            return {
+                'duration_consistency': {
+                    'average_duration': avg_duration,
+                    'variance': duration_variance,
+                    'consistency_score': max(0, 1 - (duration_variance / max(avg_duration, 1)))
+                },
+                'upload_frequency': {
+                    'average_days_between_uploads': avg_interval,
+                    'consistency_score': max(0, 1 - (max(intervals) - min(intervals)) / 30) if intervals else 0
+                },
+                'quality_consistency': {
+                    'average_quality': avg_quality,
+                    'consistency_score': min(quality_scores) / max(quality_scores) if quality_scores else 0
+                }
+            }
+            
+        except Exception as e:
+            logger.debug(f"Error analyzing content consistency: {str(e)}")
+            return {}
+    
+    def _analyze_video_performance_distribution(self, videos: List[RumbleVideo]) -> Dict[str, Any]:
+        """Analyze performance distribution across videos"""
+        try:
+            if not videos:
+                return {}
+            
+            view_counts = [v.view_count for v in videos]
+            engagement_rates = [(v.like_count + v.comment_count) / max(v.view_count, 1) for v in videos]
+            
+            # Calculate percentiles
+            view_counts.sort()
+            top_10_percent = view_counts[int(len(view_counts) * 0.9):]
+            bottom_10_percent = view_counts[:int(len(view_counts) * 0.1)]
+            
+            return {
+                'view_distribution': {
+                    'average_views': sum(view_counts) / len(view_counts),
+                    'median_views': view_counts[len(view_counts) // 2],
+                    'top_10_percent_avg': sum(top_10_percent) / len(top_10_percent) if top_10_percent else 0,
+                    'bottom_10_percent_avg': sum(bottom_10_percent) / len(bottom_10_percent) if bottom_10_percent else 0
+                },
+                'engagement_distribution': {
+                    'average_engagement_rate': sum(engagement_rates) / len(engagement_rates),
+                    'max_engagement_rate': max(engagement_rates),
+                    'min_engagement_rate': min(engagement_rates)
+                },
+                'performance_insights': {
+                    'hit_rate': len(top_10_percent) / len(view_counts) if view_counts else 0,
+                    'consistency_score': min(view_counts) / max(view_counts) if view_counts else 0
+                }
+            }
+            
+        except Exception as e:
+            logger.debug(f"Error analyzing performance distribution: {str(e)}")
+            return {}
