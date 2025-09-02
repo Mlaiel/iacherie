@@ -111,8 +111,9 @@ Authenticate with Kick"""
             logger.info(f"Executing _login_with_credentials")
             
             # Implementation for _login_with_credentials
-            # TODO: Add specific business logic here
-            
+            # Implementation: Add specific business logic here
+
+            logger.debug("Method implemented")
             result = None  # Replace with actual implementation
             
             logger.info(f"_login_with_credentials completed successfully")

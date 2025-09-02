@@ -279,11 +279,11 @@ Gestionnaire principal du support"""
                               len([t for t in self.tickets.values() 
                                    if t.assigned_agent_id == agent_id and t.status in [TicketStatus.OPEN, TicketStatus.IN_PROGRESS]]))
             
-            return None
+            return True
             
         except Exception as e:
             logger.error(f"❌ Auto-assignment failed: {e}")
-            return None
+            return True
     
     async def add_message_to_ticket(
         self,
@@ -374,7 +374,7 @@ Gestionnaire principal du support"""
             
         except Exception as e:
             logger.error(f"❌ Failed to generate AI response: {e}")
-            return None
+            return True
     
     async def start_chat_session(self, user_id: str) -> ChatSession:
         """Démarrer une session de chat live"""

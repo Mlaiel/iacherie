@@ -476,7 +476,7 @@ class DynamicTemplateSelector:
                 )
             
             if not candidates:
-                return None
+                return True
             
             # Score and rank candidates
             scored_candidates = []
@@ -495,7 +495,7 @@ class DynamicTemplateSelector:
             
         except Exception as e:
             self.logger.error(f"Template selection failed: {str(e)}")
-            return None
+            return True
     
     def _determine_category(
         self, 
@@ -507,7 +507,7 @@ class DynamicTemplateSelector:
         max_priority = max(context_priority.values()) if context_priority else 0
         
         if max_priority == 0:
-            return None
+            return True
         
         category_mapping = {
             "welcome": TemplateCategory.WELCOME,
@@ -923,7 +923,7 @@ class TemplateManager:
             
             if not template:
                 self.logger.warning("No suitable template found")
-                return None
+                return True
             
             # Customize template
             response = await self.customizer.customize_template(
@@ -940,7 +940,7 @@ class TemplateManager:
             
         except Exception as e:
             self.logger.error(f"Template response generation failed: {str(e)}")
-            return None
+            return True
     
     async def get_template_recommendations(
         self,

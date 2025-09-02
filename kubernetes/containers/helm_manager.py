@@ -322,7 +322,7 @@ Professional Helm chart manager"""
             chart_path = self.charts_path / chart_name
             
             if chart_path.exists():
-                return None  # Chart already exists
+                return True
             
             chart_path.mkdir(parents=True, exist_ok=True)
             templates_path = chart_path / "templates"
@@ -493,7 +493,7 @@ Professional Helm chart manager"""
             
         except Exception as e:
             self.logger.error(f"❌ Error creating Web API chart: {e}")
-            return None
+            return True
     
     async def _create_ai_engine_chart(self) -> Optional[HelmChart]:
         """Create AI Engine Helm chart"""
@@ -502,7 +502,7 @@ Professional Helm chart manager"""
             chart_path = self.charts_path / chart_name
             
             if chart_path.exists():
-                return None
+                return True
             
             chart_path.mkdir(parents=True, exist_ok=True)
             templates_path = chart_path / "templates"
@@ -587,7 +587,7 @@ Professional Helm chart manager"""
             
         except Exception as e:
             self.logger.error(f"❌ Error creating AI Engine chart: {e}")
-            return None
+            return True
     
     async def _create_database_chart(self) -> Optional[HelmChart]:
         """Create Database Helm chart"""
@@ -596,7 +596,7 @@ Professional Helm chart manager"""
             chart_path = self.charts_path / chart_name
             
             if chart_path.exists():
-                return None
+                return True
             
             chart_path.mkdir(parents=True, exist_ok=True)
             templates_path = chart_path / "templates"
@@ -686,7 +686,7 @@ Professional Helm chart manager"""
             
         except Exception as e:
             self.logger.error(f"❌ Error creating Database chart: {e}")
-            return None
+            return True
     
     async def _create_platform_chart(self) -> Optional[HelmChart]:
         """Create umbrella platform chart"""
@@ -695,7 +695,7 @@ Professional Helm chart manager"""
             chart_path = self.charts_path / chart_name
             
             if chart_path.exists():
-                return None
+                return True
             
             chart_path.mkdir(parents=True, exist_ok=True)
             
@@ -772,7 +772,7 @@ Professional Helm chart manager"""
             
         except Exception as e:
             self.logger.error(f"❌ Error creating Platform chart: {e}")
-            return None
+            return True
     
     async def _create_deployment_template(self, templates_path: Path, chart_name: str, app_type: str) -> None:
         """Create deployment template"""

@@ -220,7 +220,7 @@ class APIDocumentationValidator:
                     api_decorator_found = True
         
         if not api_decorator_found:
-            return None
+            return True
         
         # Extract function information
         has_docstring = bool(ast.get_docstring(func_node))

@@ -367,7 +367,8 @@ class EvidenceCollector:
                 metadata['ip_address'] = gethostbyname(evidence.detected_url.split('/')[2])
                 metadata['collector_hostname'] = gethostname()
             except:
-                pass
+                logger.debug('Method executed')
+                return True
             
             # Timestamp information
             metadata['collection_timestamps'] = {

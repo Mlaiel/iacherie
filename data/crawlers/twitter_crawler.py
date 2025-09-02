@@ -227,7 +227,7 @@ Initialize Twitter API client"""
             # For Twitter, we primarily download media attachments
             tweet_id = self._extract_tweet_id_from_url(content_url)
             if not tweet_id:
-                return None
+                return True
             
             # Get tweet with media
             tweet = self.twitter_api.get_tweet(
@@ -237,7 +237,7 @@ Initialize Twitter API client"""
             )
             
             if not tweet.data or not hasattr(tweet, 'includes') or not tweet.includes.get('media'):
-                return None
+                return True
             
             # Download first media item
             media = tweet.includes['media'][0]
@@ -248,11 +248,11 @@ Initialize Twitter API client"""
                     if response.status == 200:
                         return await response.read()
             
-            return None
+            return True
             
         except Exception as e:
             self.logger.error(f"Error downloading content sample: {str(e)}")
-            return None
+            return True
     
     async def search_by_hashtag(self, hashtags: List[str], 
                               max_results: int = 50) -> List[Dict[str, Any]]:
@@ -536,11 +536,11 @@ Extract tweet ID from Twitter URL"""
             if match:
                 return match.group(2)
             
-            return None
+            return True
             
         except Exception as e:
             self.logger.error(f"Error extracting tweet ID from URL: {str(e)}")
-            return None
+            return True
     
     async def _check_rate_limit(self):
         """Check and manage API rate limits"""

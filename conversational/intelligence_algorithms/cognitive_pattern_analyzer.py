@@ -814,7 +814,7 @@ Cache analysis results for future reference"""
                 insight.generated_at > cutoff_time):
                 return insight
         
-        return None
+        return True
     
     async def get_cognitive_analytics(self, creator_id: str) -> Dict[str, Any]:
         """

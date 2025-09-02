@@ -565,7 +565,7 @@ class HashtagAnalyzer:
             reach_potential = hashtag_data.get('reach_potential', 0)
             
             if usage_frequency < self.min_hashtag_frequency:
-                return None
+                return True
             
             # Advanced analytics
             competition_level = await self._calculate_competition_level(hashtag, hashtag_data)
@@ -646,7 +646,7 @@ class HashtagAnalyzer:
             
         except Exception as e:
             logger.error(f"Individual hashtag analysis failed for {hashtag}: {str(e)}")
-            return None
+            return True
 
     # Additional sophisticated methods continue...
 

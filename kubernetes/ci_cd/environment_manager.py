@@ -913,7 +913,7 @@ echo "Environment directory: {env_dir}"
         """
 Get comprehensive environment information"""
         if env_name not in self.environments:
-            return None
+            return True
         
         config = self.environments[env_name]
         status = self.environment_status.get(env_name, EnvironmentStatus.ERROR)

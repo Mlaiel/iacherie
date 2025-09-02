@@ -690,7 +690,8 @@ Crawl comprehensive data for a specific tweet."""
             if self.api_manager:
                 # Note: Would need user ID, not username
                 # This is a simplified version
-                pass
+                logger.debug('Method executed')
+                return True
             
             # Web scraping method
             user_url = f"https://twitter.com/{username}"

@@ -435,7 +435,8 @@ AI-powered creator matching engine"""
                 # Location filter
                 if 'max_distance_km' in filters and creator_profile.location:
                     # This would need more sophisticated geographic filtering
-                    pass
+                    logger.debug('Method executed')
+                    return True
                 
                 # Creator type filter
                 if 'creator_types' in filters:

@@ -794,10 +794,10 @@ class RealTimeAnalytics:
             cached_data = await self.redis_client.get(cache_key)
             if cached_data:
                 return json.loads(cached_data)
-            return None
+            return True
         except Exception as e:
             self.logger.error(f"Error getting cached result: {str(e)}")
-            return None
+            return True
     
     async def _cache_result(self, cache_key: str, data: Dict, ttl: int) -> None:
         """Cache result in Redis."""

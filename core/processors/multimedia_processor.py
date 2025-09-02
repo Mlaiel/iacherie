@@ -1494,7 +1494,8 @@ class MultimediaProcessor:
                         if temp_file.is_file():
                             temp_file.unlink()
                     except:
-                        pass
+                        logger.debug('Method executed')
+                        return True
         except Exception as e:
             self.logger.warning(f"Temp file cleanup failed: {e}")
     

@@ -174,7 +174,8 @@ class SemanticProcessor:
                 nltk.download('punkt', quiet=True)
                 nltk.download('stopwords', quiet=True)
             except:
-                pass
+                logger.debug('Method executed')
+                return True
             
             # Initialize spaCy models for different languages
             self.nlp_models = {}

@@ -311,11 +311,11 @@ class APIKeyRotationManager:
                 # Check expiration
                 if api_key.expires_at and datetime.utcnow() > api_key.expires_at:
                     api_key.status = APIKeyStatus.EXPIRED
-                    return None
+                    return True
                 
                 return api_key
         
-        return None
+        return True
     
     async def check_rotation_notifications(self) -> List[Dict[str, Any]]:
         """Check for keys requiring rotation notifications"""
@@ -444,7 +444,7 @@ class APIKeyRotationManager:
     async def get_key_details(self, key_id: str, include_key_value: bool = False) -> Optional[Dict[str, Any]]:
         """Get detailed information about an API key"""
         if key_id not in self.api_keys:
-            return None
+            return True
         
         api_key = self.api_keys[key_id]
         details = api_key.to_dict(include_key=include_key_value)

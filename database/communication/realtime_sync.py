@@ -335,7 +335,7 @@ Initialize synchronization infrastructure"""
             
         except Exception as e:
             logger.error(f"Conflict detection failed: {e}")
-            return None
+            return True
     
     async def _resolve_conflicts(self, sync_op: SyncOperation) -> bool:
         """Resolve synchronization conflicts using configured strategies"""
@@ -514,11 +514,11 @@ Initialize synchronization infrastructure"""
                     'metadata': sync_log.sync_metadata
                 }
             
-            return None
+            return True
             
         except Exception as e:
             logger.error(f"Failed to get sync status: {e}")
-            return None
+            return True
     
     async def _setup_sync_channels(self) -> None:
         """Setup Redis pub/sub channels for real-time sync"""

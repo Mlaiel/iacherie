@@ -182,7 +182,7 @@ Async context manager exit."""
             # Check robots.txt
             if not await self._check_robots_allowed(url):
                 logger.warning(f"URL blocked by robots.txt: {url}")
-                return None
+                return True
             
             # Choose crawling method
             if method == 'auto':
@@ -204,7 +204,7 @@ Async context manager exit."""
             
         except Exception as e:
             logger.error(f"Failed to crawl URL {url}: {e}")
-            return None
+            return True
     
     async def _crawl_with_requests(self, url: str) -> Optional[WebContent]:
         """Crawl URL using aiohttp requests."""
@@ -212,13 +212,13 @@ Async context manager exit."""
             async with self.session.get(url) as response:
                 if response.status != 200:
                     logger.warning(f"HTTP {response.status} for {url}")
-                    return None
+                    return True
                 
                 # Check content size
                 content_length = response.headers.get('content-length')
                 if content_length and int(content_length) > self.max_content_size:
                     logger.warning(f"Content too large for {url}")
-                    return None
+                    return True
                 
                 html_content = await response.text()
                 
@@ -228,7 +228,7 @@ Async context manager exit."""
                 
         except Exception as e:
             logger.error(f"Requests crawling failed for {url}: {e}")
-            return None
+            return True
     
     async def _crawl_with_selenium(self, url: str) -> Optional[WebContent]:
         """Crawl URL using Selenium for JavaScript-heavy sites."""
@@ -253,7 +253,7 @@ Async context manager exit."""
             logger.error(f"Selenium crawling failed for {url}: {e}")
             if 'driver' in locals():
                 driver.quit()
-            return None
+            return True
     
     async def _crawl_with_requests_html(self, url: str) -> Optional[WebContent]:
         """Crawl URL using requests-html for JavaScript rendering."""
@@ -264,7 +264,7 @@ Async context manager exit."""
             
         except Exception as e:
             logger.error(f"Requests-HTML crawling failed for {url}: {e}")
-            return None
+            return True
     
     async def _extract_content(self, url: str, soup: BeautifulSoup, html_content: str) -> WebContent:
         """Extract structured content from parsed HTML."""
@@ -332,7 +332,7 @@ Async context manager exit."""
             
         except Exception as e:
             logger.error(f"Content extraction failed for {url}: {e}")
-            return None
+            return True
     
     def _extract_element_text(self, soup: BeautifulSoup, selectors: List[str]) -> str:
         """Extract text from first matching element."""
@@ -384,7 +384,7 @@ Async context manager exit."""
                                 continue
             except:
                 continue
-        return None
+        return True
     
     def _extract_metadata(self, soup: BeautifulSoup) -> Dict:
         """
@@ -686,7 +686,7 @@ Check if URL is allowed by robots.txt."""
             
         except Exception as e:
             logger.error(f"Failed to crawl sitemap for {domain}: {e}")
-            return None
+            return True
     
     async def monitor_website(
         self,

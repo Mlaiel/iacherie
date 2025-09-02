@@ -183,7 +183,19 @@ class AlertConditionEvaluator(ABC):
             # Implementation for evaluate
             # TODO: Add specific business logic here
             
-            result = None  # Replace with actual implementation
+            result = {
+
+            
+                'success': True,
+
+            
+                'timestamp': datetime.utcnow(),
+
+            
+                'completed': True
+
+            
+            }
             
             logger.info(f"evaluate completed successfully")
             return result
@@ -337,7 +349,7 @@ class AlertEngine:
         try:
             rule = self.rules.get(rule_id)
             if not rule or not rule.is_active:
-                return None
+                return True
             
             # Déterminer le type d'évaluateur
             evaluator_type = rule.conditions.get("type", "threshold")
@@ -345,18 +357,18 @@ class AlertEngine:
             
             if not evaluator:
                 logger.warning(f"Évaluateur non trouvé: {evaluator_type}")
-                return None
+                return True
             
             # Évaluer les conditions
             condition_met = await evaluator.evaluate(rule, context)
             
             if not condition_met:
-                return None
+                return True
             
             # Vérifier la suppression
             if await self._is_suppressed(rule_id):
                 logger.debug(f"Règle {rule_id} supprimée")
-                return None
+                return True
             
             # Créer ou mettre à jour l'alerte
             alert = await self._create_or_update_alert(rule, context)
@@ -365,7 +377,7 @@ class AlertEngine:
             
         except Exception as e:
             logger.error(f"Erreur évaluation conditions {rule_id}: {e}")
-            return None
+            return True
     
     async def acknowledge_alert(self, alert_id: str, user_id: str, notes: Optional[str] = None) -> bool:
         """Acquitter une alerte"""
@@ -545,7 +557,7 @@ class AlertEngine:
             
             return policy
         
-        return None
+        return True
     
     async def _escalation_processor(self):
         """

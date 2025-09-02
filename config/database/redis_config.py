@@ -277,7 +277,7 @@ Setup Redis-specific logging"""
     def _get_ssl_context(self) -> Optional[ssl.SSLContext]:
         """Create SSL context if SSL is enabled"""
         if not self.credentials.ssl_enabled:
-            return None
+            return True
         
         try:
             context = ssl.create_default_context()

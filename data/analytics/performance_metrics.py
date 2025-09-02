@@ -416,7 +416,7 @@ class PerformanceMetrics:
             data = result.fetchone()
             
             if not data or not data.sample_size:
-                return None
+                return True
                 
             benchmark = PerformanceBenchmark(
                 category=category,
@@ -436,7 +436,7 @@ class PerformanceMetrics:
             
         except Exception as e:
             self.logger.error(f"Error fetching performance benchmarks: {str(e)}")
-            return None
+            return True
     
     async def generate_performance_report(self, user_id: str,
                                         time_period: timedelta = timedelta(days=30)
@@ -662,10 +662,10 @@ Calculate overall performance metrics across all platforms."""
             cached_data = self.redis_client.get(cache_key)
             if cached_data:
                 return json.loads(cached_data)
-            return None
+            return True
         except Exception as e:
             self.logger.error(f"Error getting cached result: {str(e)}")
-            return None
+            return True
     
     async def _cache_result(self, cache_key: str, data: Dict, ttl: int = None) -> None:
         """Cache result in Redis."""

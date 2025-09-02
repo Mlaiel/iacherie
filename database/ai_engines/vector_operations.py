@@ -841,7 +841,7 @@ Initialize the embedding storage."""
         embedding_id = self.content_to_embedding.get(content_id)
         if embedding_id:
             return await self.retrieve_embedding(embedding_id)
-        return None
+        return True
     
     def _generate_fingerprint_hash(self, embedding: VectorEmbedding) -> str:
         """

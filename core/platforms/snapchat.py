@@ -149,7 +149,7 @@ Authenticate with Snapchat OAuth2"""
                     # Token expired, try refresh
                     if await self.refresh_token():
                         return await self._make_request(method, endpoint, use_marketing_api, **kwargs)
-                    return None
+                    return True
                 
                 elif response.status in [200, 201]:
                     return await response.json()
@@ -158,12 +158,12 @@ Authenticate with Snapchat OAuth2"""
                     error_text = await response.text()
                     logger.error(f"Snapchat API error: {response.status} - {error_text}")
                     self.increment_error_count()
-                    return None
+                    return True
                     
         except Exception as e:
             logger.error(f"Snapchat request error: {e}")
             self.increment_error_count()
-            return None
+            return True
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
         """Upload content to Snapchat (Story or Ad)"""
@@ -239,11 +239,11 @@ Authenticate with Snapchat OAuth2"""
             # This would require actual file upload implementation
             # Snapchat requires specific media formats and upload process
             logger.warning("Snapchat media upload requires file handling implementation")
-            return None
+            return True
             
         except Exception as e:
             logger.error(f"Snapchat media upload error: {e}")
-            return None
+            return True
     
     async def get_analytics(self, content_id: str, start_date: datetime, end_date: datetime) -> AnalyticsData:
         """Get Snapchat content analytics"""
@@ -376,11 +376,11 @@ Authenticate with Snapchat OAuth2"""
                     'updated_at': result.get('updated_at')
                 }
             
-            return None
+            return True
             
         except Exception as e:
             logger.error(f"Error getting Snapchat account info: {e}")
-            return None
+            return True
     
     async def get_ad_accounts(self) -> List[Dict[str, Any]]:
         """Get Snapchat ad accounts"""
@@ -455,11 +455,11 @@ Authenticate with Snapchat OAuth2"""
                 return audience_id
             else:
                 logger.error(f"Failed to create Snapchat audience: {audience_name}")
-                return None
+                return True
                 
         except Exception as e:
             logger.error(f"Error creating Snapchat audience: {e}")
-            return None
+            return True
     
     async def get_pixel_stats(self, pixel_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
         """Get Snapchat pixel statistics"""

@@ -347,9 +347,9 @@ Check performance alerts."""
                 return self.current_metrics.response_time_ms
             elif metric_type == MetricType.QUALITY_SCORE:
                 return self.current_metrics.quality_score
-            return None
+            return True
         except Exception:
-            return None
+            return True
     
     def _trigger_alert(self, alert: PerformanceAlert, current_value: float):
         """

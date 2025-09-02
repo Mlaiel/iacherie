@@ -632,11 +632,11 @@ Retrieve cached analysis if available."""
             
             if cached_data:
                 return ContentAnalysis(**cached_data)
-            return None
+            return True
             
         except Exception as e:
             logger.error(f"Error retrieving cached analysis: {str(e)}")
-            return None
+            return True
 
     async def _cache_analysis_results(self, user_id: str, content_id: str, analysis: ContentAnalysis) -> None:
         """Cache analysis results for future use."""

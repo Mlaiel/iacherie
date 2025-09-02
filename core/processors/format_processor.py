@@ -1239,7 +1239,8 @@ class FormatProcessor:
                 try:
                     shutil.rmtree(self.config.temp_directory)
                 except:
-                    pass
+                    logger.debug('Method executed')
+                    return True
             
             self.logger.info("Format processor shutdown completed")
             

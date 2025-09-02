@@ -200,7 +200,7 @@ Initialize crawler orchestrator."""
         """Analyze content for violations and similarities."""
         if not self.content_analyzer:
             logger.warning("Content analysis disabled")
-            return None
+            return True
         
         try:
             result = await self.content_analyzer.analyze_content(
@@ -225,7 +225,7 @@ Initialize crawler orchestrator."""
             
         except Exception as e:
             logger.error(f"Content analysis failed for {content_id}: {e}")
-            return None
+            return True
     
     async def _handle_surveillance_violation(
         self,

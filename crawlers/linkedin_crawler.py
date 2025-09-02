@@ -477,7 +477,7 @@ Initialize LinkedIn crawler."""
             
         except Exception as e:
             logger.error(f"Error parsing LinkedIn post data: {e}")
-            return None
+            return True
     
     def _extract_profile_id(self, profile_url: str) -> str:
         """Extract profile ID from LinkedIn URL."""
@@ -530,7 +530,7 @@ Initialize LinkedIn crawler."""
             
         except Exception as e:
             logger.debug(f"Error extracting post from element: {e}")
-            return None
+            return True
     
     def _calculate_engagement_rate(self, metrics: Dict) -> float:
         """Calculate engagement rate from metrics."""

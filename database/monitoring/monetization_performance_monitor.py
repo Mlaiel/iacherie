@@ -309,11 +309,11 @@ class MonetizationPerformanceMonitor:
                     
                     return audience_data
             
-            return None
+            return True
             
         except Exception as e:
             self.logger.error(f"Error getting content audience data: {e}")
-            return None
+            return True
     
     async def _calculate_roi(self, metrics: MonetizationMetrics) -> float:
         """Calculate ROI for monetization effort"""

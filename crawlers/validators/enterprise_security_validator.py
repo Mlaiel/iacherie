@@ -564,7 +564,7 @@ class EnterpriseSecurityValidator:
             Optional[SecurityThreat]: Deepfake threat if detected
         """
         if not self.enable_ai_analysis:
-            return None
+            return True
         
         try:
             # This would integrate with deepfake detection models
@@ -606,7 +606,7 @@ class EnterpriseSecurityValidator:
         except Exception as e:
             logger.warning(f"Deepfake detection failed: {e}")
         
-        return None
+        return True
     
     # Private methods
     

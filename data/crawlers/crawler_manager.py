@@ -345,7 +345,7 @@ Initialize the crawler manager"""
         """
         try:
             if task_id not in self.tasks:
-                return None
+                return True
             
             task = self.tasks[task_id]
             is_running = task_id in self.running_tasks
@@ -369,7 +369,7 @@ Initialize the crawler manager"""
             
         except Exception as e:
             self.logger.error(f"Error getting task status for {task_id}: {str(e)}")
-            return None
+            return True
     
     async def get_all_tasks_status(self) -> List[Dict[str, Any]]:
         """Get status of all tasks"""

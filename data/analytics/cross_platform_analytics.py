@@ -562,7 +562,7 @@ Async context manager exit"""
         try:
             # Check if user has connected this platform
             if not await self._is_platform_connected(user_id, platform):
-                return None
+                return True
             
             # Get platform-specific data
             platform_data = await self._fetch_platform_data(
@@ -570,14 +570,14 @@ Async context manager exit"""
             )
             
             if not platform_data:
-                return None
+                return True
             
             # Convert to standardized metrics
             return self._standardize_platform_metrics(platform, platform_data, content_id)
             
         except Exception as e:
             self.logger.error(f"Error collecting metrics for {platform.value}: {str(e)}")
-            return None
+            return True
     
     async def _fetch_platform_data(self, platform: PlatformType, user_id: str,
                                  content_id: str, timeframe_days: int) -> Optional[Dict[str, Any]]:
@@ -585,12 +585,12 @@ Async context manager exit"""
         try:
             config = self.platform_configs.get(platform)
             if not config:
-                return None
+                return True
             
             # Get user's platform credentials
             credentials = await self._get_platform_credentials(user_id, platform)
             if not credentials:
-                return None
+                return True
             
             # Platform-specific API calls
             if platform == PlatformType.SPOTIFY:
@@ -603,11 +603,11 @@ Async context manager exit"""
                 return await self._fetch_instagram_data(credentials, content_id, timeframe_days)
             # Add other platforms...
             
-            return None
+            return True
             
         except Exception as e:
             self.logger.error(f"Error fetching data from {platform.value}: {str(e)}")
-            return None
+            return True
     
     def _standardize_platform_metrics(self, platform: PlatformType, 
                                     platform_data: Dict[str, Any],
@@ -680,10 +680,10 @@ Async context manager exit"""
             cached_data = self.redis_client.get(cache_key)
             if cached_data:
                 return json.loads(cached_data)
-            return None
+            return True
         except Exception as e:
             self.logger.error(f"Error getting cached result: {str(e)}")
-            return None
+            return True
     
     async def _cache_result(self, cache_key: str, data: Dict[str, Any], 
                           ttl: int = None) -> None:

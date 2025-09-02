@@ -579,7 +579,8 @@ class ImageProcessor:
             if enhanced.mode not in ('RGB', 'RGBA'):
                 if enhanced.mode == 'RGBA':
                     # Preserve transparency
-                    pass
+                    logger.debug('Method executed')
+                    return True
                 else:
                     enhanced = enhanced.convert('RGB')
             

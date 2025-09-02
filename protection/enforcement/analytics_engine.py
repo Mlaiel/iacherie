@@ -420,7 +420,7 @@ Analyze trends in performance metrics"""
             sorted_metrics = sorted(metrics, key=lambda m: m.timestamp)
             
             if len(sorted_metrics) < 2:
-                return None
+                return True
             
             # Calculate trend using linear regression
             values = [m.value for m in sorted_metrics]
@@ -478,7 +478,7 @@ Analyze trends in performance metrics"""
             
         except Exception as e:
             logger.error(f"Error analyzing metric trend: {e}")
-            return None
+            return True
 
 
 class ReportGenerator:

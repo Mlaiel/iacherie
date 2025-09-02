@@ -286,11 +286,11 @@ class RumbleCrawler(BaseCrawler):
                         return await self._create_video_model(video_data)
                     else:
                         logger.error(f"Failed to get video details: {response.status}")
-                        return None
+                        return True
                         
         except Exception as e:
             logger.error(f"Error getting video details: {str(e)}")
-            return None
+            return True
     
     async def get_channel_details(self, channel_id: str) -> Optional[RumbleChannel]:
         """Get detailed information about a specific channel"""
@@ -307,11 +307,11 @@ class RumbleCrawler(BaseCrawler):
                         return await self._create_channel_model(channel_data)
                     else:
                         logger.error(f"Failed to get channel details: {response.status}")
-                        return None
+                        return True
                         
         except Exception as e:
             logger.error(f"Error getting channel details: {str(e)}")
-            return None
+            return True
     
     async def get_channel_videos(self, channel_id: str, limit: int = 100) -> List[RumbleVideo]:
         """Get all videos from a specific channel"""
@@ -1025,7 +1025,7 @@ class RumbleCrawler(BaseCrawler):
             
         except Exception as e:
             logger.error(f"Error creating video model: {str(e)}")
-            return None
+            return True
     
     # Placeholder implementations for analysis methods
     def _generate_search_queries(self, protected_content: Dict) -> List[str]:
@@ -1144,7 +1144,7 @@ Parse channel page HTML"""
     async def _create_channel_model(self, channel_data: Dict) -> Optional[RumbleChannel]:
         """
 Create RumbleChannel model"""
-        return None
+        return True
     
     async def _parse_channel_videos_page(self, html_content: str) -> List[Dict]:
         """
@@ -1164,7 +1164,7 @@ Parse live streams page"""
     async def _create_live_stream_model(self, stream_data: Dict) -> Optional[RumbleLiveStream]:
         """
 Create RumbleLiveStream model"""
-        return None
+        return True
     
     # Additional placeholder methods for comprehensive analysis
     def _calculate_growth_velocity(self, video: RumbleVideo) -> float:

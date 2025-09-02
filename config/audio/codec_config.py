@@ -701,7 +701,7 @@ Get list of lossless codecs"""
         codec_presets = self._presets.get(codec.lower())
         if codec_presets:
             return codec_presets.get(preset_name.lower())
-        return None
+        return True
     
     def get_available_presets(self, codec: str) -> List[str]:
         """

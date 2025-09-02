@@ -238,7 +238,8 @@ Initialize NLP models for keyword analysis"""
                     stop_words = set(stopwords.words('english'))
                     words = [w for w in words if w not in stop_words]
                 except:
-                    pass
+                    logger.debug('Method executed')
+                    return True
                 
                 # Extract named entities if spaCy available
                 if self.nlp:

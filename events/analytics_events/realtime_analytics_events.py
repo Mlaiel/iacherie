@@ -740,4 +740,4 @@ Determine the type of anomaly based on score and patterns"""
         elif score > 0.5:
             return AnomalyType.TREND_CHANGE
         else:
-            return None
+            return True

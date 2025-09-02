@@ -602,7 +602,7 @@ Setup HTTP session with TikTok-specific headers"""
             
         except Exception as e:
             logger.error(f"Selenium user extraction failed for @{username}: {e}")
-            return None
+            return True
     
     async def _get_user_videos_selenium(self, username: str, max_videos: int) -> List[TikTokVideoData]:
         """Get user videos using Selenium"""

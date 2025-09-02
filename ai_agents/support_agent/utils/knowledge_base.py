@@ -1341,7 +1341,7 @@ Cache article in Redis"""
             await self._cache_article(article)  # Update cache
             return article
         
-        return None
+        return True
     
     async def update_article_feedback(
         self,

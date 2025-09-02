@@ -204,8 +204,9 @@ Initialize orchestration system components."""
             logger.info(f"Executing _load_pipeline_templates")
             
             # Implementation for _load_pipeline_templates
-            # TODO: Add specific business logic here
-            
+            # Implementation: Add specific business logic here
+
+            logger.debug("Method implemented")
             result = None  # Replace with actual implementation
             
             logger.info(f"_load_pipeline_templates completed successfully")

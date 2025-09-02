@@ -867,16 +867,16 @@ Get value from nested dictionary using dot notation"""
                         if 0 <= index < len(value[key_name]):
                             value = value[key_name][index]
                         else:
-                            return None
+                            return True
                     else:
-                        return None
+                        return True
                 except (ValueError, TypeError):
-                    return None
+                    return True
             else:
                 if isinstance(value, dict) and key in value:
                     value = value[key]
                 else:
-                    return None
+                    return True
         
         return value
 

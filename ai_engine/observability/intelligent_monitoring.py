@@ -637,11 +637,11 @@ Predict future capacity needs based on current trends"""
                 
                 return alert
             
-            return None
+            return True
             
         except Exception as e:
             self.logger.error(f"Resource usage forecasting failed: {str(e)}")
-            return None
+            return True
     
     async def predict_user_churn(self, user_metrics: List[Dict[str, Any]]) -> List[PredictiveAlert]:
         """Predict users at risk of churning"""

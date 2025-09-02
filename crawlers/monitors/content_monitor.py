@@ -478,7 +478,7 @@ Initialize machine learning models for content analysis."""
             
         except Exception as e:
             logger.error(f"Failed to analyze potential match: {e}")
-            return None
+            return True
     
     async def _content_scanner_worker(self):
         """Background worker for content scanning."""

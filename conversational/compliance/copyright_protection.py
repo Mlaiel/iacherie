@@ -252,7 +252,7 @@ class CopyrightProtectionEngine:
             )
             
             if not matches:
-                return None
+                return True
             
             # Analyze best match
             best_match = max(matches, key=lambda x: x["similarity_score"])
@@ -261,7 +261,7 @@ class CopyrightProtectionEngine:
             threshold = self.config["similarity_threshold"][suspicious_content["type"]]
             
             if best_match["similarity_score"] < threshold:
-                return None
+                return True
             
             # Determine infringement severity
             severity = self._calculate_infringement_severity(
@@ -302,7 +302,7 @@ class CopyrightProtectionEngine:
             
         except Exception as e:
             self.logger.error(f"Error detecting copyright infringement: {str(e)}")
-            return None
+            return True
     
     async def verify_content_license(self, 
                                    content_id: str, 

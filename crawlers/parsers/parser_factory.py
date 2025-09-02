@@ -475,10 +475,10 @@ Auto-detect parser type based on content information"""
                 elif content_type == 'markdown':
                     return ParserType.CONTENT_MARKDOWN
             
-            return None
+            return True
             
         except Exception:
-            return None
+            return True
     
     def create_parser_pipeline(self, parser_types: List[Union[ParserType, str]], use_cache: bool = True) -> List[Any]:
         """

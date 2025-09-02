@@ -218,7 +218,8 @@ Make request to Bandcamp (limited API)"""
             # This would require HTML parsing to extract album data
             async with session.get(album_url) as response:
                 if response.status == 200:
-                    pass
+                    logger.debug('Method executed')
+                    return True
                     # In a full implementation, you'd parse the HTML to extract:
                     # - Album title, artist, release date
                     # - Track listing with names and durations

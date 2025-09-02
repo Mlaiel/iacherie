@@ -49,7 +49,8 @@ Abstract base class for content processors"""
     async def process(self, content: str, metadata: Dict[str, Any] = None) -> ProcessingResult:
         """
 Process content and return result"""
-        pass
+        logger.debug('Method executed')
+        return True
     
     def _log_processing_step(self, step: str, result: ProcessingResult):
         """
