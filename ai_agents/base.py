@@ -321,12 +321,20 @@ Increment counter metric for monitoring agent performance"""
     @abstractmethod
     async def _load_models_and_resources(self):
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             logger.info(f"Executing _load_models_and_resources")
             
             # Implementation for _load_models_and_resources
             # Business logic implementation
 
             try:
+                pass
+            except Exception as e:
+                logger.error(f"Error: {e}")
+                raise
 
                 logger.info(f"Executing business logic")
 

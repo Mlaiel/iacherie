@@ -192,7 +192,7 @@ Individual cache entry with metadata"""
 
 class IntelligentCacheManager(ABC):
     """
-    🎯 Advanced Intelligent Cache Manager - IA-Influencer-Agent
+    Advanced Intelligent Cache Manager - IA-Influencer-Agent
     
     Enterprise-grade multi-tier intelligent caching system featuring:
     - Hierarchical caching (L1 memory → L2 Redis → L4 CDN → L5 global)
@@ -226,7 +226,7 @@ class IntelligentCacheManager(ABC):
         self._operation_semaphore = asyncio.Semaphore(self.config.max_concurrent_operations)
         self._lock = asyncio.Lock()
         
-        logger.info(f"🎯 Initializing {self.__class__.__name__} with intelligent caching")
+        logger.info(f"Initializing {self.__class__.__name__} with intelligent caching")
     
     @abstractmethod
     async def initialize_cache_system(self) -> bool:
@@ -242,21 +242,30 @@ class IntelligentCacheManager(ABC):
             return result
             
         except Exception as e:
+            logger.error(f"initialize_cache_system failed: {e}")
+            raise
+    
+    async def cache_operation(self, key: str) -> Any:
+        """Perform cache operation"""
         try:
-                    # Request validation
-                    if not key:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle_get_request(key)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler get failed: {e}")
-                    return {"status": "error", "message": str(e)}
-            cache_levels: Specific cache levels to search
+            # Request validation
+            if not key:
+                raise ValueError("Invalid request")
+    
+            # Process request
+            result = await self._handle_get_request(key)
+    
+            # Return response
+            return {"status": "success", "data": result}
+    
+        except Exception as e:
+            logger.error(f"cache_operation failed: {e}")
+            raise
+    
+    async def _handle_get_request(self, key: str) -> Any:
+        """Handle get request implementation"""
+        # Default implementation
+        return f"data_for_{key}"
             
         Returns:
             Cached value or default
@@ -972,20 +981,20 @@ CacheManager = IntelligentCacheManager
 
 class CacheManagerDocumentation:
     """
-    🎯 Gestionnaire CacheManager - IA-Influencer-Agent
+    Advanced Cache Manager - IA-Influencer-Agent
     
-    Responsabilité:
-    Gestion du cache Redis distribué
+    Responsibility:
+    Redis distributed cache management
     
     Technologies:
     Redis Cluster, Redis Sentinel
     
-    Fonctionnalités:
-    - Gestion de pool de ressources optimisée
-    - Monitoring en temps réel des performances
-    - Auto-scaling basé sur la charge
-    - Gestion d'erreurs avec circuit breaker
-    - Nettoyage automatique des ressources
+    Features:
+    - Optimized resource pool management
+    - Real-time performance monitoring
+    - Load-based auto-scaling
+    - Error handling with circuit breaker
+    - Automatic resource cleanup
     """
     
     def __init__(self, config: CacheConfig = None):
@@ -1025,7 +1034,7 @@ class CacheManagerDocumentation:
             "failed_requests": 0,
             "average_response_time": 0.0
         }
-        logger.info(f"🎯 Initialisation {self.__class__.__name__}")
+        logger.info(f"Initialisation {self.__class__.__name__}")
     
     @abstractmethod
     async def initialize_pool(self) -> bool:

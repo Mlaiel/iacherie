@@ -74,6 +74,11 @@ class AnalyticsManager(ABC):
             return result
             
         except Exception as e:
+            logger.error(f"initialize_pool failed: {e}")
+            raise
+    
+    async def acquire_resource(self) -> Any:
+        """Acquire a resource from the pool"""
         try:
             logger.info(f"Executing acquire_resource")
             
@@ -86,6 +91,11 @@ class AnalyticsManager(ABC):
             return result
             
         except Exception as e:
+            logger.error(f"acquire_resource failed: {e}")
+            raise
+    
+    async def release_resource_impl(self) -> Any:
+        """Release a resource implementation"""
         try:
             logger.info(f"Executing release_resource")
             
