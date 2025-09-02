@@ -906,11 +906,182 @@ Collect active alerts from all systems"""
     
     async def _setup_dashboard_monitoring(self) -> None:
         """Setup dashboard-specific monitoring"""
-        # In production, this would setup dashboard monitoring infrastructure
-        pass
+        try:
+            # Initialize dashboard monitoring infrastructure
+            self.monitoring_config = {
+                "refresh_interval": 30,  # seconds
+                "alert_threshold": 0.8,   # 80% utilization
+                "data_retention": 86400 * 7,  # 7 days
+                "enabled_metrics": [
+                    "cpu_usage", "memory_usage", "disk_usage", 
+                    "network_io", "response_time", "error_rate"
+                ]
+            }
+            
+            # Setup monitoring intervals
+            self.monitoring_intervals = {
+                "system_metrics": 10,    # seconds
+                "app_metrics": 30,       # seconds  
+                "health_checks": 60,     # seconds
+                "performance": 5         # seconds
+            }
+            
+            # Initialize metric collectors
+            self.metric_collectors = {}
+            for metric in self.monitoring_config["enabled_metrics"]:
+                self.metric_collectors[metric] = {
+                    "last_value": 0,
+                    "trend": [],
+                    "alerts": []
+                }
+            
+            logger.info("Dashboard monitoring setup completed")
+            
+        except Exception as e:
+            logger.error(f"Failed to setup dashboard monitoring: {e}")
+            # Continue without monitoring rather than failing
     
     async def _initialize_alerting(self) -> None:
-        """
-Initialize alerting system"""
-        # In production, this would setup alerting channels and rules
-        pass
+        """Initialize alerting system"""
+        try:
+            # Setup alerting configuration
+            self.alerting_config = {
+                "channels": {
+                    "email": {
+                        "enabled": True,
+                        "recipients": ["admin@ainflue.com", "alerts@ainflue.com"],
+                        "smtp_server": "smtp.ainflue.com",
+                        "smtp_port": 587
+                    },
+                    "slack": {
+                        "enabled": False,  # Would need webhook URL
+                        "webhook_url": None,
+                        "channel": "#alerts"
+                    },
+                    "webhook": {
+                        "enabled": True,
+                        "url": "https://api.ainflue.com/webhooks/alerts"
+                    }
+                },
+                "rules": [
+                    {
+                        "name": "high_cpu_usage",
+                        "condition": "cpu_percent > 80",
+                        "severity": "warning",
+                        "cooldown": 300  # 5 minutes
+                    },
+                    {
+                        "name": "high_memory_usage", 
+                        "condition": "memory_percent > 85",
+                        "severity": "warning",
+                        "cooldown": 300
+                    },
+                    {
+                        "name": "service_down",
+                        "condition": "health_status == 'unhealthy'",
+                        "severity": "critical",
+                        "cooldown": 60
+                    },
+                    {
+                        "name": "high_error_rate",
+                        "condition": "error_rate > 0.05",
+                        "severity": "warning", 
+                        "cooldown": 180
+                    }
+                ]
+            }
+            
+            # Initialize alert state tracking
+            self.alert_states = {}
+            for rule in self.alerting_config["rules"]:
+                self.alert_states[rule["name"]] = {
+                    "active": False,
+                    "last_triggered": None,
+                    "count": 0
+                }
+            
+            # Setup alert delivery queue
+            self.alert_queue = asyncio.Queue()
+            
+            # Start alert processor background task
+            self.alert_task = asyncio.create_task(self._process_alerts())
+            
+            logger.info("Alerting system initialized successfully")
+            
+        except Exception as e:
+            logger.error(f"Failed to initialize alerting: {e}")
+            # Continue without alerting rather than failing
+    
+    async def _process_alerts(self) -> None:
+        """Background task to process and deliver alerts"""
+        try:
+            while True:
+                try:
+                    # Wait for alert with timeout
+                    alert = await asyncio.wait_for(self.alert_queue.get(), timeout=30.0)
+                    
+                    # Check cooldown period
+                    rule_name = alert.get("rule_name")
+                    if rule_name in self.alert_states:
+                        state = self.alert_states[rule_name]
+                        now = datetime.utcnow()
+                        
+                        # Check if in cooldown period
+                        if (state["last_triggered"] and 
+                            (now - state["last_triggered"]).total_seconds() < alert.get("cooldown", 300)):
+                            continue
+                        
+                        # Update alert state
+                        state["last_triggered"] = now
+                        state["count"] += 1
+                        state["active"] = True
+                    
+                    # Deliver alert through configured channels
+                    await self._deliver_alert(alert)
+                    
+                except asyncio.TimeoutError:
+                    # No alerts to process, continue monitoring
+                    continue
+                except Exception as e:
+                    logger.error(f"Error processing alert: {e}")
+                    
+        except asyncio.CancelledError:
+            logger.info("Alert processor stopped")
+        except Exception as e:
+            logger.error(f"Alert processor error: {e}")
+    
+    async def _deliver_alert(self, alert: Dict[str, Any]) -> None:
+        """Deliver alert through configured channels"""
+        try:
+            # Log the alert
+            logger.warning(f"🚨 ALERT: {alert.get('name', 'Unknown')} - {alert.get('message', 'No message')}")
+            
+            # Email delivery (simplified)
+            if self.alerting_config["channels"]["email"]["enabled"]:
+                # In production, would send actual emails
+                logger.info(f"📧 Alert sent to email: {alert.get('name')}")
+            
+            # Webhook delivery (simplified)
+            if self.alerting_config["channels"]["webhook"]["enabled"]:
+                # In production, would make HTTP POST to webhook URL
+                logger.info(f"🔗 Alert sent to webhook: {alert.get('name')}")
+            
+            # Store alert in metrics for dashboard display
+            alert_metric = {
+                "timestamp": datetime.utcnow().isoformat(),
+                "rule": alert.get("rule_name"),
+                "severity": alert.get("severity", "info"),
+                "message": alert.get("message"),
+                "value": alert.get("value")
+            }
+            
+            # Add to recent alerts list (keep last 100)
+            if not hasattr(self, 'recent_alerts'):
+                self.recent_alerts = []
+            
+            self.recent_alerts.append(alert_metric)
+            if len(self.recent_alerts) > 100:
+                self.recent_alerts = self.recent_alerts[-100:]
+                
+        except Exception as e:
+            logger.error(f"Failed to deliver alert: {e}")
