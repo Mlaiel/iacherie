@@ -23,14 +23,16 @@ def utc_now() -> datetime:
 
 class ProtectionLevel(Enum):
     """Content protection levels"""
-    BASIC = "basic"    STANDARD = "standard"
+    BASIC = "basic"
+    STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
 
 
 class ContentType(Enum):
     """Supported content types for protection"""
-    AUDIO = "audio"    VIDEO = "video"
+    AUDIO = "audio"
+    VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
     DOCUMENT = "document"
@@ -39,7 +41,8 @@ class ContentType(Enum):
 @dataclass
 class ProtectionResult:
     """Result of content protection operation"""
-    success: bool    protection_id: str
+    success: bool
+    protection_id: str
     protection_level: ProtectionLevel
     watermark_applied: bool
     fingerprint_created: bool
@@ -54,7 +57,8 @@ class ProtectionResult:
 @dataclass
 class ContentItem:
     """Content item to be protected"""
-    content_id: str    creator_id: str
+    content_id: str
+    creator_id: str
     content_type: ContentType
     file_path: Optional[str] = None
     content_data: Optional[bytes] = None
@@ -75,7 +79,8 @@ class ContentProtector:
     """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         """Initialize content protector"""
-        self.config = config or {}        self.logger = logging.getLogger(__name__)
+        self.config = config or {}
+        self.logger = logging.getLogger(__name__)
         
         # Protection components
         self._watermark_engine = None
@@ -99,7 +104,8 @@ class ContentProtector:
     
     async def initialize(self) -> bool:
         """Initialize all protection components"""
-        try:            self.logger.info("Initializing content protection system...")
+        try:
+            self.logger.info("Initializing content protection system...")
             
             # Initialize protection engines
             await self._init_watermark_engine()
@@ -123,7 +129,7 @@ class ContentProtector:
         protection_level: ProtectionLevel = ProtectionLevel.STANDARD,
         options: Optional[Dict[str, Any]] = None
     ) -> ProtectionResult:
-        """        Apply comprehensive protection to content
+        """Apply comprehensive protection to content
         
         Args:
             content: Content item to protect
@@ -132,7 +138,8 @@ class ContentProtector:
             
         Returns:
             ProtectionResult with protection details
-        """        try:
+        """
+        try:
             self.logger.info(f"Protecting content {content.content_id} with level {protection_level.value}")
             
             # Generate protection ID
@@ -211,7 +218,8 @@ class ContentProtector:
     
     async def verify_protection(self, protection_id: str) -> Dict[str, Any]:
         """Verify the status and integrity of content protection"""
-        try:            if protection_id in self._protection_cache:
+        try:
+            if protection_id in self._protection_cache:
                 result = self._protection_cache[protection_id]
                 
                 # Check if protection is still valid
