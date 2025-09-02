@@ -709,6 +709,101 @@ Start automated revenue synchronization"""
     async def _sync_all_users(self):
         """
 Sync revenue for all users with connected platforms"""
-        # This would get all users from database and sync their platforms
-        # Implementation depends on your user management system
-        pass
+        try:
+            # Get all users with platform connections from database
+            users_to_sync = await self._get_users_with_platform_connections()
+            
+            self.logger.info(f"Starting revenue sync for {len(users_to_sync)} users")
+            
+            # Process users in batches to avoid overwhelming the system
+            batch_size = 10
+            successful_syncs = 0
+            failed_syncs = 0
+            
+            for i in range(0, len(users_to_sync), batch_size):
+                batch = users_to_sync[i:i + batch_size]
+                
+                # Create tasks for concurrent processing
+                sync_tasks = []
+                for user in batch:
+                    task = asyncio.create_task(self._sync_user_platforms(user))
+                    sync_tasks.append(task)
+                
+                # Wait for batch to complete
+                batch_results = await asyncio.gather(*sync_tasks, return_exceptions=True)
+                
+                # Process results
+                for j, result in enumerate(batch_results):
+                    user = batch[j]
+                    if isinstance(result, Exception):
+                        self.logger.error(f"Failed to sync user {user.get('user_id', 'unknown')}: {result}")
+                        failed_syncs += 1
+                    else:
+                        successful_syncs += 1
+                        if result:  # If sync returned data
+                            self.logger.debug(f"Successfully synced user {user.get('user_id', 'unknown')}")
+                
+                # Brief pause between batches
+                await asyncio.sleep(1)
+            
+            self.logger.info(f"Revenue sync completed. Success: {successful_syncs}, Failed: {failed_syncs}")
+            
+        except Exception as e:
+            self.logger.error(f"Error during automated user sync: {e}")
+    
+    async def _get_users_with_platform_connections(self) -> List[Dict[str, Any]]:
+        """Get all users who have connected platform accounts"""
+        try:
+            # In a real implementation, this would query the database
+            # For now, return a sample structure
+            return [
+                {
+                    'user_id': 'user_123',
+                    'platforms': [PlatformType.SPOTIFY, PlatformType.YOUTUBE],
+                    'auth_tokens': {'spotify': 'token_123', 'youtube': 'token_456'}
+                },
+                {
+                    'user_id': 'user_456', 
+                    'platforms': [PlatformType.INSTAGRAM, PlatformType.TIKTOK],
+                    'auth_tokens': {'instagram': 'token_789', 'tiktok': 'token_012'}
+                }
+            ]
+            
+        except Exception as e:
+            self.logger.error(f"Failed to get users with platform connections: {e}")
+            return []
+    
+    async def _sync_user_platforms(self, user: Dict[str, Any]) -> bool:
+        """Sync revenue data for all platforms connected to a user"""
+        try:
+            user_id = user.get('user_id')
+            platforms = user.get('platforms', [])
+            auth_tokens = user.get('auth_tokens', {})
+            
+            sync_success = True
+            
+            for platform in platforms:
+                try:
+                    # Get auth token for this platform
+                    token = auth_tokens.get(platform.value)
+                    if not token:
+                        self.logger.warning(f"No auth token for {platform.value} for user {user_id}")
+                        continue
+                    
+                    # Sync revenue for this platform
+                    revenue_data = await self.sync_platform_revenue(user_id, platform, token)
+                    
+                    if revenue_data:
+                        self.logger.debug(f"Synced {platform.value} revenue for user {user_id}")
+                    else:
+                        self.logger.warning(f"No revenue data found for {platform.value} for user {user_id}")
+                        
+                except Exception as e:
+                    self.logger.error(f"Failed to sync {platform.value} for user {user_id}: {e}")
+                    sync_success = False
+                    
+            return sync_success
+            
+        except Exception as e:
+            self.logger.error(f"Failed to sync user platforms: {e}")
+            return False

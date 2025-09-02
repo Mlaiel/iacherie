@@ -507,7 +507,7 @@ class ContentRepository(BaseRepository[ContentModel]):
             self.logger.error(f"Error updating content {content.id}: {e}")
             raise
     
-    def delete(self, entity_id: str, soft_delete: bool = False) -> bool:
+    async def delete(self, entity_id: str, soft_delete: bool = False) -> bool:
         """Delete content with protection cleanup"""
         try:
             # Get content for audit

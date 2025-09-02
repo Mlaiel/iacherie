@@ -781,36 +781,186 @@ Configure maximum concurrent operations"""
         self._max_concurrent_operations = max_concurrent
         return self
     
-    @abstractmethod
     async def create(self, entity: T, **kwargs) -> T:
         """
 Create new entity asynchronously with validation and audit"""
-        pass
+        try:
+            # Validate entity
+            self._validate_entity(entity)
+            
+            # Log audit entry
+            if self._audit_enabled and self.audit_service:
+                self._log_audit(
+                    OperationType.CREATE,
+                    new_values=asdict(entity) if hasattr(entity, '__dataclass_fields__') else entity.__dict__,
+                    metadata=kwargs
+                )
+            
+            # Perform actual creation (to be implemented by subclasses)
+            result = await self._perform_create(entity, **kwargs)
+            
+            # Invalidate cache for list operations
+            if self._cache_enabled and self.cache:
+                await self._invalidate_list_cache()
+            
+            self.logger.info(f"Created entity: {type(entity).__name__}")
+            return result
+            
+        except Exception as e:
+            self.logger.error(f"Error creating entity: {e}")
+            raise
     
-    @abstractmethod
     async def get_by_id(self, entity_id: str, use_cache: bool = True) -> Optional[T]:
         """
 Get entity by ID asynchronously with cache support"""
-        pass
+        try:
+            cache_key = f"{self.__class__.__name__}:get_by_id:{entity_id}"
+            
+            # Check cache first
+            if use_cache and self._cache_enabled and self.cache:
+                cached_result = await self._get_from_cache(cache_key)
+                if cached_result:
+                    self.logger.debug(f"Cache hit for entity ID: {entity_id}")
+                    return cached_result
+            
+            # Perform actual lookup (to be implemented by subclasses)
+            result = await self._perform_get_by_id(entity_id)
+            
+            # Cache the result
+            if result and use_cache and self._cache_enabled and self.cache:
+                await self._set_cache(cache_key, result, self._cache_ttl)
+            
+            # Log audit entry for read operation
+            if self._audit_enabled and self.audit_service:
+                self._log_audit(
+                    OperationType.READ,
+                    entity_id=entity_id,
+                    metadata={'cache_hit': use_cache and result is not None}
+                )
+            
+            return result
+            
+        except Exception as e:
+            self.logger.error(f"Error getting entity by ID {entity_id}: {e}")
+            raise
     
-    @abstractmethod
     async def update(self, entity: T, **kwargs) -> T:
         """
 Update entity asynchronously with validation and audit"""
-        pass
+        try:
+            # Validate entity
+            self._validate_entity(entity)
+            
+            # Get old values for audit
+            old_values = None
+            if self._audit_enabled and hasattr(entity, 'id'):
+                old_entity = await self.get_by_id(str(entity.id), use_cache=False)
+                if old_entity:
+                    old_values = asdict(old_entity) if hasattr(old_entity, '__dataclass_fields__') else old_entity.__dict__
+            
+            # Perform actual update (to be implemented by subclasses)
+            result = await self._perform_update(entity, **kwargs)
+            
+            # Log audit entry
+            if self._audit_enabled and self.audit_service:
+                new_values = asdict(result) if hasattr(result, '__dataclass_fields__') else result.__dict__
+                self._log_audit(
+                    OperationType.UPDATE,
+                    entity_id=str(entity.id) if hasattr(entity, 'id') else None,
+                    old_values=old_values,
+                    new_values=new_values,
+                    metadata=kwargs
+                )
+            
+            # Invalidate cache
+            if self._cache_enabled and self.cache and hasattr(entity, 'id'):
+                cache_key = f"{self.__class__.__name__}:get_by_id:{entity.id}"
+                await self._delete_from_cache(cache_key)
+                await self._invalidate_list_cache()
+            
+            return result
+            
+        except Exception as e:
+            self.logger.error(f"Error updating entity: {e}")
+            raise
     
-    @abstractmethod
     async def delete(self, entity_id: str, soft_delete: bool = False) -> bool:
         """
 Delete entity asynchronously with soft delete option"""
-        pass
+        try:
+            # Get entity for audit
+            old_entity = None
+            if self._audit_enabled:
+                old_entity = await self.get_by_id(entity_id, use_cache=False)
+            
+            # Perform actual deletion (to be implemented by subclasses)
+            success = await self._perform_delete(entity_id, soft_delete)
+            
+            if success:
+                # Log audit entry
+                if self._audit_enabled and self.audit_service:
+                    old_values = asdict(old_entity) if old_entity and hasattr(old_entity, '__dataclass_fields__') else (old_entity.__dict__ if old_entity else {})
+                    self._log_audit(
+                        OperationType.DELETE,
+                        entity_id=entity_id,
+                        old_values=old_values,
+                        metadata={'soft_delete': soft_delete}
+                    )
+                
+                # Invalidate cache
+                if self._cache_enabled and self.cache:
+                    cache_key = f"{self.__class__.__name__}:get_by_id:{entity_id}"
+                    await self._delete_from_cache(cache_key)
+                    await self._invalidate_list_cache()
+                
+                self.logger.info(f"{'Soft ' if soft_delete else ''}Deleted entity ID: {entity_id}")
+            
+            return success
+            
+        except Exception as e:
+            self.logger.error(f"Error deleting entity {entity_id}: {e}")
+            raise
     
-    @abstractmethod
     async def list(self, filters: Dict[str, Any] = None, limit: int = 100, 
                   offset: int = 0, order_by: str = None) -> List[T]:
         """
 List entities asynchronously with advanced filtering and ordering"""
-        pass
+        try:
+            cache_key = f"{self.__class__.__name__}:list:{hashlib.md5(str(filters).encode()).hexdigest()}:{limit}:{offset}:{order_by}"
+            
+            # Check cache first
+            if self._cache_enabled and self.cache:
+                cached_result = await self._get_from_cache(cache_key)
+                if cached_result:
+                    self.logger.debug(f"Cache hit for list operation")
+                    return cached_result
+            
+            # Perform actual listing (to be implemented by subclasses)
+            results = await self._perform_list(filters, limit, offset, order_by)
+            
+            # Cache the results
+            if self._cache_enabled and self.cache:
+                await self._set_cache(cache_key, results, self._cache_ttl // 2)  # Shorter TTL for lists
+            
+            # Log audit entry for list operation
+            if self._audit_enabled and self.audit_service:
+                self._log_audit(
+                    OperationType.READ,
+                    metadata={
+                        'operation': 'list',
+                        'filters': filters,
+                        'limit': limit,
+                        'offset': offset,
+                        'order_by': order_by,
+                        'result_count': len(results)
+                    }
+                )
+            
+            return results
+            
+        except Exception as e:
+            self.logger.error(f"Error listing entities: {e}")
+            raise
     
     async def bulk_create(self, entities: List[T], batch_size: Optional[int] = None) -> List[T]:
         """
