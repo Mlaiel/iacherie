@@ -705,9 +705,39 @@ Apply aggregation method to data"""
     def _cache_values(self, cache_key: str, values: List[MetricValue]):
         """Cache metric values"""
         try:
-            # Simple in-memory cache
-            # In real implementation, would use Redis or similar
-            pass
+            # Simple in-memory cache implementation with TTL
+            if not hasattr(self, '_cache'):
+                self._cache = {}
+                self._cache_timestamps = {}
+            
+            # Store values with timestamp
+            cache_entry = {
+                'values': [value.__dict__ if hasattr(value, '__dict__') else value for value in values],
+                'timestamp': datetime.now(),
+                'count': len(values)
+            }
+            
+            self._cache[cache_key] = cache_entry
+            self._cache_timestamps[cache_key] = datetime.now()
+            
+            # Implement cache TTL (Time To Live) - 1 hour by default
+            cache_ttl = timedelta(hours=1)
+            current_time = datetime.now()
+            
+            # Clean expired entries
+            expired_keys = [
+                key for key, timestamp in self._cache_timestamps.items()
+                if current_time - timestamp > cache_ttl
+            ]
+            
+            for key in expired_keys:
+                if key in self._cache:
+                    del self._cache[key]
+                if key in self._cache_timestamps:
+                    del self._cache_timestamps[key]
+            
+            logger.debug(f"Cached {len(values)} values for key: {cache_key}")
+            
         except Exception as e:
             logger.error(f"Error caching values: {e}")
     
