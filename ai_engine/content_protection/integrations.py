@@ -531,8 +531,27 @@ Validate integration configuration"""
         
         # Add retry configuration if specified
         if config.retry_config:
-            # Add retry logic configuration
-            pass
+            # Configure retry logic with exponential backoff
+            import aiohttp_retry
+            
+            # Create retry options
+            retry_options = aiohttp_retry.ExponentialRetry(
+                attempts=config.retry_config.get('max_attempts', 3),
+                start_timeout=config.retry_config.get('start_timeout', 1.0),
+                max_timeout=config.retry_config.get('max_timeout', 30.0),
+                factor=config.retry_config.get('backoff_factor', 2.0),
+                statuses=config.retry_config.get('retry_statuses', [500, 502, 503, 504, 429])
+            )
+            
+            # Add retry client wrapper
+            session_config['connector_owner'] = False
+            original_connector = session_config.get('connector')
+            retry_client = aiohttp_retry.RetryClient(
+                client_session=aiohttp.ClientSession(**session_config),
+                retry_options=retry_options,
+                raise_for_status=config.retry_config.get('raise_for_status', False)
+            )
+            return retry_client
         
         session = aiohttp.ClientSession(**session_config)
         self._http_sessions[config.integration_id] = session

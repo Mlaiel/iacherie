@@ -1144,12 +1144,88 @@ Check protection status of stream"""
         return "unprotected"
 
     async def _enrich_stream_data(self, stream: KickStream):
-        """Enrich stream data with additional metrics"""
+        """Enrich stream data with additional metrics and analysis"""
         try:
-            # This would make additional API calls to get more detailed metrics
-            pass
+            # Calculate derived metrics
+            if stream.started_at and stream.ended_at:
+                stream.duration = int((stream.ended_at - stream.started_at).total_seconds())
+            elif stream.started_at and stream.status == KickStreamStatus.LIVE:
+                stream.duration = int((datetime.utcnow() - stream.started_at).total_seconds())
+            
+            # Estimate unique viewers (typically 60-80% of total views for gaming streams)
+            if stream.total_views > 0 and stream.unique_viewers == 0:
+                stream.unique_viewers = int(stream.total_views * 0.7)
+            
+            # Calculate engagement metrics
+            if stream.duration > 0:
+                avg_concurrent_viewers = stream.total_views / (stream.duration / 3600)
+                stream.user.streaming_stats.update({
+                    'avg_concurrent_viewers': avg_concurrent_viewers,
+                    'viewer_retention_rate': min(stream.peak_viewers / max(stream.current_viewers, 1), 2.0),
+                    'engagement_score': self._calculate_stream_engagement_score(stream)
+                })
+            
+            # Estimate follower conversion rate
+            if stream.current_viewers > 0:
+                estimated_conversion_rate = stream.followers_gained / stream.current_viewers
+                stream.user.streaming_stats['follower_conversion_rate'] = estimated_conversion_rate
+            
+            # Update user's overall statistics
+            stream.user.total_streams += 1
+            if stream.duration > 0:
+                stream.user.total_watch_time += stream.duration // 60
+            
+            if stream.peak_viewers > stream.user.peak_viewers:
+                stream.user.peak_viewers = stream.peak_viewers
+            
+            # Calculate average viewers for user
+            if stream.user.total_streams > 0:
+                stream.user.average_viewers = (
+                    (stream.user.average_viewers * (stream.user.total_streams - 1) + 
+                     stream.current_viewers) / stream.user.total_streams
+                )
+            
+            logger.debug(f"Enriched stream data for {stream.stream_id}")
+            
         except Exception as e:
             logger.error(f"Error enriching stream data: {str(e)}")
+    
+    def _calculate_stream_engagement_score(self, stream: KickStream) -> float:
+        """Calculate engagement score for a stream"""
+        try:
+            score = 0.0
+            
+            # Viewer engagement (30% weight)
+            if stream.current_viewers > 0:
+                viewer_ratio = min(stream.peak_viewers / stream.current_viewers, 2.0)
+                score += viewer_ratio * 0.3
+            
+            # Growth metrics (25% weight)
+            if stream.current_viewers > 0:
+                follower_growth_rate = stream.followers_gained / stream.current_viewers
+                score += min(follower_growth_rate * 100, 1.0) * 0.25
+            
+            # Stream duration factor (20% weight)
+            if stream.duration > 0:
+                duration_hours = stream.duration / 3600
+                duration_score = min(duration_hours / 4, 1.0)  # Optimal around 4 hours
+                score += duration_score * 0.2
+            
+            # Chat activity estimate (15% weight)
+            # Estimate based on viewer count (active chats typically 5-15% of viewers)
+            estimated_chat_rate = min(stream.current_viewers * 0.1 / max(stream.current_viewers, 1), 1.0)
+            score += estimated_chat_rate * 0.15
+            
+            # Category popularity bonus (10% weight)
+            popular_categories = [KickStreamCategory.GAMING, KickStreamCategory.IRL]
+            if stream.category in popular_categories:
+                score += 0.1
+            
+            return min(score, 1.0)
+            
+        except Exception as e:
+            logger.debug(f"Error calculating engagement score: {str(e)}")
+            return 0.0
 
     async def _get_user_streams_in_period(
         self,
@@ -1158,8 +1234,143 @@ Check protection status of stream"""
         end_time: datetime
     ) -> List[KickStream]:
         """Get user's streams in a specific time period"""
-        # This would require additional API calls or database queries
-        return []
+        try:
+            # Check cache first
+            cache_key = f"user_streams:{user_id}:{start_time.date()}:{end_time.date()}"
+            cached_streams = await self.cache_manager.get(cache_key)
+            if cached_streams:
+                return [KickStream(**stream_data) for stream_data in cached_streams]
+            
+            streams = []
+            
+            # Get user's recent streams (Kick API doesn't provide date filtering)
+            user_url = f"{self.api_base}/user/{user_id}"
+            
+            async with aiohttp.ClientSession(headers=self.session_headers) as session:
+                await self.rate_limiter.wait()
+                
+                async with session.get(user_url) as response:
+                    if response.status == 200:
+                        user_data = await response.json()
+                        
+                        # Get recent streams from user data
+                        if 'recent_streams' in user_data:
+                            for stream_data in user_data['recent_streams']:
+                                stream_start = datetime.fromisoformat(stream_data.get('started_at', ''))
+                                
+                                # Filter by date range
+                                if start_time <= stream_start <= end_time:
+                                    # Convert to our KickStream model
+                                    stream = await self._create_stream_from_api_data(stream_data)
+                                    if stream:
+                                        streams.append(stream)
+                    
+                    # If no direct stream data, try to get from streams endpoint
+                    if not streams:
+                        streams_url = f"{self.api_base}/user/{user_id}/streams"
+                        
+                        async with session.get(streams_url) as streams_response:
+                            if streams_response.status == 200:
+                                streams_data = await streams_response.json()
+                                
+                                for stream_data in streams_data.get('data', []):
+                                    stream_start = datetime.fromisoformat(stream_data.get('started_at', ''))
+                                    
+                                    if start_time <= stream_start <= end_time:
+                                        stream = await self._create_stream_from_api_data(stream_data)
+                                        if stream:
+                                            streams.append(stream)
+            
+            # Cache the results for 1 hour
+            await self.cache_manager.set(
+                cache_key, 
+                [stream.dict() for stream in streams], 
+                ttl=3600
+            )
+            
+            logger.info(f"Retrieved {len(streams)} streams for user {user_id} in period {start_time} to {end_time}")
+            return streams
+            
+        except Exception as e:
+            logger.error(f"Error getting user streams in period: {str(e)}")
+            return []
+    
+    async def _create_stream_from_api_data(self, stream_data: Dict) -> Optional[KickStream]:
+        """Create KickStream object from API response data"""
+        try:
+            # Create user object
+            user_data = stream_data.get('user', {})
+            user = KickUser(
+                user_id=str(user_data.get('id', 0)),
+                username=user_data.get('username', ''),
+                display_name=user_data.get('display_name', user_data.get('username', '')),
+                bio=user_data.get('bio'),
+                profile_picture_url=user_data.get('profile_picture'),
+                banner_url=user_data.get('banner_image'),
+                followers_count=user_data.get('followers_count', 0),
+                following_count=user_data.get('following_count', 0),
+                is_verified=user_data.get('verified', False),
+                is_partner=user_data.get('is_partner', False),
+                is_staff=user_data.get('is_staff', False),
+                account_created=datetime.fromisoformat(
+                    user_data.get('created_at', datetime.utcnow().isoformat())
+                ),
+                is_live=stream_data.get('is_live', False)
+            )
+            
+            # Parse started_at time
+            started_at = datetime.fromisoformat(stream_data.get('started_at', datetime.utcnow().isoformat()))
+            
+            # Parse ended_at time if available
+            ended_at = None
+            if stream_data.get('ended_at'):
+                ended_at = datetime.fromisoformat(stream_data['ended_at'])
+            
+            # Determine stream status
+            status = KickStreamStatus.LIVE
+            if ended_at:
+                status = KickStreamStatus.OFFLINE
+            elif not stream_data.get('is_live', False):
+                status = KickStreamStatus.OFFLINE
+            
+            # Map category
+            category_name = stream_data.get('category', {}).get('name', 'Other').lower()
+            category = KickStreamCategory.OTHER
+            for cat in KickStreamCategory:
+                if cat.value.lower() in category_name:
+                    category = cat
+                    break
+            
+            # Create stream object
+            stream = KickStream(
+                stream_id=str(stream_data.get('id', 0)),
+                channel_id=str(stream_data.get('channel_id', user.user_id)),
+                user=user,
+                title=stream_data.get('session_title', 'Untitled Stream'),
+                category=category,
+                game_name=stream_data.get('category', {}).get('name'),
+                thumbnail_url=stream_data.get('thumbnail'),
+                preview_url=stream_data.get('preview_image'),
+                stream_url=f"https://kick.com/{user.username}",
+                status=status,
+                started_at=started_at,
+                ended_at=ended_at,
+                current_viewers=stream_data.get('viewer_count', 0),
+                peak_viewers=stream_data.get('peak_viewer_count', 0),
+                total_views=stream_data.get('total_views', 0),
+                language=stream_data.get('language', 'en'),
+                tags=stream_data.get('tags', []),
+                is_mature=stream_data.get('is_mature', False),
+                is_partnered=user.is_partner,
+                quality_options=stream_data.get('quality_options', ['720p', '1080p']),
+                chat_enabled=not stream_data.get('chatroom_disabled', False)
+            )
+            
+            return stream
+            
+        except Exception as e:
+            logger.error(f"Error creating stream from API data: {str(e)}")
+            return None
 
     async def _handle_rate_limit(self, response: aiohttp.ClientResponse) -> bool:
         """
