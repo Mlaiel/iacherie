@@ -92,6 +92,12 @@ Initialize AI models for content enhancement."""
             logger.info("AI enhancement models initialized successfully")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.warning(f"Some AI models failed to initialize: {str(e)}")
             # Initialize fallback processors
             self._initialize_fallback_models()
@@ -104,6 +110,10 @@ Initialize AI models for content enhancement."""
                                                            model="distilbert-base-uncased")
             logger.info("Fallback models initialized")
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             logger.error(f"Failed to initialize fallback models: {str(e)}")
     
     async def enhance_content(
@@ -169,6 +179,12 @@ Initialize AI models for content enhancement."""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Content enhancement failed: {str(e)}")
             raise ContentEnhancementError(f"Failed to enhance content: {str(e)}")
     
@@ -257,6 +273,12 @@ Initialize AI models for content enhancement."""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Audio enhancement failed: {str(e)}")
             raise ContentEnhancementError(f"Audio enhancement error: {str(e)}")
     
@@ -344,6 +366,12 @@ Initialize AI models for content enhancement."""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Video enhancement failed: {str(e)}")
             raise ContentEnhancementError(f"Video enhancement error: {str(e)}")
     
@@ -427,6 +455,12 @@ Initialize AI models for content enhancement."""
                 }
                 
         except Exception as e:
+
+                
+            logger.error(f"Error: {e}")
+
+                
+            raise
             logger.error(f"Image enhancement failed: {str(e)}")
             raise ContentEnhancementError(f"Image enhancement error: {str(e)}")
     
@@ -510,6 +544,12 @@ Initialize AI models for content enhancement."""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Text enhancement failed: {str(e)}")
             raise ContentEnhancementError(f"Text enhancement error: {str(e)}")
     
@@ -559,6 +599,12 @@ Normalize audio loudness to target LUFS."""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"_optimize_eq failed: {e}")
             raise
     def _enhance_stereo_width(self, audio: np.ndarray) -> np.ndarray:
@@ -824,6 +870,10 @@ Correct grammar in text using AI."""
                 return result[0]['generated_text'].replace(prompt, '').strip()
             return text
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             logger.warning(f"Grammar correction failed: {str(e)}")
             return text
     
@@ -891,6 +941,10 @@ Enhance text sentiment."""
             
             return text
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             logger.warning(f"Sentiment enhancement failed: {str(e)}")
             return text
     
@@ -920,6 +974,12 @@ Enhance text sentiment."""
             return title.title()
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.warning(f"Title generation failed: {str(e)}")
             return "Untitled Content"
     
@@ -943,6 +1003,12 @@ Enhance text sentiment."""
             return hashtags
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.warning(f"Hashtag generation failed: {str(e)}")
             return ["#content", "#ai", "#enhanced"]
     
@@ -961,6 +1027,12 @@ Enhance text sentiment."""
                 return '. '.join(sentences) + '.'
                 
         except Exception as e:
+
+                
+            logger.error(f"Error: {e}")
+
+                
+            raise
             logger.warning(f"Summary generation failed: {str(e)}")
             return text[:100] + "..." if len(text) > 100 else text
     
@@ -1004,6 +1076,12 @@ Enhance text sentiment."""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to calculate improvement metrics: {str(e)}")
             return {'overall_score': 0.5, 'metrics': {}}
     
@@ -1043,6 +1121,12 @@ Enhance text sentiment."""
             return metrics
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.warning(f"Audio metrics calculation failed: {str(e)}")
             return {'improvement_score': 0.7}
     
@@ -1064,6 +1148,12 @@ Enhance text sentiment."""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.warning(f"Video metrics calculation failed: {str(e)}")
             return {'improvement_score': 0.7}
     
@@ -1096,6 +1186,12 @@ Enhance text sentiment."""
                 }
                 
         except Exception as e:
+
+                
+            logger.error(f"Error: {e}")
+
+                
+            raise
             logger.warning(f"Image metrics calculation failed: {str(e)}")
             return {'improvement_score': 0.7}
     
@@ -1131,6 +1227,12 @@ Enhance text sentiment."""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.warning(f"Text metrics calculation failed: {str(e)}")
             return {'improvement_score': 0.7}
     

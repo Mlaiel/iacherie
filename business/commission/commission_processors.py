@@ -190,6 +190,12 @@ Initialize commission processor"""
             logger.info(f"{self.config.processor.value} processor initialized successfully")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.status = ProcessorStatus.ERROR
             logger.error(f"Failed to initialize {self.config.processor.value}: {e}")
             raise PaymentError(f"Processor initialization failed: {e}")
@@ -230,6 +236,12 @@ Initialize commission processor"""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Payment processing failed: {e}")
             
             # Return failed result
@@ -293,6 +305,12 @@ Initialize commission processor"""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"_setup_client failed: {e}")
             raise
             logger.info(f"Executing _setup_client")
@@ -306,6 +324,12 @@ Initialize commission processor"""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"_setup_client failed: {e}")
             raise
     async def _validate_credentials(self) -> None:
@@ -366,6 +390,12 @@ Initialize commission processor"""
             logger.info(f"{self.config.processor.value} processor shutdown")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Processor shutdown error: {e}")
 
 class StripeProcessor(CommissionProcessor):
@@ -388,6 +418,10 @@ Validate Stripe credentials"""
             # Test API connection
             await asyncio.to_thread(stripe.Account.retrieve)
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             raise PaymentError(f"Stripe credential validation failed: {e}")
     
     async def _execute_payment(self, request: PaymentRequest) -> Dict[str, Any]:
@@ -433,6 +467,12 @@ Validate Stripe credentials"""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Stripe payment execution failed: {e}")
             return {
                 "status": "failed",
@@ -469,6 +509,12 @@ Validate Stripe credentials"""
             )
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Stripe refund failed: {e}")
             raise PaymentError(f"Refund processing failed: {e}")
     
@@ -489,6 +535,12 @@ Validate Stripe credentials"""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Stripe status check failed: {e}")
             return {"status": "unknown", "error": str(e)}
     
@@ -521,6 +573,12 @@ Validate Stripe credentials"""
             return response
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Stripe webhook handling failed: {e}")
             return {"processed": False, "error": str(e)}
 
@@ -568,6 +626,12 @@ Setup PayPal client"""
             # In production, you might want to use a different validation method
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             raise PaymentError(f"PayPal credential validation failed: {e}")
     
     async def _execute_payment(self, request: PaymentRequest) -> Dict[str, Any]:
@@ -614,6 +678,12 @@ Setup PayPal client"""
                 }
                 
         except Exception as e:
+
+                
+            logger.error(f"Error: {e}")
+
+                
+            raise
             logger.error(f"PayPal payment execution failed: {e}")
             return {
                 "status": "failed",
@@ -684,6 +754,12 @@ Setup PayPal client"""
             )
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"PayPal refund failed: {str(e)}")
             return PaymentResult(
                 success=False,
@@ -723,6 +799,12 @@ Setup PayPal client"""
                 }
                 
         except Exception as e:
+
+                
+            logger.error(f"Error: {e}")
+
+                
+            raise
             logger.error(f"Failed to get PayPal transaction status: {str(e)}")
             return {
                 "transaction_id": transaction_id,
@@ -784,6 +866,12 @@ Setup crypto client"""
             logger.info("Cryptocurrency credentials validated successfully")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             raise PaymentError(f"Cryptocurrency credential validation failed: {e}")
     
     async def _execute_payment(self, request: PaymentRequest) -> Dict[str, Any]:
@@ -803,6 +891,12 @@ Setup crypto client"""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Crypto payment execution failed: {e}")
             return {
                 "status": "failed",
@@ -871,6 +965,12 @@ Setup crypto client"""
             )
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Crypto refund request failed: {str(e)}")
             return PaymentResult(
                 success=False,
@@ -935,6 +1035,12 @@ Initialize processor manager"""
             logger.info("Payment processor initialization complete")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Processor manager initialization failed: {e}")
             raise PaymentError(f"Processor initialization failed: {e}")
     
@@ -956,6 +1062,12 @@ Initialize processor manager"""
             logger.info(f"Added processor: {config.processor.value}")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to add processor {config.processor}: {e}")
             raise PaymentError(f"Processor addition failed: {e}")
     
@@ -977,6 +1089,12 @@ Initialize processor manager"""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Payment processing failed: {e}")
             raise PaymentError(f"Payment processing error: {e}")
     
@@ -1016,6 +1134,12 @@ Initialize processor manager"""
             return suitable_processors[0][0]
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Processor selection failed: {e}")
             return None
     
@@ -1033,6 +1157,12 @@ Initialize processor manager"""
             return await self._processors[processor].handle_webhook(payload, signature)
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Webhook handling failed: {e}")
             return {"processed": False, "error": str(e)}
     
@@ -1064,6 +1194,12 @@ Initialize processor manager"""
             logger.info("Payment processors shutdown complete")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Processor shutdown error: {e}")
 
 """Professional Commission Processors

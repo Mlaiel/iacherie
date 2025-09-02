@@ -122,6 +122,12 @@ Initialize demo with mock services."""
             print("=" * 50)
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             print(f"❌ Demo error: {e}")
             
     async def demo_client_registration(self) -> str:
@@ -137,6 +143,12 @@ Initialize demo with mock services."""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"demo_client_registration failed: {e}")
             raise
     async def demo_profile_management(self, client_id: str):

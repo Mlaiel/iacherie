@@ -514,6 +514,12 @@ Immediate content distribution"""
                 )
                 
             except Exception as e:
+
+                
+                logger.error(f"Error: {e}")
+
+                
+                raise
                 result = PlatformResult(
                     platform=platform,
                     status=DistributionStatus.FAILED,

@@ -154,6 +154,12 @@ class PlatformDistribution:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Content distribution failed: {str(e)}")
             return {'status': 'failed', 'error': str(e)}
     
@@ -231,6 +237,12 @@ class PlatformDistribution:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Distribution strategy generation failed: {str(e)}")
             return {'strategy': None, 'error': str(e)}
     
@@ -300,6 +312,12 @@ class PlatformDistribution:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Distribution performance monitoring failed: {str(e)}")
             return {'distribution_id': distribution_id, 'error': str(e)}
     
@@ -373,6 +391,10 @@ Execute content distribution across multiple platforms."""
                     'platform_response': result
                 }
             except Exception as e:
+
+                logger.error(f"Error: {e}")
+
+                raise
                 distribution_results[platform_name] = {
                     'status': 'failed',
                     'error': str(e)
@@ -518,6 +540,12 @@ class ContentDistribution:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Content distribution orchestration failed: {str(e)}")
             return {'status': 'failed', 'error': str(e)}
     
@@ -574,6 +602,12 @@ class ContentDistribution:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Content distribution scheduling failed: {str(e)}")
             return {'status': 'failed', 'error': str(e)}
     
@@ -648,6 +682,10 @@ Execute distribution for a batch of content."""
                 else:
                     batch_results['failed'].append({'content_id': content_id, 'error': result.get('error')})
             except Exception as e:
+
+                logger.error(f"Error: {e}")
+
+                raise
                 batch_results['failed'].append({'content_id': content_id, 'error': str(e)})
         
         return batch_results
@@ -707,6 +745,12 @@ class AnalyticsDistribution:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Analytics distribution failed: {str(e)}")
             return {'status': 'failed', 'error': str(e)}
     
@@ -756,5 +800,11 @@ class AnalyticsDistribution:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Automated reporting setup failed: {str(e)}")
             return {'status': 'failed', 'error': str(e)}

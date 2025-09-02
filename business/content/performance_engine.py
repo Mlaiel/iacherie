@@ -365,6 +365,12 @@ Industrial performance testing and optimization engine."""
             return test_report
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Performance test execution failed: {str(e)}")
             if test_id in self.active_tests:
                 self.active_tests[test_id]['status'] = 'failed'
@@ -442,6 +448,12 @@ Industrial performance testing and optimization engine."""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to start continuous monitoring: {str(e)}")
             raise PerformanceTestError(f"Monitoring startup failed: {str(e)}")
     
@@ -561,6 +573,12 @@ Industrial performance testing and optimization engine."""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Performance optimization failed: {str(e)}")
             raise PerformanceTestError(f"Optimization failed: {str(e)}")
     
@@ -625,6 +643,12 @@ Industrial performance testing and optimization engine."""
                             results['error_breakdown'][error_type] = results['error_breakdown'].get(error_type, 0) + count
                     
                     except Exception as e:
+
+                    
+                        logger.error(f"Error: {e}")
+
+                    
+                        raise
                         logger.error(f"Load test user failed: {str(e)}")
                         continue
             
@@ -636,6 +660,12 @@ Industrial performance testing and optimization engine."""
             return results
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Load test execution failed: {str(e)}")
             raise
     
@@ -713,6 +743,12 @@ Industrial performance testing and optimization engine."""
                     time.sleep(1)  # Brief pause on error
                     
         except Exception as e:
+
+                    
+            logger.error(f"Error: {e}")
+
+                    
+            raise
             logger.error(f"User {user_id} simulation failed: {str(e)}")
         
         finally:
@@ -734,6 +770,10 @@ Industrial performance testing and optimization engine."""
                 'timestamp': datetime.utcnow().isoformat()
             }
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             logger.error(f"Failed to capture baseline metrics: {str(e)}")
             return {}
     
@@ -769,6 +809,10 @@ Monitor system resources during test execution."""
         except asyncio.CancelledError:
             logger.info(f"Resource monitoring cancelled for test {test_id}")
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             logger.error(f"Resource monitoring failed: {str(e)}")
     
     async def _analyze_performance_results(
@@ -814,6 +858,12 @@ Monitor system resources during test execution."""
             return analysis
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Performance analysis failed: {str(e)}")
             return self._get_default_analysis()
     

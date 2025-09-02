@@ -477,6 +477,12 @@ class RefundProcessingWorkflow:
                 return {"success": True, "action": WorkflowAction.APPROVE}
                 
         except Exception as e:
+
+                
+            logger.error(f"Error: {e}")
+
+                
+            raise
             return {"success": False, "error": str(e)}
             
     async def _validate_refund_request(self, refund_request: RefundRequest) -> Dict[str, Any]:
@@ -512,6 +518,12 @@ class RefundProcessingWorkflow:
                 return {"success": True, "action": WorkflowAction.APPROVE}
                 
         except Exception as e:
+
+                
+            logger.error(f"Error: {e}")
+
+                
+            raise
             return {"success": False, "error": str(e)}
             
     async def _process_refund_payment(self, refund_request: RefundRequest) -> Dict[str, Any]:
@@ -543,6 +555,12 @@ class RefundProcessingWorkflow:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             return {"success": False, "error": str(e)}
             
     async def _complete_refund(self, refund_request: RefundRequest) -> Dict[str, Any]:
@@ -562,6 +580,12 @@ class RefundProcessingWorkflow:
             return {"success": True, "action": WorkflowAction.COMPLETE}
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             return {"success": False, "error": str(e)}
             
     async def _assign_step_to_user(self, step: WorkflowStep, refund_request: RefundRequest) -> str:

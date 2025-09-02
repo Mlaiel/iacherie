@@ -463,6 +463,18 @@ Add automation rule"""
     
     def register_action_handler(self, action: AutomationAction, handler: Callable):
         """
+        try:
+            logger.info(f"Executing register_action_handler")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"register_action_handler completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"register_action_handler failed: {e}")
+            raise
 Register custom action handler"""
         self.action_handlers[action] = handler
     

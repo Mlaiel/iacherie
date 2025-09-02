@@ -313,6 +313,12 @@ class PreferenceManager:
             return formatted_preferences
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Error retrieving preferences for client {client_id}: {e}")
             raise PreferenceServiceError("Failed to retrieve preferences") from e
             
@@ -671,6 +677,12 @@ class PreferenceManager:
             return export_data
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Error exporting preferences: {e}")
             raise PreferenceServiceError("Failed to export preferences") from e
             

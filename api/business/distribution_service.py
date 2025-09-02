@@ -576,6 +576,10 @@ class DistributionService:
                     )
                     current_states[platform.value] = state
                 except Exception as e:
+
+                    logger.error(f"Error: {e}")
+
+                    raise
                     sync_results["errors"].append({
                         "platform": platform.value,
                         "operation": "get_state",

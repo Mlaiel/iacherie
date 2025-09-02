@@ -189,6 +189,12 @@ Initialize all blockchain components"""
             logger.info("Blockchain platform initialized successfully")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to initialize blockchain platform: {str(e)}")
             raise BlockchainError(f"Platform initialization failed: {str(e)}")
     
@@ -391,6 +397,12 @@ Get blockchain performance metrics"""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to get blockchain metrics: {str(e)}")
             return {
                 "success": False,
@@ -419,6 +431,12 @@ Get blockchain performance metrics"""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to get user blockchain summary: {str(e)}")
             return {
                 "success": False,
@@ -448,6 +466,12 @@ Get blockchain performance metrics"""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Health check failed: {str(e)}")
             return {
                 "success": False,

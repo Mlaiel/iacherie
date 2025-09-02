@@ -315,6 +315,12 @@ Initialize the engagement analytics system."""
             return event
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error tracking engagement event: {e}")
             raise
     
@@ -335,6 +341,12 @@ Initialize the engagement analytics system."""
                 event.processed = True
                 
             except Exception as e:
+
+                
+                logger.error(f"Error: {e}")
+
+                
+                raise
                 self.logger.error(f"Error processing engagement event: {e}")
     
     async def _update_session_tracking(self, event: EngagementEvent) -> None:
@@ -458,6 +470,12 @@ Initialize the engagement analytics system."""
                 await self._check_monetization_insights(user_id, event)
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error generating real-time insights: {e}")
     
     async def _check_feature_discovery_insights(self, user_id: str, event: EngagementEvent) -> None:
@@ -693,6 +711,12 @@ Initialize the engagement analytics system."""
             return metrics
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error calculating user metrics: {e}")
             return EngagementMetrics(user_id=user_id)
     
@@ -724,6 +748,12 @@ Initialize the engagement analytics system."""
             return max(-100, min(100, momentum))  # Clamp between -100 and 100
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error calculating momentum score: {e}")
             return 0.0
     
@@ -761,6 +791,12 @@ Initialize the engagement analytics system."""
             return min(100, consistency_score)
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error calculating consistency score: {e}")
             return 0.0
     
@@ -784,6 +820,12 @@ Initialize the engagement analytics system."""
             return min(100, depth_score)
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error calculating depth score: {e}")
             return 0.0
     
@@ -838,6 +880,12 @@ Initialize the engagement analytics system."""
             return min(100, risk_score) / 100  # Normalize to 0-1
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error calculating churn risk: {e}")
             return 0.5  # Default moderate risk
     
@@ -879,6 +927,12 @@ Initialize the engagement analytics system."""
             return min(1000, predicted_ltv)  # Cap at reasonable maximum
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error predicting lifetime value: {e}")
             return 100  # Default value
     
@@ -913,6 +967,12 @@ Initialize the engagement analytics system."""
             return active_insights[:limit]
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error getting user insights: {e}")
             return []
     
@@ -1000,6 +1060,12 @@ Initialize the engagement analytics system."""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error getting platform analytics: {e}")
             return {}
 

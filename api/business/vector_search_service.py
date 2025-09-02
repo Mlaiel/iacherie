@@ -291,6 +291,12 @@ Initialize external services."""
             self.logger.info("Vector search services initialized successfully")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to initialize vector search services: {e}")
             
     async def _create_elasticsearch_indices(self):
@@ -320,6 +326,10 @@ Initialize external services."""
             )
             self.logger.info("Elasticsearch indices created successfully")
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Failed to create Elasticsearch indices: {e}")
             
     def _get_faiss_manager(self, vector_type: VectorType, dimension: int) -> FAISSIndexManager:
@@ -386,6 +396,12 @@ Store content fingerprint vector."""
             return vector_id
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to store fingerprint vector: {e}")
             raise VectorSearchException(f"Failed to store vector: {str(e)}")
             
@@ -427,6 +443,12 @@ Store content fingerprint vector."""
             return similarity_results
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to search similar content: {e}")
             raise VectorSearchException(f"Failed to search similar content: {str(e)}")
             
@@ -468,6 +490,12 @@ Store content fingerprint vector."""
             return None
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to get vector by ID {vector_id}: {e}")
             return None
             
@@ -499,6 +527,12 @@ Store content fingerprint vector."""
             return success
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to delete vector {vector_id}: {e}")
             return False
             
@@ -550,6 +584,12 @@ Store content fingerprint vector."""
             return results
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to search by metadata: {e}")
             return []
             
@@ -576,6 +616,12 @@ Store content fingerprint vector."""
             return stats
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to get statistics: {e}")
             return stats
             
@@ -591,6 +637,12 @@ Store content fingerprint vector."""
             self.logger.info(f"Saved {len(self.faiss_managers)} FAISS indices to {directory}")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to save indices: {e}")
             raise VectorSearchException(f"Failed to save indices: {str(e)}")
             
@@ -616,6 +668,12 @@ Store content fingerprint vector."""
             self.logger.info(f"Loaded {len(self.faiss_managers)} FAISS indices from {directory}")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to load indices: {e}")
             raise VectorSearchException(f"Failed to load indices: {str(e)}")
             

@@ -248,6 +248,12 @@ class ContentManager:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             if 'content' in locals():
                 content.status = ContentStatus.FAILED
                 self.db.commit()
@@ -282,6 +288,12 @@ class ContentManager:
             return await self._format_content_data(content)
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Error retrieving content {content_id}: {e}")
             return None
             
@@ -333,6 +345,12 @@ class ContentManager:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Error listing content for client {client_id}: {e}")
             raise ContentServiceError("Failed to retrieve content list") from e
             
@@ -379,6 +397,12 @@ class ContentManager:
             return True
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Error deleting content {content_id}: {e}")
             return False
             
@@ -470,6 +494,12 @@ class ContentManager:
             logger.info(f"Content processing completed: {content_id}")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             content = self.db.query(Content).filter(Content.id == content_id).first()
             if content:
                 content.status = ContentStatus.FAILED
@@ -563,6 +593,10 @@ Format content data for API response."""
             # Implementation would validate file integrity, format, etc.
             return {"valid": True}
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             return {"valid": False, "error": str(e)}
             
     async def _extract_metadata(self, content: Content) -> Dict[str, Any]:

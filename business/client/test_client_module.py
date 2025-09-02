@@ -98,6 +98,12 @@ Sample client registration data."""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"test_client_registration_validation failed: {e}")
             raise
             ClientRegistrationData(
@@ -320,6 +326,12 @@ Test supported document types."""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"test_required_documents_mapping failed: {e}")
             raise
         license_docs = verification_manager._get_required_documents(DocumentType.DRIVERS_LICENSE)

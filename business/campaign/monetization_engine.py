@@ -230,6 +230,12 @@ class MonetizationEngine:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Campaign monetization setup failed: {str(e)}")
             raise
     
@@ -312,6 +318,12 @@ class MonetizationEngine:
             return tracking_result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Campaign revenue tracking failed: {str(e)}")
             raise
     
@@ -382,6 +394,12 @@ class MonetizationEngine:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Campaign pricing optimization failed: {str(e)}")
             raise
     
@@ -471,6 +489,12 @@ class MonetizationEngine:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Revenue payout processing failed: {str(e)}")
             raise
     
@@ -564,6 +588,12 @@ class MonetizationEngine:
             return base_report
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Revenue report generation failed: {str(e)}")
             raise
     
@@ -646,6 +676,12 @@ class MonetizationEngine:
                 raise ValueError(f"Unknown action: {action}")
                 
         except Exception as e:
+
+                
+            logger.error(f"Error: {e}")
+
+                
+            raise
             self.logger.error(f"Revenue stream management failed: {str(e)}")
             raise
     
@@ -661,6 +697,12 @@ class MonetizationEngine:
                 await asyncio.sleep(3600)  # Collect every hour
                 
             except Exception as e:
+
+                
+                logger.error(f"Error: {e}")
+
+                
+                raise
                 self.logger.error(f"Revenue collection loop error: {str(e)}")
                 await asyncio.sleep(1800)
     
@@ -672,6 +714,12 @@ class MonetizationEngine:
                 await asyncio.sleep(3600)  # Process every hour
                 
             except Exception as e:
+
+                
+                logger.error(f"Error: {e}")
+
+                
+                raise
                 self.logger.error(f"Payout processing loop error: {str(e)}")
                 await asyncio.sleep(1800)
     

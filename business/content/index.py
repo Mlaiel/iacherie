@@ -358,6 +358,10 @@ Perform comprehensive system health check."""
                         'details': engine_health if isinstance(engine_health, dict) else {}
                     }
                 except Exception as e:
+
+                    logger.error(f"Error: {e}")
+
+                    raise
                     health_results['engines'][engine_name] = {
                         'status': 'error',
                         'error': str(e)
@@ -631,6 +635,12 @@ Example usage of the content management system."""
         print(f"\n🛑 System shutdown completed")
         
     except Exception as e:
+
+        
+        logger.error(f"Error: {e}")
+
+        
+        raise
         print(f"❌ System error: {str(e)}")
         import traceback
         traceback.print_exc()

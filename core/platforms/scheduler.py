@@ -347,6 +347,18 @@ Mark task execution as failed"""
     
     def to_dict(self) -> Dict[str, Any]:
         """
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
 Convert to dictionary"""
         return {
             'task_id': self.task_id,

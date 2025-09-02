@@ -176,6 +176,12 @@ class PaymentProcessor:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Payment processing failed: {str(e)}")
             return {
                 'status': 'failed',
@@ -241,6 +247,12 @@ class PaymentProcessor:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Batch payment processing failed: {str(e)}")
             return {'status': 'failed', 'error': str(e)}
     
@@ -279,6 +291,12 @@ class PaymentProcessor:
             return transaction_data
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Transaction status retrieval failed: {str(e)}")
             return {'error': str(e)}
     
@@ -471,6 +489,12 @@ class RevenueShare:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Revenue sharing setup failed: {str(e)}")
             return {'status': 'failed', 'error': str(e)}
     
@@ -565,6 +589,12 @@ class RevenueShare:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Revenue distribution failed: {str(e)}")
             return {'status': 'failed', 'error': str(e)}
     
@@ -618,6 +648,12 @@ class RevenueShare:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Revenue analytics generation failed: {str(e)}")
             return {'analytics': {}, 'error': str(e)}
 
@@ -698,6 +734,12 @@ class TransactionManager:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Collaboration payment flow creation failed: {str(e)}")
             return {'status': 'failed', 'error': str(e)}
     
@@ -759,5 +801,11 @@ class TransactionManager:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Milestone payment execution failed: {str(e)}")
             return {'status': 'failed', 'error': str(e)}

@@ -268,6 +268,12 @@ class ClientManager:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Email verification failed: {e}")
             raise ClientServiceError("Email verification failed") from e
             
@@ -289,6 +295,12 @@ class ClientManager:
             return self._format_client_data(client)
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Error retrieving client {client_id}: {e}")
             return None
             
@@ -393,6 +405,12 @@ class ClientManager:
             return True
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Error deactivating client {client_id}: {e}")
             return False
             

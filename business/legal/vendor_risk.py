@@ -348,6 +348,12 @@ class VendorRiskManager:
             return assessment_id
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error initiating vendor assessment: {e}")
             raise
     
@@ -366,6 +372,12 @@ class VendorRiskManager:
             await self._request_vendor_documents(assessment)
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error starting assessment process: {e}")
     
     async def _perform_initial_risk_assessment(self, assessment: VendorAssessment):
@@ -471,6 +483,12 @@ class VendorRiskManager:
             return True
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error updating security assessment: {e}")
             return False
     
@@ -517,6 +535,12 @@ class VendorRiskManager:
             return True
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error updating compliance assessment: {e}")
             return False
     
@@ -586,6 +610,12 @@ class VendorRiskManager:
             return True
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error completing vendor assessment: {e}")
             return False
     
@@ -708,6 +738,12 @@ class VendorRiskManager:
             return report
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error generating vendor risk report: {e}")
             return {"error": str(e)}
     

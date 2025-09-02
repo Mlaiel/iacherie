@@ -126,6 +126,10 @@ class MarketplaceMetrics:
                     metric_data = await task
                     collected_metrics[metric_name] = metric_data
                 except Exception as e:
+
+                    logger.error(f"Error: {e}")
+
+                    raise
                     self.logger.error(f"Failed to collect metric {metric_name}: {str(e)}")
                     collected_metrics[metric_name] = {'error': str(e)}
             
@@ -154,6 +158,12 @@ class MarketplaceMetrics:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Marketplace metrics collection failed: {str(e)}")
             return {'status': 'failed', 'error': str(e)}
     
@@ -224,6 +234,12 @@ class MarketplaceMetrics:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Real-time dashboard metrics failed: {str(e)}")
             return {'dashboard_metrics': {}, 'error': str(e)}
     
@@ -329,6 +345,12 @@ class MarketplaceMetrics:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Marketplace health score generation failed: {str(e)}")
             return {'overall_health_score': 0.0, 'error': str(e)}
     
@@ -475,6 +497,12 @@ class PerformanceAnalytics:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Creator performance analysis failed: {str(e)}")
             return {'error': str(e)}
     
@@ -533,6 +561,12 @@ class PerformanceAnalytics:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Content performance analysis failed: {str(e)}")
             return {'error': str(e)}
     
@@ -595,6 +629,12 @@ class PerformanceAnalytics:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Performance optimization recommendations failed: {str(e)}")
             return {'recommendations': [], 'error': str(e)}
 
@@ -679,6 +719,12 @@ class ROICalculator:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Collaboration ROI calculation failed: {str(e)}")
             return {'roi_metrics': {}, 'error': str(e)}
     
@@ -728,6 +774,12 @@ class ROICalculator:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Content ROI calculation failed: {str(e)}")
             return {'content_roi': {}, 'error': str(e)}
     
@@ -789,5 +841,11 @@ class ROICalculator:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Platform ROI calculation failed: {str(e)}")
             return {'platform_roi_metrics': {}, 'error': str(e)}

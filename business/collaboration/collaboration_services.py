@@ -163,6 +163,12 @@ Discover collaboration opportunities for a creator"""
             )
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Discovery service failed for creator {creator_id}: {str(e)}")
             return ServiceResponse(
                 success=False,
@@ -220,6 +226,12 @@ Discover collaboration opportunities for a creator"""
             )
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Recommendation service failed for creator {creator_id}: {str(e)}")
             return ServiceResponse(
                 success=False,
@@ -343,6 +355,12 @@ Find and rank collaboration matches"""
             )
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Matching service failed for request {request_id}: {str(e)}")
             return ServiceResponse(
                 success=False,
@@ -423,6 +441,12 @@ Find and rank collaboration matches"""
             )
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Feasibility validation failed: {str(e)}")
             return ServiceResponse(
                 success=False,
@@ -506,6 +530,12 @@ Create a new collaboration from matches"""
                 )
                 
         except Exception as e:
+
+                
+            logger.error(f"Error: {e}")
+
+                
+            raise
             logger.error(f"Collaboration creation failed: {str(e)}")
             return ServiceResponse(
                 success=False,
@@ -574,6 +604,12 @@ Create a new collaboration from matches"""
             )
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Status update failed for collaboration {collaboration_id}: {str(e)}")
             return ServiceResponse(
                 success=False,
@@ -633,6 +669,12 @@ Create a new collaboration from matches"""
                 return result
                 
         except Exception as e:
+
+                
+            logger.error(f"Error: {e}")
+
+                
+            raise
             logger.error(f"Milestone management failed for collaboration {collaboration_id}: {str(e)}")
             return ServiceResponse(
                 success=False,
@@ -657,6 +699,12 @@ class CollaborationAnalyticsService:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"__init__ failed: {e}")
             raise
     async def generate_collaboration_analytics(
@@ -697,6 +745,12 @@ class CollaborationAnalyticsService:
             )
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Analytics generation failed for collaboration {collaboration_id}: {str(e)}")
             return ServiceResponse(
                 success=False,
@@ -763,6 +817,12 @@ class CollaborationAnalyticsService:
             )
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Insights generation failed for creator {creator_id}: {str(e)}")
             return ServiceResponse(
                 success=False,

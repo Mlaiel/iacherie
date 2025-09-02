@@ -119,6 +119,12 @@ Advanced multi-format content processing engine with AI capabilities."""
             return response
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Content processing failed: {str(e)}")
             raise ContentProcessingError(f"Failed to process content: {str(e)}")
     
@@ -232,6 +238,12 @@ Process content based on its type."""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Audio processing failed: {str(e)}")
             raise ContentProcessingError(f"Audio processing error: {str(e)}")
     
@@ -290,6 +302,12 @@ Process content based on its type."""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Video processing failed: {str(e)}")
             raise ContentProcessingError(f"Video processing error: {str(e)}")
     
@@ -351,6 +369,12 @@ Process content based on its type."""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Image processing failed: {str(e)}")
             raise ContentProcessingError(f"Image processing error: {str(e)}")
     
@@ -409,6 +433,12 @@ Process content based on its type."""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Text processing failed: {str(e)}")
             raise ContentProcessingError(f"Text processing error: {str(e)}")
     
@@ -757,6 +787,12 @@ Calculate ratio of complex words (3+ syllables)."""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"_detect_passive_voice_ratio failed: {e}")
             raise
     def _extract_key_phrases(self, text: str) -> List[str]:

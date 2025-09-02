@@ -17,22 +17,20 @@ except ImportError:
     class BaseAIAgent:
         def __init__(self, config=None):
             self.config = config or {}
-            
-            logger.info(f"__init__ completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"__init__ failed: {e}")
-            raise
-from ..models.behavior_models import (
-    BehaviorAnalysisRequest,
-    BehaviorAnalysisResult,
-    UserSegmentProfile,
-    BehaviorPrediction,
-    UserSegmentType,
-    BehaviorPatternType
-)
-# Use fallback imports for compatibility
+            logger.info("BaseAIAgent __init__ completed successfully")
+
+try:
+    from ..models.behavior_models import (
+        BehaviorAnalysisRequest,
+        BehaviorAnalysisResult,
+        UserSegmentProfile,
+        BehaviorPrediction,
+        UserSegmentType,
+        BehaviorPatternType
+    )
+except ImportError:
+    # Use fallback imports for compatibility
+    pass
 try:
         try:
                     # Collect metrics

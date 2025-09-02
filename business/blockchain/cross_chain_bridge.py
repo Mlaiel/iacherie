@@ -161,6 +161,12 @@ Initialize bridge validator"""
             logger.info("Bridge validator initialized successfully")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to initialize bridge validator: {str(e)}")
             raise BlockchainError(f"Bridge validator initialization failed: {str(e)}")
     
@@ -252,6 +258,12 @@ Initialize bridge validator"""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Bridge request validation failed: {str(e)}")
             raise ValidationError(f"Bridge validation failed: {str(e)}")
     
@@ -299,6 +311,12 @@ Initialize bridge validator"""
             return bridge_proof
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to create bridge proof: {str(e)}")
             raise BlockchainError(f"Bridge proof creation failed: {str(e)}")
     
@@ -340,6 +358,12 @@ Initialize bridge validator"""
             return True
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Bridge proof verification failed: {str(e)}")
             return False
     
@@ -472,6 +496,12 @@ Initialize transfer manager"""
             logger.info("Cross-chain transfer manager initialized successfully")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to initialize transfer manager: {str(e)}")
             raise BlockchainError(f"Transfer manager initialization failed: {str(e)}")
     
@@ -533,6 +563,12 @@ Initialize transfer manager"""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to initiate bridge transfer: {str(e)}")
             raise BlockchainError(f"Bridge transfer failed: {str(e)}")
     
@@ -593,6 +629,12 @@ Initialize transfer manager"""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to process bridge transfer {bridge_id}: {str(e)}")
             
             # Update status to failed
@@ -668,6 +710,12 @@ Initialize transfer manager"""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to lock source assets: {str(e)}")
             raise BlockchainError(f"Asset locking failed: {str(e)}")
     
@@ -727,6 +775,12 @@ Initialize transfer manager"""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to mint destination assets: {str(e)}")
             raise BlockchainError(f"Asset minting failed: {str(e)}")
     
@@ -795,6 +849,12 @@ class LiquidityManager:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"__init__ failed: {e}")
             raise
     async def manage_liquidity_pools(
@@ -829,6 +889,12 @@ Manage liquidity pools for chain"""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Liquidity management failed for {chain_id}: {str(e)}")
             raise BlockchainError(f"Liquidity management failed: {str(e)}")
     
@@ -896,6 +962,12 @@ Initialize cross-chain bridge"""
             logger.info("Cross-chain bridge initialized successfully")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to initialize cross-chain bridge: {str(e)}")
             raise BlockchainError(f"Bridge initialization failed: {str(e)}")
     

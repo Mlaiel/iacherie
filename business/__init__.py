@@ -205,6 +205,12 @@ try:
     logger.info("Business modules loading completed with graceful handling of missing dependencies")
     
 except Exception as e:
+
+    
+    logger.error(f"Error: {e}")
+
+    
+    raise
     logger.error(f"Critical error in business module loading: {e}")
     # Don't raise here to allow partial functionality
     pass
@@ -341,6 +347,12 @@ Central business logic orchestrator"""
             return True
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to initialize business orchestrator: {e}")
             return False
     
@@ -408,6 +420,12 @@ Central business logic orchestrator"""
             logger.info(f"Creator journey completed for {creator_id}: {len(journey_results['stages_completed'])} stages")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             journey_results["success"] = False
             journey_results["error"] = str(e)
             logger.error(f"Creator journey failed for {creator_id}: {e}")
@@ -494,6 +512,10 @@ Initialize the complete business system"""
         logger.info("Business system initialized successfully")
         return True
     except Exception as e:
+
+        logger.error(f"Error: {e}")
+
+        raise
         logger.error(f"Failed to initialize business system: {e}")
         return False
 

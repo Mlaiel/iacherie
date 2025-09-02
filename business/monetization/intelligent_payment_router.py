@@ -262,6 +262,12 @@ class IntelligentPaymentRouter:
             return decision
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Payment routing failed: {e}")
             raise
     
@@ -281,6 +287,12 @@ class IntelligentPaymentRouter:
                     self.provider_metrics[provider] = metrics
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Provider metrics update failed: {e}")
     
     async def _fetch_provider_metrics(self, provider: PaymentProvider) -> ProviderPerformanceMetrics:

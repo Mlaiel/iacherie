@@ -320,6 +320,12 @@ class PrivacyByDesignFramework:
             return assessment_id
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error assessing new feature: {e}")
             raise
     
@@ -642,6 +648,12 @@ class PrivacyByDesignFramework:
             return True
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error approving feature: {e}")
             return False
     
@@ -731,6 +743,12 @@ class PrivacyByDesignFramework:
             return report
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error generating privacy compliance report: {e}")
             return {"error": str(e)}
     

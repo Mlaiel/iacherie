@@ -214,6 +214,12 @@ Advanced monetization system for content creators."""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to create monetization strategy: {str(e)}")
             raise MonetizationError(f"Failed to create strategy: {str(e)}")
     
@@ -338,6 +344,12 @@ Advanced monetization system for content creators."""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to process subscription payment: {str(e)}")
             raise MonetizationError(f"Subscription payment failed: {str(e)}")
     
@@ -447,6 +459,12 @@ Advanced monetization system for content creators."""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to create NFT collection: {str(e)}")
             raise MonetizationError(f"NFT collection creation failed: {str(e)}")
     
@@ -542,6 +560,12 @@ Advanced monetization system for content creators."""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to establish brand partnership: {str(e)}")
             raise MonetizationError(f"Partnership establishment failed: {str(e)}")
     
@@ -614,6 +638,12 @@ Advanced monetization system for content creators."""
             return revenue_analytics
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to get revenue analytics: {str(e)}")
             raise MonetizationError(f"Analytics generation failed: {str(e)}")
     
@@ -726,6 +756,12 @@ Advanced monetization system for content creators."""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to process payout: {str(e)}")
             raise MonetizationError(f"Payout processing failed: {str(e)}")
     
@@ -759,6 +795,12 @@ Advanced monetization system for content creators."""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to setup payment processing: {str(e)}")
             return {'gateway_configured': False, 'error': str(e)}
     

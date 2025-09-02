@@ -347,6 +347,12 @@ Contact: {legal_contact}
             return hold_id
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error creating legal hold: {e}")
             raise
     
@@ -369,6 +375,12 @@ Contact: {legal_contact}
             })
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error initiating legal hold process: {e}")
             raise
     
@@ -406,6 +418,12 @@ Contact: {legal_contact}
                 })
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error sending custodian notifications: {e}")
             raise
     
@@ -420,6 +438,12 @@ Contact: {legal_contact}
                 await self._preserve_data_target(target)
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error queuing preservation tasks: {e}")
             raise
     
@@ -461,6 +485,12 @@ Contact: {legal_contact}
             })
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error preserving data target {target.target_id}: {e}")
             target.status = "failed"
     
@@ -513,6 +543,12 @@ Contact: {legal_contact}
             return True
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error recording legal hold acknowledgment: {e}")
             return False
     
@@ -572,6 +608,12 @@ Contact: {legal_contact}
             return True
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error releasing legal hold {hold_id}: {e}")
             return False
     
@@ -674,6 +716,12 @@ Contact: {legal_contact}
             return report
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error generating legal hold compliance report: {e}")
             return {"error": str(e)}
     

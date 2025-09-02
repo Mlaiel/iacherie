@@ -251,6 +251,12 @@ class PerformanceTracker:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Campaign tracking setup failed: {str(e)}")
             raise
     
@@ -353,6 +359,12 @@ class PerformanceTracker:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Performance data collection failed: {str(e)}")
             raise
     
@@ -452,6 +464,12 @@ class PerformanceTracker:
             return analysis_result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Campaign performance analysis failed: {str(e)}")
             raise
     
@@ -524,6 +542,12 @@ class PerformanceTracker:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Real-time performance tracking failed: {str(e)}")
             raise
     
@@ -584,6 +608,12 @@ class PerformanceTracker:
             return report
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Performance report generation failed: {str(e)}")
             raise
     
@@ -654,6 +684,12 @@ class PerformanceTracker:
                 raise ValueError(f"Unknown action: {action}")
                 
         except Exception as e:
+
+                
+            logger.error(f"Error: {e}")
+
+                
+            raise
             self.logger.error(f"Performance alert management failed: {str(e)}")
             raise
     
@@ -670,6 +706,12 @@ class PerformanceTracker:
                 await asyncio.sleep(300)  # Check every 5 minutes
                 
             except Exception as e:
+
+                
+                logger.error(f"Error: {e}")
+
+                
+                raise
                 self.logger.error(f"Performance monitoring loop error: {str(e)}")
                 await asyncio.sleep(600)
     
@@ -681,6 +723,12 @@ class PerformanceTracker:
                 await asyncio.sleep(60)  # Process every minute
                 
             except Exception as e:
+
+                
+                logger.error(f"Error: {e}")
+
+                
+                raise
                 self.logger.error(f"Alert processing loop error: {str(e)}")
                 await asyncio.sleep(120)
     
@@ -692,6 +740,12 @@ class PerformanceTracker:
                 await asyncio.sleep(3600)  # Generate every hour
                 
             except Exception as e:
+
+                
+                logger.error(f"Error: {e}")
+
+                
+                raise
                 self.logger.error(f"Insight generation loop error: {str(e)}")
                 await asyncio.sleep(1800)
     

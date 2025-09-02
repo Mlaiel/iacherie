@@ -126,6 +126,12 @@ Generate comprehensive performance analytics"""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Performance analytics generation failed: {str(e)}")
             return {'error': str(e), 'success': False}
     
@@ -188,6 +194,12 @@ Generate comprehensive performance analytics"""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Financial analytics generation failed: {str(e)}")
             return {'error': str(e), 'success': False}
     
@@ -245,6 +257,12 @@ Generate comprehensive performance analytics"""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Engagement analytics generation failed: {str(e)}")
             return {'error': str(e), 'success': False}
     
@@ -301,6 +319,12 @@ Generate comprehensive performance analytics"""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Predictive analytics generation failed: {str(e)}")
             return {'error': str(e), 'success': False}
     
@@ -636,6 +660,12 @@ class CollaborationReportGenerator:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Report generation failed for creator {creator_id}: {str(e)}")
             return {'error': str(e), 'success': False}
     

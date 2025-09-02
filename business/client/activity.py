@@ -531,6 +531,12 @@ class ActivityManager:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Error retrieving activity timeline: {e}")
             raise ActivityServiceError("Failed to retrieve activity timeline") from e
             
@@ -645,6 +651,12 @@ class ActivityManager:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Error generating activity statistics: {e}")
             raise ActivityServiceError("Failed to generate activity statistics") from e
             

@@ -155,6 +155,12 @@ class MonetizationIndex:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"__init__ failed: {e}")
             raise
     @classmethod

@@ -228,6 +228,12 @@ Initialize predictive models"""
             return calculation
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Metric calculation failed: {e}")
             raise AnalyticsError(f"Metric calculation error: {e}")
     
@@ -263,6 +269,12 @@ Initialize predictive models"""
             return successful_results
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Multiple metrics calculation failed: {e}")
             raise AnalyticsError(f"Multiple metrics calculation error: {e}")
     
@@ -301,6 +313,12 @@ Initialize predictive models"""
             return insights[:20]  # Return top 20 insights
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Insight generation failed: {e}")
             raise AnalyticsError(f"Insight generation error: {e}")
     
@@ -508,6 +526,12 @@ Initialize predictive models"""
             return results
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Metric prediction failed: {e}")
             raise AnalyticsError(f"Prediction error: {e}")
     
@@ -545,6 +569,12 @@ Initialize predictive models"""
                 }
                 
         except Exception as e:
+
+                
+            logger.error(f"Error: {e}")
+
+                
+            raise
             logger.error(f"Total commission calculation failed: {e}")
             raise AnalyticsError(f"Total commission calculation error: {e}")
     
@@ -581,6 +611,12 @@ Initialize predictive models"""
                 }
                 
         except Exception as e:
+
+                
+            logger.error(f"Error: {e}")
+
+                
+            raise
             logger.error(f"Average commission calculation failed: {e}")
             raise AnalyticsError(f"Average commission calculation error: {e}")
     
@@ -620,6 +656,12 @@ Initialize predictive models"""
                 }
                 
         except Exception as e:
+
+                
+            logger.error(f"Error: {e}")
+
+                
+            raise
             logger.error(f"Median commission calculation failed: {e}")
             raise AnalyticsError(f"Median commission calculation error: {e}")
     
@@ -654,6 +696,12 @@ Initialize predictive models"""
                 }
                 
         except Exception as e:
+
+                
+            logger.error(f"Error: {e}")
+
+                
+            raise
             logger.error(f"Commission count calculation failed: {e}")
             raise AnalyticsError(f"Commission count calculation error: {e}")
     
@@ -876,6 +924,12 @@ Get cached metric"""
                 )
                 
         except Exception as e:
+
+                
+            logger.error(f"Error: {e}")
+
+                
+            raise
             logger.warning(f"Cache retrieval failed: {e}")
         
         return None
@@ -903,6 +957,12 @@ Get cached metric"""
             )
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.warning(f"Cache storage failed: {e}")
 
 """Professional Commission Analytics Engine

@@ -181,6 +181,10 @@ Check Redis connection."""
             client.ping()
             return {'available': True, 'version': client.info().get('redis_version')}
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             return {'available': False, 'error': str(e)}
     
     def _check_database_connection(self) -> Dict[str, Any]:
@@ -191,6 +195,10 @@ Check database connection."""
             # For demo, we'll simulate the check
             return {'available': True, 'type': 'postgresql'}
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             return {'available': False, 'error': str(e)}
     
     def _check_elasticsearch_connection(self) -> Dict[str, Any]:
@@ -201,6 +209,10 @@ Check Elasticsearch connection."""
             # For demo, we'll simulate the check
             return {'available': False, 'error': 'Not configured'}
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             return {'available': False, 'error': str(e)}
     
     def _check_directory_structure(self) -> Dict[str, Any]:
@@ -243,6 +255,10 @@ Check required directory structure."""
                 test_file.write_text('test')
                 test_file.unlink()
             except Exception as e:
+
+                logger.error(f"Error: {e}")
+
+                raise
                 permission_issues.append(f"{path}: {str(e)}")
         
         return {
@@ -618,6 +634,12 @@ Main setup function."""
         print(f"   - Templates: ✅ Environment and config templates generated")
         
     except Exception as e:
+
+        
+        logger.error(f"Error: {e}")
+
+        
+        raise
         logger.error(f"Setup failed: {str(e)}")
         sys.exit(1)
 

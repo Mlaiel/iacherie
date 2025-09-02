@@ -330,6 +330,10 @@ Store subscription in database"""
                             await self._renew_subscription(subscription)
                             processed['success'] += 1
                     except Exception as e:
+
+                        logger.error(f"Error: {e}")
+
+                        raise
                         processed['failed'] += 1
                         processed['details'].append({
                             'subscription_id': sub_row['subscription_id'],

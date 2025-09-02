@@ -346,6 +346,12 @@ Load royalty distribution rules"""
                             })
                             
                     except Exception as e:
+
+                            
+                        logger.error(f"Error: {e}")
+
+                            
+                        raise
                         results['failed'] += 1
                         results['details'].append({
                             'payment_id': payment['payment_id'],

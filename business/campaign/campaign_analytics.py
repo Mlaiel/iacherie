@@ -196,6 +196,12 @@ class CampaignAnalytics:
             return report
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Analytics report generation failed: {str(e)}")
             raise
     
@@ -246,6 +252,12 @@ class CampaignAnalytics:
             return processed_metrics
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Real-time metrics retrieval failed: {str(e)}")
             raise
     
@@ -298,6 +310,12 @@ class CampaignAnalytics:
             return performance_analysis
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Performance analysis failed: {str(e)}")
             raise
     
@@ -347,6 +365,12 @@ class CampaignAnalytics:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Conversion funnel tracking failed: {str(e)}")
             raise
     
@@ -400,6 +424,12 @@ class CampaignAnalytics:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Audience segment analysis failed: {str(e)}")
             raise
     
@@ -456,6 +486,12 @@ class CampaignAnalytics:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Predictive forecast generation failed: {str(e)}")
             raise
     
@@ -500,6 +536,12 @@ class CampaignAnalytics:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Analytics data export failed: {str(e)}")
             raise
     
