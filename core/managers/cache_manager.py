@@ -34,7 +34,11 @@ import redis.asyncio as redis
 import pickle
 import gzip
 import lz4.frame
-import zstd
+try:
+    import zstd
+    ZSTD_AVAILABLE = True
+except ImportError:
+    ZSTD_AVAILABLE = False
 from collections import OrderedDict, defaultdict
 import numpy as np
 
