@@ -1934,16 +1934,189 @@ class TimeSeriesAnalytics:
         self.logger = logging.getLogger(__name__)
     
     async def analyze_trends(self, metrics: List[ProtectionMetric]) -> Dict[str, Any]:
-        """
-Analyze time series trends"""
-        # Implementation for time series analysis
-        pass
+        """Analyze time series trends using statistical methods"""
+        try:
+            if not metrics:
+                return {}
+            
+            # Group metrics by type and convert to time series
+            grouped_metrics = defaultdict(list)
+            for metric in metrics:
+                grouped_metrics[metric.metric_type.value].append({
+                    'timestamp': metric.timestamp,
+                    'value': metric.value
+                })
+            
+            trends_analysis = {}
+            
+            for metric_type, data_points in grouped_metrics.items():
+                # Sort by timestamp
+                data_points.sort(key=lambda x: x['timestamp'])
+                
+                if len(data_points) < 2:
+                    continue
+                
+                # Extract values and timestamps
+                values = [dp['value'] for dp in data_points]
+                timestamps = [dp['timestamp'] for dp in data_points]
+                
+                # Calculate basic trend statistics
+                value_mean = statistics.mean(values)
+                value_stdev = statistics.stdev(values) if len(values) > 1 else 0
+                
+                # Calculate linear trend using least squares
+                n = len(values)
+                sum_x = sum(range(n))
+                sum_y = sum(values)
+                sum_xy = sum(i * values[i] for i in range(n))
+                sum_x2 = sum(i * i for i in range(n))
+                
+                # Linear regression slope
+                slope = (n * sum_xy - sum_x * sum_y) / (n * sum_x2 - sum_x * sum_x) if (n * sum_x2 - sum_x * sum_x) != 0 else 0
+                
+                # Trend direction
+                trend_direction = "increasing" if slope > 0.01 else "decreasing" if slope < -0.01 else "stable"
+                
+                # Calculate percentage change
+                if len(values) >= 2:
+                    pct_change = ((values[-1] - values[0]) / values[0]) * 100 if values[0] != 0 else 0
+                else:
+                    pct_change = 0
+                
+                # Volatility (coefficient of variation)
+                volatility = (value_stdev / value_mean) * 100 if value_mean != 0 else 0
+                
+                trends_analysis[metric_type] = {
+                    'trend_direction': trend_direction,
+                    'slope': slope,
+                    'percentage_change': pct_change,
+                    'volatility': volatility,
+                    'mean_value': value_mean,
+                    'std_deviation': value_stdev,
+                    'data_points': len(values),
+                    'time_span_hours': (timestamps[-1] - timestamps[0]).total_seconds() / 3600 if len(timestamps) > 1 else 0
+                }
+            
+            return trends_analysis
+            
+        except Exception as e:
+            logger.error(f"Error analyzing trends: {str(e)}")
+            return {}
     
     async def detect_anomalies(self, metrics: List[ProtectionMetric]) -> List[Dict[str, Any]]:
-        """
-Detect anomalies in time series data"""
-        # Implementation for anomaly detection
-        pass
+        """Detect anomalies using statistical and ML methods"""
+        try:
+            if not metrics:
+                return []
+            
+            anomalies = []
+            
+            # Group metrics by type for analysis
+            grouped_metrics = defaultdict(list)
+            for metric in metrics:
+                grouped_metrics[metric.metric_type.value].append(metric)
+            
+            for metric_type, metric_list in grouped_metrics.items():
+                if len(metric_list) < 5:  # Need minimum data points
+                    continue
+                
+                # Sort by timestamp
+                metric_list.sort(key=lambda x: x.timestamp)
+                values = [m.value for m in metric_list]
+                
+                # Calculate statistical bounds
+                mean_value = statistics.mean(values)
+                std_dev = statistics.stdev(values) if len(values) > 1 else 0
+                
+                # Define anomaly thresholds (2 standard deviations)
+                upper_bound = mean_value + (2 * std_dev)
+                lower_bound = mean_value - (2 * std_dev)
+                
+                # Detect statistical anomalies
+                for i, metric in enumerate(metric_list):
+                    is_anomaly = False
+                    anomaly_type = ""
+                    severity = 0.0
+                    
+                    # Statistical outlier detection
+                    if metric.value > upper_bound:
+                        is_anomaly = True
+                        anomaly_type = "statistical_high"
+                        severity = min(1.0, (metric.value - upper_bound) / std_dev) if std_dev > 0 else 1.0
+                    elif metric.value < lower_bound:
+                        is_anomaly = True
+                        anomaly_type = "statistical_low"
+                        severity = min(1.0, (lower_bound - metric.value) / std_dev) if std_dev > 0 else 1.0
+                    
+                    # Sudden change detection
+                    if i > 0:
+                        prev_value = metric_list[i-1].value
+                        change_ratio = abs(metric.value - prev_value) / max(prev_value, 0.001)
+                        
+                        if change_ratio > 0.5:  # 50% change threshold
+                            is_anomaly = True
+                            anomaly_type = "sudden_change"
+                            severity = max(severity, min(1.0, change_ratio))
+                    
+                    # Pattern break detection (for temporal sequences)
+                    if i >= 3:  # Need enough history
+                        recent_values = values[max(0, i-3):i]
+                        recent_trend = statistics.mean(recent_values[-2:]) - statistics.mean(recent_values[:2]) if len(recent_values) >= 2 else 0
+                        current_trend = metric.value - recent_values[-1]
+                        
+                        # Detect trend reversal
+                        if recent_trend != 0 and (recent_trend * current_trend) < 0 and abs(current_trend) > abs(recent_trend) * 2:
+                            is_anomaly = True
+                            anomaly_type = "trend_reversal"
+                            severity = max(severity, 0.7)
+                    
+                    if is_anomaly:
+                        anomalies.append({
+                            'metric_id': metric.metric_id,
+                            'metric_type': metric_type,
+                            'timestamp': metric.timestamp,
+                            'value': metric.value,
+                            'expected_range': [lower_bound, upper_bound],
+                            'anomaly_type': anomaly_type,
+                            'severity': severity,
+                            'description': self._generate_anomaly_description(anomaly_type, metric.value, mean_value, severity),
+                            'recommended_action': self._get_anomaly_action_recommendation(anomaly_type, severity)
+                        })
+            
+            # Sort anomalies by severity (highest first)
+            anomalies.sort(key=lambda x: x['severity'], reverse=True)
+            
+            return anomalies
+            
+        except Exception as e:
+            logger.error(f"Error detecting anomalies: {str(e)}")
+            return []
+    
+    def _generate_anomaly_description(self, anomaly_type: str, value: float, expected: float, severity: float) -> str:
+        """Generate human-readable anomaly description"""
+        severity_text = "critical" if severity > 0.8 else "high" if severity > 0.6 else "medium" if severity > 0.4 else "low"
+        
+        if anomaly_type == "statistical_high":
+            return f"Value {value:.2f} is significantly higher than expected {expected:.2f} ({severity_text} severity)"
+        elif anomaly_type == "statistical_low":
+            return f"Value {value:.2f} is significantly lower than expected {expected:.2f} ({severity_text} severity)"
+        elif anomaly_type == "sudden_change":
+            return f"Sudden change detected - value jumped to {value:.2f} ({severity_text} severity)"
+        elif anomaly_type == "trend_reversal":
+            return f"Trend reversal detected at value {value:.2f} ({severity_text} severity)"
+        else:
+            return f"Anomaly detected: {anomaly_type} with severity {severity_text}"
+    
+    def _get_anomaly_action_recommendation(self, anomaly_type: str, severity: float) -> str:
+        """Get recommended action for anomaly"""
+        if severity > 0.8:
+            return "Immediate investigation required - potential security incident"
+        elif severity > 0.6:
+            return "Monitor closely and investigate if pattern continues"
+        elif severity > 0.4:
+            return "Review system logs and metrics for underlying cause"
+        else:
+            return "Continue monitoring - may be normal variance"
 
 
 class MLAnalyticsEngine:
@@ -2347,15 +2520,184 @@ Generate custom report based on configuration"""
         return result
     
     async def generate_pdf_report(self, report: AnalyticsReport) -> bytes:
-        """Generate PDF report"""
-        # Implementation for PDF generation
-        pass
+        """Generate PDF report using reportlab"""
+        try:
+            from io import BytesIO
+            from reportlab.lib.pagesizes import letter, A4
+            from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
+            from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+            from reportlab.lib.units import inch
+            from reportlab.lib import colors
+            from reportlab.lib.enums import TA_CENTER, TA_LEFT
+            
+            # Create PDF buffer
+            buffer = BytesIO()
+            doc = SimpleDocTemplate(buffer, pagesize=A4)
+            styles = getSampleStyleSheet()
+            
+            # Create custom styles
+            title_style = ParagraphStyle(
+                'CustomTitle',
+                parent=styles['Heading1'],
+                fontSize=24,
+                spaceAfter=30,
+                alignment=TA_CENTER,
+                textColor=colors.darkblue
+            )
+            
+            heading_style = ParagraphStyle(
+                'CustomHeading',
+                parent=styles['Heading2'],
+                fontSize=16,
+                spaceAfter=12,
+                textColor=colors.darkblue
+            )
+            
+            # Build content
+            content = []
+            
+            # Title
+            content.append(Paragraph("Content Protection Analytics Report", title_style))
+            content.append(Spacer(1, 20))
+            
+            # Report metadata
+            content.append(Paragraph("Report Information", heading_style))
+            info_data = [
+                ['Report ID:', report.report_id],
+                ['Generated:', report.generated_at.strftime('%Y-%m-%d %H:%M:%S UTC')],
+                ['Report Type:', report.report_type.value],
+                ['Period:', f"{report.start_date.strftime('%Y-%m-%d')} to {report.end_date.strftime('%Y-%m-%d')}"],
+                ['Total Metrics:', str(len(report.metrics))]
+            ]
+            
+            info_table = Table(info_data, colWidths=[2*inch, 3*inch])
+            info_table.setStyle(TableStyle([
+                ('BACKGROUND', (0, 0), (0, -1), colors.lightgrey),
+                ('TEXTCOLOR', (0, 0), (-1, -1), colors.black),
+                ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+                ('FONTNAME', (0, 0), (-1, -1), 'Helvetica'),
+                ('FONTSIZE', (0, 0), (-1, -1), 10),
+                ('BOTTOMPADDING', (0, 0), (-1, -1), 12),
+                ('GRID', (0, 0), (-1, -1), 1, colors.black)
+            ]))
+            
+            content.append(info_table)
+            content.append(Spacer(1, 20))
+            
+            # Summary statistics
+            if report.summary:
+                content.append(Paragraph("Summary Statistics", heading_style))
+                summary_data = [['Metric', 'Value']]
+                
+                for key, value in report.summary.items():
+                    if isinstance(value, (int, float)):
+                        formatted_value = f"{value:.2f}" if isinstance(value, float) else str(value)
+                    else:
+                        formatted_value = str(value)
+                    summary_data.append([key.replace('_', ' ').title(), formatted_value])
+                
+                summary_table = Table(summary_data, colWidths=[2.5*inch, 2.5*inch])
+                summary_table.setStyle(TableStyle([
+                    ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+                    ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                    ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+                    ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                    ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),
+                    ('FONTSIZE', (0, 0), (-1, -1), 10),
+                    ('BOTTOMPADDING', (0, 0), (-1, -1), 12),
+                    ('GRID', (0, 0), (-1, -1), 1, colors.black)
+                ]))
+                
+                content.append(summary_table)
+                content.append(Spacer(1, 20))
+            
+            # Recommendations
+            if report.recommendations:
+                content.append(Paragraph("Recommendations", heading_style))
+                for i, rec in enumerate(report.recommendations[:10], 1):  # Limit to 10
+                    content.append(Paragraph(f"{i}. {rec}", styles['Normal']))
+                content.append(Spacer(1, 20))
+            
+            # Generate PDF
+            doc.build(content)
+            pdf_data = buffer.getvalue()
+            buffer.close()
+            
+            return pdf_data
+            
+        except ImportError:
+            # Fallback: generate simple text report
+            logger.warning("reportlab not available, generating text report")
+            text_content = f"""
+Content Protection Analytics Report
+==================================
+
+Report ID: {report.report_id}
+Generated: {report.generated_at.strftime('%Y-%m-%d %H:%M:%S UTC')}
+Type: {report.report_type.value}
+Period: {report.start_date.strftime('%Y-%m-%d')} to {report.end_date.strftime('%Y-%m-%d')}
+
+Summary:
+{json.dumps(report.summary, indent=2) if report.summary else 'No summary available'}
+
+Recommendations:
+{chr(10).join(f"• {rec}" for rec in report.recommendations) if report.recommendations else 'No recommendations'}
+            """
+            return text_content.encode('utf-8')
+        
+        except Exception as e:
+            logger.error(f"Error generating PDF report: {str(e)}")
+            # Return error message as PDF-like content
+            error_content = f"Error generating report: {str(e)}"
+            return error_content.encode('utf-8')
     
     async def generate_csv_export(self, metrics: List[ProtectionMetric]) -> str:
-        """
-Generate CSV export of metrics"""
-        # Implementation for CSV export
-        pass
+        """Generate CSV export of metrics data"""
+        try:
+            import csv
+            from io import StringIO
+            
+            # Create CSV buffer
+            csv_buffer = StringIO()
+            writer = csv.writer(csv_buffer)
+            
+            # Write header
+            headers = [
+                'Metric ID',
+                'Metric Type',
+                'Value',
+                'Unit',
+                'Timestamp',
+                'Source',
+                'Tags',
+                'Additional Data'
+            ]
+            writer.writerow(headers)
+            
+            # Write metric data
+            for metric in metrics:
+                row = [
+                    metric.metric_id,
+                    metric.metric_type.value,
+                    metric.value,
+                    metric.unit,
+                    metric.timestamp.isoformat(),
+                    metric.source,
+                    json.dumps(metric.tags) if metric.tags else '',
+                    json.dumps(metric.additional_data) if metric.additional_data else ''
+                ]
+                writer.writerow(row)
+            
+            # Get CSV content
+            csv_content = csv_buffer.getvalue()
+            csv_buffer.close()
+            
+            return csv_content
+            
+        except Exception as e:
+            logger.error(f"Error generating CSV export: {str(e)}")
+            # Return error message as CSV
+            return f"Error,{str(e)}\n"
 
 
 class PerformanceMonitor:
