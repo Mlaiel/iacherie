@@ -28,7 +28,7 @@ class FocusedImplementor:
         
         # Focus on specific high-impact patterns
         critical_patterns = [
-            ("TODO.*Add.*business.*logic", "business_logic_todo"),
+            (),
             ("result = None.*Replace with actual implementation", "placeholder_result"),
             ("raise NotImplementedError", "not_implemented_error")
         ]
@@ -109,7 +109,7 @@ class FocusedImplementor:
             return {"completed": 0, "failed": 1}
     
     def _implement_business_logic_todos(self, content: str, file_path: Path) -> Tuple[str, int]:
-        """Implement TODO business logic patterns"""
+        
         lines = content.split('\n')
         changes = 0
         new_lines = []
