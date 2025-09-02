@@ -271,3 +271,21 @@ __all__ = [
     "create_subscriptionmanagement_service",
     "get_subscriptionmanagement_status"
 ]
+
+    async def calculate_revenue(self, content_data, metrics):
+        """Calculate revenue for content"""
+        try:
+            base_rate = content_data.get('base_rate', 0.05)
+            views = metrics.get('views', 0)
+            engagement = metrics.get('engagement_rate', 0)
+            
+            revenue = views * base_rate * (1 + engagement)
+            
+            return {
+                'content_id': content_data.get('content_id'),
+                'revenue': round(revenue, 2),
+                'metrics_used': metrics
+            }
+        except Exception as e:
+            logger.error(f"Revenue calculation failed: {e}")
+            return {'revenue': 0, 'error': str(e)}

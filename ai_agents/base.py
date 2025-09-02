@@ -348,6 +348,10 @@ Return list of required configuration keys for this agent"""
         start_time = time.time()
         
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             # Pre-processing security and validation
             await self._validate_request(request)
             await self._check_rate_limits(request)
@@ -448,6 +452,10 @@ Comprehensive request validation"""
     async def _validate_request_data(self, data: Dict[str, Any]):
         """Validate request data structure and content"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             # Basic data structure validation
             if not isinstance(data, dict):
                 raise ValidationError("Request data must be a dictionary")

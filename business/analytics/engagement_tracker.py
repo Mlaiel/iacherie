@@ -145,9 +145,17 @@ Track a real-time engagement event"""
     async def _update_real_time_metrics(self, event: EngagementEvent) -> None:
         """Update real-time engagement metrics"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             # This would trigger real-time dashboard updates
             # Implementation depends on specific real-time system (WebSocket, etc.)
                 try:
+                    pass
+                except Exception as e:
+                    logger.error(f"Error: {e}")
+                    raise
                     self.logger.info(f"Updating {method_name}...")
 
                     # Prepare update data
@@ -175,15 +183,17 @@ Track a real-time engagement event"""
                     self.logger.info(f"Update completed for {method_name}")
                     return update_data
 
-                except Exception as e:
                     self.logger.error(f"Error updating {method_name}: {e}")
                     raise
-        except Exception as e:
             logger.error(f"Failed to update real-time metrics: {e}")
 
     async def get_engagement_analytics(self, creator_id: str, timeframe: str = "7d") -> Dict[str, Any]:
         """Get comprehensive engagement analytics"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             timeframe_mapping = {
                 '1d': timedelta(days=1),
                 '7d': timedelta(days=7),
@@ -229,6 +239,5 @@ Track a real-time engagement event"""
                 'generated_at': datetime.now().isoformat()
             }
             
-        except Exception as e:
             logger.error(f"Failed to get engagement analytics: {e}")
             raise HTTPException(status_code=500, detail="Engagement analytics retrieval failed")

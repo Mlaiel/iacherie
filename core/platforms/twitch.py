@@ -27,6 +27,18 @@ Twitch platform integration"""
     
     def __init__(self, config: PlatformConfig):
         """
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
 Initialize Twitch platform"""
         super().__init__(config)
         self.api_base = "https://api.twitch.tv/helix"
