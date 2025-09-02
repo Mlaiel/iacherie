@@ -1610,33 +1610,443 @@ Update Prometheus metrics with performance data"""
 
     async def _process_view_event(self, event: Dict):
         """Process view events"""
-        # Update view counters and analytics
-        pass
+        try:
+            content_id = event.get('content_id')
+            platform = event.get('platform', 'unknown')
+            user_id = event.get('user_id')
+            timestamp = event.get('timestamp', datetime.utcnow())
+            metadata = event.get('metadata', {})
+            
+            if not content_id:
+                logger.warning("View event missing content_id")
+                return
+            
+            # Update view counters
+            self.content_performance[content_id]['total_views'] += 1
+            self.content_performance[content_id]['platform_views'][platform] += 1
+            
+            # Track unique viewers
+            if user_id and user_id not in self.content_performance[content_id]['unique_viewers']:
+                self.content_performance[content_id]['unique_viewers'].add(user_id)
+                self.content_performance[content_id]['unique_views'] += 1
+            
+            # Update hourly metrics
+            hour_key = timestamp.strftime('%Y%m%d_%H')
+            self.content_performance[content_id]['hourly_views'][hour_key] += 1
+            
+            # Calculate view velocity
+            if 'first_view_time' not in self.content_performance[content_id]:
+                self.content_performance[content_id]['first_view_time'] = timestamp
+            
+            time_since_creation = (timestamp - self.content_performance[content_id]['first_view_time']).total_seconds()
+            if time_since_creation > 0:
+                view_velocity = self.content_performance[content_id]['total_views'] / (time_since_creation / 3600)  # views per hour
+                self.content_performance[content_id]['view_velocity'] = view_velocity
+            
+            # Update engagement metrics
+            watch_time = metadata.get('watch_time', 0)
+            if watch_time > 0:
+                self.content_performance[content_id]['total_watch_time'] += watch_time
+                self.content_performance[content_id]['avg_watch_time'] = (
+                    self.content_performance[content_id]['total_watch_time'] / 
+                    self.content_performance[content_id]['total_views']
+                )
+            
+            # Update Prometheus metrics
+            self.metrics['views_total'].labels(
+                content_id=content_id,
+                platform=platform,
+                content_type=metadata.get('content_type', 'unknown')
+            ).inc()
+            
+            if watch_time > 0:
+                self.metrics['watch_time_seconds'].labels(
+                    content_id=content_id,
+                    platform=platform
+                ).observe(watch_time)
+            
+            logger.debug(f"Processed view event for content {content_id} on {platform}")
+            
+        except Exception as e:
+            logger.error(f"Error processing view event: {e}")
+            await self._record_error("view_event_processing", str(e), event)
 
     async def _process_interaction_event(self, event: Dict):
         """Process interaction events"""
-        # Update interaction metrics
-        pass
+        try:
+            content_id = event.get('content_id')
+            interaction_type = event.get('interaction_type')  # like, comment, share, save, etc.
+            platform = event.get('platform', 'unknown')
+            user_id = event.get('user_id')
+            timestamp = event.get('timestamp', datetime.utcnow())
+            metadata = event.get('metadata', {})
+            
+            if not content_id or not interaction_type:
+                logger.warning("Interaction event missing required fields")
+                return
+            
+            # Update interaction counters
+            self.content_performance[content_id]['interactions'][interaction_type] += 1
+            self.content_performance[content_id]['total_interactions'] += 1
+            self.content_performance[content_id]['platform_interactions'][platform] += 1
+            
+            # Track interaction timing patterns
+            hour_key = timestamp.strftime('%Y%m%d_%H')
+            self.content_performance[content_id]['hourly_interactions'][hour_key] += 1
+            
+            # Calculate engagement rate
+            total_views = self.content_performance[content_id]['total_views']
+            if total_views > 0:
+                engagement_rate = (
+                    self.content_performance[content_id]['total_interactions'] / total_views
+                )
+                self.content_performance[content_id]['engagement_rate'] = engagement_rate
+            
+            # Track user engagement patterns
+            if user_id:
+                user_interactions = self.content_performance[content_id]['user_engagement'].get(user_id, 0)
+                self.content_performance[content_id]['user_engagement'][user_id] = user_interactions + 1
+            
+            # Special handling for different interaction types
+            if interaction_type == 'comment':
+                comment_length = metadata.get('comment_length', 0)
+                if comment_length > 0:
+                    self.content_performance[content_id]['avg_comment_length'] = (
+                        (self.content_performance[content_id].get('avg_comment_length', 0) * 
+                         (self.content_performance[content_id]['interactions']['comment'] - 1) + comment_length) /
+                        self.content_performance[content_id]['interactions']['comment']
+                    )
+            
+            elif interaction_type == 'share':
+                share_platform = metadata.get('share_platform', 'unknown')
+                self.content_performance[content_id]['share_platforms'][share_platform] += 1
+                
+                # Calculate virality score
+                share_count = self.content_performance[content_id]['interactions'].get('share', 0)
+                if total_views > 0:
+                    virality_score = (share_count / total_views) * 100
+                    self.content_performance[content_id]['virality_score'] = virality_score
+            
+            # Update Prometheus metrics
+            self.metrics['interactions_total'].labels(
+                content_id=content_id,
+                platform=platform,
+                interaction_type=interaction_type
+            ).inc()
+            
+            if total_views > 0:
+                self.metrics['engagement_rate'].labels(
+                    content_id=content_id,
+                    platform=platform
+                ).set(engagement_rate)
+            
+            logger.debug(f"Processed {interaction_type} interaction for content {content_id}")
+            
+        except Exception as e:
+            logger.error(f"Error processing interaction event: {e}")
+            await self._record_error("interaction_event_processing", str(e), event)
 
     async def _process_share_event(self, event: Dict):
         """Process share events"""
-        # Track sharing patterns
-        pass
+        try:
+            content_id = event.get('content_id')
+            share_platform = event.get('share_platform', 'unknown')
+            source_platform = event.get('source_platform', 'unknown')
+            user_id = event.get('user_id')
+            timestamp = event.get('timestamp', datetime.utcnow())
+            metadata = event.get('metadata', {})
+            
+            if not content_id:
+                logger.warning("Share event missing content_id")
+                return
+            
+            # Track cross-platform sharing patterns
+            share_key = f"{source_platform}->{share_platform}"
+            self.content_performance[content_id]['cross_platform_shares'][share_key] += 1
+            self.content_performance[content_id]['total_shares'] += 1
+            
+            # Track sharing velocity
+            hour_key = timestamp.strftime('%Y%m%d_%H')
+            self.content_performance[content_id]['hourly_shares'][hour_key] += 1
+            
+            # Calculate viral coefficient
+            total_views = self.content_performance[content_id]['total_views']
+            if total_views > 0:
+                viral_coefficient = self.content_performance[content_id]['total_shares'] / total_views
+                self.content_performance[content_id]['viral_coefficient'] = viral_coefficient
+                
+                # Update virality classification
+                if viral_coefficient > 0.1:
+                    self.content_performance[content_id]['virality_level'] = 'high'
+                elif viral_coefficient > 0.05:
+                    self.content_performance[content_id]['virality_level'] = 'medium'
+                else:
+                    self.content_performance[content_id]['virality_level'] = 'low'
+            
+            # Track share context and metadata
+            share_context = metadata.get('share_context', 'direct')
+            self.content_performance[content_id]['share_contexts'][share_context] += 1
+            
+            # Track user sharing behavior
+            if user_id:
+                user_shares = self.content_performance[content_id]['user_shares'].get(user_id, 0)
+                self.content_performance[content_id]['user_shares'][user_id] = user_shares + 1
+                
+                # Identify potential influencers (users who share frequently)
+                if user_shares + 1 >= 5:  # User has shared this content 5+ times
+                    if 'influencer_sharers' not in self.content_performance[content_id]:
+                        self.content_performance[content_id]['influencer_sharers'] = set()
+                    self.content_performance[content_id]['influencer_sharers'].add(user_id)
+            
+            # Track geographical sharing patterns if available
+            location = metadata.get('location')
+            if location:
+                self.content_performance[content_id]['geographic_shares'][location] += 1
+            
+            # Update Prometheus metrics
+            self.metrics['shares_total'].labels(
+                content_id=content_id,
+                source_platform=source_platform,
+                share_platform=share_platform
+            ).inc()
+            
+            if viral_coefficient:
+                self.metrics['viral_coefficient'].labels(
+                    content_id=content_id
+                ).set(viral_coefficient)
+            
+            logger.debug(f"Processed share event: {source_platform} -> {share_platform} for content {content_id}")
+            
+        except Exception as e:
+            logger.error(f"Error processing share event: {e}")
+            await self._record_error("share_event_processing", str(e), event)
 
     async def _process_monetization_event(self, event: Dict):
         """Process monetization events"""
-        # Track revenue events
-        pass
+        try:
+            content_id = event.get('content_id')
+            event_type = event.get('event_type')  # purchase, license, subscription, etc.
+            platform = event.get('platform', 'unknown')
+            revenue_amount = event.get('revenue_amount', 0.0)
+            currency = event.get('currency', 'EUR')
+            user_id = event.get('user_id')
+            timestamp = event.get('timestamp', datetime.utcnow())
+            metadata = event.get('metadata', {})
+            
+            if not content_id or not event_type:
+                logger.warning("Monetization event missing required fields")
+                return
+            
+            # Track revenue metrics
+            self.content_performance[content_id]['total_revenue'] += revenue_amount
+            self.content_performance[content_id]['revenue_events'] += 1
+            self.content_performance[content_id]['revenue_by_platform'][platform] += revenue_amount
+            self.content_performance[content_id]['revenue_by_type'][event_type] += revenue_amount
+            
+            # Calculate revenue per view (RPV)
+            total_views = self.content_performance[content_id]['total_views']
+            if total_views > 0:
+                rpv = self.content_performance[content_id]['total_revenue'] / total_views
+                self.content_performance[content_id]['revenue_per_view'] = rpv
+            
+            # Calculate conversion rate
+            if event_type in ['purchase', 'license', 'subscription']:
+                conversion_rate = (
+                    self.content_performance[content_id]['revenue_events'] / total_views
+                ) if total_views > 0 else 0
+                self.content_performance[content_id]['conversion_rate'] = conversion_rate
+            
+            # Track revenue timing patterns
+            hour_key = timestamp.strftime('%Y%m%d_%H')
+            self.content_performance[content_id]['hourly_revenue'][hour_key] += revenue_amount
+            
+            # Track customer lifetime value patterns
+            if user_id:
+                user_revenue = self.content_performance[content_id]['user_revenue'].get(user_id, 0)
+                self.content_performance[content_id]['user_revenue'][user_id] = user_revenue + revenue_amount
+                
+                # Identify high-value customers
+                if user_revenue + revenue_amount >= 100:  # €100+ threshold
+                    if 'high_value_customers' not in self.content_performance[content_id]:
+                        self.content_performance[content_id]['high_value_customers'] = set()
+                    self.content_performance[content_id]['high_value_customers'].add(user_id)
+            
+            # Track monetization method performance
+            monetization_method = metadata.get('monetization_method', 'direct')
+            self.content_performance[content_id]['monetization_methods'][monetization_method] += revenue_amount
+            
+            # Calculate ARPU (Average Revenue Per User)
+            unique_revenue_users = len(self.content_performance[content_id]['user_revenue'])
+            if unique_revenue_users > 0:
+                arpu = self.content_performance[content_id]['total_revenue'] / unique_revenue_users
+                self.content_performance[content_id]['arpu'] = arpu
+            
+            # Track geographic revenue patterns
+            location = metadata.get('location')
+            if location:
+                self.content_performance[content_id]['geographic_revenue'][location] += revenue_amount
+            
+            # Update Prometheus metrics
+            self.metrics['revenue_total'].labels(
+                content_id=content_id,
+                platform=platform,
+                event_type=event_type,
+                currency=currency
+            ).inc(revenue_amount)
+            
+            if total_views > 0:
+                self.metrics['revenue_per_view'].labels(
+                    content_id=content_id,
+                    platform=platform
+                ).set(rpv)
+                
+                if conversion_rate is not None:
+                    self.metrics['conversion_rate'].labels(
+                        content_id=content_id,
+                        platform=platform
+                    ).set(conversion_rate)
+            
+            logger.debug(f"Processed monetization event: {event_type} (€{revenue_amount}) for content {content_id}")
+            
+        except Exception as e:
+            logger.error(f"Error processing monetization event: {e}")
+            await self._record_error("monetization_event_processing", str(e), event)
 
     async def _analyze_cross_platform_patterns(self):
         """Analyze patterns across platforms"""
-        # Identify cross-platform performance correlations
-        pass
+        try:
+            logger.debug("Analyzing cross-platform content performance patterns")
+            
+            for content_id, performance_data in self.content_performance.items():
+                platform_views = performance_data['platform_views']
+                platform_interactions = performance_data['platform_interactions']
+                platform_revenue = performance_data['revenue_by_platform']
+                
+                if len(platform_views) < 2:
+                    continue  # Need at least 2 platforms for cross-platform analysis
+                
+                # Calculate platform performance scores
+                platform_scores = {}
+                for platform in platform_views.keys():
+                    views = platform_views.get(platform, 0)
+                    interactions = platform_interactions.get(platform, 0)
+                    revenue = platform_revenue.get(platform, 0)
+                    
+                    # Weighted platform score
+                    engagement_score = (interactions / views) if views > 0 else 0
+                    revenue_score = (revenue / views) if views > 0 else 0
+                    
+                    platform_scores[platform] = {
+                        'engagement_score': engagement_score,
+                        'revenue_score': revenue_score,
+                        'views': views,
+                        'combined_score': (engagement_score * 0.6) + (revenue_score * 0.4)
+                    }
+                
+                # Identify best performing platform
+                best_platform = max(platform_scores.keys(), 
+                                  key=lambda p: platform_scores[p]['combined_score'])
+                performance_data['best_platform'] = best_platform
+                
+                # Calculate platform diversity index
+                total_views = sum(platform_views.values())
+                if total_views > 0:
+                    diversity_index = 1 - sum(
+                        (views / total_views) ** 2 for views in platform_views.values()
+                    )
+                    performance_data['platform_diversity_index'] = diversity_index
+                
+                # Identify platform synergies
+                performance_data['platform_synergies'] = self._calculate_platform_synergies(
+                    platform_views, platform_interactions
+                )
+                
+                # Track cross-platform user journeys
+                performance_data['cross_platform_journey_score'] = self._analyze_user_journeys(
+                    performance_data
+                )
+            
+            logger.debug("Cross-platform analysis completed")
+            
+        except Exception as e:
+            logger.error(f"Error analyzing cross-platform patterns: {e}")
+            await self._record_error("cross_platform_analysis", str(e))
 
     async def _update_content_lifecycle_stages(self):
         """Update content lifecycle stages"""
-        # Track content from creation to retirement
-        pass
+        try:
+            logger.debug("Updating content lifecycle stages")
+            
+            current_time = datetime.utcnow()
+            
+            for content_id, performance_data in self.content_performance.items():
+                # Get content creation time
+                creation_time = performance_data.get('creation_time', current_time)
+                content_age_hours = (current_time - creation_time).total_seconds() / 3600
+                
+                total_views = performance_data['total_views']
+                total_interactions = performance_data['total_interactions']
+                total_revenue = performance_data['total_revenue']
+                
+                # Determine lifecycle stage based on age and performance
+                if content_age_hours < 24:
+                    if total_views > 1000:
+                        stage = "viral_launch"
+                    elif total_views > 100:
+                        stage = "strong_launch"
+                    else:
+                        stage = "initial_launch"
+                        
+                elif content_age_hours < 168:  # 1 week
+                    view_velocity = total_views / content_age_hours
+                    if view_velocity > 100:  # 100+ views per hour
+                        stage = "rapid_growth"
+                    elif view_velocity > 10:
+                        stage = "steady_growth"
+                    else:
+                        stage = "slow_growth"
+                        
+                elif content_age_hours < 720:  # 1 month
+                    daily_views = performance_data.get('view_velocity', 0) * 24
+                    if daily_views > 500:
+                        stage = "sustained_popularity"
+                    elif daily_views > 100:
+                        stage = "moderate_popularity"
+                    else:
+                        stage = "declining_interest"
+                        
+                else:  # Older than 1 month
+                    recent_activity = self._calculate_recent_activity(performance_data)
+                    if recent_activity > 0.5:  # 50% of activity in recent period
+                        stage = "evergreen_content"
+                    elif recent_activity > 0.1:
+                        stage = "legacy_content"
+                    else:
+                        stage = "dormant_content"
+                
+                # Update stage
+                performance_data['lifecycle_stage'] = stage
+                performance_data['content_age_hours'] = content_age_hours
+                
+                # Calculate stage-specific metrics
+                stage_metrics = self._calculate_stage_metrics(stage, performance_data)
+                performance_data['stage_metrics'] = stage_metrics
+                
+                # Predict next stage transition
+                next_stage_prediction = self._predict_next_stage(stage, performance_data)
+                performance_data['predicted_next_stage'] = next_stage_prediction
+                
+                # Update Prometheus metrics
+                self.metrics['content_lifecycle_stage'].labels(
+                    content_id=content_id,
+                    stage=stage
+                ).set(1)
+            
+            logger.debug("Content lifecycle stages updated")
+            
+        except Exception as e:
+            logger.error(f"Error updating content lifecycle stages: {e}")
+            await self._record_error("lifecycle_stage_update", str(e))
     
     async def _initialize_quality_assessment(self) -> None:
         """Initialize content quality assessment systems"""
@@ -2393,3 +2803,224 @@ Initialize the content performance analyzer"""
             
         except Exception:
             return 0.0
+    
+    def _calculate_platform_synergies(self, platform_views: Dict, platform_interactions: Dict) -> Dict:
+        """Calculate synergy effects between platforms"""
+        try:
+            synergies = {}
+            platforms = list(platform_views.keys())
+            
+            for i, platform1 in enumerate(platforms):
+                for platform2 in platforms[i+1:]:
+                    # Calculate correlation coefficient between platforms
+                    views1 = platform_views.get(platform1, 0)
+                    views2 = platform_views.get(platform2, 0)
+                    interactions1 = platform_interactions.get(platform1, 0)
+                    interactions2 = platform_interactions.get(platform2, 0)
+                    
+                    # Simple synergy score based on relative performance
+                    if views1 > 0 and views2 > 0:
+                        engagement1 = interactions1 / views1
+                        engagement2 = interactions2 / views2
+                        synergy_score = min(engagement1, engagement2) / max(engagement1, engagement2)
+                        synergies[f"{platform1}-{platform2}"] = synergy_score
+            
+            return synergies
+            
+        except Exception as e:
+            logger.error(f"Error calculating platform synergies: {e}")
+            return {}
+    
+    def _analyze_user_journeys(self, performance_data: Dict) -> float:
+        """Analyze cross-platform user journey quality"""
+        try:
+            cross_platform_shares = performance_data.get('cross_platform_shares', {})
+            if not cross_platform_shares:
+                return 0.0
+            
+            # Calculate journey complexity and effectiveness
+            total_shares = sum(cross_platform_shares.values())
+            unique_journeys = len(cross_platform_shares)
+            
+            if total_shares == 0:
+                return 0.0
+            
+            # Score based on diversity and volume of cross-platform activity
+            journey_score = (unique_journeys / max(total_shares, 1)) * min(total_shares / 100, 1)
+            return min(journey_score, 1.0)
+            
+        except Exception as e:
+            logger.error(f"Error analyzing user journeys: {e}")
+            return 0.0
+    
+    def _calculate_recent_activity(self, performance_data: Dict) -> float:
+        """Calculate recent activity ratio for lifecycle analysis"""
+        try:
+            hourly_views = performance_data.get('hourly_views', {})
+            if not hourly_views:
+                return 0.0
+            
+            current_time = datetime.utcnow()
+            recent_threshold = current_time - timedelta(hours=168)  # Last week
+            
+            total_views = sum(hourly_views.values())
+            recent_views = 0
+            
+            for hour_key, views in hourly_views.items():
+                try:
+                    hour_time = datetime.strptime(hour_key, '%Y%m%d_%H')
+                    if hour_time >= recent_threshold:
+                        recent_views += views
+                except ValueError:
+                    continue
+            
+            return recent_views / max(total_views, 1)
+            
+        except Exception as e:
+            logger.error(f"Error calculating recent activity: {e}")
+            return 0.0
+    
+    def _calculate_stage_metrics(self, stage: str, performance_data: Dict) -> Dict:
+        """Calculate stage-specific performance metrics"""
+        try:
+            metrics = {}
+            
+            if stage in ['viral_launch', 'strong_launch', 'initial_launch']:
+                # Launch stage metrics
+                metrics['launch_velocity'] = performance_data.get('view_velocity', 0)
+                metrics['early_engagement'] = performance_data.get('engagement_rate', 0)
+                
+            elif stage in ['rapid_growth', 'steady_growth', 'slow_growth']:
+                # Growth stage metrics
+                metrics['growth_consistency'] = self._calculate_growth_consistency(performance_data)
+                metrics['platform_expansion'] = len(performance_data.get('platform_views', {}))
+                
+            elif stage in ['sustained_popularity', 'moderate_popularity']:
+                # Popularity stage metrics
+                metrics['retention_rate'] = self._calculate_retention_rate(performance_data)
+                metrics['monetization_efficiency'] = performance_data.get('revenue_per_view', 0)
+                
+            elif stage in ['evergreen_content', 'legacy_content']:
+                # Mature stage metrics
+                metrics['longevity_score'] = performance_data.get('content_age_hours', 0) / 8760  # Age in years
+                metrics['sustained_revenue'] = performance_data.get('total_revenue', 0)
+                
+            return metrics
+            
+        except Exception as e:
+            logger.error(f"Error calculating stage metrics: {e}")
+            return {}
+    
+    def _predict_next_stage(self, current_stage: str, performance_data: Dict) -> str:
+        """Predict next lifecycle stage based on current performance"""
+        try:
+            view_velocity = performance_data.get('view_velocity', 0)
+            engagement_rate = performance_data.get('engagement_rate', 0)
+            content_age_hours = performance_data.get('content_age_hours', 0)
+            
+            # Simple rule-based prediction
+            if current_stage == 'initial_launch':
+                if view_velocity > 100:
+                    return 'viral_launch'
+                elif view_velocity > 10:
+                    return 'strong_launch'
+                else:
+                    return 'slow_growth'
+                    
+            elif current_stage in ['viral_launch', 'strong_launch']:
+                if content_age_hours > 24:
+                    return 'rapid_growth' if view_velocity > 50 else 'steady_growth'
+                else:
+                    return current_stage
+                    
+            elif current_stage in ['rapid_growth', 'steady_growth']:
+                if content_age_hours > 168:  # 1 week
+                    return 'sustained_popularity' if engagement_rate > 0.1 else 'declining_interest'
+                else:
+                    return current_stage
+                    
+            elif current_stage == 'sustained_popularity':
+                if content_age_hours > 720:  # 1 month
+                    return 'evergreen_content' if engagement_rate > 0.05 else 'legacy_content'
+                else:
+                    return current_stage
+                    
+            else:
+                return current_stage  # Stay in current stage
+                
+        except Exception as e:
+            logger.error(f"Error predicting next stage: {e}")
+            return current_stage
+    
+    def _calculate_growth_consistency(self, performance_data: Dict) -> float:
+        """Calculate growth consistency score"""
+        try:
+            hourly_views = performance_data.get('hourly_views', {})
+            if len(hourly_views) < 5:  # Need at least 5 data points
+                return 0.0
+            
+            # Calculate variance in view rates
+            view_rates = list(hourly_views.values())
+            if not view_rates:
+                return 0.0
+            
+            mean_views = statistics.mean(view_rates)
+            if mean_views == 0:
+                return 0.0
+            
+            variance = statistics.variance(view_rates)
+            coefficient_of_variation = (variance ** 0.5) / mean_views
+            
+            # Convert to consistency score (lower variance = higher consistency)
+            consistency_score = 1 / (1 + coefficient_of_variation)
+            return min(consistency_score, 1.0)
+            
+        except Exception as e:
+            logger.error(f"Error calculating growth consistency: {e}")
+            return 0.0
+    
+    def _calculate_retention_rate(self, performance_data: Dict) -> float:
+        """Calculate user retention rate"""
+        try:
+            unique_viewers = performance_data.get('unique_viewers', set())
+            user_engagement = performance_data.get('user_engagement', {})
+            
+            if not unique_viewers or not user_engagement:
+                return 0.0
+            
+            # Count users who had multiple engagements
+            repeat_users = sum(1 for count in user_engagement.values() if count > 1)
+            retention_rate = repeat_users / len(unique_viewers)
+            
+            return min(retention_rate, 1.0)
+            
+        except Exception as e:
+            logger.error(f"Error calculating retention rate: {e}")
+            return 0.0
+    
+    async def _record_error(self, operation: str, error_message: str, event_data: Dict = None):
+        """Record error for monitoring and debugging"""
+        try:
+            error_record = {
+                "timestamp": datetime.utcnow().isoformat(),
+                "operation": operation,
+                "error": error_message,
+                "event_data": event_data,
+                "component": "content_performance"
+            }
+            
+            # Log the error
+            logger.error(f"Content Performance Error: {operation} - {error_message}")
+            
+            # Store error for analysis (in production, this would go to a proper monitoring system)
+            if not hasattr(self, 'error_log'):
+                self.error_log = []
+            
+            self.error_log.append(error_record)
+            
+            # Keep only last 100 errors
+            if len(self.error_log) > 100:
+                self.error_log = self.error_log[-100:]
+                
+        except Exception as e:
+            logger.error(f"Failed to record error: {e}")
