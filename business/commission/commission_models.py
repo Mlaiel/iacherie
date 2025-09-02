@@ -127,7 +127,7 @@ class CommissionRate(BaseModel):
             raise ValueError("Base rate must be between 0 and 1")
         return v
     
-    @root_validator
+    @root_validator(skip_on_failure=True)
     def validate_amount_range(cls, values):
         min_amt = values.get("minimum_amount")
         max_amt = values.get("maximum_amount")

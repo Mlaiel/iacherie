@@ -25,7 +25,7 @@ import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
 from datetime import datetime, timedelta
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, asdict
 from enum import Enum, auto
 from decimal import Decimal
 import uuid
@@ -563,16 +563,98 @@ Initialize Commission Manager with comprehensive configuration"""
     async def _store_commission_calculation(self, calculation: CommissionCalculation) -> None:
         """Store commission calculation in database"""
         try:
-            # Implement database storage logic
-            pass
+            async with get_async_session() as session:
+                # Convert to database model if needed
+                calculation_data = {
+                    "id": calculation.calculation_id,
+                    "creator_id": calculation.creator_id,
+                    "content_id": calculation.content_id,
+                    "commission_type": calculation.commission_type.value,
+                    "base_amount": float(calculation.base_amount),
+                    "commission_rate": float(calculation.commission_rate),
+                    "commission_amount": float(calculation.commission_amount),
+                    "fees": float(calculation.fees or 0),
+                    "net_amount": float(calculation.net_amount),
+                    "status": calculation.status.value,
+                    "tier": calculation.tier.value if calculation.tier else None,
+                    "metadata": json.dumps(calculation.metadata or {}),
+                    "created_at": calculation.created_at,
+                    "updated_at": datetime.utcnow()
+                }
+                
+                # Use upsert operation for robustness
+                from sqlalchemy.dialects.postgresql import insert
+                stmt = insert(CommissionCalculation.__table__).values(**calculation_data)
+                stmt = stmt.on_conflict_do_update(
+                    index_elements=['id'],
+                    set_=dict(
+                        commission_amount=stmt.excluded.commission_amount,
+                        status=stmt.excluded.status,
+                        updated_at=stmt.excluded.updated_at,
+                        metadata=stmt.excluded.metadata
+                    )
+                )
+                await session.execute(stmt)
+                await session.commit()
+                
+                # Cache the calculation for quick retrieval
+                if self.config.enable_caching:
+                    redis_client = await get_redis_client()
+                    cache_key = f"commission_calc:{calculation.calculation_id}"
+                    await redis_client.setex(
+                        cache_key, 
+                        self.config.cache_ttl_seconds,
+                        json.dumps(calculation_data, default=str)
+                    )
+                
+                logger.info(f"Commission calculation stored: {calculation.calculation_id}")
+                
         except Exception as e:
             logger.error(f"Failed to store commission calculation: {e}")
+            # Don't re-raise to allow operation to continue gracefully
+            await self._record_error("store_commission", str(e), calculation.calculation_id)
             
     async def _get_commission_calculation(self, commission_id: str) -> Optional[CommissionCalculation]:
         """Retrieve commission calculation by ID"""
         try:
-            # Implement database retrieval logic
-            return None
+            # Try cache first for performance
+            if self.config.enable_caching:
+                redis_client = await get_redis_client()
+                cache_key = f"commission_calc:{commission_id}"
+                cached_data = await redis_client.get(cache_key)
+                
+                if cached_data:
+                    try:
+                        data = json.loads(cached_data)
+                        return self._deserialize_commission_calculation(data)
+                    except Exception as e:
+                        logger.warning(f"Cache deserialization failed: {e}")
+            
+            # Fallback to database
+            async with get_async_session() as session:
+                stmt = select(CommissionCalculation).where(
+                    CommissionCalculation.id == commission_id
+                )
+                result = await session.execute(stmt)
+                row = result.scalar_one_or_none()
+                
+                if row:
+                    calculation = self._row_to_commission_calculation(row)
+                    
+                    # Update cache for future requests
+                    if self.config.enable_caching:
+                        redis_client = await get_redis_client()
+                        cache_key = f"commission_calc:{commission_id}"
+                        await redis_client.setex(
+                            cache_key,
+                            self.config.cache_ttl_seconds,
+                            json.dumps(asdict(calculation), default=str)
+                        )
+                    
+                    return calculation
+                    
+                return None
+                
         except Exception as e:
             logger.error(f"Failed to get commission calculation: {e}")
             return None
@@ -615,10 +697,30 @@ Initialize Commission Manager with comprehensive configuration"""
     ) -> None:
         """Update commission status in database"""
         try:
-            # Implement database update logic
-            pass
+            async with get_async_session() as session:
+                stmt = update(CommissionCalculation).where(
+                    CommissionCalculation.id == commission_id
+                ).values(
+                    status=status.value,
+                    updated_at=datetime.utcnow()
+                )
+                result = await session.execute(stmt)
+                await session.commit()
+                
+                if result.rowcount > 0:
+                    # Invalidate cache
+                    if self.config.enable_caching:
+                        redis_client = await get_redis_client()
+                        cache_key = f"commission_calc:{commission_id}"
+                        await redis_client.delete(cache_key)
+                    
+                    logger.info(f"Commission status updated: {commission_id} -> {status.value}")
+                else:
+                    logger.warning(f"Commission not found for status update: {commission_id}")
+                    
         except Exception as e:
             logger.error(f"Failed to update commission status: {e}")
+            await self._record_error("update_status", str(e), commission_id)
     
     async def _record_commission_transaction(
         self, 
@@ -627,10 +729,60 @@ Initialize Commission Manager with comprehensive configuration"""
     ) -> None:
         """Record commission transaction"""
         try:
-            # Implement transaction recording logic
-            pass
+            async with get_async_session() as session:
+                transaction_id = str(uuid.uuid4())
+                
+                transaction_data = {
+                    "id": transaction_id,
+                    "commission_id": commission.calculation_id,
+                    "creator_id": commission.creator_id,
+                    "amount": float(commission.commission_amount),
+                    "currency": payment_result.get("currency", "EUR"),
+                    "payment_provider": payment_result.get("provider", "stripe"),
+                    "provider_transaction_id": payment_result.get("transaction_id"),
+                    "status": payment_result.get("status", "pending"),
+                    "fees": float(commission.fees or 0),
+                    "net_amount": float(commission.net_amount),
+                    "payment_method": payment_result.get("payment_method"),
+                    "reference": payment_result.get("reference"),
+                    "metadata": json.dumps({
+                        "commission_type": commission.commission_type.value,
+                        "content_id": commission.content_id,
+                        "payment_details": payment_result
+                    }),
+                    "created_at": datetime.utcnow(),
+                    "processed_at": payment_result.get("processed_at")
+                }
+                
+                # Insert transaction record
+                from sqlalchemy.dialects.postgresql import insert
+                stmt = insert(CommissionTransaction.__table__).values(**transaction_data)
+                await session.execute(stmt)
+                
+                # Update commission with transaction reference
+                update_stmt = update(CommissionCalculation).where(
+                    CommissionCalculation.id == commission.calculation_id
+                ).values(
+                    last_transaction_id=transaction_id,
+                    updated_at=datetime.utcnow()
+                )
+                await session.execute(update_stmt)
+                
+                await session.commit()
+                
+                logger.info(f"Commission transaction recorded: {transaction_id}")
+                
+                # Store analytics event
+                await self._record_analytics_event("commission_transaction", {
+                    "commission_id": commission.calculation_id,
+                    "transaction_id": transaction_id,
+                    "amount": float(commission.commission_amount),
+                    "creator_id": commission.creator_id
+                })
+                
         except Exception as e:
             logger.error(f"Failed to record commission transaction: {e}")
+            await self._record_error("record_transaction", str(e), commission.calculation_id)
     
     async def _get_recent_calculations(
         self, 
@@ -656,6 +808,93 @@ Initialize Commission Manager with comprehensive configuration"""
             logger.warning(f"Commission flagged for review: {calculation.id} - {reason}")
         except Exception as e:
             logger.error(f"Failed to flag commission for review: {e}")
+    
+    async def _record_error(self, operation: str, error_message: str, commission_id: str = None) -> None:
+        """Record error for monitoring and alerting"""
+        try:
+            error_data = {
+                "operation": operation,
+                "error": error_message,
+                "commission_id": commission_id,
+                "timestamp": datetime.utcnow().isoformat(),
+                "manager_id": id(self)
+            }
+            
+            # Store in Redis for monitoring
+            if self.config.enable_caching:
+                redis_client = await get_redis_client()
+                error_key = f"commission_errors:{datetime.utcnow().strftime('%Y%m%d')}"
+                await redis_client.lpush(error_key, json.dumps(error_data))
+                await redis_client.expire(error_key, 86400 * 7)  # Keep for 7 days
+                
+        except Exception as e:
+            logger.error(f"Failed to record error: {e}")
+    
+    async def _record_analytics_event(self, event_type: str, data: Dict[str, Any]) -> None:
+        """Record analytics event for business intelligence"""
+        try:
+            if not self.config.enable_analytics:
+                return
+                
+            event_data = {
+                "event_type": event_type,
+                "data": data,
+                "timestamp": datetime.utcnow().isoformat(),
+                "manager_id": id(self)
+            }
+            
+            # Store analytics event
+            redis_client = await get_redis_client()
+            analytics_key = f"commission_analytics:{datetime.utcnow().strftime('%Y%m%d')}"
+            await redis_client.lpush(analytics_key, json.dumps(event_data))
+            await redis_client.expire(analytics_key, 86400 * 30)  # Keep for 30 days
+            
+        except Exception as e:
+            logger.error(f"Failed to record analytics event: {e}")
+    
+    def _deserialize_commission_calculation(self, data: Dict[str, Any]) -> CommissionCalculation:
+        """Deserialize commission calculation from cached data"""
+        try:
+            return CommissionCalculation(
+                calculation_id=data["id"],
+                creator_id=data["creator_id"],
+                content_id=data["content_id"],
+                commission_type=CommissionType(data["commission_type"]),
+                base_amount=Decimal(str(data["base_amount"])),
+                commission_rate=Decimal(str(data["commission_rate"])),
+                commission_amount=Decimal(str(data["commission_amount"])),
+                fees=Decimal(str(data.get("fees", 0))),
+                net_amount=Decimal(str(data["net_amount"])),
+                status=CommissionStatus(data["status"]),
+                tier=CommissionTier(data["tier"]) if data.get("tier") else None,
+                metadata=json.loads(data.get("metadata", "{}")),
+                created_at=datetime.fromisoformat(data["created_at"]) if isinstance(data["created_at"], str) else data["created_at"]
+            )
+        except Exception as e:
+            logger.error(f"Failed to deserialize commission calculation: {e}")
+            raise
+    
+    def _row_to_commission_calculation(self, row) -> CommissionCalculation:
+        """Convert database row to CommissionCalculation object"""
+        try:
+            return CommissionCalculation(
+                calculation_id=row.id,
+                creator_id=row.creator_id,
+                content_id=row.content_id,
+                commission_type=CommissionType(row.commission_type),
+                base_amount=Decimal(str(row.base_amount)),
+                commission_rate=Decimal(str(row.commission_rate)),
+                commission_amount=Decimal(str(row.commission_amount)),
+                fees=Decimal(str(row.fees or 0)),
+                net_amount=Decimal(str(row.net_amount)),
+                status=CommissionStatus(row.status),
+                tier=CommissionTier(row.tier) if row.tier else None,
+                metadata=json.loads(row.metadata or "{}"),
+                created_at=row.created_at
+            )
+        except Exception as e:
+            logger.error(f"Failed to convert row to commission calculation: {e}")
+            raise
     
     async def shutdown(self) -> None:
         """Graceful shutdown of Commission Manager"""
