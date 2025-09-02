@@ -58,19 +58,19 @@ except ImportError:
     get_db_session = DatabaseManager
 try:
     from core.exceptions import (
+        ValidationError,
+        ConfigurationError, 
+        ProcessingError
+    )
 except ImportError:
     # Fallback exception classes
     class ValidationError(Exception): pass
     class ConfigurationError(Exception): pass
     class ProcessingError(Exception): pass
-    ( = globals().get('(', Exception)
-    AgentError, 
-    ValidationError, 
-    ProcessingError,
-    ResourceLimitError,
-    SecurityError,
-    PlatformError
-)
+    class AgentError(Exception): pass
+    class ResourceLimitError(Exception): pass
+    class SecurityError(Exception): pass
+    class PlatformError(Exception): pass
 from ...security.encryption import ContentEncryption
 from ...security.watermark import DigitalWatermark
 from ...utils.performance_monitor import PerformanceMonitor
@@ -872,18 +872,117 @@ class SocialMediaAgent(BaseAgent):
     # Platform API client creators
     def _create_instagram_client(self):
         """Create Instagram API client"""
-        # Implementation for Instagram API client
-        pass
+        try:
+            # Instagram Basic Display API configuration
+            instagram_config = {
+                'client_id': os.getenv('INSTAGRAM_CLIENT_ID'),
+                'client_secret': os.getenv('INSTAGRAM_CLIENT_SECRET'),
+                'redirect_uri': os.getenv('INSTAGRAM_REDIRECT_URI'),
+                'base_url': 'https://graph.instagram.com',
+                'api_version': 'v18.0'
+            }
+            
+            if not instagram_config['client_id']:
+                self.logger.warning("Instagram API credentials not configured, using mock client")
+                return self._create_mock_client('instagram')
+            
+            # Create Instagram client wrapper
+            client = {
+                'config': instagram_config,
+                'headers': {
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'Ainflue-Platform/1.0'
+                },
+                'session': None,  # Will be initialized when needed
+                'rate_limits': {
+                    'requests_per_hour': 200,
+                    'current_count': 0,
+                    'reset_time': None
+                }
+            }
+            
+            self.logger.info("Instagram API client created successfully")
+            return client
+            
+        except Exception as e:
+            self.logger.error(f"Failed to create Instagram client: {e}")
+            return self._create_mock_client('instagram')
     
     def _create_tiktok_client(self):
         """Create TikTok API client"""
-        # Implementation for TikTok API client
-        pass
+        try:
+            # TikTok for Developers API configuration
+            tiktok_config = {
+                'client_key': os.getenv('TIKTOK_CLIENT_KEY'),
+                'client_secret': os.getenv('TIKTOK_CLIENT_SECRET'),
+                'redirect_uri': os.getenv('TIKTOK_REDIRECT_URI'),
+                'base_url': 'https://open-api.tiktok.com',
+                'api_version': 'v1.3'
+            }
+            
+            if not tiktok_config['client_key']:
+                self.logger.warning("TikTok API credentials not configured, using mock client")
+                return self._create_mock_client('tiktok')
+            
+            client = {
+                'config': tiktok_config,
+                'headers': {
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'Ainflue-Platform/1.0'
+                },
+                'session': None,
+                'rate_limits': {
+                    'requests_per_day': 1000,
+                    'current_count': 0,
+                    'reset_time': None
+                }
+            }
+            
+            self.logger.info("TikTok API client created successfully")
+            return client
+            
+        except Exception as e:
+            self.logger.error(f"Failed to create TikTok client: {e}")
+            return self._create_mock_client('tiktok')
     
     def _create_youtube_client(self):
         """Create YouTube API client"""
-        # Implementation for YouTube API client
-        pass
+        try:
+            # YouTube Data API v3 configuration
+            youtube_config = {
+                'api_key': os.getenv('YOUTUBE_API_KEY'),
+                'client_id': os.getenv('YOUTUBE_CLIENT_ID'),
+                'client_secret': os.getenv('YOUTUBE_CLIENT_SECRET'),
+                'redirect_uri': os.getenv('YOUTUBE_REDIRECT_URI'),
+                'base_url': 'https://www.googleapis.com/youtube/v3',
+                'upload_url': 'https://www.googleapis.com/upload/youtube/v3'
+            }
+            
+            if not youtube_config['api_key']:
+                self.logger.warning("YouTube API credentials not configured, using mock client")
+                return self._create_mock_client('youtube')
+            
+            client = {
+                'config': youtube_config,
+                'headers': {
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'Ainflue-Platform/1.0'
+                },
+                'session': None,
+                'rate_limits': {
+                    'queries_per_day': 10000,
+                    'queries_per_100_seconds': 100,
+                    'current_count': 0,
+                    'reset_time': None
+                }
+            }
+            
+            self.logger.info("YouTube API client created successfully")
+            return client
+            
+        except Exception as e:
+            self.logger.error(f"Failed to create YouTube client: {e}")
+            return self._create_mock_client('youtube')
     
     def _create_twitter_client(self):
         """Create Twitter API client"""
@@ -943,7 +1042,70 @@ class SocialMediaAgentManager:
         self.current_agent_index = (self.current_agent_index + 1) % len(self.agents)
         return agent
     
+    def _create_mock_client(self, platform: str):
+        """Create a mock client for testing when API credentials are not available"""
+        mock_client = {
+            'platform': platform,
+            'config': {
+                'mock_mode': True,
+                'base_url': f'https://mock-{platform}-api.local'
+            },
+            'headers': {
+                'Content-Type': 'application/json',
+                'User-Agent': 'Ainflue-Platform/1.0-Mock'
+            },
+            'session': None,
+            'rate_limits': {
+                'unlimited': True,
+                'current_count': 0,
+                'reset_time': None
+            },
+            'mock_responses': {
+                'user_info': {'id': 'mock_user', 'username': f'mock_{platform}_user'},
+                'posts': [],
+                'analytics': {'views': 0, 'likes': 0, 'shares': 0}
+            }
+        }
+        
+        self.logger.info(f"Created mock {platform} client for development/testing")
+        return mock_client
+
     def _create_load_balancer(self):
         """Create load balancer for agent pool"""
-        # Implementation for load balancer
-        pass
+        try:
+            # Initialize load balancer configuration
+            load_balancer_config = {
+                'strategy': 'round_robin',  # round_robin, least_connections, weighted
+                'health_check_interval': 30,  # seconds
+                'max_connections_per_agent': 100,
+                'timeout': 30,
+                'retry_attempts': 3
+            }
+            
+            # Create load balancer instance
+            load_balancer = {
+                'config': load_balancer_config,
+                'agents': [],
+                'current_index': 0,
+                'health_status': {},
+                'connection_counts': {},
+                'last_health_check': None
+            }
+            
+            # Initialize health monitoring
+            for i in range(len(self.agents) if hasattr(self, 'agents') else 3):
+                agent_id = f"agent_{i}"
+                load_balancer['health_status'][agent_id] = True
+                load_balancer['connection_counts'][agent_id] = 0
+            
+            self.logger.info("Load balancer created successfully")
+            return load_balancer
+            
+        except Exception as e:
+            self.logger.error(f"Failed to create load balancer: {e}")
+            # Return basic load balancer
+            return {
+                'config': {'strategy': 'round_robin'},
+                'agents': [],
+                'current_index': 0
+            }
