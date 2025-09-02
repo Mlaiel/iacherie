@@ -667,8 +667,49 @@ Get distribution job by ID"""
 
     def _store_distribution_job(self, entity):
         """Store distribution job in database"""
-        # Implementation would store in database
-        return entity
+        try:
+            self.logger.debug(f"Storing distribution job: {entity}")
+            
+            # Generate unique ID if not provided
+            if not hasattr(entity, 'id') or not entity.id:
+                entity.id = self._generate_entity_id()
+            
+            # Add metadata
+            entity.created_at = datetime.now(timezone.utc)
+            entity.updated_at = entity.created_at
+            entity.created_by = getattr(entity, 'user_id', 'system')
+            
+            # Validate entity before storing
+            validation_errors = self._validate_distribution_entity(entity)
+            if validation_errors:
+                raise ValueError(f"Entity validation failed: {validation_errors}")
+            
+            # Prepare entity for storage
+            entity_data = self._prepare_entity_for_storage(entity)
+            
+            # Store in database (simulated for now)
+            # In production, this would use actual database connection
+            self._simulated_storage[entity.id] = {
+                'data': entity_data,
+                'stored_at': datetime.now(timezone.utc),
+                'version': 1
+            }
+            
+            # Update cache if enabled
+            if self._cache_enabled and self.cache:
+                cache_key = f"distribution_job:{entity.id}"
+                self.cache.set(cache_key, entity, ttl=self._cache_ttl)
+            
+            # Track operation
+            self._track_operation(OperationType.CREATE, entity.id, success=True)
+            
+            self.logger.info(f"Successfully stored distribution job: {entity.id}")
+            return entity
+            
+        except Exception as e:
+            self.logger.error(f"Error storing distribution job: {e}")
+            self._track_operation(OperationType.CREATE, getattr(entity, 'id', 'unknown'), success=False, error=str(e))
+            raise
 
     def _schedule_distribution_job(self, job):
         """
@@ -677,10 +718,47 @@ Schedule distribution job"""
         pass
 
     def _fetch_distribution_by_id(self, entity_id: str):
-        """
-Fetch distribution job by ID"""
-        # Implementation would fetch from database
-        return None
+        """Fetch distribution job by ID"""
+        try:
+            self.logger.debug(f"Fetching distribution job by ID: {entity_id}")
+            
+            # Check cache first if enabled
+            if self._cache_enabled and self.cache:
+                cache_key = f"distribution_job:{entity_id}"
+                cached_entity = self.cache.get(cache_key)
+                if cached_entity:
+                    self.logger.debug(f"Distribution job found in cache: {entity_id}")
+                    self._track_operation(OperationType.READ, entity_id, success=True, from_cache=True)
+                    return cached_entity
+            
+            # Fetch from database (simulated for now)
+            # In production, this would use actual database connection
+            if entity_id in self._simulated_storage:
+                stored_data = self._simulated_storage[entity_id]
+                entity_data = stored_data['data']
+                
+                # Reconstruct entity object
+                entity = self._reconstruct_entity_from_storage(entity_data)
+                
+                # Update cache if enabled
+                if self._cache_enabled and self.cache:
+                    cache_key = f"distribution_job:{entity_id}"
+                    self.cache.set(cache_key, entity, ttl=self._cache_ttl)
+                
+                # Track operation
+                self._track_operation(OperationType.READ, entity_id, success=True)
+                
+                self.logger.debug(f"Successfully fetched distribution job: {entity_id}")
+                return entity
+            else:
+                self.logger.warning(f"Distribution job not found: {entity_id}")
+                self._track_operation(OperationType.READ, entity_id, success=False, error="Not found")
+                return None
+                
+        except Exception as e:
+            self.logger.error(f"Error fetching distribution job {entity_id}: {e}")
+            self._track_operation(OperationType.READ, entity_id, success=False, error=str(e))
+            raise
 
     def _track_status_change(self, current_entity, new_entity):
         """
@@ -689,10 +767,47 @@ Track status changes"""
         pass
 
     def _update_distribution_job(self, entity):
-        """
-Update distribution job in database"""
-        # Implementation would update database
-        return entity
+        """Update distribution job in database"""
+        try:
+            self.logger.debug(f"Updating distribution job: {entity.id}")
+            
+            # Validate entity
+            validation_errors = self._validate_distribution_entity(entity)
+            if validation_errors:
+                raise ValueError(f"Entity validation failed: {validation_errors}")
+            
+            # Update metadata
+            entity.updated_at = datetime.now(timezone.utc)
+            
+            # Prepare entity for storage
+            entity_data = self._prepare_entity_for_storage(entity)
+            
+            # Update in database (simulated)
+            if not hasattr(self, '_simulated_storage'):
+                self._simulated_storage = {}
+                
+            if entity.id in self._simulated_storage:
+                self._simulated_storage[entity.id]['data'] = entity_data
+                self._simulated_storage[entity.id]['updated_at'] = datetime.now(timezone.utc)
+                self._simulated_storage[entity.id]['version'] = self._simulated_storage[entity.id].get('version', 1) + 1
+                
+                # Update cache if enabled
+                if self._cache_enabled and self.cache:
+                    cache_key = f"distribution_job:{entity.id}"
+                    self.cache.set(cache_key, entity, ttl=self._cache_ttl)
+                
+                # Track operation
+                self._track_operation(OperationType.UPDATE, entity.id, success=True)
+                
+                self.logger.info(f"Successfully updated distribution job: {entity.id}")
+                return entity
+            else:
+                raise ValueError(f"Distribution job not found: {entity.id}")
+                
+        except Exception as e:
+            self.logger.error(f"Error updating distribution job {getattr(entity, 'id', 'unknown')}: {e}")
+            self._track_operation(OperationType.UPDATE, getattr(entity, 'id', 'unknown'), success=False, error=str(e))
+            raise
 
     def _cancel_distribution_job(self, job_id: str):
         """
@@ -778,10 +893,53 @@ Initialize sync monitoring"""
         pass
 
     def _schedule_retry(self, job: DistributionJob):
-        """
-Schedule job retry"""
-        # Implementation would schedule retry
-        pass
+        """Schedule job retry"""
+        try:
+            self.logger.info(f"Scheduling retry for distribution job: {job.id}")
+            
+            # Calculate retry delay based on attempt count
+            base_delay = 300  # 5 minutes base delay
+            max_delay = 3600  # 1 hour max delay
+            retry_attempts = getattr(job, 'retry_attempts', 0)
+            
+            # Exponential backoff with jitter
+            import random
+            delay = min(base_delay * (2 ** retry_attempts), max_delay)
+            jitter = random.uniform(0.1, 0.3) * delay
+            final_delay = delay + jitter
+            
+            # Update job with retry information
+            job.retry_attempts = retry_attempts + 1
+            job.next_retry_at = datetime.now(timezone.utc) + timedelta(seconds=final_delay)
+            job.last_error_at = datetime.now(timezone.utc)
+            job.status = DistributionStatus.QUEUED
+            
+            # Check max retry attempts
+            max_retries = getattr(job, 'max_retries', 3)
+            if job.retry_attempts > max_retries:
+                job.status = DistributionStatus.FAILED
+                job.failure_reason = f"Max retries ({max_retries}) exceeded"
+                self.logger.warning(f"Max retries exceeded for job {job.id}")
+                return
+            
+            # Schedule the retry (in production, this would use a job queue)
+            retry_data = {
+                'job_id': job.id,
+                'retry_attempt': job.retry_attempts,
+                'scheduled_at': job.next_retry_at,
+                'delay_seconds': final_delay
+            }
+            
+            # Store retry information
+            if not hasattr(self, '_scheduled_retries'):
+                self._scheduled_retries = {}
+            self._scheduled_retries[job.id] = retry_data
+            
+            self.logger.info(f"Retry scheduled for job {job.id} - attempt {job.retry_attempts} in {final_delay:.0f} seconds")
+            
+        except Exception as e:
+            self.logger.error(f"Error scheduling retry for job {job.id}: {e}")
+            raise
 
     def _calculate_platform_breakdown(self, jobs: List[DistributionJob]) -> Dict[str, int]:
         """
@@ -1171,8 +1329,55 @@ Get distribution job by ID asynchronously"""
 
     async def _store_distribution_job_async(self, entity):
         """Store distribution job in database asynchronously"""
-        # Implementation would store in database
-        return entity
+        try:
+            self.logger.debug(f"Storing distribution job async: {entity}")
+            
+            # Generate unique ID if not provided
+            if not hasattr(entity, 'id') or not entity.id:
+                entity.id = await self._generate_entity_id_async()
+            
+            # Add metadata
+            entity.created_at = datetime.now(timezone.utc)
+            entity.updated_at = entity.created_at
+            entity.created_by = getattr(entity, 'user_id', 'system')
+            
+            # Validate entity before storing
+            validation_errors = await self._validate_distribution_entity_async(entity)
+            if validation_errors:
+                raise ValueError(f"Entity validation failed: {validation_errors}")
+            
+            # Prepare entity for storage
+            entity_data = await self._prepare_entity_for_storage_async(entity)
+            
+            # Store in database (simulated for now)
+            # In production, this would use actual async database connection
+            if not hasattr(self, '_async_simulated_storage'):
+                self._async_simulated_storage = {}
+            
+            self._async_simulated_storage[entity.id] = {
+                'data': entity_data,
+                'stored_at': datetime.now(timezone.utc),
+                'version': 1
+            }
+            
+            # Update cache if enabled
+            if self._cache_enabled and self.cache:
+                cache_key = f"distribution_job:{entity.id}"
+                if hasattr(self.cache, 'set_async'):
+                    await self.cache.set_async(cache_key, entity, ttl=self._cache_ttl)
+                else:
+                    self.cache.set(cache_key, entity, ttl=self._cache_ttl)
+            
+            # Track operation
+            await self._track_operation_async(OperationType.CREATE, entity.id, success=True)
+            
+            self.logger.info(f"Successfully stored distribution job async: {entity.id}")
+            return entity
+            
+        except Exception as e:
+            self.logger.error(f"Error storing distribution job async: {e}")
+            await self._track_operation_async(OperationType.CREATE, getattr(entity, 'id', 'unknown'), success=False, error=str(e))
+            raise
 
     async def _schedule_distribution_job_async(self, job):
         """
@@ -1181,10 +1386,66 @@ Schedule distribution job asynchronously"""
         pass
 
     async def _fetch_distribution_by_id_async(self, entity_id: str):
-        """
-Fetch distribution job by ID asynchronously"""
-        # Implementation would fetch from database
-        return None
+        """Fetch distribution job by ID asynchronously"""
+        try:
+            self.logger.debug(f"Fetching distribution job by ID async: {entity_id}")
+            
+            # Check cache first if enabled
+            if self._cache_enabled and self.cache:
+                cache_key = f"distribution_job:{entity_id}"
+                if hasattr(self.cache, 'get_async'):
+                    cached_entity = await self.cache.get_async(cache_key)
+                else:
+                    cached_entity = self.cache.get(cache_key)
+                    
+                if cached_entity:
+                    self.logger.debug(f"Distribution job found in cache async: {entity_id}")
+                    await self._track_operation_async(OperationType.READ, entity_id, success=True, from_cache=True)
+                    return cached_entity
+            
+            # Fetch from database (simulated for now)
+            # In production, this would use actual async database connection
+            if not hasattr(self, '_async_simulated_storage'):
+                self._async_simulated_storage = {}
+                
+            if entity_id in self._async_simulated_storage:
+                stored_data = self._async_simulated_storage[entity_id]
+                entity_data = stored_data['data']
+                
+                # Reconstruct entity object
+                entity = await self._reconstruct_entity_from_storage_async(entity_data)
+                
+                # Update cache if enabled
+                if self._cache_enabled and self.cache:
+                    cache_key = f"distribution_job:{entity_id}"
+                    if hasattr(self.cache, 'set_async'):
+                        await self.cache.set_async(cache_key, entity, ttl=self._cache_ttl)
+                    else:
+                        self.cache.set(cache_key, entity, ttl=self._cache_ttl)
+                
+                # Track operation
+                await self._track_operation_async(OperationType.READ, entity_id, success=True)
+                
+                self.logger.debug(f"Successfully fetched distribution job async: {entity_id}")
+                return entity
+            else:
+                # Check sync storage as fallback
+                if hasattr(self, '_simulated_storage') and entity_id in self._simulated_storage:
+                    stored_data = self._simulated_storage[entity_id]
+                    entity_data = stored_data['data']
+                    entity = await self._reconstruct_entity_from_storage_async(entity_data)
+                    
+                    await self._track_operation_async(OperationType.READ, entity_id, success=True)
+                    return entity
+                
+                self.logger.warning(f"Distribution job not found async: {entity_id}")
+                await self._track_operation_async(OperationType.READ, entity_id, success=False, error="Not found")
+                return None
+                
+        except Exception as e:
+            self.logger.error(f"Error fetching distribution job async {entity_id}: {e}")
+            await self._track_operation_async(OperationType.READ, entity_id, success=False, error=str(e))
+            raise
 
     async def _track_status_change_async(self, current_entity, new_entity):
         """
@@ -1193,10 +1454,61 @@ Track status changes asynchronously"""
         pass
 
     async def _update_distribution_job_async(self, entity):
-        """
-Update distribution job in database asynchronously"""
-        # Implementation would update database
-        return entity
+        """Update distribution job in database asynchronously"""
+        try:
+            self.logger.debug(f"Updating distribution job async: {entity.id}")
+            
+            # Validate entity
+            validation_errors = await self._validate_distribution_entity_async(entity)
+            if validation_errors:
+                raise ValueError(f"Entity validation failed: {validation_errors}")
+            
+            # Update metadata
+            entity.updated_at = datetime.now(timezone.utc)
+            
+            # Prepare entity for storage
+            entity_data = await self._prepare_entity_for_storage_async(entity)
+            
+            # Update in database (simulated)
+            if not hasattr(self, '_async_simulated_storage'):
+                self._async_simulated_storage = {}
+                
+            if entity.id in self._async_simulated_storage:
+                self._async_simulated_storage[entity.id]['data'] = entity_data
+                self._async_simulated_storage[entity.id]['updated_at'] = datetime.now(timezone.utc)
+                self._async_simulated_storage[entity.id]['version'] = self._async_simulated_storage[entity.id].get('version', 1) + 1
+                
+                # Update cache if enabled
+                if self._cache_enabled and self.cache:
+                    cache_key = f"distribution_job:{entity.id}"
+                    if hasattr(self.cache, 'set_async'):
+                        await self.cache.set_async(cache_key, entity, ttl=self._cache_ttl)
+                    else:
+                        self.cache.set(cache_key, entity, ttl=self._cache_ttl)
+                
+                # Track operation
+                await self._track_operation_async(OperationType.UPDATE, entity.id, success=True)
+                
+                self.logger.info(f"Successfully updated distribution job async: {entity.id}")
+                return entity
+            else:
+                # Check sync storage as fallback
+                if hasattr(self, '_simulated_storage') and entity.id in self._simulated_storage:
+                    # Migrate to async storage
+                    self._async_simulated_storage[entity.id] = self._simulated_storage[entity.id].copy()
+                    self._async_simulated_storage[entity.id]['data'] = entity_data
+                    self._async_simulated_storage[entity.id]['updated_at'] = datetime.now(timezone.utc)
+                    self._async_simulated_storage[entity.id]['version'] = self._async_simulated_storage[entity.id].get('version', 1) + 1
+                    
+                    await self._track_operation_async(OperationType.UPDATE, entity.id, success=True)
+                    return entity
+                
+                raise ValueError(f"Distribution job not found: {entity.id}")
+                
+        except Exception as e:
+            self.logger.error(f"Error updating distribution job async {getattr(entity, 'id', 'unknown')}: {e}")
+            await self._track_operation_async(OperationType.UPDATE, getattr(entity, 'id', 'unknown'), success=False, error=str(e))
+            raise
 
     async def _cancel_distribution_job_async(self, job_id: str):
         """
@@ -1253,5 +1565,158 @@ Prepare content variant for specific platform asynchronously"""
 
     async def _schedule_retry_async(self, job: DistributionJob):
         """Schedule job retry asynchronously"""
-        # Implementation would schedule retry
-        pass
+        try:
+            self.logger.info(f"Scheduling retry async for distribution job: {job.id}")
+            
+            # Calculate retry delay based on attempt count
+            base_delay = 300  # 5 minutes base delay
+            max_delay = 3600  # 1 hour max delay
+            retry_attempts = getattr(job, 'retry_attempts', 0)
+            
+            # Exponential backoff with jitter
+            import random
+            delay = min(base_delay * (2 ** retry_attempts), max_delay)
+            jitter = random.uniform(0.1, 0.3) * delay
+            final_delay = delay + jitter
+            
+            # Update job with retry information
+            job.retry_attempts = retry_attempts + 1
+            job.next_retry_at = datetime.now(timezone.utc) + timedelta(seconds=final_delay)
+            job.last_error_at = datetime.now(timezone.utc)
+            job.status = DistributionStatus.QUEUED
+            
+            # Check max retry attempts
+            max_retries = getattr(job, 'max_retries', 3)
+            if job.retry_attempts > max_retries:
+                job.status = DistributionStatus.FAILED
+                job.failure_reason = f"Max retries ({max_retries}) exceeded"
+                self.logger.warning(f"Max retries exceeded for job {job.id}")
+                return
+            
+            # Schedule the retry (in production, this would use a job queue)
+            retry_data = {
+                'job_id': job.id,
+                'retry_attempt': job.retry_attempts,
+                'scheduled_at': job.next_retry_at,
+                'delay_seconds': final_delay
+            }
+            
+            # Store retry information
+            if not hasattr(self, '_scheduled_retries'):
+                self._scheduled_retries = {}
+            self._scheduled_retries[job.id] = retry_data
+            
+            # Update the job in storage
+            await self._update_distribution_job_async(job)
+            
+            self.logger.info(f"Retry scheduled async for job {job.id} - attempt {job.retry_attempts} in {final_delay:.0f} seconds")
+            
+        except Exception as e:
+            self.logger.error(f"Error scheduling retry async for job {job.id}: {e}")
+            raise
+
+    # Additional helper methods for distribution repository implementation
+    
+    def _generate_entity_id(self) -> str:
+        """Generate unique entity ID"""
+        import uuid
+        return f"dist_{uuid.uuid4().hex[:12]}"
+    
+    async def _generate_entity_id_async(self) -> str:
+        """Generate unique entity ID asynchronously"""
+        return self._generate_entity_id()
+    
+    def _validate_distribution_entity(self, entity) -> List[str]:
+        """Validate distribution entity"""
+        errors = []
+        
+        # Check required fields
+        if not hasattr(entity, 'content_id') or not entity.content_id:
+            errors.append("content_id is required")
+        
+        if not hasattr(entity, 'platform') or not entity.platform:
+            errors.append("platform is required")
+            
+        if not hasattr(entity, 'format') or not entity.format:
+            errors.append("format is required")
+        
+        # Validate platform capabilities
+        if hasattr(entity, 'platform') and hasattr(entity, 'format'):
+            if not self._is_format_supported_by_platform(entity.platform, entity.format):
+                errors.append(f"Format {entity.format} not supported by platform {entity.platform}")
+        
+        return errors
+    
+    async def _validate_distribution_entity_async(self, entity) -> List[str]:
+        """Validate distribution entity asynchronously"""
+        return self._validate_distribution_entity(entity)
+    
+    def _prepare_entity_for_storage(self, entity) -> Dict[str, Any]:
+        """Prepare entity for storage"""
+        if hasattr(entity, '__dict__'):
+            return entity.__dict__.copy()
+        else:
+            return asdict(entity) if hasattr(entity, '__dataclass_fields__') else dict(entity)
+    
+    async def _prepare_entity_for_storage_async(self, entity) -> Dict[str, Any]:
+        """Prepare entity for storage asynchronously"""
+        return self._prepare_entity_for_storage(entity)
+    
+    def _reconstruct_entity_from_storage(self, entity_data: Dict[str, Any]):
+        """Reconstruct entity object from storage data"""
+        # Simple reconstruction - in production this would be more sophisticated
+        class StoredEntity:
+            def __init__(self, **kwargs):
+                for k, v in kwargs.items():
+                    setattr(self, k, v)
+        
+        return StoredEntity(**entity_data)
+    
+    async def _reconstruct_entity_from_storage_async(self, entity_data: Dict[str, Any]):
+        """Reconstruct entity object from storage data asynchronously"""
+        return self._reconstruct_entity_from_storage(entity_data)
+    
+    def _is_format_supported_by_platform(self, platform, format_type) -> bool:
+        """Check if format is supported by platform"""
+        # Platform format compatibility matrix
+        platform_formats = {
+            DistributionPlatform.YOUTUBE: [ContentFormat.VIDEO, ContentFormat.LIVE_STREAM],
+            DistributionPlatform.INSTAGRAM: [ContentFormat.VIDEO, ContentFormat.IMAGE, ContentFormat.STORY, ContentFormat.REEL],
+            DistributionPlatform.TIKTOK: [ContentFormat.VIDEO, ContentFormat.STORY],
+            DistributionPlatform.SPOTIFY: [ContentFormat.AUDIO, ContentFormat.PODCAST],
+            DistributionPlatform.SOUNDCLOUD: [ContentFormat.AUDIO, ContentFormat.PODCAST],
+            DistributionPlatform.TWITTER: [ContentFormat.VIDEO, ContentFormat.IMAGE, ContentFormat.TEXT],
+            DistributionPlatform.LINKEDIN: [ContentFormat.VIDEO, ContentFormat.IMAGE, ContentFormat.TEXT, ContentFormat.ARTICLE],
+            DistributionPlatform.FACEBOOK: [ContentFormat.VIDEO, ContentFormat.IMAGE, ContentFormat.TEXT, ContentFormat.LIVE_STREAM],
+        }
+        
+        if isinstance(platform, str):
+            platform = DistributionPlatform(platform)
+        if isinstance(format_type, str):
+            format_type = ContentFormat(format_type)
+            
+        return format_type in platform_formats.get(platform, [])
+    
+    def _track_operation(self, operation_type, entity_id, success=True, error=None, from_cache=False):
+        """Track repository operation for monitoring"""
+        operation_data = {
+            'operation_type': operation_type.value if hasattr(operation_type, 'value') else str(operation_type),
+            'entity_id': entity_id,
+            'success': success,
+            'error': error,
+            'from_cache': from_cache,
+            'timestamp': datetime.now(timezone.utc)
+        }
+        
+        # Store operation tracking
+        if not hasattr(self, '_operation_tracking'):
+            self._operation_tracking = []
+        self._operation_tracking.append(operation_data)
+        
+        # Keep only last 1000 operations
+        if len(self._operation_tracking) > 1000:
+            self._operation_tracking = self._operation_tracking[-1000:]
+    
+    async def _track_operation_async(self, operation_type, entity_id, success=True, error=None, from_cache=False):
+        """Track repository operation for monitoring asynchronously"""
+        self._track_operation(operation_type, entity_id, success, error, from_cache)
