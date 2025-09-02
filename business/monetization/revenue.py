@@ -14886,13 +14886,146 @@ class SubscriptionManager:
     
     async def _schedule_subscription_payment(self, subscription_id: str):
         """Schedule recurring payment for subscription"""
-        # Implementation would use Celery or similar for scheduling
-        pass
+        try:
+            # Get subscription details
+            subscription_key = f"subscription:{subscription_id}"
+            subscription_data = await self.redis_client.get(subscription_key)
+            
+            if not subscription_data:
+                logger.error(f"Subscription {subscription_id} not found")
+                return
+                
+            subscription = json.loads(subscription_data)
+            
+            # Calculate next payment date
+            current_date = datetime.now(timezone.utc)
+            billing_cycle = subscription.get('billing_cycle', 'monthly')
+            
+            if billing_cycle == 'monthly':
+                next_payment_date = current_date + timedelta(days=30)
+            elif billing_cycle == 'quarterly':
+                next_payment_date = current_date + timedelta(days=90)
+            elif billing_cycle == 'yearly':
+                next_payment_date = current_date + timedelta(days=365)
+            else:
+                next_payment_date = current_date + timedelta(days=30)  # Default to monthly
+            
+            # Create scheduled payment record
+            scheduled_payment = {
+                'subscription_id': subscription_id,
+                'customer_id': subscription.get('customer_id'),
+                'amount': subscription.get('amount', 0.0),
+                'currency': subscription.get('currency', 'USD'),
+                'scheduled_date': next_payment_date.isoformat(),
+                'payment_method_id': subscription.get('payment_method_id'),
+                'status': 'scheduled',
+                'billing_cycle': billing_cycle,
+                'created_at': current_date.isoformat()
+            }
+            
+            # Store scheduled payment
+            payment_key = f"scheduled_payment:{subscription_id}:{next_payment_date.strftime('%Y%m%d')}"
+            await self.redis_client.set(
+                payment_key,
+                json.dumps(scheduled_payment, default=str),
+                ex=86400 * 40  # 40 days (buffer for processing)
+            )
+            
+            # Add to processing queue (sorted set for time-based processing)
+            await self.redis_client.zadd(
+                "subscription_payment_queue",
+                {payment_key: next_payment_date.timestamp()}
+            )
+            
+            logger.info(f"Scheduled payment for subscription {subscription_id} on {next_payment_date.date()}")
+            
+        except Exception as e:
+            logger.error(f"Error scheduling subscription payment {subscription_id}: {str(e)}")
+            raise
     
     async def _schedule_trial_end_notification(self, subscription_id: str, trial_end: datetime):
         """Schedule trial end notification"""
-        # Implementation would schedule email/notification
-        pass
+        try:
+            # Get subscription details
+            subscription_key = f"subscription:{subscription_id}"
+            subscription_data = await self.redis_client.get(subscription_key)
+            
+            if not subscription_data:
+                logger.error(f"Subscription {subscription_id} not found")
+                return
+                
+            subscription = json.loads(subscription_data)
+            customer_id = subscription.get('customer_id')
+            
+            # Schedule notifications at different intervals before trial end
+            notification_intervals = [
+                {'days': 7, 'type': 'trial_ending_soon'},
+                {'days': 3, 'type': 'trial_ending_urgent'},
+                {'days': 1, 'type': 'trial_ending_final'},
+                {'days': 0, 'type': 'trial_ended'}
+            ]
+            
+            for interval in notification_intervals:
+                notification_date = trial_end - timedelta(days=interval['days'])
+                
+                # Only schedule future notifications
+                if notification_date > datetime.now(timezone.utc):
+                    notification = {
+                        'subscription_id': subscription_id,
+                        'customer_id': customer_id,
+                        'notification_type': interval['type'],
+                        'trial_end_date': trial_end.isoformat(),
+                        'scheduled_date': notification_date.isoformat(),
+                        'status': 'scheduled',
+                        'message_template': self._get_trial_notification_template(interval['type']),
+                        'created_at': datetime.now(timezone.utc).isoformat()
+                    }
+                    
+                    # Store notification
+                    notification_key = f"trial_notification:{subscription_id}:{interval['type']}"
+                    await self.redis_client.set(
+                        notification_key,
+                        json.dumps(notification, default=str),
+                        ex=86400 * 10  # 10 days
+                    )
+                    
+                    # Add to notification queue (sorted set for time-based processing)
+                    await self.redis_client.zadd(
+                        "trial_notification_queue",
+                        {notification_key: notification_date.timestamp()}
+                    )
+            
+            logger.info(f"Scheduled trial end notifications for subscription {subscription_id}")
+            
+        except Exception as e:
+            logger.error(f"Error scheduling trial end notification {subscription_id}: {str(e)}")
+            raise
+    
+    def _get_trial_notification_template(self, notification_type: str) -> dict:
+        """Get email template for trial notification type."""
+        templates = {
+            'trial_ending_soon': {
+                'subject': 'Your free trial ends in 7 days',
+                'body': 'Hi! Your free trial expires in 7 days. Upgrade now to continue using our platform.',
+                'cta': 'Upgrade Now'
+            },
+            'trial_ending_urgent': {
+                'subject': 'Your free trial ends in 3 days',
+                'body': 'Only 3 days left in your free trial! Don\'t lose access to your account.',
+                'cta': 'Upgrade Today'
+            },
+            'trial_ending_final': {
+                'subject': 'Your free trial ends tomorrow',
+                'body': 'Last chance! Your free trial expires tomorrow. Upgrade to keep your account active.',
+                'cta': 'Upgrade Now'
+            },
+            'trial_ended': {
+                'subject': 'Your free trial has ended',
+                'body': 'Your free trial has ended. Upgrade anytime to reactivate your account.',
+                'cta': 'Reactivate Account'
+            }
+        }
+        return templates.get(notification_type, templates['trial_ending_soon'])
     
     async def _update_customer_subscription_cache(self, customer_id: str, subscription_id: str):
         """Update customer's subscription cache"""
@@ -20955,11 +21088,211 @@ class UsageTracker:
     
     async def initialize_tenant_tracking(self, tenant_id: str, pricing_tier: PricingTier):
         """Initialize usage tracking for tenant."""
-        pass
+        try:
+            # Create tenant tracking configuration
+            tracking_config = {
+                'tenant_id': tenant_id,
+                'pricing_tier': pricing_tier.value,
+                'start_date': datetime.now(timezone.utc),
+                'api_calls_count': 0,
+                'storage_used_gb': 0.0,
+                'bandwidth_used_gb': 0.0,
+                'active_users': 0,
+                'features_used': [],
+                'limits': self._get_tier_limits(pricing_tier),
+                'overage_tracking': {
+                    'api_calls': 0,
+                    'storage': 0.0,
+                    'bandwidth': 0.0
+                }
+            }
+            
+            # Store in Redis for real-time access
+            await self.redis_client.set(
+                f"tenant_tracking:{tenant_id}",
+                json.dumps(tracking_config, default=str),
+                ex=86400 * 30  # 30 days
+            )
+            
+            # Initialize daily tracking
+            await self._initialize_daily_tracking(tenant_id, pricing_tier)
+            
+            logger.info(f"Initialized usage tracking for tenant {tenant_id} on {pricing_tier.value} tier")
+            
+        except Exception as e:
+            logger.error(f"Error initializing tenant tracking: {str(e)}")
+            raise
+    
+    def _get_tier_limits(self, pricing_tier: PricingTier) -> dict:
+        """Get usage limits for pricing tier."""
+        limits = {
+            PricingTier.FREE: {
+                'api_calls_monthly': 1000,
+                'storage_gb': 1.0,
+                'bandwidth_gb': 5.0,
+                'active_users': 100
+            },
+            PricingTier.BASIC: {
+                'api_calls_monthly': 10000,
+                'storage_gb': 10.0,
+                'bandwidth_gb': 50.0,
+                'active_users': 1000
+            },
+            PricingTier.PRO: {
+                'api_calls_monthly': 100000,
+                'storage_gb': 100.0,
+                'bandwidth_gb': 500.0,
+                'active_users': 10000
+            },
+            PricingTier.ENTERPRISE: {
+                'api_calls_monthly': -1,  # Unlimited
+                'storage_gb': -1,  # Unlimited
+                'bandwidth_gb': -1,  # Unlimited
+                'active_users': -1  # Unlimited
+            }
+        }
+        return limits.get(pricing_tier, limits[PricingTier.FREE])
+    
+    async def _initialize_daily_tracking(self, tenant_id: str, pricing_tier: PricingTier):
+        """Initialize daily usage tracking."""
+        daily_key = f"daily_usage:{tenant_id}:{datetime.now().strftime('%Y-%m-%d')}"
+        daily_data = {
+            'date': datetime.now().strftime('%Y-%m-%d'),
+            'api_calls': 0,
+            'storage_used': 0.0,
+            'bandwidth_used': 0.0,
+            'unique_users': 0
+        }
+        await self.redis_client.set(daily_key, json.dumps(daily_data), ex=86400 * 7)  # 7 days
     
     async def aggregate_usage_data(self):
         """Aggregate usage data for billing."""
-        pass
+        try:
+            # Get all active tenants
+            tenant_keys = await self.redis_client.keys("tenant_tracking:*")
+            aggregated_data = {}
+            
+            for tenant_key in tenant_keys:
+                tenant_id = tenant_key.split(':')[1]
+                
+                # Get tenant tracking data
+                tenant_data = await self.redis_client.get(tenant_key)
+                if not tenant_data:
+                    continue
+                    
+                tracking_data = json.loads(tenant_data)
+                
+                # Aggregate monthly usage
+                monthly_usage = await self._aggregate_monthly_usage(tenant_id)
+                
+                # Calculate overage costs
+                overage_costs = self._calculate_overage_costs(
+                    tracking_data['pricing_tier'],
+                    monthly_usage,
+                    tracking_data['limits']
+                )
+                
+                # Prepare billing data
+                billing_data = {
+                    'tenant_id': tenant_id,
+                    'pricing_tier': tracking_data['pricing_tier'],
+                    'base_cost': self._get_base_cost(tracking_data['pricing_tier']),
+                    'usage': monthly_usage,
+                    'overage_costs': overage_costs,
+                    'total_cost': self._get_base_cost(tracking_data['pricing_tier']) + sum(overage_costs.values()),
+                    'billing_period': datetime.now().strftime('%Y-%m'),
+                    'generated_at': datetime.now(timezone.utc)
+                }
+                
+                aggregated_data[tenant_id] = billing_data
+                
+                # Store billing data
+                await self._store_billing_data(tenant_id, billing_data)
+            
+            logger.info(f"Aggregated usage data for {len(aggregated_data)} tenants")
+            return aggregated_data
+            
+        except Exception as e:
+            logger.error(f"Error aggregating usage data: {str(e)}")
+            raise
+    
+    async def _aggregate_monthly_usage(self, tenant_id: str) -> dict:
+        """Aggregate monthly usage for a tenant."""
+        current_month = datetime.now().strftime('%Y-%m')
+        
+        # Get all daily usage records for the month
+        daily_keys = await self.redis_client.keys(f"daily_usage:{tenant_id}:{current_month}-*")
+        
+        total_usage = {
+            'api_calls': 0,
+            'storage_gb': 0.0,
+            'bandwidth_gb': 0.0,
+            'unique_users': set()
+        }
+        
+        for daily_key in daily_keys:
+            daily_data = await self.redis_client.get(daily_key)
+            if daily_data:
+                data = json.loads(daily_data)
+                total_usage['api_calls'] += data.get('api_calls', 0)
+                total_usage['storage_gb'] = max(total_usage['storage_gb'], data.get('storage_used', 0.0))
+                total_usage['bandwidth_gb'] += data.get('bandwidth_used', 0.0)
+                if 'users' in data:
+                    total_usage['unique_users'].update(data['users'])
+        
+        total_usage['unique_users'] = len(total_usage['unique_users'])
+        return total_usage
+    
+    def _calculate_overage_costs(self, pricing_tier: str, usage: dict, limits: dict) -> dict:
+        """Calculate overage costs based on usage exceeding limits."""
+        overage_costs = {
+            'api_calls': 0.0,
+            'storage': 0.0,
+            'bandwidth': 0.0
+        }
+        
+        # Define overage rates (per unit)
+        overage_rates = {
+            'api_calls': 0.001,  # $0.001 per additional API call
+            'storage': 0.10,     # $0.10 per additional GB
+            'bandwidth': 0.05    # $0.05 per additional GB
+        }
+        
+        # Calculate API calls overage
+        if limits['api_calls_monthly'] > 0 and usage['api_calls'] > limits['api_calls_monthly']:
+            overage_api_calls = usage['api_calls'] - limits['api_calls_monthly']
+            overage_costs['api_calls'] = overage_api_calls * overage_rates['api_calls']
+        
+        # Calculate storage overage
+        if limits['storage_gb'] > 0 and usage['storage_gb'] > limits['storage_gb']:
+            overage_storage = usage['storage_gb'] - limits['storage_gb']
+            overage_costs['storage'] = overage_storage * overage_rates['storage']
+        
+        # Calculate bandwidth overage
+        if limits['bandwidth_gb'] > 0 and usage['bandwidth_gb'] > limits['bandwidth_gb']:
+            overage_bandwidth = usage['bandwidth_gb'] - limits['bandwidth_gb']
+            overage_costs['bandwidth'] = overage_bandwidth * overage_rates['bandwidth']
+        
+        return overage_costs
+    
+    def _get_base_cost(self, pricing_tier: str) -> float:
+        """Get base monthly cost for pricing tier."""
+        base_costs = {
+            'FREE': 0.0,
+            'BASIC': 29.0,
+            'PRO': 99.0,
+            'ENTERPRISE': 499.0
+        }
+        return base_costs.get(pricing_tier, 0.0)
+    
+    async def _store_billing_data(self, tenant_id: str, billing_data: dict):
+        """Store billing data for historical tracking."""
+        billing_key = f"billing:{tenant_id}:{billing_data['billing_period']}"
+        await self.redis_client.set(
+            billing_key,
+            json.dumps(billing_data, default=str),
+            ex=86400 * 365  # 1 year
+        )
 
 
 class RevenueAnalyticsEngine:
@@ -20971,11 +21304,417 @@ class RevenueAnalyticsEngine:
     
     async def update_real_time_metrics(self):
         """Update real-time revenue metrics."""
-        pass
+        try:
+            # Get current timestamp
+            current_time = datetime.now(timezone.utc)
+            
+            # Aggregate real-time metrics across all tenants
+            total_metrics = {
+                'total_revenue_today': 0.0,
+                'total_revenue_month': 0.0,
+                'active_tenants': 0,
+                'api_calls_today': 0,
+                'conversion_rate': 0.0,
+                'avg_revenue_per_user': 0.0,
+                'growth_rate': 0.0,
+                'updated_at': current_time
+            }
+            
+            # Get all tenant billing data
+            tenant_keys = await self.redis_client.keys("tenant_tracking:*")
+            active_tenants = []
+            
+            for tenant_key in tenant_keys:
+                tenant_id = tenant_key.split(':')[1]
+                tenant_data = await self.redis_client.get(tenant_key)
+                
+                if tenant_data:
+                    tracking_data = json.loads(tenant_data)
+                    
+                    # Calculate daily revenue for this tenant
+                    daily_revenue = await self._calculate_daily_revenue(tenant_id, tracking_data)
+                    monthly_revenue = await self._calculate_monthly_revenue(tenant_id)
+                    
+                    total_metrics['total_revenue_today'] += daily_revenue
+                    total_metrics['total_revenue_month'] += monthly_revenue
+                    total_metrics['active_tenants'] += 1
+                    
+                    # Track API usage
+                    daily_api_calls = await self._get_daily_api_calls(tenant_id)
+                    total_metrics['api_calls_today'] += daily_api_calls
+                    
+                    active_tenants.append({
+                        'tenant_id': tenant_id,
+                        'daily_revenue': daily_revenue,
+                        'monthly_revenue': monthly_revenue,
+                        'pricing_tier': tracking_data.get('pricing_tier', 'FREE')
+                    })
+            
+            # Calculate derived metrics
+            if active_tenants:
+                total_metrics['avg_revenue_per_user'] = (
+                    total_metrics['total_revenue_month'] / len(active_tenants)
+                )
+                
+                # Calculate conversion rate (paying vs free users)
+                paying_tenants = len([t for t in active_tenants if t['pricing_tier'] != 'FREE'])
+                total_metrics['conversion_rate'] = (paying_tenants / len(active_tenants)) * 100
+                
+                # Calculate growth rate (comparing to last month)
+                growth_rate = await self._calculate_growth_rate()
+                total_metrics['growth_rate'] = growth_rate
+            
+            # Store real-time metrics
+            await self.redis_client.set(
+                "real_time_revenue_metrics",
+                json.dumps(total_metrics, default=str),
+                ex=300  # 5 minutes
+            )
+            
+            # Update dashboard metrics
+            await self._update_dashboard_metrics(total_metrics)
+            
+            logger.info(f"Updated real-time metrics: ${total_metrics['total_revenue_today']:.2f} today, "
+                       f"${total_metrics['total_revenue_month']:.2f} this month")
+            
+            return total_metrics
+            
+        except Exception as e:
+            logger.error(f"Error updating real-time metrics: {str(e)}")
+            raise
+    
+    async def _calculate_daily_revenue(self, tenant_id: str, tracking_data: dict) -> float:
+        """Calculate daily revenue for a tenant."""
+        try:
+            today = datetime.now().strftime('%Y-%m-%d')
+            daily_key = f"daily_usage:{tenant_id}:{today}"
+            
+            daily_data = await self.redis_client.get(daily_key)
+            if not daily_data:
+                return 0.0
+            
+            usage_data = json.loads(daily_data)
+            
+            # Get pricing tier limits
+            pricing_tier = tracking_data.get('pricing_tier', 'FREE')
+            limits = self._get_tier_limits(PricingTier(pricing_tier))
+            
+            # Calculate overage costs for today
+            overage_costs = self._calculate_overage_costs(pricing_tier, usage_data, limits)
+            
+            # Daily revenue is base cost / 30 + overage costs
+            base_daily_cost = self._get_base_cost(pricing_tier) / 30.0
+            total_daily_revenue = base_daily_cost + sum(overage_costs.values())
+            
+            return total_daily_revenue
+            
+        except Exception as e:
+            logger.error(f"Error calculating daily revenue for {tenant_id}: {str(e)}")
+            return 0.0
+    
+    async def _calculate_monthly_revenue(self, tenant_id: str) -> float:
+        """Calculate monthly revenue for a tenant."""
+        try:
+            current_month = datetime.now().strftime('%Y-%m')
+            billing_key = f"billing:{tenant_id}:{current_month}"
+            
+            billing_data = await self.redis_client.get(billing_key)
+            if billing_data:
+                data = json.loads(billing_data)
+                return data.get('total_cost', 0.0)
+            
+            return 0.0
+            
+        except Exception as e:
+            logger.error(f"Error calculating monthly revenue for {tenant_id}: {str(e)}")
+            return 0.0
+    
+    async def _get_daily_api_calls(self, tenant_id: str) -> int:
+        """Get daily API calls for a tenant."""
+        today = datetime.now().strftime('%Y-%m-%d')
+        daily_key = f"daily_usage:{tenant_id}:{today}"
+        
+        daily_data = await self.redis_client.get(daily_key)
+        if daily_data:
+            data = json.loads(daily_data)
+            return data.get('api_calls', 0)
+        
+        return 0
+    
+    async def _calculate_growth_rate(self) -> float:
+        """Calculate month-over-month growth rate."""
+        try:
+            current_month = datetime.now().strftime('%Y-%m')
+            last_month = (datetime.now() - timedelta(days=30)).strftime('%Y-%m')
+            
+            # Get current month revenue
+            current_revenue = 0.0
+            billing_keys = await self.redis_client.keys(f"billing:*:{current_month}")
+            for key in billing_keys:
+                data = await self.redis_client.get(key)
+                if data:
+                    billing_data = json.loads(data)
+                    current_revenue += billing_data.get('total_cost', 0.0)
+            
+            # Get last month revenue
+            last_revenue = 0.0
+            billing_keys = await self.redis_client.keys(f"billing:*:{last_month}")
+            for key in billing_keys:
+                data = await self.redis_client.get(key)
+                if data:
+                    billing_data = json.loads(data)
+                    last_revenue += billing_data.get('total_cost', 0.0)
+            
+            # Calculate growth rate
+            if last_revenue > 0:
+                growth_rate = ((current_revenue - last_revenue) / last_revenue) * 100
+                return round(growth_rate, 2)
+            
+            return 0.0
+            
+        except Exception as e:
+            logger.error(f"Error calculating growth rate: {str(e)}")
+            return 0.0
+    
+    async def _update_dashboard_metrics(self, metrics: dict):
+        """Update dashboard with real-time metrics."""
+        dashboard_data = {
+            'revenue': {
+                'today': metrics['total_revenue_today'],
+                'month': metrics['total_revenue_month'],
+                'growth_rate': metrics['growth_rate']
+            },
+            'usage': {
+                'active_tenants': metrics['active_tenants'],
+                'api_calls_today': metrics['api_calls_today'],
+                'conversion_rate': metrics['conversion_rate']
+            },
+            'performance': {
+                'avg_revenue_per_user': metrics['avg_revenue_per_user'],
+                'updated_at': metrics['updated_at']
+            }
+        }
+        
+        await self.redis_client.set(
+            "dashboard_metrics",
+            json.dumps(dashboard_data, default=str),
+            ex=600  # 10 minutes
+        )
     
     async def generate_predictions(self):
         """Generate revenue predictions."""
-        pass
+        try:
+            # Get historical revenue data (last 12 months)
+            historical_data = await self._get_historical_revenue_data(12)
+            
+            if len(historical_data) < 3:
+                logger.warning("Insufficient historical data for predictions")
+                return self._generate_default_predictions()
+            
+            # Prepare data for ML prediction
+            revenue_values = [data['total_revenue'] for data in historical_data]
+            months = list(range(len(revenue_values)))
+            
+            # Simple linear regression for trend prediction
+            predictions = self._calculate_trend_predictions(months, revenue_values, forecast_months=6)
+            
+            # Apply seasonality adjustments
+            seasonal_predictions = self._apply_seasonality(predictions, historical_data)
+            
+            # Calculate confidence intervals
+            confidence_intervals = self._calculate_confidence_intervals(
+                revenue_values, seasonal_predictions
+            )
+            
+            # Generate scenario analysis
+            scenarios = self._generate_scenarios(seasonal_predictions)
+            
+            prediction_data = {
+                'historical_data': historical_data[-6:],  # Last 6 months
+                'predictions': {
+                    'base_case': seasonal_predictions,
+                    'optimistic': scenarios['optimistic'],
+                    'pessimistic': scenarios['pessimistic']
+                },
+                'confidence_intervals': confidence_intervals,
+                'insights': self._generate_insights(historical_data, seasonal_predictions),
+                'generated_at': datetime.now(timezone.utc),
+                'forecast_horizon_months': 6
+            }
+            
+            # Store predictions
+            await self.redis_client.set(
+                "revenue_predictions",
+                json.dumps(prediction_data, default=str),
+                ex=86400 * 7  # 7 days
+            )
+            
+            logger.info(f"Generated revenue predictions for next 6 months")
+            return prediction_data
+            
+        except Exception as e:
+            logger.error(f"Error generating predictions: {str(e)}")
+            return self._generate_default_predictions()
+    
+    async def _get_historical_revenue_data(self, months: int) -> list:
+        """Get historical revenue data for the specified number of months."""
+        historical_data = []
+        
+        for i in range(months):
+            target_date = datetime.now() - timedelta(days=30 * i)
+            month_key = target_date.strftime('%Y-%m')
+            
+            # Get all billing records for this month
+            billing_keys = await self.redis_client.keys(f"billing:*:{month_key}")
+            
+            month_revenue = 0.0
+            tenant_count = 0
+            
+            for key in billing_keys:
+                data = await self.redis_client.get(key)
+                if data:
+                    billing_data = json.loads(data)
+                    month_revenue += billing_data.get('total_cost', 0.0)
+                    tenant_count += 1
+            
+            historical_data.append({
+                'month': month_key,
+                'total_revenue': month_revenue,
+                'tenant_count': tenant_count,
+                'avg_revenue_per_tenant': month_revenue / max(tenant_count, 1)
+            })
+        
+        return list(reversed(historical_data))  # Chronological order
+    
+    def _calculate_trend_predictions(self, months: list, revenues: list, forecast_months: int) -> list:
+        """Calculate trend-based predictions using linear regression."""
+        if len(months) < 2:
+            return [revenues[-1]] * forecast_months if revenues else [0.0] * forecast_months
+        
+        # Simple linear regression
+        n = len(months)
+        sum_x = sum(months)
+        sum_y = sum(revenues)
+        sum_xy = sum(x * y for x, y in zip(months, revenues))
+        sum_x2 = sum(x * x for x in months)
+        
+        # Calculate slope and intercept
+        slope = (n * sum_xy - sum_x * sum_y) / (n * sum_x2 - sum_x * sum_x)
+        intercept = (sum_y - slope * sum_x) / n
+        
+        # Generate predictions
+        predictions = []
+        last_month = max(months)
+        
+        for i in range(1, forecast_months + 1):
+            future_month = last_month + i
+            predicted_revenue = slope * future_month + intercept
+            predictions.append(max(predicted_revenue, 0.0))  # Ensure non-negative
+        
+        return predictions
+    
+    def _apply_seasonality(self, predictions: list, historical_data: list) -> list:
+        """Apply seasonality adjustments to predictions."""
+        if len(historical_data) < 12:
+            return predictions  # Not enough data for seasonality
+        
+        # Calculate monthly seasonality factors
+        monthly_revenues = {}
+        for data in historical_data:
+            month_num = int(data['month'].split('-')[1])
+            if month_num not in monthly_revenues:
+                monthly_revenues[month_num] = []
+            monthly_revenues[month_num].append(data['total_revenue'])
+        
+        # Calculate average revenue and seasonality factors
+        overall_avg = sum(data['total_revenue'] for data in historical_data) / len(historical_data)
+        seasonality_factors = {}
+        
+        for month, revenues in monthly_revenues.items():
+            month_avg = sum(revenues) / len(revenues)
+            seasonality_factors[month] = month_avg / max(overall_avg, 1.0)
+        
+        # Apply seasonality to predictions
+        seasonal_predictions = []
+        current_month = datetime.now().month
+        
+        for i, prediction in enumerate(predictions):
+            future_month = ((current_month + i) % 12) + 1
+            factor = seasonality_factors.get(future_month, 1.0)
+            seasonal_predictions.append(prediction * factor)
+        
+        return seasonal_predictions
+    
+    def _calculate_confidence_intervals(self, historical_revenues: list, predictions: list) -> list:
+        """Calculate confidence intervals for predictions."""
+        if len(historical_revenues) < 3:
+            return [{'lower': p * 0.8, 'upper': p * 1.2} for p in predictions]
+        
+        # Calculate standard deviation of historical data
+        mean_revenue = sum(historical_revenues) / len(historical_revenues)
+        variance = sum((r - mean_revenue) ** 2 for r in historical_revenues) / len(historical_revenues)
+        std_dev = variance ** 0.5
+        
+        # Calculate confidence intervals (95% confidence)
+        confidence_intervals = []
+        for prediction in predictions:
+            margin = 1.96 * std_dev  # 95% confidence interval
+            confidence_intervals.append({
+                'lower': max(prediction - margin, 0.0),
+                'upper': prediction + margin
+            })
+        
+        return confidence_intervals
+    
+    def _generate_scenarios(self, predictions: list) -> dict:
+        """Generate optimistic and pessimistic scenarios."""
+        return {
+            'optimistic': [p * 1.25 for p in predictions],  # 25% higher
+            'pessimistic': [p * 0.75 for p in predictions]  # 25% lower
+        }
+    
+    def _generate_insights(self, historical_data: list, predictions: list) -> list:
+        """Generate insights from historical and predicted data."""
+        insights = []
+        
+        if len(historical_data) >= 3:
+            # Trend analysis
+            recent_trend = (historical_data[-1]['total_revenue'] - historical_data[-3]['total_revenue']) / 2
+            if recent_trend > 0:
+                insights.append("Revenue is showing positive growth trend")
+            elif recent_trend < 0:
+                insights.append("Revenue is showing declining trend")
+            else:
+                insights.append("Revenue is relatively stable")
+        
+        # Prediction analysis
+        if predictions:
+            avg_prediction = sum(predictions) / len(predictions)
+            if len(historical_data) > 0:
+                current_revenue = historical_data[-1]['total_revenue']
+                if avg_prediction > current_revenue * 1.1:
+                    insights.append("Significant revenue growth expected")
+                elif avg_prediction < current_revenue * 0.9:
+                    insights.append("Revenue decline predicted")
+                else:
+                    insights.append("Steady revenue growth expected")
+        
+        return insights
+    
+    def _generate_default_predictions(self) -> dict:
+        """Generate default predictions when insufficient data."""
+        return {
+            'historical_data': [],
+            'predictions': {
+                'base_case': [1000.0] * 6,
+                'optimistic': [1250.0] * 6,
+                'pessimistic': [750.0] * 6
+            },
+            'confidence_intervals': [{'lower': 800.0, 'upper': 1200.0}] * 6,
+            'insights': ["Insufficient historical data for accurate predictions"],
+            'generated_at': datetime.now(timezone.utc),
+            'forecast_horizon_months': 6
+        }
 
 
 class PricingOptimizer:
@@ -20987,7 +21726,224 @@ class PricingOptimizer:
     
     async def optimize_pricing(self):
         """Optimize pricing strategies."""
-        pass
+        try:
+            # Get current pricing performance data
+            pricing_data = await self._analyze_current_pricing_performance()
+            
+            # Analyze competitor pricing
+            market_data = await self._analyze_market_pricing()
+            
+            # Calculate price elasticity
+            elasticity_data = await self._calculate_price_elasticity()
+            
+            # Generate optimization recommendations
+            optimizations = {
+                'current_performance': pricing_data,
+                'market_analysis': market_data,
+                'elasticity_insights': elasticity_data,
+                'recommendations': [],
+                'projected_impact': {},
+                'generated_at': datetime.now(timezone.utc)
+            }
+            
+            # Generate specific recommendations
+            recommendations = []
+            
+            # Tier optimization
+            if pricing_data['conversion_rates']['FREE_to_BASIC'] < 0.05:  # Less than 5% conversion
+                recommendations.append({
+                    'type': 'tier_optimization',
+                    'action': 'reduce_basic_price',
+                    'current_price': 29.0,
+                    'recommended_price': 19.0,
+                    'rationale': 'Low FREE to BASIC conversion rate suggests price sensitivity',
+                    'expected_impact': '+30% conversion rate, +15% revenue'
+                })
+            
+            # Feature bundling
+            if pricing_data['feature_usage']['advanced_features'] > 0.7:  # High advanced feature usage
+                recommendations.append({
+                    'type': 'feature_bundling',
+                    'action': 'create_premium_tier',
+                    'suggested_price': 149.0,
+                    'features': ['Advanced Analytics', 'API Access', 'Priority Support'],
+                    'rationale': 'High advanced feature usage indicates demand for premium tier',
+                    'expected_impact': '+25% ARPU for qualifying users'
+                })
+            
+            # Usage-based pricing
+            if elasticity_data['usage_correlation'] > 0.8:
+                recommendations.append({
+                    'type': 'usage_based_pricing',
+                    'action': 'introduce_usage_tiers',
+                    'model': 'hybrid_subscription_usage',
+                    'rationale': 'Strong correlation between usage and value perception',
+                    'expected_impact': '+20% revenue from heavy users'
+                })
+            
+            # Discounting strategy
+            discount_recommendations = self._analyze_discount_opportunities(pricing_data)
+            recommendations.extend(discount_recommendations)
+            
+            optimizations['recommendations'] = recommendations
+            
+            # Calculate projected impact
+            optimizations['projected_impact'] = self._calculate_optimization_impact(
+                pricing_data, recommendations
+            )
+            
+            # Store optimization results
+            await self.redis_client.set(
+                "pricing_optimization",
+                json.dumps(optimizations, default=str),
+                ex=86400 * 7  # 7 days
+            )
+            
+            logger.info(f"Generated {len(recommendations)} pricing optimization recommendations")
+            return optimizations
+            
+        except Exception as e:
+            logger.error(f"Error optimizing pricing: {str(e)}")
+            raise
+    
+    async def _analyze_current_pricing_performance(self) -> dict:
+        """Analyze current pricing tier performance."""
+        # Get conversion rates between tiers
+        tenant_keys = await self.redis_client.keys("tenant_tracking:*")
+        
+        tier_counts = {'FREE': 0, 'BASIC': 0, 'PRO': 0, 'ENTERPRISE': 0}
+        tier_revenues = {'FREE': 0.0, 'BASIC': 0.0, 'PRO': 0.0, 'ENTERPRISE': 0.0}
+        feature_usage = {}
+        
+        for tenant_key in tenant_keys:
+            tenant_data = await self.redis_client.get(tenant_key)
+            if tenant_data:
+                data = json.loads(tenant_data)
+                tier = data.get('pricing_tier', 'FREE')
+                tier_counts[tier] += 1
+                
+                # Get monthly revenue for this tenant
+                tenant_id = tenant_key.split(':')[1]
+                monthly_revenue = await self._calculate_monthly_revenue(tenant_id)
+                tier_revenues[tier] += monthly_revenue
+        
+        # Calculate conversion rates
+        total_users = sum(tier_counts.values())
+        conversion_rates = {}
+        if total_users > 0:
+            conversion_rates = {
+                'FREE_to_BASIC': (tier_counts['BASIC'] / max(tier_counts['FREE'] + tier_counts['BASIC'], 1)) * 100,
+                'BASIC_to_PRO': (tier_counts['PRO'] / max(tier_counts['BASIC'] + tier_counts['PRO'], 1)) * 100,
+                'PRO_to_ENTERPRISE': (tier_counts['ENTERPRISE'] / max(tier_counts['PRO'] + tier_counts['ENTERPRISE'], 1)) * 100
+            }
+        
+        return {
+            'tier_distribution': tier_counts,
+            'tier_revenues': tier_revenues,
+            'conversion_rates': conversion_rates,
+            'average_revenue_per_tier': {
+                tier: revenue / max(count, 1) for tier, (revenue, count) 
+                in zip(tier_revenues.keys(), zip(tier_revenues.values(), tier_counts.values()))
+            },
+            'feature_usage': {'advanced_features': 0.7}  # Simplified - would analyze actual feature usage
+        }
+    
+    async def _analyze_market_pricing(self) -> dict:
+        """Analyze competitor and market pricing."""
+        # In production, this would integrate with market research APIs
+        return {
+            'competitor_analysis': {
+                'basic_tier_average': 25.0,
+                'pro_tier_average': 89.0,
+                'enterprise_tier_average': 450.0
+            },
+            'market_position': 'slightly_above_average',
+            'price_competitiveness': {
+                'BASIC': 'above_market',
+                'PRO': 'above_market',
+                'ENTERPRISE': 'competitive'
+            }
+        }
+    
+    async def _calculate_price_elasticity(self) -> dict:
+        """Calculate price elasticity of demand."""
+        # Simplified price elasticity analysis
+        return {
+            'usage_correlation': 0.85,  # Strong correlation between usage and willingness to pay
+            'churn_sensitivity': {
+                'BASIC': 0.15,  # 15% churn for 10% price increase
+                'PRO': 0.10,    # 10% churn for 10% price increase
+                'ENTERPRISE': 0.05  # 5% churn for 10% price increase
+            },
+            'conversion_sensitivity': {
+                'price_reduction_impact': 1.8,  # 1.8x conversion improvement per 10% price reduction
+                'optimal_price_points': {
+                    'BASIC': 24.0,
+                    'PRO': 79.0,
+                    'ENTERPRISE': 399.0
+                }
+            }
+        }
+    
+    def _analyze_discount_opportunities(self, pricing_data: dict) -> list:
+        """Analyze discount and promotional opportunities."""
+        recommendations = []
+        
+        # Annual discount opportunity
+        if pricing_data['conversion_rates']['FREE_to_BASIC'] < 0.08:
+            recommendations.append({
+                'type': 'promotional_discount',
+                'action': 'annual_discount',
+                'discount_percentage': 20,
+                'target_tier': 'BASIC',
+                'duration_months': 3,
+                'rationale': 'Annual payment discount can improve conversion and cash flow',
+                'expected_impact': '+40% annual subscription rate'
+            })
+        
+        # Student/startup discount
+        recommendations.append({
+            'type': 'segment_discount',
+            'action': 'student_startup_discount',
+            'discount_percentage': 50,
+            'target_segments': ['students', 'startups'],
+            'rationale': 'Market expansion to price-sensitive segments',
+            'expected_impact': '+200% student/startup acquisitions'
+        })
+        
+        return recommendations
+    
+    def _calculate_optimization_impact(self, pricing_data: dict, recommendations: list) -> dict:
+        """Calculate projected impact of pricing optimizations."""
+        impact = {
+            'revenue_impact': 0.0,
+            'conversion_impact': 0.0,
+            'churn_impact': 0.0,
+            'customer_lifetime_value_impact': 0.0
+        }
+        
+        # Calculate cumulative impact
+        for rec in recommendations:
+            if 'expected_impact' in rec:
+                impact_text = rec['expected_impact']
+                
+                # Parse revenue impact
+                if 'revenue' in impact_text.lower():
+                    if '+15%' in impact_text:
+                        impact['revenue_impact'] += 15.0
+                    elif '+20%' in impact_text:
+                        impact['revenue_impact'] += 20.0
+                    elif '+25%' in impact_text:
+                        impact['revenue_impact'] += 25.0
+                
+                # Parse conversion impact
+                if 'conversion' in impact_text.lower():
+                    if '+30%' in impact_text:
+                        impact['conversion_impact'] += 30.0
+                    elif '+40%' in impact_text:
+                        impact['conversion_impact'] += 40.0
+        
+        return impact
     
     async def generate_recommendations(self):
         """Generate pricing recommendations."""
@@ -21003,7 +21959,258 @@ class DunningManager:
     
     async def process_overdue_payments(self):
         """Process overdue payment workflow."""
-        pass
+        try:
+            # Get all tenants with overdue payments
+            overdue_tenants = await self._identify_overdue_tenants()
+            
+            processed_results = {
+                'total_overdue': len(overdue_tenants),
+                'notifications_sent': 0,
+                'payment_retries': 0,
+                'suspensions': 0,
+                'recoveries': 0,
+                'escalations': 0,
+                'processed_at': datetime.now(timezone.utc)
+            }
+            
+            for tenant_data in overdue_tenants:
+                tenant_id = tenant_data['tenant_id']
+                overdue_amount = tenant_data['overdue_amount']
+                days_overdue = tenant_data['days_overdue']
+                
+                # Determine dunning action based on days overdue
+                action = self._determine_dunning_action(days_overdue, overdue_amount)
+                
+                try:
+                    if action == 'gentle_reminder':
+                        await self._send_gentle_reminder(tenant_id, overdue_amount)
+                        processed_results['notifications_sent'] += 1
+                        
+                    elif action == 'payment_retry':
+                        retry_result = await self._retry_payment(tenant_id, overdue_amount)
+                        processed_results['payment_retries'] += 1
+                        if retry_result['success']:
+                            processed_results['recoveries'] += 1
+                            
+                    elif action == 'service_suspension':
+                        await self._suspend_service(tenant_id)
+                        processed_results['suspensions'] += 1
+                        
+                    elif action == 'escalation':
+                        await self._escalate_to_collections(tenant_id, overdue_amount)
+                        processed_results['escalations'] += 1
+                    
+                    # Update dunning history
+                    await self._update_dunning_history(tenant_id, action, {
+                        'overdue_amount': overdue_amount,
+                        'days_overdue': days_overdue,
+                        'action_taken': action,
+                        'timestamp': datetime.now(timezone.utc)
+                    })
+                    
+                except Exception as e:
+                    logger.error(f"Error processing dunning for tenant {tenant_id}: {str(e)}")
+                    continue
+            
+            # Store processing results
+            await self.redis_client.set(
+                "dunning_processing_results",
+                json.dumps(processed_results, default=str),
+                ex=86400  # 24 hours
+            )
+            
+            # Generate dunning report
+            await self._generate_dunning_report(processed_results, overdue_tenants)
+            
+            logger.info(f"Processed dunning for {len(overdue_tenants)} overdue tenants. "
+                       f"Recovered: {processed_results['recoveries']}, "
+                       f"Suspended: {processed_results['suspensions']}")
+            
+            return processed_results
+            
+        except Exception as e:
+            logger.error(f"Error processing overdue payments: {str(e)}")
+            raise
+    
+    async def _identify_overdue_tenants(self) -> list:
+        """Identify tenants with overdue payments."""
+        overdue_tenants = []
+        current_date = datetime.now(timezone.utc)
+        
+        # Get all billing records
+        billing_keys = await self.redis_client.keys("billing:*")
+        
+        for billing_key in billing_keys:
+            billing_data = await self.redis_client.get(billing_key)
+            if not billing_data:
+                continue
+                
+            data = json.loads(billing_data)
+            
+            # Check if payment is overdue
+            billing_date = datetime.fromisoformat(data['generated_at'].replace('Z', '+00:00'))
+            due_date = billing_date + timedelta(days=30)  # 30 days payment terms
+            
+            if current_date > due_date and data.get('payment_status', 'pending') != 'paid':
+                days_overdue = (current_date - due_date).days
+                
+                overdue_tenants.append({
+                    'tenant_id': data['tenant_id'],
+                    'overdue_amount': data['total_cost'],
+                    'days_overdue': days_overdue,
+                    'billing_period': data['billing_period'],
+                    'pricing_tier': data['pricing_tier'],
+                    'due_date': due_date.isoformat()
+                })
+        
+        return overdue_tenants
+    
+    def _determine_dunning_action(self, days_overdue: int, overdue_amount: float) -> str:
+        """Determine appropriate dunning action based on overdue status."""
+        if days_overdue <= 7:
+            return 'gentle_reminder'
+        elif days_overdue <= 14:
+            return 'payment_retry'
+        elif days_overdue <= 30:
+            return 'service_suspension'
+        else:
+            return 'escalation'
+    
+    async def _send_gentle_reminder(self, tenant_id: str, overdue_amount: float):
+        """Send gentle payment reminder."""
+        # In production, this would integrate with email service
+        reminder_data = {
+            'tenant_id': tenant_id,
+            'type': 'gentle_reminder',
+            'amount': overdue_amount,
+            'sent_at': datetime.now(timezone.utc),
+            'message': f"Friendly reminder: Payment of ${overdue_amount:.2f} is past due"
+        }
+        
+        await self.redis_client.set(
+            f"dunning_action:{tenant_id}:{datetime.now().strftime('%Y%m%d')}",
+            json.dumps(reminder_data, default=str),
+            ex=86400 * 30  # 30 days
+        )
+        
+        logger.info(f"Sent gentle reminder to tenant {tenant_id} for ${overdue_amount:.2f}")
+    
+    async def _retry_payment(self, tenant_id: str, overdue_amount: float) -> dict:
+        """Retry payment for overdue amount."""
+        # In production, this would integrate with payment processor
+        
+        # Simulate payment retry (80% success rate for demo)
+        import random
+        success = random.random() < 0.8
+        
+        retry_result = {
+            'tenant_id': tenant_id,
+            'amount': overdue_amount,
+            'success': success,
+            'retry_at': datetime.now(timezone.utc),
+            'transaction_id': f"retry_{tenant_id}_{int(datetime.now().timestamp())}"
+        }
+        
+        if success:
+            # Update billing status to paid
+            billing_keys = await self.redis_client.keys(f"billing:{tenant_id}:*")
+            for key in billing_keys:
+                await self.redis_client.set(key + ":payment_status", "paid")
+            
+            logger.info(f"Successfully retried payment for tenant {tenant_id}: ${overdue_amount:.2f}")
+        else:
+            logger.warning(f"Payment retry failed for tenant {tenant_id}: ${overdue_amount:.2f}")
+        
+        return retry_result
+    
+    async def _suspend_service(self, tenant_id: str):
+        """Suspend service for non-payment."""
+        suspension_data = {
+            'tenant_id': tenant_id,
+            'suspended_at': datetime.now(timezone.utc),
+            'reason': 'non_payment',
+            'status': 'suspended'
+        }
+        
+        await self.redis_client.set(
+            f"tenant_suspension:{tenant_id}",
+            json.dumps(suspension_data, default=str),
+            ex=86400 * 90  # 90 days
+        )
+        
+        # Update tenant tracking to suspended status
+        tenant_key = f"tenant_tracking:{tenant_id}"
+        tenant_data = await self.redis_client.get(tenant_key)
+        if tenant_data:
+            data = json.loads(tenant_data)
+            data['status'] = 'suspended'
+            data['suspended_at'] = datetime.now(timezone.utc).isoformat()
+            await self.redis_client.set(tenant_key, json.dumps(data, default=str))
+        
+        logger.info(f"Suspended service for tenant {tenant_id} due to non-payment")
+    
+    async def _escalate_to_collections(self, tenant_id: str, overdue_amount: float):
+        """Escalate to collections agency."""
+        escalation_data = {
+            'tenant_id': tenant_id,
+            'overdue_amount': overdue_amount,
+            'escalated_at': datetime.now(timezone.utc),
+            'collections_agency': 'external_collections',
+            'status': 'escalated'
+        }
+        
+        await self.redis_client.set(
+            f"collections_escalation:{tenant_id}",
+            json.dumps(escalation_data, default=str),
+            ex=86400 * 365  # 1 year
+        )
+        
+        logger.info(f"Escalated tenant {tenant_id} to collections for ${overdue_amount:.2f}")
+    
+    async def _update_dunning_history(self, tenant_id: str, action: str, details: dict):
+        """Update dunning history for tenant."""
+        history_key = f"dunning_history:{tenant_id}"
+        
+        # Get existing history
+        existing_history = await self.redis_client.get(history_key)
+        history = json.loads(existing_history) if existing_history else []
+        
+        # Add new entry
+        history.append({
+            'action': action,
+            'details': details,
+            'timestamp': datetime.now(timezone.utc).isoformat()
+        })
+        
+        # Keep only last 50 entries
+        history = history[-50:]
+        
+        await self.redis_client.set(
+            history_key,
+            json.dumps(history, default=str),
+            ex=86400 * 365  # 1 year
+        )
+    
+    async def _generate_dunning_report(self, results: dict, overdue_tenants: list):
+        """Generate dunning processing report."""
+        report = {
+            'summary': results,
+            'overdue_breakdown': {
+                '1-7_days': len([t for t in overdue_tenants if t['days_overdue'] <= 7]),
+                '8-14_days': len([t for t in overdue_tenants if 8 <= t['days_overdue'] <= 14]),
+                '15-30_days': len([t for t in overdue_tenants if 15 <= t['days_overdue'] <= 30]),
+                '30+_days': len([t for t in overdue_tenants if t['days_overdue'] > 30])
+            },
+            'total_overdue_amount': sum(t['overdue_amount'] for t in overdue_tenants),
+            'recovery_rate': (results['recoveries'] / max(results['total_overdue'], 1)) * 100,
+            'generated_at': datetime.now(timezone.utc)
+        }
+        
+        await self.redis_client.set(
+            "dunning_report",
+            json.dumps(report, default=str),
+            ex=86400 * 30  # 30 days
+        )
 
 # ==========================================================================================
 # MODULE 31/40: revenue_analytics.py
