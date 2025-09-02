@@ -115,24 +115,18 @@ def test_implementation_completeness():
 
 
 def main():
-        try:
-            logger.info(f"Executing main")
-            
-            # Implementation for main
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"main completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"main failed: {e}")
-            raise
+    """Run all tests and return success status"""
+    try:
+        # Run all test functions
+        test_licensing_repositories()
+        test_crypto_provider()
+        test_watermarker_configurations() 
+        test_implementation_completeness()
+        
         print("🎉 All tests passed!")
         return True
-    else:
-        print("❌ Some tests failed")
+    except Exception as e:
+        print(f"❌ Some tests failed: {e}")
         return False
 
 
