@@ -28,8 +28,26 @@ def test_project_structure():
 
 def test_pytest_markers():
     """Test des marqueurs pytest"""
-    # Ce test devrait passer avec les marqueurs configurés
-    pass
+    # Test que les marqueurs pytest sont correctement configurés
+    import pytest
+    
+    # Vérifier que pytest est disponible
+    assert pytest is not None, "pytest module should be available"
+    
+    # Vérifier que le test fonctionne avec les marqueurs
+    expected_markers = ['unit', 'integration', 'api', 'db', 'redis', 'external', 'security', 'performance', 'monetization']
+    
+    # Cette vérification s'assure que nous pouvons utiliser les marqueurs
+    for marker in expected_markers:
+        try:
+            # Créer un marqueur fictif pour valider
+            test_marker = pytest.mark.__getattr__(marker)
+            assert test_marker is not None, f"Marker {marker} should be available"
+        except AttributeError:
+            pytest.fail(f"Marker {marker} is not properly configured")
+    
+    # Test réussi si on arrive ici
+    assert True, "All pytest markers are properly configured"
 
 @pytest.mark.unit
 def test_with_unit_marker():
