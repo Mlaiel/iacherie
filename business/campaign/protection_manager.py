@@ -300,6 +300,12 @@ class ProtectionManager:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Content protection failed: {str(e)}")
             raise
     
@@ -380,6 +386,12 @@ class ProtectionManager:
             return monitoring_result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Content violation monitoring failed: {str(e)}")
             raise
     
@@ -478,6 +490,12 @@ class ProtectionManager:
             return handling_result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Violation handling failed: {str(e)}")
             raise
     
@@ -614,6 +632,12 @@ class ProtectionManager:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Protection effectiveness tracking failed: {str(e)}")
             raise
     
@@ -721,6 +745,12 @@ class ProtectionManager:
                 raise ValueError(f"Unknown action: {action}")
                 
         except Exception as e:
+
+                
+            logger.error(f"Error: {e}")
+
+                
+            raise
             self.logger.error(f"Protection rule management failed: {str(e)}")
             raise
     
@@ -745,6 +775,12 @@ class ProtectionManager:
                 await asyncio.sleep(300)  # Check every 5 minutes
                 
             except Exception as e:
+
+                
+                logger.error(f"Error: {e}")
+
+                
+                raise
                 self.logger.error(f"Continuous monitoring loop error: {str(e)}")
                 await asyncio.sleep(600)
     
@@ -757,6 +793,12 @@ class ProtectionManager:
                 await asyncio.sleep(60)  # Process every minute
                 
             except Exception as e:
+
+                
+                logger.error(f"Error: {e}")
+
+                
+                raise
                 self.logger.error(f"Violation processing loop error: {str(e)}")
                 await asyncio.sleep(120)
     

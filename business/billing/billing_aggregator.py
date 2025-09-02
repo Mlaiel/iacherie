@@ -861,6 +861,10 @@ Trigger analytics update"""
                 'checked_at': datetime.now().isoformat()
             }
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             return {
                 'healthy': False,
                 'response_time': None,

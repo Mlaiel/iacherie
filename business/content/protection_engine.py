@@ -242,6 +242,12 @@ Industrial content protection system with AI fingerprinting and anti-piracy."""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to register content protection: {str(e)}")
             raise ContentProtectionError(f"Protection registration failed: {str(e)}")
     
@@ -305,6 +311,12 @@ Industrial content protection system with AI fingerprinting and anti-piracy."""
                     scan_results['scan_statistics']['total_content_scanned'] += platform_results['content_scanned']
                     
                 except Exception as e:
+
+                    
+                    logger.error(f"Error: {e}")
+
+                    
+                    raise
                     logger.error(f"Failed to scan platform {platform}: {str(e)}")
                     continue
             
@@ -355,6 +367,12 @@ Industrial content protection system with AI fingerprinting and anti-piracy."""
             return scan_results
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to scan for violations: {str(e)}")
             raise ContentProtectionError(f"Violation scan failed: {str(e)}")
     
@@ -459,6 +477,12 @@ Industrial content protection system with AI fingerprinting and anti-piracy."""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to process takedown request: {str(e)}")
             raise ContentProtectionError(f"Takedown processing failed: {str(e)}")
     
@@ -537,6 +561,12 @@ Industrial content protection system with AI fingerprinting and anti-piracy."""
             return analytics
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to get protection analytics: {str(e)}")
             raise ContentProtectionError(f"Analytics generation failed: {str(e)}")
     
@@ -562,6 +592,12 @@ Industrial content protection system with AI fingerprinting and anti-piracy."""
                 raise ContentProtectionError(f"Unsupported content type: {content_type}")
                 
         except Exception as e:
+
+                
+            logger.error(f"Error: {e}")
+
+                
+            raise
             logger.error(f"Failed to generate {content_type} fingerprints: {str(e)}")
             return []
     
@@ -654,6 +690,12 @@ Industrial content protection system with AI fingerprinting and anti-piracy."""
             return fingerprints
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Audio fingerprint generation failed: {str(e)}")
             return []
     
@@ -741,6 +783,12 @@ Industrial content protection system with AI fingerprinting and anti-piracy."""
             return fingerprints
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Image fingerprint generation failed: {str(e)}")
             return []
     
@@ -834,6 +882,12 @@ Industrial content protection system with AI fingerprinting and anti-piracy."""
             return fingerprints
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Video fingerprint generation failed: {str(e)}")
             return []
     
@@ -913,6 +967,12 @@ Industrial content protection system with AI fingerprinting and anti-piracy."""
             return fingerprints
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Text fingerprint generation failed: {str(e)}")
             return []
     
@@ -932,6 +992,12 @@ Industrial content protection system with AI fingerprinting and anti-piracy."""
             logger.info("Content protection AI models initialized successfully")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to initialize protection models: {str(e)}")
     
     def _get_adjusted_threshold(self, content_type: str, policy: str) -> float:

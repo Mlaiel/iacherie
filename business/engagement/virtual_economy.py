@@ -567,6 +567,12 @@ Initialize marketplace with default items."""
                 return transaction
                 
             except Exception as e:
+
+                
+                logger.error(f"Error: {e}")
+
+                
+                raise
                 self.logger.error(f"Error processing transaction: {e}")
                 # Create failed transaction record
                 failed_transaction = VirtualTransaction(
@@ -842,6 +848,12 @@ Purchase an item from the virtual marketplace."""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error purchasing marketplace item: {e}")
             return {"success": False, "error": str(e)}
     
@@ -948,6 +960,12 @@ Purchase an item from the virtual marketplace."""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error getting marketplace items: {e}")
             return {"items": [], "pagination": {"total": 0, "limit": limit, "offset": offset, "has_more": False}}
     
@@ -1008,6 +1026,12 @@ Purchase an item from the virtual marketplace."""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error getting user transaction history: {e}")
             return {"transactions": [], "pagination": {"total": 0, "limit": limit, "offset": offset, "has_more": False}}
     
@@ -1073,6 +1097,12 @@ Purchase an item from the virtual marketplace."""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error getting user financial summary: {e}")
             return {}
     
@@ -1124,6 +1154,12 @@ Purchase an item from the virtual marketplace."""
             return credits_transaction
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error awarding daily login bonus: {e}")
             raise
 

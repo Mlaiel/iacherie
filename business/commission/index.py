@@ -129,6 +129,12 @@ Initialize Commission System Coordinator"""
             logger.info("Commission System initialized successfully")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Commission system initialization failed: {e}")
             self._status = SystemStatus.UNHEALTHY
             raise CommissionError(f"System initialization failed: {e}")
@@ -171,6 +177,12 @@ Initialize Commission System Coordinator"""
             logger.info("Commission System shutdown complete")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Commission system shutdown error: {e}")
     
     async def _wait_for_active_requests(self, timeout_seconds: int = 30) -> None:
@@ -231,6 +243,12 @@ Initialize Commission System Coordinator"""
             return status
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"System status check failed: {e}")
             return {
                 "system": "commission_system",
@@ -310,6 +328,10 @@ async def get_system_health():
     try:
         return system_coordinator.get_system_status()
     except Exception as e:
+
+        logger.error(f"Error: {e}")
+
+        raise
         logger.error(f"Health check failed: {e}")
         raise HTTPException(status_code=500, detail=f"Health check error: {e}")
 
@@ -349,6 +371,12 @@ async def calculate_commission(
             }
             
     except Exception as e:
+
+            
+        logger.error(f"Error: {e}")
+
+            
+        raise
         logger.error(f"Commission calculation failed: {e}")
         raise HTTPException(status_code=500, detail=f"Calculation error: {e}")
 
@@ -388,6 +416,12 @@ async def process_payment(
             }
             
     except Exception as e:
+
+            
+        logger.error(f"Error: {e}")
+
+            
+        raise
         logger.error(f"Payment processing failed: {e}")
         raise HTTPException(status_code=500, detail=f"Payment error: {e}")
 
@@ -427,6 +461,12 @@ async def generate_report(
         }
         
     except Exception as e:
+
+        
+        logger.error(f"Error: {e}")
+
+        
+        raise
         logger.error(f"Report generation failed: {e}")
         raise HTTPException(status_code=500, detail=f"Report error: {e}")
 
@@ -465,6 +505,12 @@ async def calculate_metric(
         }
         
     except Exception as e:
+
+        
+        logger.error(f"Error: {e}")
+
+        
+        raise
         logger.error(f"Metric calculation failed: {e}")
         raise HTTPException(status_code=500, detail=f"Metric error: {e}")
 
@@ -489,6 +535,10 @@ async def generate_insights(
                 )
                 metric_calculations.append(calculation)
             except Exception as e:
+
+                logger.error(f"Error: {e}")
+
+                raise
                 logger.warning(f"Failed to calculate metric {metric_name}: {e}")
         
         # Generate insights
@@ -512,6 +562,12 @@ async def generate_insights(
         }
         
     except Exception as e:
+
+        
+        logger.error(f"Error: {e}")
+
+        
+        raise
         logger.error(f"Insight generation failed: {e}")
         raise HTTPException(status_code=500, detail=f"Insight error: {e}")
 
@@ -541,6 +597,12 @@ async def predict_metric(
         }
         
     except Exception as e:
+
+        
+        logger.error(f"Error: {e}")
+
+        
+        raise
         logger.error(f"Metric prediction failed: {e}")
         raise HTTPException(status_code=500, detail=f"Prediction error: {e}")
 
@@ -572,6 +634,12 @@ async def get_commission_transactions(
         return transactions
         
     except Exception as e:
+
+        
+        logger.error(f"Error: {e}")
+
+        
+        raise
         logger.error(f"Transaction retrieval failed: {e}")
         raise HTTPException(status_code=500, detail=f"Transaction error: {e}")
 
@@ -582,6 +650,10 @@ async def _log_calculation_metrics(result, user_id: Optional[str]):
         # This would log metrics to monitoring system
         logger.info(f"Logged calculation metrics for user {user_id}")
     except Exception as e:
+
+        logger.error(f"Error: {e}")
+
+        raise
         logger.error(f"Metrics logging failed: {e}")
 
 # System lifecycle management
@@ -594,6 +666,10 @@ async def lifespan(app):
         await system_coordinator.initialize()
         yield
     except Exception as e:
+
+        logger.error(f"Error: {e}")
+
+        raise
         logger.error(f"System startup failed: {e}")
         raise
     finally:

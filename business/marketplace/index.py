@@ -94,6 +94,10 @@ Setup all marketplace API routes"""
                     if status.get("status") != "healthy":
                         overall_healthy = False
                 except Exception as e:
+
+                    logger.error(f"Error: {e}")
+
+                    raise
                     health_status[service_name] = {
                         "status": "unhealthy", 
                         "error": str(e)

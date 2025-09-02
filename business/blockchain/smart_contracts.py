@@ -117,6 +117,12 @@ class ContentProtectionContract:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to register content: {str(e)}")
             raise BlockchainError(f"Content registration failed: {str(e)}")
     
@@ -126,6 +132,10 @@ class ContentProtectionContract:
             owner = self.contract.functions.getContentOwner(content_hash).call()
             return owner.lower() == claimed_owner.lower()
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Failed to verify ownership: {str(e)}")
             return False
     
@@ -142,6 +152,10 @@ class ContentProtectionContract:
                 }
             return None
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Failed to get content info: {str(e)}")
             return None
 
@@ -210,6 +224,12 @@ class LicensingContract:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to create license: {str(e)}")
             raise BlockchainError(f"License creation failed: {str(e)}")
     
@@ -247,6 +267,12 @@ class LicensingContract:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to purchase license: {str(e)}")
             raise BlockchainError(f"License purchase failed: {str(e)}")
     
@@ -255,6 +281,10 @@ class LicensingContract:
         try:
             return self.contract.functions.hasValidLicense(license_id, user_address).call()
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Failed to validate license: {str(e)}")
             return False
 
@@ -314,6 +344,12 @@ class RoyaltyDistributionContract:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to set royalty scheme: {str(e)}")
             raise BlockchainError(f"Royalty scheme setup failed: {str(e)}")
     
@@ -357,6 +393,12 @@ class RoyaltyDistributionContract:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to distribute royalties: {str(e)}")
             raise BlockchainError(f"Royalty distribution failed: {str(e)}")
 
@@ -414,6 +456,12 @@ class GovernanceContract:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to create proposal: {str(e)}")
             raise BlockchainError(f"Proposal creation failed: {str(e)}")
     
@@ -450,6 +498,12 @@ class GovernanceContract:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to cast vote: {str(e)}")
             raise BlockchainError(f"Vote casting failed: {str(e)}")
 
@@ -500,6 +554,12 @@ class StakingContract:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to stake tokens: {str(e)}")
             raise BlockchainError(f"Token staking failed: {str(e)}")
     
@@ -526,6 +586,12 @@ class StakingContract:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to claim rewards: {str(e)}")
             raise BlockchainError(f"Reward claiming failed: {str(e)}")
 
@@ -564,6 +630,12 @@ Initialize smart contract manager and load contract instances"""
             self.logger.info("Smart contract manager initialized successfully")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to initialize smart contract manager: {str(e)}")
             raise BlockchainError(f"Smart contract manager initialization failed: {str(e)}")
     
@@ -664,6 +736,12 @@ Initialize smart contract manager and load contract instances"""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to deploy contract {contract_name}: {str(e)}")
             raise BlockchainError(f"Contract deployment failed: {str(e)}")
     
@@ -710,6 +788,12 @@ Initialize smart contract manager and load contract instances"""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to upgrade contract {contract_name}: {str(e)}")
             raise BlockchainError(f"Contract upgrade failed: {str(e)}")
     
@@ -726,6 +810,12 @@ Initialize smart contract manager and load contract instances"""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"_load_contract_configurations failed: {e}")
             raise
     async def _initialize_network_contracts(self, network: str) -> None:
@@ -789,6 +879,12 @@ Verify all contract deployments are valid"""
                         self.logger.debug(f"Contract {contract_name} on {network} verified")
                         
                 except Exception as e:
+
+                        
+                    logger.error(f"Error: {e}")
+
+                        
+                    raise
                     self.logger.error(f"Failed to verify contract {contract_name} on {network}: {str(e)}")
     
     async def _get_optimal_gas_price(self, network: str) -> int:
@@ -809,6 +905,12 @@ Verify all contract deployments are valid"""
             return int(gas_price * multiplier)
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to get gas price for {network}: {str(e)}")
             return self.config.default_gas_price
     
@@ -842,4 +944,10 @@ Verify all contract deployments are valid"""
             self.logger.info("Smart contract manager cleanup completed")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error during smart contract manager cleanup: {str(e)}")

@@ -238,6 +238,12 @@ class ProfileManager:
             return await self._format_profile_data(profile, include_private=viewer_id == client_id)
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Error retrieving profile for client {client_id}: {e}")
             return None
             
@@ -354,6 +360,12 @@ class ProfileManager:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Error uploading profile image: {e}")
             return {'success': False, 'error': str(e)}
             
@@ -456,6 +468,12 @@ class ProfileManager:
             return tier
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Error updating creator tier: {e}")
             return CreatorTier.EMERGING
             
@@ -544,6 +562,12 @@ class ProfileManager:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Error searching profiles: {e}")
             raise ProfileServiceError("Profile search failed") from e
             

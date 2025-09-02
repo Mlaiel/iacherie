@@ -117,6 +117,12 @@ class BitcoinProcessor:
             self.logger.info(f"Bitcoin processor initialized - Network: {info['chain']}, Blocks: {info['blocks']}")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to initialize Bitcoin processor: {str(e)}")
             raise BlockchainError(f"Bitcoin processor initialization failed: {str(e)}")
     
@@ -142,6 +148,12 @@ class BitcoinProcessor:
             return address
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to generate Bitcoin address: {str(e)}")
             raise PaymentError(f"Address generation failed: {str(e)}")
     
@@ -180,6 +192,12 @@ class BitcoinProcessor:
             return payment_request
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to create Bitcoin payment request: {str(e)}")
             raise PaymentError(f"Payment request creation failed: {str(e)}")
     
@@ -262,6 +280,12 @@ class BitcoinProcessor:
             return payment_result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to process Bitcoin payment: {str(e)}")
             raise PaymentError(f"Bitcoin payment processing failed: {str(e)}")
     
@@ -284,6 +308,12 @@ class BitcoinProcessor:
             return False
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to verify Bitcoin payment: {str(e)}")
             return False
     
@@ -306,6 +336,10 @@ class BitcoinProcessor:
         try:
             return self.rpc_connection.listunspent(1, 9999999, [address])
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Failed to get UTXOs: {str(e)}")
             return []
     
@@ -325,6 +359,12 @@ class BitcoinProcessor:
             return max(fee_btc, Decimal("0.00001"))  # Minimum fee
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to estimate Bitcoin fee: {str(e)}")
             return Decimal("0.0001")  # Default fee
     
@@ -369,10 +409,22 @@ Monitor Bitcoin transaction for confirmations"""
                     await asyncio.sleep(60)  # Check every minute
                     
                 except Exception as e:
+
+                    
+                    logger.error(f"Error: {e}")
+
+                    
+                    raise
                     self.logger.error(f"Error monitoring Bitcoin transaction {tx_hash}: {str(e)}")
                     await asyncio.sleep(300)  # Wait 5 minutes on error
                     
         except Exception as e:
+
+                    
+            logger.error(f"Error: {e}")
+
+                    
+            raise
             self.logger.error(f"Failed to monitor Bitcoin transaction: {str(e)}")
     
     async def _store_payment_request(self, payment_request: PaymentRequest) -> None:
@@ -455,6 +507,12 @@ class EthereumProcessor:
             self.logger.info("Ethereum processor initialized successfully")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to initialize Ethereum processor: {str(e)}")
             raise BlockchainError(f"Ethereum processor initialization failed: {str(e)}")
     
@@ -519,6 +577,12 @@ class EthereumProcessor:
             return payment_result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to process ETH payment: {str(e)}")
             raise PaymentError(f"ETH payment processing failed: {str(e)}")
     
@@ -594,6 +658,12 @@ class EthereumProcessor:
             return payment_result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to process token payment: {str(e)}")
             raise PaymentError(f"Token payment processing failed: {str(e)}")
     
@@ -610,6 +680,12 @@ class EthereumProcessor:
             return Decimal(balance) / (10 ** decimals)
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to get token balance: {str(e)}")
             return Decimal("0")
     
@@ -620,6 +696,10 @@ class EthereumProcessor:
             balance_wei = web3.eth.get_balance(address)
             return web3.from_wei(balance_wei, 'ether')
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Failed to get ETH balance: {str(e)}")
             return Decimal("0")
     
@@ -748,6 +828,12 @@ class MultiChainWallet:
             return wallet_addresses
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to create user wallet: {str(e)}")
             raise PaymentError(f"Wallet creation failed: {str(e)}")
     
@@ -792,6 +878,12 @@ class MultiChainWallet:
             return balances
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to get user balances: {str(e)}")
             return {}
     
@@ -880,6 +972,12 @@ class MultiChainWallet:
                     }
                     
                 except Exception as e:
+
+                    
+                    logger.error(f"Error: {e}")
+
+                    
+                    raise
                     self.logger.error(f"Bitcoin transfer failed: {str(e)}")
                     raise PaymentError(f"Bitcoin transfer failed: {str(e)}")
             
@@ -916,6 +1014,12 @@ class MultiChainWallet:
                 raise PaymentError(f"Unsupported network: {from_network}")
                 
         except Exception as e:
+
+                
+            logger.error(f"Error: {e}")
+
+                
+            raise
             self.logger.error(f"Failed to transfer funds: {str(e)}")
             raise PaymentError(f"Fund transfer failed: {str(e)}")
     
@@ -985,6 +1089,12 @@ Initialize payment gateway"""
             self.logger.info("Payment gateway initialized successfully")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to initialize payment gateway: {str(e)}")
             raise BlockchainError(f"Payment gateway initialization failed: {str(e)}")
     
@@ -1082,6 +1192,12 @@ Initialize payment gateway"""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to process payment: {str(e)}")
             raise PaymentError(f"Payment processing failed: {str(e)}")
     
@@ -1114,6 +1230,12 @@ Initialize payment gateway"""
             return None
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to get payment status: {str(e)}")
             return None
     
@@ -1132,6 +1254,12 @@ Initialize payment gateway"""
                     self.logger.warning(f"Payment request expired: {payment_request.payment_id}")
                     
         except Exception as e:
+
+                    
+            logger.error(f"Error: {e}")
+
+                    
+            raise
             self.logger.error(f"Error processing pending transactions: {str(e)}")
     
     async def _process_payment_queue(self) -> None:
@@ -1141,6 +1269,10 @@ Initialize payment gateway"""
                 await self.process_pending_transactions()
                 await asyncio.sleep(10)  # Process every 10 seconds
             except Exception as e:
+
+                logger.error(f"Error: {e}")
+
+                raise
                 self.logger.error(f"Payment queue processing error: {str(e)}")
                 await asyncio.sleep(30)  # Wait longer on error
     
@@ -1153,6 +1285,12 @@ Initialize payment gateway"""
             self.logger.info("Payment gateway cleanup completed")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error during payment gateway cleanup: {str(e)}")
 
 
@@ -1182,6 +1320,12 @@ class CryptoConverter:
             self.logger.info("Crypto converter initialized successfully")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to initialize crypto converter: {str(e)}")
             raise BlockchainError(f"Crypto converter initialization failed: {str(e)}")
     
@@ -1202,6 +1346,12 @@ class CryptoConverter:
             return converted_amount
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to convert currency: {str(e)}")
             raise PaymentError(f"Currency conversion failed: {str(e)}")
     
@@ -1210,6 +1360,10 @@ class CryptoConverter:
         try:
             return await self._get_exchange_rate(currency, "USD")
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Failed to get USD price for {currency}: {str(e)}")
             return None
     
@@ -1229,6 +1383,12 @@ class CryptoConverter:
             return None
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to get exchange rate: {str(e)}")
             return None
     
@@ -1273,6 +1433,12 @@ class CryptoConverter:
             self.logger.debug("Exchange rates updated successfully")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to update exchange rates: {str(e)}")
     
     async def _price_update_loop(self) -> None:
@@ -1286,6 +1452,12 @@ class CryptoConverter:
                 await asyncio.sleep(300)  # 5 minutes
                 
             except Exception as e:
+
+                
+                logger.error(f"Error: {e}")
+
+                
+                raise
                 self.logger.error(f"Price update loop error: {str(e)}")
                 await asyncio.sleep(60)  # Retry in 1 minute
     
@@ -1307,6 +1479,12 @@ class CryptoConverter:
             return True
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Bitcoin address validation error: {e}")
             return False
     
@@ -1321,6 +1499,12 @@ class CryptoConverter:
             return mock_balance
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to get Bitcoin balance: {e}")
             return 0.0
     
@@ -1337,6 +1521,12 @@ class CryptoConverter:
             return transaction_hash
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to generate transaction hash: {e}")
             return f"mock_tx_{uuid.uuid4().hex[:16]}"
     
@@ -1374,5 +1564,11 @@ class CryptoConverter:
             self.logger.info(f"Recorded crypto transaction: {transaction_hash}")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to record transaction: {e}")
             raise

@@ -304,6 +304,12 @@ class MultiFormatContentProcessor:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Content processing failed for {content_id}: {str(e)}")
             
             result.status = ProcessingStatus.FAILED
@@ -386,6 +392,12 @@ class MultiFormatContentProcessor:
             logger.info(f"Audio analysis completed: duration={metadata.duration}s, tempo={tempo}")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.warning(f"Audio analysis failed: {str(e)}")
             
         return metadata
@@ -430,6 +442,12 @@ class MultiFormatContentProcessor:
             logger.info(f"Video analysis completed: {width}x{height}, {metadata.duration}s")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.warning(f"Video analysis failed: {str(e)}")
             
         return metadata
@@ -470,6 +488,12 @@ class MultiFormatContentProcessor:
             logger.info(f"Image analysis completed: {metadata.dimensions}, mode={metadata.color_space}")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.warning(f"Image analysis failed: {str(e)}")
             
         return metadata
@@ -510,6 +534,12 @@ class MultiFormatContentProcessor:
             logger.info(f"Text analysis completed: {word_count} words, language={metadata.language}")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.warning(f"Text analysis failed: {str(e)}")
             
         return metadata
@@ -576,6 +606,12 @@ Store original content in secure storage"""
                 )
                 
         except Exception as e:
+
+                
+            logger.error(f"Error: {e}")
+
+                
+            raise
             logger.error(f"AI enhancement failed: {str(e)}")
             enhancements['error'] = str(e)
             
@@ -602,6 +638,12 @@ Store original content in secure storage"""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Content protection failed: {str(e)}")
             return {'error': str(e)}
 
@@ -667,6 +709,12 @@ Setup multi-platform distribution"""
             result.processing_logs.append(f"Monetization setup: {monetization_data}")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Monetization integration failed: {str(e)}")
 
     async def _update_processing_status(self, content_id: str, status: ProcessingStatus):
@@ -802,6 +850,12 @@ Get current processing status"""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"cleanup_temp_files failed: {e}")
             raise
 __all__ = ['MultiFormatContentProcessor', 'ContentFormat', 'ProcessingStatus', 'CreatorType']

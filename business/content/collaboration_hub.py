@@ -186,6 +186,12 @@ Advanced real-time collaboration system for content creators."""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to create collaboration session: {str(e)}")
             raise CollaborationError(f"Failed to create session: {str(e)}")
     
@@ -263,6 +269,12 @@ Advanced real-time collaboration system for content creators."""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to join collaboration session: {str(e)}")
             raise CollaborationError(f"Failed to join session: {str(e)}")
     
@@ -331,6 +343,12 @@ Advanced real-time collaboration system for content creators."""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to send collaboration update: {str(e)}")
             raise CollaborationError(f"Failed to send update: {str(e)}")
     
@@ -415,6 +433,12 @@ Advanced real-time collaboration system for content creators."""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to send invitation: {str(e)}")
             raise CollaborationError(f"Failed to send invitation: {str(e)}")
     
@@ -520,6 +544,12 @@ Advanced real-time collaboration system for content creators."""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to manage permissions: {str(e)}")
             raise CollaborationError(f"Failed to manage permissions: {str(e)}")
     
@@ -581,6 +611,12 @@ Advanced real-time collaboration system for content creators."""
             return analytics
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to get session analytics: {str(e)}")
             raise CollaborationError(f"Failed to get analytics: {str(e)}")
     
@@ -648,6 +684,12 @@ Advanced real-time collaboration system for content creators."""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to export collaboration data: {str(e)}")
             raise CollaborationError(f"Failed to export data: {str(e)}")
     

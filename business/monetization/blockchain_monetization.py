@@ -259,6 +259,12 @@ class BlockchainWalletManager:
             )
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Wallet creation error: {e}")
             raise
     
@@ -289,6 +295,12 @@ class BlockchainWalletManager:
             )
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Wallet import error: {e}")
             raise
     
@@ -316,6 +328,12 @@ class BlockchainWalletManager:
             return Decimal('0')
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Balance fetch error: {e}")
             return Decimal('0')
     
@@ -340,6 +358,12 @@ class BlockchainWalletManager:
             return Decimal('0')
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"ERC-20 balance error: {e}")
             return Decimal('0')
 
@@ -403,6 +427,12 @@ class NFTMarketplace:
             return nft_asset
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"NFT minting error: {e}")
             raise
     
@@ -448,6 +478,12 @@ class NFTMarketplace:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"NFT listing error: {e}")
             return {'success': False, 'error': str(e)}
     
@@ -497,6 +533,12 @@ class NFTMarketplace:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"NFT purchase error: {e}")
             return {'success': False, 'error': str(e)}
     
@@ -560,6 +602,12 @@ class NFTMarketplace:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"NFT analytics error: {e}")
             return {'error': str(e)}
     
@@ -571,6 +619,10 @@ class NFTMarketplace:
             # This would use actual IPFS service
             return "QmExampleHash123456789"  # Placeholder
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"IPFS upload error: {e}")
             return ""
     
@@ -591,6 +643,12 @@ class NFTMarketplace:
             return await self._deploy_nft_contract(user_id, network)
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Contract deployment error: {e}")
             raise
     
@@ -632,6 +690,12 @@ class NFTMarketplace:
             )
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Contract deployment error: {e}")
             raise
     
@@ -646,6 +710,10 @@ class NFTMarketplace:
             # This would interact with actual blockchain
             return "0xminttransactionhash..."  # Placeholder
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"On-chain minting error: {e}")
             raise
     
@@ -655,6 +723,10 @@ class NFTMarketplace:
             # This would store in actual database
             pass
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"NFT storage error: {e}")
             raise
     
@@ -664,6 +736,10 @@ class NFTMarketplace:
             # This would query actual database
             return None  # Placeholder
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"NFT fetch error: {e}")
             return None
     
@@ -673,6 +749,10 @@ class NFTMarketplace:
             # This would store in actual database
             pass
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Listing storage error: {e}")
             raise
     
@@ -682,6 +762,10 @@ class NFTMarketplace:
             # This would query actual database
             return None  # Placeholder
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Listing fetch error: {e}")
             return None
     
@@ -696,6 +780,10 @@ class NFTMarketplace:
             # This would interact with blockchain
             return "0xtransferhash..."  # Placeholder
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"NFT transfer error: {e}")
             raise
     
@@ -713,6 +801,10 @@ class NFTMarketplace:
             # This would distribute actual payments
             pass
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Royalty distribution error: {e}")
     
     async def _update_nft_asset(self, nft_asset: NFTAsset):
@@ -721,6 +813,10 @@ class NFTMarketplace:
             # This would update actual database
             pass
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"NFT update error: {e}")
     
     async def _update_marketplace_listing(self, listing: Dict[str, Any]):
@@ -729,6 +825,10 @@ class NFTMarketplace:
             # This would update actual database
             pass
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Listing update error: {e}")
     
     async def _get_user_nfts(self, user_id: str) -> List[NFTAsset]:
@@ -737,6 +837,10 @@ class NFTMarketplace:
             # This would query actual database
             return []  # Placeholder
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"User NFTs fetch error: {e}")
             return []
     
@@ -751,6 +855,10 @@ class NFTMarketplace:
             # This would calculate actual royalty earnings
             return Decimal('50.00')  # Placeholder
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Royalty calculation error: {e}")
             return Decimal('0')
     
@@ -786,6 +894,10 @@ Generate NFT strategy recommendations"""
             # This would query actual database
             return None  # Placeholder
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Contract fetch error: {e}")
             return None
 
@@ -856,6 +968,12 @@ class DeFiIntegration:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Token staking error: {e}")
             return {'success': False, 'error': str(e)}
     
@@ -915,6 +1033,12 @@ class DeFiIntegration:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Liquidity provision error: {e}")
             return {'success': False, 'error': str(e)}
     
@@ -953,6 +1077,12 @@ class DeFiIntegration:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"DeFi portfolio error: {e}")
             return {'error': str(e)}
     
@@ -968,6 +1098,10 @@ class DeFiIntegration:
             # This would query actual database
             return None  # Placeholder
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Wallet fetch error: {e}")
             return None
     
@@ -983,6 +1117,10 @@ class DeFiIntegration:
             # This would interact with staking contract
             return "0xstakingtxhash..."  # Placeholder
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Staking transaction error: {e}")
             raise
     
@@ -992,6 +1130,10 @@ class DeFiIntegration:
             # This would store in actual database
             pass
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Staking position storage error: {e}")
     
     async def _add_liquidity_to_pool(
@@ -1008,6 +1150,10 @@ class DeFiIntegration:
             # This would interact with DEX contract
             return "0xliquiditytxhash..."  # Placeholder
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Liquidity transaction error: {e}")
             raise
     
@@ -1017,6 +1163,10 @@ class DeFiIntegration:
             # This would store in actual database
             pass
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Liquidity position storage error: {e}")
     
     async def _get_user_staking_positions(self, user_id: str) -> List[Dict[str, Any]]:
@@ -1025,6 +1175,10 @@ class DeFiIntegration:
             # This would query actual database
             return []  # Placeholder
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Staking positions fetch error: {e}")
             return []
     
@@ -1034,6 +1188,10 @@ class DeFiIntegration:
             # This would query actual database
             return []  # Placeholder
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Liquidity positions fetch error: {e}")
             return []
     
@@ -1092,6 +1250,12 @@ Main blockchain monetization orchestrator"""
             return True
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"❌ Blockchain Monetization initialization failed: {e}")
             return False
     
@@ -1112,6 +1276,12 @@ Main blockchain monetization orchestrator"""
             return wallets
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Wallet creation error: {e}")
             return {}
     
@@ -1152,6 +1322,12 @@ Main blockchain monetization orchestrator"""
             return nft_asset
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Content NFT minting error: {e}")
             raise
     
@@ -1196,6 +1372,12 @@ Main blockchain monetization orchestrator"""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Blockchain analytics error: {e}")
             return {'error': str(e)}
     
@@ -1207,6 +1389,10 @@ Main blockchain monetization orchestrator"""
             # Initialize Web3 connections
             pass
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Blockchain connection error: {e}")
     
     async def _setup_blockchain_tables(self):
@@ -1215,6 +1401,10 @@ Main blockchain monetization orchestrator"""
             # This would create database tables
             pass
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Database setup error: {e}")
     
     async def _store_wallet_credentials(self, wallet: WalletCredentials):
@@ -1223,6 +1413,10 @@ Main blockchain monetization orchestrator"""
             # This would store in actual database
             pass
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Wallet storage error: {e}")
     
     async def _get_wallet_balances(self, user_id: str) -> Dict[str, Any]:
@@ -1234,6 +1428,10 @@ Main blockchain monetization orchestrator"""
                 'polygon': {'MATIC': 500.0, 'USDC': 250.0}
             }
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Balance fetch error: {e}")
             return {}
     
@@ -1248,6 +1446,10 @@ Main blockchain monetization orchestrator"""
             # This would query actual transaction history
             return []  # Placeholder
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Transaction history error: {e}")
             return []
     

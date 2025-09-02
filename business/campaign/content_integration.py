@@ -243,6 +243,12 @@ class ContentIntegration:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Content upload failed: {str(e)}")
             raise
     
@@ -301,6 +307,12 @@ class ContentIntegration:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Content status retrieval failed: {str(e)}")
             raise
     
@@ -367,6 +379,12 @@ class ContentIntegration:
             return response
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Processed content retrieval failed: {str(e)}")
             raise
     
@@ -452,6 +470,12 @@ class ContentIntegration:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Platform optimization failed: {str(e)}")
             raise
     
@@ -518,6 +542,12 @@ class ContentIntegration:
             return batch_results
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Batch content processing failed: {str(e)}")
             raise
     
@@ -572,6 +602,12 @@ class ContentIntegration:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Content performance analysis failed: {str(e)}")
             raise
     
@@ -592,6 +628,12 @@ class ContentIntegration:
                 await asyncio.sleep(30)  # Check every 30 seconds
                 
             except Exception as e:
+
+                
+                logger.error(f"Error: {e}")
+
+                
+                raise
                 self.logger.error(f"Content processing worker error: {str(e)}")
                 await asyncio.sleep(60)
     
@@ -691,6 +733,12 @@ class ContentIntegration:
             self.logger.info(f"Content processing completed: {content_id}")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             # Handle processing error
             if content_id in self._processing_queue:
                 self._processing_queue[content_id]["status"] = ProcessingStatus.ERROR

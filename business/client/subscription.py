@@ -325,6 +325,12 @@ class SubscriptionManager:
             return await self._format_subscription_data(subscription)
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Error retrieving subscription for client {client_id}: {e}")
             return None
             
@@ -528,6 +534,12 @@ class SubscriptionManager:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Error checking usage limits: {e}")
             return {"allowed": False, "reason": "Error checking limits"}
             
@@ -604,6 +616,12 @@ class SubscriptionManager:
             return payment_result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Error processing renewal for subscription {subscription_id}: {e}")
             return {"success": False, "error": str(e)}
             

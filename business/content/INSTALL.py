@@ -115,6 +115,12 @@ async def quick_setup():
         return True
         
     except Exception as e:
+
+        
+        logger.error(f"Error: {e}")
+
+        
+        raise
         print(f"❌ Setup failed: {e}")
         return False
 
@@ -139,6 +145,10 @@ def run_health_check():
         print("⚠️  Health check timed out - system may be slow")
         return True
     except Exception as e:
+
+        logger.error(f"Error: {e}")
+
+        raise
         print(f"❌ Health check failed: {e}")
         return False
 
@@ -155,6 +165,10 @@ def run_demo():
         print("⚠️  Demo timed out - system components may be initializing")
         return True
     except Exception as e:
+
+        logger.error(f"Error: {e}")
+
+        raise
         print(f"❌ Demo failed: {e}")
         return False
 
@@ -235,6 +249,10 @@ Main installation and setup process."""
             print("❌ Setup failed")
             sys.exit(1)
     except Exception as e:
+
+        logger.error(f"Error: {e}")
+
+        raise
         print(f"❌ Setup error: {e}")
         sys.exit(1)
     
@@ -264,5 +282,9 @@ if __name__ == '__main__':
         print("\n\n🛑 Installation cancelled by user")
         sys.exit(1)
     except Exception as e:
+
+        logger.error(f"Error: {e}")
+
+        raise
         print(f"\n❌ Installation failed: {e}")
         sys.exit(1)

@@ -250,6 +250,12 @@ class ConsentManager:
             return collected_consents
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error collecting consent for user {user_id}: {e}")
             raise
     
@@ -315,6 +321,12 @@ class ConsentManager:
             return withdrawn_consents
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error withdrawing consent for user {user_id}: {e}")
             raise
     
@@ -369,6 +381,12 @@ class ConsentManager:
             return True
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error checking consent for user {user_id}, purpose {purpose}: {e}")
             return False
     
@@ -417,6 +435,12 @@ class ConsentManager:
             return user_consents
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error getting consents for user {user_id}: {e}")
             return {}
     
@@ -448,6 +472,12 @@ class ConsentManager:
             return True
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error updating consent configuration for {purpose}: {e}")
             return False
     
@@ -523,6 +553,12 @@ class ConsentManager:
             return report
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error generating consent report: {e}")
             return {"error": str(e)}
     
@@ -543,6 +579,12 @@ class ConsentManager:
             self.logger.info(f"Assessed withdrawal impact for consent {consent_record.consent_id}")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error assessing withdrawal impact: {e}")
     
     async def _log_consent_event(self, event: Dict[str, Any]):

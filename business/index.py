@@ -205,6 +205,12 @@ Initialize all business services and connections"""
             return True
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to initialize Business Service Orchestrator: {e}")
             return False
     
@@ -340,6 +346,12 @@ Initialize all business services and connections"""
             logger.info(f"Initialized {len(self.services)} business services")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to initialize business services: {e}")
             raise
     
@@ -431,6 +443,12 @@ Initialize all business services and connections"""
             logger.info(f"Creator journey completed successfully for {request.creator_id}")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             response.error_message = str(e)
             logger.error(f"Creator journey failed for {request.creator_id}: {e}")
         
@@ -614,6 +632,10 @@ Perform health check on all business services"""
                 else:
                     health_status["services"][service_name] = "unknown"
             except Exception as e:
+
+                logger.error(f"Error: {e}")
+
+                raise
                 health_status["services"][service_name] = f"error: {str(e)}"
         
         return health_status
@@ -628,6 +650,10 @@ Perform health check on all business services"""
                 if hasattr(service, 'shutdown'):
                     await service.shutdown()
             except Exception as e:
+
+                logger.error(f"Error: {e}")
+
+                raise
                 logger.error(f"Error shutting down {service_name}: {e}")
         
         # Close database connections

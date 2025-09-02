@@ -194,6 +194,12 @@ Initialize collaboration index with comprehensive configuration"""
             logger.info("All collaboration services initialized successfully")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.state.system_status = CollaborationSystemStatus.OFFLINE
             self.state.last_error = str(e)
             logger.error(f"Failed to initialize services: {e}", exc_info=True)
@@ -241,6 +247,12 @@ Initialize collaboration index with comprehensive configuration"""
             return [p.dict() for p in partnerships]
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Partnership discovery failed: {e}", exc_info=True)
             raise CollaborationError(f"Partnership discovery error: {e}")
     
@@ -295,6 +307,12 @@ Initialize collaboration index with comprehensive configuration"""
             return result.dict()
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Collaboration request creation failed: {e}", exc_info=True)
             raise CollaborationError(f"Request creation error: {e}")
     
@@ -350,6 +368,12 @@ Initialize collaboration index with comprehensive configuration"""
             return result.dict()
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Match processing failed: {e}", exc_info=True)
             raise CollaborationError(f"Match processing error: {e}")
     
@@ -388,6 +412,12 @@ Initialize collaboration index with comprehensive configuration"""
             return result.dict()
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Content distribution failed: {e}", exc_info=True)
             raise CollaborationError(f"Distribution error: {e}")
     
@@ -426,6 +456,12 @@ Initialize collaboration index with comprehensive configuration"""
             return analytics.dict()
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Analytics generation failed: {e}", exc_info=True)
             raise CollaborationError(f"Analytics error: {e}")
     
@@ -453,6 +489,12 @@ Initialize collaboration index with comprehensive configuration"""
             return health_data
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Health check failed: {e}", exc_info=True)
             return SystemHealthMetrics(
                 status=CollaborationSystemStatus.DEGRADED,
@@ -479,6 +521,10 @@ Initialize collaboration index with comprehensive configuration"""
                     event_type=event_type
                 )
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             logger.error(f"Notification sending failed: {e}")
     
     async def _update_collaboration_analytics(
@@ -491,6 +537,10 @@ Initialize collaboration index with comprehensive configuration"""
             if self._analytics:
                 await self._analytics.record_event(event_type, event_data)
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             logger.error(f"Analytics update failed: {e}")
     
     async def _setup_revenue_sharing(self, collaboration_id: str) -> None:
@@ -501,6 +551,10 @@ Initialize collaboration index with comprehensive configuration"""
                     collaboration_id
                 )
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             logger.error(f"Revenue sharing setup failed: {e}")
     
     async def _setup_content_sync(self, collaboration_id: str) -> None:
@@ -511,6 +565,10 @@ Initialize collaboration index with comprehensive configuration"""
                     collaboration_id
                 )
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             logger.error(f"Content sync setup failed: {e}")
     
     # Utility methods
@@ -524,6 +582,10 @@ Initialize collaboration index with comprehensive configuration"""
                     json.dumps(data, default=str)
                 )
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             logger.warning(f"Cache operation failed: {e}")
     
     async def _get_active_collaborations_count(self) -> int:
@@ -589,6 +651,12 @@ Calculate system error rate"""
             logger.info("Collaboration index shutdown complete")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Shutdown error: {e}", exc_info=True)
 
 # Global collaboration index instance
@@ -608,6 +676,10 @@ Dependency to get authenticated creator ID"""
         creator_id = await verify_creator_token(credentials.credentials)
         return creator_id
     except Exception as e:
+
+        logger.error(f"Error: {e}")
+
+        raise
         raise HTTPException(status_code=401, detail=f"Authentication failed: {e}")
 
 # FastAPI route functions for external use
@@ -620,6 +692,10 @@ async def health_check() -> JSONResponse:
             content=health.dict()
         )
     except Exception as e:
+
+        logger.error(f"Error: {e}")
+
+        raise
         return JSONResponse(
             status_code=500,
             content={"error": f"Health check failed: {e}"}

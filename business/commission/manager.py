@@ -188,6 +188,12 @@ Initialize Commission Manager with comprehensive configuration"""
             logger.info("Commission Manager services initialized successfully")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to initialize Commission Manager: {e}", exc_info=True)
             raise CommissionError(f"Commission Manager initialization failed: {e}")
     
@@ -247,6 +253,12 @@ Initialize Commission Manager with comprehensive configuration"""
             return calculation_result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.state.failed_calculations += 1
             logger.error(f"Commission calculation failed: {e}", exc_info=True)
             raise CommissionError(f"Commission calculation error: {e}")
@@ -306,6 +318,12 @@ Initialize Commission Manager with comprehensive configuration"""
             return payment_result.dict()
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Commission payment processing failed: {e}", exc_info=True)
             raise CommissionError(f"Payment processing error: {e}")
     
@@ -376,6 +394,12 @@ Initialize Commission Manager with comprehensive configuration"""
             return batch_result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Batch commission calculation failed: {e}", exc_info=True)
             raise CommissionError(f"Batch processing error: {e}")
     
@@ -414,6 +438,12 @@ Initialize Commission Manager with comprehensive configuration"""
             return analytics.dict()
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Commission analytics generation failed: {e}", exc_info=True)
             raise CommissionError(f"Analytics generation error: {e}")
     
@@ -449,6 +479,12 @@ Initialize Commission Manager with comprehensive configuration"""
             return optimization.dict()
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Commission structure optimization failed: {e}", exc_info=True)
             raise CommissionError(f"Optimization error: {e}")
     
@@ -480,6 +516,12 @@ Initialize Commission Manager with comprehensive configuration"""
             return tier_info
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to get creator tier: {e}")
             return {"tier": CommissionTier.STANDARD, "tier_multiplier": Decimal("1.0")}
     
@@ -515,6 +557,12 @@ Initialize Commission Manager with comprehensive configuration"""
             )
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to get commission structure: {e}")
             raise CommissionError(f"Commission structure error: {e}")
     
@@ -557,6 +605,12 @@ Initialize Commission Manager with comprehensive configuration"""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Fraud detection failed: {e}")
             return {"is_suspicious": False, "risk_score": 0.0, "indicators": []}
     
@@ -610,6 +664,12 @@ Initialize Commission Manager with comprehensive configuration"""
                 logger.info(f"Commission calculation stored: {calculation.calculation_id}")
                 
         except Exception as e:
+
+                
+            logger.error(f"Error: {e}")
+
+                
+            raise
             logger.error(f"Failed to store commission calculation: {e}")
             # Don't re-raise to allow operation to continue gracefully
             await self._record_error("store_commission", str(e), calculation.calculation_id)
@@ -628,6 +688,10 @@ Initialize Commission Manager with comprehensive configuration"""
                         data = json.loads(cached_data)
                         return self._deserialize_commission_calculation(data)
                     except Exception as e:
+
+                        logger.error(f"Error: {e}")
+
+                        raise
                         logger.warning(f"Cache deserialization failed: {e}")
             
             # Fallback to database
@@ -656,6 +720,12 @@ Initialize Commission Manager with comprehensive configuration"""
                 return None
                 
         except Exception as e:
+
+                
+            logger.error(f"Error: {e}")
+
+                
+            raise
             logger.error(f"Failed to get commission calculation: {e}")
             return None
     
@@ -687,6 +757,12 @@ Initialize Commission Manager with comprehensive configuration"""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Payment eligibility check failed: {e}")
             return {"eligible": False, "reason": "Eligibility check failed"}
     
@@ -719,6 +795,12 @@ Initialize Commission Manager with comprehensive configuration"""
                     logger.warning(f"Commission not found for status update: {commission_id}")
                     
         except Exception as e:
+
+                    
+            logger.error(f"Error: {e}")
+
+                    
+            raise
             logger.error(f"Failed to update commission status: {e}")
             await self._record_error("update_status", str(e), commission_id)
     
@@ -781,6 +863,12 @@ Initialize Commission Manager with comprehensive configuration"""
                 })
                 
         except Exception as e:
+
+                
+            logger.error(f"Error: {e}")
+
+                
+            raise
             logger.error(f"Failed to record commission transaction: {e}")
             await self._record_error("record_transaction", str(e), commission.calculation_id)
     
@@ -794,6 +882,10 @@ Initialize Commission Manager with comprehensive configuration"""
             # Implement database query logic
             return []
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             logger.error(f"Failed to get recent calculations: {e}")
             return []
     
@@ -807,6 +899,10 @@ Initialize Commission Manager with comprehensive configuration"""
             # Implement flagging logic
             logger.warning(f"Commission flagged for review: {calculation.id} - {reason}")
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             logger.error(f"Failed to flag commission for review: {e}")
     
     async def _record_error(self, operation: str, error_message: str, commission_id: str = None) -> None:
@@ -828,6 +924,12 @@ Initialize Commission Manager with comprehensive configuration"""
                 await redis_client.expire(error_key, 86400 * 7)  # Keep for 7 days
                 
         except Exception as e:
+
+                
+            logger.error(f"Error: {e}")
+
+                
+            raise
             logger.error(f"Failed to record error: {e}")
     
     async def _record_analytics_event(self, event_type: str, data: Dict[str, Any]) -> None:
@@ -850,6 +952,12 @@ Initialize Commission Manager with comprehensive configuration"""
             await redis_client.expire(analytics_key, 86400 * 30)  # Keep for 30 days
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to record analytics event: {e}")
     
     def _deserialize_commission_calculation(self, data: Dict[str, Any]) -> CommissionCalculation:
@@ -871,6 +979,10 @@ Initialize Commission Manager with comprehensive configuration"""
                 created_at=datetime.fromisoformat(data["created_at"]) if isinstance(data["created_at"], str) else data["created_at"]
             )
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             logger.error(f"Failed to deserialize commission calculation: {e}")
             raise
     
@@ -893,6 +1005,10 @@ Initialize Commission Manager with comprehensive configuration"""
                 created_at=row.created_at
             )
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             logger.error(f"Failed to convert row to commission calculation: {e}")
             raise
     
@@ -918,6 +1034,12 @@ Initialize Commission Manager with comprehensive configuration"""
             logger.info("Commission Manager shutdown complete")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Commission Manager shutdown error: {e}", exc_info=True)
 
 """Professional Commission Management System

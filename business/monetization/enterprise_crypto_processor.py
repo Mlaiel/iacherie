@@ -200,6 +200,12 @@ class EnterpriseCryptoProcessor:
             return await self._get_mock_crypto_rate(crypto_currency, fiat_currency)
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to get crypto exchange rate: {e}")
             return await self._get_mock_crypto_rate(crypto_currency, fiat_currency)
     
@@ -218,6 +224,10 @@ class EnterpriseCryptoProcessor:
             if coingecko_rate:
                 rates.append(coingecko_rate)
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             logger.warning(f"CoinGecko rate fetch failed: {e}")
         
         # CoinMarketCap API  
@@ -226,6 +236,10 @@ class EnterpriseCryptoProcessor:
             if cmc_rate:
                 rates.append(cmc_rate)
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             logger.warning(f"CoinMarketCap rate fetch failed: {e}")
         
         # Binance API
@@ -234,6 +248,10 @@ class EnterpriseCryptoProcessor:
             if binance_rate:
                 rates.append(binance_rate)
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             logger.warning(f"Binance rate fetch failed: {e}")
         
         return rates
@@ -309,6 +327,12 @@ class EnterpriseCryptoProcessor:
             return transaction
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Crypto payment processing failed: {e}")
             raise
     
@@ -344,6 +368,12 @@ class EnterpriseCryptoProcessor:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Crypto to fiat conversion failed: {e}")
             raise
     

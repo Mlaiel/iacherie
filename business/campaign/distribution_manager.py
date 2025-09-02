@@ -239,6 +239,12 @@ class DistributionManager:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Campaign distribution setup failed: {str(e)}")
             raise
     
@@ -345,6 +351,12 @@ class DistributionManager:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Content distribution failed: {str(e)}")
             raise
     
@@ -416,6 +428,12 @@ class DistributionManager:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Distribution timing optimization failed: {str(e)}")
             raise
     
@@ -499,6 +517,12 @@ class DistributionManager:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Distribution performance tracking failed: {str(e)}")
             raise
     
@@ -612,6 +636,12 @@ class DistributionManager:
                 raise ValueError(f"Unknown action: {action}")
                 
         except Exception as e:
+
+                
+            logger.error(f"Error: {e}")
+
+                
+            raise
             self.logger.error(f"Platform connection management failed: {str(e)}")
             raise
     
@@ -625,6 +655,12 @@ class DistributionManager:
                 await asyncio.sleep(60)  # Process every minute
                 
             except Exception as e:
+
+                
+                logger.error(f"Error: {e}")
+
+                
+                raise
                 self.logger.error(f"Distribution worker error: {str(e)}")
                 await asyncio.sleep(120)
     
@@ -636,6 +672,12 @@ class DistributionManager:
                 await asyncio.sleep(1800)  # Collect every 30 minutes
                 
             except Exception as e:
+
+                
+                logger.error(f"Error: {e}")
+
+                
+                raise
                 self.logger.error(f"Metrics collection worker error: {str(e)}")
                 await asyncio.sleep(1800)
     

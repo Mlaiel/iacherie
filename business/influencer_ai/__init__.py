@@ -214,6 +214,12 @@ async def create_influencer_ai_ecosystem() -> Dict[str, Any]:
         return ecosystem
         
     except Exception as e:
+
+        
+        logger.error(f"Error: {e}")
+
+        
+        raise
         logger.error(f"❌ Failed to create ecosystem: {e}")
         raise
 
@@ -247,6 +253,12 @@ def validate_business_logic() -> bool:
         return True
     
     except Exception as e:
+
+    
+        logger.error(f"Error: {e}")
+
+    
+        raise
         logger.error(f"❌ Business logic validation failed: {str(e)}")
         return False
 

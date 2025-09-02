@@ -239,6 +239,12 @@ class SEOOptimizer:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"SEO optimization failed: {str(e)}")
             raise
     
@@ -320,6 +326,12 @@ class SEOOptimizer:
             return keyword_research
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Keyword research failed: {str(e)}")
             raise
     
@@ -414,6 +426,12 @@ class SEOOptimizer:
             return audit
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"SEO audit failed: {str(e)}")
             raise
     
@@ -492,6 +510,12 @@ class SEOOptimizer:
             )
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Content structure optimization failed: {str(e)}")
             raise
     
@@ -572,6 +596,12 @@ class SEOOptimizer:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"SEO performance tracking failed: {str(e)}")
             raise
     
@@ -648,6 +678,12 @@ class SEOOptimizer:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"SEO strategy generation failed: {str(e)}")
             raise
     
@@ -663,6 +699,12 @@ class SEOOptimizer:
                 await asyncio.sleep(3600)  # Check every hour
                 
             except Exception as e:
+
+                
+                logger.error(f"Error: {e}")
+
+                
+                raise
                 self.logger.error(f"SEO monitoring loop error: {str(e)}")
                 await asyncio.sleep(1800)
     
@@ -676,6 +718,12 @@ class SEOOptimizer:
                 await asyncio.sleep(86400)  # Check daily
                 
             except Exception as e:
+
+                
+                logger.error(f"Error: {e}")
+
+                
+                raise
                 self.logger.error(f"Ranking tracking loop error: {str(e)}")
                 await asyncio.sleep(43200)
     

@@ -169,6 +169,12 @@ Advanced revenue calculation engine with multi-currency support"""
             return net_revenue, platform_fees
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Revenue calculation error: {e}")
             return Decimal('0'), Decimal('0')
     
@@ -189,6 +195,12 @@ Advanced revenue calculation engine with multi-currency support"""
             return amount * Decimal(str(conversion_rate))
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Currency conversion error: {e}")
             return amount
 
@@ -251,6 +263,12 @@ class RevenueOptimizer:
             return optimization_plan
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Optimization strategy error: {e}")
             return {}
     
@@ -339,6 +357,12 @@ Generate platform-specific action recommendations"""
             return strategies
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Content strategy generation error: {e}")
             return {}
     
@@ -359,6 +383,12 @@ Generate platform-specific action recommendations"""
             return recent_revenue * target_growth
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Revenue projection error: {e}")
             return 0.0
 
@@ -400,6 +430,12 @@ class RevenueEngine:
             return True
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"❌ Revenue Engine initialization failed: {e}")
             return False
     
@@ -451,6 +487,12 @@ class RevenueEngine:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Revenue tracking error: {e}")
             return {'status': 'error', 'error': str(e)}
     
@@ -488,6 +530,12 @@ class RevenueEngine:
             return await self._calculate_comprehensive_metrics(revenue_data)
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Revenue analytics error: {e}")
             raise
     
@@ -521,6 +569,12 @@ class RevenueEngine:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Revenue forecasting error: {e}")
             return {'status': 'error', 'error': str(e)}
     
@@ -569,6 +623,12 @@ class RevenueEngine:
             return optimization_strategies
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Revenue optimization error: {e}")
             return {'status': 'error', 'error': str(e)}
     
@@ -590,6 +650,12 @@ class RevenueEngine:
                 self.payment_processors['wise'] = WiseProcessor()
                 
         except Exception as e:
+
+                
+            logger.error(f"Error: {e}")
+
+                
+            raise
             self.logger.error(f"Payment processor initialization error: {e}")
     
     async def _setup_database_tables(self):
@@ -599,6 +665,10 @@ class RevenueEngine:
             # Implementation depends on database system used
             pass
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Database setup error: {e}")
     
     async def _load_currency_rates(self):
@@ -614,6 +684,10 @@ class RevenueEngine:
                 # Add more rates as needed
             }
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Currency rates loading error: {e}")
     
     async def _validate_revenue_data(self, revenue: PlatformRevenue) -> bool:
@@ -641,6 +715,12 @@ class RevenueEngine:
             return True
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Revenue validation error: {e}")
             return False
     
@@ -655,6 +735,10 @@ class RevenueEngine:
             # Implementation depends on database system
             pass
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Revenue storage error: {e}")
     
     async def _generate_revenue_metrics(
@@ -696,6 +780,12 @@ class RevenueEngine:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Metrics generation error: {e}")
             return {}
     
@@ -724,6 +814,12 @@ class RevenueEngine:
             return entropy / max_entropy if max_entropy > 0 else 0.0
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Diversification score calculation error: {e}")
             return 0.0
     
@@ -740,6 +836,10 @@ class RevenueEngine:
             # Return placeholder data for now
             return []
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Revenue data fetch error: {e}")
             return []
     
@@ -766,6 +866,10 @@ class RevenueEngine:
                 performance_scores={}
             )
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Comprehensive metrics calculation error: {e}")
             raise
     
@@ -775,6 +879,10 @@ class RevenueEngine:
             # This would fetch historical data from database
             return []
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Historical data fetch error: {e}")
             return []
     
@@ -794,6 +902,10 @@ class RevenueEngine:
                 'confidence_bounds': []
             }
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Revenue forecasting error: {e}")
             return {}
     
@@ -809,6 +921,10 @@ class RevenueEngine:
                 'confidence_level': 0.95
             }
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Confidence interval calculation error: {e}")
             return {}
     
@@ -824,6 +940,10 @@ class RevenueEngine:
                 "Platform diversification recommended for risk mitigation"
             ]
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Forecast insights generation error: {e}")
             return []
     
@@ -848,6 +968,10 @@ class RevenueEngine:
                 ]
             }
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Stream opportunity analysis error: {e}")
             return {}
     
@@ -880,6 +1004,10 @@ class RevenueEngine:
                 }
             ]
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Action items generation error: {e}")
             return []
 

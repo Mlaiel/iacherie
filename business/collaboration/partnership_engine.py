@@ -150,6 +150,12 @@ Initialize partnership engine components"""
             logger.info("Partnership engine initialized successfully")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Error initializing partnership engine: {str(e)}")
             raise
     
@@ -186,6 +192,12 @@ Initialize partnership engine components"""
             return filtered_partnerships[:20]  # Return top 20
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Error discovering partnerships: {str(e)}")
             return []
     
@@ -250,6 +262,12 @@ Initialize partnership engine components"""
             return evaluation_results
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Error evaluating partnership: {str(e)}")
             return {
                 'partnership_id': proposal.id,
@@ -284,6 +302,12 @@ Initialize partnership engine components"""
             return enriched_proposal
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Error creating partnership proposal: {str(e)}")
             raise
     
@@ -320,6 +344,12 @@ Initialize partnership engine components"""
             return negotiation_result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Error in partnership negotiation: {str(e)}")
             return {
                 'status': 'error',
@@ -363,6 +393,12 @@ Initialize partnership engine components"""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Error executing partnership: {str(e)}")
             return {
                 'partnership_id': proposal_id,
@@ -406,6 +442,12 @@ Initialize partnership engine components"""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Error tracking partnership performance: {str(e)}")
             return {
                 'partnership_id': partnership_id,

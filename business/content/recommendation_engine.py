@@ -267,6 +267,12 @@ AI-powered content and strategy recommendation system."""
             return recommendations
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to generate content recommendations: {str(e)}")
             raise RecommendationError(f"Recommendation generation failed: {str(e)}")
     
@@ -421,6 +427,12 @@ AI-powered content and strategy recommendation system."""
             return insights
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to analyze audience insights: {str(e)}")
             raise RecommendationError(f"Audience analysis failed: {str(e)}")
     
@@ -579,6 +591,12 @@ AI-powered content and strategy recommendation system."""
             return strategy
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to generate monetization strategy: {str(e)}")
             raise RecommendationError(f"Monetization strategy generation failed: {str(e)}")
     
@@ -644,6 +662,12 @@ AI-powered content and strategy recommendation system."""
             return analysis
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Performance analysis failed: {str(e)}")
             return self._get_default_performance_analysis()
     
@@ -694,6 +718,12 @@ AI-powered content and strategy recommendation system."""
             return ranked_ideas[:25]  # Return top 25 ideas
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Content idea generation failed: {str(e)}")
             return []
     
@@ -728,6 +758,12 @@ AI-powered content and strategy recommendation system."""
                     predictions.append(prediction)
                     
                 except Exception as e:
+
+                    
+                    logger.error(f"Error: {e}")
+
+                    
+                    raise
                     logger.error(f"Failed to predict performance for suggestion: {str(e)}")
                     # Add default prediction
                     predictions.append({
@@ -741,6 +777,12 @@ AI-powered content and strategy recommendation system."""
             return predictions
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Performance prediction failed: {str(e)}")
             return [{'views': 1000, 'engagement_rate': 0.05, 'viral_potential': 0.3, 'monetization_potential': 0.4, 'confidence': 0.5}] * len(content_suggestions)
     
@@ -763,6 +805,12 @@ AI-powered content and strategy recommendation system."""
             logger.info("Recommendation AI models initialized successfully")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to initialize recommendation models: {str(e)}")
     
     def _get_default_performance_analysis(self) -> Dict[str, Any]:
@@ -905,6 +953,12 @@ Get performance benchmarks for creator's niche."""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to get niche benchmarks: {str(e)}")
             return {
                 'avg_niche_views': 2000,

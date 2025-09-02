@@ -229,6 +229,12 @@ Advanced royalty calculation engine"""
             )
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Royalty calculation error: {e}")
             raise
     
@@ -266,6 +272,12 @@ Advanced royalty calculation engine"""
             return total_royalty
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Tiered royalty calculation error: {e}")
             return Decimal('0')
     
@@ -297,6 +309,12 @@ Advanced royalty calculation engine"""
             return total_royalty
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Usage-based royalty calculation error: {e}")
             return Decimal('0')
     
@@ -332,6 +350,12 @@ Advanced royalty calculation engine"""
             return deductions
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Deductions calculation error: {e}")
             return {}
 
@@ -400,6 +424,12 @@ class RightsManager:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Rights registration error: {e}")
             return {
                 'success': False,
@@ -457,6 +487,12 @@ class RightsManager:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Rights verification error: {e}")
             return {
                 'verified': False,
@@ -484,6 +520,10 @@ Fetch content rights from database"""
             # This would query the database
             return []  # Placeholder
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Content rights fetch error: {e}")
             return []
     
@@ -493,6 +533,10 @@ Fetch content rights from database"""
             # This would store in the database
             pass
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Rights storage error: {e}")
             raise
     
@@ -502,6 +546,10 @@ Fetch content rights from database"""
             # This would update in the database
             pass
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Rights update error: {e}")
     
     async def _blockchain_verify_rights(self, rights: ContentRights) -> Optional[str]:
@@ -514,6 +562,10 @@ Fetch content rights from database"""
             ).hexdigest()
             return content_hash
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Blockchain verification error: {e}")
             return None
 
@@ -563,6 +615,12 @@ class ContractManager:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Contract generation error: {e}")
             return {
                 'success': False,
@@ -596,6 +654,12 @@ class ContractManager:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Contract terms summary error: {e}")
             return {
                 'success': False,
@@ -652,6 +716,10 @@ Format license duration for display"""
             # This would store in the database with encryption
             pass
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Contract storage error: {e}")
             raise
 
@@ -718,6 +786,12 @@ class LicensingAnalytics:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Licensing report generation error: {e}")
             return {
                 'error': str(e)
@@ -734,6 +808,10 @@ class LicensingAnalytics:
             # This would query the database
             return []  # Placeholder
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"License fetch error: {e}")
             return []
     
@@ -748,6 +826,10 @@ class LicensingAnalytics:
             # This would query the database
             return []  # Placeholder
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Royalty data fetch error: {e}")
             return []
     
@@ -783,6 +865,12 @@ class LicensingAnalytics:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Territory analysis error: {e}")
             return {}
     
@@ -802,6 +890,10 @@ class LicensingAnalytics:
                 'new_license_types': 1
             }
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Growth metrics calculation error: {e}")
             return {}
     
@@ -835,6 +927,12 @@ class LicensingAnalytics:
             return recommendations
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Recommendations generation error: {e}")
             return []
 
@@ -870,6 +968,12 @@ class LicensingEngine:
             return True
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"❌ Licensing Engine initialization failed: {e}")
             return False
     
@@ -933,6 +1037,12 @@ class LicensingEngine:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"License agreement creation error: {e}")
             return {
                 'success': False,
@@ -974,6 +1084,12 @@ class LicensingEngine:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Royalty calculation error: {e}")
             return {
                 'success': False,
@@ -1000,6 +1116,10 @@ Store license agreement in database"""
             # This would store in the database
             pass
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"License agreement storage error: {e}")
             raise
     
@@ -1012,6 +1132,10 @@ Store license agreement in database"""
             # This would query the database
             return None  # Placeholder
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"License agreement fetch error: {e}")
             return None
     
@@ -1021,6 +1145,10 @@ Store license agreement in database"""
             # This would store in the database
             pass
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Royalty calculation storage error: {e}")
             raise
 

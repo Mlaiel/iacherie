@@ -498,6 +498,12 @@ Initialize the leaderboard manager."""
             return affected_leaderboards
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error updating user score: {e}")
             return []
     
@@ -552,6 +558,12 @@ Initialize the leaderboard manager."""
             await self._calculate_entry_momentum(entry)
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error updating leaderboard entry: {e}")
     
     async def _calculate_entry_momentum(self, entry: LeaderboardEntry) -> None:
@@ -572,6 +584,12 @@ Initialize the leaderboard manager."""
             entry.consistency_score = min(100.0, entry.momentum_score * 0.1)
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error calculating entry momentum: {e}")
     
     async def _recalculate_leaderboard_rankings(self, leaderboard_id: str) -> None:
@@ -611,6 +629,12 @@ Initialize the leaderboard manager."""
                 self.logger.debug(f"Recalculated rankings for leaderboard {leaderboard.name}")
                 
             except Exception as e:
+
+                
+                logger.error(f"Error: {e}")
+
+                
+                raise
                 self.logger.error(f"Error recalculating leaderboard rankings: {e}")
     
     async def _calculate_composite_score(
@@ -637,6 +661,12 @@ Initialize the leaderboard manager."""
             return composite_score
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error calculating composite score: {e}")
             return entry.score
     
@@ -728,6 +758,12 @@ Initialize the leaderboard manager."""
             return leaderboard_data
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error getting leaderboard: {e}")
             return {}
     
@@ -847,6 +883,12 @@ Get summary of user's performance across all leaderboards."""
             return summary
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error getting user leaderboard summary: {e}")
             return {}
     
@@ -906,6 +948,12 @@ Get summary of user's performance across all leaderboards."""
             return leaderboards
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error getting available leaderboards: {e}")
             return []
     
@@ -960,6 +1008,12 @@ Get summary of user's performance across all leaderboards."""
             return leaderboard.leaderboard_id
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error creating custom leaderboard: {e}")
             raise
     
@@ -977,6 +1031,12 @@ Get summary of user's performance across all leaderboards."""
             self.logger.debug("Completed scheduled leaderboard updates")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error in scheduled leaderboard updates: {e}")
     
     async def get_leaderboard_analytics(self, leaderboard_id: str) -> Dict[str, Any]:
@@ -1031,6 +1091,12 @@ Get summary of user's performance across all leaderboards."""
             return analytics
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error getting leaderboard analytics: {e}")
             return {}
 

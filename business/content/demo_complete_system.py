@@ -110,6 +110,12 @@ Initialize all content management engines."""
             logger.info("🎉 Complete Content Management Demonstration Finished Successfully!")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"❌ Demo failed with error: {str(e)}")
             raise
     
@@ -161,6 +167,12 @@ Initialize all content management engines."""
             logger.info(f"✅ Batch processing: {batch_result.get('total_items', 0)} items queued")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"❌ Content processing demo failed: {str(e)}")
     
     async def demo_ai_enhancement(self):
@@ -211,6 +223,12 @@ Initialize all content management engines."""
             logger.info(f"✅ Content Analysis: {len(analysis_result.get('analysis_results', {}))} metrics analyzed")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"❌ AI enhancement demo failed: {str(e)}")
     
     async def demo_content_protection(self):
@@ -268,6 +286,12 @@ Initialize all content management engines."""
             logger.info(f"✅ Violation Scan: {scan_result.get('matches_found', 0)} violations detected")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"❌ Content protection demo failed: {str(e)}")
     
     async def demo_collaboration_monetization(self):
@@ -327,6 +351,12 @@ Initialize all content management engines."""
             logger.info(f"✅ Revenue Tracking: Session ID {tracking_result.get('tracking_session_id', 'N/A')}")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"❌ Collaboration/monetization demo failed: {str(e)}")
     
     async def demo_distribution_analytics(self):
@@ -374,6 +404,12 @@ Initialize all content management engines."""
             logger.info(f"✅ Platform Comparison: {len(comparison_result.get('platform_rankings', []))} platforms ranked")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"❌ Distribution/analytics demo failed: {str(e)}")
     
     async def demo_recommendations_optimization(self):
@@ -419,6 +455,12 @@ Initialize all content management engines."""
             logger.info(f"✅ Monetization Optimization: {len(monetization_optimization.get('recommended_monetization_mix', []))} strategies recommended")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"❌ Recommendations/optimization demo failed: {str(e)}")
     
     async def demo_performance_testing(self):
@@ -482,6 +524,12 @@ Initialize all content management engines."""
             logger.info(f"✅ System Optimization: {optimization_result.get('applied_optimizations', {}).get('total_applied', 0)} optimizations identified")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"❌ Performance testing demo failed: {str(e)}")
     
     async def generate_demo_report(self):
@@ -576,6 +624,12 @@ async def main():
         """)
         
     except Exception as e:
+
+        
+        logger.error(f"Error: {e}")
+
+        
+        raise
         logger.error(f"Demo execution failed: {str(e)}")
         print(f"""
     ╔══════════════════════════════════════════════════════════════════════════════╗

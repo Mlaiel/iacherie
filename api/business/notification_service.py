@@ -869,6 +869,12 @@ Deliver notification through specified channels."""
                     delivery_results[channel.value] = result
                 
             except Exception as e:
+
+                
+                logger.error(f"Error: {e}")
+
+                
+                raise
                 delivery_results[channel.value] = {
                     "status": "failed",
                     "error": str(e),

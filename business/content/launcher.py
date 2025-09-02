@@ -107,6 +107,12 @@ Quick start the system."""
                 return False
                 
         except Exception as e:
+
+                
+            logger.error(f"Error: {e}")
+
+                
+            raise
             print(f"❌ Startup failed: {e}")
             return False
     
@@ -257,6 +263,10 @@ Quick start the system."""
         except ImportError:
             print("❌ Demo system not available")
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             print(f"❌ Demo failed: {e}")
     
     async def show_system_info(self):
@@ -386,6 +396,12 @@ Shutdown the system."""
                 print("\n🛑 Operation cancelled by user")
                 
             except Exception as e:
+
+                
+                logger.error(f"Error: {e}")
+
+                
+                raise
                 print(f"❌ Error: {e}")
             
             if choice not in ['0', '4']:  # Don't pause for exit or maintenance menu
@@ -441,5 +457,9 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         print("\n🛑 Launcher interrupted by user")
     except Exception as e:
+
+        logger.error(f"Error: {e}")
+
+        raise
         print(f"❌ Launcher error: {e}")
         sys.exit(1)

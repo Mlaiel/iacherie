@@ -163,6 +163,12 @@ class ContentCatalog:
             return content_entry
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Content registration failed: {str(e)}")
             raise
     
@@ -197,6 +203,12 @@ class ContentCatalog:
             return filtered_results[:limit]
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Content search failed: {str(e)}")
             return []
     
@@ -234,6 +246,12 @@ class ContentCatalog:
             return trending_content
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Trending content retrieval failed: {str(e)}")
             return []
     
@@ -432,6 +450,12 @@ class CreatorCatalog:
             return creator_entry
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Creator registration failed: {str(e)}")
             raise
     
@@ -466,6 +490,12 @@ class CreatorCatalog:
             return sorted_results[:limit]
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Creator search failed: {str(e)}")
             return []
     
@@ -505,6 +535,12 @@ class CreatorCatalog:
             return recommendations[:limit]
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Creator recommendations failed: {str(e)}")
             return []
     
@@ -668,6 +704,12 @@ class ServiceCatalog:
             return service_entry
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Service registration failed: {str(e)}")
             raise
     
@@ -703,6 +745,12 @@ class ServiceCatalog:
             return services
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Service retrieval failed: {str(e)}")
             return []
     

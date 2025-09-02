@@ -288,6 +288,12 @@ Industrial content crawler with anti-detection and platform integration."""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to start monitoring crawl: {str(e)}")
             raise CrawlerError(f"Crawl job startup failed: {str(e)}")
     
@@ -359,6 +365,12 @@ Industrial content crawler with anti-detection and platform integration."""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Platform search failed for {platform}: {str(e)}")
             raise CrawlerError(f"Search failed: {str(e)}")
     
@@ -445,6 +457,12 @@ Industrial content crawler with anti-detection and platform integration."""
                         potential_matches.append(potential_match_data)
                 
                 except Exception as e:
+
+                
+                    logger.error(f"Error: {e}")
+
+                
+                    raise
                     logger.error(f"Failed to analyze content item: {str(e)}")
                     continue
             
@@ -475,6 +493,12 @@ Industrial content crawler with anti-detection and platform integration."""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Content match analysis failed: {str(e)}")
             raise CrawlerError(f"Match analysis failed: {str(e)}")
     
@@ -554,6 +578,12 @@ Industrial content crawler with anti-detection and platform integration."""
             return status
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to get crawl job status: {str(e)}")
             raise CrawlerError(f"Status retrieval failed: {str(e)}")
     
@@ -583,6 +613,12 @@ Industrial content crawler with anti-detection and platform integration."""
             return results
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"API search failed for {platform}: {str(e)}")
             return []
     
@@ -615,6 +651,12 @@ Industrial content crawler with anti-detection and platform integration."""
             return results
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Web scraping failed for {platform}: {str(e)}")
             return []
     
@@ -671,6 +713,12 @@ Industrial content crawler with anti-detection and platform integration."""
             return results
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"YouTube API search failed: {str(e)}")
             return []
     
@@ -720,12 +768,24 @@ Industrial content crawler with anti-detection and platform integration."""
                     await asyncio.sleep(2 + (hash(search_term) % 3))
                     
                 except Exception as e:
+
+                    
+                    logger.error(f"Error: {e}")
+
+                    
+                    raise
                     logger.error(f"Failed to scrape {platform} for term '{search_term}': {str(e)}")
                     continue
             
             return results
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Selenium scraping failed for {platform}: {str(e)}")
             return []
     
@@ -792,12 +852,24 @@ Industrial content crawler with anti-detection and platform integration."""
                     results.append(result)
                     
                 except Exception as e:
+
+                    
+                    logger.error(f"Error: {e}")
+
+                    
+                    raise
                     logger.error(f"Failed to extract Instagram post: {str(e)}")
                     continue
             
             return results
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Instagram content extraction failed: {str(e)}")
             return []
     
@@ -990,6 +1062,12 @@ Handle captcha if detected."""
             await asyncio.sleep(60)  # Wait 1 minute
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Captcha handling failed for {platform}: {str(e)}")
     
     def _deduplicate_search_results(self, results: List[Dict[str, Any]]) -> List[Dict[str, Any]]:

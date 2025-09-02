@@ -187,6 +187,12 @@ AI-powered churn prediction system"""
             return True
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Churn model training error: {e}")
             return False
     
@@ -234,6 +240,12 @@ AI-powered churn prediction system"""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Churn prediction error: {e}")
             return {
                 'churn_probability': 0.5,
@@ -415,6 +427,12 @@ class SubscriptionAnalytics:
             )
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Subscription metrics generation error: {e}")
             raise
     
@@ -444,6 +462,12 @@ class SubscriptionAnalytics:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Subscription health analysis error: {e}")
             return {'error': str(e)}
     
@@ -460,6 +484,10 @@ class SubscriptionAnalytics:
             # This would query the database
             return []  # Placeholder
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Subscription fetch error: {e}")
             return []
     
@@ -474,6 +502,10 @@ class SubscriptionAnalytics:
             # Implementation would calculate actual churn rate
             return 0.05  # 5% placeholder churn rate
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Churn rate calculation error: {e}")
             return 0.0
     
@@ -494,6 +526,10 @@ class SubscriptionAnalytics:
                     mrr += monthly_amount
             return mrr
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"MRR calculation error: {e}")
             return Decimal('0')
     
@@ -520,6 +556,10 @@ Calculate customer lifetime value"""
             # Implementation would use cohort analysis
             return Decimal('500')  # Placeholder LTV
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"LTV calculation error: {e}")
             return Decimal('0')
     
@@ -537,6 +577,12 @@ Calculate customer lifetime value"""
             return converted / len(trial_subs) if trial_subs else 0.0
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Conversion rate calculation error: {e}")
             return 0.0
     
@@ -566,6 +612,10 @@ Calculate retention rates for different periods"""
                 '12_months': 0.45
             }
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Retention rate calculation error: {e}")
             return {}
     
@@ -584,6 +634,10 @@ Calculate retention rates for different periods"""
                 'net_mrr_growth': 0.18
             }
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Growth metrics calculation error: {e}")
             return {}
     
@@ -593,6 +647,10 @@ Calculate retention rates for different periods"""
             # This would query the database
             return None  # Placeholder
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Individual subscription fetch error: {e}")
             return None
     
@@ -610,6 +668,10 @@ Calculate retention rates for different periods"""
             
             return max(0.0, min(100.0, score))
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Health score calculation error: {e}")
             return 50.0
     
@@ -626,6 +688,10 @@ Calculate retention rates for different periods"""
                 'engagement_trend': 'stable'
             }
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Usage pattern analysis error: {e}")
             return {}
     
@@ -642,6 +708,10 @@ Calculate retention rates for different periods"""
                 'payment_method_health': 'good'
             }
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Payment history analysis error: {e}")
             return {}
     
@@ -742,6 +812,12 @@ class SubscriptionManager:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Subscription creation error: {e}")
             return {'success': False, 'error': str(e)}
     
@@ -772,6 +848,12 @@ class SubscriptionManager:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Subscription cancellation error: {e}")
             return {'success': False, 'error': str(e)}
     
@@ -817,6 +899,12 @@ class SubscriptionManager:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Subscription upgrade error: {e}")
             return {'success': False, 'error': str(e)}
     
@@ -868,6 +956,12 @@ class SubscriptionManager:
                 }
                 
         except Exception as e:
+
+                
+            logger.error(f"Error: {e}")
+
+                
+            raise
             self.logger.error(f"Billing cycle processing error: {e}")
             return {'success': False, 'error': str(e)}
     
@@ -881,6 +975,12 @@ class SubscriptionManager:
             return await self.churn_predictor.predict_churn_probability(subscription)
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Churn prediction error: {e}")
             return {'error': str(e)}
     
@@ -925,6 +1025,10 @@ Fetch subscription tier from database"""
                 limits={"uploads_per_month": 1000, "storage_gb": 100}
             )
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Tier fetch error: {e}")
             return None
     
@@ -934,6 +1038,10 @@ Fetch subscription tier from database"""
             # This would store in the database
             pass
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Subscription storage error: {e}")
             raise
     
@@ -946,6 +1054,10 @@ Fetch subscription tier from database"""
             # This would query the database
             return None  # Placeholder
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Subscription fetch error: {e}")
             return None
     
@@ -955,6 +1067,10 @@ Fetch subscription tier from database"""
             subscription.updated_at = datetime.utcnow()
             # This would update in the database
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Subscription update error: {e}")
             raise
     
@@ -964,6 +1080,10 @@ Fetch subscription tier from database"""
             # This would setup billing with payment processor
             pass
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Billing setup error: {e}")
     
     async def _calculate_proration(
@@ -991,6 +1111,12 @@ Fetch subscription tier from database"""
             return max(Decimal('0'), prorated_charge)
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Proration calculation error: {e}")
             return Decimal('0')
     
@@ -1004,6 +1130,10 @@ Fetch subscription tier from database"""
             # This would process payment through payment processor
             return {'success': True, 'amount_charged': float(amount)}
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Upgrade payment error: {e}")
             return {'success': False, 'error': str(e)}
     
@@ -1019,6 +1149,10 @@ Fetch subscription tier from database"""
                 'amount_charged': float(subscription.tier.base_price)
             }
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Subscription payment error: {e}")
             return {'success': False, 'error': str(e)}
 
@@ -1052,6 +1186,12 @@ class SubscriptionEngine:
             return True
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"❌ Subscription Engine initialization failed: {e}")
             return False
     
@@ -1097,6 +1237,10 @@ Process billing for all due subscriptions"""
                 'errors': []
             }
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Billing cycles processing error: {e}")
             return {'error': str(e)}
     
@@ -1107,6 +1251,10 @@ Process billing for all due subscriptions"""
             training_data = []  # Fetch from database
             await self.churn_predictor.train_model(training_data)
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Churn model initialization error: {e}")
 
 

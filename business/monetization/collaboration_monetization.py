@@ -182,6 +182,12 @@ class RevenueAttributionEngine:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"__init__ failed: {e}")
             raise
     async def calculate_contribution_weights(
@@ -243,6 +249,12 @@ class RevenueAttributionEngine:
             return weights
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Contribution weight calculation error: {e}")
             return {}
     
@@ -405,6 +417,12 @@ Advanced revenue splitting calculation engine"""
             return final_splits
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Revenue split calculation error: {e}")
             return {}
     
@@ -445,6 +463,12 @@ Calculate splits based on contribution weights"""
             return splits
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Contribution-based split error: {e}")
             return {}
     
@@ -474,6 +498,12 @@ Calculate splits based on contribution weights"""
             return splits
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Investment-based split error: {e}")
             return {}
     
@@ -510,6 +540,12 @@ Calculate splits based on contribution weights"""
             return splits
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Performance-based split error: {e}")
             return {}
     
@@ -575,6 +611,12 @@ Calculate splits based on contribution weights"""
             return final_splits
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Hybrid split calculation error: {e}")
             return {}
     
@@ -613,6 +655,12 @@ Calculate splits based on contribution weights"""
             return bonuses
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Bonus calculation error: {e}")
             return {}
 
@@ -687,6 +735,12 @@ class CollaborationAnalytics:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Collaboration report generation error: {e}")
             return {'error': str(e)}
     
@@ -703,6 +757,10 @@ class CollaborationAnalytics:
             # This would query the database
             return []  # Placeholder
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Collaboration fetch error: {e}")
             return []
     
@@ -717,6 +775,10 @@ class CollaborationAnalytics:
             # This would query the database
             return []  # Placeholder
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Revenue fetch error: {e}")
             return []
     
@@ -731,6 +793,10 @@ class CollaborationAnalytics:
             # This would query the database
             return []  # Placeholder
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Payment fetch error: {e}")
             return []
     
@@ -747,6 +813,10 @@ class CollaborationAnalytics:
                 'projection': 'positive'
             }
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Revenue trend analysis error: {e}")
             return {}
     
@@ -763,6 +833,10 @@ class CollaborationAnalytics:
                 'repeat_collaboration_rate': 0.60
             }
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Success metrics calculation error: {e}")
             return {}
     
@@ -785,6 +859,12 @@ class CollaborationAnalytics:
             return recommendations
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Recommendations generation error: {e}")
             return []
 
@@ -818,6 +898,12 @@ class CollaborationMonetization:
             return True
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"❌ Collaboration Monetization initialization failed: {e}")
             return False
     
@@ -870,6 +956,12 @@ class CollaborationMonetization:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Collaboration contract creation error: {e}")
             return {
                 'success': False,
@@ -931,6 +1023,12 @@ class CollaborationMonetization:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Collaboration revenue processing error: {e}")
             return {
                 'success': False,
@@ -983,6 +1081,12 @@ class CollaborationMonetization:
                         })
                         
                 except Exception as e:
+
+                        
+                    logger.error(f"Error: {e}")
+
+                        
+                    raise
                     failed_payments.append({
                         'payment_id': payment.payment_id,
                         'error': str(e)
@@ -999,6 +1103,12 @@ class CollaborationMonetization:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Payment distribution error: {e}")
             return {
                 'success': False,
@@ -1025,6 +1135,10 @@ Store collaboration contract in database"""
             # This would store in the database
             pass
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Contract storage error: {e}")
             raise
     
@@ -1037,6 +1151,10 @@ Store collaboration contract in database"""
             # This would query the database
             return None  # Placeholder
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Contract fetch error: {e}")
             return None
     
@@ -1046,6 +1164,10 @@ Store collaboration contract in database"""
             # This would store in the database
             pass
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Revenue storage error: {e}")
             raise
     
@@ -1080,6 +1202,12 @@ Store collaboration contract in database"""
             return payment_results
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Payment creation error: {e}")
             return []
     
@@ -1089,6 +1217,10 @@ Store collaboration contract in database"""
             # This would store in the database
             pass
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Payment storage error: {e}")
             raise
     
@@ -1101,6 +1233,10 @@ Store collaboration contract in database"""
             # This would query the database
             return None  # Placeholder
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Revenue fetch error: {e}")
             return None
     
@@ -1113,6 +1249,10 @@ Store collaboration contract in database"""
             # This would query the database
             return []  # Placeholder
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Pending payments fetch error: {e}")
             return []
     
@@ -1122,6 +1262,10 @@ Store collaboration contract in database"""
             # This would update in the database
             pass
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Payment update error: {e}")
 
 

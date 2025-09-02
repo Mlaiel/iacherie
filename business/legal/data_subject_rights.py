@@ -200,6 +200,12 @@ class DataSubjectRightsManager:
             return request_id
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error submitting data subject request: {e}")
             raise
     
@@ -228,6 +234,12 @@ class DataSubjectRightsManager:
             })
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error initiating verification for request {request.request_id}: {e}")
     
     async def verify_request(
@@ -283,6 +295,12 @@ class DataSubjectRightsManager:
                 return False
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error verifying request {request_id}: {e}")
             return False
     
@@ -316,6 +334,12 @@ class DataSubjectRightsManager:
             })
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error processing request {request.request_id}: {e}")
             request.manual_review_required = True
     
@@ -344,6 +368,12 @@ class DataSubjectRightsManager:
             await self._send_completion_notification(request)
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error processing access request {request.request_id}: {e}")
             raise
     
@@ -373,6 +403,12 @@ class DataSubjectRightsManager:
             await self._send_completion_notification(request)
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error processing rectification request {request.request_id}: {e}")
             raise
     
@@ -412,6 +448,12 @@ class DataSubjectRightsManager:
             await self._send_completion_notification(request)
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error processing erasure request {request.request_id}: {e}")
             raise
     
@@ -436,6 +478,12 @@ class DataSubjectRightsManager:
             await self._send_completion_notification(request)
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error processing restriction request {request.request_id}: {e}")
             raise
     
@@ -461,6 +509,12 @@ class DataSubjectRightsManager:
             await self._send_completion_notification(request)
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error processing portability request {request.request_id}: {e}")
             raise
     
@@ -500,6 +554,12 @@ class DataSubjectRightsManager:
             await self._send_completion_notification(request)
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error processing objection request {request.request_id}: {e}")
             raise
     
@@ -522,6 +582,12 @@ class DataSubjectRightsManager:
             await self._send_completion_notification(request)
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error processing automated decision request {request.request_id}: {e}")
             raise
     
@@ -537,11 +603,21 @@ class DataSubjectRightsManager:
                     if data:
                         personal_data[category] = data
                 except Exception as e:
+
+                    logger.error(f"Error: {e}")
+
+                    raise
                     self.logger.warning(f"Failed to collect {category} data: {e}")
             
             return personal_data
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error collecting personal data for user {user_id}: {e}")
             return {}
     
@@ -595,6 +671,12 @@ class DataSubjectRightsManager:
             return export_package
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error creating data export for user {user_id}: {e}")
             raise
     
@@ -685,6 +767,12 @@ class DataSubjectRightsManager:
             return report
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Error generating compliance report: {e}")
             return {"error": str(e)}
     

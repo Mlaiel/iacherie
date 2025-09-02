@@ -194,6 +194,12 @@ Initialize Fee Calculator Engine"""
             logger.info("Fee Calculator Engine initialized successfully")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to initialize Fee Calculator Engine: {e}", exc_info=True)
             raise CommissionError(f"Fee Calculator initialization failed: {e}")
     
@@ -258,6 +264,12 @@ Initialize Fee Calculator Engine"""
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Fee calculation failed: {e}", exc_info=True)
             raise CommissionError(f"Fee calculation error: {e}")
     
@@ -319,6 +331,12 @@ Initialize Fee Calculator Engine"""
             )
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Percentage fee calculation failed: {e}")
             raise CommissionError(f"Percentage calculation error: {e}")
     
@@ -331,6 +349,12 @@ Initialize Fee Calculator Engine"""
             return await self._tiered_calculator.calculate_tiered_fee(request)
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Tiered fee calculation failed: {e}")
             raise CommissionError(f"Tiered calculation error: {e}")
     
@@ -343,6 +367,12 @@ Initialize Fee Calculator Engine"""
             return await self._performance_calculator.calculate_performance_fee(request)
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Performance fee calculation failed: {e}")
             raise CommissionError(f"Performance calculation error: {e}")
     
@@ -394,6 +424,12 @@ Initialize Fee Calculator Engine"""
             )
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"AI-optimized fee calculation failed: {e}")
             # Fallback to percentage calculation
             return await self._calculate_percentage_fee(request)
@@ -448,6 +484,12 @@ Initialize Fee Calculator Engine"""
             return base_rate * tier_discount
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to get base rate: {e}")
             return Decimal("0.05")  # Default 5%
     
@@ -485,6 +527,12 @@ Initialize Fee Calculator Engine"""
                 bonuses["volume_bonus"] = bonus_amount
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Bonus calculation failed: {e}")
         
         return bonuses
@@ -505,6 +553,12 @@ Initialize Fee Calculator Engine"""
                 discounts["new_creator_discount"] = discount_amount
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Discount calculation failed: {e}")
         
         return discounts
@@ -526,6 +580,12 @@ Initialize Fee Calculator Engine"""
             logger.info("ML components initialized with dummy data")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.warning(f"ML components initialization failed: {e}")
             self._ml_model = None
             self._scaler = None
@@ -546,6 +606,12 @@ Initialize Fee Calculator Engine"""
             return features
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Feature preparation failed: {e}")
             return [0.0] * 8
     
@@ -567,6 +633,12 @@ Initialize Fee Calculator Engine"""
                 await self._retrain_ml_model()
                 
         except Exception as e:
+
+                
+            logger.error(f"Error: {e}")
+
+                
+            raise
             logger.error(f"ML training data update failed: {e}")
     
     async def _retrain_ml_model(self) -> None:
@@ -590,6 +662,12 @@ Initialize Fee Calculator Engine"""
             logger.info("ML model retrained successfully")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"ML model retraining failed: {e}")
     
     # Additional calculation methods
@@ -674,6 +752,12 @@ Initialize Fee Calculator Engine"""
                 return FeeCalculationResult.parse_raw(cached_data)
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.warning(f"Cache retrieval failed: {e}")
         
         return None
@@ -692,6 +776,12 @@ Initialize Fee Calculator Engine"""
             )
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.warning(f"Cache storage failed: {e}")
     
     def _generate_cache_key(self, request: FeeCalculationRequest) -> str:
@@ -713,6 +803,12 @@ Initialize Fee Calculator Engine"""
             logger.info("Fee Calculator Engine shutdown complete")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Fee Calculator shutdown error: {e}")
 
 class PlatformFeeCalculator:

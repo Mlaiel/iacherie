@@ -204,6 +204,12 @@ class ContentValidator:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Content validation failed: {str(e)}")
             return {
                 'validation_status': ValidationStatus.REJECTED.value,
@@ -282,6 +288,12 @@ class ContentValidator:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Batch content validation failed: {str(e)}")
             return {'status': 'failed', 'error': str(e)}
     
@@ -335,6 +347,12 @@ class ContentValidator:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Quality trend analysis failed: {str(e)}")
             return {'trend_analysis': {}, 'error': str(e)}
     
@@ -552,6 +570,12 @@ class CreatorValidator:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Creator validation failed: {str(e)}")
             return {
                 'validation_score': 0.0,
@@ -610,6 +634,12 @@ class CreatorValidator:
             return quality_report
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Creator quality monitoring failed: {str(e)}")
             return {'error': str(e)}
 
@@ -697,6 +727,12 @@ class QualityAssurance:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Quality audit failed: {str(e)}")
             return {'status': 'failed', 'error': str(e)}
     
@@ -739,5 +775,11 @@ class QualityAssurance:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Quality improvement implementation failed: {str(e)}")
             return {'status': 'failed', 'error': str(e)}

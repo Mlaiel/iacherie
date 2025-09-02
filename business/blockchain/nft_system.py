@@ -147,6 +147,12 @@ class NFTMinter:
             self.logger.info("NFT minter initialized successfully")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to initialize NFT minter: {str(e)}")
             raise BlockchainError(f"NFT minter initialization failed: {str(e)}")
     
@@ -205,6 +211,12 @@ class NFTMinter:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to mint NFT: {str(e)}")
             raise NFTError(f"NFT minting failed: {str(e)}")
     
@@ -257,6 +269,12 @@ class NFTMinter:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to mint license NFT: {str(e)}")
             raise NFTError(f"License NFT minting failed: {str(e)}")
     
@@ -318,6 +336,12 @@ class NFTMinter:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to mint collection NFT: {str(e)}")
             raise NFTError(f"Collection NFT minting failed: {str(e)}")
     
@@ -328,6 +352,10 @@ class NFTMinter:
                 result = self.ipfs_client.add(file)
                 return result['Hash']
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Failed to upload content to IPFS: {str(e)}")
             raise NFTError(f"IPFS upload failed: {str(e)}")
     
@@ -338,6 +366,10 @@ class NFTMinter:
             result = self.ipfs_client.add_json(metadata)
             return result
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Failed to upload metadata to IPFS: {str(e)}")
             raise NFTError(f"Metadata upload failed: {str(e)}")
     
@@ -455,6 +487,12 @@ Generate waveform visualization for audio content"""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to mint NFT on blockchain: {str(e)}")
             raise BlockchainError(f"Blockchain minting failed: {str(e)}")
     
@@ -523,6 +561,12 @@ class NFTLicenseManager:
             self.logger.info("NFT License Manager initialized successfully")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to initialize license manager: {str(e)}")
             raise BlockchainError(f"License manager initialization failed: {str(e)}")
     
@@ -599,6 +643,12 @@ class NFTLicenseManager:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to create license offering: {str(e)}")
             raise NFTError(f"License offering creation failed: {str(e)}")
     
@@ -657,6 +707,12 @@ class NFTLicenseManager:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to purchase license: {str(e)}")
             raise NFTError(f"License purchase failed: {str(e)}")
     
@@ -697,6 +753,12 @@ class NFTLicenseManager:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to validate license usage: {str(e)}")
             return {"valid": False, "reason": f"Validation error: {str(e)}"}
     
@@ -755,6 +817,12 @@ class NFTMarketplace:
             self.logger.info("NFT Marketplace initialized successfully")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to initialize marketplace: {str(e)}")
             raise BlockchainError(f"Marketplace initialization failed: {str(e)}")
     
@@ -848,6 +916,12 @@ class NFTMarketplace:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to list NFT: {str(e)}")
             raise NFTError(f"NFT listing failed: {str(e)}")
     
@@ -883,6 +957,10 @@ class NFTMarketplace:
                 network=network
             )
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             self.logger.error(f"Failed to list license: {str(e)}")
             raise NFTError(f"License listing failed: {str(e)}")
     
@@ -937,6 +1015,12 @@ class NFTMarketplace:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to purchase NFT: {str(e)}")
             raise NFTError(f"NFT purchase failed: {str(e)}")
     
@@ -992,6 +1076,12 @@ class NFTMarketplace:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to create auction: {str(e)}")
             raise NFTError(f"Auction creation failed: {str(e)}")
     
@@ -1027,6 +1117,12 @@ class NFTMarketplace:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to place bid: {str(e)}")
             raise NFTError(f"Bid placement failed: {str(e)}")
     
@@ -1070,6 +1166,12 @@ class NFTMarketplace:
             return listings
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to get marketplace listings: {str(e)}")
             return []
     
@@ -1089,6 +1191,12 @@ class NFTMarketplace:
                     pass
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to load active listings: {str(e)}")
     
     def _get_marketplace_contract_abi(self) -> List[Dict]:
@@ -1147,6 +1255,12 @@ class NFTRoyaltyManager:
             self.logger.info("NFT Royalty Manager initialized successfully")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to initialize royalty manager: {str(e)}")
             raise BlockchainError(f"Royalty manager initialization failed: {str(e)}")
     
@@ -1189,6 +1303,12 @@ class NFTRoyaltyManager:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to set NFT royalty: {str(e)}")
             raise NFTError(f"Royalty setting failed: {str(e)}")
     
@@ -1238,6 +1358,12 @@ class NFTRoyaltyManager:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to distribute royalty: {str(e)}")
             raise NFTError(f"Royalty distribution failed: {str(e)}")
     
@@ -1280,6 +1406,12 @@ class NFTMetadataManager:
             self.logger.info("NFT Metadata Manager initialized successfully")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to initialize metadata manager: {str(e)}")
             raise BlockchainError(f"Metadata manager initialization failed: {str(e)}")
     
@@ -1334,6 +1466,12 @@ class NFTMetadataManager:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to create metadata: {str(e)}")
             raise NFTError(f"Metadata creation failed: {str(e)}")
     
@@ -1365,6 +1503,12 @@ class NFTMetadataManager:
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to update metadata: {str(e)}")
             raise NFTError(f"Metadata update failed: {str(e)}")
     
@@ -1432,6 +1576,10 @@ class NFTMetadataManager:
             result = self.ipfs_client.add_json(metadata)
             return result
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             raise NFTError(f"IPFS upload failed: {str(e)}")
     
     async def _fetch_from_ipfs(self, ipfs_hash: str) -> Dict[str, Any]:
@@ -1439,6 +1587,10 @@ class NFTMetadataManager:
         try:
             return self.ipfs_client.get_json(ipfs_hash)
         except Exception as e:
+
+            logger.error(f"Error: {e}")
+
+            raise
             raise NFTError(f"IPFS fetch failed: {str(e)}")
     
     def _is_valid_url(self, url: str) -> bool:

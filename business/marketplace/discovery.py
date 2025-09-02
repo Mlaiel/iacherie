@@ -144,6 +144,12 @@ class ContentDiscovery:
             return enhanced_results
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Content discovery failed: {str(e)}")
             return {'items': [], 'total': 0, 'error': str(e)}
     
@@ -196,6 +202,12 @@ class ContentDiscovery:
             return diversified_recs
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Content recommendations failed: {str(e)}")
             return []
     
@@ -252,6 +264,12 @@ class ContentDiscovery:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Trend analysis failed: {str(e)}")
             return {'trends': [], 'insights': {}}
     
@@ -657,6 +675,12 @@ class CreatorDiscovery:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Creator discovery failed: {str(e)}")
             return {'creators': [], 'total': 0, 'error': str(e)}
     
@@ -707,6 +731,12 @@ class CreatorDiscovery:
             return scored_matches
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Collaboration matching failed: {str(e)}")
             return []
     
@@ -746,6 +776,12 @@ class CreatorDiscovery:
             return trending_creators
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Trending creators retrieval failed: {str(e)}")
             return []
     
@@ -970,6 +1006,12 @@ class TrendDiscovery:
             return result
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Trend discovery failed: {str(e)}")
             return {'trends': [], 'insights': {}}
     
@@ -1011,6 +1053,12 @@ class TrendDiscovery:
             return prediction
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Viral prediction failed: {str(e)}")
             return {'viral_score': 0.0, 'confidence': 0.0, 'error': str(e)}
     
@@ -1061,6 +1109,12 @@ class TrendDiscovery:
             return opportunities
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Market opportunity analysis failed: {str(e)}")
             return []
     

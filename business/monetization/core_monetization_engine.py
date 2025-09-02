@@ -127,6 +127,12 @@ class CoreMonetizationEngine:
             return optimal_strategy
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to optimize monetization strategy: {e}")
             # Default to freemium strategy
             return MonetizationStrategy.FREEMIUM
@@ -300,6 +306,12 @@ class CoreMonetizationEngine:
                 return {'estimated_monthly_revenue': Decimal('0'), 'confidence': 0.0}
                 
         except Exception as e:
+
+                
+            logger.error(f"Error: {e}")
+
+                
+            raise
             self.logger.error(f"Failed to calculate revenue potential: {e}")
             return {'estimated_monthly_revenue': Decimal('0'), 'confidence': 0.0}
     
@@ -515,6 +527,12 @@ class CoreMonetizationEngine:
             self.logger.info(f"Updated performance tracking for {content_id} using {strategy.value} strategy")
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             self.logger.error(f"Failed to track performance: {e}")
     
     def get_monetization_insights(self) -> Dict[str, Any]:

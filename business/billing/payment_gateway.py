@@ -640,6 +640,12 @@ Process payment through Stripe"""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             return {
                 'transaction_id': None,
                 'status': 'failed',
@@ -661,6 +667,12 @@ Process refund through Stripe"""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             return {
                 'refund_id': None,
                 'status': 'failed',
@@ -698,6 +710,12 @@ Process payment through PayPal"""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             return {
                 'transaction_id': None,
                 'status': 'failed',
@@ -715,6 +733,12 @@ Process payment through PayPal"""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             return {
                 'refund_id': None,
                 'status': 'failed',
@@ -748,6 +772,12 @@ Process payment through Wise"""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             return {
                 'transaction_id': None,
                 'status': 'failed',
@@ -765,6 +795,12 @@ Process payment through Wise"""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             return {
                 'refund_id': None,
                 'status': 'failed',
@@ -798,6 +834,12 @@ Process payment through Square"""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             return {
                 'transaction_id': None,
                 'status': 'failed',
@@ -815,6 +857,12 @@ Process payment through Square"""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             return {
                 'refund_id': None,
                 'status': 'failed',

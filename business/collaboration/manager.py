@@ -131,6 +131,12 @@ Discover available collaboration opportunities"""
                 )
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Collaboration discovery failed for creator {creator_id}: {str(e)}")
             return CollaborationManagerResponse(
                 success=False,
@@ -184,6 +190,12 @@ Discover available collaboration opportunities"""
                 )
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Collaboration request creation failed: {str(e)}")
             return CollaborationManagerResponse(
                 success=False,
@@ -243,6 +255,12 @@ Discover available collaboration opportunities"""
                 )
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Collaboration matching failed for request {request_id}: {str(e)}")
             return CollaborationManagerResponse(
                 success=False,
@@ -320,6 +338,12 @@ Discover available collaboration opportunities"""
                 )
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Collaboration lifecycle management failed: {str(e)}")
             return CollaborationManagerResponse(
                 success=False,
@@ -378,6 +402,12 @@ Discover available collaboration opportunities"""
                 )
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Analytics generation failed for creator {creator_id}: {str(e)}")
             return CollaborationManagerResponse(
                 success=False,
@@ -428,6 +458,12 @@ Discover available collaboration opportunities"""
                 )
                 
         except Exception as e:
+
+                
+            logger.error(f"Error: {e}")
+
+                
+            raise
             logger.error(f"Contract creation failed: {str(e)}")
             return CollaborationManagerResponse(
                 success=False,
@@ -470,6 +506,12 @@ Discover available collaboration opportunities"""
                 )
                 
         except Exception as e:
+
+                
+            logger.error(f"Error: {e}")
+
+                
+            raise
             logger.error(f"Report generation failed for creator {creator_id}: {str(e)}")
             return CollaborationManagerResponse(
                 success=False,
@@ -566,6 +608,12 @@ Discover available collaboration opportunities"""
             )
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Failed to get collaboration status for {collaboration_id}: {str(e)}")
             return CollaborationManagerResponse(
                 success=False,
@@ -611,6 +659,12 @@ Discover available collaboration opportunities"""
             }
             
         except Exception as e:
+
+            
+            logger.error(f"Error: {e}")
+
+            
+            raise
             logger.error(f"Health status check failed: {str(e)}")
             return {
                 'status': 'unhealthy',
