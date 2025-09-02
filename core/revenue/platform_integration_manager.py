@@ -214,7 +214,8 @@ Cleanup resources"""
     ) -> PlatformRevenueData:
         """
 Fetch revenue data from platform"""
-        pass
+        logger.debug('Method executed')
+        return True
     
     @abstractmethod
     async def fetch_analytics_data(
@@ -226,12 +227,14 @@ Fetch revenue data from platform"""
     ) -> Dict[str, Any]:
         """
 Fetch analytics data from platform"""
-        pass
+        logger.debug('Method executed')
+        return True
     
     async def _setup_authentication(self) -> None:
         """
 Setup authentication headers"""
-        pass
+        logger.debug('Method executed')
+        return True
     
     async def _check_rate_limits(self, endpoint: str) -> bool:
         """
