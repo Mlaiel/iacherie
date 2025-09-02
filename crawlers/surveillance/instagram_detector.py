@@ -526,6 +526,7 @@ Initialize Instagram detector."""
             await asyncio.sleep(0.2)
             
             for url in image_urls:
+                pass
                 # In real implementation, this would use computer vision models
                 # to analyze images for violations
                 
@@ -579,6 +580,7 @@ Initialize Instagram detector."""
             await asyncio.sleep(0.5)
             
             for url in video_urls:
+                pass
                 # In real implementation, this would use video analysis models
                 # to analyze videos for violations
                 
@@ -634,6 +636,7 @@ Initialize Instagram detector."""
             
             # Check for copyrighted music
             if audio_title:
+                pass
                 # In real implementation, this would check against music databases
                 # and use audio fingerprinting
                 

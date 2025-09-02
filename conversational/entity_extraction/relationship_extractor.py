@@ -384,6 +384,7 @@ class RelationshipExtractor(BaseService):
                 self.network = nn.Sequential(*layers)
             
             def forward(self, x):
+                pass
         try:
             logger.info(f"Executing forward")
             

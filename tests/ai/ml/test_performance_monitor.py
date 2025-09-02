@@ -1115,6 +1115,7 @@ Test complete performance monitoring pipeline"""
         # Memory profiling
         if monitoring_scenario["memory_profiling"]:
             def test_function():
+                pass
         try:
             logger.info(f"Executing test_function")
             

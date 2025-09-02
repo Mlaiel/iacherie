@@ -50,6 +50,7 @@ class TextContentGenerator(BaseContentGenerator):
     """
     Advanced text content generator that creates high-quality text content
     for various platforms and purposes including:
+        pass
     - Social media posts (Instagram, TikTok, Twitter, Facebook)
     - Blog articles and SEO content
     - Marketing copy and advertisements

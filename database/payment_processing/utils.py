@@ -1184,6 +1184,7 @@ Validate credit card number using Luhn algorithm"""
         # Luhn algorithm
         def luhn_checksum(num):
             def digits_of(n):
+                pass
         try:
             logger.info(f"Executing digits_of")
             

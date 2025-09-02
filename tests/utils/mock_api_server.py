@@ -175,6 +175,7 @@ Start the mock API server."""
             logger.info(f"Starting mock API server on port {self.port}")
             
             def run_server():
+                pass
         try:
             logger.info(f"Executing run_server")
             

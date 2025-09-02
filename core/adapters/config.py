@@ -266,6 +266,7 @@ Load configuration overrides from environment variables."""
         # Look for environment variables with pattern: ADAPTER_{ADAPTER_NAME}_{SETTING}
         for key, value in os.environ.items():
             if key.startswith('ADAPTER_'):
+                pass
         try:
             logger.info(f"Executing _convert_env_value")
             

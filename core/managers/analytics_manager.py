@@ -146,12 +146,7 @@ class AnalyticsManager(ABC):
         return True
     
     def get_stats(self) -> Dict[str, Any]:
-        """
-        Statistiques du gestionnaire
-        
-        Returns:
-            Dict: Métriques actuelles
-        """
+        """Get manager statistics."""
         with self._lock:
             return {
                 "pool_size": len(self._pool),
@@ -161,16 +156,12 @@ class AnalyticsManager(ABC):
             }
 
 
-# Instance globale
+# Global instance
 analytics_manager = None
 
 
 def get_analytics_manager() -> AnalyticsManager:
-    """Get the analytics manager instance.
-    
-    Returns:
-        AnalyticsManager: Instance of the analytics manager
-    """
+    """Get the analytics manager instance."""
     global analytics_manager
     if analytics_manager is None:
         analytics_manager = AnalyticsManager()

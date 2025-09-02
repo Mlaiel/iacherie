@@ -460,6 +460,7 @@ Set up log sampling for high-volume loggers"""
                 self.rate = rate
             
             def filter(self, record):
+                pass
         try:
             logger.info(f"Executing filter")
             
