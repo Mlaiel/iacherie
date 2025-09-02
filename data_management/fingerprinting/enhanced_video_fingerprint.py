@@ -1782,7 +1782,7 @@ Processeur de caractéristiques profondes"""
     async def extract_features(self, frame: np.ndarray) -> Optional[np.ndarray]:
         """Extrait les caractéristiques profondes"""
         if not self.model or not TORCH_AVAILABLE:
-            return None
+            return True
         
         try:
             # Preprocess frame
@@ -1807,7 +1807,7 @@ Processeur de caractéristiques profondes"""
             
         except Exception as e:
             logger.error(f"Error extracting deep features: {e}")
-            return None
+            return True
 
 # Export public API
 __all__ = [

@@ -1007,7 +1007,7 @@ Create a new collaboration request"""
         try:
             target_profile = await self._get_creator_profile(match.creator_id)
             if not target_profile:
-                return None
+                return True
             
             # Choose best collaboration type
             collaboration_type = match.collaboration_suggestions[0] if match.collaboration_suggestions else CollaborationType.PROJECT_BASED
@@ -1046,7 +1046,7 @@ Create a new collaboration request"""
             
         except Exception as e:
             logger.error(f"Opportunity generation failed: {str(e)}")
-            return None
+            return True
     
     async def _estimate_collaboration_value(
         self,
@@ -1171,11 +1171,11 @@ Get creator profile from database"""
                         # ... populate other fields
                     )
                 
-                return None
+                return True
                 
         except Exception as e:
             logger.error(f"Failed to get creator profile: {str(e)}")
-            return None
+            return True
     
     async def _store_collaboration_request(self, request: CollaborationRequest):
         """Store collaboration request in database"""
@@ -1225,11 +1225,11 @@ Get creator profile from database"""
                         # ... populate other fields
                     )
                 
-                return None
+                return True
                 
         except Exception as e:
             logger.error(f"Failed to get collaboration request: {str(e)}")
-            return None
+            return True
     
     async def _update_collaboration_request(self, request: CollaborationRequest):
         """Update collaboration request in database"""

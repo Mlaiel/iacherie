@@ -368,7 +368,7 @@ Async context manager exit."""
             
         except Exception as e:
             logger.error(f"Failed to parse publication element: {e}")
-            return None
+            return True
     
     def _parse_count_text(self, count_text: str) -> int:
         """Parse subscriber count text like '1.2K' or '5M'."""
@@ -527,7 +527,7 @@ Async context manager exit."""
             
         except Exception as e:
             logger.error(f"Failed to parse RSS entry: {e}")
-            return None
+            return True
     
     async def _scrape_publication_posts(
         self,
@@ -637,7 +637,7 @@ Async context manager exit."""
             
         except Exception as e:
             logger.warning(f"Failed to extract post from element: {e}")
-            return None
+            return True
     
     def _parse_date_text(self, date_text: str) -> datetime:
         """Parse date text into datetime object."""

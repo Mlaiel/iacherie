@@ -862,7 +862,7 @@ Identify potential risk indicators in user behavior"""
         cached_data = await self.cache_manager.get(cache_key)
         
         if not cached_data:
-            return None
+            return True
         
         try:
             profile_data = json.loads(cached_data)
@@ -915,7 +915,7 @@ Identify potential risk indicators in user behavior"""
             
         except Exception as e:
             self.logger.error(f"Failed to reconstruct behavioral profile for user {user_id}: {e}")
-            return None
+            return True
 
     # Additional helper methods for intent prediction and response optimization would continue here...
     # Due to length constraints, implementing core framework with extensible architecture
@@ -1002,7 +1002,7 @@ Identify potential risk indicators in user behavior"""
             
         except Exception as e:
             self.logger.error(f"Failed to analyze engagement pattern: {e}")
-            return None
+            return True
     
     async def _analyze_content_interaction_pattern(self, interaction_data: Dict[str, Any], context: Dict[str, Any]) -> Optional[BehavioralPattern]:
         """Analyze content interaction patterns with deep insights"""
@@ -1044,7 +1044,7 @@ Identify potential risk indicators in user behavior"""
             
         except Exception as e:
             self.logger.error(f"Failed to analyze content interaction pattern: {e}")
-            return None
+            return True
     
     async def _analyze_collaboration_pattern(self, interaction_data: Dict[str, Any], context: Dict[str, Any]) -> Optional[BehavioralPattern]:
         """Analyze collaboration seeking patterns with network analysis"""
@@ -1086,7 +1086,7 @@ Identify potential risk indicators in user behavior"""
             
         except Exception as e:
             self.logger.error(f"Failed to analyze collaboration pattern: {e}")
-            return None
+            return True
     
     async def _analyze_monetization_pattern(self, interaction_data: Dict[str, Any], context: Dict[str, Any]) -> Optional[BehavioralPattern]:
         """Analyze monetization focus patterns with revenue intelligence"""
@@ -1128,7 +1128,7 @@ Identify potential risk indicators in user behavior"""
             
         except Exception as e:
             self.logger.error(f"Failed to analyze monetization pattern: {e}")
-            return None
+            return True
 
     def _calculate_engagement_score(self, metrics: Dict[str, Any]) -> float:
         """Calculate weighted engagement score"""

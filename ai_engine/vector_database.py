@@ -377,7 +377,7 @@ class VectorDatabase:
                 elif "color_histogram" in fingerprint_data:
                     vector = np.array(fingerprint_data["color_histogram"])
                 else:
-                    return None
+                    return True
                 
                 vector = self._normalize_vector(vector.tolist())
                 
@@ -398,13 +398,13 @@ class VectorDatabase:
                     vector = self._normalize_vector(vector_parts)
                 
             else:
-                return None
+                return True
             
             return vector
             
         except Exception as e:
             logger.error(f"Failed to extract vector from fingerprint: {str(e)}")
-            return None
+            return True
     
     def _normalize_vector(self, vector_data: List[float]) -> np.ndarray:
         """Normalize vector to target dimension"""
@@ -469,14 +469,14 @@ Remove content from the vector database"""
         """Get content metadata by ID"""
         try:
             if content_type not in self.indexes:
-                return None
+                return True
             
             index = self.indexes[content_type]
             return index.metadata.get(content_id)
             
         except Exception as e:
             logger.error(f"Failed to get content: {str(e)}")
-            return None
+            return True
     
     async def get_database_stats(self) -> Dict[str, Any]:
         """Get comprehensive database statistics"""

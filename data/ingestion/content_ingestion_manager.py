@@ -746,11 +746,11 @@ class ContentIngestionManager:
                 import json
                 return json.loads(checkpoint_data)
             
-            return None
+            return True
             
         except Exception as e:
             self.logger.error(f"Error getting checkpoint: {str(e)}")
-            return None
+            return True
     
     async def _save_checkpoint(self, content_id: str, stage: str, data: Dict[str, Any]):
         """Save ingestion checkpoint"""

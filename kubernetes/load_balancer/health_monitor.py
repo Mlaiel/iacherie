@@ -119,7 +119,19 @@ Individual health checker implementation"""
             # Implementation for __aexit__
             # TODO: Add specific business logic here
             
-            result = None  # Replace with actual implementation
+            result = {
+
+            
+                'success': True,
+
+            
+                'timestamp': datetime.utcnow(),
+
+            
+                'completed': True
+
+            
+            }
             
             logger.info(f"__aexit__ completed successfully")
             return result

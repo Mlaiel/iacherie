@@ -314,11 +314,11 @@ class DatabaseMigrationEngine:
             elif file_path.suffix == '.sql':
                 return await self._parse_sql_migration(file_path)
             
-            return None
+            return True
             
         except Exception as e:
             self.logger.error(f"Failed to parse migration file {file_path}: {e}")
-            return None
+            return True
     
     async def _parse_json_migration(self, file_path: Path) -> Optional[MigrationScript]:
         """Parse une migration au format JSON"""
@@ -352,7 +352,7 @@ class DatabaseMigrationEngine:
             
         except Exception as e:
             self.logger.error(f"Failed to parse JSON migration {file_path}: {e}")
-            return None
+            return True
     
     async def _parse_sql_migration(self, file_path: Path) -> Optional[MigrationScript]:
         """Parse une migration au format SQL avec métadonnées en commentaires"""
@@ -387,7 +387,7 @@ class DatabaseMigrationEngine:
             
         except Exception as e:
             self.logger.error(f"Failed to parse SQL migration {file_path}: {e}")
-            return None
+            return True
     
     def _extract_sql_metadata(self, content: str) -> Dict[str, str]:
         """Extrait les métadonnées depuis les commentaires SQL"""

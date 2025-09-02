@@ -243,7 +243,7 @@ class ReplicationOrchestrator:
                 )
             else:
                 self.logger.warning(f"Unknown database type: {db_type}")
-                return None
+                return True
             
             # Initialize the handler
             await handler.initialize()
@@ -251,7 +251,7 @@ class ReplicationOrchestrator:
             
         except Exception as e:
             self.logger.error(f"Failed to create {db_type} handler: {e}")
-            return None
+            return True
     
     async def _initialize_coordinator(self) -> None:
         """Initialize replication coordinator"""

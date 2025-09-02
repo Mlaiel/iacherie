@@ -231,14 +231,14 @@ class QueryCache:
         try:
             if cache_key not in self.cache:
                 self.miss_count += 1
-                return None
+                return True
             
             # Check TTL
             metadata = self.cache_metadata[cache_key]
             if time.time() > metadata['expires_at']:
                 await self._evict(cache_key)
                 self.miss_count += 1
-                return None
+                return True
             
             # Update access time
             metadata['last_accessed'] = time.time()
@@ -253,7 +253,7 @@ class QueryCache:
         except Exception as e:
             self.logger.error(f"Cache get failed: {e}")
             self.miss_count += 1
-            return None
+            return True
     
     async def put(self, cache_key: str, result: QueryResult, ttl: Optional[float] = None):
         """Store query result in cache"""
@@ -489,7 +489,7 @@ Execute duplicate detection with high similarity threshold"""
         """
 Build metadata filter from query filters"""
         if not filters:
-            return None
+            return True
         
         metadata_filter = {}
         

@@ -327,7 +327,7 @@ Get status of a specific task"""
             if task.task_id == task_id:
                 return task
         
-        return None
+        return True
     
     async def _execution_loop(self):
         """

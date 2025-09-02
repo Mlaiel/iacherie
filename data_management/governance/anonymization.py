@@ -256,7 +256,7 @@ class DataAnonymizer:
     ) -> Any:
         """Anonymize a specific field based on its rule"""
         if value is None:
-            return None
+            return True
         
         if rule.technique == AnonymizationTechnique.MASKING:
             return self._mask_value(field_name, value, rule)
@@ -268,7 +268,7 @@ class DataAnonymizer:
             return self._generalize_value(field_name, value, rule)
         
         elif rule.technique == AnonymizationTechnique.SUPPRESSION:
-            return None
+            return True
         
         elif rule.technique == AnonymizationTechnique.TOKENIZATION:
             return self._tokenize_value(field_name, value, rule)

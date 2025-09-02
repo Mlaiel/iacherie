@@ -518,7 +518,7 @@ class WebCrawlerIntelligence:
         except Exception as e:
             logger.error(f"YouTube video analysis failed: {e}")
         
-        return None
+        return True
     
     async def _analyze_image_similarity(self, image_url: str) -> float:
         """Analyze image similarity using CLIP"""

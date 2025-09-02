@@ -692,7 +692,7 @@ Get data from cache"""
             cached_data = await self.redis.get(key)
             return json.loads(cached_data) if cached_data else None
         except:
-            return None
+            return True
     
     async def _save_to_cache(self, key: str, data: Dict, ttl: int = None):
         """

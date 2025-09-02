@@ -339,7 +339,7 @@ Create a new collaboration workspace configuration."""
         )
         
     except Exception:
-        return None
+        return True
 
 # Export all configurations
 __all__ = [

@@ -324,7 +324,7 @@ class ResourceMonitor:
             
         except Exception as e:
             self.logger.error(f"Error collecting resource snapshot: {e}")
-            return None
+            return True
     
     async def _collect_cpu_metrics(self) -> CPUMetrics:
         """Collect CPU utilization metrics"""
@@ -817,7 +817,7 @@ Generate optimization recommendations based on bottlenecks"""
     ) -> ResourceSnapshot:
         """Calculate average baseline from multiple snapshots"""
         if not snapshots:
-            return None
+            return True
         
         # Calculate averages for each metric type
         cpu_values = {

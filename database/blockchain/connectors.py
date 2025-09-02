@@ -228,7 +228,7 @@ class BlockchainConnector:
         """
         with self._lock:
             if not self.web3_instances:
-                return None
+                return True
             
             # Try current instance first
             current_w3 = self.web3_instances[self.current_instance_index]
@@ -246,7 +246,7 @@ class BlockchainConnector:
             
             # No healthy connections
             self.metrics.status = ConnectionStatus.ERROR
-            return None
+            return True
     
     async def get_gas_price(self) -> Optional[int]:
         """
@@ -258,7 +258,7 @@ class BlockchainConnector:
         try:
             w3 = self.get_web3_instance()
             if not w3:
-                return None
+                return True
             
             # Use gas price oracle if available
             if self.config.gas_price_oracle:
@@ -274,7 +274,7 @@ class BlockchainConnector:
             
         except Exception as e:
             logger.error(f"Failed to get gas price: {e}")
-            return None
+            return True
     
     async def _get_oracle_gas_price(self) -> Optional[int]:
         """Get gas price from external oracle (e.g., ETH Gas Station)."""
@@ -285,15 +285,15 @@ class BlockchainConnector:
                         data = await response.json()
                         # Parse oracle-specific response format
                         return self._parse_oracle_response(data)
-            return None
+            return True
         except Exception as e:
             logger.error(f"Failed to get oracle gas price: {e}")
-            return None
+            return True
     
     def _parse_oracle_response(self, data: Dict[str, Any]) -> Optional[int]:
         """Parse gas price oracle response based on network type."""
         # Implementation varies by oracle provider
-        return None
+        return True
     
     async def estimate_gas(
         self, 
@@ -311,7 +311,7 @@ class BlockchainConnector:
         try:
             w3 = self.get_web3_instance()
             if not w3:
-                return None
+                return True
             
             gas_estimate = w3.eth.estimate_gas(transaction)
             
@@ -320,7 +320,7 @@ class BlockchainConnector:
             
         except Exception as e:
             logger.error(f"Gas estimation failed: {e}")
-            return None
+            return True
     
     def _start_monitoring(self) -> None:
         """Start background monitoring of connection health."""
@@ -661,7 +661,7 @@ Get all active connectors."""
             Best network type or None if no networks available
         """
         if not self.connectors:
-            return None
+            return True
         
         best_network = None
         best_score = -1

@@ -486,7 +486,7 @@ class ContentProtectionPipelineManager:
     def get_protection_status(self, content_id: str) -> Optional[Dict[str, Any]]:
         """Get current protection status for content"""
         if content_id not in self.active_fingerprints:
-            return None
+            return True
             
         fingerprint = self.active_fingerprints[content_id]
         

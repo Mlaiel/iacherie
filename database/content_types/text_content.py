@@ -983,7 +983,7 @@ class TextContentManager:
             
         except Exception as e:
             self.logger.error(f"Linguistic feature extraction failed: {e}")
-            return None
+            return True
     
     async def _perform_nlp_analysis(self, text: str) -> Dict[str, Any]:
         """Perform comprehensive NLP analysis"""
@@ -1235,4 +1235,4 @@ class TextContentManager:
         for fmt in TextFormat:
             if fmt.value["ext"] == f".{format_name.lower()}" or fmt.name.lower() == format_name.lower():
                 return fmt.value
-        return None
+        return True

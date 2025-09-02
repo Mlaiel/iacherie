@@ -437,7 +437,7 @@ class PlatformEntityExtractor(BaseService):
             
         except Exception as e:
             self.logger.error(f"Failed to create platform entity: {e}")
-            return None
+            return True
     
     async def _extract_platform_urls(
         self,
@@ -543,7 +543,7 @@ Check if URL belongs to specified platform"""
             
         except Exception as e:
             self.logger.error(f"Failed to create URL entity: {e}")
-            return None
+            return True
     
     async def _extract_content_id_from_url(
         self, 
@@ -582,7 +582,7 @@ Check if URL belongs to specified platform"""
         except Exception as e:
             self.logger.error(f"Content ID extraction failed: {e}")
         
-        return None
+        return True
     
     async def _determine_url_entity_type(
         self, 
@@ -754,7 +754,7 @@ Check if URL belongs to specified platform"""
         except Exception as e:
             self.logger.error(f"URL construction failed: {e}")
         
-        return None
+        return True
     
     async def _fetch_engagement_metrics(
         self,

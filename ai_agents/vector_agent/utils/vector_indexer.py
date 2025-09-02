@@ -183,7 +183,7 @@ Store vector document with metadata"""
                     
                     row = cursor.fetchone()
                     if not row:
-                        return None
+                        return True
                     
                     # Load vector data
                     vector_data = np.load(row[3])
@@ -211,7 +211,7 @@ Store vector document with metadata"""
                     
             except Exception as e:
                 logger.error(f"Failed to retrieve document {document_id}: {e}")
-                return None
+                return True
     
     def delete_document(self, document_id: str) -> bool:
         """Delete vector document"""
@@ -537,7 +537,7 @@ class VectorIndexer:
             
         except Exception as e:
             logger.error(f"Failed to retrieve document {document_id}: {e}")
-            return None
+            return True
     
     async def delete_document(self, document_id: str) -> bool:
         """Delete document from index"""

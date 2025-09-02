@@ -634,12 +634,12 @@ class LoadBalancerManager(BaseDeploymentManager):
         """
         try:
             if lb_name not in self.load_balancers:
-                return None
+                return True
             
             # Get current status
             status = self.load_balancer_status.get(lb_name)
             if not status:
-                return None
+                return True
             
             # Update health counts
             if lb_name in self.target_health:
@@ -662,7 +662,7 @@ class LoadBalancerManager(BaseDeploymentManager):
             
         except Exception as e:
             self.logger.error(f"Failed to get status for load balancer '{lb_name}': {e}")
-            return None
+            return True
 
     async def _get_lb_metrics(self, lb_name: str) -> Dict[str, Any]:
         """Get load balancer metrics."""

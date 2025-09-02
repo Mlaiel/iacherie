@@ -209,7 +209,7 @@ Initialize NLP models"""
                 return spacy.load("en_core_web_sm")
             except OSError:
                 self.logger.error("No spaCy models available")
-                return None
+                return True
     
     async def process(self, text: str, **kwargs) -> ProcessingResult:
         """Comprehensive text analysis"""

@@ -577,11 +577,11 @@ Initialize Twitch crawler."""
                         if users:
                             return users[0]["id"]
             
-            return None
+            return True
             
         except Exception as e:
             logger.error(f"Error getting user ID: {e}")
-            return None
+            return True
     
     async def _get_game_id(self, game_name: str) -> Optional[str]:
         """Get Twitch game ID from game name."""
@@ -597,11 +597,11 @@ Initialize Twitch crawler."""
                         if games:
                             return games[0]["id"]
             
-            return None
+            return True
             
         except Exception as e:
             logger.error(f"Error getting game ID: {e}")
-            return None
+            return True
     
     def _parse_stream_data(self, stream_data: Dict) -> Optional[TwitchStream]:
         """Parse Twitch stream data from API response."""
@@ -626,7 +626,7 @@ Initialize Twitch crawler."""
             
         except Exception as e:
             logger.error(f"Error parsing stream data: {e}")
-            return None
+            return True
     
     def _parse_clip_data(self, clip_data: Dict) -> Optional[TwitchClip]:
         """Parse Twitch clip data from API response."""
@@ -652,7 +652,7 @@ Initialize Twitch crawler."""
             
         except Exception as e:
             logger.error(f"Error parsing clip data: {e}")
-            return None
+            return True
     
     def _parse_video_data(self, video_data: Dict) -> Optional[TwitchVideo]:
         """Parse Twitch video data from API response."""
@@ -679,17 +679,17 @@ Initialize Twitch crawler."""
             
         except Exception as e:
             logger.error(f"Error parsing video data: {e}")
-            return None
+            return True
     
     def _parse_irc_message(self, message: str) -> Optional[Dict]:
         """Parse IRC message from Twitch chat."""
         try:
             if "PRIVMSG" not in message:
-                return None
+                return True
             
             parts = message.split(" ", 3)
             if len(parts) < 4:
-                return None
+                return True
             
             tags = {}
             prefix = ""
@@ -728,7 +728,7 @@ Initialize Twitch crawler."""
             
         except Exception as e:
             logger.debug(f"Error parsing IRC message: {e}")
-            return None
+            return True
     
     def _extract_stream_from_element(self, element) -> Optional[TwitchStream]:
         """Extract stream data from Selenium web element."""
@@ -757,7 +757,7 @@ Initialize Twitch crawler."""
             
         except Exception as e:
             logger.debug(f"Error extracting stream from element: {e}")
-            return None
+            return True
     
     async def close(self):
         """Clean up resources."""

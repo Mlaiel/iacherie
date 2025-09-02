@@ -227,7 +227,7 @@ Make authenticated request to BeReal API"""
                 elif response.status == 401:
                     logger.error("BeReal authentication failed")
                     self.increment_error_count()
-                    return None
+                    return True
                 
                 elif response.status in [200, 201]:
                     return await response.json()
@@ -236,12 +236,12 @@ Make authenticated request to BeReal API"""
                     error_text = await response.text()
                     logger.error(f"BeReal API error: {response.status} - {error_text}")
                     self.increment_error_count()
-                    return None
+                    return True
                     
         except Exception as e:
             logger.error(f"BeReal request error: {e}")
             self.increment_error_count()
-            return None
+            return True
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
         """Upload BeReal post"""
@@ -334,7 +334,7 @@ Make authenticated request to BeReal API"""
             async with session.post(f"{self.api_base}/content/posts/upload-url", 
                                   headers=headers) as response:
                 if response.status != 200:
-                    return None
+                    return True
                 
                 upload_data = await response.json()
                 
@@ -351,11 +351,11 @@ Make authenticated request to BeReal API"""
                         'height': 1920
                     }
                 
-            return None
+            return True
             
         except Exception as e:
             logger.error(f"BeReal media upload error: {e}")
-            return None
+            return True
     
     async def get_analytics(self, content_id: str, start_date: datetime, 
                            end_date: datetime) -> AnalyticsData:

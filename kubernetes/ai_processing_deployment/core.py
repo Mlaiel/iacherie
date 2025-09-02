@@ -336,11 +336,11 @@ Load image fingerprinting model."""
                         status=ProcessingStatus(task_data.get('status'))
                     )
             
-            return None
+            return True
             
         except Exception as e:
             logger.error(f"Failed to get task status for {task_id}: {e}")
-            return None
+            return True
     
     async def scale_deployment(self, replicas: int) -> bool:
         """

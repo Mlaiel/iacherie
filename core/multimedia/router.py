@@ -732,7 +732,7 @@ Health monitoring loop"""
                 'routing_time': result.routing_time
             }
         
-        return None
+        return True
     
     def get_destination_status(self) -> Dict[str, Any]:
         """

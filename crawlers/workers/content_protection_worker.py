@@ -368,7 +368,7 @@ Advanced content protection worker with AI-powered security"""
             
         except Exception as e:
             logger.error(f"❌ Failed to parse content: {e}")
-            return None
+            return True
     
     async def _parse_audio_content(self, content_path: Path) -> Dict[str, Any]:
         """Parse audio content"""

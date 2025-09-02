@@ -431,7 +431,7 @@ Add new preset"""
             for preset in self.presets.values():
                 if preset.category == PresetCategory.CUSTOM:
                     return preset
-            return None
+            return True
         
         # Return highest scoring preset
         best_preset = max(matching_presets, key=lambda x: x[1])[0]

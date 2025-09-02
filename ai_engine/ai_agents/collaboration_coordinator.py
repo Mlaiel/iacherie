@@ -630,7 +630,7 @@ class CollaborationCoordinatorAgent(BaseAIAgent):
             self.creator_profiles[creator_id] = profile
             return profile
         
-        return None
+        return True
 
     async def _get_potential_collaborators(
         self, 

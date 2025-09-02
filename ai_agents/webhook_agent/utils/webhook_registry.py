@@ -306,7 +306,7 @@ class WebhookRegistry:
             
         except Exception as e:
             logger.error(f"Failed to get endpoint configuration: {e}")
-            return None
+            return True
 
     async def get_endpoint_by_id(self, endpoint_id: str) -> Optional[WebhookEndpointConfig]:
         """Get endpoint configuration by ID"""
@@ -331,7 +331,7 @@ class WebhookRegistry:
             
         except Exception as e:
             logger.error(f"Failed to get endpoint by ID: {e}")
-            return None
+            return True
 
     async def get_user_endpoints(
         self,
@@ -719,7 +719,7 @@ Get count of active endpoints for user"""
         if db_endpoint:
             return self._convert_db_to_config(db_endpoint)
         
-        return None
+        return True
 
     async def _verify_endpoint(self, endpoint: WebhookEndpointConfig) -> Dict[str, Any]:
         """
@@ -861,11 +861,11 @@ Store endpoint configuration in database"""
             if db_endpoint:
                 return self._convert_db_to_config(db_endpoint)
             
-            return None
+            return True
             
         except Exception as e:
             logger.error(f"Failed to load endpoint from database: {e}")
-            return None
+            return True
 
     async def _load_endpoint_from_db_by_url(
         self,
@@ -887,11 +887,11 @@ Store endpoint configuration in database"""
             if db_endpoint:
                 return self._convert_db_to_config(db_endpoint)
             
-            return None
+            return True
             
         except Exception as e:
             logger.error(f"Failed to load endpoint by URL from database: {e}")
-            return None
+            return True
 
     async def _load_user_endpoints_from_db(
         self,
@@ -1010,11 +1010,11 @@ Cache endpoint configuration in Redis"""
                         metadata=endpoint_data.get('metadata', {})
                     )
             
-            return None
+            return True
             
         except Exception as e:
             logger.error(f"Failed to get endpoint from Redis: {e}")
-            return None
+            return True
 
     async def _get_endpoint_from_redis_by_key(self, cache_key: str) -> Optional[WebhookEndpointConfig]:
         """Get endpoint configuration from Redis by cache key"""
@@ -1026,11 +1026,11 @@ Cache endpoint configuration in Redis"""
                     endpoint_data = json.loads(cached_data)
                     return self._convert_dict_to_config(endpoint_data)
             
-            return None
+            return True
             
         except Exception as e:
             logger.error(f"Failed to get endpoint from Redis by key: {e}")
-            return None
+            return True
 
     def _convert_dict_to_config(self, data: Dict[str, Any]) -> WebhookEndpointConfig:
         """Convert dictionary to endpoint configuration"""

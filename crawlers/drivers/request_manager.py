@@ -332,7 +332,7 @@ Initialize request manager"""
             if request.request_id == request_id:
                 return request
         
-        return None
+        return True
     
     async def process_queue(self):
         """

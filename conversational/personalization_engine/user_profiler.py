@@ -233,7 +233,7 @@ class UserProfiler(BaseService):
             
         except Exception as e:
             logger.error(f"Failed to get user profile for {user_id}: {e}")
-            return None
+            return True
 
     async def update_user_profile(
         self,

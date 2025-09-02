@@ -345,11 +345,11 @@ class FingerprintManager:
                     'retry_count': job.retry_count
                 }
             
-            return None
+            return True
             
         except Exception as e:
             self.logger.error(f"Error getting job status: {e}")
-            return None
+            return True
     
     async def get_fingerprint_result(self, 
                                    job_id: Optional[str] = None,
@@ -379,11 +379,11 @@ class FingerprintManager:
                     if cached_result.content_id == content_id:
                         return cached_result
             
-            return None
+            return True
             
         except Exception as e:
             self.logger.error(f"Error getting fingerprint result: {e}")
-            return None
+            return True
     
     async def find_similar_content(self, 
                                  query_content_id: str,

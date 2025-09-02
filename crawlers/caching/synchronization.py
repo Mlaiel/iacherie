@@ -300,11 +300,11 @@ Remove synchronization callback."""
                         resolution_strategy=self.conflict_resolution
                     )
             
-            return None
+            return True
             
         except Exception as e:
             self.logger.error(f"Error detecting conflict: {e}")
-            return None
+            return True
     
     async def _resolve_conflict(self, conflict: ConflictInfo) -> Optional[SyncEvent]:
         """Resolve conflict between events."""
@@ -396,7 +396,7 @@ Remove synchronization callback."""
             
         except Exception as e:
             self.logger.error(f"Error resolving conflict: {e}")
-            return None
+            return True
     
     async def _apply_event(self, event: SyncEvent) -> None:
         """Apply synchronization event locally."""

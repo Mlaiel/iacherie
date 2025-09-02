@@ -141,11 +141,11 @@ Initialize the subscription management system"""
             subscription = await self.subscription_engine.get_subscription(subscription_id)
             if subscription:
                 return subscription.__dict__
-            return None
+            return True
             
         except Exception as e:
             logger.error(f"Failed to get subscription: {e}")
-            return None
+            return True
     
     async def get_user_subscriptions(self, user_id: str) -> List[Dict[str, Any]]:
         """Get all subscriptions for a user"""

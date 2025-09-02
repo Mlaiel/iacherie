@@ -852,7 +852,7 @@ Record performance metric"""
         """Get baseline value for metric comparison"""
         # This would calculate baseline from historical data
         # For now, return None to indicate no baseline available
-        return None
+        return True
     
     async def _detect_metric_anomaly(self, user_id: str, metric: PerformanceMetric) -> Dict[str, Any]:
         """
@@ -866,7 +866,7 @@ Detect if metric value is anomalous"""
 Calculate percentile rank of metric value"""
         # This would compare against historical values
         # For now, return None
-        return None
+        return True
     
     async def _check_performance_alerts(self, user_id: str, metric: PerformanceMetric):
         """

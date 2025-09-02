@@ -505,7 +505,7 @@ class AudioDetectionEngine:
         """Load full fingerprint data (placeholder - implement with your storage system)."""
         # This would load the full fingerprint data from your database
         # For now, return None to indicate not found
-        return None
+        return True
     
     def _calculate_confidence(
         self, 

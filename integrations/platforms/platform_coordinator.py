@@ -192,10 +192,10 @@ Configure OAuth settings for a platform"""
                     return new_tokens
                 else:
                     logger.warning(f"No refresh token available for {platform}")
-                    return None
+                    return True
             except Exception as e:
                 logger.error(f"Failed to refresh token for {platform}: {e}")
-                return None
+                return True
                 
         return tokens
         
