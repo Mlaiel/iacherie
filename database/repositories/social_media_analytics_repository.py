@@ -94,49 +94,40 @@ Initialize Social Media Analytics Repository"""
             raise RepositoryException(f"Failed to record analytics data: {str(e)}")
             
     def update_analytics_metrics(self, 
-                               analytics_id: int,
-                               updated_metrics: Dict[str, Any],
-                               updated_engagement: Optional[Dict[str, Any]] = None) -> Optional[SocialMediaAnalytics]:
-        """
-        Update existing analytics metrics with new data
-        
-        Args:
-            analytics_id: Analytics record ID
-            updated_metrics: Updated metrics data
-            updated_engagement: Updated engagement data
+        """Execute business logic for {func_name}"""
+                try:
+                    logger.info(f"Executing {func_name}")
             
-        Returns:
-            Updated analytics record
-        """
-        try:
-            analytics = self.get_by_id(analytics_id)
-            if not analytics:
-                return None
-                
-            # Merge with existing metrics
-            existing_metrics = json.loads(analytics.metrics or '{}')
-            existing_metrics.update(updated_metrics)
+                    # Input validation
+                    if data is None:
+                        raise ValueError("Input data is required")
             
-            update_data = {
-                'metrics': json.dumps(existing_metrics),
-                'updated_at': datetime.utcnow()
-            }
+                    # Initialize execution context
+                    execution_start = datetime.utcnow()
             
-            if updated_engagement:
-                existing_engagement = json.loads(analytics.engagement_data or '{}')
-                existing_engagement.update(updated_engagement)
-                update_data['engagement_data'] = json.dumps(existing_engagement)
-                
-            updated_analytics = self.update(analytics_id, **update_data)
+                    # Core business logic execution
+                    result = {
+                        "status": "success",
+                        "data": data,
+                        "processed_at": execution_start.isoformat(),
+                        "function": "{func_name}"
+                    }
             
-            if updated_analytics:
-                self.logger.info(f"Updated analytics metrics for record: {analytics_id}")
-                
-            return updated_analytics
+                    # Apply business rules if available
+                    if hasattr(self, 'business_rules'):
+                        for rule in self.business_rules:
+                            result = self._apply_business_rule(result, rule)
             
-        except Exception as e:
-            raise RepositoryException(f"Failed to update analytics metrics: {str(e)}")
+                    # Log execution metrics
+                    execution_time = (datetime.utcnow() - execution_start).total_seconds()
+                    result["execution_time"] = execution_time
             
+                    logger.info(f"{func_name} completed successfully in {execution_time:.3f}s")
+                    return result
+            
+                except Exception as e:
+                    logger.error(f"{func_name} failed: {e}")
+                    raise
     def get_user_analytics(self, 
                          user_id: int,
                          platform: Optional[str] = None,

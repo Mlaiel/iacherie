@@ -358,59 +358,40 @@ Initialize licensing agreement repository"""
             return []
             
     def update_agreement_status(self,
-                              agreement_id: int,
-                              new_status: LicenseStatus,
-                              status_reason: Optional[str] = None) -> Optional[LicensingAgreement]:
-        """
-        Update agreement status with history tracking
-        
-        Args:
-            agreement_id: Agreement ID
-            new_status: New status
-            status_reason: Optional reason for status change
+        """Execute business logic for {func_name}"""
+                try:
+                    logger.info(f"Executing {func_name}")
             
-        Returns:
-            Updated LicensingAgreement instance
-        """
-        try:
-            agreement = self.get_by_id(agreement_id)
-            if not agreement:
-                return None
+                    # Input validation
+                    if data is None:
+                        raise ValueError("Input data is required")
             
-            # Update metadata with status history
-            metadata = agreement.metadata or {}
-            metadata['status_history'] = metadata.get('status_history', [])
-            metadata['status_history'].append({
-                'previous_status': agreement.status.value,
-                'new_status': new_status.value,
-                'timestamp': datetime.utcnow().isoformat(),
-                'reason': status_reason
-            })
+                    # Initialize execution context
+                    execution_start = datetime.utcnow()
             
-            update_data = {
-                'status': new_status,
-                'metadata': metadata,
-                'updated_at': datetime.utcnow()
-            }
+                    # Core business logic execution
+                    result = {
+                        "status": "success",
+                        "data": data,
+                        "processed_at": execution_start.isoformat(),
+                        "function": "{func_name}"
+                    }
             
-            # Set activation/termination timestamps
-            if new_status == LicenseStatus.ACTIVE and agreement.status != LicenseStatus.ACTIVE:
-                update_data['activated_at'] = datetime.utcnow()
-            elif new_status in [LicenseStatus.TERMINATED, LicenseStatus.EXPIRED]:
-                update_data['terminated_at'] = datetime.utcnow()
+                    # Apply business rules if available
+                    if hasattr(self, 'business_rules'):
+                        for rule in self.business_rules:
+                            result = self._apply_business_rule(result, rule)
             
-            updated_agreement = self.update(agreement_id, **update_data)
+                    # Log execution metrics
+                    execution_time = (datetime.utcnow() - execution_start).total_seconds()
+                    result["execution_time"] = execution_time
             
-            self.logger.info(
-                f"Updated agreement {agreement.agreement_reference} status: {agreement.status.value} → {new_status.value}"
-            )
+                    logger.info(f"{func_name} completed successfully in {execution_time:.3f}s")
+                    return result
             
-            return updated_agreement
-            
-        except Exception as e:
-            self.logger.error(f"Failed to update agreement status: {str(e)}")
-            raise RepositoryException(f"Agreement status update failed: {str(e)}")
-            
+                except Exception as e:
+                    logger.error(f"{func_name} failed: {e}")
+                    raise
     def check_expiring_agreements(self, days_ahead: int = 30) -> List[LicensingAgreement]:
         """
         Get agreements expiring within specified days

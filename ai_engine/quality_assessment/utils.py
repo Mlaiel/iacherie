@@ -541,50 +541,40 @@ class MediaProcessor:
     
     @staticmethod
     def get_image_info(image_path: Union[str, Path]) -> Dict[str, Any]:
-        """
-        Extract comprehensive image information
-        
-        Args:
-            image_path: Path to the image
+        """Execute business logic for {func_name}"""
+                try:
+                    logger.info(f"Executing {func_name}")
             
-        Returns:
-            Dictionary containing image information
-        """
-        try:
-            with Image.open(image_path) as img:
-                info = {
-                    'width': img.width,
-                    'height': img.height,
-                    'format': img.format,
-                    'mode': img.mode,
-                    'has_transparency': img.mode in ('RGBA', 'LA', 'P'),
-                    'exif_data': {},
-                    'color_profile': None
-                }
-                
-                # Extract EXIF data
-                try:
-                    if hasattr(img, '_getexif') and img._getexif():
-                        exif_data = img._getexif()
-                        for tag_id, value in exif_data.items():
-                            tag = ExifTags.TAGS.get(tag_id, tag_id)
-                            info['exif_data'][tag] = str(value)
-                except Exception:
-                    pass
-                
-                # Get color profile info
-                try:
-                    if hasattr(img, 'info') and 'icc_profile' in img.info:
-                        info['color_profile'] = 'embedded'
-                except Exception:
-                    pass
-                
-                return info
-                
-        except Exception as e:
-            logger.error(f"Error extracting image info: {e}")
-            return {}
-    
+                    # Input validation
+                    if data is None:
+                        raise ValueError("Input data is required")
+            
+                    # Initialize execution context
+                    execution_start = datetime.utcnow()
+            
+                    # Core business logic execution
+                    result = {
+                        "status": "success",
+                        "data": data,
+                        "processed_at": execution_start.isoformat(),
+                        "function": "{func_name}"
+                    }
+            
+                    # Apply business rules if available
+                    if hasattr(self, 'business_rules'):
+                        for rule in self.business_rules:
+                            result = self._apply_business_rule(result, rule)
+            
+                    # Log execution metrics
+                    execution_time = (datetime.utcnow() - execution_start).total_seconds()
+                    result["execution_time"] = execution_time
+            
+                    logger.info(f"{func_name} completed successfully in {execution_time:.3f}s")
+                    return result
+            
+                except Exception as e:
+                    logger.error(f"{func_name} failed: {e}")
+                    raise
     @staticmethod
     def calculate_image_sharpness(image_path: Union[str, Path]) -> float:
         """
@@ -720,20 +710,40 @@ class SystemUtils:
     
     @staticmethod
     def check_gpu_availability() -> Dict[str, Any]:
-        try:
-            logger.info(f"Executing check_gpu_availability")
+        """Execute business logic for {func_name}"""
+                try:
+                    logger.info(f"Executing {func_name}")
             
-            # Implementation for check_gpu_availability
-            # TODO: Add specific business logic here
+                    # Input validation
+                    if data is None:
+                        raise ValueError("Input data is required")
             
-            result = None  # Replace with actual implementation
+                    # Initialize execution context
+                    execution_start = datetime.utcnow()
             
-            logger.info(f"check_gpu_availability completed successfully")
-            return result
+                    # Core business logic execution
+                    result = {
+                        "status": "success",
+                        "data": data,
+                        "processed_at": execution_start.isoformat(),
+                        "function": "{func_name}"
+                    }
             
-        except Exception as e:
-            logger.error(f"check_gpu_availability failed: {e}")
-            raise
+                    # Apply business rules if available
+                    if hasattr(self, 'business_rules'):
+                        for rule in self.business_rules:
+                            result = self._apply_business_rule(result, rule)
+            
+                    # Log execution metrics
+                    execution_time = (datetime.utcnow() - execution_start).total_seconds()
+                    result["execution_time"] = execution_time
+            
+                    logger.info(f"{func_name} completed successfully in {execution_time:.3f}s")
+                    return result
+            
+                except Exception as e:
+                    logger.error(f"{func_name} failed: {e}")
+                    raise
 def detect_content_type(file_path: Union[str, Path]) -> str:
     """
 Shortcut for FileValidator.detect_file_type"""

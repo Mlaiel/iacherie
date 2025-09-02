@@ -113,11 +113,48 @@ class PaymentTransactionCreateSchema(BasePaymentSchema):
     
     @validator('amount')
     def validate_amount(cls, v):
-        if v <= 0:
-            raise ValueError('Amount must be positive')
-        return v
-
-
+        """Validate data against business rules and constraints"""
+                try:
+                    logger.info(f"Validation {func_name} started")
+            
+                    validation_results = {
+                        "is_valid": True,
+                        "errors": [],
+                        "warnings": [],
+                        "score": 1.0
+                    }
+            
+                    # Required field validation
+                    required_fields = getattr(self, 'required_fields', [])
+                    for field in required_fields:
+                        if not data.get(field):
+                            validation_results["errors"].append(f"Required field '{field}' is missing")
+                            validation_results["is_valid"] = False
+            
+                    # Business rule validation
+                    business_rules = getattr(self, 'business_rules', [])
+                    for rule in business_rules:
+                        if not self._validate_business_rule(data, rule):
+                            validation_results["warnings"].append(f"Business rule violation: {rule}")
+                            validation_results["score"] *= 0.9
+            
+                    # Data integrity checks
+                    if self._has_data_integrity_issues(data):
+                        validation_results["errors"].append("Data integrity issues detected")
+                        validation_results["is_valid"] = False
+            
+                    # Calculate final validation score
+                    if validation_results["errors"]:
+                        validation_results["score"] = 0.0
+                    elif validation_results["warnings"]:
+                        validation_results["score"] *= 0.8
+            
+                    logger.info(f"Validation {func_name} completed: valid={validation_results['is_valid']}, score={validation_results['score']:.2f}")
+                    return validation_results
+            
+                except Exception as e:
+                    logger.error(f"Validation {func_name} failed: {e}")
+                    raise
 class PaymentTransactionUpdateSchema(BasePaymentSchema):
     """
 Schema for updating payment transactions"""

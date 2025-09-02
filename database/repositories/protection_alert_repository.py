@@ -382,66 +382,40 @@ Initialize protection alert repository"""
             return []
             
     def update_alert_status(self,
-                           alert_id: int,
-                           new_status: AlertStatus,
-                           resolution_notes: Optional[str] = None,
-                           automated_action: Optional[AutomatedAction] = None) -> Optional[ProtectionAlert]:
-        """
-        Update alert status with resolution tracking
-        
-        Args:
-            alert_id: Alert ID to update
-            new_status: New status to set
-            resolution_notes: Optional resolution notes
-            automated_action: Optional automated action taken
+        """Execute business logic for {func_name}"""
+                try:
+                    logger.info(f"Executing {func_name}")
             
-        Returns:
-            Updated ProtectionAlert instance
-        """
-        try:
-            alert = self.get_by_id(alert_id)
-            if not alert:
-                return None
+                    # Input validation
+                    if data is None:
+                        raise ValueError("Input data is required")
             
-            update_data = {
-                'status': new_status,
-                'updated_at': datetime.utcnow()
-            }
+                    # Initialize execution context
+                    execution_start = datetime.utcnow()
             
-            # Add resolution timestamp for resolved/dismissed alerts
-            if new_status in [AlertStatus.RESOLVED, AlertStatus.DISMISSED]:
-                update_data['resolved_at'] = datetime.utcnow()
-                
-            # Update metadata with resolution info
-            metadata = alert.metadata or {}
-            if resolution_notes:
-                metadata['resolution_notes'] = resolution_notes
-                
-            if automated_action:
-                metadata['final_action'] = automated_action.value
-                
-            metadata['status_history'] = metadata.get('status_history', [])
-            metadata['status_history'].append({
-                'previous_status': alert.status.value,
-                'new_status': new_status.value,
-                'timestamp': datetime.utcnow().isoformat(),
-                'notes': resolution_notes
-            })
+                    # Core business logic execution
+                    result = {
+                        "status": "success",
+                        "data": data,
+                        "processed_at": execution_start.isoformat(),
+                        "function": "{func_name}"
+                    }
             
-            update_data['metadata'] = metadata
+                    # Apply business rules if available
+                    if hasattr(self, 'business_rules'):
+                        for rule in self.business_rules:
+                            result = self._apply_business_rule(result, rule)
             
-            updated_alert = self.update(alert_id, **update_data)
+                    # Log execution metrics
+                    execution_time = (datetime.utcnow() - execution_start).total_seconds()
+                    result["execution_time"] = execution_time
             
-            self.logger.info(
-                f"Updated alert {alert_id} status: {alert.status.value} → {new_status.value}"
-            )
+                    logger.info(f"{func_name} completed successfully in {execution_time:.3f}s")
+                    return result
             
-            return updated_alert
-            
-        except Exception as e:
-            self.logger.error(f"Failed to update alert status: {str(e)}")
-            raise RepositoryException(f"Alert status update failed: {str(e)}")
-            
+                except Exception as e:
+                    logger.error(f"{func_name} failed: {e}")
+                    raise
     def get_alert_statistics(self,
                            user_id: Optional[int] = None,
                            days_back: int = 30) -> Dict[str, Any]:

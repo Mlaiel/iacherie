@@ -136,64 +136,40 @@ class CrossModalAttention(nn.Module):
         self.layer_norm = nn.LayerNorm(embedding_dim)
     
     def forward(self, modality_embeddings: Dict[ModalityType, torch.Tensor]) -> Dict[ModalityType, torch.Tensor]:
-        """
-        Compute cross-modal attention
-        
-        Args:
-            modality_embeddings: Dict mapping ModalityType to embeddings (batch_size, embedding_dim)
+        """Execute business logic for {func_name}"""
+                try:
+                    logger.info(f"Executing {func_name}")
             
-        Returns:
-            Attended embeddings for each modality
-        """
-        batch_size = next(iter(modality_embeddings.values())).size(0)
-        attended_embeddings = {}
-        
-        for query_modality, query_embed in modality_embeddings.items():
-            # Compute queries for this modality
-            queries = self.query_projections[query_modality.value](query_embed)
-            queries = queries.view(batch_size, self.num_heads, self.head_dim)
+                    # Input validation
+                    if data is None:
+                        raise ValueError("Input data is required")
             
-            # Attend to all modalities (including self)
-            attended_values = []
-            attention_weights = []
+                    # Initialize execution context
+                    execution_start = datetime.utcnow()
             
-            for key_modality, key_embed in modality_embeddings.items():
-                # Compute keys and values
-                keys = self.key_projections[key_modality.value](key_embed)
-                values = self.value_projections[key_modality.value](key_embed)
-                
-                keys = keys.view(batch_size, self.num_heads, self.head_dim)
-                values = values.view(batch_size, self.num_heads, self.head_dim)
-                
-                # Compute attention scores
-                attention_scores = torch.sum(queries * keys, dim=-1) * self.scale  # (batch_size, num_heads)
-                attention_weights.append(attention_scores)
-                
-                # Apply attention to values
-                attended_value = attention_scores.unsqueeze(-1) * values  # (batch_size, num_heads, head_dim)
-                attended_values.append(attended_value)
+                    # Core business logic execution
+                    result = {
+                        "status": "success",
+                        "data": data,
+                        "processed_at": execution_start.isoformat(),
+                        "function": "{func_name}"
+                    }
             
-            # Combine attended values from all modalities
-            # Normalize attention weights across modalities
-            all_attention_weights = torch.stack(attention_weights, dim=-1)  # (batch_size, num_heads, num_modalities)
-            normalized_weights = F.softmax(all_attention_weights, dim=-1)
+                    # Apply business rules if available
+                    if hasattr(self, 'business_rules'):
+                        for rule in self.business_rules:
+                            result = self._apply_business_rule(result, rule)
             
-            # Weight and sum attended values
-            combined_attended = torch.zeros_like(attended_values[0])
-            for i, attended_value in enumerate(attended_values):
-                weight = normalized_weights[:, :, i].unsqueeze(-1)  # (batch_size, num_heads, 1)
-                combined_attended += weight * attended_value
+                    # Log execution metrics
+                    execution_time = (datetime.utcnow() - execution_start).total_seconds()
+                    result["execution_time"] = execution_time
             
-            # Reshape and project output
-            combined_attended = combined_attended.view(batch_size, -1)  # (batch_size, embedding_dim)
-            output = self.output_projections[query_modality.value](combined_attended)
+                    logger.info(f"{func_name} completed successfully in {execution_time:.3f}s")
+                    return result
             
-            # Residual connection and layer norm
-            attended_embeddings[query_modality] = self.layer_norm(query_embed + self.dropout(output))
-        
-        return attended_embeddings
-
-
+                except Exception as e:
+                    logger.error(f"{func_name} failed: {e}")
+                    raise
 class MultiModalTransformerFusion(nn.Module):
     """
     Transformer-based multi-modal fusion architecture

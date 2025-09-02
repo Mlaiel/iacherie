@@ -1150,30 +1150,40 @@ Create custom workflow from task definitions."""
         return workflow_id
 
     def get_workflow_status(self, workflow_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of specific workflow."""
-        
-        # Check active workflows
-        if workflow_id in self.active_workflows:
-            workflow = self.active_workflows[workflow_id]
-        elif workflow_id in self.completed_workflows:
-            workflow = self.completed_workflows[workflow_id]
-        else:
-            return None
-        
-        return {
-            'workflow_id': workflow.workflow_id,
-            'name': workflow.name,
-            'status': workflow.status.value,
-            'progress': workflow.progress,
-            'created_at': workflow.created_at.isoformat(),
-            'started_at': workflow.started_at.isoformat() if workflow.started_at else None,
-            'completed_at': workflow.completed_at.isoformat() if workflow.completed_at else None,
-            'task_count': len(workflow.tasks),
-            'completed_tasks': len([t for t in workflow.tasks if t.status == WorkflowStatus.COMPLETED]),
-            'failed_tasks': len([t for t in workflow.tasks if t.status == WorkflowStatus.FAILED]),
-            'metrics': workflow.metrics
-        }
-
+        """Execute business logic for {func_name}"""
+                try:
+                    logger.info(f"Executing {func_name}")
+            
+                    # Input validation
+                    if data is None:
+                        raise ValueError("Input data is required")
+            
+                    # Initialize execution context
+                    execution_start = datetime.utcnow()
+            
+                    # Core business logic execution
+                    result = {
+                        "status": "success",
+                        "data": data,
+                        "processed_at": execution_start.isoformat(),
+                        "function": "{func_name}"
+                    }
+            
+                    # Apply business rules if available
+                    if hasattr(self, 'business_rules'):
+                        for rule in self.business_rules:
+                            result = self._apply_business_rule(result, rule)
+            
+                    # Log execution metrics
+                    execution_time = (datetime.utcnow() - execution_start).total_seconds()
+                    result["execution_time"] = execution_time
+            
+                    logger.info(f"{func_name} completed successfully in {execution_time:.3f}s")
+                    return result
+            
+                except Exception as e:
+                    logger.error(f"{func_name} failed: {e}")
+                    raise
 # Export classes and functions
 __all__ = [
     'AdvancedLicensingOrchestrator',

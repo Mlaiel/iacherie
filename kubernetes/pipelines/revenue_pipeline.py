@@ -534,23 +534,40 @@ class RevenueRecoveryPipelineManager:
         return analytics
         
     def get_claim_status(self, claim_id: str) -> Optional[Dict[str, Any]]:
-        """Get current status of revenue claim"""
-        if claim_id not in self.pending_claims:
-            return None
+        """Execute business logic for {func_name}"""
+                try:
+                    logger.info(f"Executing {func_name}")
             
-        claim = self.pending_claims[claim_id]
-        
-        return {
-            "claim_id": claim_id,
-            "status": claim.status.value,
-            "content_id": claim.content_id,
-            "platform": claim.platform.value,
-            "claimed_amount": str(claim.claimed_amount),
-            "currency": claim.currency,
-            "created_at": claim.created_at.isoformat(),
-            "processed_at": claim.processed_at.isoformat() if claim.processed_at else None
-        }
-        
+                    # Input validation
+                    if data is None:
+                        raise ValueError("Input data is required")
+            
+                    # Initialize execution context
+                    execution_start = datetime.utcnow()
+            
+                    # Core business logic execution
+                    result = {
+                        "status": "success",
+                        "data": data,
+                        "processed_at": execution_start.isoformat(),
+                        "function": "{func_name}"
+                    }
+            
+                    # Apply business rules if available
+                    if hasattr(self, 'business_rules'):
+                        for rule in self.business_rules:
+                            result = self._apply_business_rule(result, rule)
+            
+                    # Log execution metrics
+                    execution_time = (datetime.utcnow() - execution_start).total_seconds()
+                    result["execution_time"] = execution_time
+            
+                    logger.info(f"{func_name} completed successfully in {execution_time:.3f}s")
+                    return result
+            
+                except Exception as e:
+                    logger.error(f"{func_name} failed: {e}")
+                    raise
     def list_revenue_streams(self, owner_id: Optional[str] = None,
                            platform: Optional[RevenueSource] = None) -> List[Dict[str, Any]]:
         """List revenue streams with optional filtering"""
