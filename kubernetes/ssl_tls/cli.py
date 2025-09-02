@@ -66,7 +66,12 @@ class SSLCLIManager:
             self.ssl_validator = SSLValidator()
             self.cert_converter = CertificateConverter()
             self.test_server = SSLTestServer()
-        @config.command()
+        except Exception as e:
+            logger.error(f"Failed to initialize SSL/TLS components: {e}")
+            console.print(f"[red]Error: Failed to initialize SSL/TLS components: {e}[/red]")
+
+
+@config.command()
 @click.argument('config_file')
 @click.pass_context
 def create(ctx, config_file):
@@ -138,31 +143,69 @@ def cli(ctx, log_level, log_file):
 @cli.group()
 def certificate():
     """Certificate management commands"""
-    pass
+    console.print("🔐 [bold blue]Certificate Management Commands[/bold blue]")
+    console.print("Available subcommands:")
+    console.print("  • generate    - Generate new certificates")
+    console.print("  • list        - List existing certificates")
+    console.print("  • renew       - Renew expiring certificates")
+    console.print("  • revoke      - Revoke certificates")
+    console.print("  • validate    - Validate certificate files")
+    console.print("Example: ssl certificate generate --domain example.com")
 
 
 @cli.group()
 def scan():
     """SSL/TLS security scanning commands"""
-    pass
+    console.print("🔍 [bold blue]SSL/TLS Security Scanning[/bold blue]")
+    console.print("Available subcommands:")
+    console.print("  • domain      - Scan domain SSL configuration")
+    console.print("  • endpoints   - Scan multiple endpoints")
+    console.print("  • certificate - Analyze certificate details")
+    console.print("  • vulnerabilities - Check for SSL vulnerabilities")
+    console.print("  • ciphers     - Test supported cipher suites")
+    console.print("Example: ssl scan domain --hostname example.com --port 443")
 
 
 @cli.group()
 def config():
     """TLS configuration management commands"""
-    pass
+    console.print("⚙️  [bold blue]TLS Configuration Management[/bold blue]")
+    console.print("Available subcommands:")
+    console.print("  • generate    - Generate TLS configuration files")
+    console.print("  • validate    - Validate TLS configurations")
+    console.print("  • optimize    - Optimize TLS settings for security")
+    console.print("  • export      - Export configuration templates")
+    console.print("  • import      - Import configuration from files")
+    console.print("  • benchmark   - Benchmark TLS performance")
+    console.print("Example: ssl config generate --type nginx --security-level high")
 
 
 @cli.group()
 def monitor():
     """Certificate monitoring commands"""
-    pass
+    console.print("📊 [bold blue]Certificate Monitoring[/bold blue]")
+    console.print("Available subcommands:")
+    console.print("  • start       - Start certificate monitoring service")
+    console.print("  • status      - Check monitoring service status")
+    console.print("  • alerts      - Configure expiration alerts")
+    console.print("  • dashboard   - Launch monitoring dashboard")
+    console.print("  • endpoints   - Add/remove monitoring endpoints")
+    console.print("  • reports     - Generate monitoring reports")
+    console.print("Example: ssl monitor start --interval 3600 --alert-days 30")
 
 
 @cli.group()
 def convert():
     """Certificate conversion commands"""
-    pass
+    console.print("🔄 [bold blue]Certificate Conversion[/bold blue]")
+    console.print("Available subcommands:")
+    console.print("  • pem-to-der  - Convert PEM format to DER")
+    console.print("  • der-to-pem  - Convert DER format to PEM")
+    console.print("  • p12-to-pem  - Convert PKCS#12 to PEM")
+    console.print("  • pem-to-p12  - Convert PEM to PKCS#12")
+    console.print("  • extract     - Extract components from certificates")
+    console.print("  • combine     - Combine certificate and key files")
+    console.print("Example: ssl convert pem-to-der --input cert.pem --output cert.der")
 
 
 @cli.group()
@@ -216,7 +259,10 @@ def issue(ctx, domain, provider, challenge, email, staging):
                 else:
                     console.print(f"[red]✗ Failed to issue certificate: {result.error}[/red]")
                     sys.exit(1)
-            
+        except Exception as e:
+            console.print(f"[red]✗ Certificate issuance failed: {e}[/red]")
+            sys.exit(1)
+
 
 @certificate.command()
 @click.argument('domain')

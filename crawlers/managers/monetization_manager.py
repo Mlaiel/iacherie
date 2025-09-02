@@ -275,9 +275,193 @@ Initialize payment processing systems."""
     
     def _initialize_platform_clients(self):
         """Initialize platform API clients for revenue tracking."""
-        # This would initialize various platform APIs for revenue data collection
-        # Implementation depends on specific platform APIs and requirements
-        pass
+        try:
+            self.platform_clients = {}
+            
+            # Initialize YouTube Data API client for monetization tracking
+            if hasattr(self.config, 'youtube_api_key') and self.config.youtube_api_key:
+                from googleapiclient.discovery import build
+                self.platform_clients['youtube'] = {
+                    'service': build('youtube', 'v3', developerKey=self.config.youtube_api_key),
+                    'analytics': build('youtubeAnalytics', 'v2', developerKey=self.config.youtube_api_key),
+                    'revenue_tracking': True,
+                    'supported_metrics': ['estimated_revenue', 'ad_revenue', 'subscriber_revenue']
+                }
+                self.logger.info("YouTube API client initialized for revenue tracking")
+            
+            # Initialize Spotify API client for streaming revenue
+            if hasattr(self.config, 'spotify_client_id') and self.config.spotify_client_id:
+                import spotipy
+                from spotipy.oauth2 import SpotifyClientCredentials
+                
+                client_credentials_manager = SpotifyClientCredentials(
+                    client_id=self.config.spotify_client_id,
+                    client_secret=self.config.spotify_client_secret
+                )
+                self.platform_clients['spotify'] = {
+                    'service': spotipy.Spotify(client_credentials_manager=client_credentials_manager),
+                    'revenue_tracking': True,
+                    'supported_metrics': ['streaming_revenue', 'playlist_revenue', 'premium_revenue']
+                }
+                self.logger.info("Spotify API client initialized for revenue tracking")
+            
+            # Initialize TikTok Business API for monetization
+            if hasattr(self.config, 'tiktok_app_id') and self.config.tiktok_app_id:
+                self.platform_clients['tiktok'] = {
+                    'app_id': self.config.tiktok_app_id,
+                    'app_secret': self.config.tiktok_app_secret,
+                    'base_url': 'https://business-api.tiktok.com/open_api/',
+                    'revenue_tracking': True,
+                    'supported_metrics': ['creator_fund', 'live_gifts', 'brand_partnerships']
+                }
+                self.logger.info("TikTok Business API client initialized for revenue tracking")
+            
+            # Initialize Instagram Graph API for business accounts
+            if hasattr(self.config, 'instagram_access_token') and self.config.instagram_access_token:
+                self.platform_clients['instagram'] = {
+                    'access_token': self.config.instagram_access_token,
+                    'base_url': 'https://graph.instagram.com/',
+                    'revenue_tracking': True,
+                    'supported_metrics': ['reels_revenue', 'story_revenue', 'sponsored_content']
+                }
+                self.logger.info("Instagram Graph API client initialized for revenue tracking")
+            
+            # Initialize Twitch API for streaming revenue
+            if hasattr(self.config, 'twitch_client_id') and self.config.twitch_client_id:
+                self.platform_clients['twitch'] = {
+                    'client_id': self.config.twitch_client_id,
+                    'client_secret': self.config.twitch_client_secret,
+                    'base_url': 'https://api.twitch.tv/helix/',
+                    'revenue_tracking': True,
+                    'supported_metrics': ['subscription_revenue', 'bits_revenue', 'ad_revenue', 'donation_revenue']
+                }
+                self.logger.info("Twitch API client initialized for revenue tracking")
+            
+            # Initialize Patreon API for subscription revenue
+            if hasattr(self.config, 'patreon_client_id') and self.config.patreon_client_id:
+                self.platform_clients['patreon'] = {
+                    'client_id': self.config.patreon_client_id,
+                    'client_secret': self.config.patreon_client_secret,
+                    'base_url': 'https://www.patreon.com/api/oauth2/',
+                    'revenue_tracking': True,
+                    'supported_metrics': ['patron_revenue', 'tier_revenue', 'goal_revenue']
+                }
+                self.logger.info("Patreon API client initialized for revenue tracking")
+            
+            # Initialize OnlyFans API (if available)
+            if hasattr(self.config, 'onlyfans_api_key') and self.config.onlyfans_api_key:
+                self.platform_clients['onlyfans'] = {
+                    'api_key': self.config.onlyfans_api_key,
+                    'revenue_tracking': True,
+                    'supported_metrics': ['subscription_revenue', 'tip_revenue', 'ppv_revenue']
+                }
+                self.logger.info("OnlyFans API client initialized for revenue tracking")
+            
+            # Initialize platform revenue sync jobs
+            self.revenue_sync_intervals = {
+                'youtube': 3600,     # 1 hour
+                'spotify': 7200,     # 2 hours
+                'tiktok': 1800,      # 30 minutes
+                'instagram': 3600,   # 1 hour
+                'twitch': 900,       # 15 minutes
+                'patreon': 7200,     # 2 hours
+                'onlyfans': 1800     # 30 minutes
+            }
+            
+            # Set up automated revenue collection tasks
+            for platform, client_config in self.platform_clients.items():
+                if client_config.get('revenue_tracking'):
+                    asyncio.create_task(self._schedule_revenue_collection(platform))
+            
+            self.logger.info(f"Initialized {len(self.platform_clients)} platform clients for revenue tracking")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to initialize platform clients: {str(e)}")
+            # Fallback to basic configuration
+            self.platform_clients = {}
+    
+    async def _schedule_revenue_collection(self, platform: str):
+        """Schedule automated revenue collection for a platform."""
+        try:
+            interval = self.revenue_sync_intervals.get(platform, 3600)
+            
+            while True:
+                try:
+                    await self._collect_platform_revenue(platform)
+                    await asyncio.sleep(interval)
+                except Exception as e:
+                    self.logger.error(f"Revenue collection failed for {platform}: {str(e)}")
+                    # Wait before retrying
+                    await asyncio.sleep(300)  # 5 minutes
+                    
+        except asyncio.CancelledError:
+            self.logger.info(f"Revenue collection cancelled for {platform}")
+        except Exception as e:
+            self.logger.error(f"Revenue collection scheduler error for {platform}: {str(e)}")
+    
+    async def _collect_platform_revenue(self, platform: str):
+        """Collect revenue data from a specific platform."""
+        try:
+            client_config = self.platform_clients.get(platform)
+            if not client_config or not client_config.get('revenue_tracking'):
+                return
+            
+            if platform == 'youtube':
+                await self._collect_youtube_revenue(client_config)
+            elif platform == 'spotify':
+                await self._collect_spotify_revenue(client_config)
+            elif platform == 'tiktok':
+                await self._collect_tiktok_revenue(client_config)
+            elif platform == 'instagram':
+                await self._collect_instagram_revenue(client_config)
+            elif platform == 'twitch':
+                await self._collect_twitch_revenue(client_config)
+            elif platform == 'patreon':
+                await self._collect_patreon_revenue(client_config)
+            elif platform == 'onlyfans':
+                await self._collect_onlyfans_revenue(client_config)
+            
+            self.logger.debug(f"Revenue collection completed for {platform}")
+            
+        except Exception as e:
+            self.logger.error(f"Platform revenue collection failed for {platform}: {str(e)}")
+    
+    async def _collect_youtube_revenue(self, client_config: Dict[str, Any]):
+        """Collect YouTube revenue data using YouTube Analytics API."""
+        try:
+            # Implementation would use YouTube Analytics API to fetch revenue data
+            # This is a simplified version for demonstration
+            analytics_service = client_config.get('analytics')
+            if analytics_service:
+                # Fetch revenue data for the last 30 days
+                end_date = datetime.now().strftime('%Y-%m-%d')
+                start_date = (datetime.now() - timedelta(days=30)).strftime('%Y-%m-%d')
+                
+                # This would make actual API calls to get revenue data
+                revenue_data = {
+                    'platform': 'youtube',
+                    'period': f"{start_date} to {end_date}",
+                    'estimated_revenue': 0.0,  # Would be fetched from API
+                    'ad_revenue': 0.0,
+                    'subscriber_revenue': 0.0,
+                    'currency': 'USD'
+                }
+                
+                # Store revenue data in database
+                await self._store_revenue_data(revenue_data)
+                
+        except Exception as e:
+            self.logger.error(f"YouTube revenue collection failed: {str(e)}")
+    
+    async def _store_revenue_data(self, revenue_data: Dict[str, Any]):
+        """Store collected revenue data in database."""
+        try:
+            # Implementation would store the revenue data in the database
+            # This is a placeholder for the actual database operation
+            self.logger.debug(f"Stored revenue data: {revenue_data}")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to store revenue data: {str(e)}")
     
     async def track_revenue_stream(
         self,

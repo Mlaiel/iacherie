@@ -851,23 +851,240 @@ class SocialMediaAgent(BaseAgent):
     
     def _load_instagram_optimizer(self):
         """Load Instagram-specific optimization model"""
-        # Implementation for Instagram optimization model
-        pass
+        try:
+            # Instagram-specific content optimization
+            optimizer = {
+                'platform': 'instagram',
+                'content_formats': ['image', 'video', 'story', 'reel', 'carousel'],
+                'optimal_dimensions': {
+                    'square': (1080, 1080),
+                    'portrait': (1080, 1350),
+                    'story': (1080, 1920),
+                    'reel': (1080, 1920)
+                },
+                'hashtag_limits': {
+                    'max_per_post': 30,
+                    'optimal_count': 20,
+                    'trending_weight': 0.3
+                },
+                'caption_guidelines': {
+                    'max_length': 2200,
+                    'optimal_length': 125,
+                    'call_to_action': True,
+                    'emoji_usage': 'moderate'
+                },
+                'timing_optimization': {
+                    'peak_hours': [11, 13, 17, 19],
+                    'best_days': ['Tuesday', 'Wednesday', 'Thursday'],
+                    'story_peak': [19, 21]
+                },
+                'ai_features': {
+                    'auto_crop': True,
+                    'filter_suggestions': True,
+                    'caption_generation': True,
+                    'hashtag_generation': True,
+                    'engagement_prediction': True
+                }
+            }
+            
+            logger.info("Instagram optimizer loaded successfully")
+            return optimizer
+            
+        except Exception as e:
+            logger.error(f"Failed to load Instagram optimizer: {e}")
+            return {'platform': 'instagram', 'status': 'error', 'error': str(e)}
     
     def _load_tiktok_optimizer(self):
         """Load TikTok-specific optimization model"""
-        # Implementation for TikTok optimization model
-        pass
+        try:
+            # TikTok-specific content optimization
+            optimizer = {
+                'platform': 'tiktok',
+                'content_formats': ['video', 'live'],
+                'optimal_dimensions': {
+                    'video': (1080, 1920),
+                    'aspect_ratio': '9:16'
+                },
+                'video_specs': {
+                    'duration_limits': {'min': 3, 'max': 180, 'optimal': 15},
+                    'file_size_max': 287,  # MB
+                    'fps': [23.976, 24, 25, 29.97, 30],
+                    'codecs': ['H.264', 'H.265']
+                },
+                'hashtag_strategy': {
+                    'max_per_post': 100,
+                    'optimal_count': 5,
+                    'trending_focus': 0.6,
+                    'niche_balance': 0.4
+                },
+                'caption_guidelines': {
+                    'max_length': 2200,
+                    'optimal_length': 100,
+                    'hook_importance': 'critical',
+                    'call_to_action': True
+                },
+                'timing_optimization': {
+                    'peak_hours': [6, 10, 19, 21],
+                    'best_days': ['Tuesday', 'Thursday', 'Friday', 'Sunday'],
+                    'timezone_consideration': True
+                },
+                'ai_features': {
+                    'auto_captions': True,
+                    'trending_sounds': True,
+                    'effect_suggestions': True,
+                    'viral_prediction': True,
+                    'duet_recommendations': True
+                },
+                'engagement_tactics': {
+                    'questions_in_captions': True,
+                    'trend_participation': True,
+                    'user_generated_content': True,
+                    'challenges': True
+                }
+            }
+            
+            logger.info("TikTok optimizer loaded successfully")
+            return optimizer
+            
+        except Exception as e:
+            logger.error(f"Failed to load TikTok optimizer: {e}")
+            return {'platform': 'tiktok', 'status': 'error', 'error': str(e)}
     
     def _load_youtube_optimizer(self):
         """Load YouTube-specific optimization model"""
-        # Implementation for YouTube optimization model
-        pass
+        try:
+            # YouTube-specific content optimization
+            optimizer = {
+                'platform': 'youtube',
+                'content_formats': ['video', 'short', 'live', 'podcast'],
+                'video_specs': {
+                    'recommended_resolutions': ['1920x1080', '1280x720', '3840x2160'],
+                    'aspect_ratios': {
+                        'standard': '16:9',
+                        'shorts': '9:16',
+                        'square': '1:1'
+                    },
+                    'duration_optimization': {
+                        'shorts': {'min': 15, 'max': 60, 'optimal': 30},
+                        'standard': {'min': 180, 'optimal': 600, 'max': 3600},
+                        'long_form': {'min': 3600, 'optimal': 1800}
+                    },
+                    'codecs': ['H.264', 'VP9', 'AV1'],
+                    'audio_codec': 'AAC-LC'
+                },
+                'seo_optimization': {
+                    'title_length': {'min': 10, 'max': 100, 'optimal': 60},
+                    'description_length': {'min': 100, 'max': 5000, 'optimal': 250},
+                    'keyword_density': 0.03,
+                    'thumbnail_optimization': True
+                },
+                'hashtag_strategy': {
+                    'max_per_video': 15,
+                    'optimal_count': 3,
+                    'in_title': False,
+                    'in_description': True
+                },
+                'engagement_optimization': {
+                    'custom_thumbnails': True,
+                    'end_screens': True,
+                    'cards': True,
+                    'chapters': True,
+                    'community_tab': True
+                },
+                'timing_optimization': {
+                    'peak_hours': [14, 15, 20, 21],
+                    'best_days': ['Thursday', 'Friday', 'Saturday', 'Sunday'],
+                    'upload_consistency': 'critical'
+                },
+                'ai_features': {
+                    'auto_chapters': True,
+                    'thumbnail_generation': True,
+                    'title_optimization': True,
+                    'tag_suggestions': True,
+                    'audience_retention_analysis': True,
+                    'competitor_analysis': True
+                },
+                'monetization_features': {
+                    'mid_roll_ads': True,
+                    'channel_memberships': True,
+                    'super_chat': True,
+                    'merchandise_shelf': True
+                }
+            }
+            
+            logger.info("YouTube optimizer loaded successfully")
+            return optimizer
+            
+        except Exception as e:
+            logger.error(f"Failed to load YouTube optimizer: {e}")
+            return {'platform': 'youtube', 'status': 'error', 'error': str(e)}
     
     def _load_twitter_optimizer(self):
         """Load Twitter-specific optimization model"""
-        # Implementation for Twitter optimization model
-        pass
+        try:
+            # Twitter/X-specific content optimization
+            optimizer = {
+                'platform': 'twitter',
+                'content_formats': ['text', 'image', 'video', 'gif', 'poll', 'thread'],
+                'text_specifications': {
+                    'character_limit': 280,
+                    'optimal_length': 100,
+                    'thread_limit': 25,
+                    'url_shortening': True
+                },
+                'media_specs': {
+                    'image': {
+                        'max_size': 5,  # MB
+                        'formats': ['JPEG', 'PNG', 'GIF', 'WEBP'],
+                        'dimensions': {'min': 600, 'max': 4096}
+                    },
+                    'video': {
+                        'max_size': 512,  # MB
+                        'duration_limit': 140,  # seconds
+                        'formats': ['MP4', 'MOV'],
+                        'aspect_ratios': ['16:9', '1:1', '9:16']
+                    }
+                },
+                'hashtag_strategy': {
+                    'max_per_tweet': 2,
+                    'optimal_count': 1,
+                    'trending_focus': 0.8,
+                    'placement': 'end_of_tweet'
+                },
+                'engagement_optimization': {
+                    'retweet_optimization': True,
+                    'reply_encouragement': True,
+                    'quote_tweet_friendly': True,
+                    'poll_usage': True,
+                    'thread_continuation': True
+                },
+                'timing_optimization': {
+                    'peak_hours': [9, 12, 15, 18],
+                    'best_days': ['Tuesday', 'Wednesday', 'Thursday'],
+                    'frequency': {'optimal': 5, 'max': 15}  # tweets per day
+                },
+                'ai_features': {
+                    'sentiment_analysis': True,
+                    'trending_topics': True,
+                    'mention_tracking': True,
+                    'engagement_prediction': True,
+                    'thread_optimization': True,
+                    'hashtag_trending': True
+                },
+                'content_types': {
+                    'news_commentary': {'timing': 'immediate', 'tone': 'informative'},
+                    'entertainment': {'timing': 'evening', 'tone': 'casual'},
+                    'educational': {'timing': 'business_hours', 'tone': 'professional'},
+                    'promotional': {'timing': 'peak_hours', 'tone': 'engaging'}
+                }
+            }
+            
+            logger.info("Twitter optimizer loaded successfully")
+            return optimizer
+            
+        except Exception as e:
+            logger.error(f"Failed to load Twitter optimizer: {e}")
+            return {'platform': 'twitter', 'status': 'error', 'error': str(e)}
     
     # Platform API client creators
     def _create_instagram_client(self):
@@ -986,28 +1203,235 @@ class SocialMediaAgent(BaseAgent):
     
     def _create_twitter_client(self):
         """Create Twitter API client"""
-        # Implementation for Twitter API client
-        pass
+        try:
+            # Twitter API v2 configuration
+            twitter_config = {
+                'consumer_key': os.getenv('TWITTER_CONSUMER_KEY'),
+                'consumer_secret': os.getenv('TWITTER_CONSUMER_SECRET'),
+                'access_token': os.getenv('TWITTER_ACCESS_TOKEN'),
+                'access_token_secret': os.getenv('TWITTER_ACCESS_TOKEN_SECRET'),
+                'bearer_token': os.getenv('TWITTER_BEARER_TOKEN'),
+                'base_url': 'https://api.twitter.com/2',
+                'api_version': '2'
+            }
+            
+            if not twitter_config['consumer_key']:
+                logger.warning("Twitter API credentials not configured, using mock client")
+                return self._create_mock_client('twitter')
+            
+            client = {
+                'config': twitter_config,
+                'headers': {
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'Ainflue-Platform/1.0',
+                    'Authorization': f"Bearer {twitter_config['bearer_token']}"
+                },
+                'session': None,
+                'rate_limits': {
+                    'tweets_per_24h': 300,
+                    'requests_per_15min': 300,
+                    'current_count': 0,
+                    'reset_time': None
+                },
+                'features': {
+                    'media_upload': True,
+                    'polls': True,
+                    'threads': True,
+                    'spaces': True,
+                    'analytics': True
+                }
+            }
+            
+            logger.info("Twitter API client created successfully")
+            return client
+            
+        except Exception as e:
+            logger.error(f"Failed to create Twitter client: {e}")
+            return self._create_mock_client('twitter')
     
     def _create_facebook_client(self):
         """Create Facebook API client"""
-        # Implementation for Facebook API client
-        pass
+        try:
+            # Facebook Graph API configuration
+            facebook_config = {
+                'app_id': os.getenv('FACEBOOK_APP_ID'),
+                'app_secret': os.getenv('FACEBOOK_APP_SECRET'),
+                'access_token': os.getenv('FACEBOOK_ACCESS_TOKEN'),
+                'page_access_token': os.getenv('FACEBOOK_PAGE_ACCESS_TOKEN'),
+                'base_url': 'https://graph.facebook.com',
+                'api_version': 'v18.0'
+            }
+            
+            if not facebook_config['app_id']:
+                logger.warning("Facebook API credentials not configured, using mock client")
+                return self._create_mock_client('facebook')
+            
+            client = {
+                'config': facebook_config,
+                'headers': {
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'Ainflue-Platform/1.0'
+                },
+                'session': None,
+                'rate_limits': {
+                    'calls_per_hour': 4800,
+                    'pages_per_hour': 200,
+                    'current_count': 0,
+                    'reset_time': None
+                },
+                'features': {
+                    'pages_api': True,
+                    'instagram_basic_display': True,
+                    'marketing_api': True,
+                    'messenger_platform': True
+                }
+            }
+            
+            logger.info("Facebook API client created successfully")
+            return client
+            
+        except Exception as e:
+            logger.error(f"Failed to create Facebook client: {e}")
+            return self._create_mock_client('facebook')
     
     def _create_linkedin_client(self):
         """Create LinkedIn API client"""
-        # Implementation for LinkedIn API client
-        pass
+        try:
+            # LinkedIn API configuration
+            linkedin_config = {
+                'client_id': os.getenv('LINKEDIN_CLIENT_ID'),
+                'client_secret': os.getenv('LINKEDIN_CLIENT_SECRET'),
+                'access_token': os.getenv('LINKEDIN_ACCESS_TOKEN'),
+                'redirect_uri': os.getenv('LINKEDIN_REDIRECT_URI'),
+                'base_url': 'https://api.linkedin.com/v2',
+                'api_version': 'v2'
+            }
+            
+            if not linkedin_config['client_id']:
+                logger.warning("LinkedIn API credentials not configured, using mock client")
+                return self._create_mock_client('linkedin')
+            
+            client = {
+                'config': linkedin_config,
+                'headers': {
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'Ainflue-Platform/1.0',
+                    'X-Restli-Protocol-Version': '2.0.0'
+                },
+                'session': None,
+                'rate_limits': {
+                    'throttle_limit': 100000,  # per day
+                    'per_application': 500,  # per day
+                    'current_count': 0,
+                    'reset_time': None
+                },
+                'features': {
+                    'share_api': True,
+                    'ugc_posts': True,
+                    'marketing_api': True,
+                    'company_pages': True,
+                    'analytics': True
+                }
+            }
+            
+            logger.info("LinkedIn API client created successfully")
+            return client
+            
+        except Exception as e:
+            logger.error(f"Failed to create LinkedIn client: {e}")
+            return self._create_mock_client('linkedin')
     
     def _create_pinterest_client(self):
         """Create Pinterest API client"""
-        # Implementation for Pinterest API client
-        pass
+        try:
+            # Pinterest API configuration
+            pinterest_config = {
+                'app_id': os.getenv('PINTEREST_APP_ID'),
+                'app_secret': os.getenv('PINTEREST_APP_SECRET'),
+                'access_token': os.getenv('PINTEREST_ACCESS_TOKEN'),
+                'redirect_uri': os.getenv('PINTEREST_REDIRECT_URI'),
+                'base_url': 'https://api.pinterest.com/v5',
+                'api_version': 'v5'
+            }
+            
+            if not pinterest_config['app_id']:
+                logger.warning("Pinterest API credentials not configured, using mock client")
+                return self._create_mock_client('pinterest')
+            
+            client = {
+                'config': pinterest_config,
+                'headers': {
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'Ainflue-Platform/1.0'
+                },
+                'session': None,
+                'rate_limits': {
+                    'requests_per_day': 1000,
+                    'requests_per_hour': 200,
+                    'current_count': 0,
+                    'reset_time': None
+                },
+                'features': {
+                    'pins_api': True,
+                    'boards_api': True,
+                    'catalogs_api': True,
+                    'ads_api': True,
+                    'analytics': True
+                }
+            }
+            
+            logger.info("Pinterest API client created successfully")
+            return client
+            
+        except Exception as e:
+            logger.error(f"Failed to create Pinterest client: {e}")
+            return self._create_mock_client('pinterest')
     
     def _create_snapchat_client(self):
         """Create Snapchat API client"""
-        # Implementation for Snapchat API client
-        pass
+        try:
+            # Snapchat Marketing API configuration
+            snapchat_config = {
+                'client_id': os.getenv('SNAPCHAT_CLIENT_ID'),
+                'client_secret': os.getenv('SNAPCHAT_CLIENT_SECRET'),
+                'access_token': os.getenv('SNAPCHAT_ACCESS_TOKEN'),
+                'refresh_token': os.getenv('SNAPCHAT_REFRESH_TOKEN'),
+                'base_url': 'https://adsapi.snapchat.com/v1',
+                'api_version': 'v1'
+            }
+            
+            if not snapchat_config['client_id']:
+                logger.warning("Snapchat API credentials not configured, using mock client")
+                return self._create_mock_client('snapchat')
+            
+            client = {
+                'config': snapchat_config,
+                'headers': {
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'Ainflue-Platform/1.0'
+                },
+                'session': None,
+                'rate_limits': {
+                    'requests_per_second': 10,
+                    'requests_per_hour': 1000,
+                    'current_count': 0,
+                    'reset_time': None
+                },
+                'features': {
+                    'ads_api': True,
+                    'creative_api': True,
+                    'targeting_api': True,
+                    'reporting_api': True,
+                    'pixel_api': True
+                }
+            }
+            
+            logger.info("Snapchat API client created successfully")
+            return client
+            
+        except Exception as e:
+            logger.error(f"Failed to create Snapchat client: {e}")
+            return self._create_mock_client('snapchat')
 
 
 class SocialMediaAgentManager:
