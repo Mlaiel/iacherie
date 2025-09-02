@@ -221,6 +221,7 @@ Create new entity with validation and audit"""
             self.logger.error(f"Error creating entity: {e}")
             raise
     
+    @abstractmethod
     async def _perform_create(self, entity: T, **kwargs) -> T:
         """Override this method in subclasses for actual creation logic"""
         raise NotImplementedError("Subclasses must implement _perform_create")
@@ -260,6 +261,7 @@ Get entity by ID with cache support"""
             self.logger.error(f"Error getting entity by ID {entity_id}: {e}")
             raise
     
+    @abstractmethod
     async def _perform_get_by_id(self, entity_id: str) -> Optional[T]:
         """Override this method in subclasses for actual lookup logic"""
         raise NotImplementedError("Subclasses must implement _perform_get_by_id")
@@ -306,6 +308,7 @@ Update entity with validation and audit"""
             self.logger.error(f"Error updating entity: {e}")
             raise
     
+    @abstractmethod
     async def _perform_update(self, entity: T, **kwargs) -> T:
         """Override this method in subclasses for actual update logic"""
         raise NotImplementedError("Subclasses must implement _perform_update")
@@ -351,6 +354,7 @@ Delete entity with soft delete option"""
             self.logger.error(f"Error deleting entity ID {entity_id}: {e}")
             raise
     
+    @abstractmethod
     async def _perform_delete(self, entity_id: str, soft_delete: bool = False) -> bool:
         """Override this method in subclasses for actual deletion logic"""
         raise NotImplementedError("Subclasses must implement _perform_delete")
@@ -400,6 +404,7 @@ List entities with advanced filtering and ordering"""
             self.logger.error(f"Error listing entities: {e}")
             raise
     
+    @abstractmethod
     async def _perform_list(self, filters: Dict[str, Any], limit: int, offset: int, order_by: str) -> List[T]:
         """Override this method in subclasses for actual list logic"""
         raise NotImplementedError("Subclasses must implement _perform_list")
