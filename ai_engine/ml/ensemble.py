@@ -9,6 +9,7 @@ model blending, voting systems, stacking, and advanced ensemble techniques.
 import logging
 import numpy as np
 import copy
+import time
 from typing import Dict, List, Any, Optional, Union, Tuple, Callable
 from dataclasses import dataclass
 from enum import Enum
@@ -581,9 +582,100 @@ class VotingClassifier:
             raise
     
     def _fit_classifier(self, classifier: Any, X: np.ndarray, y: np.ndarray):
-        """Fit individual classifier (simulation)"""
-        # In production, this would call classifier.fit(X, y)
-        pass
+        """Fit individual classifier with proper error handling and optimization"""
+        try:
+            # Validate input data
+            if X.size == 0 or y.size == 0:
+                raise ValueError("Training data cannot be empty")
+            
+            if len(X) != len(y):
+                raise ValueError("X and y must have the same number of samples")
+            
+            # Check for NaN or infinite values
+            if np.any(np.isnan(X)) or np.any(np.isinf(X)):
+                self.logger.warning("Input data contains NaN or infinite values, cleaning...")
+                X = np.nan_to_num(X, nan=0.0, posinf=1e6, neginf=-1e6)
+            
+            if np.any(np.isnan(y)) or np.any(np.isinf(y)):
+                self.logger.warning("Target data contains NaN or infinite values, cleaning...")
+                y = np.nan_to_num(y, nan=0.0, posinf=1e6, neginf=-1e6)
+            
+            # Fit the classifier based on its type
+            classifier_type = type(classifier).__name__
+            
+            if hasattr(classifier, 'fit'):
+                # Standard scikit-learn interface
+                if classifier_type in ['RandomForestClassifier', 'GradientBoostingClassifier']:
+                    # Tree-based classifiers - can handle most data types
+                    classifier.fit(X, y)
+                    
+                elif classifier_type in ['SVC', 'LinearSVC']:
+                    # SVM classifiers - may need feature scaling
+                    from sklearn.preprocessing import StandardScaler
+                    scaler = StandardScaler()
+                    X_scaled = scaler.fit_transform(X)
+                    classifier.fit(X_scaled, y)
+                    # Store scaler for later use
+                    classifier._scaler = scaler
+                    
+                elif classifier_type in ['LogisticRegression', 'SGDClassifier']:
+                    # Linear classifiers - benefit from feature scaling
+                    from sklearn.preprocessing import StandardScaler
+                    scaler = StandardScaler()
+                    X_scaled = scaler.fit_transform(X)
+                    classifier.fit(X_scaled, y)
+                    classifier._scaler = scaler
+                    
+                elif classifier_type in ['KNeighborsClassifier']:
+                    # Distance-based classifiers - require feature scaling
+                    from sklearn.preprocessing import StandardScaler
+                    scaler = StandardScaler()
+                    X_scaled = scaler.fit_transform(X)
+                    classifier.fit(X_scaled, y)
+                    classifier._scaler = scaler
+                    
+                elif classifier_type in ['MLPClassifier']:
+                    # Neural network - requires feature scaling and convergence handling
+                    from sklearn.preprocessing import StandardScaler
+                    scaler = StandardScaler()
+                    X_scaled = scaler.fit_transform(X)
+                    
+                    # Set solver and learning rate based on data size
+                    if len(X) > 10000:
+                        classifier.solver = 'adam'
+                        classifier.learning_rate = 'adaptive'
+                    
+                    classifier.fit(X_scaled, y)
+                    classifier._scaler = scaler
+                    
+                else:
+                    # Generic classifier - use default fitting
+                    classifier.fit(X, y)
+                
+                # Validate that the classifier was fitted properly
+                if hasattr(classifier, 'classes_'):
+                    self.logger.debug(f"Classifier {classifier_type} fitted successfully with {len(classifier.classes_)} classes")
+                else:
+                    self.logger.debug(f"Classifier {classifier_type} fitted successfully")
+                
+                # Store training metadata
+                classifier._training_metadata = {
+                    'n_samples': len(X),
+                    'n_features': X.shape[1] if len(X.shape) > 1 else 1,
+                    'n_classes': len(np.unique(y)),
+                    'fit_time': time.time(),
+                    'data_shape': X.shape,
+                    'target_shape': y.shape
+                }
+                
+            else:
+                # Custom classifier without fit method
+                self.logger.warning(f"Classifier {classifier_type} does not have a 'fit' method")
+                raise AttributeError(f"Classifier {classifier_type} must implement a 'fit' method")
+                
+        except Exception as e:
+            self.logger.error(f"Failed to fit classifier {type(classifier).__name__}: {str(e)}")
+            raise
     
     def predict(self, X: np.ndarray) -> np.ndarray:
         """
