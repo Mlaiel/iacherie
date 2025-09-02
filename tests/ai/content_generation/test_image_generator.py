@@ -360,7 +360,20 @@ Test basic AI image generation"""
         
         with patch.object(generator, '_generate_with_ai') as mock_generation:
             def provider_generation(prompt, config, provider):
-                return {
+        try:
+            logger.info(f"Executing provider_generation")
+            
+            # Implementation for provider_generation
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"provider_generation completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"provider_generation failed: {e}")
+            raise
                     "success": True,
                     "image_path": f"/tmp/{provider.value}_result.jpg",
                     "provider": provider.value,
@@ -464,6 +477,26 @@ Test basic AI image generation"""
                     commercial_use=True
                 )
                 
+                assert result["success"] is True
+                assert result["copyright_checked"] is True
+                assert result["commercial_usage"] == "approved"
+    
+    @pytest.mark.asyncio
+    async def test_image_format_conversion(self, generator):
+        try:
+            logger.info(f"Executing format_conversion")
+            
+            # Implementation for format_conversion
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"format_conversion completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"format_conversion failed: {e}")
+            raise
                 assert result["success"] is True
                 assert result["copyright_checked"] is True
                 assert result["commercial_usage"] == "approved"

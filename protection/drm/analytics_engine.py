@@ -1145,10 +1145,36 @@ Initialize analytics engine."""
                 logger.error(f"Error during periodic analysis: {e}")
     
     async def _aggregate_metrics(self, period: AggregationPeriod) -> None:
-        """Aggregate metrics for specified period."""
-        # This would implement metric aggregation logic
-        pass
-    
+        try:
+            logger.info(f"Executing _aggregate_metrics")
+            
+            # Implementation for _aggregate_metrics
+            # TODO: Add specific business logic here
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__update_prediction_models_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__update_prediction_models_result(result)
+            
+                    logger.info(f"AI processing _update_prediction_models completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _update_prediction_models failed: {e}")
+                    raise
+            return result
+            
+        except Exception as e:
+            logger.error(f"_aggregate_metrics failed: {e}")
+            raise
     async def _update_prediction_models(self) -> None:
         """
 Update machine learning prediction models."""

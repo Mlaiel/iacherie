@@ -766,10 +766,28 @@ Process Stripe webhook."""
             self.logger.warning(f"Failed to delete Stripe payment method: {str(e)}")
     
     async def _delete_paypal_payment_method(self, payment_method_id: str) -> None:
-        """Delete PayPal payment method."""
-        # PayPal payment method deletion logic
-        pass
-    
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _delete_paypal_payment_method completed")
+                        return True
+                
+                except Exception as e:
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _delete_wise_payment_method completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _delete_wise_payment_method failed: {e}")
+                    raise
+                    logger.error(f"Database operation _delete_paypal_payment_method failed: {e}")
+                    raise
     async def _delete_wise_payment_method(self, payment_method_id: str) -> None:
         """
 Delete Wise payment method."""

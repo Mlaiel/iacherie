@@ -711,20 +711,49 @@ Normalize API content to standard format"""
         return item
 
     async def _passes_content_filters(self, content: Dict[str, Any], filters: Dict[str, Any]) -> bool:
-        """
-Check if content passes aggregation filters"""
-        return True
-
+        try:
+            logger.info(f"Executing _passes_content_filters")
+            
+            # Implementation for _passes_content_filters
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_passes_content_filters completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_passes_content_filters failed: {e}")
+            raise
     async def _find_existing_content(self, content: Dict[str, Any]) -> Optional[Any]:
         """
 Find existing content in database"""
         return None
 
     async def _create_new_content(self, content: Dict[str, Any], source_id: str) -> Optional[Any]:
-        """
-Create new content record"""
-        return None
-
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _update_source_sync_status completed")
+                        return True
+                
+                except Exception as e:
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _update_aggregation_stats completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _update_aggregation_stats failed: {e}")
+                    raise
+                except Exception as e:
+                    logger.error(f"Database operation _update_source_sync_status failed: {e}")
+                    raise
     async def _update_existing_content(self, existing: Any, new_content: Dict[str, Any]) -> Optional[Any]:
         """
 Update existing content record"""

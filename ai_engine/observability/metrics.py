@@ -81,7 +81,20 @@ class MetricSample:
     labels: Dict[str, str] = field(default_factory=dict)
     
     def __post_init__(self):
-        if self.timestamp.tzinfo is None:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             self.timestamp = self.timestamp.replace(tzinfo=timezone.utc)
     
     def to_dict(self) -> Dict[str, Any]:
@@ -708,11 +721,20 @@ Clean up old metrics data"""
                     'sum': metric.get_sum(),
                     'count': metric.get_count(),
                     'buckets': metric.get_bucket_counts()
-                })
-            elif isinstance(metric, Summary):
-                metric_info.update({
-                    'sum': metric.get_sum(),
-                    'count': metric.get_count(),
+        try:
+            logger.info(f"Executing _export_to_backend")
+            
+            # Implementation for _export_to_backend
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_export_to_backend completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_export_to_backend failed: {e}")
+            raise
                     'quantiles': metric.get_quantiles()
                 })
             

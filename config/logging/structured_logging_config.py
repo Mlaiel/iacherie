@@ -470,15 +470,20 @@ Set correlation ID for request tracking"""
             self._thread_local.correlation_id = correlation_id
     
     def get_correlation_id(self) -> Optional[str]:
-        """
-Get current correlation ID"""
-        if self.enable_context_vars:
-            try:
-                return structlog.get_logger().bind().context.get('correlation_id')
-            except:
-                pass
-        return getattr(self._thread_local, 'correlation_id', None)
-    
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_correlation_id_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_correlation_id failed: {e}")
+                    return {"status": "error", "message": str(e)}
     def clear_context(self) -> None:
         """
 Clear all context information"""

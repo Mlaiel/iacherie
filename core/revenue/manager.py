@@ -230,10 +230,20 @@ Initialize revenue manager"""
         self.portfolios[sample_portfolio.portfolio_id] = sample_portfolio
     
     async def _load_targets(self) -> None:
-        """Load existing revenue targets"""
-        # In production, load from database
-        pass
-    
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__load_targets_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _load_targets failed: {e}")
+                    return {"status": "error", "message": str(e)}
     async def _setup_performance_tracking(self) -> None:
         """
 Setup performance tracking system"""

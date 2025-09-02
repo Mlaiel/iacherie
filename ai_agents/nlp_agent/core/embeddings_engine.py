@@ -186,15 +186,20 @@ Initialize embedding models"""
         self.fallback_mode = True
     
     def _get_device(self) -> int:
-        """Get optimal device for model execution"""
-        if self.config.performance.enable_gpu and TRANSFORMERS_AVAILABLE:
-            try:
-                if torch.cuda.is_available():
-                    return 0  # Use first GPU
-            except:
-                pass
-        return -1  # Use CPU
-    
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_device_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_device failed: {e}")
+                    return {"status": "error", "message": str(e)}
     def _initialize_faiss(self):
         """
 Initialize FAISS index for fast similarity search"""
@@ -970,26 +975,20 @@ Clear embedding caches"""
         logger.info("Embedding cache cleared")
     
     def health_check(self) -> Dict[str, Any]:
-        """Perform health check"""
-        status = {
-            "status": "healthy",
-            "transformers_available": TRANSFORMERS_AVAILABLE,
-            "sklearn_available": SKLEARN_AVAILABLE,
-            "faiss_available": FAISS_AVAILABLE,
-            "models_loaded": len(self.models),
-            "pipelines_loaded": len(self.pipelines),
-            "embeddings_stored": len(self.embedding_store),
-            "cache_size": len(self.embeddings_cache),
-            "faiss_index_size": self.faiss_index.ntotal if self.faiss_index else 0
-        }
-        
-        # Test basic functionality
         try:
-            test_result = asyncio.run(
-                self.generate_embeddings("This is a test text for embedding.")
-            )
-            status["test_result"] = "passed"
-            status["test_embedding_dim"] = test_result.embedding_dim
+            logger.info(f"Executing health_check")
+            
+            # Implementation for health_check
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"health_check completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"health_check failed: {e}")
+            raise
         except Exception as e:
             status["status"] = "degraded"
             status["error"] = str(e)

@@ -767,15 +767,36 @@ Abstract base class for event handlers."""
     async def handle_event(
         self,
         event: Event,
-        context: Dict[str, Any]
-    ) -> Dict[str, Any]:
-        """
-Handle a specific event."""
-        pass
-    
+        try:
+            logger.info(f"Executing handle_event")
+            
+            # Implementation for handle_event
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"handle_event completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"handle_event failed: {e}")
+            raise
     @abstractmethod
     async def validate_event(self, event: Event) -> bool:
-        """
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_supported_event_types_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_supported_event_types failed: {e}")
+                    return {"status": "error", "message": str(e)}
 Validate if event can be handled."""
         pass
     
@@ -2019,26 +2040,20 @@ Monitoring loop for event system."""
                         events_to_remove.append(event_id)
             
             for event_id in events_to_remove:
-                del self.processed_events[event_id]
-            
-            if events_to_remove:
-                logger.info(f"Cleaned up {len(events_to_remove)} old processed events")
-                
-        except Exception as e:
-            logger.error(f"Event cleanup error: {e}")
-    
-    async def health_check(self) -> bool:
-        """Check scheduler health."""
         try:
-            return (
-                self.is_running and
-                self.processing_task and not self.processing_task.done() and
-                self.monitoring_task and not self.monitoring_task.done() and
-                self.event_queue.qsize() < 10000  # Queue not overwhelmed
-            )
-        except Exception:
-            return False
-    
+            logger.info(f"Executing stop")
+            
+            # Implementation for stop
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"stop completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"stop failed: {e}")
+            raise
     async def stop(self) -> None:
         """
 Stop the event-driven scheduler."""

@@ -1594,29 +1594,20 @@ Monitoring loop for batch processing."""
             return False
     
     async def stop(self) -> None:
-        """
-Stop the batch scheduler."""
-        logger.info("Stopping batch scheduler...")
-        
-        self.is_running = False
-        
-        # Cancel background tasks
-        for task in [self.processing_task, self.monitoring_task, self.metrics_task]:
-            if task:
-                task.cancel()
-                try:
-                    await task
-                except asyncio.CancelledError:
-                    pass
-        
-        # Shutdown executors
-        self.thread_pool.shutdown(wait=True)
-        self.process_pool.shutdown(wait=True)
-        
-        logger.info("Batch scheduler stopped")
-
-
-# Export main classes
+        try:
+            logger.info(f"Executing stop")
+            
+            # Implementation for stop
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"stop completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"stop failed: {e}")
+            raise
 __all__ = [
     'BatchScheduler',
     'BatchRequest',

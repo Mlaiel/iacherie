@@ -98,7 +98,20 @@ class AudioAnalysisStartedEvent(BaseEvent):
     analysis_parameters: Dict[str, Any]
     
     def __post_init__(self):
-        super().__init__(
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             event_type="audio.analysis.started",
             event_category=EventCategory.ANALYSIS,
             priority=EventPriority.HIGH,
@@ -122,7 +135,20 @@ class AudioAnalysisProgressEvent(BaseEvent):
     Provides real-time feedback about AI analysis pipeline progress.
     """
     user_id: UUID
-    file_id: UUID
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     analysis_id: UUID
     current_analysis_type: AnalysisType
     analysis_progress: float  # 0.0 to 1.0
@@ -145,7 +171,20 @@ class AudioAnalysisProgressEvent(BaseEvent):
                 "analysis_id": str(self.analysis_id),
                 "current_analysis": self.current_analysis_type.value,
                 "overall_progress": self.overall_progress,
-                "estimated_remaining": self.estimated_remaining
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             }
         )
 
@@ -171,7 +210,20 @@ class AudioAnalysisCompletedEvent(BaseEvent):
     processing_statistics: Dict[str, Any]
     
     def __post_init__(self):
-        super().__init__(
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             event_type="audio.analysis.completed",
             event_category=EventCategory.ANALYSIS,
             priority=EventPriority.HIGH,
@@ -198,7 +250,20 @@ class AudioAnalysisFailedEvent(BaseEvent):
     file_id: UUID
     analysis_id: UUID
     failed_analysis_type: AnalysisType
-    error_code: str
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     error_message: str
     error_details: Dict[str, Any]
     partial_results: Dict[str, Any]
@@ -227,6 +292,21 @@ class AudioAnalysisFailedEvent(BaseEvent):
 
 
 @dataclass
+class AudioGenreDetectionEvent(BaseEvent):
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
 class AudioGenreDetectionEvent(BaseEvent):
     """
     Event triggered when genre detection analysis is completed.
@@ -257,6 +337,22 @@ class AudioGenreDetectionEvent(BaseEvent):
             user_id=self.user_id,
             metadata={
                 "file_id": str(self.file_id),
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            metadata={
+                "file_id": str(self.file_id),
                 "detection_id": str(self.detection_id),
                 "primary_genre": self.primary_genre,
                 "genre_confidence": self.genre_confidence,
@@ -280,7 +376,20 @@ class AudioMoodAnalysisEvent(BaseEvent):
     mood_confidence: float
     emotional_valence: float  # -1.0 (negative) to 1.0 (positive)
     emotional_arousal: float  # 0.0 (calm) to 1.0 (energetic)
-    mood_progression: List[Tuple[float, str, float]]  # (time, mood, confidence)
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     emotional_intensity: float
     mood_stability: float
     atmospheric_qualities: List[str]
@@ -310,6 +419,22 @@ class AudioMoodAnalysisEvent(BaseEvent):
 
 @dataclass
 class AudioBPMDetectionEvent(BaseEvent):
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
+@dataclass
+class AudioBPMDetectionEvent(BaseEvent):
     """
     Event triggered when BPM (tempo) detection is completed.
     
@@ -336,6 +461,25 @@ class AudioBPMDetectionEvent(BaseEvent):
     def __post_init__(self):
         super().__init__(
             event_type="audio.analysis.bpm_detection",
+            event_category=EventCategory.RHYTHM,
+            priority=EventPriority.MEDIUM,
+            user_id=self.user_id,
+            metadata={
+                "file_id": str(self.file_id),
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             event_category=EventCategory.RHYTHM,
             priority=EventPriority.MEDIUM,
             user_id=self.user_id,

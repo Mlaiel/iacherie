@@ -37,8 +37,33 @@ app.include_router(api_router, prefix=root_prefix)
 
 @app.get("/health", tags=["System"])
 def health():
-    return {"status": "ok"}
-
+        try:
+            logger.info(f"Executing health")
+            
+            # Implementation for health
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing ready")
+            
+            # Implementation for ready
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"ready completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"ready failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"health completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"health failed: {e}")
+            raise
 @app.get("/ready", tags=["System"])
 def ready():
     return {"status": "ready"}

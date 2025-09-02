@@ -539,25 +539,20 @@ Start buffered synthesis worker."""
             logger.warning("Synthesis queue full, dropping request")
             
     def get_next_chunk(self) -> Optional[np.ndarray]:
-        """Get next synthesized chunk."""
-        # Try immediate buffer first
-        if self.immediate_buffer:
-            return self.immediate_buffer.popleft()
-            
-        # Try result queue
         try:
-            chunk = self.result_queue.get_nowait()
-            return chunk
-        except queue.Empty:
-            pass
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
             
-        # Emergency buffer as last resort
-        if self.emergency_buffer:
-            logger.warning("Using emergency buffer")
-            return self.emergency_buffer.popleft()
+                    # Process request
+                    result = await self._handle_get_next_chunk_request(data)
             
-        return None
-        
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_next_chunk failed: {e}")
+                    return {"status": "error", "message": str(e)}
     def _synthesis_worker(self) -> None:
         """Background synthesis worker."""
         while self.is_active:

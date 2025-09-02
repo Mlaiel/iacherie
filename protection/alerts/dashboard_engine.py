@@ -1075,10 +1075,31 @@ Get alert resolution metrics"""
     # Additional utility methods would be implemented here...
     
     async def _aggregate_metrics(self):
-        """
-Aggregate collected metrics"""
-        pass
-    
+        try:
+            logger.info(f"Executing _aggregate_metrics")
+            
+            # Implementation for _aggregate_metrics
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _clean_expired_cache")
+            
+            # Implementation for _clean_expired_cache
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_clean_expired_cache completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_clean_expired_cache failed: {e}")
+            raise
+            logger.info(f"_aggregate_metrics completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_aggregate_metrics failed: {e}")
+            raise
     async def _clean_expired_cache(self):
         """
 Clean expired cache entries"""

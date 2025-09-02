@@ -721,36 +721,20 @@ Push harmonized data to target platform"""
     async def _apply_transformation_rules(
         self,
         data: Dict[str, Any],
-        rules: List[Dict[str, Any]]
-    ) -> Dict[str, Any]:
-        """Apply transformation rules to data"""
-        transformed_data = data.copy()
-        
-        for rule in rules:
-            rule_type = rule.get('type')
+        try:
+            logger.info(f"Executing _apply_transformation_rules")
             
-            if rule_type == 'rename_field':
-                old_name = rule.get('old_name')
-                new_name = rule.get('new_name')
-                if old_name in transformed_data:
-                    transformed_data[new_name] = transformed_data.pop(old_name)
+            # Implementation for _apply_transformation_rules
+            # TODO: Add specific business logic here
             
-            elif rule_type == 'format_date':
-                field_name = rule.get('field_name')
-                target_format = rule.get('target_format')
-                if field_name in transformed_data:
-                    # Implementation would format date according to target_format
-                    pass
+            result = None  # Replace with actual implementation
             
-            elif rule_type == 'convert_currency':
-                field_name = rule.get('field_name')
-                target_currency = rule.get('target_currency')
-                if field_name in transformed_data:
-                    # Implementation would convert currency
-                    pass
-        
-        return transformed_data
-    
+            logger.info(f"_apply_transformation_rules completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_apply_transformation_rules failed: {e}")
+            raise
     async def _apply_field_mappings(
         self,
         data: Dict[str, Any],
@@ -896,9 +880,31 @@ Calculate next run time based on frequency"""
         now = datetime.utcnow()
         
         if frequency == 'hourly':
-            return now + timedelta(hours=1)
-        elif frequency == 'daily':
-            return now + timedelta(days=1)
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _save_sync_operation completed")
+                        return True
+                
+                except Exception as e:
+        try:
+            logger.info(f"Executing _emit_sync_completion_event")
+            
+            # Implementation for _emit_sync_completion_event
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_emit_sync_completion_event completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_emit_sync_completion_event failed: {e}")
+            raise
+                    logger.error(f"Database operation _save_sync_operation failed: {e}")
+                    raise
         elif frequency == 'weekly':
             return now + timedelta(weeks=1)
         else:

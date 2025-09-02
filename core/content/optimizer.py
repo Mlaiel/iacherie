@@ -667,10 +667,20 @@ class ContentOptimizer:
     # Helper methods for optimization operations
 
     async def _get_content(self, content_id: str):
-        """Get content from database"""
-        # This would query the actual database
-        pass
-
+        try:
+                    # Request validation
+                    if not content_id:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_content_request(content_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_content failed: {e}")
+                    return {"status": "error", "message": str(e)}
     def _get_optimized_file_path(self, content_id: str, filename: str) -> str:
         """
 Generate path for optimized file"""
@@ -734,6 +744,17 @@ Calculate signal-to-noise ratio"""
         return 10 * np.log10(signal_power / max(noise_estimate, 1e-10))
 
     async def _get_file_size(self, file_path: str) -> int:
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _save_optimization_result completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _save_optimization_result failed: {e}")
+                    raise
         """
 Get file size in bytes"""
         import os

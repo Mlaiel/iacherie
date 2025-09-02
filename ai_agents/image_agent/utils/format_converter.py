@@ -855,7 +855,20 @@ Auto-detect best format for given image and optimization level"""
             semaphore = asyncio.Semaphore(4)  # Max 4 concurrent conversions
             
             async def convert_single(source_path: Union[str, Path]) -> OptimizationResult:
-                async with semaphore:
+        try:
+            logger.info(f"Executing convert_single")
+            
+            # Implementation for convert_single
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"convert_single completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"convert_single failed: {e}")
+            raise
                     try:
                         source_path = Path(source_path)
                         

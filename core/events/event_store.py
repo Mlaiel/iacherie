@@ -59,7 +59,20 @@ class EventStreamCursor:
     direction: StreamDirection = StreamDirection.FORWARD
     
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             "stream_id": self.stream_id,
             "position": self.position,
             "timestamp": self.timestamp.isoformat() if self.timestamp else None,
@@ -77,9 +90,67 @@ class EventQuery:
     tenant_id: Optional[str] = None
     from_timestamp: Optional[datetime] = None
     to_timestamp: Optional[datetime] = None
-    from_position: Optional[int] = None
-    to_position: Optional[int] = None
-    limit: int = 100
+        try:
+            logger.info(f"Executing store_event")
+            
+            # Implementation for store_event
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"store_event completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                        result = await session.execute(select_query)
+                        await session.commit()
+                        logger.info(f"Database operation query_events completed")
+                        return True
+                
+                except Exception as e:
+        try:
+                    # Request validation
+                    if not stream_id:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_stream_events_request(stream_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+        try:
+                    # Request validation
+                    if not stream_id:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_stream_info_request(stream_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_stream_info failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                except Exception as e:
+                    logger.error(f"API handler get_stream_events failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                    result = await self._handle_get_event_request(event_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_event failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            return result
+            
+        except Exception as e:
+            logger.error(f"store_event failed: {e}")
+            raise
     order_by: str = "timestamp"
     order_direction: str = "ASC"
     include_metadata: bool = True

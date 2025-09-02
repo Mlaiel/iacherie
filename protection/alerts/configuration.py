@@ -459,11 +459,20 @@ class ConfigurationManager:
             logger.error(f"Failed to load configuration from Redis: {e}")
 
     async def _load_from_database(self):
-        """Load configuration from database."""
-        # Implementation would depend on your database schema
-        # This is a placeholder for database-backed configuration
-        pass
-
+        try:
+            logger.info(f"Executing _load_from_database")
+            
+            # Implementation for _load_from_database
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_load_from_database completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_load_from_database failed: {e}")
+            raise
     async def _store_configuration(
         self,
         scope: ConfigurationScope,
@@ -599,31 +608,20 @@ Store configuration to all applicable sources."""
 Set nested dictionary value from path list."""
         current = dictionary
         for key in path[:-1]:
-            if key not in current:
-                current[key] = {}
-            current = current[key]
-        
-        # Try to convert value to appropriate type
-        final_value = self._convert_env_value(value)
-        current[path[-1]] = final_value
-
-    def _convert_env_value(self, value: str) -> Any:
-        """
-Convert environment variable string to appropriate type."""
-        # Boolean conversion
-        if value.lower() in ('true', 'false'):
-            return value.lower() == 'true'
-        
-        # Number conversion
         try:
-            if '.' in value:
-                return float(value)
-            else:
-                return int(value)
-        except ValueError:
-            pass
-        
-        # JSON conversion
+            logger.info(f"Executing _convert_env_value")
+            
+            # Implementation for _convert_env_value
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_convert_env_value completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_convert_env_value failed: {e}")
+            raise
         try:
             return json.loads(value)
         except (json.JSONDecodeError, ValueError):

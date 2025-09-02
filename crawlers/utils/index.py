@@ -112,7 +112,20 @@ Configuration for crawler utilities."""
     data_directory: str = "./data/crawler"
     
     def __post_init__(self):
-        if self.captcha_api_keys is None:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             self.captcha_api_keys = {}
 
 class CrawlerUtilsManager:
@@ -406,6 +419,21 @@ Create a new crawler session with all utilities configured."""
         """
         Crawl multiple URLs concurrently.
         
+        Args:
+        try:
+            logger.info(f"Executing crawl_with_semaphore")
+            
+            # Implementation for crawl_with_semaphore
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"crawl_with_semaphore completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"crawl_with_semaphore failed: {e}")
+            raise
         Args:
             urls: List of URLs to crawl
             max_concurrent: Maximum concurrent requests

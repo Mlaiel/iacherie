@@ -261,7 +261,20 @@ Initialize platform integrator"""
             semaphore = asyncio.Semaphore(method_concurrency)
             
             async def submit_with_limit(platform_id):
-                async with semaphore:
+        try:
+            logger.info(f"Executing submit_with_limit")
+            
+            # Implementation for submit_with_limit
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"submit_with_limit completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"submit_with_limit failed: {e}")
+            raise
                     return await self.submit_to_platform(
                         notice_id, platform_id, submission_options
                     )

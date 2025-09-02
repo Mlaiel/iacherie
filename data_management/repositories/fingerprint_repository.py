@@ -471,12 +471,20 @@ Asynchronous fingerprint repository for high-performance operations"""
         pass
     
     async def batch_duplicate_detection_async(self, content_ids: List[str]) -> List[DuplicateDetection]:
-        """
-Perform batch duplicate detection asynchronously"""
-        # Async implementation would go here
-        pass
-        return fingerprints[0] if fingerprints else None
-    
+        try:
+            logger.info(f"Executing batch_duplicate_detection_async")
+            
+            # Implementation for batch_duplicate_detection_async
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"batch_duplicate_detection_async completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"batch_duplicate_detection_async failed: {e}")
+            raise
     def search_similar(self, embedding: List[float], threshold: float = 0.8, limit: int = 10) -> List[FingerPrintModel]:
         """
 Recherche d'empreintes similaires"""
@@ -497,6 +505,50 @@ class AsyncFingerprintRepository(AsyncBaseRepository[FingerPrintModel]):
         super().__init__(db_connection, cache_manager)
         self.vector_db = vector_db
         self.table_name = "fingerprints"
+        self.logger = logging.getLogger(__name__)
+    
+    async def create(self, fingerprint: FingerPrintModel) -> FingerPrintModel:
+        try:
+                    # Request validation
+                    if not fingerprint_id:
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation delete completed")
+                        return True
+                
+                except Exception as e:
+        try:
+            logger.info(f"Executing list")
+            
+            # Implementation for list
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"list completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"list failed: {e}")
+            raise
+                        await session.commit()
+                        logger.info(f"Database operation delete completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation delete failed: {e}")
+                    raise
+                    result = await self._handle_get_by_id_request(fingerprint_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_by_id failed: {e}")
+                    return {"status": "error", "message": str(e)}
         self.logger = logging.getLogger(__name__)
     
     async def create(self, fingerprint: FingerPrintModel) -> FingerPrintModel:

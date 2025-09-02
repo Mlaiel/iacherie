@@ -777,7 +777,20 @@ Map raw API data to standardized analytics format"""
         semaphore = asyncio.Semaphore(5)  # Limit concurrent syncs
         
         async def sync_connection(connection):
-            async with semaphore:
+        try:
+            logger.info(f"Executing sync_connection")
+            
+            # Implementation for sync_connection
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"sync_connection completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"sync_connection failed: {e}")
+            raise
                 try:
                     return await self.sync_platform_data(
                         session, str(connection.id), sync_types

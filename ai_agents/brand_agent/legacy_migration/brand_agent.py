@@ -248,8 +248,20 @@ class BrandAgent(BaseAgent):
         
         class ColorExtractor:
             def __init__(self):
-                self.kmeans = KMeans(n_clusters=5, random_state=42)
-                
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
             def extract_dominant_colors(self, image_path: str) -> List[str]:
                 """
 Extract dominant colors from image"""
@@ -303,6 +315,26 @@ Convert hex color to RGB"""
                 """
 Calculate color distance (inverse similarity)"""
                 distance = sum((a - b) ** 2 for a, b in zip(rgb1, rgb2)) ** 0.5
+                max_distance = (3 * 255 ** 2) ** 0.5
+                return 1.0 - (distance / max_distance)
+        
+        return ColorExtractor()
+
+    def _initialize_font_detector(self):
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
                 max_distance = (3 * 255 ** 2) ** 0.5
                 return 1.0 - (distance / max_distance)
         

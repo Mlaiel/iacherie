@@ -1051,11 +1051,40 @@ class CheckpointManager:
     """Checkpoint manager for training state persistence."""
     
     def __init__(self):
-        self.checkpoints = {}
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     async def initialize(self):
         """
 Initialize checkpoint manager."""
+        logger.info("Checkpoint manager initialized")
+    
+    async def save_checkpoint(self, checkpoint: TrainingCheckpoint):
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
         logger.info("Checkpoint manager initialized")
     
     async def save_checkpoint(self, checkpoint: TrainingCheckpoint):

@@ -587,10 +587,20 @@ Initialize predefined creator workflow flows"""
         }
 
     async def _store_flow_execution(self, flow_execution: Dict[str, Any]) -> None:
-        """Store flow execution results"""
-        # Implementation for storing execution results in database
-        pass
-
+        try:
+            logger.info(f"Executing _store_flow_execution")
+            
+            # Implementation for _store_flow_execution
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_flow_execution completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_flow_execution failed: {e}")
+            raise
     def _suggest_alternative_flows(
         self,
         creator_profile: CreatorProfile

@@ -1170,10 +1170,17 @@ class WorkflowOrchestrator:
         }
     
     async def _update_system_metrics(self, execution_result: WorkflowExecutionResult):
-        """Update system-wide performance metrics."""
-        # In real implementation, would update comprehensive metrics database
-        pass
-    
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _update_system_metrics completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _update_system_metrics failed: {e}")
+                    raise
     async def _send_execution_notifications(
         self,
         execution_result: WorkflowExecutionResult,

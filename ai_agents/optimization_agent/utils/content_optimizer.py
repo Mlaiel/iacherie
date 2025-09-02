@@ -1494,7 +1494,20 @@ Optimize image content."""
             semaphore = asyncio.Semaphore(self.max_workers)
             
             async def optimize_single(content_path: str) -> ContentOptimizationResult:
-                async with semaphore:
+        try:
+            logger.info(f"Executing optimize_single")
+            
+            # Implementation for optimize_single
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"optimize_single completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"optimize_single failed: {e}")
+            raise
                     try:
                         output_path = None
                         if output_directory:
@@ -2317,7 +2330,20 @@ Update processing statistics"""
         Optimize multiple content files concurrently
         
         Args:
-            content_files: List of (file_path, content_type) tuples
+        try:
+            logger.info(f"Executing optimize_single_file")
+            
+            # Implementation for optimize_single_file
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"optimize_single_file completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"optimize_single_file failed: {e}")
+            raise
             optimization_level: Optimization intensity
             max_concurrent: Maximum concurrent optimizations
             

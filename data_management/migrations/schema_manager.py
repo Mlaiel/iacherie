@@ -644,7 +644,30 @@ Get database session"""
         return self.session_maker()
         
     async def _rollback_version_changes(self, version: SchemaVersion) -> None:
-        """
-Rollback changes for a specific version"""
-        # Implementation for rollback logic
-        pass
+        try:
+            logger.info(f"Executing _rollback_version_changes")
+            
+            # Implementation for _rollback_version_changes
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_rollback_version_changes completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_rollback_version_changes failed: {e}")
+            raise
+            logger.info(f"Executing _rollback_version_changes")
+            
+            # Implementation for _rollback_version_changes
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_rollback_version_changes completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_rollback_version_changes failed: {e}")
+            raise

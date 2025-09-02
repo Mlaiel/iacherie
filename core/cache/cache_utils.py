@@ -59,7 +59,20 @@ Global cache configuration"""
     retry_delay: float = 1.0
     
     def __post_init__(self):
-        if self.redis_cluster_nodes is None:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             self.redis_cluster_nodes = []
     
     @classmethod
@@ -487,6 +500,21 @@ class CacheSerializationError(CacheError):
 Cache serialization error"""
     pass
 
+class CacheInvalidationError(CacheError):
+        try:
+            logger.info(f"Executing wrapper")
+            
+            # Implementation for wrapper
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"wrapper completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"wrapper failed: {e}")
+            raise
 class CacheInvalidationError(CacheError):
     """
 Cache invalidation error"""

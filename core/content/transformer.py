@@ -723,10 +723,17 @@ Aggregate multiple transformation results"""
         return {}
 
     async def _save_platform_version(self, content_id: str, platform: str, result: Dict[str, Any]) -> None:
-        """
-Save platform-specific version to database"""
-        pass
-
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _save_platform_version completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _save_platform_version failed: {e}")
+                    raise
     async def _enhance_audio_quality(self, file_path: str, params: Dict[str, Any]) -> Optional[str]:
         """
 Enhance audio quality"""

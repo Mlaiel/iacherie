@@ -80,8 +80,20 @@ Test matcher initialization failure handling"""
         original_method = matcher._load_compatibility_models
         
         async def mock_failing_load():
-            raise Exception("Model loading failed")
-        
+        try:
+            logger.info(f"Executing mock_failing_load")
+            
+            # Implementation for mock_failing_load
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"mock_failing_load completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"mock_failing_load failed: {e}")
+            raise
         matcher._load_compatibility_models = mock_failing_load
         
         with pytest.raises(CollaborationMatchingError):
@@ -701,6 +713,18 @@ Test niche collaboration recommendations"""
                    any('production' in genre.lower() for genre in partner_genres)
 
 
+class TestCollaborationMatchingPerformance:
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation find_matches completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation find_matches failed: {e}")
+                    raise
 class TestCollaborationMatchingPerformance:
     """Performance tests for collaboration matching"""
     

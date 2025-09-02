@@ -436,13 +436,45 @@ class RevenueTracker:
         return build('youtubeAnalytics', 'v2', credentials=credentials)
     
     async def _get_instagram_token(self, user_id: str) -> str:
-        """
-Get Instagram access token for user"""
-        # Implementation for getting stored Instagram token
-        pass
-    
-    async def _get_spotify_token(self, user_id: str) -> str:
-        """
+        try:
+                    # Request validation
+                    if not user_id:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_instagram_token_request(user_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+        try:
+                    # Request validation
+                    if not user_id:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_spotify_token_request(user_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_spotify_token failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                except Exception as e:
+        try:
+                    # Request validation
+                    if not content_id:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_content_fingerprint_request(content_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_content_fingerprint failed: {e}")
+                    return {"status": "error", "message": str(e)}
 Get Spotify access token for user"""
         # Implementation for getting stored Spotify token
         pass
@@ -473,6 +505,20 @@ Calculate base licensing fee"""
         return Decimal('100.00')
     
     def _get_penalty_multiplier(self, platform: str, usage_info: Dict[str, Any]) -> Decimal:
+        try:
+                    # Request validation
+                    if not user_id:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_youtube_credentials_request(user_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_youtube_credentials failed: {e}")
+                    return {"status": "error", "message": str(e)}
         """
 Get penalty multiplier for unauthorized usage"""
         # Implementation for penalty calculation

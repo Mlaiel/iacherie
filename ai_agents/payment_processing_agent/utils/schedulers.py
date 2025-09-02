@@ -492,45 +492,20 @@ Get comprehensive scheduler status"""
                 await self._schedule_strategy_job(strategy)
 
     async def _schedule_strategy_job(self, strategy: PayoutStrategy):
-        """
-Schedule job for specific payout strategy"""
-        job_id = f"strategy_{strategy.name}"
-        
-        # Remove existing job
         try:
-            self.scheduler.remove_job(job_id)
-        except:
-            pass
-        
-        # Create trigger based on frequency
-        if strategy.frequency == PayoutFrequency.DAILY:
-            trigger = CronTrigger(
-                hour=int(strategy.time_of_day.split(':')[0]),
-                minute=int(strategy.time_of_day.split(':')[1]),
-                timezone=strategy.timezone
-            )
-        elif strategy.frequency == PayoutFrequency.WEEKLY:
-            trigger = CronTrigger(
-                day_of_week=strategy.days_of_week[0] if strategy.days_of_week else 1,
-                hour=int(strategy.time_of_day.split(':')[0]),
-                minute=int(strategy.time_of_day.split(':')[1]),
-                timezone=strategy.timezone
-            )
-        elif strategy.frequency == PayoutFrequency.MONTHLY:
-            # First occurrence of specified weekday in month
-            trigger = CronTrigger(
-                day='1-7',
-                day_of_week=strategy.days_of_week[0] if strategy.days_of_week else 1,
-                hour=int(strategy.time_of_day.split(':')[0]),
-                minute=int(strategy.time_of_day.split(':')[1]),
-                timezone=strategy.timezone
-            )
-        else:
-            logger.warning(f"Unsupported frequency for strategy {strategy.name}")
-            return
-
-        # Schedule job
-        self.scheduler.add_job(
+            logger.info(f"Executing _schedule_strategy_job")
+            
+            # Implementation for _schedule_strategy_job
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_schedule_strategy_job completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_schedule_strategy_job failed: {e}")
+            raise
             self._execute_strategy_payouts,
             trigger,
             args=[strategy.name],

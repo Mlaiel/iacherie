@@ -703,7 +703,20 @@ Calculate overall system health score"""
         """
 Assess resource utilization status"""
         def get_status(usage_percent: float) -> str:
-            if usage_percent > 95:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_status_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_status failed: {e}")
+                    return {"status": "error", "message": str(e)}
                 return "critical"
             elif usage_percent > 85:
                 return "high"

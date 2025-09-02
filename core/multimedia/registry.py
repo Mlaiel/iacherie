@@ -98,11 +98,61 @@ Base class for multimedia components"""
     
     @abstractmethod
     async def initialize(self, config: Dict[str, Any] = None):
-        """
-Initialize component"""
-        pass
-        
-    @abstractmethod
+        try:
+            logger.info(f"Executing initialize")
+            
+            # Implementation for initialize
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"initialize completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing health_check")
+            
+            # Implementation for health_check
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"health_check completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing cleanup")
+            
+            # Implementation for cleanup
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"cleanup completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"cleanup failed: {e}")
+            raise
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_metadata_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_metadata failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            return result
+            
+        except Exception as e:
+            logger.error(f"health_check failed: {e}")
+            raise
     async def process(self, data: Any, options: Dict[str, Any] = None) -> Any:
         """
 Process multimedia data"""

@@ -177,7 +177,20 @@ class CreatorProfile:
     updated_at: datetime = field(default_factory=datetime.utcnow)
     
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             "creator_id": self.creator_id,
             "name": self.name,
             "category": self.category.value,
@@ -249,6 +262,20 @@ class CompatibilityScore:
     
     # Recommendations
     recommended_collaboration_types: List[CollaborationType] = field(default_factory=list)
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
     optimal_collaboration_timing: Optional[datetime] = None
     suggested_platforms: List[Platform] = field(default_factory=list)
     
@@ -306,6 +333,21 @@ class CollaborationOpportunity:
     
     # Requirements
     required_resources: Dict[str, Any] = field(default_factory=dict)
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
+    required_resources: Dict[str, Any] = field(default_factory=dict)
     timeline: Dict[str, datetime] = field(default_factory=dict)
     budget_requirements: Optional[float] = None
     
@@ -360,7 +402,20 @@ class CollaborationOpportunity:
             },
             "success": {
                 "kpis": self.kpis,
-                "criteria": self.success_criteria
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             },
             "meta": {
                 "status": self.status.value,

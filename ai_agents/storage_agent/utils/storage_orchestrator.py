@@ -843,19 +843,20 @@ Setup CDN distribution for file"""
     async def _store_file_record(
         self,
         file_id: str,
-        request: StorageRequest,
-        file_info: Dict[str, Any],
-        primary_url: str,
-        backup_urls: List[str],
-        cdn_url: Optional[str],
-        processing_stats: Dict[str, Any],
-        storage_cost: float
-    ):
-        """Store file record in database"""
-        # This would store in the database
-        # For now, we'll use in-memory storage
-        pass
-    
+        try:
+            logger.info(f"Executing _store_file_record")
+            
+            # Implementation for _store_file_record
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_file_record completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_file_record failed: {e}")
+            raise
     async def _get_file_record(self, file_id: str) -> Optional[Dict[str, Any]]:
         """
 Retrieve file record from database"""

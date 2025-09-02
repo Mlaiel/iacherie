@@ -39,8 +39,20 @@ class DataValidator:
     """Simple data validator for harvested data"""
     
     def __init__(self):
-        self.logger = logging.getLogger(__name__)
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     def validate(self, data: Dict[str, Any], schema: Dict[str, Any] = None) -> Dict[str, Any]:
         """
         Validate data against a schema
@@ -90,6 +102,21 @@ class DataValidator:
                 self.logger.warning(f"Required field missing: {field}")
         
         # Include non-schema fields
+        for field, value in data.items():
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
         for field, value in data.items():
             if field not in validated:
                 validated[field] = value
@@ -169,7 +196,20 @@ class ContentAnalyzer:
             'estimated_size': 'medium',
             'objects_detected': [],
             'text_detected': '',
-            'colors': ['#000000', '#FFFFFF'],
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
             'quality_score': 0.8
         }
         

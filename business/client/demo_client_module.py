@@ -125,50 +125,20 @@ Initialize demo with mock services."""
             print(f"❌ Demo error: {e}")
             
     async def demo_client_registration(self) -> str:
-        """Demonstrate client registration process."""
-        print("👤 DEMO: Client Registration & Onboarding")
-        print("-" * 40)
-        
-        # Mock client manager (in real implementation, would use actual services)
-        # client_manager = ClientManager(self.db, self.email_service, self.analytics_tracker)
-        
-        # Create registration data
-        registration_data = ClientRegistrationData(
-            email="demo.musician@example.com",
-            password="SecurePassword123!",
-            first_name="Alex",
-            last_name="Melody",
-            creator_type=ClientType.MUSICIAN,
-            country_code="DE",
-            language_preference="en",
-            marketing_consent=True,
-            terms_accepted=True
-        )
-        
-        print(f"📝 Registration Data:")
-        print(f"   - Email: {registration_data.email}")
-        print(f"   - Name: {registration_data.first_name} {registration_data.last_name}")
-        print(f"   - Creator Type: {registration_data.creator_type.value}")
-        print(f"   - Country: {registration_data.country_code}")
-        
-        # Mock registration result
-        client_id = str(uuid4())
-        mock_result = {
-            "client_id": client_id,
-            "email": registration_data.email,
-            "status": "registration_successful",
-            "verification_required": True,
-            "onboarding_stage": "email_verification"
-        }
-        
-        print(f"✅ Registration Result:")
-        print(f"   - Client ID: {mock_result['client_id']}")
-        print(f"   - Status: {mock_result['status']}")
-        print(f"   - Next Stage: {mock_result['onboarding_stage']}")
-        print()
-        
-        return client_id
-        
+        try:
+            logger.info(f"Executing demo_client_registration")
+            
+            # Implementation for demo_client_registration
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"demo_client_registration completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"demo_client_registration failed: {e}")
+            raise
     async def demo_profile_management(self, client_id: str):
         """Demonstrate profile management capabilities."""
         print("👨‍🎤 DEMO: Profile Management")

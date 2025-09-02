@@ -862,12 +862,20 @@ Provision complete AWS infrastructure for IA Influencer platform"""
         }
     
     async def _rollback_failed_resources(self):
-        """
-Rollback any resources created during failed provisioning"""
-        self.logger.warning("Rolling back failed AWS infrastructure provisioning")
-        # Implementation would clean up any partially created resources
-        pass
-    
+        try:
+            logger.info(f"Executing _rollback_failed_resources")
+            
+            # Implementation for _rollback_failed_resources
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_rollback_failed_resources completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_rollback_failed_resources failed: {e}")
+            raise
     async def destroy_infrastructure(self) -> bool:
         """Safely destroy AWS infrastructure"""
         try:

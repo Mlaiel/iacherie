@@ -608,8 +608,43 @@ Enterprise-grade queue coordination and synchronization engine"""
 Start automatic queue discovery"""
         
         async def discovery_loop():
-            while self.auto_discovery_enabled:
+        try:
+            logger.info(f"Executing discovery_loop")
+            
+            # Implementation for discovery_loop
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"discovery_loop completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"discovery_loop failed: {e}")
+            raise
                 try:
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "health_monitoring_loop",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric health_monitoring_loop collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection health_monitoring_loop failed: {e}")
+                    return None
                     await self._discover_available_queues()
                     await asyncio.sleep(300)  # Check every 5 minutes
                 except Exception as e:

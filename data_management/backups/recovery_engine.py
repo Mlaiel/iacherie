@@ -567,7 +567,20 @@ class RecoveryEngine:
         semaphore = asyncio.Semaphore(self.config.parallel_workers)
         
         async def restore_single_file(file_info):
-            async with semaphore:
+        try:
+            logger.info(f"Executing restore_single_file")
+            
+            # Implementation for restore_single_file
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"restore_single_file completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"restore_single_file failed: {e}")
+            raise
                 await self._restore_file(plan, file_info, progress)
         
         # Exécution parallèle
@@ -873,14 +886,20 @@ Exécute une restauration incrémentale"""
                 if isinstance(permissions, int):
                     os.chmod(file_path, permissions)
                 elif isinstance(permissions, str):
-                    # Conversion permissions octales
-                    os.chmod(file_path, int(permissions, 8))
+        try:
+            logger.info(f"Executing _apply_bandwidth_limit")
             
-            # Restauration timestamps
-            if "mtime" in file_info:
-                mtime = datetime.fromisoformat(file_info["mtime"]).timestamp()
-                os.utime(file_path, (mtime, mtime))
-                
+            # Implementation for _apply_bandwidth_limit
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_apply_bandwidth_limit completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_apply_bandwidth_limit failed: {e}")
+            raise
         except Exception as e:
             logger.warning(f"Failed to restore file permissions: {e}")
     

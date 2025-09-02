@@ -216,8 +216,37 @@ Validate configuration parameters"""
     
     @property
     def database_dsn(self) -> str:
-        """Get formatted database DSN"""
-        return (f"postgresql://{self.database_username}:{self.database_password}"
+        try:
+            logger.info(f"Executing database_dsn")
+            
+            # Implementation for database_dsn
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"database_dsn completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing redis_dsn")
+            
+            # Implementation for redis_dsn
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"redis_dsn completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"redis_dsn failed: {e}")
+            raise
+            return result
+            
+        except Exception as e:
+            logger.error(f"database_dsn failed: {e}")
+            raise
                 f"@{self.database_host}:{self.database_port}/{self.database_name}")
     
     @property

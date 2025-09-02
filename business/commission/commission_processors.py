@@ -281,11 +281,33 @@ Initialize commission processor"""
     
     # Abstract methods to be implemented by subclasses
     async def _setup_client(self) -> None:
-        """Setup processor client"""
-        # Default implementation for processors without specific client setup
-        logging.warning(f"Client setup not implemented for {self.__class__.__name__}")
-        pass
-    
+        try:
+            logger.info(f"Executing _setup_client")
+            
+            # Implementation for _setup_client
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_setup_client completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_setup_client failed: {e}")
+            raise
+            logger.info(f"Executing _setup_client")
+            
+            # Implementation for _setup_client
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_setup_client completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_setup_client failed: {e}")
+            raise
     async def _validate_credentials(self) -> None:
         """Validate processor credentials"""
         # Default implementation for processors without credential validation

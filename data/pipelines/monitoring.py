@@ -813,10 +813,76 @@ class PipelineMonitor:
 
     # Additional health check methods for other components...
     async def _check_monetization_health(self) -> HealthCheck:
-        """Check monetization pipeline health"""
-        # Implementation for monetization health check
-        pass
-
+        try:
+            logger.info(f"Executing _check_monetization_health")
+            
+            # Implementation for _check_monetization_health
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _check_collaboration_health")
+            
+            # Implementation for _check_collaboration_health
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_check_collaboration_health completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _check_storage_health")
+            
+            # Implementation for _check_storage_health
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_check_storage_health completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _check_external_apis_health")
+            
+            # Implementation for _check_external_apis_health
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_check_external_apis_health completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_check_external_apis_health failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_check_api_gateway_health completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_check_api_gateway_health failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"_check_storage_health failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_check_distribution_health completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_check_distribution_health failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"_check_collaboration_health failed: {e}")
+            raise
+            return result
+            
+        except Exception as e:
+            logger.error(f"_check_monetization_health failed: {e}")
+            raise
     async def _check_collaboration_health(self) -> HealthCheck:
         """
 Check collaboration pipeline health"""

@@ -760,8 +760,20 @@ Get executor function from registry."""
         # This would typically be a more sophisticated registry
         # For now, return a placeholder
         async def placeholder_executor(context):
-            return f"Executed {executor_name} with context"
-        
+        try:
+            logger.info(f"Executing placeholder_executor")
+            
+            # Implementation for placeholder_executor
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"placeholder_executor completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"placeholder_executor failed: {e}")
+            raise
         return placeholder_executor
 
     async def get_workflow_status(self, workflow_id: str) -> Dict[str, Any]:

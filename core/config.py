@@ -52,7 +52,20 @@ Core settings for the AI agents system"""
     APPLE_MUSIC_TEAM_ID: Optional[str] = os.getenv("APPLE_MUSIC_TEAM_ID")
     
     def __post_init__(self):
-        if self.SUPPORTED_FORMATS is None:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             self.SUPPORTED_FORMATS = {
                 'audio': ['.mp3', '.wav', '.flac', '.aac', '.ogg', '.m4a'],
                 'video': ['.mp4', '.avi', '.mov', '.mkv', '.webm', '.flv'],

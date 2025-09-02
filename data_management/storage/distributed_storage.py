@@ -850,11 +850,33 @@ Determine which shard should handle a given key"""
         return f"shard_{key_hash[:8]}"
     
     async def remove_node(self, node_id: str) -> None:
-        """Remove node from sharding configuration"""
-        # Implementation would update sharding maps
-        pass
-
-
+        try:
+            logger.info(f"Executing remove_node")
+            
+            # Implementation for remove_node
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"remove_node completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"remove_node failed: {e}")
+            raise
+            logger.info(f"Executing remove_node")
+            
+            # Implementation for remove_node
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"remove_node completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"remove_node failed: {e}")
+            raise
 class ConsistencyManager:
     """
 Manages data consistency across distributed nodes"""

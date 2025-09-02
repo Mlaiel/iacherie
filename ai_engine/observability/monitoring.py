@@ -60,7 +60,20 @@ class Metric:
     description: str = ""
     
     def __post_init__(self):
-        if self.labels is None:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             self.labels = {}
 
 
@@ -351,52 +364,28 @@ Get performance summary and statistics"""
                 await asyncio.sleep(self.collection_interval)
                 
             except Exception as e:
-                self.logger.error(f"Error in monitoring loop: {str(e)}")
-                await asyncio.sleep(self.collection_interval)
-    
-    async def _collect_system_metrics(self) -> Dict[str, Metric]:
-        """Collect basic system metrics"""
-        metrics = {}
-        now = datetime.utcnow()
-        
         try:
-            # CPU usage
-            cpu_percent = psutil.cpu_percent(interval=1)
-            metrics["cpu_usage"] = Metric(
-                name="cpu_usage",
-                metric_type=MetricType.GAUGE,
-                value=cpu_percent,
-                unit="percent",
-                timestamp=now,
-                description="CPU utilization percentage"
-            )
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_collect_system_metrics",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
             
-            # Memory usage
-            memory = psutil.virtual_memory()
-            metrics["memory_usage"] = Metric(
-                name="memory_usage",
-                metric_type=MetricType.GAUGE,
-                value=memory.percent,
-                unit="percent",
-                timestamp=now,
-                description="Memory utilization percentage"
-            )
+                    # Store metrics
+                    await self._store_metric(metrics)
             
-            metrics["memory_available_gb"] = Metric(
-                name="memory_available_gb",
-                metric_type=MetricType.GAUGE,
-                value=memory.available / (1024**3),
-                unit="GB",
-                timestamp=now,
-                description="Available memory in GB"
-            )
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
             
-            # Load average (Unix systems)
-            try:
-                load_avg = psutil.getloadavg()
-                metrics["load_average_1m"] = Metric(
-                    name="load_average_1m",
-                    metric_type=MetricType.GAUGE,
+                    logger.info(f"Metric _collect_system_metrics collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _collect_system_metrics failed: {e}")
+                    return None
                     value=load_avg[0],
                     unit="",
                     timestamp=now,
@@ -453,32 +442,28 @@ Get performance summary and statistics"""
             
             # File descriptors (Unix)
             try:
-                metrics["process_file_descriptors"] = Metric(
-                    name="process_file_descriptors",
-                    metric_type=MetricType.GAUGE,
-                    value=current_process.num_fds(),
-                    unit="count",
-                    timestamp=now,
-                    description="Number of open file descriptors"
-                )
-            except (AttributeError, OSError):
-                pass
-            
-        except Exception as e:
-            self.logger.warning(f"Failed to collect process metrics: {str(e)}")
-        
-        return metrics
-    
-    async def _collect_network_metrics(self) -> Dict[str, Metric]:
-        """Collect network metrics"""
-        metrics = {}
-        now = datetime.utcnow()
-        
         try:
-            # Network I/O statistics
-            net_io = psutil.net_io_counters()
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_collect_process_metrics",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
             
-            metrics["network_bytes_sent"] = Metric(
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _collect_process_metrics collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _collect_process_metrics failed: {e}")
+                    return None
                 name="network_bytes_sent",
                 metric_type=MetricType.COUNTER,
                 value=net_io.bytes_sent,

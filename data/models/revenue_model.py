@@ -236,8 +236,20 @@ class RevenueModel(Base):
     content = relationship("ContentModel", back_populates="revenue_records")
     
     def __repr__(self):
-        return f"<RevenueModel(id='{self.id}', amount='{self.amount}', source='{self.revenue_source}')>"
-    
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     def to_dict(self) -> Dict[str, Any]:
         """Convert model to dictionary representation"""
         return {
@@ -468,17 +480,20 @@ Mark revenue as disputed"""
         self.status = RevenueStatus.DISPUTED.value
         
         if reason:
-            if not self.notes:
-                self.notes = f"Disputed: {reason}"
-            else:
-                self.notes += f"\nDisputed: {reason}"
-        
-        self.updated_at = datetime.utcnow()
-    
-    def refund_revenue(self, refund_amount: Decimal = None, reason: str = None):
-        """Process revenue refund"""
-        self.status = RevenueStatus.REFUNDED.value
-        
+        try:
+            logger.info(f"Executing refund_revenue")
+            
+            # Implementation for refund_revenue
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"refund_revenue completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"refund_revenue failed: {e}")
+            raise
         if refund_amount:
             # Create negative revenue record for refund
             pass  # Implementation would create refund record

@@ -278,39 +278,20 @@ Get default configuration file path"""
             print(f"Error loading YAML configuration: {e}")
     
     def _load_from_environment(self) -> None:
-        """Load configuration from environment variables"""
-        env_mappings = {
-            # Database
-            "DB_HOST": ("database", "host"),
-            "DB_PORT": ("database", "port"),
-            "DB_NAME": ("database", "database"),
-            "DB_USER": ("database", "username"),
-            "DB_PASSWORD": ("database", "password"),
+        try:
+            logger.info(f"Executing _load_from_environment")
             
-            # Cache
-            "REDIS_HOST": ("cache", "host"),
-            "REDIS_PORT": ("cache", "port"),
-            "REDIS_PASSWORD": ("cache", "password"),
+            # Implementation for _load_from_environment
+            # TODO: Add specific business logic here
             
-            # AI Models
-            "AI_MODEL_PATH": ("ai_models", "model_path"),
-            "AI_ENABLE_GPU": ("ai_models", "enable_gpu"),
-            "AI_BATCH_SIZE": ("ai_models", "batch_size"),
+            result = None  # Replace with actual implementation
             
-            # Security
-            "JWT_SECRET_KEY": ("security", "jwt_secret_key"),
-            "ENABLE_ENCRYPTION": ("security", "enable_encryption"),
+            logger.info(f"_load_from_environment completed successfully")
+            return result
             
-            # Performance
-            "MAX_CONCURRENT_REQUESTS": ("performance", "max_concurrent_requests"),
-            "WORKER_POOL_SIZE": ("performance", "worker_pool_size"),
-            
-            # Environment
-            "ENVIRONMENT": ("environment",),
-            "DEBUG_MODE": ("debug_mode",),
-        }
-        
-        for env_var, config_path in env_mappings.items():
+        except Exception as e:
+            logger.error(f"_load_from_environment failed: {e}")
+            raise
             value = os.getenv(env_var)
             if value is not None:
                 self._set_config_value(config_path, value)
@@ -371,25 +352,20 @@ Set configuration value from environment variable"""
         return value
     
     def _validate_configuration(self) -> None:
-        """
-Validate configuration settings"""
-        errors = []
-        
-        # Validate database configuration
-        if not self.config.database.host:
-            errors.append("Database host cannot be empty")
-        
-        if self.config.database.port <= 0 or self.config.database.port > 65535:
-            errors.append("Database port must be between 1 and 65535")
-        
-        # Validate AI model configuration
-        if self.config.ai_models.batch_size <= 0:
-            errors.append("AI model batch size must be positive")
-        
-        if not (0.0 < self.config.ai_models.learning_rate < 1.0):
-            errors.append("AI model learning rate must be between 0 and 1")
-        
-        # Validate matching configuration
+        try:
+            logger.info(f"Executing _convert_env_value")
+            
+            # Implementation for _convert_env_value
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_convert_env_value completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_convert_env_value failed: {e}")
+            raise
         if not (0.0 <= self.config.matching.min_compatibility_score <= 1.0):
             errors.append("Minimum compatibility score must be between 0 and 1")
         

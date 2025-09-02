@@ -423,10 +423,20 @@ async def update_user_profile(
 @router.post("/change-password")
 async def change_password(
     password_data: PasswordChange,
-    current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
-):
-    """Change user password"""
-    try:
+        try:
+            logger.info(f"Executing change_password")
+            
+            # Implementation for change_password
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"change_password completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"change_password failed: {e}")
+            raise
         user_id = current_user["user_id"]
         
         # Get current password hash

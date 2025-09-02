@@ -96,7 +96,20 @@ class NotificationMessage:
     created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             "message_id": self.message_id,
             "recipient": self.recipient,
             "subject": self.subject,
@@ -141,6 +154,22 @@ class NotificationChannel(ABC):
         # Statistiques
         self.stats = {
             "sent": 0,
+        try:
+            logger.info(f"Executing send")
+            
+            # Implementation for send
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"send completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"send failed: {e}")
+            raise
+        self.stats = {
+            "sent": 0,
             "delivered": 0,
             "failed": 0,
             "total_time": 0.0
@@ -167,16 +196,20 @@ Vérifie si le canal peut envoyer (rate limiting)"""
         
         # Reset du compteur chaque minute
         if (now - self.rate_reset_time).seconds >= 60:
-            self.rate_counter = 0
-            self.rate_reset_time = now
-        
-        return self.rate_counter < self.rate_limit
-    
-    def _increment_counter(self):
-        """
-Incrémente le compteur de rate limiting"""
-        self.rate_counter += 1
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     def get_stats(self) -> Dict[str, Any]:
         """
 Retourne les statistiques du canal"""

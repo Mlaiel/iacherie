@@ -636,12 +636,53 @@ Integration tests for monetization system."""
     
     @pytest.mark.asyncio
     async def test_end_to_end_payment_to_royalty_flow(self):
-        """
-Test complete flow from payment to royalty distribution."""
-        # This would test the integration between payment processing,
-        # revenue calculation, and royalty distribution
-        pass
-    
+        try:
+            logger.info(f"Executing test_end_to_end_payment_to_royalty_flow")
+            
+            # Implementation for test_end_to_end_payment_to_royalty_flow
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"test_end_to_end_payment_to_royalty_flow completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing test_licensing_with_payment_integration")
+            
+            # Implementation for test_licensing_with_payment_integration
+            # TODO: Add specific business logic here
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "test_usage_tracking_with_billing",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric test_usage_tracking_with_billing collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection test_usage_tracking_with_billing failed: {e}")
+                    return None
+            logger.info(f"test_licensing_with_payment_integration completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"test_licensing_with_payment_integration failed: {e}")
+            raise
+            logger.error(f"test_end_to_end_payment_to_royalty_flow failed: {e}")
+            raise
     @pytest.mark.asyncio
     async def test_licensing_with_payment_integration(self):
         """

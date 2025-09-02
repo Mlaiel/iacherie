@@ -851,10 +851,30 @@ Initialize statistics manager"""
     
     # Helper methods (simplified implementations)
     async def _load_historical_statistics(self):
-        """Load historical statistics from storage"""
-        # Implementation would load from persistent storage
-        pass
-    
+        try:
+            logger.info(f"Executing _load_historical_statistics")
+            
+            # Implementation for _load_historical_statistics
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _load_baselines")
+            
+            # Implementation for _load_baselines
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_load_baselines completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_load_baselines failed: {e}")
+            raise
+            return result
+            
+        except Exception as e:
+            logger.error(f"_load_historical_statistics failed: {e}")
+            raise
     async def _load_baselines(self):
         """
 Load performance baselines"""
@@ -893,9 +913,17 @@ Get storage metrics"""
 Get cache metrics"""
         return {
             'hit_rate': 85.0,
-            'memory_usage': 536870912  # 512MB
-        }
-    
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                        result = await session.execute(insert_query)
+                        await session.commit()
+                        logger.info(f"Database operation _save_pending_statistics completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _save_pending_statistics failed: {e}")
+                    raise
     async def _get_error_metrics(self) -> Dict[str, int]:
         """
 Get error metrics"""
@@ -946,10 +974,20 @@ Generate forecast values"""
             
             return forecast
         except Exception:
-            return []
-    
-    async def _detect_metric_anomalies(self, timestamps: List[datetime], values: List[float]) -> List[datetime]:
-        """
+        try:
+            logger.info(f"Executing _handle_anomaly")
+            
+            # Implementation for _handle_anomaly
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_handle_anomaly completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_handle_anomaly failed: {e}")
+            raise
 Detect anomalies in metric values"""
         try:
             if len(values) < 3:

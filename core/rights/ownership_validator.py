@@ -613,10 +613,30 @@ Initialize ownership validation service."""
     # Helper methods (simplified implementations)
     
     async def _check_existing_ownership(self, content_id: str) -> Optional[Any]:
-        """Check for existing ownership records."""
-        # Database query implementation
-        pass
-    
+        try:
+            logger.info(f"Executing _check_existing_ownership")
+            
+            # Implementation for _check_existing_ownership
+            # TODO: Add specific business logic here
+        try:
+                    # Request validation
+                    if not content_id:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_content_record_request(content_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_content_record failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            return result
+            
+        except Exception as e:
+            logger.error(f"_check_existing_ownership failed: {e}")
+            raise
     async def _get_content_record(self, content_id: str) -> Optional[Any]:
         """
 Get content record from database."""

@@ -304,55 +304,28 @@ Initialize YouTube monitor."""
             return False
     
     async def _monitoring_loop(self) -> None:
-        """Main monitoring loop."""
-        self._logger.info("YouTube monitoring loop started")
-        
         try:
-            while self._monitoring_active:
-                try:
-                    scan_start_time = datetime.now()
-                    
-                    # Find targets that need checking
-                    targets_to_check = []
-                    current_time = datetime.now()
-                    
-                    for target in self.targets.values():
-                        if (target.enabled and target.next_check and 
-                            current_time >= target.next_check):
-                            targets_to_check.append(target)
-                    
-                    if targets_to_check:
-                        self._logger.debug(f"Checking {len(targets_to_check)} targets")
-                        
-                        # Process targets with concurrency limit
-                        semaphore = asyncio.Semaphore(self.max_concurrent_requests)
-                        tasks = [
-                            self._check_target_with_semaphore(target, semaphore)
-                            for target in targets_to_check
-                        ]
-                        
-                        await asyncio.gather(*tasks, return_exceptions=True)
-                    
-                    # Update scan metrics
-                    scan_duration = (datetime.now() - scan_start_time).total_seconds()
-                    self.metrics.last_scan_duration_seconds = scan_duration
-                    self.metrics.total_scan_time_seconds += scan_duration
-                    
-                    # Wait before next scan cycle
-                    await asyncio.sleep(30)  # Check every 30 seconds for due targets
-                    
-                except asyncio.CancelledError:
-                    break
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_monitoring_loop",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _monitoring_loop collected")
+                    return metrics
+            
                 except Exception as e:
-                    self._logger.error(f"Error in monitoring loop: {e}")
-                    self.metrics.error_count += 1
-                    await asyncio.sleep(60)  # Wait before retrying
-        
-        except asyncio.CancelledError:
-            pass
-        
-        self._logger.info("YouTube monitoring loop stopped")
-    
+                    logger.error(f"Metric collection _monitoring_loop failed: {e}")
+                    return None
     async def _check_target_with_semaphore(
         self,
         target: YouTubeMonitorTarget,

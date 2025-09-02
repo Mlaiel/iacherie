@@ -117,7 +117,20 @@ class ResourceRequirement:
     specialized_hardware: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             'cpu_cores': self.cpu_cores,
             'gpu_count': self.gpu_count,
             'memory_gb': self.memory_gb,
@@ -131,6 +144,21 @@ class ResourceRequirement:
 class StepMetrics:
     """
 Metrics for pipeline step execution"""
+    step_id: str
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
     step_id: str
     start_time: datetime
     end_time: Optional[datetime] = None
@@ -152,7 +180,20 @@ Metrics for pipeline step execution"""
             'memory_usage_mb': self.memory_usage_mb,
             'gpu_usage_percent': self.gpu_usage_percent,
             'disk_io_mb': self.disk_io_mb,
-            'network_io_mb': self.network_io_mb,
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             'custom_metrics': self.custom_metrics
         }
 
@@ -202,8 +243,20 @@ Configuration for ML pipeline"""
 
 
 class PipelineStep(ABC):
-    """Abstract base class for pipeline steps"""
-    
+        try:
+            logger.info(f"Executing execute")
+            
+            # Implementation for execute
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"execute completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"execute failed: {e}")
+            raise
     def __init__(
         self,
         step_id: str,

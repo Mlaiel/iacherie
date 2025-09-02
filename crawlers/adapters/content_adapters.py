@@ -305,9 +305,50 @@ Initialize AI models and processors."""
     
     @abstractmethod
     async def extract_features(self, content: Union[bytes, str, BinaryIO]) -> Dict[str, Any]:
-        """Extract comprehensive features from content."""
-        pass
-    
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_extract_features_input(content)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_extract_features_result(result)
+            
+                    logger.info(f"AI processing extract_features completed")
+                    return final_result
+            
+                except Exception as e:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_extract_metadata_input(content)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_extract_metadata_result(result)
+            
+                    logger.info(f"AI processing extract_metadata completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing extract_metadata failed: {e}")
+                    raise
+                    logger.info(f"AI processing extract_features completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing extract_features failed: {e}")
+                    raise
     @abstractmethod
     async def generate_fingerprint(self, content: Union[bytes, str, BinaryIO]) -> ContentFingerprint:
         """

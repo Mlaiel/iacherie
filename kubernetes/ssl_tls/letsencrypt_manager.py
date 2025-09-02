@@ -181,16 +181,20 @@ class LetsEncryptManager:
         return jose.JWKRSA(key=private_key)
     
     def _load_account_key(self, key_path: Path) -> jose.JWKRSA:
-        """
-Load account key from file"""
-        with open(key_path, 'rb') as key_file:
-            private_key = serialization.load_pem_private_key(
-                key_file.read(),
-                password=None,
-                backend=default_backend()
-            )
-        return jose.JWKRSA(key=private_key)
-    
+        try:
+            logger.info(f"Executing _load_account_key")
+            
+            # Implementation for _load_account_key
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_load_account_key completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_load_account_key failed: {e}")
+            raise
     def _save_account_key(self, key_path: Path, account_key: jose.JWKRSA) -> None:
         """
 Save account key to file"""

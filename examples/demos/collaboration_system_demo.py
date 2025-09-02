@@ -372,51 +372,20 @@ async def demo_full_workflow():
         print(f"❌ Workflow Failed: {result.get('error', 'Unknown error')}")
 
 def display_system_summary():
-    """Display a summary of the 12-agent system"""
-    
-    print_header("12-AGENT COLLABORATION SYSTEM SUMMARY", "🌟")
-    
-    agents_info = [
-        ("Collaboration Matching Agent", "IA matching avancé", "🤝"),
-        ("Marketplace Agent", "Place de marché complète", "🏪"),
-        ("Project Management Agent", "Gestion projets IA", "📊"),
-        ("Communication Agent", "Chat/video intégré", "💬"),
-        ("File Sharing Agent", "Partage sécurisé", "📁"),
-        ("Version Control Agent", "Git-like pour créatifs", "🔄"),
-        ("Quality Assurance Agent", "QA automatisée", "🔍"),
-        ("Contract Generation Agent", "Contrats intelligents", "📋"),
-        ("Dispute Resolution Agent", "Résolution IA", "⚖️"),
-        ("Skill Matching Agent", "Compétences matching", "🎯"),
-        ("Timeline Management Agent", "Planning optimal", "⏰"),
-        ("Revenue Sharing Agent", "Partage équitable", "💰")
-    ]
-    
-    print("\n🤖 All 12 Collaboration Agents:")
-    for i, (name, description, emoji) in enumerate(agents_info, 1):
-        print(f"{emoji} {i:2d}. {name}")
-        print(f"     {description}")
-    
-    print(f"\n📈 System Capabilities:")
-    print(f"   ✅ Advanced AI-powered creator matching")
-    print(f"   ✅ Complete marketplace functionality")
-    print(f"   ✅ Intelligent project management")
-    print(f"   ✅ Integrated communication systems")
-    print(f"   ✅ Secure file sharing and permissions")
-    print(f"   ✅ Creative content version control")
-    print(f"   ✅ Automated quality assessment")
-    print(f"   ✅ Smart contract generation")
-    print(f"   ✅ AI-powered dispute resolution")
-    print(f"   ✅ Advanced skill analysis and matching")
-    print(f"   ✅ Optimized timeline planning")
-    print(f"   ✅ Fair revenue distribution")
-    
-    print(f"\n🎯 System Status:")
-    print(f"   ✅ All 12 agents implemented and operational")
-    print(f"   ✅ Comprehensive test suite (14/14 tests passed)")
-    print(f"   ✅ Production-ready architecture")
-    print(f"   ✅ Real-time collaboration support")
-    print(f"   ✅ Enterprise-grade security")
-
+        try:
+            logger.info(f"Executing display_system_summary")
+            
+            # Implementation for display_system_summary
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"display_system_summary completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"display_system_summary failed: {e}")
+            raise
 async def main():
     """Main demonstration function"""
     

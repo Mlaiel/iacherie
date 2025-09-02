@@ -504,11 +504,89 @@ class PaymentProcessingOrchestrator:
             return PAYMENT_PROCESSING_CONFIG
     
     async def _initialize_payment_services(self):
-        """Initialise les services de paiement principaux"""
-        logger.info("Initializing payment services...")
-        # Service initialization logic here
-        pass
-    
+        try:
+            logger.info(f"Executing _initialize_payment_services")
+            
+            # Implementation for _initialize_payment_services
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_initialize_payment_services completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _initialize_analytics")
+            
+            # Implementation for _initialize_analytics
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_initialize_analytics completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _initialize_webhooks")
+            
+            # Implementation for _initialize_webhooks
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_initialize_webhooks completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_initialize_monitoring",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _initialize_monitoring collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _initialize_monitoring failed: {e}")
+                    return None
+        except Exception as e:
+            logger.error(f"_initialize_webhooks failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_initialize_compliance completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_initialize_compliance failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"_initialize_analytics failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_initialize_fraud_detection completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_initialize_fraud_detection failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"_initialize_payment_services failed: {e}")
+            raise
     async def _initialize_fraud_detection(self):
         """Initialise le moteur de détection de fraude"""
         logger.info("Initializing fraud detection engine...")

@@ -327,8 +327,20 @@ class LicenseAgreement(Base):
     )
     
     def __repr__(self):
-        return f"<LicenseAgreement(id={self.id}, agreement_number={self.agreement_number}, type={self.license_type.value})>"
-    
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     @property
     def is_active(self) -> bool:
         """Check if license is currently active"""

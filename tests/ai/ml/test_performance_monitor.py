@@ -1115,8 +1115,20 @@ Test complete performance monitoring pipeline"""
         # Memory profiling
         if monitoring_scenario["memory_profiling"]:
             def test_function():
-                return sum(range(100000))
+        try:
+            logger.info(f"Executing test_function")
             
+            # Implementation for test_function
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"test_function completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"test_function failed: {e}")
+            raise
             with patch.object(memory_profiler, 'profile_comprehensive') as mock_memory:
                 mock_memory.return_value = {
                     "peak_memory_mb": 45.7,

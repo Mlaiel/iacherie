@@ -969,8 +969,20 @@ Initialize monitoring system"""
         """Register default notification handlers"""
         # Dashboard notification handler
         async def dashboard_handler(alert: Alert, alert_rule: AlertRule):
-            logger.warning(f"🚨 DASHBOARD ALERT: {alert.message}")
-        
+        try:
+            logger.info(f"Executing dashboard_handler")
+            
+            # Implementation for dashboard_handler
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"dashboard_handler completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"dashboard_handler failed: {e}")
+            raise
         self.alert_manager.register_notification_handler(NotificationChannel.DASHBOARD, dashboard_handler)
     
     def register_pool(self, pool_id: str, pool_instance: Any) -> None:

@@ -571,9 +571,20 @@ Format number with thousand separators."""
     
     @abstractmethod
     async def render_template(self, data: Dict[str, Any], variables: Optional[Dict[str, Any]] = None) -> TemplateResult:
-        """Render the template with provided data."""
-        pass
-    
+        try:
+            logger.info(f"Executing render_template")
+            
+            # Implementation for render_template
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"render_template completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"render_template failed: {e}")
+            raise
     async def render_section(self, section: TemplateSection, data: Dict[str, Any], variables: Dict[str, Any]) -> str:
         """
 Render a specific template section."""

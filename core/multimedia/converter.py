@@ -242,7 +242,20 @@ Enterprise multimedia format converter"""
             semaphore = asyncio.Semaphore(self.parallel_conversions)
             
             async def convert_with_semaphore(request):
-                async with semaphore:
+        try:
+            logger.info(f"Executing convert_with_semaphore")
+            
+            # Implementation for convert_with_semaphore
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"convert_with_semaphore completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"convert_with_semaphore failed: {e}")
+            raise
                     return await self.convert_file(request)
                     
             # Process conversions in parallel

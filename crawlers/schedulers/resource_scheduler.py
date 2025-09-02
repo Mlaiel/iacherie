@@ -424,19 +424,28 @@ Initialize resource scheduler."""
         logger.info("Resource monitoring started")
     
     async def stop_monitoring(self) -> None:
-        """Stop resource monitoring."""
-        self.is_running = False
-        
-        for task in [self.monitor_task, self.scaling_task, self.cost_optimizer_task]:
-            if task:
-                task.cancel()
-                try:
-                    await task
-                except asyncio.CancelledError:
-                    pass
-        
-        logger.info("Resource monitoring stopped")
-    
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "stop_monitoring",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric stop_monitoring collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection stop_monitoring failed: {e}")
+                    return None
     async def allocate_resources(
         self,
         task_id: str,
@@ -1001,10 +1010,20 @@ Optimize a specific allocation."""
         )
         
         if self.active_allocations:
-            self.metrics.sla_compliance_rate = (compliant_allocations / len(self.active_allocations)) * 100
-        
-        self.metrics.last_updated = datetime.utcnow()
-    
+        try:
+            logger.info(f"Executing _evaluate_scaling_decisions")
+            
+            # Implementation for _evaluate_scaling_decisions
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_evaluate_scaling_decisions completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_evaluate_scaling_decisions failed: {e}")
+            raise
     async def _evaluate_scaling_decisions(self) -> None:
         """
 Evaluate and make scaling decisions."""

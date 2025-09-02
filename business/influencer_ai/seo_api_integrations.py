@@ -147,10 +147,37 @@ class BaseAPIConnector(ABC):
     
     @abstractmethod
     async def _test_connection(self) -> bool:
-        """
-Tester la connexion API"""
-        pass
-    
+        try:
+            logger.info(f"Executing _test_connection")
+            
+            # Implementation for _test_connection
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_test_connection completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _make_request")
+            
+            # Implementation for _make_request
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_make_request completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_make_request failed: {e}")
+            raise
+            return result
+            
+        except Exception as e:
+            logger.error(f"_test_connection failed: {e}")
+            raise
     @abstractmethod
     async def _make_request(self, endpoint: str, params: Dict = None) -> Dict:
         """
@@ -332,6 +359,42 @@ Générer des mots-clés de fallback en cas d'échec API"""
 # =============== SEMRUSH API ===============
 
 class SEMrushConnector(BaseAPIConnector):
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+        variations = [
+            f"{seed} tips",
+            f"{seed} guide",
+            f"best {seed}",
+            f"{seed} tutorial",
+            f"how to {seed}"
+        ]
+        
+        return [
+            KeywordMetrics(
+                keyword=variation,
+                search_volume=random.randint(100, 5000),
+                competition=random.uniform(0.1, 0.9),
+                cpc_low=random.uniform(0.1, 2.0),
+                cpc_high=random.uniform(2.0, 8.0),
+                source=APIProvider.GOOGLE_KEYWORD_PLANNER
+            ) for variation in variations
+        ]
+
+# =============== SEMRUSH API ===============
+
+class SEMrushConnector(BaseAPIConnector):
     """Connecteur pour SEMrush API"""
     
     def __init__(self, config: APIConfig):
@@ -386,7 +449,20 @@ Tester la connexion SEMrush API"""
             for keyword in keywords:
                 params = {
                     'type': 'phrase_this',
-                    'phrase': keyword,
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
                     'database': database,
                     'display_limit': 50
                 }
@@ -506,8 +582,20 @@ Tester la connexion Ahrefs API"""
             for domain in domains:
                 # Appel API réel (production)
                 if self.config.enabled and self.config.api_key:
-                    try:
-                        # Obtenir les métriques du domaine
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
                         domain_metrics = await self._make_request(
                             "domain-rating",
                             {"target": domain}

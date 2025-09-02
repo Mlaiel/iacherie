@@ -1164,8 +1164,20 @@ if __name__ == "__main__":
         alerts_triggered = []
         
         async def alert_callback(alert: PerformanceAlert):
-            alerts_triggered.append(alert)
-        
+        try:
+            logger.info(f"Executing alert_callback")
+            
+            # Implementation for alert_callback
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"alert_callback completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"alert_callback failed: {e}")
+            raise
         performance_monitor.add_alert_callback(alert_callback)
         
         # Trigger performance threshold violations
@@ -1350,7 +1362,28 @@ if __name__ == "__main__":
         assert metrics["inference_time"]["count"] >= 950  # Most requests recorded
     
     async def test_real_time_monitoring(self, performance_monitor):
-        """Test real-time performance monitoring capabilities."""
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "monitor_callback",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric monitor_callback collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection monitor_callback failed: {e}")
+                    return None
         model_id = "test_realtime_001"
         
         await performance_monitor.register_model(

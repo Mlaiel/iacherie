@@ -765,7 +765,35 @@ def monitor_ai_model(
     """Decorator for automatic AI model performance monitoring"""
     def decorator(func: Callable) -> Callable:
         async def async_wrapper(*args, **kwargs):
-            return await ai_performance_monitor.track_model_inference(
+        try:
+            logger.info(f"Executing async_wrapper")
+            
+            # Implementation for async_wrapper
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"async_wrapper completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing sync_wrapper")
+            
+            # Implementation for sync_wrapper
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"sync_wrapper completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"sync_wrapper failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"async_wrapper failed: {e}")
+            raise
                 model_id=model_id,
                 model_type=model_type,
                 inference_func=func,

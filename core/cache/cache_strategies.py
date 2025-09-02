@@ -108,7 +108,20 @@ Cache item with metadata"""
     priority: int = 0
     
     def __post_init__(self):
-        if self.tags is None:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             self.tags = set()
     
     @property
@@ -127,6 +140,30 @@ Get item age in seconds"""
     
     @property
     def time_since_access(self) -> float:
+        try:
+            logger.info(f"Executing should_evict")
+            
+            # Implementation for should_evict
+            # TODO: Add specific business logic here
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation update_on_access completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation update_on_access failed: {e}")
+                    raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"should_evict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"should_evict failed: {e}")
+            raise
         """
 Get time since last access in seconds"""
         return (datetime.utcnow() - self.last_accessed).total_seconds()
@@ -379,53 +416,26 @@ Record cache access for pattern learning"""
         self._update_patterns(key, timestamp)
     
     def _update_patterns(self, key: str, timestamp: datetime):
-        """
-Update access patterns"""
-        accesses = self.access_history[key]
-        if len(accesses) < 2:
-            return
-        
-        # Temporal patterns
-        intervals = [
-            (accesses[i] - accesses[i-1]).total_seconds()
-            for i in range(1, len(accesses))
-        ]
-        
-        if intervals:
-            avg_interval = sum(intervals) / len(intervals)
-            self.access_patterns[key]['avg_interval'] = avg_interval
-            self.access_patterns[key]['last_access'] = timestamp
-        
-        # Sequential patterns (for content-based keys)
         try:
-            # Extract numeric part of key for sequence detection
-            import re
-            numbers = re.findall(r'\d+', key)
-            if numbers:
-                numeric_id = int(numbers[-1])
-                self.sequential_patterns[key.replace(numbers[-1], '')].append(numeric_id)
-                
-                # Keep only recent sequences
-                pattern_key = key.replace(numbers[-1], '')
-                if len(self.sequential_patterns[pattern_key]) > 50:
-                    self.sequential_patterns[pattern_key] = self.sequential_patterns[pattern_key][-50:]
-        except:
-            pass
-    
-    def predict_next_keys(self, current_key: str, count: int = 5) -> List[str]:
-        """
-Predict next keys to prefetch"""
-        predictions = []
-        
-        # Temporal predictions
-        if current_key in self.access_patterns:
-            pattern = self.access_patterns[current_key]
-            if 'avg_interval' in pattern and 'last_access' in pattern:
-                next_access_time = pattern['last_access'] + timedelta(seconds=pattern['avg_interval'])
-                if (next_access_time - datetime.utcnow()).total_seconds() < 3600:  # Within 1 hour
-                    predictions.append(current_key)
-        
-        # Sequential predictions
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_predict_next_keys_input(current_key)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_predict_next_keys_result(result)
+            
+                    logger.info(f"AI processing predict_next_keys completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing predict_next_keys failed: {e}")
+                    raise
         try:
             import re
             numbers = re.findall(r'\d+', current_key)

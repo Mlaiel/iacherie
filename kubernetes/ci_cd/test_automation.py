@@ -182,8 +182,20 @@ class CreatorContentTestValidator:
 Validator for creator content processing tests"""
     
     def __init__(self):
-        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
-        
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     async def validate_audio_processing(self, audio_data: bytes, expected_format: str) -> Tuple[bool, Dict[str, Any]]:
         """Validate audio content processing accuracy"""
         try:
@@ -286,6 +298,23 @@ Validator for creator content processing tests"""
             return validation_score >= 0.8, processing_results
             
         except Exception as e:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+            return validation_score >= 0.8, processing_results
+            
+        except Exception as e:
             self.logger.error(f"Text processing validation failed: {str(e)}")
             return False, {"error": str(e)}
 
@@ -374,6 +403,23 @@ class AIModelTestValidator:
                 "forecast_reliability": overall_accuracy * 0.96
             }
             
+            return overall_accuracy >= 0.95, metrics
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
             return overall_accuracy >= 0.95, metrics
             
         except Exception as e:

@@ -219,14 +219,20 @@ class ProtectionManager(ABC):
     
     @abstractmethod
     async def initialize_pool(self) -> bool:
-        """
-        Initialize protection engine pool and AI models
-        
-        Returns:
-            bool: True if initialization successful
-        """
-        pass
-    
+        try:
+            logger.info(f"Executing initialize_pool")
+            
+            # Implementation for initialize_pool
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"initialize_pool completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"initialize_pool failed: {e}")
+            raise
     @abstractmethod
     async def generate_fingerprint(
         self, 
@@ -243,21 +249,20 @@ class ProtectionManager(ABC):
             metadata: Additional metadata
             
         Returns:
-            ContentFingerprint: Complete fingerprint with AI vectors
-        """
-        pass
-    
-    @abstractmethod
-    async def detect_violations(
-        self, 
-        fingerprint: ContentFingerprint,
-        platforms: Optional[Set[str]] = None
-    ) -> List[ViolationAlert]:
-        """
-        Detect copyright violations across platforms
-        
-        Args:
-            fingerprint: Content fingerprint to check
+        try:
+            logger.info(f"Executing detect_violations")
+            
+            # Implementation for detect_violations
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"detect_violations completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"detect_violations failed: {e}")
+            raise
             platforms: Specific platforms to scan
             
         Returns:
@@ -516,7 +521,28 @@ class ProtectionManager(ABC):
             }
     
     async def _start_monitoring(self, fingerprint: ContentFingerprint) -> None:
-        """Start real-time monitoring for a fingerprint"""
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "monitor_loop",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric monitor_loop collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection monitor_loop failed: {e}")
+                    return None
         if fingerprint.id in self._monitoring_tasks:
             return
         

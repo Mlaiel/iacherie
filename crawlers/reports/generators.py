@@ -1183,10 +1183,28 @@ class ReportGenerator(ABC):
     
     @abstractmethod
     async def collect_data(self, session: AsyncSession) -> Dict[str, Any]:
-        """
-Collect data for report generation."""
-        pass
-    
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "collect_data",
+                        "value": session if session else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric collect_data collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection collect_data failed: {e}")
+                    return None
     async def validate_configuration(self) -> bool:
         """
 Validate report configuration."""

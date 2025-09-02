@@ -70,10 +70,37 @@ Abstract base class for media parsers"""
     
     @abstractmethod
     async def parse(self, file_path: Union[str, Path, BinaryIO], **kwargs) -> Dict[str, Any]:
-        """
-Parse media file and extract metadata/content"""
-        pass
-    
+        try:
+            logger.info(f"Executing parse")
+            
+            # Implementation for parse
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"parse completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_supported_formats_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_supported_formats failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            return result
+            
+        except Exception as e:
+            logger.error(f"parse failed: {e}")
+            raise
     @abstractmethod
     def get_supported_formats(self) -> List[MediaFormat]:
         """
@@ -114,8 +141,20 @@ Extract basic file metadata"""
         metadata = {
             'parsed_at': datetime.now(timezone.utc).isoformat(),
             'parser_type': self.__class__.__name__
-        }
-        
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_supported_formats_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_supported_formats failed: {e}")
+                    return {"status": "error", "message": str(e)}
         if isinstance(file_path, (str, Path)):
             path = Path(file_path)
             stat = path.stat()
@@ -285,6 +324,21 @@ Analyze audio content using librosa"""
     async def _generate_audio_fingerprint(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
         """
 Generate audio fingerprint for content identification"""
+        try:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_supported_formats_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_supported_formats failed: {e}")
+                    return {"status": "error", "message": str(e)}
         try:
             # Load audio for fingerprinting
             if isinstance(file_path, (str, Path)):
@@ -462,7 +516,20 @@ Video file parser with frame analysis capabilities"""
         """
 Generate video fingerprint for content identification"""
         try:
-            if isinstance(file_path, (str, Path)):
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_supported_formats_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_supported_formats failed: {e}")
+                    return {"status": "error", "message": str(e)}
                 cap = cv2.VideoCapture(str(file_path))
             else:
                 import tempfile
@@ -599,7 +666,20 @@ Analyze image content for visual properties"""
                 'mean_rgb': stat.mean,
                 'median_rgb': stat.median,
                 'stddev_rgb': stat.stddev,
-                'extrema_rgb': stat.extrema
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_supported_formats_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_supported_formats failed: {e}")
+                    return {"status": "error", "message": str(e)}
             }
             
             # Calculate dominant colors
@@ -672,6 +752,21 @@ Text file parser with content analysis"""
         ]
     
     async def parse(self, file_path: Union[str, Path, BinaryIO], **kwargs) -> Dict[str, Any]:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_supported_formats_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_supported_formats failed: {e}")
+                    return {"status": "error", "message": str(e)}
+    async def parse(self, file_path: Union[str, Path, BinaryIO], **kwargs) -> Dict[str, Any]:
         """
 Parse text file and extract content"""
         try:
@@ -728,8 +823,20 @@ Generate text fingerprint"""
         char_freq = {}
         for char in content.lower():
             if char.isalnum():
-                char_freq[char] = char_freq.get(char, 0) + 1
-        
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_supported_formats_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_supported_formats failed: {e}")
+                    return {"status": "error", "message": str(e)}
         freq_hash = hash(tuple(sorted(char_freq.items())))
         
         return {
@@ -778,6 +885,20 @@ Parse PDF document"""
                 page_count = len(reader.pages)
                 text_content = ''
                 for page in reader.pages:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_supported_formats_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_supported_formats failed: {e}")
+                    return {"status": "error", "message": str(e)}
                     text_content += page.extract_text()
             
             metadata = self._extract_basic_metadata(file_path)

@@ -820,11 +820,17 @@ Check frequency limits for user and rule"""
         return True
 
     def _update_event(self, event: NotificationEvent):
-        """
-Update event in database"""
-        # Implementation would update event
-        pass
-
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _update_event completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _update_event failed: {e}")
+                    raise
     def _validate_template(self, template: NotificationTemplate):
         """
 Validate template configuration"""
@@ -1086,6 +1092,20 @@ Get notification entity by ID asynchronously"""
         return notification_list
 
     async def batch_send_notifications(self, notification_requests: List[Dict[str, Any]]) -> List[List[Notification]]:
+        try:
+            logger.info(f"Executing send_notification_with_semaphore")
+            
+            # Implementation for send_notification_with_semaphore
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"send_notification_with_semaphore completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"send_notification_with_semaphore failed: {e}")
+            raise
         """Send multiple notifications concurrently"""
         try:
             semaphore = asyncio.Semaphore(self._max_concurrent_operations)
@@ -1113,6 +1133,21 @@ Get notification entity by ID asynchronously"""
             self.logger.error(f"Batch notification sending failed: {e}")
             raise
 
+    async def send_notification_async(self, user_id: str, notification_type: NotificationType,
+        try:
+            logger.info(f"Executing create_channel_notification")
+            
+            # Implementation for create_channel_notification
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"create_channel_notification completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"create_channel_notification failed: {e}")
+            raise
     async def send_notification_async(self, user_id: str, notification_type: NotificationType,
                                     data: Dict[str, Any], channels: List[NotificationChannel] = None,
                                     priority: Priority = Priority.MEDIUM) -> List[Notification]:

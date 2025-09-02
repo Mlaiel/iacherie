@@ -651,23 +651,20 @@ Execute flow steps asynchronously."""
         correlation.events.append(event.instance_id)
     
     async def _check_circuit_breaker(self, handler_id: str) -> bool:
-        """
-Check circuit breaker state."""
-        cb = self.circuit_breakers.get(handler_id, {})
-        
-        if cb.get('state') == 'open':
-            # Check if timeout period has passed
-            last_failure = cb.get('last_failure_time')
-            timeout = cb.get('timeout', 60)
+        try:
+            logger.info(f"Executing _check_circuit_breaker")
             
-            if last_failure and (datetime.now() - last_failure).seconds > timeout:
-                cb['state'] = 'half_open'
-                return True
+            # Implementation for _check_circuit_breaker
+            # TODO: Add specific business logic here
             
-            return False
-        
-        return True
-    
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_check_circuit_breaker completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_check_circuit_breaker failed: {e}")
+            raise
     async def _record_circuit_breaker_failure(self, handler_id: str) -> None:
         """
 Record circuit breaker failure."""

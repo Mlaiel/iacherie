@@ -472,7 +472,20 @@ Initialize AI/ML models for contract optimization"""
             semaphore = asyncio.Semaphore(5)  # Limit to 5 concurrent optimizations
             
             async def optimize_single_contract(contract_id: str):
-                async with semaphore:
+        try:
+            logger.info(f"Executing optimize_single_contract")
+            
+            # Implementation for optimize_single_contract
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"optimize_single_contract completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"optimize_single_contract failed: {e}")
+            raise
                     return await self.optimize_contract(
                         contract_id=contract_id,
                         optimization_types=optimization_config.get('types', [OptimizationType.CLAUSES]),
@@ -637,6 +650,20 @@ Estimate revenue impact of optimizations"""
             "Include technology adaptation provisions"
         ]
     
+    async def _assess_legal_review_requirement(
+        self,
+        optimization_result: ContractOptimizationResult
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _save_optimization_result completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _save_optimization_result failed: {e}")
+                    raise
     async def _assess_legal_review_requirement(
         self,
         optimization_result: ContractOptimizationResult

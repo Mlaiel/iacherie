@@ -524,7 +524,20 @@ class ComplianceAssessment:
     next_assessment_due: Optional[datetime] = None
     
     def __post_init__(self):
-        if not self.assessment_id:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             self.assessment_id = f"assess-{secrets.token_hex(8)}"
 
 
@@ -545,8 +558,20 @@ class LegalDocumentation:
     jurisdiction: str = "US"
     legal_framework: ComplianceFramework = ComplianceFramework.DMCA_US
     document_status: str = "active"
-    
-    # Lifecycle
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     created_at: datetime = field(default_factory=datetime.utcnow)
     created_by: str = "system"
     reviewed_at: Optional[datetime] = None

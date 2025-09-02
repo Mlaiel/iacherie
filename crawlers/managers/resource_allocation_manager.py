@@ -314,19 +314,20 @@ Initialize default resource limits based on system capabilities."""
             )
             
     def _get_gpu_utilization(self) -> Optional[float]:
-        """Get GPU utilization if available."""
         try:
-            import GPUtil
-            gpus = GPUtil.getGPUs()
-            if gpus:
-                return sum(gpu.load for gpu in gpus) / len(gpus) * 100
-        except ImportError:
-            pass
-        except Exception as e:
-            self.logger.debug(f"GPU utilization check failed: {e}")
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
             
-        return None
-        
+                    # Process request
+                    result = await self._handle__get_gpu_utilization_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_gpu_utilization failed: {e}")
+                    return {"status": "error", "message": str(e)}
     def _update_allocation_tracking(self):
         """Update tracking for active allocations."""
         current_time = datetime.utcnow()

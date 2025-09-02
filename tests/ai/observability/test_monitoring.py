@@ -709,9 +709,28 @@ Test thread safety of monitoring operations"""
         lock = threading.Lock()
         
         def concurrent_metric_collection(thread_id):
-            try:
-                # This would normally be async, but for thread safety testing
-                # we simulate concurrent access patterns
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "concurrent_metric_collection",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric concurrent_metric_collection collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection concurrent_metric_collection failed: {e}")
+                    return None
                 with lock:
                     result = {
                         'thread_id': thread_id,
@@ -950,6 +969,28 @@ Test alert threshold evaluation logic"""
             if metric in thresholds:
                 threshold_config = thresholds[metric]
                 if value >= threshold_config['critical']:
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "collect_metrics",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric collect_metrics collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection collect_metrics failed: {e}")
+                    return None
                     alerts.append({'metric': metric, 'level': 'critical', 'value': value})
                 elif value >= threshold_config['warning']:
                     alerts.append({'metric': metric, 'level': 'warning', 'value': value})

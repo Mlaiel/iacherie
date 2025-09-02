@@ -667,21 +667,33 @@ Periodic cleanup of expired entries"""
                 self.logger.error(f"Cleanup error: {e}")
     
     async def close(self):
-        """Close cache manager and cleanup resources"""
-        if self._cleanup_task:
-            self._cleanup_task.cancel()
-            try:
-                await self._cleanup_task
-            except asyncio.CancelledError:
-                pass
-        
-        if self.l2_redis:
-            await self.l2_redis.close()
-        
-        self.logger.info("Intelligent cache manager closed")
-
-
-# Cache manager singleton
+        try:
+            logger.info(f"Executing close")
+            
+            # Implementation for close
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"close completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"close failed: {e}")
+            raise
+            logger.info(f"Executing close")
+            
+            # Implementation for close
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"close completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"close failed: {e}")
+            raise
 _cache_manager: Optional[IntelligentCacheManager] = None
 
 

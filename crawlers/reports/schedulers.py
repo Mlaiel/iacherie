@@ -279,9 +279,56 @@ class ReportScheduler(ABC):
     
     @abstractmethod
     async def start(self):
-        """Start the scheduler."""
-        pass
-    
+        try:
+            logger.info(f"Executing start")
+            
+            # Implementation for start
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing stop")
+            
+            # Implementation for stop
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"stop completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing remove_schedule")
+            
+            # Implementation for remove_schedule
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"remove_schedule completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"remove_schedule failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"add_schedule completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"add_schedule failed: {e}")
+            raise
+            return result
+            
+        except Exception as e:
+            logger.error(f"stop failed: {e}")
+            raise
+            logger.info(f"start completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"start failed: {e}")
+            raise
     @abstractmethod
     async def stop(self):
         """

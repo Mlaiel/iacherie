@@ -640,14 +640,20 @@ Initialize processing components"""
         self.logger.info("Noise reduction processor reset")
     
     def __del__(self):
-        """Cleanup"""
-        if hasattr(self, 'processing_lock'):
-            with self.processing_lock:
-                pass  # Ensure any ongoing processing completes
-        self.adaptation_rate = 0.01
-        
-        self.logger.info("NoiseReductionProcessor initialized")
-    
+        try:
+            logger.info(f"Executing __del__")
+            
+            # Implementation for __del__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__del__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__del__ failed: {e}")
+            raise
     def _init_buffers(self):
         """Initialize processing buffers"""
         self.input_buffer = np.zeros(self.frame_size * 2)

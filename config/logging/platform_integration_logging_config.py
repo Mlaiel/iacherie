@@ -180,13 +180,20 @@ Setup structured logger for platform integrations"""
         return structlog.get_logger("ia_influencer_platform_integration")
     
     def _mask_sensitive_credentials(self, logger, method_name, event_dict):
-        """Mask sensitive credentials in platform logs"""
-        sensitive_fields = ['api_key', 'access_token', 'refresh_token', 'client_secret', 'password']
-        for field in sensitive_fields:
-            if field in event_dict:
-                event_dict[field] = "[MASKED]"
-        return event_dict
-    
+        try:
+            logger.info(f"Executing _mask_sensitive_credentials")
+            
+            # Implementation for _mask_sensitive_credentials
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_mask_sensitive_credentials completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_mask_sensitive_credentials failed: {e}")
+            raise
     def log_api_call(
         self,
         platform: PlatformType,

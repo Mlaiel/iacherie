@@ -859,27 +859,26 @@ Generate cache key for query"""
         return min(confidence, 1.0)
     
     def _extract_ranking_features(self, result: Any, query: SearchQuery) -> Dict[str, float]:
-        """Extract features for ranking algorithms"""
-        features = {
-            "similarity_score": getattr(result, 'similarity_score', 0.0),
-            "confidence_score": getattr(result, 'confidence_score', 0.0),
-            "metadata_completeness": len(getattr(result, 'metadata', {})) / 10.0,
-            "recency_score": 0.0,  # Calculate based on timestamp
-            "popularity_score": 0.0,  # Calculate based on usage
-            "quality_score": 0.0  # Calculate based on content quality metrics
-        }
-        
-        # Calculate recency score
-        if hasattr(result, 'metadata') and 'timestamp' in result.metadata:
-            try:
-                timestamp = datetime.fromisoformat(result.metadata['timestamp'])
-                days_old = (datetime.now() - timestamp).days
-                features["recency_score"] = max(0.0, 1.0 - (days_old / 365.0))
-            except:
-                pass
-        
-        return features
-    
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__extract_ranking_features_input(result)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__extract_ranking_features_result(result)
+            
+                    logger.info(f"AI processing _extract_ranking_features completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _extract_ranking_features failed: {e}")
+                    raise
     def _initialize_content_configs(self) -> Dict[str, Dict[str, Any]]:
         """Initialize content type specific configurations"""
         return {

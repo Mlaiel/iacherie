@@ -212,7 +212,20 @@ class S3Archiver:
         """Upload file to S3"""
         
         def _upload():
-            try:
+        try:
+            logger.info(f"Executing _upload")
+            
+            # Implementation for _upload
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_upload completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_upload failed: {e}")
+            raise
                 self.s3_client.upload_file(
                     str(local_path),
                     self.bucket,
@@ -251,8 +264,20 @@ class S3Archiver:
                 if success:
                     uploaded_files.append(str(file_path))
                 else:
-                    failed_files.append(str(file_path))
-        
+        try:
+            logger.info(f"Executing _list_files")
+            
+            # Implementation for _list_files
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_list_files completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_list_files failed: {e}")
+            raise
         return {
             "uploaded": len(uploaded_files),
             "failed": len(failed_files),
@@ -272,7 +297,20 @@ class S3Archiver:
                 
                 files = []
                 for obj in response.get('Contents', []):
-                    files.append({
+        try:
+            logger.info(f"Executing _transition")
+            
+            # Implementation for _transition
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_transition completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_transition failed: {e}")
+            raise
                         'key': obj['Key'],
                         'size': obj['Size'],
                         'last_modified': obj['LastModified'],

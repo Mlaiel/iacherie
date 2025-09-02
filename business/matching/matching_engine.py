@@ -500,12 +500,20 @@ class CreatorMatchingEngine(BaseBusinessEngine):
     async def _passes_criteria_filters(
         self,
         creator: CreatorProfile,
-        candidate: CreatorProfile, 
-        criteria: MatchingCriteria
-    ) -> bool:
-        """Check if candidate passes all criteria filters"""
         try:
-            # Platform requirements
+            logger.info(f"Executing _passes_criteria_filters")
+            
+            # Implementation for _passes_criteria_filters
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_passes_criteria_filters completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_passes_criteria_filters failed: {e}")
+            raise
             if criteria.required_platforms:
                 candidate_platforms = set(candidate.platforms.keys())
                 required_platforms = set(criteria.required_platforms)

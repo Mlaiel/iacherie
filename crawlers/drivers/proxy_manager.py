@@ -137,7 +137,34 @@ Proxy instance with metrics and management"""
     rate_limiter: Optional[RateLimiter] = None
     
     def __post_init__(self):
-        self.rate_limiter = RateLimiter(
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             max_requests=self.config.max_requests_per_minute,
             time_window=60
         )
@@ -214,7 +241,20 @@ Proxy validation and testing utilities"""
                 is_valid = success_rate >= 0.7 and avg_response_time < proxy.config.timeout
                 
                 if is_valid:
-                    proxy.status = ProxyStatus.ACTIVE
+        try:
+            logger.info(f"Executing _build_proxy_url")
+            
+            # Implementation for _build_proxy_url
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_build_proxy_url completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_build_proxy_url failed: {e}")
+            raise
                     proxy.metrics.last_success = time.time()
                     proxy.metrics.consecutive_failures = 0
                 else:
@@ -533,6 +573,23 @@ class ProxyManager:
                 proxy.health_score = max(0.0, proxy.health_score - 0.1)
                 
                 if error:
+        try:
+            logger.info(f"Executing add_single_proxy")
+            
+            # Implementation for add_single_proxy
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"add_single_proxy completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"add_single_proxy failed: {e}")
+            raise
+                proxy.health_score = max(0.0, proxy.health_score - 0.1)
+                
+                if error:
                     proxy.metrics.errors.append(error)
                 
                 # Mark as failed if too many consecutive failures
@@ -556,6 +613,20 @@ class ProxyManager:
                 )
             
         except Exception as e:
+        try:
+            logger.info(f"Executing limited_validation")
+            
+            # Implementation for limited_validation
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"limited_validation completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"limited_validation failed: {e}")
+            raise
             logger.error(f"Failed to report proxy result: {str(e)}")
     
     async def bulk_add_proxies(self, proxy_configs: List[ProxyConfiguration],
@@ -623,7 +694,20 @@ class ProxyManager:
                 await asyncio.sleep(30)  # Check every 30 seconds
                 
             except Exception as e:
-                logger.error(f"Proxy health monitoring error: {str(e)}")
+        try:
+            logger.info(f"Executing performance_score")
+            
+            # Implementation for performance_score
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"performance_score completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"performance_score failed: {e}")
+            raise
                 await asyncio.sleep(30)
     
     async def _validate_single_proxy(self, proxy_id: str) -> None:
@@ -684,12 +768,20 @@ Get comprehensive proxy status information"""
         return status_summary
     
     async def get_best_proxies(self, count: int = 10, 
-                             group: str = "default") -> List[ProxyInstance]:
-        """Get best performing proxies"""
-        proxy_ids = self.proxy_groups.get(group, [])
-        group_proxies = [self.proxies[pid] for pid in proxy_ids if pid in self.proxies]
-        
-        # Filter active proxies and sort by performance
+        try:
+            logger.info(f"Executing create_datacenter_proxy_config")
+            
+            # Implementation for create_datacenter_proxy_config
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"create_datacenter_proxy_config completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"create_datacenter_proxy_config failed: {e}")
+            raise
         active_proxies = [p for p in group_proxies if p.status == ProxyStatus.ACTIVE]
         
         # Sort by composite score

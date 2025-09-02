@@ -806,27 +806,20 @@ Monitor active escalations for deadlines and status updates"""
             logger.error(f"Error handling overdue escalation: {e}")
     
     def _get_next_escalation_level(self, current_level: EscalationLevel) -> Optional[EscalationLevel]:
-        """Get next escalation level"""
-        level_order = [
-            EscalationLevel.INITIAL,
-            EscalationLevel.AUTOMATED_RETRY,
-            EscalationLevel.MANUAL_REVIEW,
-            EscalationLevel.LEGAL_NOTICE,
-            EscalationLevel.ATTORNEY_REVIEW,
-            EscalationLevel.FORMAL_COMPLAINT,
-            EscalationLevel.LITIGATION,
-            EscalationLevel.SETTLEMENT
-        ]
-        
         try:
-            current_index = level_order.index(current_level)
-            if current_index < len(level_order) - 1:
-                return level_order[current_index + 1]
-        except ValueError:
-            pass
-        
-        return None
-    
+                    # Request validation
+                    if not current_level:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_next_escalation_level_request(current_level)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_next_escalation_level failed: {e}")
+                    return {"status": "error", "message": str(e)}
     async def get_escalation_statistics(self) -> Dict[str, Any]:
         """
 Get escalation engine statistics"""

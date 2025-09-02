@@ -646,12 +646,17 @@ class DistributionManager:
     async def _update_distribution_results(
         self,
         request: DistributionRequest,
-        results: List[DistributionResult]
-    ):
-        """Update distribution job results"""
-        # Implementation to update database with results
-        pass
-    
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _update_distribution_results completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _update_distribution_results failed: {e}")
+                    raise
     async def _send_distribution_notification(
         self,
         request: DistributionRequest,
@@ -684,6 +689,20 @@ Handle distribution error"""
     async def _schedule_distribution(
         self,
         job: DistributionJob,
+        try:
+            logger.info(f"Executing _schedule_distribution")
+            
+            # Implementation for _schedule_distribution
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_schedule_distribution completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_schedule_distribution failed: {e}")
+            raise
         scheduling: Dict[str, Any]
     ):
         """Schedule distribution for later execution"""

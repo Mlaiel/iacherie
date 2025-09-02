@@ -201,8 +201,20 @@ class ContentModel(Base):
     licenses = relationship("LicensingModel", back_populates="content")
     
     def __repr__(self):
-        return f"<ContentModel(id='{self.id}', title='{self.title}', type='{self.content_type}')>"
-    
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     def to_dict(self) -> Dict[str, Any]:
         """Convert model to dictionary representation"""
         return {

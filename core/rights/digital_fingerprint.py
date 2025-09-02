@@ -81,12 +81,20 @@ Generate fingerprint for content."""
     @abstractmethod
     async def compare_fingerprints(
         self, fingerprint1: FingerprintResult, fingerprint2: FingerprintResult
-    ) -> float:
-        """
-Compare two fingerprints and return similarity score."""
-        pass
-
-
+        try:
+            logger.info(f"Executing compare_fingerprints")
+            
+            # Implementation for compare_fingerprints
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"compare_fingerprints completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"compare_fingerprints failed: {e}")
+            raise
 class AudioFingerprintEngine(BaseFingerprintEngine):
     """
 High-precision audio fingerprinting using Chromaprint and spectral analysis."""

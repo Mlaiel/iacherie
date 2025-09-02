@@ -575,11 +575,35 @@ Initialize collaboration matcher"""
             self.risk_assessor = None
     
     async def _load_collaboration_history(self):
-        """Load historical collaboration data"""
-        self.logger.info("Loading collaboration history...")
-        # Implementation for loading historical data
-        pass
-    
+        try:
+            logger.info(f"Executing _load_collaboration_history")
+            
+            # Implementation for _load_collaboration_history
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_load_collaboration_history completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _initialize_creator_database")
+            
+            # Implementation for _initialize_creator_database
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_initialize_creator_database completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_initialize_creator_database failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"_load_collaboration_history failed: {e}")
+            raise
     async def _initialize_creator_database(self):
         """Initialize creator database"""
         self.logger.info("Initializing creator database...")
@@ -2006,6 +2030,20 @@ Calculate schedule compatibility for collaboration timing."""
         # Posting frequency compatibility
         freq_compat = 0.8  # Default
         if 'frequency' in schedule1 and 'frequency' in schedule2:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_tier_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_tier failed: {e}")
+                    return {"status": "error", "message": str(e)}
             freq1 = schedule1['frequency']
             freq2 = schedule2['frequency']
             

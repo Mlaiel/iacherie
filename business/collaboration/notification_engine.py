@@ -768,14 +768,20 @@ Deliver notification via specific channel"""
     async def _schedule_notification_for_recipient(
         self,
         notification: CollaborationNotification,
-        recipient: NotificationRecipient,
-        channel: NotificationChannel
-    ):
-        """
-Schedule notification for specific recipient and channel"""
-        # Implementation would add to scheduled queue with specific timing
-        pass
-    
+        try:
+            logger.info(f"Executing _schedule_notification_for_recipient")
+            
+            # Implementation for _schedule_notification_for_recipient
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_schedule_notification_for_recipient completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_schedule_notification_for_recipient failed: {e}")
+            raise
     async def _update_analytics(
         self,
         notification: CollaborationNotification,

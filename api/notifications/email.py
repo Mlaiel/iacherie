@@ -12,17 +12,20 @@ from email import encoders
 
 class EmailNotifier:
     def __init__(self, provider: str = "smtp"):
-        self.provider = provider
-        self.smtp_config = {
-            "host": os.getenv("SMTP_HOST", "smtp.gmail.com"),
-            "port": int(os.getenv("SMTP_PORT", "587")),
-            "username": os.getenv("SMTP_USERNAME", ""),
-            "password": os.getenv("SMTP_PASSWORD", ""),
-            "use_tls": True
-        }
-        self.sendgrid_api_key = os.getenv("SENDGRID_API_KEY", "")
-        self.default_sender = os.getenv("DEFAULT_SENDER_EMAIL", "noreply@iainfluencer.com")
-
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     async def send_email(self, 
                         to_email: str, 
                         subject: str, 

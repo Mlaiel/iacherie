@@ -1041,17 +1041,30 @@ Create music lover audience segment"""
     async def _store_targeting_results(
         self,
         targeting_id: str,
-        segments: List[AudienceProfile],
-        strategy: Dict[str, Any],
-        session: AsyncSession
-    ) -> None:
-        """Store targeting results in database"""
-        # Implementation would store in database
-        pass
-    
-    async def _store_custom_audience(
-        self,
-        audience: AudienceProfile,
+        try:
+                    # Request validation
+                    if not targeting_id:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__store_targeting_results_request(targeting_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+        try:
+            logger.info(f"Executing _store_custom_audience")
+            
+            # Implementation for _store_custom_audience
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_custom_audience completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_custom_audience failed: {e}")
+            raise
         session: AsyncSession
     ) -> None:
         """

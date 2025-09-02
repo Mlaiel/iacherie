@@ -26,7 +26,20 @@ class GovernanceModel:
     created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             "governance_id": self.governance_id,
             "tenant_id": self.tenant_id,
             "policy_type": self.policy_type,
@@ -38,12 +51,41 @@ class GovernanceModel:
 
 @dataclass
 class ComplianceModel:
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
+@dataclass
+class ComplianceModel:
     compliance_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     tenant_id: str = ""
     regulation: str = "GDPR"
     status: str = "compliant"
     last_audit_date: Optional[datetime] = None
-    next_audit_date: Optional[datetime] = None
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
     findings: List[str] = field(default_factory=list)
     created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     

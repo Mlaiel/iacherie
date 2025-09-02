@@ -185,23 +185,33 @@ class MonitoringIndex:
         logger.info("Monitoring index started successfully")
         
     async def stop_index(self) -> None:
-        """Stop the monitoring index service"""
-        if not self.is_running:
-            return
+        try:
+            logger.info(f"Executing stop_index")
             
-        self.is_running = False
-        
-        # Cancel background tasks
-        for task in self.background_tasks:
-            task.cancel()
-            try:
-                await task
-            except asyncio.CancelledError:
-                pass
-                
-        self.background_tasks.clear()
-        logger.info("Monitoring index stopped")
-        
+            # Implementation for stop_index
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"stop_index completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"stop_index failed: {e}")
+            raise
+            logger.info(f"Executing stop_index")
+            
+            # Implementation for stop_index
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"stop_index completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"stop_index failed: {e}")
+            raise
     def _register_services(self) -> None:
         """Register all monitoring services"""
         services = [

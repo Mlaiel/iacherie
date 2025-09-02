@@ -805,17 +805,20 @@ Submit frame for asynchronous analysis"""
             return None
     
     def get_latest_results(self, count: int = 10) -> List[Dict[str, Any]]:
-        """
-Get latest analysis results"""
-        results = []
         try:
-            while len(results) < count and not self.result_queue.empty():
-                result = self.result_queue.get_nowait()
-                results.append(result)
-        except queue.Empty:
-            pass
-        return results
-
+                    # Request validation
+                    if not count:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_latest_results_request(count)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_latest_results failed: {e}")
+                    return {"status": "error", "message": str(e)}
 class PerformanceMonitor:
     """
 Real-time performance monitoring for streaming"""

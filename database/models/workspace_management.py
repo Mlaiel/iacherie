@@ -320,8 +320,20 @@ class WorkspaceManagement(Base):
     )
     
     def __repr__(self):
-        return f"<WorkspaceManagement(id={self.id}, name={self.name}, type={self.workspace_type.value}, status={self.status.value})>"
-    
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     @classmethod
     def create_workspace(
         cls,
@@ -626,6 +638,31 @@ class WorkspaceProject(Base):
     project_type = Column(String(100), nullable=True)
     priority = Column(String(20), nullable=False, default="medium")
     tags = Column(ARRAY(String), nullable=True)
+    metadata = Column(JSONB, nullable=True)
+    
+    # Relationships
+    workspace = relationship("WorkspaceManagement", backref="projects")
+    
+    __table_args__ = (
+        Index('idx_workspace_projects_workspace_status', 'workspace_id', 'status'),
+        Index('idx_workspace_projects_created_updated', 'created_at', 'updated_at'),
+    )
+    
+    def __repr__(self):
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     metadata = Column(JSONB, nullable=True)
     
     # Relationships

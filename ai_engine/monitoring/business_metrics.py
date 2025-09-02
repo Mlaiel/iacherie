@@ -207,21 +207,28 @@ class BusinessMetricsCollector:
         logger.info("Business metrics collection started successfully")
         
     async def stop_collection(self) -> None:
-        """Stop business metrics collection"""
-        if not self.is_collecting:
-            return
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "stop_collection",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
             
-        self.is_collecting = False
-        
-        if self._collection_task:
-            self._collection_task.cancel()
-            try:
-                await self._collection_task
-            except asyncio.CancelledError:
-                pass
-                
-        logger.info("Business metrics collection stopped")
-        
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric stop_collection collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection stop_collection failed: {e}")
+                    return None
     async def record_revenue(
         self,
         user_id: str,

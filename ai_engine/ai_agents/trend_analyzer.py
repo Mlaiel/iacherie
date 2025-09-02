@@ -34,8 +34,49 @@ Initialize trend prediction models and algorithms"""
         logger.info("TrendPredictionEngine initialized with prediction algorithms")
         
     async def predict_trends(self, historical_data, signals, horizon): return []
-
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_predict_trends_input(historical_data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_predict_trends_result(result)
+            
+                    logger.info(f"AI processing predict_trends completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing predict_trends failed: {e}")
+                    raise
 class SocialListeningEngine:
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "collect_trending_data",
+                        "value": platform if platform else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric collect_trending_data collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection collect_trending_data failed: {e}")
+                    return None
     async def initialize(self):
         """Initialize social listening capabilities"""
         self.platforms = ['twitter', 'instagram', 'tiktok', 'youtube', 'facebook']

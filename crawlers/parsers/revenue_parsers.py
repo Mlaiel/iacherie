@@ -52,10 +52,37 @@ Async context manager exit"""
     
     @abstractmethod
     async def parse_revenue(self, **kwargs) -> Dict[str, Any]:
-        """
-Parse revenue data from platform"""
-        pass
-    
+        try:
+            logger.info(f"Executing parse_revenue")
+            
+            # Implementation for parse_revenue
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"parse_revenue completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_platform_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_platform_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            return result
+            
+        except Exception as e:
+            logger.error(f"parse_revenue failed: {e}")
+            raise
     @abstractmethod
     def get_platform_name(self) -> str:
         """
@@ -91,8 +118,20 @@ Calculate date range for revenue queries"""
         return ((current - previous) / previous) * 100
     
     def _convert_currency(self, amount: float, from_currency: str, to_currency: str = "USD") -> float:
-        """Convert currency (placeholder implementation)"""
-        # In a real implementation, this would use a currency conversion API
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_platform_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_platform_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
         conversion_rates = {
             "EUR": 1.1,
             "GBP": 1.3,
@@ -252,6 +291,26 @@ class YouTubeRevenueParser(BaseRevenueParser):
         
         return {
             'overview': {
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_platform_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_platform_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
+        avg_cpm = (total_ad_revenue / total_views * 1000) if total_views > 0 else 0
+        revenue_per_subscriber = total_revenue / total_subscribers_gained if total_subscribers_gained > 0 else 0
+        revenue_per_hour = (total_revenue / (total_watch_time / 60)) if total_watch_time > 0 else 0
+        
+        return {
+            'overview': {
                 'total_revenue': round(total_revenue, 2),
                 'total_ad_revenue': round(total_ad_revenue, 2),
                 'total_red_revenue': round(total_red_revenue, 2),
@@ -305,7 +364,20 @@ Parser for Spotify artist royalties"""
                     'days': (end_date - start_date).days
                 },
                 'currency': 'USD',
-                'data': parsed_revenue,
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_platform_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_platform_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
                 'parsed_at': datetime.now(timezone.utc).isoformat()
             }
             
@@ -390,6 +462,21 @@ Parser for Patreon subscription revenue"""
             )
     
     async def _get_patreon_campaign_data(self, campaign_id: str) -> Dict[str, Any]:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_platform_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_platform_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
+    async def _get_patreon_campaign_data(self, campaign_id: str) -> Dict[str, Any]:
         """Get Patreon campaign data"""
         url = f"https://www.patreon.com/api/oauth2/v2/campaigns/{campaign_id}"
         
@@ -464,6 +551,20 @@ class TwitchRevenueParser(BaseRevenueParser):
     async def parse_revenue(self, channel_id: str, **kwargs) -> Dict[str, Any]:
         """Parse Twitch revenue data"""
         try:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_platform_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_platform_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
             start_date, end_date = self._calculate_date_range(kwargs.get('days'))
             
             revenue_data = await self._get_twitch_revenue_data(channel_id, start_date, end_date)
@@ -546,6 +647,20 @@ Get Twitch analytics data"""
 
 
 class PayPalRevenueParser(BaseRevenueParser):
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_platform_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_platform_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
     """
 Parser for PayPal transaction revenue"""
     

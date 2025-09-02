@@ -265,7 +265,20 @@ Scrape multiple URLs concurrently."""
         semaphore = asyncio.Semaphore(self.config.concurrent_requests)
         
         async def scrape_with_semaphore(url: str) -> ScrapingResult:
-            async with semaphore:
+        try:
+            logger.info(f"Executing scrape_with_semaphore")
+            
+            # Implementation for scrape_with_semaphore
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"scrape_with_semaphore completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"scrape_with_semaphore failed: {e}")
+            raise
                 return await self._fetch_url(url, headers)
                 
         tasks = [scrape_with_semaphore(url) for url in urls]

@@ -226,10 +226,38 @@ class MetricCollector(ABC):
     
     @abstractmethod
     async def collect_metrics(self) -> Dict[str, MetricPoint]:
-        """
-Collect metrics from source"""
-        pass
-    
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "collect_metrics",
+                        "value": data if data else 0,
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_collector_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_collector_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric collect_metrics collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection collect_metrics failed: {e}")
+                    return None
     @abstractmethod
     def get_collector_name(self) -> str:
         """
@@ -279,6 +307,63 @@ Collect archival system metrics"""
             metrics["cost_per_gb"] = MetricPoint(timestamp, 0.023)  # USD
             
             # Health metrics
+            metrics["error_rate"] = MetricPoint(timestamp, 0.025)  # 2.5%
+            metrics["integrity_failures"] = MetricPoint(timestamp, 2)
+            
+            return metrics
+            
+        except Exception as e:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_collector_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_collector_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            metrics["frozen_tier_archives"] = MetricPoint(timestamp, 150)
+            metrics["deep_archive_archives"] = MetricPoint(timestamp, 50)
+            
+            # Operation rates
+            metrics["archives_created_rate"] = MetricPoint(timestamp, 45.0)  # per hour
+            metrics["archives_retrieved_rate"] = MetricPoint(timestamp, 120.0)  # per hour
+            
+            # Performance
+            metrics["avg_compression_time"] = MetricPoint(timestamp, 1250.0)  # ms
+            metrics["avg_retrieval_time"] = MetricPoint(timestamp, 800.0)  # ms
+            metrics["cache_hit_rate"] = MetricPoint(timestamp, 0.85)
+            
+            # Cost metrics
+            metrics["monthly_storage_cost"] = MetricPoint(timestamp, 1250.50)  # USD
+            metrics["cost_per_gb"] = MetricPoint(timestamp, 0.023)  # USD
+            
+            # Health metrics
+            metrics["error_rate"] = MetricPoint(timestamp, 0.025)  # 2.5%
+            metrics["integrity_failures"] = MetricPoint(timestamp, 2)
+            
+            return metrics
+            
+        except Exception as e:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_collector_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_collector_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
             metrics["error_rate"] = MetricPoint(timestamp, 0.025)  # 2.5%
             metrics["integrity_failures"] = MetricPoint(timestamp, 2)
             

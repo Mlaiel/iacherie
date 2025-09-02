@@ -423,15 +423,20 @@ Check if vote threshold is reached"""
         return precommit_stake >= threshold
     
     async def _apply_block(self, proposal: BlockProposal) -> None:
-        """Apply block to blockchain state"""
-        # This would contain the logic to apply transactions and update state
-        # For content protection, this might include:
-        # - Registering new content rights
-        # - Processing license transactions
-        # - Updating validator states
-        # - Distributing royalties
-        pass
-    
+        try:
+            logger.info(f"Executing _apply_block")
+            
+            # Implementation for _apply_block
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_apply_block completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_apply_block failed: {e}")
+            raise
     async def _distribute_block_rewards(self, proposer_id: str) -> None:
         """
 Distribute block rewards to validators"""
@@ -588,11 +593,20 @@ Update validator information"""
             "performance_score": str(validator.performance_score),
             "slashing_count": validator.slashing_count,
             "last_activity": validator.last_activity.isoformat()
-        }
-        
-        await self.redis.hset(key, mapping=data)
-    
-    async def _should_propose_block(self) -> bool:
+        try:
+            logger.info(f"Executing _should_propose_block")
+            
+            # Implementation for _should_propose_block
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_should_propose_block completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_should_propose_block failed: {e}")
+            raise
         """Check if we should propose a new block"""
         # Check if enough time has passed since last block
         # Check if there are pending transactions
@@ -615,9 +629,30 @@ Trigger block proposal process"""
         }))
     
     async def _trigger_precommit_phase(self, block_hash: str) -> None:
-        """Trigger precommit phase"""
-        await self.redis.publish("consensus_events", json.dumps({
-            "action": "precommit_phase",
+        try:
+            logger.info(f"Executing _check_finalization")
+            
+            # Implementation for _check_finalization
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _cleanup_expired_data")
+            
+            # Implementation for _cleanup_expired_data
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_cleanup_expired_data completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_cleanup_expired_data failed: {e}")
+            raise
+            return result
+            
+        except Exception as e:
+            logger.error(f"_check_finalization failed: {e}")
+            raise
             "block_hash": block_hash,
             "height": self.current_height + 1
         }))
@@ -634,12 +669,30 @@ Check for block finalization"""
         pass
     
     async def _cleanup_expired_data(self) -> None:
-        """
-Cleanup expired consensus data"""
-        # Remove old votes, proposals, and other temporary data
-        pass
-    
-    async def _record_slashing(self, validator_id: str, amount: Decimal, reason: str) -> None:
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _update_validator_set completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _update_validator_set failed: {e}")
+        try:
+            logger.info(f"Executing _reset_epoch_data")
+            
+            # Implementation for _reset_epoch_data
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_reset_epoch_data completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_reset_epoch_data failed: {e}")
+            raise
         """
 Record validator slashing"""
         key = f"slashing:{validator_id}:{datetime.utcnow().timestamp()}"
@@ -866,6 +919,27 @@ class ValidatorNetwork:
                 max(Decimal("0"), Decimal("20") - Decimal(str(response_time)) * Decimal("2"))  # 20% weight for speed
             )
             
+            validator.performance_score = min(performance_score, Decimal("100"))
+            validator.last_activity = datetime.utcnow()
+            validator.metadata.update(performance_metrics)
+            
+            await self._store_validator(validator)
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _load_validators")
+            
+            # Implementation for _load_validators
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_load_validators completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_load_validators failed: {e}")
+            raise
             validator.performance_score = min(performance_score, Decimal("100"))
             validator.last_activity = datetime.utcnow()
             validator.metadata.update(performance_metrics)

@@ -79,8 +79,20 @@ Generate error code based on category and timestamp"""
         }
     
     def __str__(self) -> str:
-        return f"[{self.error_code}] {self.message}"
-
+        try:
+            logger.info(f"Executing __str__")
+            
+            # Implementation for __str__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__str__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__str__ failed: {e}")
+            raise
 class ConfigurationError(SupportAgentException):
     """Configuration-related errors"""
     

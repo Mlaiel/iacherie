@@ -198,42 +198,26 @@ class SoundCloudIntelligentAgent:
             return None
     
     async def _extract_data_from_html(self, html: str) -> Dict[str, Any]:
-        """Extract structured data from HTML using intelligent patterns"""
-        extracted_data = {}
-        
-        # Extract JSON data from script tags
-        json_pattern = r'<script[^>]*>\s*window\.__sc_hydration\s*=\s*(\[.*?\]);\s*</script>'
-        json_matches = re.findall(json_pattern, html, re.DOTALL)
-        
-        if json_matches:
-            try:
-                json_data = json.loads(json_matches[0])
-                extracted_data['hydration_data'] = json_data
-            except Exception:
-                pass
-        
-        # Extract track information using patterns
-        for key, pattern in self.track_patterns.items():
-            matches = re.findall(pattern, html)
-            if matches:
-                extracted_data[key] = matches[0] if len(matches) == 1 else matches
-        
-        # Extract metadata from meta tags
-        meta_patterns = {
-            'title': r'<meta property="og:title" content="([^"]+)"',
-            'description': r'<meta property="og:description" content="([^"]+)"',
-            'image': r'<meta property="og:image" content="([^"]+)"',
-            'url': r'<meta property="og:url" content="([^"]+)"'
-        }
-        
-        for key, pattern in meta_patterns.items():
-            match = re.search(pattern, html)
-            if match:
-                extracted_data[f'meta_{key}'] = match.group(1)
-        
-        return extracted_data
-    
-    # Track Operations
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__extract_data_from_html_input(html)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__extract_data_from_html_result(result)
+            
+                    logger.info(f"AI processing _extract_data_from_html completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _extract_data_from_html failed: {e}")
+                    raise
     async def search_tracks(self, query: str, limit: int = 50) -> List[SoundCloudTrack]:
         """Search for tracks using API or intelligent scraping"""
         tracks = []

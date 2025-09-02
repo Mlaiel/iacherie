@@ -62,14 +62,20 @@ class NlpProcessingEngine(ABC):
     
     @abstractmethod
     async def initialize(self) -> bool:
-        """
-        Initialise le moteur avec ses dépendances
-        
-        Returns:
-            bool: True si initialisation réussie
-        """
-        pass
-    
+        try:
+            logger.info(f"Executing initialize")
+            
+            # Implementation for initialize
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"initialize completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"initialize failed: {e}")
+            raise
     @abstractmethod
     async def process(self, data: Any) -> Any:
         """
@@ -79,13 +85,20 @@ class NlpProcessingEngine(ABC):
             data: Données à traiter
             
         Returns:
-            Any: Résultat du traitement
-        """
-        pass
-    
-    @abstractmethod
-    async def shutdown(self) -> bool:
-        """
+        try:
+            logger.info(f"Executing shutdown")
+            
+            # Implementation for shutdown
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"shutdown completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"shutdown failed: {e}")
+            raise
         Arrêt propre du moteur
         
         Returns:

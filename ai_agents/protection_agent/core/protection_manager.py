@@ -758,7 +758,20 @@ class ProtectionAgentManager(BaseAgent):
         start_time = time.time()
         
         async def protect_single_content(content_path: str) -> Dict[str, Any]:
-            try:
+        try:
+            logger.info(f"Executing protect_single_content")
+            
+            # Implementation for protect_single_content
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"protect_single_content completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"protect_single_content failed: {e}")
+            raise
                 result = await self.protection_agent.process({
                     'action': 'protect_content',
                     'content_path': content_path,
@@ -839,6 +852,32 @@ class ProtectionAgentManager(BaseAgent):
         all_violations = []
         
         async def scan_single_content(content_id: str) -> Dict[str, Any]:
+        try:
+            logger.info(f"Executing scan_single_content")
+            
+            # Implementation for scan_single_content
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"scan_single_content completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"scan_single_content failed: {e}")
+            raise
+            successful_items=0,
+            failed_items=0,
+            errors=[],
+            execution_time=0.0,
+            started_at=datetime.utcnow(),
+            completed_at=datetime.utcnow()
+        )
+        
+        start_time = time.time()
+        all_violations = []
+        
+        async def scan_single_content(content_id: str) -> Dict[str, Any]:
             try:
                 result = await self.protection_agent.process({
                     'action': 'check_violations',
@@ -879,6 +918,24 @@ class ProtectionAgentManager(BaseAgent):
         violation_analysis = await self._analyze_batch_violations(all_violations)
         
         # Update metrics
+        self.metrics.violations_detected += len(all_violations)
+        
+        return {
+            'operation_id': operation_id,
+        try:
+            logger.info(f"Executing enforce_single_violation")
+            
+            # Implementation for enforce_single_violation
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"enforce_single_violation completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"enforce_single_violation failed: {e}")
+            raise
         self.metrics.violations_detected += len(all_violations)
         
         return {

@@ -31,10 +31,37 @@ Abstract base class for configuration loaders"""
     
     @abstractmethod
     def load(self, source: str) -> Dict[str, Any]:
-        """
-Load configuration from source"""
-        pass
-    
+        try:
+            logger.info(f"Executing load")
+            
+            # Implementation for load
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"load completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing supports")
+            
+            # Implementation for supports
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"supports completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"supports failed: {e}")
+            raise
+            return result
+            
+        except Exception as e:
+            logger.error(f"load failed: {e}")
+            raise
     @abstractmethod
     def supports(self, source: str) -> bool:
         """
@@ -222,28 +249,20 @@ Load configuration from INI file"""
                 config[section_name] = dict(parser[section_name])
             
             logger.info(f"Loaded configuration from INI file: {source}")
-            return self._process_config(config)
+        try:
+            logger.info(f"Executing _convert_string_value")
             
-        except configparser.Error as e:
-            logger.error(f"Error parsing INI config file {source}: {e}")
-            raise ValueError(f"Invalid INI syntax in {source}: {e}")
+            # Implementation for _convert_string_value
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_convert_string_value completed successfully")
+            return result
+            
         except Exception as e:
-            logger.error(f"Error loading INI config file {source}: {e}")
+            logger.error(f"_convert_string_value failed: {e}")
             raise
-    
-    def _process_config(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Process loaded configuration with type conversion"""
-        return self._convert_types(config)
-    
-    def _convert_types(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """
-Convert string values to appropriate types"""
-        result = {}
-        for key, value in config.items():
-            if isinstance(value, dict):
-                result[key] = self._convert_types(value)
-            elif isinstance(value, str):
-                result[key] = self._convert_string_value(value)
             else:
                 result[key] = value
         return result
@@ -308,35 +327,20 @@ Always supports environment loading"""
             if self.separator in config_key:
                 self._set_nested_value(config, config_key, value)
             else:
-                config[config_key] = self._convert_env_value(value)
-        
-        logger.info(f"Loaded {len(config)} configuration values from environment")
-        return config
-    
-    def _set_nested_value(self, config: Dict[str, Any], key_path: str, value: str):
-        """Set nested configuration value"""
-        keys = key_path.split(self.separator)
-        current = config
-        
-        for key in keys[:-1]:
-            if key not in current:
-                current[key] = {}
-            current = current[key]
-        
-        current[keys[-1]] = self._convert_env_value(value)
-    
-    def _convert_env_value(self, value: str) -> Any:
-        """
-Convert environment variable string to appropriate type"""
-        # Boolean conversion
-        if value.lower() in ('true', 'yes', '1', 'on'):
-            return True
-        elif value.lower() in ('false', 'no', '0', 'off'):
-            return False
-        
-        # JSON conversion (for complex values)
-        if (value.startswith('{') and value.endswith('}')) or \
-           (value.startswith('[') and value.endswith(']')):
+        try:
+            logger.info(f"Executing _convert_env_value")
+            
+            # Implementation for _convert_env_value
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_convert_env_value completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_convert_env_value failed: {e}")
+            raise
             try:
                 return json.loads(value)
             except json.JSONDecodeError:

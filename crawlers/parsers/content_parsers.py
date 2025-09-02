@@ -36,8 +36,42 @@ class BaseContentParser(ABC):
 Abstract base class for content parsers"""
     
     def __init__(self, config: ParserConfig):
-        self.config = config
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing parse")
+            
+            # Implementation for parse
+            # TODO: Add specific business logic here
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_parser_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_parser_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            logger.info(f"parse completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"parse failed: {e}")
+            raise
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     @abstractmethod
     async def parse(self, content: Union[str, bytes], **kwargs) -> Dict[str, Any]:
         """
@@ -48,6 +82,23 @@ Parse content and extract structured data"""
     def get_parser_type(self) -> str:
         """
 Get the type of content this parser handles"""
+        pass
+    
+    def _clean_text(self, text: str) -> str:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_parser_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_parser_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
         pass
     
     def _clean_text(self, text: str) -> str:
@@ -444,6 +495,22 @@ Extract semantic HTML5 elements content"""
         # Extract aside content
         aside = soup.find('aside')
         if aside:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_parser_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_parser_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
+        aside = soup.find('aside')
+        if aside:
             semantic['aside'] = self._clean_text(aside.get_text())
         
         # Extract footer
@@ -542,6 +609,20 @@ Parser for Markdown content"""
             for img in soup.find_all('img'):
                 images.append({
                     'src': img.get('src', ''),
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_parser_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_parser_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
                     'alt': img.get('alt', ''),
                     'title': img.get('title', '')
                 })
@@ -642,6 +723,21 @@ class JSONContentParser(BaseContentParser):
             }
             
         except json.JSONDecodeError as e:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_parser_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_parser_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
+        except json.JSONDecodeError as e:
             raise ContentExtractionError(
                 f"JSON parsing failed: {str(e)}",
                 extraction_method="json_parser",
@@ -741,6 +837,22 @@ Parser for XML content"""
             # Analyze XML structure
             structure_analysis = await self._analyze_xml_structure(root)
             
+            return {
+                'type': self.get_parser_type(),
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_parser_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_parser_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
             return {
                 'type': self.get_parser_type(),
                 'content': {
@@ -853,6 +965,20 @@ Parser for CSV content"""
             rows = list(csv_reader)
             
             if not rows:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_parser_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_parser_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
                 raise ContentExtractionError("Empty CSV content", parser_type="CSVParser")
             
             # Process data
@@ -934,6 +1060,43 @@ Parser for CSV content"""
                 
                 # Check if date-like
                 date_patterns = [
+                    r'\d{4}-\d{2}-\d{2}',  # YYYY-MM-DD
+                    r'\d{2}/\d{2}/\d{4}',  # MM/DD/YYYY
+                    r'\d{2}-\d{2}-\d{4}'   # MM-DD-YYYY
+                ]
+                
+                date_count = sum(1 for v in values 
+                               if any(re.match(pattern, str(v)) for pattern in date_patterns))
+                if date_count > len(values) * 0.8:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_parser_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_parser_type_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_parser_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_parser_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
                     r'\d{4}-\d{2}-\d{2}',  # YYYY-MM-DD
                     r'\d{2}/\d{2}/\d{4}',  # MM/DD/YYYY
                     r'\d{2}-\d{2}-\d{4}'   # MM-DD-YYYY

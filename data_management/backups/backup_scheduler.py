@@ -1020,10 +1020,33 @@ class ConditionalScheduler(BackupScheduler):
         return True  # Placeholder
     
     async def _evaluate_network_bandwidth(self, condition_params: Dict[str, Any]) -> bool:
-        """Évalue la bande passante réseau"""
-        # Monitoring bande passante
-        return True  # Placeholder
-    
+        try:
+            logger.info(f"Executing _evaluate_network_bandwidth")
+            
+            # Implementation for _evaluate_network_bandwidth
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_evaluate_network_bandwidth completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_evaluate_network_bandwidth failed: {e}")
+            raise
+            logger.info(f"Executing _evaluate_network_bandwidth")
+            
+            # Implementation for _evaluate_network_bandwidth
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_evaluate_network_bandwidth completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_evaluate_network_bandwidth failed: {e}")
+            raise
     async def _evaluate_storage_usage(self, condition_params: Dict[str, Any]) -> bool:
         """Évalue l'usage du stockage"""
         # Vérification espace disque

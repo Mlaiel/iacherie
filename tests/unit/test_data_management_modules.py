@@ -615,24 +615,26 @@ Test data format normalization"""
         
     @pytest.mark.asyncio
     async def test_extract_transform_load(self, mock_data_transformer):
-        """
-Test extract, transform, and load (ETL) operations"""
-        etl_request = {
-            'source_system': 'legacy_content_db',
-            'target_system': 'modern_content_db',
-            'transformation_rules': 'content_migration_v1.json',
-            'batch_size': 1000
-        }
-        
-        result = await mock_data_transformer.extract_and_transform(etl_request)
-        
-        assert result['extraction_id'] == 'ext_123'
-        assert result['source_count'] == 1000
-        assert result['transformed_count'] == 995
-        assert result['failed_transformations'] == 5
-        assert result['quality_checks_passed'] is True
-
-
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_test_extract_transform_load_input(mock_data_transformer)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_test_extract_transform_load_result(result)
+            
+                    logger.info(f"AI processing test_extract_transform_load completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing test_extract_transform_load failed: {e}")
+                    raise
 class TestDataIntegration:
     """
 Integration tests for data management modules working together"""

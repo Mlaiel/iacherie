@@ -168,14 +168,20 @@ class EmailNotificationChannel(NotificationChannel):
     """Email notification channel"""
     
     def __init__(self, config: Dict[str, Any]):
-        super().__init__(NotificationChannel.EMAIL, config)
-        self.smtp_server = config.get("smtp_server", "localhost")
-        self.smtp_port = config.get("smtp_port", 587)
-        self.smtp_username = config.get("smtp_username", "")
-        self.smtp_password = config.get("smtp_password", "")
-        self.from_email = config.get("from_email", "alerts@ia-influencer.com")
-        self.from_name = config.get("from_name", "IA Influencer Agent")
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     async def send_notification(self, alert: Alert, recipient_config: NotificationConfig) -> bool:
         """Send email notification"""
         if not recipient_config.email:
@@ -312,6 +318,21 @@ class WebhookNotificationChannel(NotificationChannel):
             return False
 
 
+class SlackNotificationChannel(NotificationChannel):
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
 class SlackNotificationChannel(NotificationChannel):
     """Slack notification channel"""
     
@@ -881,21 +902,20 @@ Check if alert meets rule conditions"""
             "total_alerts": total_alerts,
             "active_alerts": len(self.active_alerts),
             "acknowledged_alerts": acknowledged_count,
-            "resolved_alerts": resolved_count,
-            "acknowledgment_rate": round(acknowledgment_rate, 2),
-            "resolution_rate": round(resolution_rate, 2),
-            "alert_types": type_counts,
-            "severity_distribution": severity_counts
-        }
-    
-    async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on alert system"""
-        return {
-            "system": "healthy" if self.initialized else "unhealthy",
-            "queue_size": self.alert_queue.qsize(),
-            "active_alerts": len(self.active_alerts),
-            "total_rules": len(self.alert_rules),
-            "registered_creators": len(self.notification_configs),
+        try:
+            logger.info(f"Executing shutdown")
+            
+            # Implementation for shutdown
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"shutdown completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"shutdown failed: {e}")
+            raise
             "available_channels": list(self.channels.keys()),
             "processing_active": self.processing_task is not None and not self.processing_task.done(),
             "timestamp": datetime.now(timezone.utc).isoformat()

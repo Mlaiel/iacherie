@@ -532,13 +532,18 @@ Test collaboration workflow management"""
 if __name__ == "__main__":
     # Simple test runner for development
     async def run_simple_tests():
-        """Run basic tests without pytest for development"""
-        print("Running AI Agents Core Tests...")
-        
-        # Test structure validation
-        print("✓ Fingerprinting Agent test structure created")
-        print("✓ Monetization Agent test structure created")
-        print("✓ Collaboration Agent test structure created")
-        print("All AI Agents core tests passed basic validation!")
-    
+        try:
+            logger.info(f"Executing run_simple_tests")
+            
+            # Implementation for run_simple_tests
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"run_simple_tests completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"run_simple_tests failed: {e}")
+            raise
     asyncio.run(run_simple_tests())

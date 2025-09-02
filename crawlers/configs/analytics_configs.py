@@ -504,22 +504,28 @@ Generate analytics report for specified time period."""
         return alerts
     
     def optimize_metric_collection(self) -> Dict[str, Any]:
-        """Optimize metric collection based on usage patterns."""
-        optimization_report = {
-            "recommendations": [],
-            "potential_savings": {},
-            "performance_improvements": []
-        }
-        
-        # Analyze metric usage and performance
-        for metric in self.get_metrics():
-            # Check if metric is being queried
-            # Check collection overhead
-            # Suggest optimizations
-            pass
-        
-        return optimization_report
-    
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "optimize_metric_collection",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric optimize_metric_collection collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection optimize_metric_collection failed: {e}")
+                    return None
     def _save_configurations(self) -> None:
         """Save configurations to file."""
         try:

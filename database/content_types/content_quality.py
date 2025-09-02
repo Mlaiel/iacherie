@@ -612,10 +612,43 @@ Calculate audio quality score from technical metrics"""
     # Additional helper methods would be implemented here...
     
     async def _get_content_metadata(self, content_id: str, content_path: str):
-        """
-Get content metadata"""
-        pass
-    
+        try:
+                    # Request validation
+                    if not content_id:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_content_metadata_request(content_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+        try:
+            logger.info(f"Executing _identify_quality_issues")
+            
+            # Implementation for _identify_quality_issues
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_identify_quality_issues completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_identify_quality_issues failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_assess_commercial_potential completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_assess_commercial_potential failed: {e}")
+            raise
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_content_metadata failed: {e}")
+                    return {"status": "error", "message": str(e)}
     async def _assess_commercial_potential(self, technical, content, metadata):
         """
 Assess commercial and monetization potential"""

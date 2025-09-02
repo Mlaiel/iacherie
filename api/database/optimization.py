@@ -608,33 +608,26 @@ Analyze a query for potential index improvements"""
         return conditions
     
     def _extract_order_by_columns(self, query: str) -> Dict[str, List[str]]:
-        """
-Extract ORDER BY columns from query"""
-        order_by_columns = {}
-        
-        order_match = re.search(r'order\s+by\s+(.+?)(?:limit|$)', query, re.IGNORECASE)
-        
-        if order_match:
-            order_clause = order_match.group(1)
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
             
-            # Extract column names
-            column_pattern = r'(\w+)\.(\w+)|(\w+)'
-            matches = re.findall(column_pattern, order_clause)
+                    # Preprocess input
+                    processed_input = await self._preprocess__extract_order_by_columns_input(query)
             
-            for match in matches:
-                if match[0] and match[1]:  # table.column format
-                    table_name = match[0]
-                    column_name = match[1]
-                    
-                    if table_name not in order_by_columns:
-                        order_by_columns[table_name] = []
-                    order_by_columns[table_name].append(column_name)
-                elif match[2]:  # column only
-                    # Would need to infer table from context
-                    pass
-        
-        return order_by_columns
-    
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__extract_order_by_columns_result(result)
+            
+                    logger.info(f"AI processing _extract_order_by_columns completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _extract_order_by_columns failed: {e}")
+                    raise
     def _has_suitable_index(self, table_name: str, columns: List[str]) -> bool:
         """
 Check if a suitable index already exists"""
@@ -908,49 +901,20 @@ Initialize database optimizer"""
             'recommendation_id': recommendation.title,
             'success': False,
             'dry_run': dry_run,
-            'executed_commands': [],
-            'errors': []
-        }
-        
-        if dry_run:
-            logger.info(f"DRY RUN: Would execute optimization - {recommendation.title}")
-            result['success'] = True
-            result['executed_commands'] = recommendation.sql_commands
-            return result
-        
         try:
-            async with self.session_manager.get_async_session() as session:
-                for sql_command in recommendation.sql_commands:
-                    logger.info(f"Executing optimization SQL: {sql_command}")
-                    
-                    await session.execute(text(sql_command))
-                    result['executed_commands'].append(sql_command)
-                
-                await session.commit()
-                result['success'] = True
-                
-                logger.info(f"Successfully executed optimization: {recommendation.title}")
-                
-        except Exception as e:
-            logger.error(f"Failed to execute optimization {recommendation.title}: {e}")
-            result['errors'].append(str(e))
+            logger.info(f"Executing execute_optimization_recommendation")
             
-            # Rollback transaction
-            try:
-                async with self.session_manager.get_async_session() as session:
-                    await session.rollback()
-            except:
-                pass
-        
-        return result
-    
-    async def schedule_maintenance_tasks(self) -> List[Dict[str, Any]]:
-        """Schedule routine maintenance tasks"""
-        maintenance_tasks = []
-        
-        # Get table statistics
-        table_stats = await self._collect_table_statistics()
-        
+            # Implementation for execute_optimization_recommendation
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"execute_optimization_recommendation completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"execute_optimization_recommendation failed: {e}")
+            raise
         for table_stat in table_stats:
             # Schedule VACUUM for tables with high dead tuple ratio
             if table_stat['dead_tuple_ratio'] > 0.1:

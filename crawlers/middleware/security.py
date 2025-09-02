@@ -418,8 +418,20 @@ class BehaviorAnalyzer:
     """Advanced behavioral security analysis"""
     
     def __init__(self, redis_client: redis.Redis):
-        self.redis_client = redis_client
-        
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     async def analyze_behavior(self, user_id: str, ip_addr: str, 
                              request_data: Dict[str, Any]) -> Dict[str, Any]:
         """

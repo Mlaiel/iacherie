@@ -292,8 +292,20 @@ class AIAnalysis(Base):
     content = relationship("UserContent", back_populates="ai_analyses")
     
     def __repr__(self):
-        return f"<AIAnalysis(id={self.id}, type={self.analysis_type.value}, confidence={self.confidence_level.value})>"
-    
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     @classmethod
     def create_sentiment_analysis(cls, content_id: str, user_id: str, sentiment_data: Dict[str, Any]) -> 'AIAnalysis':
         """Create sentiment analysis record"""

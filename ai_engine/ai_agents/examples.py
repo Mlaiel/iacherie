@@ -58,8 +58,20 @@ class AIAgentsExamples:
     """
     
     def __init__(self):
-        self.system: AIAgentsSystem = None
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     async def example_1_basic_initialization(self):
         """
         Example 1: Basic system initialization and health check

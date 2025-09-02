@@ -531,17 +531,20 @@ Validate quality of workflow step result"""
         self.quality_validators[step_id] = validator_func
     
     def get_quality_statistics(self) -> Dict[str, Any]:
-        """
-Get quality validation statistics"""
-        if not self.quality_history:
-            return {}
-        
-        recent_history = self.quality_history[-100:]  # Last 100 validations
-        
-        scores = [report.get("overall_score", 0.0) for report in recent_history]
-        passed_count = sum(1 for report in recent_history if report.get("passed", False))
-        
-        return {
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_quality_statistics_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_quality_statistics failed: {e}")
+                    return {"status": "error", "message": str(e)}
             "total_validations": len(recent_history),
             "average_score": np.mean(scores),
             "min_score": np.min(scores),

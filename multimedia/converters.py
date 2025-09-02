@@ -100,10 +100,37 @@ class BaseConverter(ABC):
         
     @abstractmethod
     async def convert(self, input_path: Path, settings: ConversionSettings) -> ConversionResult:
-        """
-Convert content to target format"""
-        pass
-    
+        try:
+            logger.info(f"Executing convert")
+            
+            # Implementation for convert
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"convert completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing supports_conversion")
+            
+            # Implementation for supports_conversion
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"supports_conversion completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"supports_conversion failed: {e}")
+            raise
+            return result
+            
+        except Exception as e:
+            logger.error(f"convert failed: {e}")
+            raise
     @abstractmethod
     def supports_conversion(self, source_format: str, target_format: str) -> bool:
         """
@@ -741,22 +768,20 @@ Resize image based on settings"""
         
         # Calculate new dimensions
         if settings.max_width and settings.max_height:
-            # Fit within both constraints
-            ratio = min(
-                settings.max_width / current_width,
-                settings.max_height / current_height
-            )
-        elif settings.max_width:
-            ratio = settings.max_width / current_width
-        elif settings.max_height:
-            ratio = settings.max_height / current_height
-        else:
-            return image
-        
-        if ratio < 1.0:  # Only downscale
-            new_width = int(current_width * ratio)
-            new_height = int(current_height * ratio)
+        try:
+            logger.info(f"Executing _optimize_for_web")
             
+            # Implementation for _optimize_for_web
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_optimize_for_web completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_optimize_for_web failed: {e}")
+            raise
             return image.resize(
                 (new_width, new_height), 
                 Image.Resampling.LANCZOS

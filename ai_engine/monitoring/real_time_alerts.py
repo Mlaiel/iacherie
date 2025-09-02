@@ -205,22 +205,33 @@ Start the real-time alerting system"""
         logger.info("Real-time alerting system started successfully")
         
     async def stop_alerting(self) -> None:
-        """Stop the real-time alerting system"""
-        if not self.is_monitoring:
-            return
+        try:
+            logger.info(f"Executing stop_alerting")
             
-        self.is_monitoring = False
-        
-        for task in [self._monitor_task, self._evaluation_task]:
-            if task:
-                task.cancel()
-                try:
-                    await task
-                except asyncio.CancelledError:
-                    pass
-                    
-        logger.info("Real-time alerting system stopped")
-        
+            # Implementation for stop_alerting
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"stop_alerting completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"stop_alerting failed: {e}")
+            raise
+            logger.info(f"Executing stop_alerting")
+            
+            # Implementation for stop_alerting
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"stop_alerting completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"stop_alerting failed: {e}")
+            raise
     def add_alert_rule(self, rule: AlertRule) -> None:
         """Add a new alert rule"""
         self.alert_rules[rule.rule_id] = rule

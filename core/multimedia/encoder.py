@@ -538,8 +538,20 @@ Get codec information from encoded file"""
         semaphore = asyncio.Semaphore(max_concurrent)
         
         async def encode_single(source: Union[str, bytes], index: int) -> str:
-            async with semaphore:
-                # Generate output path
+        try:
+            logger.info(f"Executing encode_single")
+            
+            # Implementation for encode_single
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"encode_single completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"encode_single failed: {e}")
+            raise
                 if isinstance(source, str):
                     source_name = Path(source).stem
                 else:

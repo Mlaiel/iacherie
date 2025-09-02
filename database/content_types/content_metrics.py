@@ -112,7 +112,20 @@ class MetricSnapshot:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             'metric_type': self.metric_type.value,
             'value': self.value,
             'timestamp': self.timestamp.isoformat(),
@@ -227,6 +240,32 @@ Database model for content performance metrics"""
     updated_at = Column(DateTime(timezone=True), nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
     
     def __repr__(self) -> str:
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
+    trend_analysis = Column(JSONB, nullable=False, default={})
+    
+    # Time tracking
+    measurement_period_start = Column(DateTime(timezone=True), nullable=False)
+    measurement_period_end = Column(DateTime(timezone=True), nullable=False)
+    measured_at = Column(DateTime(timezone=True), nullable=False, default=datetime.utcnow, index=True)
+    
+    # Timestamps
+    created_at = Column(DateTime(timezone=True), nullable=False, default=datetime.utcnow)
+    updated_at = Column(DateTime(timezone=True), nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    def __repr__(self) -> str:
         return f"<ContentPerformanceMetrics(content_id={self.content_id}, platform={self.platform}, views={self.views})>"
     
     def calculate_engagement_rate(self) -> float:
@@ -246,6 +285,24 @@ Calculate viral potential score"""
         engagement_ratio = self.calculate_engagement_rate()
         
         # Weighted score
+        viral_score = (share_ratio * 0.4) + (engagement_ratio * 0.3) + (min(100, self.view_growth_rate) * 0.3)
+        return min(100.0, viral_score)
+
+class PerformanceTrend(Base):
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
         viral_score = (share_ratio * 0.4) + (engagement_ratio * 0.3) + (min(100, self.view_growth_rate) * 0.3)
         return min(100.0, viral_score)
 

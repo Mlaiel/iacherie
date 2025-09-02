@@ -605,10 +605,17 @@ class AIRevenueTrackingEngine:
         logger.info(f"Stored revenue data: {revenue_data.data_point_id}")
     
     async def _update_realtime_analytics(self, revenue_data: RevenueDataPoint):
-        """Update real-time analytics dashboard"""
-        # Mock implementation
-        pass
-    
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _update_realtime_analytics completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _update_realtime_analytics failed: {e}")
+                    raise
     async def _get_revenue_data(
         self, 
         creator_id: str, 

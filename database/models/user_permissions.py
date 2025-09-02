@@ -305,8 +305,20 @@ class UserPermissions(Base):
     )
     
     def __repr__(self):
-        return f"<UserPermissions(id={self.id}, user_id={self.user_id}, permission={self.permission_type.value}, resource={self.resource_type.value})>"
-    
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     @classmethod
     def grant_permission(
         cls,
@@ -429,22 +441,20 @@ Record permission usage"""
         
         # Update metadata with usage context
         if context:
-            if not self.metadata:
-                self.metadata = {}
+        try:
+            logger.info(f"Executing check_rate_limit")
             
-            self.metadata['last_usage'] = {
-                'timestamp': datetime.now(timezone.utc).isoformat(),
-                'context': context
-            }
-    
-    def check_rate_limit(self) -> bool:
-        """
-Check if rate limit allows current request"""
-        now = datetime.now(timezone.utc)
-        
-        # Reset counter if time window has passed
-        if self.rate_limit_reset_at and now >= self.rate_limit_reset_at:
-            self.current_usage_count = 0
+            # Implementation for check_rate_limit
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"check_rate_limit completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"check_rate_limit failed: {e}")
+            raise
             self.rate_limit_reset_at = now + timedelta(hours=1)
         
         # Check hourly limit

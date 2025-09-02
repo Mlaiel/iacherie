@@ -355,7 +355,48 @@ Get service dependencies"""
         """
 Start health monitoring task"""
         async def health_monitor():
-            while self.is_running:
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "health_monitor",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "metrics_collector",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric metrics_collector collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection metrics_collector failed: {e}")
+                    return None
+                    logger.info(f"Metric health_monitor collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection health_monitor failed: {e}")
+                    return None
                 try:
                     await self._perform_health_checks()
                     await asyncio.sleep(self.config.health_check_interval)
@@ -569,19 +610,20 @@ Execute takedown request task"""
         )
         
         return {'type': 'takedown_request', 'result': result}
-    
-    async def _execute_analytics_report(self, task_data: Dict[str, Any]) -> Dict[str, Any]:
-        """
-Execute analytics report generation task"""
-        analytics = self.services['analytics_tracker']
-        
-        result = await analytics.generate_analytics_report(
-            time_range=task_data['time_range'],
-            user_id=task_data.get('user_id'),
-            platforms=task_data.get('platforms'),
-            include_visualizations=task_data.get('include_visualizations', True)
-        )
-        
+        try:
+            logger.info(f"Executing cancel_task")
+            
+            # Implementation for cancel_task
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"cancel_task completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"cancel_task failed: {e}")
+            raise
         return {'type': 'analytics_report', 'result': result}
     
     async def get_task_status(self, task_id: str) -> Dict[str, Any]:

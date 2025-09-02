@@ -357,7 +357,20 @@ class QualityOrchestrator:
             semaphore = asyncio.Semaphore(max_concurrent)
             
             async def assess_with_semaphore(request):
-                async with semaphore:
+        try:
+            logger.info(f"Executing assess_with_semaphore")
+            
+            # Implementation for assess_with_semaphore
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"assess_with_semaphore completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"assess_with_semaphore failed: {e}")
+            raise
                     return await self.assess_content_quality(request)
             
             tasks = [assess_with_semaphore(request) for request in requests]

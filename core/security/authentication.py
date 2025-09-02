@@ -283,11 +283,43 @@ class MultiTenantAuth:
         return True  # Placeholder
     
     async def get_tenant_user(self, email: str, tenant_id: str):
-        """Get user within tenant context"""
-        # Implementation depends on your user model
-        # Should include tenant_id in query
-        pass
-    
+        try:
+                    # Request validation
+                    if not email:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_tenant_user_request(email)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+        try:
+            logger.info(f"Executing verify_password")
+            
+            # Implementation for verify_password
+            # TODO: Add specific business logic here
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation update_last_login completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation update_last_login failed: {e}")
+                    raise
+            logger.info(f"verify_password completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"verify_password failed: {e}")
+            raise
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_tenant_user failed: {e}")
+                    return {"status": "error", "message": str(e)}
     def verify_password(self, plain_password: str, hashed_password: str) -> bool:
         """
 Verify password using bcrypt"""
@@ -496,7 +528,20 @@ class AuthenticationManager:
             return auth_token
             
         except Exception as e:
-            self.logger.error(f"Authentication failed: {str(e)}")
+        try:
+                    # Request validation
+                    if not user_id:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_user_request(user_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_user failed: {e}")
+                    return {"status": "error", "message": str(e)}
             raise
     
     async def get_current_user(

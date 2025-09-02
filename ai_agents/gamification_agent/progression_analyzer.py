@@ -1086,16 +1086,20 @@ Generate human-readable progress summary"""
         return action_plan
     
     def _get_next_progression_stage(self, current_stage: ProgressionStage) -> Optional[ProgressionStage]:
-        """Get the next progression stage"""
-        stages = list(ProgressionStage)
         try:
-            current_index = stages.index(current_stage)
-            if current_index < len(stages) - 1:
-                return stages[current_index + 1]
-        except ValueError:
-            pass
-        return None
-    
+                    # Request validation
+                    if not current_stage:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_next_progression_stage_request(current_stage)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_next_progression_stage failed: {e}")
+                    return {"status": "error", "message": str(e)}
     def get_system_analytics(self) -> Dict[str, Any]:
         """
 Get system-wide progression analytics"""

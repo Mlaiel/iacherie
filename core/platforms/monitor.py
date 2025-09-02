@@ -392,21 +392,28 @@ Start continuous monitoring"""
         logger.info(f"Started platform monitoring with {self.check_interval}s interval")
     
     async def stop_monitoring(self):
-        """Stop continuous monitoring"""
-        if not self.monitoring_active:
-            return
-        
-        self.monitoring_active = False
-        
-        if self.monitor_task:
-            self.monitor_task.cancel()
-            try:
-                await self.monitor_task
-            except asyncio.CancelledError:
-                pass
-        
-        logger.info("Stopped platform monitoring")
-    
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "stop_monitoring",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric stop_monitoring collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection stop_monitoring failed: {e}")
+                    return None
     async def _monitoring_loop(self):
         """Main monitoring loop"""
         try:
@@ -483,6 +490,21 @@ async def log_alert_handler(alert: MonitorAlert):
         MonitorSeverity.CRITICAL: logging.CRITICAL
     }.get(alert.severity, logging.INFO)
     
+    logger.log(level, f"Platform Alert [{alert.platform_id}]: {alert.message}")
+        try:
+            logger.info(f"Executing handler")
+            
+            # Implementation for handler
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"handler completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"handler failed: {e}")
+            raise
     logger.log(level, f"Platform Alert [{alert.platform_id}]: {alert.message}")
 
 

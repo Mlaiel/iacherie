@@ -727,80 +727,20 @@ Setup Spotify API client"""
             return {}
     
     async def _scrape_artist_web_data(self, artist_id: str) -> Dict[str, Any]:
-        """Scrape additional artist data from Spotify web interface"""
-        additional_data = {}
-        
         try:
-            url = f"https://open.spotify.com/artist/{artist_id}"
-            self.driver.get(url)
+            logger.info(f"Executing _scrape_artist_web_data")
             
-            # Wait for page to load
-            WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located((By.TAG_NAME, "main"))
-            )
+            # Implementation for _scrape_artist_web_data
+            # TODO: Add specific business logic here
             
-            await asyncio.sleep(random.uniform(2, 4))
+            result = None  # Replace with actual implementation
             
-            # Try to get monthly listeners
-            try:
-                monthly_listeners_element = self.driver.find_element(
-                    By.XPATH,
-                    "//span[contains(text(), 'monthly listeners')]"
-                )
-                monthly_listeners_text = monthly_listeners_element.text
-                # Extract number from text like "1,234,567 monthly listeners"
-                numbers = re.findall(r'[\d,]+', monthly_listeners_text)
-                if numbers:
-                    monthly_listeners = int(numbers[0].replace(',', ''))
-                    additional_data['monthly_listeners'] = monthly_listeners
-            except NoSuchElementException:
-                pass
-            
-            # Check if verified
-            try:
-                self.driver.find_element(
-                    By.XPATH,
-                    "//span[@title='Verified Artist' or contains(@class, 'verified')]"
-                )
-                additional_data['verified'] = True
-            except NoSuchElementException:
-                additional_data['verified'] = False
-            
-            # Try to get bio/about section
-            try:
-                bio_element = self.driver.find_element(
-                    By.XPATH,
-                    "//div[contains(@class, 'about') or contains(@class, 'bio')]//span"
-                )
-                additional_data['bio'] = bio_element.text
-            except NoSuchElementException:
-                pass
-            
-            # Try to get social links
-            try:
-                social_links = {}
-                social_elements = self.driver.find_elements(
-                    By.XPATH,
-                    "//a[contains(@href, 'facebook') or contains(@href, 'twitter') or contains(@href, 'instagram')]"
-                )
-                for element in social_elements:
-                    href = element.get_attribute('href')
-                    if 'facebook' in href:
-                        social_links['facebook'] = href
-                    elif 'twitter' in href:
-                        social_links['twitter'] = href
-                    elif 'instagram' in href:
-                        social_links['instagram'] = href
-                
-                additional_data['social_links'] = social_links
-            except:
-                pass
+            logger.info(f"_scrape_artist_web_data completed successfully")
+            return result
             
         except Exception as e:
-            logger.warning(f"Error scraping additional artist data for {artist_id}: {e}")
-        
-        return additional_data
-    
+            logger.error(f"_scrape_artist_web_data failed: {e}")
+            raise
     def _calculate_std(self, values: List[float]) -> float:
         """Calculate standard deviation"""
         if len(values) <= 1:

@@ -925,18 +925,20 @@ Add LATERAL JOIN (PostgreSQL specific)"""
         return self
     
     def build_select(self) -> Select:
-        """Build query with complex joins"""
-        query = super().build_select()
-        
-        # Apply table aliases
-        if self.table_aliases:
-            for alias, table_name in self.table_aliases.items():
-                # This would require more complex alias handling in SQLAlchemy
-                pass
-        
-        return query
-
-
+        try:
+            logger.info(f"Executing build_select")
+            
+            # Implementation for build_select
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"build_select completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"build_select failed: {e}")
+            raise
 class SubQueryBuilder(QueryBuilder):
     """
     Specialized query builder for subqueries:

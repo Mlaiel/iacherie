@@ -61,9 +61,20 @@ Test all platform crawlers."""
         instagram_crawler = await orchestrator.get_crawler('instagram')
         if instagram_crawler:
             async def mock_story_callback(update):
-                print(f"    📸 Story update: {update['type']} for {update['user_id']}")
+        try:
+            logger.info(f"Executing mock_story_callback")
             
-            # Run a brief test of story monitoring (for 2 seconds)
+            # Implementation for mock_story_callback
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"mock_story_callback completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"mock_story_callback failed: {e}")
+            raise
             monitoring_task = asyncio.create_task(
                 instagram_crawler.monitor_stories(["demo_user"], mock_story_callback)
             )
@@ -71,6 +82,21 @@ Test all platform crawlers."""
             # Wait a bit then cancel
             await asyncio.sleep(1)
             monitoring_task.cancel()
+            try:
+        try:
+            logger.info(f"Executing mock_twitter_callback")
+            
+            # Implementation for mock_twitter_callback
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"mock_twitter_callback completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"mock_twitter_callback failed: {e}")
+            raise
             try:
                 await monitoring_task
             except asyncio.CancelledError:
@@ -80,10 +106,66 @@ Test all platform crawlers."""
         print(f"\n🐦 Testing Twitter real-time monitoring...")
         twitter_crawler = await orchestrator.get_crawler('twitter')
         if twitter_crawler:
+        try:
+            logger.info(f"Executing mock_company_callback")
+            
+            # Implementation for mock_company_callback
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"mock_company_callback completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing mock_board_callback")
+            
+            # Implementation for mock_board_callback
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"mock_board_callback completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"mock_board_callback failed: {e}")
+            raise
+            raise
+        print(f"\n🐦 Testing Twitter real-time monitoring...")
+        twitter_crawler = await orchestrator.get_crawler('twitter')
+        if twitter_crawler:
+        try:
+            logger.info(f"Executing mock_server_callback")
+            
+            # Implementation for mock_server_callback
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"mock_server_callback completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"mock_server_callback failed: {e}")
+            raise
             async def mock_twitter_callback(update):
                 print(f"    🐦 Twitter update: {update['type']} for '{update['keyword']}'")
+        try:
+            logger.info(f"Executing mock_channel_callback")
             
-            # Run a brief test of real-time monitoring (for 2 seconds)
+            # Implementation for mock_channel_callback
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"mock_channel_callback completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"mock_channel_callback failed: {e}")
+            raise
             monitoring_task = asyncio.create_task(
                 twitter_crawler.monitor_real_time_stream(["test"], mock_twitter_callback)
             )

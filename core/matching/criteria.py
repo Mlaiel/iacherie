@@ -896,13 +896,20 @@ Delete criterion from database"""
         return True
     
     async def _clear_criteria_cache(self) -> None:
-        """
-Clear criteria-related caches"""
-        # Implementation would clear relevant cache keys
-        pass
-    
-    # Serialization methods
-    
+        try:
+            logger.info(f"Executing _clear_criteria_cache")
+            
+            # Implementation for _clear_criteria_cache
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_clear_criteria_cache completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_clear_criteria_cache failed: {e}")
+            raise
     def _serialize_criterion(self, criterion: MatchingCriterion) -> str:
         """
 Serialize criterion for caching"""

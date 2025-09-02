@@ -46,8 +46,33 @@ except ImportError as e:
     
     class MockCoordinator:
         async def evaluate_all_metrics(self, **kwargs):
-            return {"status": "mock", "alerts": []}
-        
+        try:
+            logger.info(f"Executing evaluate_all_metrics")
+            
+            # Implementation for evaluate_all_metrics
+            # TODO: Add specific business logic here
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_comprehensive_status_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_comprehensive_status failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"evaluate_all_metrics completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"evaluate_all_metrics failed: {e}")
+            raise
         async def get_comprehensive_status(self):
             return {"status": "mock", "system_health": "healthy"}
     

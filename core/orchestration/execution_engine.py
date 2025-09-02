@@ -510,7 +510,20 @@ class ExecutionEngine:
         semaphore = asyncio.Semaphore(batch.max_concurrent)
         
         async def execute_task_with_semaphore(task):
-            async with semaphore:
+        try:
+            logger.info(f"Executing execute_task_with_semaphore")
+            
+            # Implementation for execute_task_with_semaphore
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"execute_task_with_semaphore completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"execute_task_with_semaphore failed: {e}")
+            raise
                 execution_id = await self.execute_task(task)
                 return execution_id, task.task_id
         

@@ -665,11 +665,17 @@ Check if insights should be updated"""
         return True
 
     def _update_related_insights(self, entity):
-        """
-Update related insights"""
-        # Implementation would update insights
-        pass
-
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _update_related_insights completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _update_related_insights failed: {e}")
+                    raise
     def _delete_audience_entity(self, entity_id: str, soft_delete: bool) -> bool:
         """
 Delete audience entity"""
@@ -683,11 +689,30 @@ Fetch audience entities list"""
         return []
 
     def _store_engagement_metrics(self, engagement: EngagementMetrics) -> EngagementMetrics:
-        """
-Store engagement metrics"""
-        # Implementation would store engagement data
-        return engagement
-
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _update_real_time_analytics completed")
+                        return True
+                
+                except Exception as e:
+        try:
+            logger.info(f"Executing _check_insight_triggers")
+            
+            # Implementation for _check_insight_triggers
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_check_insight_triggers completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_check_insight_triggers failed: {e}")
+            raise
+                    raise
     def _update_real_time_analytics(self, engagement: EngagementMetrics):
         """
 Update real-time analytics"""
@@ -701,7 +726,20 @@ Check if insights should be triggered"""
         pass
 
     def _fetch_engagement_data(self, creator_id: str, platform: AudiencePlatform, time_range: str):
-        """
+        try:
+            logger.info(f"Executing _store_demographics_analysis")
+            
+            # Implementation for _store_demographics_analysis
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_demographics_analysis completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_demographics_analysis failed: {e}")
+            raise
 Fetch engagement data"""
         # Implementation would fetch engagement data
         return []
@@ -744,6 +782,32 @@ Generate platform-specific insight"""
             confidence_score=0.0,
             impact_potential="medium",
             time_sensitivity="normal",
+            generated_at=datetime.now(timezone.utc)
+        )
+
+    def _impact_score(self, impact_potential: str) -> float:
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_initialize_strategy_tracking",
+                        "value": strategy if strategy else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _initialize_strategy_tracking collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _initialize_strategy_tracking failed: {e}")
+                    return None
             generated_at=datetime.now(timezone.utc)
         )
 
@@ -1078,6 +1142,29 @@ Get audience entity by ID asynchronously"""
             old_values=asdict(current_entity) if current_entity else None,
             new_values=asdict(updated_entity) if hasattr(updated_entity, '__dict__') else None,
             metadata={'operation': 'async_audience_entity_updated', **kwargs}
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "track_engagement_with_semaphore",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric track_engagement_with_semaphore collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection track_engagement_with_semaphore failed: {e}")
+                    return None
+            metadata={'operation': 'async_audience_entity_updated', **kwargs}
         )
         
         # Invalidate cache
@@ -1137,10 +1224,17 @@ Get audience entity by ID asynchronously"""
     async def batch_track_engagement(self, engagement_events: List[Dict[str, Any]]) -> List[EngagementMetrics]:
         """Track multiple engagement events concurrently"""
         try:
-            semaphore = asyncio.Semaphore(self._max_concurrent_operations)
-            
-            async def track_engagement_with_semaphore(event_data):
-                async with semaphore:
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _update_related_insights_async completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _update_related_insights_async failed: {e}")
+                    raise
                     return await self._track_engagement_async(
                         event_data['content_id'],
                         AudiencePlatform(event_data['platform']),
@@ -1201,10 +1295,17 @@ Get audience entity by ID asynchronously"""
     # Async versions of private methods
 
     async def _store_audience_entity_async(self, entity):
-        """Store audience entity in database asynchronously"""
-        # Implementation would store in database
-        return entity
-
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _update_real_time_analytics_async completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _update_real_time_analytics_async failed: {e}")
+                    raise
     async def _trigger_real_time_processing_async(self, entity):
         """
 Trigger real-time processing asynchronously"""

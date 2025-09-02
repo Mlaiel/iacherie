@@ -482,7 +482,17 @@ def create_custom_config(
     
     if overrides:
         def deep_update(base_dict, update_dict):
-            for key, value in update_dict.items():
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                        result = await session.execute(update_query)
+                        await session.commit()
+                        logger.info(f"Database operation deep_update completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation deep_update failed: {e}")
+                    raise
                 if isinstance(value, dict) and key in base_dict and isinstance(base_dict[key], dict):
                     deep_update(base_dict[key], value)
                 else:

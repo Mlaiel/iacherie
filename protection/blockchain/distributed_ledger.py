@@ -84,7 +84,20 @@ class ContentMetadata:
     tags: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             'content_id': self.content_id,
             'original_filename': self.original_filename,
             'mime_type': self.mime_type,
@@ -117,6 +130,21 @@ class IPFSClient:
     """
 Professional IPFS client for distributed storage"""
     
+    def __init__(self, gateway_url: str = "http://localhost:5001", timeout: int = 300):
+        try:
+            logger.info(f"Executing __aexit__")
+            
+            # Implementation for __aexit__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__aexit__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__aexit__ failed: {e}")
+            raise
     def __init__(self, gateway_url: str = "http://localhost:5001", timeout: int = 300):
         self.gateway_url = gateway_url
         self.timeout = timeout
@@ -263,6 +291,20 @@ Professional IPFS client for distributed storage"""
             params = {'arg': ipfs_hash}
             
             async with self.session.post(url, params=params) as response:
+        try:
+            logger.info(f"Executing __aexit__")
+            
+            # Implementation for __aexit__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__aexit__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__aexit__ failed: {e}")
+            raise
                 if response.status == 200:
                     self.pinned_hashes.discard(ipfs_hash)
                     logger.info(f"Content unpinned: {ipfs_hash}")

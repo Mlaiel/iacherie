@@ -411,10 +411,26 @@ class ContentClassifierEngine:
     
     # Helper methods
     async def _classify_image_direct(self, image: Image.Image) -> Dict[str, Any]:
-        """Direct image classification without file I/O"""
-        # Implementation similar to _classify_image but with direct Image input
-        pass
-    
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__classify_image_direct_input(image)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__classify_image_direct_result(result)
+            
+                    logger.info(f"AI processing _classify_image_direct completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _classify_image_direct failed: {e}")
+                    raise
     async def _analyze_image_safety(self, image: Image.Image) -> Dict[str, Any]:
         """
 Analyze image for safety concerns"""

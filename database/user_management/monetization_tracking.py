@@ -346,8 +346,20 @@ class MonetizationRepository:
     Repository pour la gestion de la monétisation et des revenus.
     """
     def __init__(self, db_session: Session):
-        self.db = db_session
-
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     def record_transaction(self, transaction_data: Dict[str, Any]) -> RevenueTransaction:
         """
 Enregistrer une nouvelle transaction de revenu."""

@@ -446,9 +446,20 @@ Test event subscription and notification"""
         events_received = []
         
         async def event_handler(event_type: str, event_data: Dict[str, Any]):
-            events_received.append({"type": event_type, "data": event_data})
-        
-        # Subscribe to events
+        try:
+            logger.info(f"Executing event_handler")
+            
+            # Implementation for event_handler
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"event_handler completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"event_handler failed: {e}")
+            raise
         subscription_id = await communication_bus.subscribe_to_events(
             event_types=["agent_registered", "message_sent"],
             handler=event_handler

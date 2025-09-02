@@ -215,8 +215,20 @@ Database model for content SEO data"""
     analyzed_at = Column(DateTime(timezone=True), nullable=True)
     
     def __repr__(self) -> str:
-        return f"<ContentSEO(id={self.id}, score={self.optimization_score}, status={self.optimization_status})>"
-
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
 class SEOPerformanceMetrics(Base):
     """Database model for SEO performance tracking"""
     __tablename__ = "seo_performance_metrics"
@@ -255,6 +267,31 @@ class SEOPerformanceMetrics(Base):
     # Revenue metrics
     revenue_generated = Column(Float, nullable=False, default=0.0)
     cost_per_acquisition = Column(Float, nullable=False, default=0.0)
+    return_on_investment = Column(Float, nullable=False, default=0.0)
+    
+    # Tracking period
+    date_recorded = Column(DateTime(timezone=True), nullable=False, default=datetime.utcnow, index=True)
+    period_start = Column(DateTime(timezone=True), nullable=False)
+    period_end = Column(DateTime(timezone=True), nullable=False)
+    
+    # Relationships
+    content_seo = relationship("ContentSEO", back_populates="performance_metrics")
+    
+    def __repr__(self) -> str:
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     return_on_investment = Column(Float, nullable=False, default=0.0)
     
     # Tracking period

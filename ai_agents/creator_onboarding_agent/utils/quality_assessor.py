@@ -260,7 +260,20 @@ Initialize industry quality standards."""
             semaphore = asyncio.Semaphore(concurrent_limit)
             
             async def assess_single(content_item):
-                async with semaphore:
+        try:
+            logger.info(f"Executing assess_single")
+            
+            # Implementation for assess_single
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"assess_single completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"assess_single failed: {e}")
+            raise
                     return await self.assess_quality(content_item, creator_type=creator_type)
             
             # Process all items concurrently

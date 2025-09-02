@@ -344,12 +344,53 @@ async def global_exception_handler(request: Request, exc: Exception):
 # HTTP exception handler
 @app.exception_handler(HTTPException)
 async def http_exception_handler(request: Request, exc: HTTPException):
-    return JSONResponse(
+        try:
+            logger.info(f"Executing http_exception_handler")
+            
+            # Implementation for http_exception_handler
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"http_exception_handler completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"http_exception_handler failed: {e}")
+            raise
         status_code=exc.status_code,
         content={
             "error": {
+        try:
+            logger.info(f"Executing custom_swagger_ui_html")
+            
+            # Implementation for custom_swagger_ui_html
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"custom_swagger_ui_html completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"custom_swagger_ui_html failed: {e}")
+            raise
+            "error": {
                 "code": exc.detail.get("code", "HTTP_ERROR") if isinstance(exc.detail, dict) else "HTTP_ERROR",
-                "message": exc.detail.get("message", str(exc.detail)) if isinstance(exc.detail, dict) else str(exc.detail),
+        try:
+            logger.info(f"Executing redoc_html")
+            
+            # Implementation for redoc_html
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"redoc_html completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"redoc_html failed: {e}")
+            raise
                 "timestamp": datetime.utcnow().isoformat(),
                 "request_id": getattr(request.state, "request_id", "unknown")
             }

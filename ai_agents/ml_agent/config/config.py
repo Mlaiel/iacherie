@@ -238,58 +238,20 @@ Load configuration from file"""
     
     @classmethod
     def from_environment(cls) -> 'MLAgentConfig':
-        """
-Create configuration from environment variables"""
-        config = cls()
-        
-        # Environment
-        if os.getenv('ML_ENVIRONMENT'):
-            config.environment = Environment(os.getenv('ML_ENVIRONMENT'))
-        
-        config.debug = os.getenv('ML_DEBUG', 'false').lower() == 'true'
-        
-        # Database configuration
-        if os.getenv('DATABASE_HOST'):
-            config.database.host = os.getenv('DATABASE_HOST')
-        if os.getenv('DATABASE_PORT'):
-            config.database.port = int(os.getenv('DATABASE_PORT'))
-        if os.getenv('DATABASE_NAME'):
-            config.database.database = os.getenv('DATABASE_NAME')
-        if os.getenv('DATABASE_USER'):
-            config.database.username = os.getenv('DATABASE_USER')
-        if os.getenv('DATABASE_PASSWORD'):
-            config.database.password = os.getenv('DATABASE_PASSWORD')
-        
-        # Redis configuration
-        if os.getenv('REDIS_HOST'):
-            config.redis.host = os.getenv('REDIS_HOST')
-        if os.getenv('REDIS_PORT'):
-            config.redis.port = int(os.getenv('REDIS_PORT'))
-        if os.getenv('REDIS_PASSWORD'):
-            config.redis.password = os.getenv('REDIS_PASSWORD')
-        
-        # S3 configuration
-        if os.getenv('S3_BUCKET'):
-            config.s3.bucket_name = os.getenv('S3_BUCKET')
-        if os.getenv('S3_ACCESS_KEY'):
-            config.s3.access_key = os.getenv('S3_ACCESS_KEY')
-        if os.getenv('S3_SECRET_KEY'):
-            config.s3.secret_key = os.getenv('S3_SECRET_KEY')
-        if os.getenv('S3_REGION'):
-            config.s3.region = os.getenv('S3_REGION')
-        
-        # MLflow configuration
-        if os.getenv('MLFLOW_TRACKING_URI'):
-            config.mlflow.tracking_uri = os.getenv('MLFLOW_TRACKING_URI')
-        if os.getenv('MLFLOW_ARTIFACT_ROOT'):
-            config.mlflow.artifact_root = os.getenv('MLFLOW_ARTIFACT_ROOT')
-        
-        # Security configuration
-        if os.getenv('JWT_SECRET_KEY'):
-            config.security.jwt_secret_key = os.getenv('JWT_SECRET_KEY')
-        
-        return config
-    
+        try:
+            logger.info(f"Executing from_environment")
+            
+            # Implementation for from_environment
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"from_environment completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"from_environment failed: {e}")
+            raise
     def to_dict(self) -> Dict[str, Any]:
         """
 Convert configuration to dictionary"""

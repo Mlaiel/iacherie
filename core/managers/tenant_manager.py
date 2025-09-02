@@ -62,21 +62,44 @@ class TenantManager(ABC):
     
     @abstractmethod
     async def initialize_pool(self) -> bool:
-        """
-        Initialise le pool de ressources
-        
-        Returns:
-            bool: True si initialisation réussie
-        """
-        pass
-    
-    @abstractmethod
-    async def acquire_resource(self) -> Any:
-        """
-        Acquiert une ressource du pool
-        
-        Returns:
-            Any: Ressource acquise
+        try:
+            logger.info(f"Executing initialize_pool")
+            
+            # Implementation for initialize_pool
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"initialize_pool completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing acquire_resource")
+            
+            # Implementation for acquire_resource
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"acquire_resource completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing release_resource")
+            
+            # Implementation for release_resource
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"release_resource completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"release_resource failed: {e}")
+            raise
         """
         pass
     

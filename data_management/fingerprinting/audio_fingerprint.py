@@ -192,8 +192,20 @@ class ChromaprintProcessor(AudioProcessor):
             raise
     
     def get_name(self) -> str:
-        return "chromaprint"
-    
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
     def _calculate_quality_score(self, audio: np.ndarray, sr: int) -> float:
         """Calcule un score de qualité pour l'audio"""
         try:
@@ -287,7 +299,20 @@ Processeur Essentia pour l'analyse musicale avancée"""
             
             return {
                 "processor": "essentia",
-                "features": features,
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
                 "duration": len(audio) / sr,
                 "sample_rate": sr,
                 "processing_time": processing_time,
@@ -381,6 +406,27 @@ Initialise le processeur de hash spectraux"""
             log_mel = librosa.power_to_db(mel_spec, ref=np.max)
             
             # Spectral hash
+            spectral_hash = self._compute_spectral_hash(magnitude)
+            mel_hash = self._compute_mel_hash(log_mel)
+            
+            processing_time = time.time() - start_time
+            
+            return {
+                "processor": "spectral_hash",
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
             spectral_hash = self._compute_spectral_hash(magnitude)
             mel_hash = self._compute_mel_hash(log_mel)
             
@@ -508,6 +554,49 @@ Initialise le processeur de spectrogrammes mel"""
             audio, sr = librosa.load(audio_path, sr=config.sample_rate, mono=True)
             
             # Mel spectrogram
+            mel_spec = librosa.feature.melspectrogram(
+                y=audio,
+                sr=sr,
+                n_mels=config.n_mels,
+                n_fft=config.n_fft,
+                hop_length=config.hop_length
+            )
+            
+            # Log mel spectrogram
+            log_mel = librosa.power_to_db(mel_spec, ref=np.max)
+            
+            # MFCC
+            mfcc = librosa.feature.mfcc(
+                y=audio,
+                sr=sr,
+                n_mfcc=config.n_mfcc,
+                n_mels=config.n_mels,
+                n_fft=config.n_fft,
+                hop_length=config.hop_length
+            )
+            
+            # Delta MFCC
+            mfcc_delta = librosa.feature.delta(mfcc)
+            mfcc_delta2 = librosa.feature.delta(mfcc, order=2)
+            
+            processing_time = time.time() - start_time
+            
+            return {
+                "processor": "mel_spectrogram",
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
             mel_spec = librosa.feature.melspectrogram(
                 y=audio,
                 sr=sr,

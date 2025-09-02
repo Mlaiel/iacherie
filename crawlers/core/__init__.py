@@ -74,10 +74,37 @@ Abstract base crawler class."""
         
     @abstractmethod
     async def search_content(self, query: str, max_results: int = 50) -> List[CrawlerResult]:
-        """
-Search for content on the platform."""
-        pass
-    
+        try:
+            logger.info(f"Executing search_content")
+            
+            # Implementation for search_content
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"search_content completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+                    # Request validation
+                    if not content_id:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_content_details_request(content_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_content_details failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            return result
+            
+        except Exception as e:
+            logger.error(f"search_content failed: {e}")
+            raise
     @abstractmethod
     async def get_content_details(self, content_id: str) -> Optional[CrawlerResult]:
         """

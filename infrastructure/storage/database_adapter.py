@@ -62,10 +62,45 @@ class IStorageAdapter(ABC):
     
     @abstractmethod
     async def connect(self) -> bool:
-        """
-Connexion au stockage"""
-        pass
-    
+        try:
+            logger.info(f"Executing connect")
+            
+            # Implementation for connect
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"connect completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing health_check")
+            
+            # Implementation for health_check
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"health_check completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"health_check failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"disconnect completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"disconnect failed: {e}")
+            raise
+            return result
+            
+        except Exception as e:
+            logger.error(f"connect failed: {e}")
+            raise
     @abstractmethod
     async def disconnect(self) -> bool:
         """

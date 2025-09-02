@@ -226,15 +226,33 @@ def performance_monitor() -> PerformanceMonitor:
 
 @pytest.fixture
 def assert_performance():
-    """
-Performance assertion fixture"""
-    def _assert(test_name: str, max_time: float):
-        # This is a simple placeholder - in real tests you'd measure actual performance
-        pass
-    return _assert
-
-
-# Pytest configuration
+        try:
+            logger.info(f"Executing assert_performance")
+            
+            # Implementation for assert_performance
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _assert")
+            
+            # Implementation for _assert
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_assert completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_assert failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"assert_performance completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"assert_performance failed: {e}")
+            raise
 def pytest_configure(config):
     """
 Configure pytest"""

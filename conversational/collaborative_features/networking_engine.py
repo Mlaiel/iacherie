@@ -772,13 +772,17 @@ Add connection to user's connection list"""
     async def _update_network_connections(
         self,
         user1_id: str,
-        user2_id: str,
-        action: str
-    ):
-        """Update network graph connections"""
-        # Implementation would update network graph structure
-        pass
-    
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _update_network_connections completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _update_network_connections failed: {e}")
+                    raise
     async def _calculate_connection_strength(
         self,
         user1_id: str,

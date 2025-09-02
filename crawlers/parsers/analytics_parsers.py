@@ -50,10 +50,37 @@ Async context manager exit"""
     
     @abstractmethod
     async def parse_analytics(self, **kwargs) -> Dict[str, Any]:
-        """
-Parse analytics data from platform"""
-        pass
-    
+        try:
+            logger.info(f"Executing parse_analytics")
+            
+            # Implementation for parse_analytics
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"parse_analytics completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_platform_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_platform_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            return result
+            
+        except Exception as e:
+            logger.error(f"parse_analytics failed: {e}")
+            raise
     @abstractmethod
     def get_platform_name(self) -> str:
         """
@@ -61,6 +88,20 @@ Get the platform name for this analytics parser"""
         pass
     
     def _calculate_date_range(self, days: Optional[int] = None) -> tuple:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_platform_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_platform_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
         """
 Calculate date range for analytics queries"""
         if days is None:
@@ -237,6 +278,22 @@ class GoogleAnalyticsParser(BaseAnalyticsParser):
             # Daily time series
             date = dim_dict.get('date', '')
             if date and date not in daily_data:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_platform_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_platform_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            date = dim_dict.get('date', '')
+            if date and date not in daily_data:
                 daily_data[date] = {
                     'sessions': 0,
                     'pageviews': 0,
@@ -329,6 +386,21 @@ Parser for Facebook Insights data"""
             return await response.json()
     
     async def _parse_facebook_insights(self, data: Dict[str, Any]) -> Dict[str, Any]:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_platform_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_platform_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
+    async def _parse_facebook_insights(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Parse Facebook Insights API response"""
         parsed = {
             'overview': {},
@@ -375,6 +447,24 @@ Parser for Facebook Insights data"""
                 day_data[metric_name] = values.get(date, 0)
             parsed['time_series'].append(day_data)
         
+        return parsed
+
+
+class TwitterAnalyticsParser(BaseAnalyticsParser):
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_platform_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_platform_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
         return parsed
 
 
@@ -460,7 +550,20 @@ Parser for YouTube Analytics data"""
                 'channel_id': channel_id,
                 'date_range': {
                     'start_date': start_date.isoformat(),
-                    'end_date': end_date.isoformat(),
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_platform_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_platform_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
                     'days': (end_date - start_date).days
                 },
                 'data': parsed_data,
@@ -546,6 +649,24 @@ Parser for YouTube Analytics data"""
 
 
 class InstagramInsightsParser(BaseAnalyticsParser):
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_platform_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_platform_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
+        return parsed
+
+
+class InstagramInsightsParser(BaseAnalyticsParser):
     """
 Parser for Instagram Insights data"""
     
@@ -575,6 +696,20 @@ Parser for Instagram Insights data"""
         except Exception as e:
             raise AnalyticsParsingError(
                 f"Instagram Insights parsing failed: {str(e)}",
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_platform_name_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_platform_name failed: {e}")
+                    return {"status": "error", "message": str(e)}
                 analytics_platform="instagram",
                 parser_type="InstagramInsightsParser"
             )

@@ -200,12 +200,20 @@ Initialize orchestration system components."""
         asyncio.create_task(self._metrics_collection_loop())
 
     def _load_pipeline_templates(self):
-        """
-Load default pipeline templates."""
-        # This would load predefined templates from configuration or database
-        # For now, the PipelineBuilder handles template initialization
-        pass
-
+        try:
+            logger.info(f"Executing _load_pipeline_templates")
+            
+            # Implementation for _load_pipeline_templates
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_load_pipeline_templates completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_load_pipeline_templates failed: {e}")
+            raise
     async def submit_workflow(self, request: WorkflowRequest) -> str:
         """
         Submit a workflow for execution.

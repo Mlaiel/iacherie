@@ -640,10 +640,20 @@ Apply specific protection method to content."""
     # Placeholder implementations for supporting services
     
     async def _get_content_record(self, content_id: str) -> Optional[Any]:
-        """
-Get content record from database."""
-        pass
-    
+        try:
+                    # Request validation
+                    if not content_id:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_content_record_request(content_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_content_record failed: {e}")
+                    return {"status": "error", "message": str(e)}
     async def _start_protection_monitoring(
         self, protection_id: str, config: ProtectionConfiguration
     ) -> str:
@@ -653,10 +663,20 @@ Start protection monitoring task."""
     
     async def _create_blockchain_proof(
         self, content: Any, config: ProtectionConfiguration
-    ) -> Dict[str, Any]:
-        """Create blockchain timestamp proof."""
-        return {
-            "blockchain": "ethereum",
+        try:
+            logger.info(f"Executing _create_protection_record")
+            
+            # Implementation for _create_protection_record
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_create_protection_record completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_create_protection_record failed: {e}")
+            raise
             "transaction_hash": f"0x{hashlib.sha256(content.data).hexdigest()}",
             "timestamp": datetime.utcnow().isoformat()
         }

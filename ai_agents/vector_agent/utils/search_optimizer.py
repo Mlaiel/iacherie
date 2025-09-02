@@ -369,8 +369,20 @@ class ResultEnhancer:
 Advanced result enhancement and post-processing"""
     
     def __init__(self, config: VectorConfig):
-        self.config = config
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     def enhance_results(self, results: List[VectorSearchResult], 
                        request: VectorSearchRequest) -> List[VectorSearchResult]:
         """

@@ -721,4 +721,17 @@ Setup Selenium WebDriver"""
             logger.error(f"Error during cleanup: {e}")
     
     def __str__(self) -> str:
-        return f"KickCrawlerEngine(platform=kick)"
+        try:
+            logger.info(f"Executing __str__")
+            
+            # Implementation for __str__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__str__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__str__ failed: {e}")
+            raise

@@ -42,8 +42,20 @@ Critical priority events - security alerts, system failures, urgent operations""
 Emergency priority events - immediate attention required, system-critical"""
     
     def __str__(self) -> str:
-        return self.name.lower()
-    
+        try:
+            logger.info(f"Executing __str__")
+            
+            # Implementation for __str__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__str__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__str__ failed: {e}")
+            raise
     def get_description(self) -> str:
         """
 Get human-readable description of priority level"""

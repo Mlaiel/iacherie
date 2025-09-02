@@ -635,10 +635,54 @@ Upload file to AWS S3 or MinIO"""
     
     # Azure Blob Storage methods (similar pattern)
     async def _upload_to_azure(self, file_path: str, content: bytes, metadata: Dict[str, Any], content_type: str) -> Dict[str, Any]:
-        """Upload to Azure Blob Storage"""
-        # Azure-specific implementation
-        pass
-    
+        try:
+            logger.info(f"Executing _upload_to_azure")
+            
+            # Implementation for _upload_to_azure
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _download_from_azure")
+            
+            # Implementation for _download_from_azure
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_download_from_azure completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+        try:
+            logger.info(f"Executing _download_from_gcp")
+            
+            # Implementation for _download_from_gcp
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_download_from_gcp completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_download_from_gcp failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_upload_to_gcp completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_upload_to_gcp failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"_download_from_azure failed: {e}")
+            raise
+            return result
+            
+        except Exception as e:
+            logger.error(f"_upload_to_azure failed: {e}")
+            raise
     async def _download_from_azure(self, file_path: str, local_path: Optional[str] = None) -> Dict[str, Any]:
         """
 Download from Azure Blob Storage"""
@@ -661,6 +705,33 @@ Download from Google Cloud Storage"""
     # Helper methods
     
     def _determine_storage_class(self, file_size: int, metadata: Optional[Dict[str, Any]]) -> str:
+        try:
+            logger.info(f"Executing _ensure_azure_container_exists")
+            
+            # Implementation for _ensure_azure_container_exists
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _ensure_gcp_bucket_exists")
+            
+            # Implementation for _ensure_gcp_bucket_exists
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_ensure_gcp_bucket_exists completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_ensure_gcp_bucket_exists failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_ensure_azure_container_exists completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_ensure_azure_container_exists failed: {e}")
+            raise
         """
 Determine optimal storage class based on file characteristics"""
         if not metadata:
@@ -716,7 +787,20 @@ Ensure GCP bucket exists"""
         """
 Configure bucket security and lifecycle policies"""
         try:
-            # Enable versioning if configured
+        try:
+            logger.info(f"Executing store_single")
+            
+            # Implementation for store_single
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"store_single completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"store_single failed: {e}")
+            raise
             if self.config.versioning_enabled:
                 self.client.put_bucket_versioning(
                     Bucket=self.bucket_name,
@@ -725,7 +809,20 @@ Configure bucket security and lifecycle policies"""
             
             # Configure lifecycle policies if provided
             if self.config.lifecycle_policies:
-                self.client.put_bucket_lifecycle_configuration(
+        try:
+            logger.info(f"Executing retrieve_single")
+            
+            # Implementation for retrieve_single
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"retrieve_single completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"retrieve_single failed: {e}")
+            raise
                     Bucket=self.bucket_name,
                     LifecycleConfiguration=self.config.lifecycle_policies
                 )

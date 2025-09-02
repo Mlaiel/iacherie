@@ -246,8 +246,20 @@ Test data aggregation from multiple sources."""
         streaming_data = []
         
         async def data_callback(data_batch):
-            streaming_data.append(data_batch)
-        
+        try:
+            logger.info(f"Executing data_callback")
+            
+            # Implementation for data_callback
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"data_callback completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"data_callback failed: {e}")
+            raise
         await reporting_engine.start_real_time_aggregation(
             source="performance_metrics",
             callback=data_callback,
@@ -560,6 +572,33 @@ Test data aggregation from multiple sources."""
         assert "filtered_data" in custom_report["metadata"]
     
     async def test_automated_reporting_scheduler(self, reporting_engine, report_test_config):
+        try:
+            logger.info(f"Executing schedule_callback")
+            
+            # Implementation for schedule_callback
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing delivery_callback")
+            
+            # Implementation for delivery_callback
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"delivery_callback completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"delivery_callback failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"schedule_callback completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"schedule_callback failed: {e}")
+            raise
         """Test automated report scheduling and delivery."""
         # Configure automated reporting
         await reporting_engine.configure_automated_reporting(

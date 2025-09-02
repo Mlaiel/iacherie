@@ -714,10 +714,20 @@ Estimate workflow completion time"""
             raise MusicOrchestratorError(f"Cancellation failed: {str(e)}")
 
     async def _cleanup_workflow_resources(self, context: MusicWorkflowContext):
-        """Clean up resources for cancelled workflow"""
-        # This would clean up temporary files, cancel scheduled tasks, etc.
-        pass
-
+        try:
+            logger.info(f"Executing _cleanup_workflow_resources")
+            
+            # Implementation for _cleanup_workflow_resources
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_cleanup_workflow_resources completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_cleanup_workflow_resources failed: {e}")
+            raise
     async def get_orchestrator_stats(self) -> Dict[str, Any]:
         """
 Get orchestrator performance statistics"""

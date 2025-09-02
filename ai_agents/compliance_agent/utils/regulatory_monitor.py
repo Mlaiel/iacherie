@@ -554,100 +554,26 @@ Initialize regulatory monitor with comprehensive source management"""
             return []
     
     async def _analyze_update_content(self, title: str, description: str) -> Dict[str, Any]:
-        """Analyze policy update content to determine type, priority, and impact"""
-        content = (title + " " + description).lower()
-        
-        analysis = {
-            'update_type': PolicyUpdateType.GUIDANCE_UPDATE,
-            'priority': PolicyPriority.LOW,
-            'action_required': False,
-            'keywords_found': [],
-            'effective_date': None,
-            'compliance_deadline': None
-        }
-        
-        # Critical keywords that indicate high priority
-        critical_keywords = [
-            'emergency', 'urgent', 'immediate', 'critical', 'mandatory',
-            'violation', 'penalty', 'fine', 'enforcement action',
-            'cease and desist', 'takedown', 'suspension'
-        ]
-        
-        high_priority_keywords = [
-            'new regulation', 'amendment', 'deadline', 'compliance',
-            'required', 'must', 'shall', 'obligatory',
-            'data breach', 'security incident', 'privacy violation'
-        ]
-        
-        medium_priority_keywords = [
-            'guidance', 'recommendation', 'best practice', 'update',
-            'clarification', 'interpretation', 'policy change'
-        ]
-        
-        # Update type indicators
-        type_indicators = {
-            PolicyUpdateType.NEW_REGULATION: ['new regulation', 'new law', 'new rule', 'introduces'],
-            PolicyUpdateType.AMENDMENT: ['amendment', 'amends', 'modifies', 'changes to'],
-            PolicyUpdateType.ENFORCEMENT_CHANGE: ['enforcement', 'penalty', 'fine', 'sanctions'],
-            PolicyUpdateType.DEADLINE_CHANGE: ['deadline', 'extended', 'postponed', 'due date'],
-            PolicyUpdateType.REVOCATION: ['revokes', 'cancels', 'withdraws', 'repeals']
-        }
-        
-        # Analyze priority
-        found_keywords = []
-        
-        for keyword in critical_keywords:
-            if keyword in content:
-                analysis['priority'] = PolicyPriority.CRITICAL
-                analysis['action_required'] = True
-                found_keywords.append(keyword)
-        
-        if analysis['priority'] != PolicyPriority.CRITICAL:
-            for keyword in high_priority_keywords:
-                if keyword in content:
-                    analysis['priority'] = PolicyPriority.HIGH
-                    analysis['action_required'] = True
-                    found_keywords.append(keyword)
-                    break
-        
-        if analysis['priority'] not in [PolicyPriority.CRITICAL, PolicyPriority.HIGH]:
-            for keyword in medium_priority_keywords:
-                if keyword in content:
-                    analysis['priority'] = PolicyPriority.MEDIUM
-                    found_keywords.append(keyword)
-                    break
-        
-        # Analyze update type
-        for update_type, indicators in type_indicators.items():
-            for indicator in indicators:
-                if indicator in content:
-                    analysis['update_type'] = update_type
-                    break
-        
-        # Try to extract dates
-        date_patterns = [
-            r'effective (?:date |on |from )?(\d{1,2}[-/]\d{1,2}[-/]\d{2,4})',
-            r'deadline (?:of |is |on )?(\d{1,2}[-/]\d{1,2}[-/]\d{2,4})',
-            r'by (\d{1,2}[-/]\d{1,2}[-/]\d{2,4})',
-            r'(\d{1,2} (?:january|february|march|april|may|june|july|august|september|october|november|december) \d{4})'
-        ]
-        
-        for pattern in date_patterns:
-            matches = re.findall(pattern, content, re.IGNORECASE)
-            if matches:
-                try:
-                    # Simple date parsing (would need more robust parsing in production)
-                    date_str = matches[0]
-                    if 'effective' in pattern:
-                        analysis['effective_date'] = datetime.now(timezone.utc) + timedelta(days=30)
-                    elif 'deadline' in pattern or 'by' in pattern:
-                        analysis['compliance_deadline'] = datetime.now(timezone.utc) + timedelta(days=60)
-                except:
-                    pass
-        
-        analysis['keywords_found'] = found_keywords
-        return analysis
-    
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__analyze_update_content_input(title)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__analyze_update_content_result(result)
+            
+                    logger.info(f"AI processing _analyze_update_content completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _analyze_update_content failed: {e}")
+                    raise
     async def _process_policy_update(self, update: PolicyUpdate):
         """Process and store a policy update"""
         try:
@@ -1030,5 +956,25 @@ Track and analyze policy changes for a specific framework"""
             return analysis
             
         except Exception as e:
-            logger.error(f"Error tracking policy changes for {framework}: {e}")
-            return {'error': str(e)}
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "stop_monitoring",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric stop_monitoring collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection stop_monitoring failed: {e}")
+                    return None

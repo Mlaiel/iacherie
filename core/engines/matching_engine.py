@@ -62,14 +62,20 @@ class MatchingEngine(ABC):
     
     @abstractmethod
     async def initialize(self) -> bool:
-        """
-        Initialise le moteur avec ses dépendances
-        
-        Returns:
-            bool: True si initialisation réussie
-        """
-        pass
-    
+        try:
+            logger.info(f"Executing initialize")
+            
+            # Implementation for initialize
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"initialize completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"initialize failed: {e}")
+            raise
     @abstractmethod
     async def process(self, data: Any) -> Any:
         """
@@ -79,13 +85,20 @@ class MatchingEngine(ABC):
             data: Données à traiter
             
         Returns:
-            Any: Résultat du traitement
-        """
-        pass
-    
-    @abstractmethod
-    async def shutdown(self) -> bool:
-        """
+        try:
+            logger.info(f"Executing shutdown")
+            
+            # Implementation for shutdown
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"shutdown completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"shutdown failed: {e}")
+            raise
         Arrêt propre du moteur
         
         Returns:
@@ -112,15 +125,20 @@ class MatchingEngine(ABC):
         Retourne les métriques de performance
         
         Returns:
-            Dict: Métriques actuelles
-        """
-        return self._performance_metrics.copy()
-
-
-# Instance globale pour l'injection de dépendances
-matching_engine = None
-
-
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_matching_engine_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_matching_engine failed: {e}")
+                    return {"status": "error", "message": str(e)}
 def get_matching_engine() -> MatchingEngine:
     """
     Factory function pour obtenir l'instance du moteur

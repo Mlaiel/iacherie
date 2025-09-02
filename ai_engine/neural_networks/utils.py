@@ -382,16 +382,20 @@ class PerformanceProfiler:
         return psutil.Process().memory_info().rss / (1024 * 1024)
     
     def _get_gpu_usage(self) -> float:
-        """
-Get current GPU utilization percentage"""
         try:
-            gpus = GPUtil.getGPUs()
-            if gpus:
-                return gpus[0].load * 100
-        except:
-            pass
-        return 0.0
-    
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_gpu_usage_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_gpu_usage failed: {e}")
+                    return {"status": "error", "message": str(e)}
     def get_performance_summary(self) -> Dict[str, Any]:
         """
 Get comprehensive performance summary"""

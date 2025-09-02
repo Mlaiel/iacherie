@@ -150,11 +150,67 @@ Abstract data masker interface"""
     @property
     @abstractmethod
     def supported_data_types(self) -> List[DataType]:
-        """
-List of supported data types"""
-        pass
-    
+        try:
+            logger.info(f"Executing supported_data_types")
+            
+            # Implementation for supported_data_types
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"supported_data_types completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+        try:
+            logger.info(f"Executing mask_value")
+            
+            # Implementation for mask_value
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"mask_value completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"mask_value failed: {e}")
+            raise
+            return result
+            
+        except Exception as e:
+            logger.error(f"technique failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"supported_data_types failed: {e}")
+            raise
     @property
+    @abstractmethod
+    def technique(self) -> MaskingTechnique:
+        try:
+        try:
+            logger.info(f"Executing technique")
+            
+            # Implementation for technique
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"technique completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"technique failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"supported_data_types completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"supported_data_types failed: {e}")
+            raise
     @abstractmethod
     def technique(self) -> MaskingTechnique:
         """
@@ -220,29 +276,20 @@ Mask value using redaction technique"""
             return await self._mask_generic(value, replacement_char, rule)
     
     async def _mask_email(self, email: str, replacement_char: str, rule: MaskingRule) -> str:
-        """Mask email address"""
-        if "@" in email:
-            local, domain = email.split("@", 1)
-            # Keep first and last character of local part
-            if len(local) > 2:
-                masked_local = local[0] + replacement_char * (len(local) - 2) + local[-1]
-            else:
-                masked_local = replacement_char * len(local)
-            return f"{masked_local}@{domain}"
-        else:
-            return replacement_char * len(email)
-    
-    async def _mask_phone(self, phone: str, replacement_char: str, rule: MaskingRule) -> str:
-        """Mask phone number"""
-        # Keep format but mask digits
-        masked = ""
-        for char in phone:
-            if char.isdigit():
-                masked += replacement_char
-            else:
-                masked += char
-        return masked
-    
+        try:
+            logger.info(f"Executing _mask_generic")
+            
+            # Implementation for _mask_generic
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_mask_generic completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_mask_generic failed: {e}")
+            raise
     async def _mask_ssn(self, ssn: str, replacement_char: str, rule: MaskingRule) -> str:
         """Mask Social Security Number"""
         # Typical format: XXX-XX-1234 (keep last 4 digits)
@@ -272,6 +319,34 @@ Mask value using redaction technique"""
         
         # Restore spacing if present
         if " " in card and len(result) >= 12:
+        try:
+            logger.info(f"Executing supported_data_types")
+            
+            # Implementation for supported_data_types
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing technique")
+            
+            # Implementation for technique
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"technique completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"technique failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"supported_data_types completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"supported_data_types failed: {e}")
+            raise
+        if " " in card and len(result) >= 12:
             return f"{result[:4]} {result[4:8]} {result[8:12]} {result[12:]}"
         return result
     
@@ -290,10 +365,88 @@ Mask value using redaction technique"""
                     pass
             elif pattern.startswith("show_last_"):
                 try:
-                    show_count = int(pattern.split("_")[-1])
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing supported_data_types")
+            
+            # Implementation for supported_data_types
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing technique")
+            
+            # Implementation for technique
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"technique completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"technique failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"supported_data_types completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"supported_data_types failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
                     if len(value) > show_count:
                         return replacement_char * (len(value) - show_count) + value[-show_count:]
-                except ValueError:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing supported_data_types")
+            
+            # Implementation for supported_data_types
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing technique")
+            
+            # Implementation for technique
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"technique completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"technique failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"supported_data_types completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"supported_data_types failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
                     pass
         
         # Default: mask entire value
@@ -307,6 +460,34 @@ Mask value using redaction technique"""
         return rule.masking_technique == self.technique
 
 
+class SubstitutionMasker(DataMasker):
+        try:
+            logger.info(f"Executing technique")
+            
+            # Implementation for technique
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"technique completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"technique failed: {e}")
+            raise
+            logger.info(f"Executing supported_data_types")
+            
+            # Implementation for supported_data_types
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"supported_data_types completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"supported_data_types failed: {e}")
+            raise
 class SubstitutionMasker(DataMasker):
     """
 Substitution-based data masker using realistic fake data"""

@@ -1079,12 +1079,28 @@ Projette les revenus territoriaux"""
     }
 
 async def _start_conflict_monitoring():
-    """
-Démarre la surveillance des conflits"""
-    # Implémentation de surveillance des conflits
-    pass
-
-
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_start_conflict_monitoring",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _start_conflict_monitoring collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _start_conflict_monitoring failed: {e}")
+                    return None
 __all__ = [
     'TerritoryManager',
     'TerritoryDefinition',

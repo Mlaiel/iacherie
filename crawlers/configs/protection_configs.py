@@ -535,10 +535,20 @@ Save configuration to file."""
                 self.config = self._deserialize_config(data)
     
     def _deserialize_config(self, data: dict) -> ProtectionConfig:
-        """Deserialize configuration data."""
-        # Implementation for converting dict back to ProtectionConfig
-        pass
-    
+        try:
+            logger.info(f"Executing _deserialize_config")
+            
+            # Implementation for _deserialize_config
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_deserialize_config completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_deserialize_config failed: {e}")
+            raise
     def validate_config(self) -> List[str]:
         """
 Validate protection configuration."""

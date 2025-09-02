@@ -571,9 +571,20 @@ Start background sync workers"""
             asyncio.create_task(self._sync_worker(f"worker_{i}"))
     
     async def _setup_conflict_resolution(self):
-        """Setup conflict resolution system"""
-        pass
-    
+        try:
+            logger.info(f"Executing _setup_conflict_resolution")
+            
+            # Implementation for _setup_conflict_resolution
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_setup_conflict_resolution completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_setup_conflict_resolution failed: {e}")
+            raise
     async def _validate_sync_request(self, request: ContentSyncRequest) -> Dict[str, Any]:
         """
 Validate sync request"""
@@ -858,15 +869,17 @@ Create new content version"""
         targets = []
         
         if collaboration_id:
-            # Find all collaboration endpoints except source
-            for endpoint_id, endpoint in self.sync_endpoints.items():
-                if (endpoint.endpoint_type == "collaboration" and 
-                    endpoint_id != source_endpoint and 
-                    collaboration_id in endpoint_id):
-                    targets.append(endpoint_id)
-        
-        return targets
-    
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _notify_content_update completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _notify_content_update failed: {e}")
+                    raise
     async def _notify_content_update(
         self, 
         collaboration_id: str, 

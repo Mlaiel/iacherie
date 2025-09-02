@@ -432,35 +432,26 @@ class ProtectionManager:
             raise
     
     async def _analyze_violation_severity(self, fingerprint_match: Dict[str, Any]) -> ViolationSeverity:
-        """Analyse la sévérité d'une violation"""
-        similarity_score = fingerprint_match['similarity_score']
-        platform = fingerprint_match['platform']
-        content_type = fingerprint_match['content_type']
-        
-        # High similarity = higher severity
-        if similarity_score >= 0.95:
-            base_severity = ViolationSeverity.CRITICAL
-        elif similarity_score >= 0.90:
-            base_severity = ViolationSeverity.HIGH
-        elif similarity_score >= 0.80:
-            base_severity = ViolationSeverity.MEDIUM
-        else:
-            base_severity = ViolationSeverity.LOW
-        
-        # Platform impact multiplier
-        high_impact_platforms = ['youtube', 'tiktok', 'instagram']
-        if platform in high_impact_platforms:
-            # Keep or increase severity
-            pass
-        else:
-            # Potentially reduce severity for lower-impact platforms
-            if base_severity == ViolationSeverity.CRITICAL:
-                base_severity = ViolationSeverity.HIGH
-            elif base_severity == ViolationSeverity.HIGH:
-                base_severity = ViolationSeverity.MEDIUM
-        
-        return base_severity
-    
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__analyze_violation_severity_input(fingerprint_match)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__analyze_violation_severity_result(result)
+            
+                    logger.info(f"AI processing _analyze_violation_severity completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _analyze_violation_severity failed: {e}")
+                    raise
     async def _classify_violation_type(self, fingerprint_match: Dict[str, Any]) -> ViolationType:
         """
 Classifie le type de violation"""

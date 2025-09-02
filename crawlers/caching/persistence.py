@@ -514,7 +514,20 @@ Start automatic backup process."""
             return
         
         async def auto_backup_loop():
-            while True:
+        try:
+            logger.info(f"Executing auto_backup_loop")
+            
+            # Implementation for auto_backup_loop
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"auto_backup_loop completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"auto_backup_loop failed: {e}")
+            raise
                 try:
                     await asyncio.sleep(self.auto_backup_interval)
                     await self.create_backup(BackupStrategy.INCREMENTAL)
@@ -624,6 +637,21 @@ Initialize backup manager."""
             
             return True
             
+        except Exception as e:
+        try:
+            logger.info(f"Executing schedule_loop")
+            
+            # Implementation for schedule_loop
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"schedule_loop completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"schedule_loop failed: {e}")
+            raise
         except Exception as e:
             self.logger.error(f"Error adding backup schedule: {e}")
             return False

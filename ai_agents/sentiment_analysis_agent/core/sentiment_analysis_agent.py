@@ -16,7 +16,20 @@ except ImportError:
     # Fallback for when base agent is not available
     class BaseAIAgent:
         def __init__(self, config=None):
-            self.config = config or {}
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
 from ..models.sentiment_models import (
     SentimentAnalysisRequest,
     SentimentAnalysisResult,

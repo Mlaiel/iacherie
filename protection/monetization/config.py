@@ -271,46 +271,20 @@ class MonetizationConfig:
     
     @classmethod
     def from_env(cls) -> 'MonetizationConfig':
-        """Create configuration from environment variables."""
-        config = cls()
-        
-        # Basic settings
-        config.environment = EnvironmentType(os.getenv('MONETIZATION_ENV', 'development'))
-        config.debug = os.getenv('DEBUG', 'false').lower() == 'true'
-        config.base_url = os.getenv('BASE_URL', 'https://localhost:8000')
-        
-        # Database settings
-        config.database.host = os.getenv('DB_HOST', 'localhost')
-        config.database.port = int(os.getenv('DB_PORT', '5432'))
-        config.database.database = os.getenv('DB_NAME', 'monetization_db')
-        config.database.username = os.getenv('DB_USER', 'monetization_user')
-        config.database.password = os.getenv('DB_PASSWORD', '')
-        
-        # Redis settings
-        config.redis.host = os.getenv('REDIS_HOST', 'localhost')
-        config.redis.port = int(os.getenv('REDIS_PORT', '6379'))
-        config.redis.password = os.getenv('REDIS_PASSWORD', '')
-        
-        # Security settings
-        config.security.secret_key = os.getenv('SECRET_KEY', '')
-        config.security.jwt_secret_key = os.getenv('JWT_SECRET_KEY', '')
-        
-        # Payment gateway settings
-        config.payment_gateways.stripe_secret_key = os.getenv('STRIPE_SECRET_KEY', '')
-        config.payment_gateways.stripe_publishable_key = os.getenv('STRIPE_PUBLISHABLE_KEY', '')
-        config.payment_gateways.paypal_client_id = os.getenv('PAYPAL_CLIENT_ID', '')
-        config.payment_gateways.paypal_client_secret = os.getenv('PAYPAL_CLIENT_SECRET', '')
-        
-        # Platform API settings
-        config.platform_apis.spotify_client_id = os.getenv('SPOTIFY_CLIENT_ID', '')
-        config.platform_apis.spotify_client_secret = os.getenv('SPOTIFY_CLIENT_SECRET', '')
-        config.platform_apis.youtube_api_key = os.getenv('YOUTUBE_API_KEY', '')
-        
-        # Post-init processing
-        config.__post_init__()
-        
-        return config
-    
+        try:
+            logger.info(f"Executing from_env")
+            
+            # Implementation for from_env
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"from_env completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"from_env failed: {e}")
+            raise
     @classmethod
     def from_file(cls, file_path: Union[str, Path]) -> 'MonetizationConfig':
         """

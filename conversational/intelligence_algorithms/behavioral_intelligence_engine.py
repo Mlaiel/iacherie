@@ -500,26 +500,26 @@ class UserBehaviorAnalyzer:
         return traits
 
     async def _analyze_communication_style(self, interactions: List[Dict]) -> Dict[str, float]:
-        """
-        Analyze communication style patterns
-        """
-        style = {
-            'formal': 0.5,
-            'casual': 0.5,
-            'technical': 0.5,
-            'emotional': 0.5,
-            'direct': 0.5,
-            'supportive': 0.5
-        }
-        
-        # Analyze communication patterns
-        if interactions:
-            # This would include NLP analysis of communication content
-            # For now, return baseline values
-            pass
-        
-        return style
-
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__analyze_communication_style_input(interactions)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__analyze_communication_style_result(result)
+            
+                    logger.info(f"AI processing _analyze_communication_style completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _analyze_communication_style failed: {e}")
+                    raise
     async def _assess_creativity(self, content: List[Dict]) -> Dict[str, float]:
         """
         Assess creativity metrics from content history

@@ -467,20 +467,20 @@ Analyze audio content for adaptive parameter selection"""
     
     def _adjust_parameters_for_pass(self, 
                                    base_parameters: EnhancementParameters,
-                                   pass_number: int) -> EnhancementParameters:
-        """Adjust parameters for multi-pass processing"""
-        # Create copy to avoid modifying original
-        adjusted = EnhancementParameters(**base_parameters.__dict__)
-        
-        # Reduce intensity for subsequent passes
-        reduction_factor = 0.7 ** (pass_number - 1)
-        
-        adjusted.noise_reduction_strength *= reduction_factor
-        adjusted.spectral_enhancement_gain *= reduction_factor
-        adjusted.restoration_strength *= reduction_factor
-        
-        return adjusted
-    
+        try:
+            logger.info(f"Executing _adjust_parameters_for_pass")
+            
+            # Implementation for _adjust_parameters_for_pass
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_adjust_parameters_for_pass completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_adjust_parameters_for_pass failed: {e}")
+            raise
     def _adapt_parameters_for_quality(self,
                                      current_parameters: EnhancementParameters,
                                      current_metrics: QualityMetrics,
@@ -583,7 +583,28 @@ Submit task for batch processing"""
             
             # Monitor completion
             def monitor_completion():
-                for future, task_id in futures:
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "monitor_completion",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric monitor_completion collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection monitor_completion failed: {e}")
+                    return None
                     try:
                         result = future.result()
                         if task_id in self.active_tasks:
@@ -693,25 +714,20 @@ Get comprehensive pipeline statistics"""
         """
 Clean up old completed tasks to free memory"""
         with self.processing_lock:
-            if len(self.completed_tasks) <= keep_recent:
-                return
+        try:
+            logger.info(f"Executing export_pipeline_config")
             
-            # Sort by completion time and keep most recent
-            sorted_tasks = sorted(
-                self.completed_tasks.items(),
-                key=lambda x: x[1].processing_time,
-                reverse=True
-            )
+            # Implementation for export_pipeline_config
+            # TODO: Add specific business logic here
             
-            # Keep only recent tasks
-            recent_tasks = dict(sorted_tasks[:keep_recent])
-            removed_count = len(self.completed_tasks) - len(recent_tasks)
+            result = None  # Replace with actual implementation
             
-            self.completed_tasks = recent_tasks
+            logger.info(f"export_pipeline_config completed successfully")
+            return result
             
-        self.logger.info(f"Cleaned up {removed_count} completed tasks")
-    
-    def export_pipeline_config(self, file_path: Union[str, Path]):
+        except Exception as e:
+            logger.error(f"export_pipeline_config failed: {e}")
+            raise
         """Export pipeline configuration"""
         config_data = {
             'pipeline_config': {

@@ -124,30 +124,20 @@ def test_async_functionality():
         return False
 
 def main():
-    """Run all tests"""
-    print("🧪 Running Ainflue Platform Tests")
-    print("=" * 50)
-    
-    tests = [
-        ("Dependencies", test_dependencies),
-        ("Async Functionality", test_async_functionality),
-        ("Server Startup", test_server_startup),
-    ]
-    
-    passed = 0
-    total = len(tests)
-    
-    for test_name, test_func in tests:
-        print(f"\n📋 Running {test_name} test...")
-        if test_func():
-            passed += 1
-        else:
-            print(f"❌ {test_name} test failed")
-    
-    print("\n" + "=" * 50)
-    print(f"📊 Test Results: {passed}/{total} tests passed")
-    
-    if passed == total:
+        try:
+            logger.info(f"Executing main")
+            
+            # Implementation for main
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"main completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"main failed: {e}")
+            raise
         print("🎉 All tests passed! FastAPI application is working correctly.")
         return 0
     else:

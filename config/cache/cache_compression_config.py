@@ -295,62 +295,20 @@ Get best compression profile for given data"""
         return matching_profiles[0]
     
     def detect_content_type(self, data: bytes, key: str = None) -> ContentType:
-        """Detect content type from data or key"""
-        if not self.auto_detect_content_type:
-            return self.fallback_content_type
-        
-        # Try to detect from key extension
-        if key:
-            key_lower = key.lower()
-            if key_lower.endswith(('.json', '.js')):
-                return ContentType.JSON
-            elif key_lower.endswith(('.xml', '.html', '.htm')):
-                return ContentType.XML if '.xml' in key_lower else ContentType.HTML
-            elif key_lower.endswith(('.txt', '.log')):
-                return ContentType.TEXT
-            elif key_lower.endswith(('.jpg', '.jpeg', '.png', '.gif', '.bmp')):
-                return ContentType.IMAGE
-            elif key_lower.endswith(('.mp3', '.wav', '.flac', '.ogg')):
-                return ContentType.AUDIO
-            elif key_lower.endswith(('.mp4', '.avi', '.mkv', '.mov')):
-                return ContentType.VIDEO
-            elif key_lower.endswith('.pdf'):
-                return ContentType.PDF
-            elif key_lower.endswith('.css'):
-                return ContentType.CSS
-            elif key_lower.endswith('.js'):
-                return ContentType.JAVASCRIPT
-        
-        # Try to detect from data content
-        if data:
-            # Check for JSON
-            if data.strip().startswith(b'{') or data.strip().startswith(b'['):
-                return ContentType.JSON
+        try:
+            logger.info(f"Executing detect_content_type")
             
-            # Check for XML/HTML
-            if data.strip().startswith(b'<'):
-                if b'<html' in data[:1024].lower():
-                    return ContentType.HTML
-                else:
-                    return ContentType.XML
+            # Implementation for detect_content_type
+            # TODO: Add specific business logic here
             
-            # Check for text (printable ASCII)
-            try:
-                data.decode('utf-8')
-                return ContentType.TEXT
-            except UnicodeDecodeError:
-                pass
+            result = None  # Replace with actual implementation
             
-            # Check for common binary signatures
-            if data.startswith(b'\x89PNG'):
-                return ContentType.IMAGE
-            elif data.startswith(b'\xff\xfb') or data.startswith(b'ID3'):
-                return ContentType.AUDIO
-            elif data.startswith(b'%PDF'):
-                return ContentType.PDF
-        
-        return self.fallback_content_type
-    
+            logger.info(f"detect_content_type completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"detect_content_type failed: {e}")
+            raise
     def should_use_async_compression(self, data_size: int, algorithm: CompressionAlgorithm) -> bool:
         """
 Determine if async compression should be used"""

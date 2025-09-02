@@ -404,10 +404,31 @@ class CrossRegionBackupManager:
         return True
     
     async def _store_backup_metadata(self, backup_record: BackupRecord):
-        """Store backup metadata for tracking"""
-        # Implementation would store in database
-        pass
-    
+        try:
+            logger.info(f"Executing _store_backup_metadata")
+            
+            # Implementation for _store_backup_metadata
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _store_dr_test_results")
+            
+            # Implementation for _store_dr_test_results
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_dr_test_results completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_dr_test_results failed: {e}")
+            raise
+            logger.info(f"_store_backup_metadata completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_backup_metadata failed: {e}")
+            raise
     async def _store_dr_test_results(self, dr_test: DisasterRecoveryTest):
         """Store disaster recovery test results"""
         # Implementation would store in database

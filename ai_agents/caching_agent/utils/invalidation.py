@@ -99,13 +99,30 @@ Determine if invalidation should proceed"""
     async def get_invalidation_candidates(
         self,
         event: InvalidationEvent,
-        cache_entries: Dict[str, Any]
-    ) -> List[str]:
-        """
-Get list of cache keys to invalidate"""
-        pass
-    
-    @abstractmethod
+        try:
+                    # Request validation
+                    if not event:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_invalidation_candidates_request(event)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+        try:
+                    # Request validation
+                    if not event:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_post_invalidation_actions_request(event)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler post_invalidation_actions failed: {e}")
+                    return {"status": "error", "message": str(e)}
     async def post_invalidation_actions(
         self,
         event: InvalidationEvent,
@@ -393,15 +410,20 @@ class InvalidationEngine:
         self.processing_task: Optional[asyncio.Task] = None
         self.metrics = {
             'total_events': 0,
-            'successful_invalidations': 0,
-            'failed_invalidations': 0,
-            'keys_invalidated': 0,
-            'average_processing_time': 0.0
-        }
-        
-        # For dependency tracking and rule evaluation
-        self.cache_access_callback: Optional[Callable] = None
-        
+        try:
+            logger.info(f"Executing shutdown")
+            
+            # Implementation for shutdown
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"shutdown completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"shutdown failed: {e}")
+            raise
     async def initialize(self):
         """
 Initialize invalidation engine"""

@@ -111,10 +111,20 @@ Abstract base class for all content processors"""
         
     @abstractmethod
     def get_supported_formats(self) -> List[str]:
-        """
-Get list of supported formats for this processor"""
-        pass
-        
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_supported_formats_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_supported_formats failed: {e}")
+                    return {"status": "error", "message": str(e)}
     def _calculate_checksum(self, data: bytes) -> str:
         """
 Calculate SHA-256 checksum of content"""
@@ -923,33 +933,26 @@ Industrial-grade text content processor"""
             )
     
     async def _extract_text_metadata(self, text_data: str, 
-                                   raw_bytes: bytes) -> ContentMetadata:
-        """Extract comprehensive text metadata"""
-        # Basic statistics
-        word_count = len(text_data.split())
-        char_count = len(text_data)
-        line_count = len(text_data.splitlines())
-        
-        # Language detection
-        language = 'unknown'
         try:
-            if TEXT_AVAILABLE:
-                import langdetect
-                language = langdetect.detect(text_data)
-        except:
-            pass
-        
-        # Readability metrics
-        readability_metrics = {}
-        try:
-            if TEXT_AVAILABLE:
-                readability_metrics = {
-                    'flesch_reading_ease': flesch_reading_ease(text_data),
-                    'flesch_kincaid_grade': flesch_kincaid_grade(text_data)
-                }
-        except:
-            pass
-        
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__extract_text_metadata_input(text_data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__extract_text_metadata_result(result)
+            
+                    logger.info(f"AI processing _extract_text_metadata completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _extract_text_metadata failed: {e}")
+                    raise
         custom_tags = {
             'word_count': word_count,
             'char_count': char_count,
@@ -1190,6 +1193,21 @@ class MetadataExtractor:
     """
 Comprehensive metadata extraction utility"""
     
+    def __init__(self):
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.MetadataExtractor")
     

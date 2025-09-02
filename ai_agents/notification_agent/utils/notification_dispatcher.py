@@ -488,7 +488,20 @@ class NotificationDispatcher:
         semaphore = asyncio.Semaphore(self.config.max_concurrent_dispatches)
         
         async def dispatch_with_semaphore(notification):
-            async with semaphore:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_dispatch_with_semaphore_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler dispatch_with_semaphore failed: {e}")
+                    return {"status": "error", "message": str(e)}
                 return await self.dispatch_notification(notification, strategy=strategy)
         
         # Create tasks for all notifications
@@ -614,6 +627,21 @@ Get user engagement patterns for optimization"""
         # Implementation would analyze user behavior
         return {
             'email_open_rate': 0.7,
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+            'email_open_rate': 0.7,
             'push_click_rate': 0.4,
             'sms_response_rate': 0.9,
             'best_delivery_hours': [10, 14, 18]
@@ -630,7 +658,20 @@ AI-powered delivery time optimization based on user behavior patterns"""
     async def calculate_optimal_delay(
         self, user_id: str, channels: List[ChannelType]
     ) -> float:
-        """
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
         Calculate optimal delay before sending notification
         
         Returns:

@@ -127,7 +127,20 @@ Platform response to DMCA notice"""
     verified: bool = False
     
     def __post_init__(self):
-        if not self.response_id:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             self.response_id = f"resp-{secrets.token_hex(8)}"
 
 

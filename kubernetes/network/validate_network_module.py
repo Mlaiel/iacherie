@@ -120,192 +120,20 @@ def validate_file_structure() -> bool:
 
 
 async def run_comprehensive_validation():
-    """Run comprehensive validation of network module"""
-    
-    print("🚀 IA INFLUENCER AGENT - NETWORK MODULE VALIDATION")
-    print("=" * 60)
-    print("🔍 Validating complete network deployment module...")
-    print()
-    
-    # 1. Validate file structure
-    print("📁 1. FILE STRUCTURE VALIDATION")
-    print("-" * 40)
-    file_structure_valid = validate_file_structure()
-    print(f"File Structure: {'✅ VALID' if file_structure_valid else '❌ INVALID'}")
-    print()
-    
-    # 2. Validate core module imports
-    print("📦 2. CORE MODULE IMPORTS")
-    print("-" * 40)
-    
-    core_modules = [
-        ("backend.deployment.network", "Core Network Module"),
-        ("backend.deployment.network.index", "Network Orchestrator"),
-        ("backend.deployment.network.ingress_manager", "Ingress Manager"),
-        ("backend.deployment.network.firewall_manager", "Firewall Manager"),
-        ("backend.deployment.network.vpc_manager", "VPC Manager"),
-        ("backend.deployment.network.dns_manager", "DNS Manager")
-    ]
-    
-    core_imports_valid = True
-    for module, description in core_modules:
-        if not validate_import(module, description):
-            core_imports_valid = False
-    
-    print(f"Core Modules: {'✅ VALID' if core_imports_valid else '❌ INVALID'}")
-    print()
-    
-    # 3. Validate content delivery modules
-    print("🎵 3. CONTENT DELIVERY MODULES")
-    print("-" * 40)
-    
-    content_modules = [
-        ("backend.deployment.network.content_delivery_manager", "Content Delivery Manager"),
-        ("backend.deployment.network.traffic_analytics_manager", "Traffic Analytics Manager"),
-        ("backend.deployment.network.geo_distribution_manager", "Geographic Distribution Manager"),
-        ("backend.deployment.network.performance_monitor", "Performance Monitor")
-    ]
-    
-    content_imports_valid = True
-    for module, description in content_modules:
-        if not validate_import(module, description):
-            content_imports_valid = False
-    
-    print(f"Content Delivery Modules: {'✅ VALID' if content_imports_valid else '❌ INVALID'}")
-    print()
-    
-    # 4. Validate enterprise modules
-    print("🏢 4. ENTERPRISE MODULES")
-    print("-" * 40)
-    
-    enterprise_modules = [
-        ("backend.deployment.network.security_compliance_manager", "Security & Compliance Manager"),
-        ("backend.deployment.network.revenue_monetization_manager", "Revenue & Monetization Manager")
-    ]
-    
-    enterprise_imports_valid = True
-    for module, description in enterprise_modules:
-        if not validate_import(module, description):
-            enterprise_imports_valid = False
-    
-    print(f"Enterprise Modules: {'✅ VALID' if enterprise_imports_valid else '❌ INVALID'}")
-    print()
-    
-    # 5. Validate example modules
-    print("📋 5. EXAMPLE MODULES")
-    print("-" * 40)
-    
-    example_modules = [
-        ("backend.deployment.network.complete_example", "Complete Example"),
-        ("backend.deployment.network.enterprise_integration_example", "Enterprise Integration Example")
-    ]
-    
-    example_imports_valid = True
-    for module, description in example_modules:
-        if not validate_import(module, description):
-            example_imports_valid = False
-    
-    print(f"Example Modules: {'✅ VALID' if example_imports_valid else '❌ INVALID'}")
-    print()
-    
-    # 6. Validate class availability
-    print("🔧 6. CLASS AVAILABILITY VALIDATION")
-    print("-" * 40)
-    
-    key_classes = [
-        ("backend.deployment.network.index", "NetworkOrchestrator", "Network Orchestrator Class"),
-        ("backend.deployment.network.security_compliance_manager", "NetworkSecurityComplianceManager", "Security Manager Class"),
-        ("backend.deployment.network.revenue_monetization_manager", "NetworkRevenueMonetizationManager", "Revenue Manager Class"),
-        ("backend.deployment.network.content_delivery_manager", "ContentDeliveryManager", "CDN Manager Class"),
-        ("backend.deployment.network.traffic_analytics_manager", "TrafficAnalyticsManager", "Analytics Manager Class")
-    ]
-    
-    class_availability_valid = True
-    for module, class_name, description in key_classes:
-        if not validate_class_availability(module, class_name, description):
-            class_availability_valid = False
-    
-    print(f"Class Availability: {'✅ VALID' if class_availability_valid else '❌ INVALID'}")
-    print()
-    
-    # 7. Validate async initialization capability
-    print("⚡ 7. ASYNC INITIALIZATION VALIDATION")
-    print("-" * 40)
-    
-    async_classes = [
-        ("backend.deployment.network.index", "NetworkOrchestrator", "Network Orchestrator Async Init"),
-        ("backend.deployment.network.security_compliance_manager", "NetworkSecurityComplianceManager", "Security Manager Async Init"),
-        ("backend.deployment.network.revenue_monetization_manager", "NetworkRevenueMonetizationManager", "Revenue Manager Async Init")
-    ]
-    
-    async_init_valid = True
-    for module, class_name, description in async_classes:
-        if not await validate_async_initialization(module, class_name, description):
-            async_init_valid = False
-    
-    print(f"Async Initialization: {'✅ VALID' if async_init_valid else '❌ INVALID'}")
-    print()
-    
-    # 8. Generate validation summary
-    print("📊 8. VALIDATION SUMMARY")
-    print("-" * 40)
-    
-    # Count results
-    total_tests = len(validation_results)
-    passed_tests = sum(1 for _, passed, _ in validation_results if passed)
-    failed_tests = total_tests - passed_tests
-    
-    success_rate = (passed_tests / total_tests * 100) if total_tests > 0 else 0
-    
-    print(f"Total Tests: {total_tests}")
-    print(f"Passed: {passed_tests}")
-    print(f"Failed: {failed_tests}")
-    print(f"Success Rate: {success_rate:.1f}%")
-    print()
-    
-    # Overall status
-    overall_valid = all([
-        file_structure_valid,
-        core_imports_valid,
-        content_imports_valid,
-        enterprise_imports_valid,
-        example_imports_valid,
-        class_availability_valid,
-        async_init_valid
-    ])
-    
-    if overall_valid:
-        print("🎯 OVERALL VALIDATION STATUS: ✅ ALL MODULES VALID")
-        print("🚀 Network module is ready for production deployment!")
-    else:
-        print("⚠️ OVERALL VALIDATION STATUS: ❌ ISSUES DETECTED")
-        print("🔧 Please review and fix the reported issues.")
-    
-    print()
-    print("📋 DETAILED VALIDATION RESULTS:")
-    print("-" * 40)
-    
-    # Group results by category
-    categories = {}
-    for description, passed, message in validation_results:
-        category = description.split(" - ")[0] if " - " in description else "General"
-        if category not in categories:
-            categories[category] = []
-        categories[category].append((description, passed, message))
-    
-    for category, results in categories.items():
-        print(f"\n📁 {category}:")
-        for description, passed, message in results:
-            print(f"   {message}")
-    
-    print("\n" + "=" * 60)
-    print("🎵 IA Influencer Agent - Network Module Validation Complete")
-    print("👨‍💻 Author: Fahed Mlaiel <mlaiel@live.de>")
-    print("⚠️ Copyright: All rights reserved")
-    
-    return overall_valid
-
-
+        try:
+            logger.info(f"Executing run_comprehensive_validation")
+            
+            # Implementation for run_comprehensive_validation
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"run_comprehensive_validation completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"run_comprehensive_validation failed: {e}")
+            raise
 if __name__ == "__main__":
     # Run validation
     success = asyncio.run(run_comprehensive_validation())

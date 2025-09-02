@@ -88,15 +88,65 @@ Interface abstraite pour les providers de stockage"""
     async def upload_file(
         self,
         local_path: Path,
-        remote_path: str,
-        metadata: Optional[Dict[str, Any]] = None
-    ) -> StorageLocation:
-        """
-Upload un fichier vers le storage"""
-        pass
-    
-    @abstractmethod
-    async def download_file(
+        try:
+            logger.info(f"Executing upload_file")
+            
+            # Implementation for upload_file
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"upload_file completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing download_file")
+            
+            # Implementation for download_file
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"download_file completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+        try:
+            logger.info(f"Executing list_files")
+            
+            # Implementation for list_files
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"list_files completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+                    # Request validation
+                    if not remote_path:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_file_metadata_request(remote_path)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_file_metadata failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            logger.error(f"list_files failed: {e}")
+            raise
+                except Exception as e:
+                    logger.error(f"Database operation delete_file failed: {e}")
+                    raise
+        except Exception as e:
+            logger.error(f"download_file failed: {e}")
+            raise
         self,
         remote_path: str,
         local_path: Path

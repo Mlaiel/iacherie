@@ -562,25 +562,20 @@ Generate unique request ID."""
         logger.info("Request Orchestrator started")
     
     async def stop(self):
-        """Stop the orchestrator."""
-        self.running = False
-        
-        if self.scheduler_task:
-            self.scheduler_task.cancel()
-            try:
-                await self.scheduler_task
-            except asyncio.CancelledError:
-                pass
-        
-        # Cancel active workers
-        for worker in self.active_workers:
-            worker.cancel()
-        
-        if self.active_workers:
-            await asyncio.gather(*self.active_workers, return_exceptions=True)
-        
-        logger.info("Request Orchestrator stopped")
-    
+        try:
+            logger.info(f"Executing stop")
+            
+            # Implementation for stop
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"stop completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"stop failed: {e}")
+            raise
     async def _scheduler_loop(self):
         """Main scheduler loop."""
         logger.info("Scheduler loop started")

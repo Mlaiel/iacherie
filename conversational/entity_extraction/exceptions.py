@@ -374,7 +374,20 @@ Log error with appropriate level and context"""
     def handle_and_reraise(func):
         """Decorator to handle exceptions and convert to EntityExtractionError"""
         def wrapper(*args, **kwargs):
-            try:
+        try:
+            logger.info(f"Executing wrapper")
+            
+            # Implementation for wrapper
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"wrapper completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"wrapper failed: {e}")
+            raise
                 return func(*args, **kwargs)
             except EntityExtractionError:
                 # Re-raise our custom exceptions

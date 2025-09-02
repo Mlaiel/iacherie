@@ -183,8 +183,20 @@ class BlockchainRights(Base):
     )
     
     def __repr__(self):
-        return f"<BlockchainRights(id={self.id}, network={self.blockchain_network.value}, rights_type={self.rights_type.value})>"
-    
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     def to_dict(self) -> Dict[str, Any]:
         """Convert model to dictionary for API responses"""
         return {
@@ -278,6 +290,25 @@ class ViolationReport(Base):
     
     # Timestamps
     created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False)
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
+    recovery_amount = Column(Numeric(18, 8), default=Decimal('0.0'))
+    legal_costs = Column(Numeric(18, 8), default=Decimal('0.0'))
+    
+    # Timestamps
+    created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False)
     resolved_at = Column(DateTime(timezone=True), nullable=True)
     
     # Relationships
@@ -292,6 +323,46 @@ class LicenseAutomation(Base):
     License Automation Model
     
     Manages automated licensing requests, negotiations, and smart contract execution.
+    """
+    __tablename__ = "license_automation"
+    
+    # Primary identification
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    blockchain_rights_id = Column(UUID(as_uuid=True), ForeignKey('blockchain_rights.id'), nullable=False, index=True)
+    
+    # License request details
+    licensee_wallet_address = Column(String(255), nullable=False, index=True)
+    requested_usage_type = Column(String(100), nullable=False)
+    proposed_price = Column(Numeric(18, 8), nullable=False)
+    license_duration_days = Column(Integer, nullable=False)
+    territory_requested = Column(ARRAY(String), nullable=True)
+    
+    # Automation rules
+    auto_approval_threshold = Column(Numeric(18, 8), nullable=True)
+    negotiation_allowed = Column(Boolean, default=True)
+    maximum_discount_percentage = Column(Float, default=0.0)
+    
+    # Smart contract execution
+    contract_address = Column(String(255), nullable=True)
+    escrow_amount = Column(Numeric(18, 8), nullable=True)
+    execution_status = Column(String(50), default="pending")
+    
+    # Timestamps
+    requested_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False)
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     """
     __tablename__ = "license_automation"
     

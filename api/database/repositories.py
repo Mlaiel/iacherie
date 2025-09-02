@@ -673,8 +673,20 @@ class UserRepository(BaseRepository[User, UserCreate, UserUpdate]):
     """User repository with specific user operations"""
     
     def __init__(self):
-        super().__init__(User)
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     async def find_by_email(self, email: str) -> RepositoryResult:
         """
 Find user by email"""
@@ -694,6 +706,20 @@ Find all active users"""
         return await self.find_many(filters=filters, pagination=pagination)
     
     async def update_last_login(self, user_id: str) -> RepositoryResult:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
         """
 Update user's last login timestamp"""
         update_data = {'last_login_at': datetime.utcnow()}
@@ -705,8 +731,20 @@ class CreatorRepository(BaseRepository[Creator, CreatorCreate, CreatorUpdate]):
 Creator repository with creator-specific operations"""
     
     def __init__(self):
-        super().__init__(Creator)
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     async def find_by_user_id(self, user_id: str) -> RepositoryResult:
         """
 Find creator by user ID"""
@@ -727,6 +765,20 @@ Find creators by content type"""
 
 
 class ContentRepository(BaseRepository[Content, ContentCreate, ContentUpdate]):
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     """
 Content repository with content-specific operations"""
     
@@ -752,6 +804,21 @@ Find all published content"""
         return await self.find_many(filters=filters, pagination=pagination)
     
     async def find_recent_content(self, days: int = 7, pagination: Optional[QueryPagination] = None) -> RepositoryResult:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+    async def find_recent_content(self, days: int = 7, pagination: Optional[QueryPagination] = None) -> RepositoryResult:
         """
 Find recent content within specified days"""
         since_date = datetime.utcnow() - timedelta(days=days)
@@ -760,10 +827,39 @@ Find recent content within specified days"""
 
 
 class MediaRepository(BaseRepository[Media, MediaCreate, MediaUpdate]):
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+class MediaRepository(BaseRepository[Media, MediaCreate, MediaUpdate]):
     """
 Media repository with media-specific operations"""
     
     def __init__(self):
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
         super().__init__(Media)
     
     async def find_by_content_id(self, content_id: str) -> RepositoryResult:
@@ -779,8 +875,85 @@ Find media by type"""
         return await self.find_many(filters=filters, pagination=pagination)
     
     async def get_total_storage_size(self) -> RepositoryResult:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+        filters = [QueryFilter(field='media_type', operator='eq', value=media_type)]
+        return await self.find_many(filters=filters, pagination=pagination)
+    
+    async def get_total_storage_size(self) -> RepositoryResult:
         """
 Get total storage size across all media"""
+        try:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+            raise
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
         try:
             async with self.session_manager.get_async_session() as session:
                 query = select(func.sum(Media.file_size))

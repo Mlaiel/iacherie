@@ -1033,7 +1033,20 @@ Convert multiple files in batch."""
         semaphore = asyncio.Semaphore(3)  # Limit concurrent conversions
         
         async def convert_single(file_path: Path) -> Dict[str, Any]:
-            async with semaphore:
+        try:
+            logger.info(f"Executing convert_single")
+            
+            # Implementation for convert_single
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"convert_single completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"convert_single failed: {e}")
+            raise
                 try:
                     result = await self.handle_format(
                         file_path, content_type, target_format, quality_preset

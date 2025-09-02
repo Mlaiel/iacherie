@@ -172,68 +172,26 @@ Create A-weighting filter coefficients"""
         }
     
     def analyze_loudness(self, audio: np.ndarray, sample_rate: int) -> Dict[str, float]:
-        """
-Analyze perceptual loudness using ITU-R BS.1770 standard"""
-        # Pre-filter (high-pass)
-        sos = signal.butter(2, 48, btype='high', fs=sample_rate, output='sos')
-        filtered_audio = signal.sosfilt(sos, audio, axis=0)
-        
-        # RLB weighting filter (for stereo)
-        if len(filtered_audio.shape) > 1 and filtered_audio.shape[1] >= 2:
-            # Apply channel weighting
-            left_weight = 1.0
-            right_weight = 1.0
-            weighted_sum = (left_weight * filtered_audio[:, 0] ** 2 + 
-                           right_weight * filtered_audio[:, 1] ** 2)
-        else:
-            weighted_sum = filtered_audio.flatten() ** 2
-        
-        # Gating
-        block_size = int(0.4 * sample_rate)  # 400ms blocks
-        hop_size = int(0.1 * sample_rate)    # 100ms overlap
-        
-        loudness_blocks = []
-        for i in range(0, len(weighted_sum) - block_size + 1, hop_size):
-            block = weighted_sum[i:i + block_size]
-            block_loudness = -0.691 + 10 * np.log10(np.mean(block) + 1e-10)
-            loudness_blocks.append(block_loudness)
-        
-        if not loudness_blocks:
-            return {
-                'momentary_lufs': -np.inf,
-                'integrated_lufs': -np.inf,
-                'loudness_range': 0.0,
-                'true_peak_dbfs': 20 * np.log10(np.max(np.abs(audio)) + 1e-10)
-            }
-        
-        loudness_blocks = np.array(loudness_blocks)
-        
-        # Absolute gating (-70 LUFS)
-        gated_blocks = loudness_blocks[loudness_blocks > -70]
-        
-        if len(gated_blocks) == 0:
-            integrated_loudness = -np.inf
-        else:
-            # Relative gating
-            relative_threshold = np.mean(gated_blocks) - 10
-            relative_gated = gated_blocks[gated_blocks > relative_threshold]
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
             
-            if len(relative_gated) == 0:
-                integrated_loudness = -np.inf
-            else:
-                integrated_loudness = np.mean(relative_gated)
-        
-        # Loudness range
-        if len(gated_blocks) > 0:
-            loudness_range = np.percentile(gated_blocks, 95) - np.percentile(gated_blocks, 10)
-        else:
-            loudness_range = 0.0
-        
-        # True peak
-        upsampled_audio = signal.resample(audio, len(audio) * 4, axis=0)
-        true_peak_dbfs = 20 * np.log10(np.max(np.abs(upsampled_audio)) + 1e-10)
-        
-        return {
+                    # Preprocess input
+                    processed_input = await self._preprocess_analyze_loudness_input(audio)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_loudness_result(result)
+            
+                    logger.info(f"AI processing analyze_loudness completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing analyze_loudness failed: {e}")
+                    raise
             'momentary_lufs': loudness_blocks[-1] if loudness_blocks.size > 0 else -np.inf,
             'integrated_lufs': integrated_loudness,
             'loudness_range': loudness_range,

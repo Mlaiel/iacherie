@@ -1073,11 +1073,17 @@ Background task for performance calculations"""
             self.logger.error(f"Error updating performance calculations: {str(e)}")
     
     async def _save_content_data(self) -> None:
-        """Save content data before shutdown"""
-        # Placeholder for data persistence
-        pass
-
-
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _save_content_data completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _save_content_data failed: {e}")
+                    raise
 class RevenueTracker:
     """
     Advanced revenue tracking and analytics system.
@@ -1448,9 +1454,17 @@ Background task for revenue calculations"""
             ]
             
             if recent_events:
-                self.logger.debug(f"Updated revenue summaries with {len(recent_events)} recent events")
-            
-        except Exception as e:
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _save_revenue_data completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _save_revenue_data failed: {e}")
+                    raise
             self.logger.error(f"Error updating revenue summaries: {str(e)}")
     
     async def _save_revenue_data(self) -> None:

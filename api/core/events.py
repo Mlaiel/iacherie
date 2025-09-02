@@ -57,7 +57,20 @@ class DomainEvent:
     tenant_id: Optional[str] = field(default=None)
     
     def __post_init__(self):
-        if not self.event_type:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             self.event_type = self.__class__.__name__
     
     def to_dict(self) -> Dict[str, Any]:
@@ -96,6 +109,71 @@ class DomainEvent:
             priority=priority,
             correlation_id=data.get("correlation_id"),
             causation_id=data.get("causation_id"),
+            user_id=data.get("user_id"),
+            tenant_id=data.get("tenant_id")
+        )
+
+
+class IEventHandler(ABC):
+        try:
+            logger.info(f"Executing can_handle")
+            
+            # Implementation for can_handle
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"can_handle completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing append_event")
+            
+            # Implementation for append_event
+            # TODO: Add specific business logic here
+        try:
+                    # Request validation
+                    if not aggregate_id:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_events_request(aggregate_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+        try:
+                    # Request validation
+                    if not event_type:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_events_by_type_request(event_type)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_events_by_type failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            raise
+        except Exception as e:
+            logger.error(f"can_handle failed: {e}")
+            raise
+        try:
+            logger.info(f"Executing handle")
+            
+            # Implementation for handle
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"handle completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"handle failed: {e}")
+            raise
             user_id=data.get("user_id"),
             tenant_id=data.get("tenant_id")
         )
@@ -299,14 +377,20 @@ Subscribe handler to all events."""
         return True
     
     async def _process_events(self):
-        """
-Background event processing loop."""
-        while self._is_running:
-            try:
-                # Get event from queue with timeout
-                event = await asyncio.wait_for(
-                    self._processing_queue.get(),
-                    timeout=1.0
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
                 )
                 
                 await self._handle_event(event)
@@ -323,10 +407,20 @@ Background event processing loop."""
         
         # Get specific handlers
         with self._lock:
-            if event.event_type in self._handlers:
-                handlers_to_run.extend(self._handlers[event.event_type])
+        try:
+            logger.info(f"Executing __init__")
             
-            # Add global handlers
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
             handlers_to_run.extend(self._global_handlers)
         
         # Execute handlers in priority order
@@ -334,14 +428,20 @@ Background event processing loop."""
         
         for subscription in handlers_to_run:
             if subscription.handler.can_handle(event.event_type):
-                await self._execute_handler(subscription, event)
-    
-    async def _execute_handler(self, subscription: EventSubscription, event: DomainEvent):
-        """
-Execute handler with retry logic and timeout."""
-        retry_count = 0
-        max_retries = subscription.retry_count
-        
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
         while retry_count <= max_retries:
             try:
                 # Execute with timeout
@@ -351,14 +451,20 @@ Execute handler with retry logic and timeout."""
                 )
                 
                 if success:
-                    return
-                
-            except asyncio.TimeoutError:
-                print(f"Handler timeout for event {event.event_type}")
-            except Exception as e:
-                print(f"Handler error for event {event.event_type}: {e}")
+        try:
+            logger.info(f"Executing __init__")
             
-            retry_count += 1
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
             if retry_count <= max_retries:
                 # Exponential backoff
                 await asyncio.sleep(2 ** retry_count)
@@ -372,14 +478,20 @@ Execute handler with retry logic and timeout."""
 # Content Protection Domain Events
 @dataclass
 class ContentUploadedEvent(DomainEvent):
-    """
-Event raised when content is uploaded."""
-    
-    def __init__(
-        self,
-        content_id: str,
-        user_id: str,
-        content_type: str,
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
         file_path: str,
         file_size: int,
         **kwargs

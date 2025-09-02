@@ -631,22 +631,17 @@ Find files that match the rule conditions"""
     async def _delete_file(
         self,
         file_info: Dict[str, Any],
-        action_config: Dict[str, Any],
-        execution: LifecycleExecution
-    ) -> None:
-        """Delete file from storage"""
-        
-        file_id = file_info.get('file_id') or file_info.get('storage_id')
-        file_size = file_info.get('file_size', 0)
-        
-        # Perform deletion
-        if self.storage_manager:
-            # result = await self.storage_manager.delete_content(file_id)
-            pass
-        
-        execution.space_freed += file_size
-        logger.info(f"Deleted {file_id}")
-    
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _delete_file completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _delete_file failed: {e}")
+                    raise
     async def _compress_file(
         self,
         file_info: Dict[str, Any],

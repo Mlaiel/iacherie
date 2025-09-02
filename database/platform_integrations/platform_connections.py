@@ -74,8 +74,20 @@ class PlatformConnection(BaseModel):
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     
     def __repr__(self):
-        return f"<PlatformConnection(platform={self.platform_name}, user={self.user_id})>"
-    
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     @property
     def is_token_expired(self) -> bool:
         """Vérifie si le token d'accès est expiré."""
@@ -178,6 +190,31 @@ class PlatformEndpoint(BaseModel):
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     
     def __repr__(self):
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
+    is_available = Column(Boolean, default=True)
+    
+    # Versioning
+    api_version = Column(String(20), default="v1")
+    deprecated = Column(Boolean, default=False)
+    deprecation_date = Column(DateTime(timezone=True))
+    
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    
+    def __repr__(self):
         return f"<PlatformEndpoint(platform={self.platform_name}, endpoint={self.endpoint_name})>"
 
 
@@ -213,6 +250,103 @@ class PlatformWebhook(BaseModel):
     
     # Configuration avancée
     retry_policy = Column(JSONB, default={"max_retries": 3, "backoff_factor": 2})
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
+    Gère les notifications en temps réel des plateformes
+    externes (nouvelles publications, interactions, etc.).
+    """
+    
+    __tablename__ = "platform_webhooks"
+    
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    platform_connection_id = Column(UUID(as_uuid=True), nullable=False, index=True)
+    platform_name = Column(String(50), nullable=False, index=True)
+    
+    # Configuration du webhook
+    webhook_url = Column(Text, nullable=False)
+    webhook_secret = Column(String(255))
+    event_types = Column(JSONB, default=list)  # ['post_created', 'like_received', etc.]
+    
+    # Statut et validation
+    is_active = Column(Boolean, default=True)
+    is_verified = Column(Boolean, default=False)
+    verification_token = Column(String(255))
+    verification_challenge = Column(String(255))
+    
+    # Métriques de réception
+    total_events_received = Column(Integer, default=0)
+    last_event_received = Column(DateTime(timezone=True))
+    failed_deliveries = Column(Integer, default=0)
+    
+    # Configuration avancée
+    retry_policy = Column(JSONB, default={"max_retries": 3, "backoff_factor": 2})
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
+    """
+    
+    __tablename__ = "platform_webhooks"
+    
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    platform_connection_id = Column(UUID(as_uuid=True), nullable=False, index=True)
+    platform_name = Column(String(50), nullable=False, index=True)
+    
+    # Configuration du webhook
+    webhook_url = Column(Text, nullable=False)
+    webhook_secret = Column(String(255))
+    event_types = Column(JSONB, default=list)  # ['post_created', 'like_received', etc.]
+    
+    # Statut et validation
+    is_active = Column(Boolean, default=True)
+    is_verified = Column(Boolean, default=False)
+    verification_token = Column(String(255))
+    verification_challenge = Column(String(255))
+    
+    # Métriques de réception
+    total_events_received = Column(Integer, default=0)
+    last_event_received = Column(DateTime(timezone=True))
+    failed_deliveries = Column(Integer, default=0)
+    
+    # Configuration avancée
+    retry_policy = Column(JSONB, default={"max_retries": 3, "backoff_factor": 2})
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
+    retry_policy = Column(JSONB, default={"max_retries": 3, "backoff_factor": 2})
     filter_conditions = Column(JSONB, default=dict)
     transformation_rules = Column(JSONB, default=list)
     
@@ -239,6 +373,87 @@ class PlatformSyncLog(BaseModel):
     
     # Informations de synchronisation
     sync_type = Column(String(50), nullable=False)  # full, incremental, webhook
+    sync_direction = Column(String(20), nullable=False)  # inbound, outbound, bidirectional
+    
+    # Résultats de la synchronisation
+    sync_status = Column(String(20), nullable=False, index=True)  # success, failure, partial
+    records_processed = Column(Integer, default=0)
+    records_created = Column(Integer, default=0)
+    records_updated = Column(Integer, default=0)
+    records_failed = Column(Integer, default=0)
+    
+    # Timing et performance
+    started_at = Column(DateTime(timezone=True), nullable=False)
+    completed_at = Column(DateTime(timezone=True))
+    duration_seconds = Column(Integer, default=0)
+    
+    # Détails et erreurs
+    sync_details = Column(JSONB, default=dict)
+    error_details = Column(JSONB, default=dict)
+    warning_messages = Column(JSONB, default=list)
+    
+    # Métadonnées
+    triggered_by = Column(String(50))  # system, user, webhook, schedule
+    execution_context = Column(JSONB, default=dict)
+    
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    
+    def __repr__(self):
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
+    sync_type = Column(String(50), nullable=False)  # full, incremental, webhook
+    sync_direction = Column(String(20), nullable=False)  # inbound, outbound, bidirectional
+    
+    # Résultats de la synchronisation
+    sync_status = Column(String(20), nullable=False, index=True)  # success, failure, partial
+    records_processed = Column(Integer, default=0)
+    records_created = Column(Integer, default=0)
+    records_updated = Column(Integer, default=0)
+    records_failed = Column(Integer, default=0)
+    
+    # Timing et performance
+    started_at = Column(DateTime(timezone=True), nullable=False)
+    completed_at = Column(DateTime(timezone=True))
+    duration_seconds = Column(Integer, default=0)
+    
+    # Détails et erreurs
+    sync_details = Column(JSONB, default=dict)
+    error_details = Column(JSONB, default=dict)
+    warning_messages = Column(JSONB, default=list)
+    
+    # Métadonnées
+    triggered_by = Column(String(50))  # system, user, webhook, schedule
+    execution_context = Column(JSONB, default=dict)
+    
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    
+    def __repr__(self):
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     sync_direction = Column(String(20), nullable=False)  # inbound, outbound, bidirectional
     
     # Résultats de la synchronisation

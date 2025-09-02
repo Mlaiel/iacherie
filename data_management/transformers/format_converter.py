@@ -672,8 +672,20 @@ class DocumentFormatConverter:
 Convertisseur spécialisé pour documents"""
     
     def __init__(self):
-        self.logger = logging.getLogger(__name__)
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     def convert(
         self,
         source_path: str,
@@ -1127,6 +1139,22 @@ Conversion asynchrone"""
         )
     
     async def batch_convert_async(
+        self,
+        file_list: List[Tuple[str, str, SupportedFormat, SupportedFormat]],
+        try:
+            logger.info(f"Executing convert_single")
+            
+            # Implementation for convert_single
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"convert_single completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"convert_single failed: {e}")
+            raise
         self,
         file_list: List[Tuple[str, str, SupportedFormat, SupportedFormat]],
         max_concurrent: int = 4,

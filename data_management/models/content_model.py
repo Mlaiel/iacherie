@@ -630,9 +630,20 @@ Generate optimized cache key"""
         return cls(**{k: v for k, v in data.items() if hasattr(cls, k)})
     
     def __repr__(self) -> str:
-        return f"ContentModel(id={self.content_id}, type={self.content_type.value}, status={self.content_status.value})"
-
-
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
 @dataclass 
 class ContentFingerprint:
     """Empreinte digitale du contenu pour protection"""
@@ -742,7 +753,20 @@ class ContentModel:
     
     # Collaboration et projets
     project_id: Optional[str] = None
-    collaborators: List[str] = field(default_factory=list)
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     collaboration_rights: Dict[str, str] = field(default_factory=dict)
     
     # Timestamps

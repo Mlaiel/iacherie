@@ -288,27 +288,20 @@ Get resource configuration."""
         )
     
     def get_jaeger_config(self) -> Dict[str, Any]:
-        """
-Get Jaeger-specific configuration."""
-        config = {
-            "service_name": self.service_name,
-            "agent_host_name": self.jaeger_agent_host,
-            "agent_port": self.jaeger_agent_port,
-            "sampling": {
-                "type": self.sampling_strategy.value,
-                "param": self.sampling_rate
-            }
-        }
-        
-        if self.jaeger_collector_endpoint:
-            config["collector_endpoint"] = self.jaeger_collector_endpoint
-        
-        if self.jaeger_user and self.jaeger_password:
-            config["username"] = self.jaeger_user
-            config["password"] = self.jaeger_password
-        
-        return config
-    
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_jaeger_config_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_jaeger_config failed: {e}")
+                    return {"status": "error", "message": str(e)}
     def get_zipkin_config(self) -> Dict[str, Any]:
         """Get Zipkin-specific configuration."""
         return {

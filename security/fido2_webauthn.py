@@ -508,8 +508,20 @@ class FIDO2Middleware:
     """FastAPI middleware for FIDO2 authentication"""
     
     def __init__(self, fido2_manager: FIDO2Manager):
-        self.fido2_manager = fido2_manager
-        
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     async def authenticate_request(self, request: Request) -> Optional[str]:
         """
 Authenticate request using FIDO2 if credentials present"""

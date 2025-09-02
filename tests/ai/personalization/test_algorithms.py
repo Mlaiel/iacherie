@@ -1241,7 +1241,17 @@ Test thread safety with concurrent updates"""
         
         # Create concurrent update tasks
         async def update_task(task_id: int):
-            for i in range(20):
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation update_task completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation update_task failed: {e}")
+                    raise
                 data_point = {
                     'user_id': f'user_{(task_id + i) % 10}',
                     'item_id': f'item_{i % 20}',

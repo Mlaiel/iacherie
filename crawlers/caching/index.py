@@ -331,32 +331,26 @@ Initialise l'index de cache industriel."""
         return capabilities
     
     def _extract_dependencies(self, class_type: Type) -> List[str]:
-        """
-Extrait les dépendances d'une classe."""
-        dependencies = []
-        
-        # Analyse du constructeur
         try:
-            signature = inspect.signature(class_type.__init__)
-            for param_name, param in signature.parameters.items():
-                if param_name != 'self' and param.annotation != inspect.Parameter.empty:
-                    dep_name = getattr(param.annotation, '__name__', str(param.annotation))
-                    if 'Cache' in dep_name:
-                        dependencies.append(dep_name.lower())
-        except Exception:
-            pass
-        
-        # Dépendances hardcodées connues
-        class_name = class_type.__name__.lower()
-        if 'redis' in class_name:
-            dependencies.append('redis')
-        if 'distributed' in class_name:
-            dependencies.extend(['redis', 'memory'])
-        if 'manager' in class_name:
-            dependencies.extend(['memory', 'redis'])
-        
-        return dependencies
-    
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__extract_dependencies_input(class_type)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__extract_dependencies_result(result)
+            
+                    logger.info(f"AI processing _extract_dependencies completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _extract_dependencies failed: {e}")
+                    raise
     async def _validate_dependencies(self) -> None:
         """
 Valide les dépendances entre modules."""
@@ -602,25 +596,28 @@ Configure le système d'alertes."""
         instance_count = 0
         
         for instance in self.instances.values():
-            if hasattr(instance, 'get_stats'):
-                try:
-                    stats = instance.get_stats()
-                    total_hits += getattr(stats, 'hits', 0)
-                    total_misses += getattr(stats, 'misses', 0)
-                    total_response_time += getattr(stats, 'average_response_time', 0.0)
-                    instance_count += 1
-                except Exception:
-                    pass
-        
-        self.stats.total_cache_hits = total_hits
-        self.stats.total_cache_misses = total_misses
-        if instance_count > 0:
-            self.stats.average_response_time = total_response_time / instance_count
-    
-    async def _collect_performance_metrics(self) -> None:
-        """
-Collecte les métriques de performance."""
-        # Calcul du taux d'erreur
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_collect_cache_metrics",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _collect_cache_metrics collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _collect_cache_metrics failed: {e}")
+                    return None
         total_errors = sum(info.error_count for info in self.modules.values())
         total_operations = self.stats.total_cache_hits + self.stats.total_cache_misses
         

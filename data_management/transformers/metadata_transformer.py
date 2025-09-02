@@ -332,39 +332,26 @@ Extrait les métadonnées audio (ID3, Vorbis, etc.)"""
                     break
     
     def _extract_video_metadata(self, video_path: str) -> Dict[str, Any]:
-        """
-Extrait les métadonnées vidéo"""
-        
-        metadata = {}
-        
         try:
-            # Utilisation d'OpenCV pour les métadonnées de base
-            cap = cv2.VideoCapture(video_path)
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
             
-            if cap.isOpened():
-                metadata['video_width'] = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-                metadata['video_height'] = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-                metadata['fps'] = cap.get(cv2.CAP_PROP_FPS)
-                metadata['frame_count'] = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-                
-                duration = metadata['frame_count'] / metadata['fps'] if metadata['fps'] > 0 else 0
-                metadata['duration'] = duration
-                
-                cap.release()
+                    # Preprocess input
+                    processed_input = await self._preprocess__extract_video_metadata_input(video_path)
             
-            # Tentative d'extraction avec mutagen (pour conteneurs avec audio)
-            try:
-                video_file = mutagen.File(video_path)
-                if video_file and video_file.tags:
-                    metadata['video_tags'] = {k: str(v) for k, v in video_file.tags.items()}
-            except:
-                pass
+                    # Run inference
+                    result = await self.model.predict(processed_input)
             
-        except Exception as e:
-            self.logger.warning(f"Erreur extraction métadonnées vidéo: {e}")
-        
-        return metadata
-    
+                    # Postprocess result
+                    final_result = await self._postprocess__extract_video_metadata_result(result)
+            
+                    logger.info(f"AI processing _extract_video_metadata completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _extract_video_metadata failed: {e}")
+                    raise
     def _extract_pdf_metadata(self, pdf_path: str) -> Dict[str, Any]:
         """Extrait les métadonnées PDF"""
         
@@ -1418,6 +1405,26 @@ __all__ = [
     'MetadataExtractor',
     'MetadataEnricher',
     'MetadataNormalizer',
+    'MetadataStandard',
+    'MetadataField',
+    'EnrichmentType',
+    'MetadataProcessingResult'
+]
+
+        try:
+            logger.info(f"Executing transform_single")
+            
+            # Implementation for transform_single
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"transform_single completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"transform_single failed: {e}")
+            raise
     'MetadataStandard',
     'MetadataField',
     'EnrichmentType',

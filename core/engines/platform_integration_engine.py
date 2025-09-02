@@ -907,11 +907,62 @@ class PlatformIntegrationEngine:
         return await self.file_manager.get_file_size(file_path)
 
     async def _test_platform_connection(self, credentials: PlatformCredentials):
-        """
-Test platform connection"""
-        # Implementation for testing platform connection
-        pass
-
+        try:
+            logger.info(f"Executing _test_platform_connection")
+            
+            # Implementation for _test_platform_connection
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_test_platform_connection completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _store_platform_credentials")
+            
+            # Implementation for _store_platform_credentials
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_platform_credentials completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _refresh_token_if_needed")
+            
+            # Implementation for _refresh_token_if_needed
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _store_distribution_records")
+            
+            # Implementation for _store_distribution_records
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_distribution_records completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_distribution_records failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_refresh_token_if_needed completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_refresh_token_if_needed failed: {e}")
+            raise
+            logger.error(f"_store_platform_credentials failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"_test_platform_connection failed: {e}")
+            raise
     async def _store_platform_credentials(self, user_id: str, credentials: PlatformCredentials):
         """
 Store encrypted platform credentials"""

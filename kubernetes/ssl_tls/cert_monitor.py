@@ -391,42 +391,26 @@ class CertificateMonitor:
     def _extract_certificate_info(
         self, 
         cert: x509.Certificate, 
-        ssl_socket: ssl.SSLSocket
-    ) -> Dict[str, Any]:
-        """Extract detailed certificate information"""
-        # Basic certificate info
-        subject = cert.subject
-        issuer = cert.issuer
-        
-        # Get common name
-        common_name = None
-        for attribute in subject:
-            if attribute.oid == x509.NameOID.COMMON_NAME:
-                common_name = attribute.value
-                break
-        
-        # Get Subject Alternative Names
-        san_list = []
         try:
-            san_extension = cert.extensions.get_extension_for_oid(
-                x509.ExtensionOID.SUBJECT_ALTERNATIVE_NAME
-            )
-            for name in san_extension.value:
-                if isinstance(name, x509.DNSName):
-                    san_list.append(name.value)
-        except x509.ExtensionNotFound:
-            pass
-        
-        # Get SSL/TLS protocol and cipher info
-        protocol = ssl_socket.version()
-        cipher = ssl_socket.cipher()
-        
-        # Calculate fingerprints
-        cert_der = cert.public_bytes(x509.Encoding.DER)
-        sha1_fingerprint = hashlib.sha1(cert_der).hexdigest()
-        sha256_fingerprint = hashlib.sha256(cert_der).hexdigest()
-        
-        return {
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__extract_certificate_info_input(cert)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__extract_certificate_info_result(result)
+            
+                    logger.info(f"AI processing _extract_certificate_info completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _extract_certificate_info failed: {e}")
+                    raise
             'common_name': common_name,
             'subject': subject.rfc4514_string(),
             'issuer': issuer.rfc4514_string(),

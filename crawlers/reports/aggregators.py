@@ -305,9 +305,20 @@ class DataAggregator(ABC):
     
     @abstractmethod
     async def aggregate(self, session: AsyncSession) -> AggregationResult:
-        """Perform data aggregation."""
-        pass
-    
+        try:
+            logger.info(f"Executing aggregate")
+            
+            # Implementation for aggregate
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"aggregate completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"aggregate failed: {e}")
+            raise
     async def extract_data(self, session: AsyncSession) -> pd.DataFrame:
         """
 Extract data from source tables."""

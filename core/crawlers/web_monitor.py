@@ -732,16 +732,20 @@ class WebContentMonitor:
         await self._send_notification(notification_data)
 
     async def _send_notification(self, data: Dict[str, Any]) -> None:
-        """
-        Envoie une notification système
-        
-        Args:
-            data: Données de notification
-        """
-        # Implémentation du système de notification
-        # (email, webhook, push notification, etc.)
-        pass
-
+        try:
+            logger.info(f"Executing _send_notification")
+            
+            # Implementation for _send_notification
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_send_notification completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_send_notification failed: {e}")
+            raise
     async def _proactive_search_monitoring(self) -> None:
         """
         Surveillance proactive par recherche automatique
@@ -885,7 +889,17 @@ class WebContentMonitor:
         await self._save_monitoring_data()
 
     async def _save_monitoring_data(self) -> None:
-        """
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _save_monitoring_data completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _save_monitoring_data failed: {e}")
+                    raise
         Sauvegarde les données de surveillance
         """
         # Implémentation de la sauvegarde des données

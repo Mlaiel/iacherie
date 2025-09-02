@@ -402,8 +402,20 @@ class RetryManager:
     """Gestionnaire de retry avec différentes politiques"""
     
     def __init__(self, config: RetryConfig):
-        self.config = config
-        
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     async def execute_with_retry(
         self,
         func: Callable,
@@ -472,7 +484,20 @@ Calcule le délai pour le retry"""
         
         # Application du jitter
         if self.config.jitter:
-            import random
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
             jitter = random.uniform(0.1, 0.2) * delay
             delay += jitter
         
@@ -516,6 +541,21 @@ Exécute une fonction avec timeout"""
             raise TimeoutError(f"Function {func.__name__} timed out after {timeout_seconds} seconds")
 
 
+class ResilienceDecorator:
+        try:
+            logger.info(f"Executing timeout_wrapper")
+            
+            # Implementation for timeout_wrapper
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"timeout_wrapper completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"timeout_wrapper failed: {e}")
+            raise
 class ResilienceDecorator:
     """Décorateur combinant toutes les stratégies de résilience"""
     

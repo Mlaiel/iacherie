@@ -1597,92 +1597,26 @@ Extract content using web scraping as fallback"""
         return engagement_analysis
     
     async def _analyze_trending_potential(self, video_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze trending and virality potential"""
-        trending_analysis = {
-            'trending_score': 0.0,
-            'trend_indicators': [],
-            'optimal_posting_suggestions': [],
-            'audience_growth_potential': 0.0
-        }
-        
         try:
-            # Analyze title for trending keywords
-            title = video_data.get('title', '').lower()
-            trending_keywords = [
-                'viral', 'trending', 'breaking', 'new', 'latest', 'exclusive',
-                'revealed', 'exposed', 'shocking', 'amazing', 'incredible',
-                'first time', 'world record', 'never seen'
-            ]
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
             
-            found_keywords = [kw for kw in trending_keywords if kw in title]
-            trending_analysis['trend_indicators'] = found_keywords
+                    # Preprocess input
+                    processed_input = await self._preprocess__analyze_trending_potential_input(video_data)
             
-            # Calculate trending score
-            score = 0.0
+                    # Run inference
+                    result = await self.model.predict(processed_input)
             
-            # Title optimization
-            if len(found_keywords) > 0:
-                score += 15
+                    # Postprocess result
+                    final_result = await self._postprocess__analyze_trending_potential_result(result)
             
-            # Content freshness
-            published_at = video_data.get('published_at')
-            if published_at:
-                # Recent content has higher trending potential
-                from datetime import datetime, timezone
-                if isinstance(published_at, str):
-                    try:
-                        pub_date = datetime.fromisoformat(published_at.replace('Z', '+00:00'))
-                        hours_since_publish = (datetime.now(timezone.utc) - pub_date).total_seconds() / 3600
-                        
-                        if hours_since_publish < 24:
-                            score += 20
-                        elif hours_since_publish < 72:
-                            score += 15
-                        elif hours_since_publish < 168:  # 1 week
-                            score += 10
-                    except:
-                        pass
+                    logger.info(f"AI processing _analyze_trending_potential completed")
+                    return final_result
             
-            # Engagement velocity
-            view_count = video_data.get('view_count', 0)
-            if view_count > 1000:
-                score += min(25, np.log10(view_count) * 5)
-            
-            # Content category factor
-            content_class = video_data.get('ai_analysis', {}).get('content_classification', {})
-            trending_categories = ['entertainment', 'news', 'music', 'gaming']
-            
-            for category in trending_categories:
-                if category in content_class and content_class[category] > 0.3:
-                    score += 10
-                    break
-            
-            # Social signals
-            engagement_rate = video_data.get('engagement_analysis', {}).get('engagement_rate', 0)
-            if engagement_rate > 0.02:
-                score += 15
-            
-            trending_analysis['trending_score'] = min(100, score)
-            
-            # Optimization suggestions
-            suggestions = []
-            
-            if len(found_keywords) == 0:
-                suggestions.append("Add trending keywords to title for better discoverability")
-            
-            if not video_data.get('tags') or len(video_data['tags']) < 5:
-                suggestions.append("Use more relevant hashtags and tags")
-            
-            if video_data.get('duration', 0) > 900:  # >15 minutes
-                suggestions.append("Consider shorter content for better trending potential")
-            
-            trending_analysis['optimal_posting_suggestions'] = suggestions
-            
-        except Exception as e:
-            self.logger.error(f"Trending analysis failed: {e}")
-        
-        return trending_analysis
-    
+                except Exception as e:
+                    logger.error(f"AI processing _analyze_trending_potential failed: {e}")
+                    raise
     async def _analyze_content_protection(self, video_data: Dict[str, Any]) -> Dict[str, Any]:
         """Analyze content protection and copyright aspects"""
         protection_analysis = {

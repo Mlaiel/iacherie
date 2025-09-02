@@ -890,7 +890,20 @@ Get comprehensive platform statistics"""
         semaphore = asyncio.Semaphore(max_concurrent)
         
         async def execute_single(case_data, legal_notice):
-            async with semaphore:
+        try:
+            logger.info(f"Executing execute_single")
+            
+            # Implementation for execute_single
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"execute_single completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"execute_single failed: {e}")
+            raise
                 return await self.execute_takedown(case_data, legal_notice, priority)
         
         tasks = [

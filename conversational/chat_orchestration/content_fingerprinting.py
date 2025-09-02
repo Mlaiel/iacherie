@@ -875,15 +875,20 @@ Check if fingerprint already exists"""
         return None
     
     async def _store_fingerprint(self, fingerprint: ContentFingerprint) -> None:
-        """
-Store fingerprint in database and cache"""
-        # Store in cache
-        self.fingerprint_cache[fingerprint.fingerprint_id] = fingerprint
-        
-        # Store in database
-        # Implementation would insert into database
-        pass
-    
+        try:
+            logger.info(f"Executing _store_fingerprint")
+            
+            # Implementation for _store_fingerprint
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_fingerprint completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_fingerprint failed: {e}")
+            raise
     async def _add_to_faiss_index(self, fingerprint: ContentFingerprint) -> None:
         """
 Add fingerprint to FAISS index for similarity search"""
@@ -986,8 +991,20 @@ Check if match represents potential copyright violation"""
 Rank matches by violation severity"""
         # Sort by similarity score and confidence
         matches.sort(key=lambda x: (x.similarity_score, x.confidence_level), reverse=True)
-        return matches
-    
+        try:
+            logger.info(f"Executing _store_similarity_match")
+            
+            # Implementation for _store_similarity_match
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_similarity_match completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_similarity_match failed: {e}")
+            raise
     async def _store_similarity_match(self, match: SimilarityMatch) -> None:
         """
 Store similarity match in database"""

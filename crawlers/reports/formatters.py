@@ -173,9 +173,28 @@ class ReportFormatter(ABC):
     
     @abstractmethod
     async def format_report(self, report_data: Dict[str, Any]) -> Union[str, bytes, IO]:
-        """Format report data into specific output format."""
-        pass
-    
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "format_report",
+                        "value": report_data if report_data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric format_report collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection format_report failed: {e}")
+                    return None
     async def validate_data(self, data: Dict[str, Any]) -> bool:
         """
 Validate report data before formatting."""
@@ -759,6 +778,21 @@ class JSONFormatter(ReportFormatter):
     """
     JSON formatter for structured data output.
     
+    Features:
+        try:
+            logger.info(f"Executing default")
+            
+            # Implementation for default
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"default completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"default failed: {e}")
+            raise
     Features:
     - Pretty-printed JSON with proper indentation
     - Schema validation and compliance

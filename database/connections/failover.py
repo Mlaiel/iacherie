@@ -145,17 +145,28 @@ class FailoverManager:
         self.logger.info("Started health monitoring for all endpoints")
     
     async def stop_health_monitoring(self) -> None:
-        """Stop health monitoring"""
-        for task in self.health_tasks.values():
-            task.cancel()
-            try:
-                await task
-            except asyncio.CancelledError:
-                pass
-        
-        self.health_tasks.clear()
-        self.logger.info("Stopped health monitoring")
-    
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "stop_health_monitoring",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric stop_health_monitoring collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection stop_health_monitoring failed: {e}")
+                    return None
     async def _health_monitoring_loop(self, db_type: str) -> None:
         """Health monitoring loop for specific database type"""
         while True:

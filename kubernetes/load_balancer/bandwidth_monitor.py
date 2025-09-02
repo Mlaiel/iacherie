@@ -314,25 +314,28 @@ class BandwidthMonitor:
         logger.info("Bandwidth monitoring started")
     
     async def stop_monitoring(self) -> None:
-        """Stop bandwidth monitoring"""
-        self.is_monitoring = False
-        
-        if self.monitor_task:
-            self.monitor_task.cancel()
-            try:
-                await self.monitor_task
-            except asyncio.CancelledError:
-                pass
-        
-        if self.shaping_task:
-            self.shaping_task.cancel()
-            try:
-                await self.shaping_task
-            except asyncio.CancelledError:
-                pass
-        
-        logger.info("Bandwidth monitoring stopped")
-    
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "stop_monitoring",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric stop_monitoring collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection stop_monitoring failed: {e}")
+                    return None
     async def _monitoring_loop(self) -> None:
         """Main monitoring loop"""
         while self.is_monitoring:

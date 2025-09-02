@@ -113,7 +113,17 @@ Fix docstring syntax errors in a single file."""
             return False
     
     def find_files_with_docstring_errors(self, root_path: Path = Path(".")) -> List[Path]:
-        """Find Python files with docstring syntax errors."""
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation find_files_with_docstring_errors completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation find_files_with_docstring_errors failed: {e}")
+                    raise
     import argparse
     
     parser = argparse.ArgumentParser(description="Fix docstring syntax errors")

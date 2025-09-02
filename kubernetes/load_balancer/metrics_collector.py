@@ -701,25 +701,28 @@ Collect system metrics periodically"""
         logger.info("Metrics collection started")
     
     async def stop_collection(self) -> None:
-        """Stop metrics collection"""
-        if not self.running:
-            logger.warning("Metrics collection not running")
-            return
-        
-        self.running = False
-        
-        if self.collection_task:
-            self.collection_task.cancel()
-            try:
-                await self.collection_task
-            except asyncio.CancelledError:
-                pass
-        
-        # Flush remaining metrics
-        self.metrics_buffer.force_flush()
-        
-        logger.info("Metrics collection stopped")
-    
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "stop_collection",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric stop_collection collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection stop_collection failed: {e}")
+                    return None
     def configure_platform_metrics(self) -> bool:
         """Configure metrics for platform services"""
         try:

@@ -65,7 +65,20 @@ class SEOIssue:
     impact_score: float = 0.0  # 0-10 scale
     
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             'category': self.category.value,
             'severity': self.severity,
             'message': self.message,
@@ -79,11 +92,40 @@ class SEOIssue:
 
 @dataclass
 class KeywordAnalysis:
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
+@dataclass
+class KeywordAnalysis:
     """
 Keyword analysis results"""
     primary_keywords: List[str]
     secondary_keywords: List[str]
-    keyword_density: Dict[str, float]
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
     keyword_placement: Dict[str, List[str]]  # keyword -> locations
     long_tail_keywords: List[str]
     keyword_score: float  # 0-100
@@ -125,7 +167,20 @@ Content readability analysis"""
 
 @dataclass
 class SEOAnalysisResult:
-    """Comprehensive SEO analysis result"""
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
     content_id: str
     overall_seo_score: float  # 0-100
     seo_level: SEOLevel
@@ -140,6 +195,21 @@ class SEOAnalysisResult:
     social_score: float = 0.0
     
     # Analysis results
+    keyword_analysis: Optional[KeywordAnalysis] = None
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     keyword_analysis: Optional[KeywordAnalysis] = None
     readability_metrics: Optional[ReadabilityMetrics] = None
     

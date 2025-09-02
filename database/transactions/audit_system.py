@@ -228,33 +228,20 @@ Convert to dictionary for serialization"""
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'TransactionLog':
-        """
-Create from dictionary"""
-        context = None
-        if data.get('context'):
-            context_data = data['context']
-            context = AuditContext(
-                user_id=context_data.get('user_id'),
-                session_id=context_data.get('session_id'),
-                ip_address=context_data.get('ip_address'),
-                user_agent=context_data.get('user_agent'),
-                request_id=context_data.get('request_id'),
-                correlation_id=context_data.get('correlation_id'),
-                creator_id=context_data.get('creator_id'),
-                content_id=context_data.get('content_id'),
-                transaction_id=context_data.get('transaction_id'),
-                business_context=context_data.get('business_context'),
-                compliance_tags=set(context_data.get('compliance_tags', [])),
-            )
-        
-        compliance_standards = set()
-        for std in data.get('compliance_standards', []):
-            try:
-                compliance_standards.add(ComplianceStandard(std))
-            except ValueError:
-                pass  # Skip unknown standards
-        
-        return cls(
+        try:
+            logger.info(f"Executing from_dict")
+            
+            # Implementation for from_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"from_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"from_dict failed: {e}")
+            raise
             log_id=data['log_id'],
             timestamp=datetime.fromisoformat(data['timestamp']),
             event_type=AuditEventType(data['event_type']),

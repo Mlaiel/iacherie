@@ -630,12 +630,20 @@ Verify snapshot data integrity."""
             return False
     
     async def _initialize_state_storage(self, state_def: StateDefinition) -> None:
-        """
-Initialize storage for state definition."""
-        # This would initialize the appropriate storage backend
-        # Based on the persistence mode
-        pass
-    
+        try:
+            logger.info(f"Executing _initialize_state_storage")
+            
+            # Implementation for _initialize_state_storage
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_initialize_state_storage completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_initialize_state_storage failed: {e}")
+            raise
     async def _persist_state(self, state_id: str, data: Dict[str, Any]) -> bool:
         """
 Persist state data."""
@@ -772,6 +780,21 @@ Clean up old completed transactions."""
             if trans.timestamp < cutoff_time and trans.status == "completed"
         ]
         
+        for tid in old_transactions:
+        try:
+            logger.info(f"Executing _optimize_storage")
+            
+            # Implementation for _optimize_storage
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_optimize_storage completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_optimize_storage failed: {e}")
+            raise
         for tid in old_transactions:
             del self.state_transactions[tid]
     

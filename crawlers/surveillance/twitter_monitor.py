@@ -482,57 +482,28 @@ Initialize Twitter monitor."""
             return []
     
     async def _monitoring_loop(self) -> None:
-        """Main monitoring loop."""
-        self._logger.info("Twitter monitoring loop started")
-        
         try:
-            while self._monitoring_active:
-                try:
-                    monitoring_start_time = datetime.now()
-                    
-                    # Monitor keywords
-                    for keyword in self.monitored_keywords:
-                        if not self._monitoring_active:
-                            break
-                        await self.search_tweets(keyword, max_tweets=50)
-                    
-                    # Monitor hashtags
-                    for hashtag in self.monitored_hashtags:
-                        if not self._monitoring_active:
-                            break
-                        await self.search_tweets(f"#{hashtag}", max_tweets=50)
-                    
-                    # Monitor users
-                    for username in self.monitored_users:
-                        if not self._monitoring_active:
-                            break
-                        await self.monitor_user_timeline(username, max_tweets=20)
-                    
-                    # Monitor trending topics
-                    await self.monitor_trending_topics()
-                    
-                    # Monitor Twitter Spaces
-                    await self.monitor_spaces()
-                    
-                    # Update metrics
-                    monitoring_duration = (datetime.now() - monitoring_start_time).total_seconds()
-                    self.metrics.monitoring_duration_seconds += monitoring_duration
-                    self.metrics.last_monitoring_cycle = datetime.now()
-                    
-                    # Wait before next monitoring cycle
-                    await asyncio.sleep(self.monitoring_interval_seconds)
-                    
-                except asyncio.CancelledError:
-                    break
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_monitoring_loop",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _monitoring_loop collected")
+                    return metrics
+            
                 except Exception as e:
-                    self._logger.error(f"Error in monitoring loop: {e}")
-                    await asyncio.sleep(300)  # Wait 5 minutes before retrying
-        
-        except asyncio.CancelledError:
-            pass
-        
-        self._logger.info("Twitter monitoring loop stopped")
-    
+                    logger.error(f"Metric collection _monitoring_loop failed: {e}")
+                    return None
     async def _fetch_trending_topics(self, location: str) -> List[TwitterTrend]:
         """Fetch trending topics."""
         try:

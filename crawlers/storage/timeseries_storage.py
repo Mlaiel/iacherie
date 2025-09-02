@@ -609,10 +609,86 @@ Initialize time-series storage provider."""
 
     # Private helper methods
     async def _create_connections(self) -> None:
-        """Create database connections."""
-        # Implementation depends on storage backend
-        pass
-
+        try:
+            logger.info(f"Executing _create_connections")
+            
+            # Implementation for _create_connections
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _create_tables")
+            
+            # Implementation for _create_tables
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_create_tables completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _setup_retention_policies")
+            
+            # Implementation for _setup_retention_policies
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_setup_retention_policies completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _start_background_tasks")
+            
+            # Implementation for _start_background_tasks
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_start_background_tasks completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_start_background_tasks failed: {e}")
+        try:
+            logger.info(f"Executing _store_series_batch")
+            
+            # Implementation for _store_series_batch
+            # TODO: Add specific business logic here
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _update_realtime_aggregations completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _update_realtime_aggregations failed: {e}")
+                    raise
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_series_batch failed: {e}")
+            raise
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_create_indexes completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_create_indexes failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"_create_tables failed: {e}")
+            raise
+            return result
+            
+        except Exception as e:
+            logger.error(f"_create_connections failed: {e}")
+            raise
     async def _create_tables(self) -> None:
         """
 Create time-series tables with proper schema."""
@@ -638,8 +714,20 @@ Start background tasks for maintenance."""
         pass
 
     async def _flush_buffer(self) -> None:
-        """
-Flush metric buffer to storage."""
+        try:
+            logger.info(f"Executing _cache_result")
+            
+            # Implementation for _cache_result
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_cache_result completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_cache_result failed: {e}")
+            raise
         if not self.metric_buffer:
             return
         

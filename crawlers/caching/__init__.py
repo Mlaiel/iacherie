@@ -382,48 +382,20 @@ __url__ = "https://github.com/Mlaiel/IA-influencer"
 
 # Compatibility and feature detection
 def get_available_features():
-    """Get list of available cache features and components."""
-    features = {
-        'core_caching': True,
-        'memory_cache': True,
-        'redis_cache': False,
-        'distributed_cache': False,
-        'compression': False,
-        'encryption': False,
-        'monitoring': True,
-        'persistence': True
-    }
-    
-    # Check Redis availability
-    try:
-        import redis
-        features['redis_cache'] = True
-    except ImportError:
-        pass
-    
-    # Check compression libraries
-    try:
-        import gzip, lz4, zstandard, brotli
-        features['compression'] = True
-    except ImportError:
-        pass
-    
-    # Check encryption libraries
-    try:
-        from cryptography.fernet import Fernet
-        features['encryption'] = True
-    except ImportError:
-        pass
-    
-    # Check distributed cache dependencies
-    try:
-        import aiohttp
-        features['distributed_cache'] = True
-    except ImportError:
-        pass
-    
-    return features
-
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_available_features_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_available_features failed: {e}")
+                    return {"status": "error", "message": str(e)}
 def check_system_requirements():
     """
 Check if system meets minimum requirements for cache system."""

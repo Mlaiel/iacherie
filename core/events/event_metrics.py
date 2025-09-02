@@ -128,10 +128,38 @@ Interface pour collecteurs de métriques"""
     
     @abstractmethod
     async def collect(self) -> Dict[str, MetricValue]:
-        """
-Collecte les métriques"""
-        pass
-    
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "collect",
+                        "value": data if data else 0,
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_definitions_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_definitions failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric collect collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection collect failed: {e}")
+                    return None
     @abstractmethod
     def get_definitions(self) -> List[MetricDefinition]:
         """
@@ -586,16 +614,20 @@ class EventMetricsManager:
         # Prometheus registry
         self.prometheus_registry = CollectorRegistry()
         self.prometheus_metrics: Dict[str, Any] = {}
-        
-        # État
-        self._collecting = False
-        self._collection_task: Optional[asyncio.Task] = None
-        
-        logger.info("EventMetricsManager initialized")
-    
-    async def start(self):
-        """Démarre la collecte de métriques"""
-        if self._collecting:
+        try:
+            logger.info(f"Executing stop")
+            
+            # Implementation for stop
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"stop completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"stop failed: {e}")
+            raise
             return
         
         # Enregistrement des collecteurs par défaut

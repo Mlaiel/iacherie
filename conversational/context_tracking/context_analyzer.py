@@ -74,7 +74,20 @@ Individual context element"""
     related_elements: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             "element_id": self.element_id,
             "context_type": self.context_type.value,
             "value": self.value,
@@ -88,6 +101,20 @@ Individual context element"""
 
 @dataclass
 class ContextInsight:
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
     """Context analysis insight"""
     insight_id: str
     insight_type: str
@@ -100,7 +127,20 @@ class ContextInsight:
     timestamp: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             "insight_id": self.insight_id,
             "insight_type": self.insight_type,
             "title": self.title,
@@ -1143,8 +1183,20 @@ class ContextAnalyzer:
             # Check for professional indicators
             professional_terms = len([e for e in elements if "professional" in str(e.value).lower() or "business" in str(e.value).lower()])
             if professional_terms > 0:
-                readiness_score += 0.4
+        try:
+            logger.info(f"Executing _initialize_patterns")
             
+            # Implementation for _initialize_patterns
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_initialize_patterns completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_initialize_patterns failed: {e}")
+            raise
             readiness_level = "high" if readiness_score > 0.7 else "medium" if readiness_score > 0.4 else "developing"
             
             return ContextInsight(

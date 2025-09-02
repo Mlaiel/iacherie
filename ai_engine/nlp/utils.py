@@ -263,8 +263,33 @@ Normalize whitespace"""
 Normalize hashtags and mentions"""
         # Convert hashtags to lowercase
         def lowercase_hashtag(match):
-            return match.group(0).lower()
-        
+        try:
+            logger.info(f"Executing lowercase_hashtag")
+            
+            # Implementation for lowercase_hashtag
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing lowercase_mention")
+            
+            # Implementation for lowercase_mention
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"lowercase_mention completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"lowercase_mention failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"lowercase_hashtag completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"lowercase_hashtag failed: {e}")
+            raise
         def lowercase_mention(match):
             return match.group(0).lower()
         

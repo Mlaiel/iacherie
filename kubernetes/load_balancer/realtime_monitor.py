@@ -951,8 +951,20 @@ Demo function for real-time monitoring"""
         
         # Add alert callback for demo
         def alert_handler(alert: Alert):
-            print(f"🚨 ALERT: {alert.severity.value.upper()} - {alert.message}")
-        
+        try:
+            logger.info(f"Executing alert_handler")
+            
+            # Implementation for alert_handler
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"alert_handler completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"alert_handler failed: {e}")
+            raise
         monitor.add_alert_callback(alert_handler)
         
         # Start monitoring

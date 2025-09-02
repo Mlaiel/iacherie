@@ -204,8 +204,46 @@ Test thread safety of real-time processing"""
         """Test processing chain performance under real-time constraints"""
         # Create processing chain with multiple stages
         def gain_stage(buffer):
-            return buffer * 0.8
-        
+        try:
+            logger.info(f"Executing gain_stage")
+            
+            # Implementation for gain_stage
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing filter_stage")
+            
+            # Implementation for filter_stage
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing limiter_stage")
+            
+            # Implementation for limiter_stage
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"limiter_stage completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"limiter_stage failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"filter_stage completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"filter_stage failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"gain_stage completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"gain_stage failed: {e}")
+            raise
         def filter_stage(buffer):
             # Simple high-pass filter
             return np.diff(buffer, prepend=buffer[0])
@@ -340,6 +378,21 @@ Test behavior when buffer pool is exhausted"""
         overflow_buffer = self.manager.allocate_buffer()
         
         # Should either return None or raise appropriate exception
+        if overflow_buffer is not None:
+        try:
+            logger.info(f"Executing producer")
+            
+            # Implementation for producer
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"producer completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"producer failed: {e}")
+            raise
         if overflow_buffer is not None:
             # If implementation creates new buffer, it should be valid
             assert len(overflow_buffer) == self.buffer_size
@@ -657,6 +710,28 @@ Test latency measurement accuracy"""
             assert abs(measured_latency - delay * 1000) < 1.0  # Convert to ms
     
     def test_statistics_calculation(self):
+        try:
+            logger.info(f"Executing alert_handler")
+            
+            # Implementation for alert_handler
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"alert_handler completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"alert_handler failed: {e}")
+            raise
+            end_time = time.perf_counter()
+            
+            measured_latency = self.monitor.record_latency(start_time, end_time)
+            
+            # Allow 1ms tolerance for measurement accuracy
+            assert abs(measured_latency - delay * 1000) < 1.0  # Convert to ms
+    
+    def test_statistics_calculation(self):
         """
 Test latency statistics calculation"""
         # Record known latency values
@@ -671,6 +746,34 @@ Test latency statistics calculation"""
         assert abs(stats['mean'] - 5.5) < 0.1
         assert abs(stats['median'] - 5.5) < 0.1
         assert stats['min'] == 1.0
+        assert stats['max'] == 10.0
+        assert abs(stats['std'] - np.std(test_latencies)) < 0.1
+        assert stats['p95'] >= 9.0  # 95th percentile
+        assert stats['p99'] >= 9.5  # 99th percentile
+    
+    def test_threshold_monitoring(self):
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "monitor_callback",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric monitor_callback collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection monitor_callback failed: {e}")
+                    return None
         assert stats['max'] == 10.0
         assert abs(stats['std'] - np.std(test_latencies)) < 0.1
         assert stats['p95'] >= 9.0  # 95th percentile

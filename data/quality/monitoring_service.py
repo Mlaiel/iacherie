@@ -187,19 +187,28 @@ class QualityMonitoringService:
         self.logger.info("Quality monitoring service started")
     
     async def stop_monitoring(self):
-        """Stop the monitoring service"""
-        
-        self.is_monitoring = False
-        
-        if self.monitoring_task:
-            self.monitoring_task.cancel()
-            try:
-                await self.monitoring_task
-            except asyncio.CancelledError:
-                pass
-        
-        self.logger.info("Quality monitoring service stopped")
-    
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "stop_monitoring",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric stop_monitoring collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection stop_monitoring failed: {e}")
+                    return None
     async def _monitoring_loop(self):
         """Main monitoring loop"""
         
@@ -240,41 +249,17 @@ class QualityMonitoringService:
             self.performance_metrics['total_assessments'] += 1
             
             self.logger.debug(f"Recorded quality assessment with score: {assessment.get('overall_score', 'unknown')}")
-            
-        except Exception as e:
-            self.logger.error(f"Error recording assessment: {str(e)}")
-    
-    def _update_metrics_from_assessment(self, assessment: Dict[str, Any]):
-        """Update metrics from a quality assessment"""
-        
-        timestamp = datetime.utcnow()
-        
-        # Quality score
-        overall_score = assessment.get('overall_score', 0)
-        self.metrics_buffer[MonitoringMetric.QUALITY_SCORE].append({
-            'timestamp': timestamp,
-            'value': overall_score,
-            'content_type': assessment.get('content_type')
-        })
-        
-        # Processing time
-        processing_time = assessment.get('processing_time', 0)
-        self.metrics_buffer[MonitoringMetric.PROCESSING_TIME].append({
-            'timestamp': timestamp,
-            'value': processing_time,
-            'content_type': assessment.get('content_type')
-        })
-        
-        # Error rate (based on assessment status)
-        error_occurred = assessment.get('status') == 'error'
-        self.metrics_buffer[MonitoringMetric.ERROR_RATE].append({
-            'timestamp': timestamp,
-            'value': 1.0 if error_occurred else 0.0,
-            'content_type': assessment.get('content_type')
-        })
-        
-        # Compliance rate
-        compliance_passed = assessment.get('compliance', {}).get('status') == 'passed'
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _update_metrics_from_assessment completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _update_metrics_from_assessment failed: {e}")
+                    raise
         self.metrics_buffer[MonitoringMetric.COMPLIANCE_RATE].append({
             'timestamp': timestamp,
             'value': 1.0 if compliance_passed else 0.0,

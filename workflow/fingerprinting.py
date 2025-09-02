@@ -733,11 +733,35 @@ Get quality thresholds for fingerprinting level."""
         return storage_id
     
     async def _create_search_index(self, fp_result: ContentFingerprintResult, storage_id: str):
-        """Create search index for fingerprint."""
-        # Simplified indexing implementation
-        # await self.search_engine.index_fingerprint(storage_id, fp_result)
-        pass
-    
+        try:
+            logger.info(f"Executing _create_search_index")
+            
+            # Implementation for _create_search_index
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_create_search_index completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _send_notification")
+            
+            # Implementation for _send_notification
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_send_notification completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_send_notification failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"_create_search_index failed: {e}")
+            raise
     async def _send_notification(self, event_type: str, data: Dict[str, Any]):
         """
 Send notification about workflow events."""

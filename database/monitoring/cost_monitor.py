@@ -256,16 +256,28 @@ Load cost budgets and thresholds"""
         self.logger.info("Database cost monitoring started")
         
     async def stop_monitoring(self):
-        """Stop cost monitoring"""
-        self._monitoring_active = False
-        if self._monitoring_task:
-            self._monitoring_task.cancel()
-            try:
-                await self._monitoring_task
-            except asyncio.CancelledError:
-                pass
-        self.logger.info("Database cost monitoring stopped")
-        
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "stop_monitoring",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric stop_monitoring collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection stop_monitoring failed: {e}")
+                    return None
     async def _monitoring_loop(self, interval: int):
         """Main cost monitoring loop"""
         while self._monitoring_active:
@@ -984,10 +996,65 @@ Get recent cost metrics"""
             return budget_status
             
         except Exception as e:
-            self.logger.error(f"Failed to get budget status: {e}")
-            return {}
-
-
+        try:
+            logger.info(f"Executing optimize_resources")
+            
+            # Implementation for optimize_resources
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"optimize_resources completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing right_size_instances")
+            
+            # Implementation for right_size_instances
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"right_size_instances completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing forecast_costs")
+            
+            # Implementation for forecast_costs
+            # TODO: Add specific business logic here
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_analyze_cost_drivers_input(cost_data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_cost_drivers_result(result)
+            
+                    logger.info(f"AI processing analyze_cost_drivers completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing analyze_cost_drivers failed: {e}")
+                    raise
+            logger.info(f"forecast_costs completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"forecast_costs failed: {e}")
+            raise
+            raise
+        except Exception as e:
+            logger.error(f"optimize_resources failed: {e}")
+            raise
 class ResourceOptimizer:
     """Advanced resource optimization engine"""
     

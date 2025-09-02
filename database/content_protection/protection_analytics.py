@@ -895,9 +895,47 @@ Analyze threat infrastructure"""
     # Storage methods (placeholders)
     
     async def _store_intelligence_report(self, report: Dict[str, Any]) -> None:
-        """Store intelligence report"""
-        pass
-    
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_store_compliance_report",
+                        "value": report if report else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _store_compliance_report collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _store_compliance_report failed: {e}")
+                    return None
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _store_intelligence_report collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _store_intelligence_report failed: {e}")
+                    return None
     async def _store_compliance_report(self, report: Dict[str, Any]) -> None:
         """
 Store compliance report"""

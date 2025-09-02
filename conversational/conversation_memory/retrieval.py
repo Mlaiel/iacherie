@@ -109,10 +109,33 @@ class RetrievalInterface(ABC):
     
     @abstractmethod
     async def search(self, query: SearchQuery) -> List[SearchResult]:
-        """
-Search conversations based on query"""
-        pass
-    
+        try:
+            logger.info(f"Executing search")
+            
+            # Implementation for search
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"search completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+                    # Request validation
+                    if not conversation_id:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_related_conversations_request(conversation_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_related_conversations failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            raise
     @abstractmethod
     async def get_related_conversations(
         self,
@@ -938,45 +961,26 @@ class ContentAwareRetriever:
         
         # Query text matching
         if query.text_query and conversation_text:
-            query_words = set(query.text_query.lower().split())
-            text_words = set(conversation_text.lower().split())
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
             
-            overlap = len(query_words.intersection(text_words))
-            if overlap > 0:
-                text_match_score = min(overlap / len(query_words), 0.2)
-                score += text_match_score
-        
-        # Context matching
-        if conversation.context and isinstance(conversation.context, ContentContext):
-            if conversation.context.content_type == content_type:
-                score += 0.2
-        
-        return min(score, 1.0)
-    
-    def _extract_content_matches(
-        self,
-        conversation: ConversationRecord,
-        content_type: str,
-        query: SearchQuery
-    ) -> List[str]:
-        """
-Extract content-specific matches"""
-        
-        matches = []
-        
-        # Content type match
-        matches.append(f"Content Type: {content_type}")
-        
-        # Context information
-        if conversation.context and isinstance(conversation.context, ContentContext):
-            if conversation.context.creation_stage:
-                matches.append(f"Stage: {conversation.context.creation_stage}")
+                    # Preprocess input
+                    processed_input = await self._preprocess__extract_content_matches_input(conversation)
             
-            if conversation.context.target_platforms:
-                platforms = ", ".join(conversation.context.target_platforms[:3])
-                matches.append(f"Platforms: {platforms}")
-        
-        # Keyword matches
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__extract_content_matches_result(result)
+            
+                    logger.info(f"AI processing _extract_content_matches completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _extract_content_matches failed: {e}")
+                    raise
         conversation_text = self._extract_conversation_text(conversation)
         if conversation_text:
             try:

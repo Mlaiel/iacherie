@@ -178,11 +178,20 @@ Initialize stage processor."""
         return True
         
     async def cleanup(self, record: DataRecord):
-        """
-Cleanup after processing."""
-        pass
-
-
+        try:
+            logger.info(f"Executing cleanup")
+            
+            # Implementation for cleanup
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"cleanup completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"cleanup failed: {e}")
+            raise
 class IngestionProcessor(PipelineStageProcessor):
     """
 Data ingestion stage processor."""
@@ -943,9 +952,20 @@ async def process_crawled_data_batch(data_items: List[Tuple[str, Any, DataFormat
         return [record_id for record_id, success in results.items() if success]
         
     finally:
-        await manager.shutdown()
-
-
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
 async def create_custom_processor(stage: PipelineStage, process_func: Callable) -> PipelineStageProcessor:
     """
 Create a custom processor from a function."""

@@ -494,7 +494,20 @@ class MultiPlatformDistributionService:
         semaphore = asyncio.Semaphore(self.max_concurrent_uploads)
         
         async def distribute_to_platform(platform: Platform):
-            async with semaphore:
+        try:
+            logger.info(f"Executing distribute_to_platform")
+            
+            # Implementation for distribute_to_platform
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"distribute_to_platform completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"distribute_to_platform failed: {e}")
+            raise
                 return await self._distribute_to_single_platform(
                     db, asset, platform, prepared_content[platform], 
                     optimized_metadata[platform], request

@@ -320,9 +320,20 @@ Increment counter metric for monitoring agent performance"""
     
     @abstractmethod
     async def _load_models_and_resources(self):
-        """Load AI models and other resources specific to the agent"""
-        pass
-    
+        try:
+            logger.info(f"Executing _load_models_and_resources")
+            
+            # Implementation for _load_models_and_resources
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_load_models_and_resources completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_load_models_and_resources failed: {e}")
+            raise
     @abstractmethod
     def get_required_config_keys(self) -> List[str]:
         """
@@ -496,7 +507,20 @@ Comprehensive request validation"""
         
         # User/Tenant ID validation
         for id_field in ['user_id', 'tenant_id']:
-            if id_field in data:
+        try:
+            logger.info(f"Executing _custom_data_validation")
+            
+            # Implementation for _custom_data_validation
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_custom_data_validation completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_custom_data_validation failed: {e}")
+            raise
                 id_value = str(data[id_field])
                 if not id_value.strip():
                     raise ValidationError(f"{id_field} cannot be empty")
@@ -621,6 +645,26 @@ Get comprehensive agent health status"""
         """Graceful shutdown with request completion"""
         logger.info(f"Initiating graceful shutdown for agent {self.agent_id}")
         
+        self.shutdown_requested = True
+        self.status = AgentStatus.SHUTDOWN
+        
+        # Wait for active requests to complete
+        start_time = time.time()
+        while self._active_requests and (time.time() - start_time) < timeout_seconds:
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
         self.shutdown_requested = True
         self.status = AgentStatus.SHUTDOWN
         

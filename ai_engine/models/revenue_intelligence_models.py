@@ -246,8 +246,20 @@ Initialize all prediction models"""
                 self.network = nn.Sequential(*layers)
                 
             def forward(self, x):
-                return self.network(x)
-        
+        try:
+            logger.info(f"Executing forward")
+            
+            # Implementation for forward
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"forward completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"forward failed: {e}")
+            raise
         return PricingOptimizerNet()
     
     async def predict_revenue(
@@ -687,13 +699,45 @@ class IntelligentContentRecommendationEngine(BaseAIModel):
 Create content embedding network"""
         class ContentEmbedder(nn.Module):
             def __init__(self, input_dim=100, embedding_dim=128):
-                super().__init__()
+        try:
+            logger.info(f"Executing forward")
+            
+            # Implementation for forward
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"forward completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"forward failed: {e}")
+            raise
                 self.embedder = nn.Sequential(
                     nn.Linear(input_dim, 256),
                     nn.ReLU(),
                     nn.Dropout(0.3),
                     nn.Linear(256, 128),
                     nn.ReLU(),
+                    nn.Linear(128, embedding_dim),
+                    nn.Tanh()
+                )
+            
+            def forward(self, x):
+        try:
+            logger.info(f"Executing forward")
+            
+            # Implementation for forward
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"forward completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"forward failed: {e}")
+            raise
                     nn.Linear(128, embedding_dim),
                     nn.Tanh()
                 )

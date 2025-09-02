@@ -664,10 +664,20 @@ Analyze content quality using AI-powered assessment"""
         }
     
     async def _get_enhancement_profile(self, profile_id: str) -> EnhancementProfile:
-        """Get enhancement profile by ID"""
-        # Implementation for retrieving enhancement profile
-        pass
-    
+        try:
+                    # Request validation
+                    if not profile_id:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_enhancement_profile_request(profile_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_enhancement_profile failed: {e}")
+                    return {"status": "error", "message": str(e)}
     def _get_default_enhancement_profile(self, content_format: ContentFormat) -> EnhancementProfile:
         """
 Get default enhancement profile for content format"""

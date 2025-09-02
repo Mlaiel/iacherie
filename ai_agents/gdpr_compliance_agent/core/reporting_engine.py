@@ -1064,8 +1064,166 @@ Get list of data sources used in report"""
     # More placeholder helper methods for completeness
     
     async def _get_submission_requirements(self, authority: str, submission_type: str) -> Dict[str, Any]:
-        return {"deadline": "2024-03-31", "method": "online_portal"}
-    
+        try:
+                    # Request validation
+                    if not authority:
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_collect_regulatory_data",
+                        "value": submission_config if submission_config else 0,
+        try:
+            logger.info(f"Executing _create_digital_signature")
+            
+            # Implementation for _create_digital_signature
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _prepare_submission_attachments")
+            
+            # Implementation for _prepare_submission_attachments
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_prepare_submission_attachments completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _identify_strategic_priorities")
+            
+            # Implementation for _identify_strategic_priorities
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _identify_key_achievements")
+            
+            # Implementation for _identify_key_achievements
+            # TODO: Add specific business logic here
+        try:
+        try:
+            logger.info(f"Executing _assess_resource_requirements")
+            
+            # Implementation for _assess_resource_requirements
+            # TODO: Add specific business logic here
+        try:
+        try:
+                    # Request validation
+                    if not compliance_metrics:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_next_quarter_priorities_request(compliance_metrics)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_next_quarter_priorities failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_assess_regulatory_outlook completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_assess_regulatory_outlook failed: {e}")
+        try:
+            logger.info(f"Executing _create_rights_distribution_chart")
+            
+            # Implementation for _create_rights_distribution_chart
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _create_trend_chart")
+            
+            # Implementation for _create_trend_chart
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_create_trend_chart completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_create_trend_chart failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_create_rights_distribution_chart completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_create_rights_distribution_chart failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_assess_resource_requirements completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_assess_resource_requirements failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_identify_critical_issues completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_identify_critical_issues failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_identify_key_achievements completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_identify_key_achievements failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_identify_strategic_priorities completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_identify_strategic_priorities failed: {e}")
+            raise
+            logger.info(f"_prepare_submission_attachments completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_prepare_submission_attachments failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_create_digital_signature completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_create_digital_signature failed: {e}")
+            raise
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _collect_regulatory_data collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _collect_regulatory_data failed: {e}")
+                    return None
+                    result = await self._handle__get_submission_requirements_request(authority)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_submission_requirements failed: {e}")
+                    return {"status": "error", "message": str(e)}
     async def _collect_regulatory_data(self, submission_config: Dict[str, Any]) -> Dict[str, Any]:
         return {"processing_activities": [], "data_categories": []}
     

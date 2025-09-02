@@ -677,17 +677,20 @@ Process payment through Wise."""
     async def _record_revenue_transaction(
         self,
         user_id: str,
-        gross_revenue: Decimal,
-        platform_fee: Decimal,
-        net_revenue: Decimal,
-        payment_method: PaymentMethod,
-        transaction_id: str
-    ):
-        """
-Record revenue transaction in database."""
-        # Database transaction recording
-        pass
-    
+        try:
+            logger.info(f"Executing _record_revenue_transaction")
+            
+            # Implementation for _record_revenue_transaction
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_record_revenue_transaction completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_record_revenue_transaction failed: {e}")
+            raise
     @performance_monitor
     async def get_revenue_analytics(
         self, 

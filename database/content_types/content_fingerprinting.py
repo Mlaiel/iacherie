@@ -159,8 +159,20 @@ Database model for content fingerprints"""
     is_verified = Column(Boolean, nullable=False, default=False)
     
     def __repr__(self) -> str:
-        return f"<ContentFingerprint(id={self.id}, type={self.content_type}, algorithm={self.algorithm_used})>"
-
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
 class FingerprintMatch(Base):
     """Database model for fingerprint matches and similarities"""
     __tablename__ = "fingerprint_matches"
@@ -187,6 +199,31 @@ class FingerprintMatch(Base):
     # Status
     match_status = Column(String(20), nullable=False, default='pending')  # pending, confirmed, false_positive, resolved
     is_violation = Column(Boolean, nullable=False, default=False)
+    action_taken = Column(String(50), nullable=True)
+    
+    # Relationships
+    source_fingerprint = relationship("ContentFingerprint", foreign_keys=[source_fingerprint_id])
+    target_fingerprint = relationship("ContentFingerprint", foreign_keys=[target_fingerprint_id])
+    
+    # Timestamps
+    created_at = Column(DateTime(timezone=True), nullable=False, default=datetime.utcnow)
+    updated_at = Column(DateTime(timezone=True), nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    def __repr__(self) -> str:
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     action_taken = Column(String(50), nullable=True)
     
     # Relationships

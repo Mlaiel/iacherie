@@ -96,8 +96,20 @@ class ExcelExporter:
     """
     
     def __init__(self):
-        self.logger = logging.getLogger(__name__)
-        
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     async def export_to_excel(
         self,
         data: Dict[str, Any],
@@ -370,7 +382,20 @@ class ExcelExporter:
         copyright_text = "(c) 2025 Fahed Mlaiel - IA Influencer Agent. All rights reserved. Email: mlaiel@live.de"
         
         for ws in wb.worksheets:
-            last_row = ws.max_row + 2
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
             ws[f'A{last_row}'] = copyright_text
             ws[f'A{last_row}'].font = Font(size=8, color="7F8C8D", italic=True)
 
@@ -599,6 +624,22 @@ class PDFReporter:
                 
             kpis.append({
                 'name': kpi.get('name', 'N/A'),
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+            kpis.append({
+                'name': kpi.get('name', 'N/A'),
                 'value': kpi.get('value', 0),
                 'trend_class': trend_class,
                 'trend_text': trend_text
@@ -646,7 +687,20 @@ class APIExporter:
             import aiohttp
             
             headers = {'Content-Type': 'application/json'}
-            if api_key:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
                 headers['Authorization'] = f'Bearer {api_key}'
                 
             # Prepare export payload

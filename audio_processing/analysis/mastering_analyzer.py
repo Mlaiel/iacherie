@@ -413,8 +413,26 @@ class MasteringAnalyzer:
                               target_standard: MasteringStandard) -> LoudnessAnalysis:
         """Analyze loudness characteristics according to professional standards"""
         def analyze():
-            try:
-                # Convert to mono for integrated loudness measurement
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_analyze_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_result(result)
+            
+                    logger.info(f"AI processing analyze completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing analyze failed: {e}")
+                    raise
                 mono_audio = np.mean(audio_stereo, axis=0)
                 
                 # Integrated loudness (LUFS) - simplified implementation
@@ -476,6 +494,33 @@ class MasteringAnalyzer:
                 )
                 
             except Exception as e:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_analyze_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_result(result)
+            
+                    logger.info(f"AI processing analyze completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing analyze failed: {e}")
+                    raise
+                    rms_db=float(rms_db),
+                    crest_factor=float(crest_factor),
+                    compliance_ebu_r128=compliance_ebu,
+                    compliance_streaming=streaming_compliance
+                )
+                
+            except Exception as e:
                 self.logger.error(f"Loudness analysis failed: {str(e)}")
                 return self._default_loudness_analysis()
         
@@ -524,9 +569,118 @@ class MasteringAnalyzer:
                 )
                 
             except Exception as e:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_analyze_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_result(result)
+            
+                    logger.info(f"AI processing analyze completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing analyze failed: {e}")
+                    raise
+                dr_value = self._calculate_dr_meter_value(audio_stereo, sample_rate)
+                
+                # Peak-to-RMS ratio
+                peak_level = np.max(np.abs(mono_audio))
+                rms_level = np.sqrt(np.mean(mono_audio**2))
+                peak_to_rms_ratio = 20 * np.log10((peak_level / (rms_level + 1e-10)) + 1e-10)
+                
+                # Envelope variation analysis
+                envelope = np.abs(scipy.signal.hilbert(mono_audio))
+                envelope_smooth = scipy.signal.savgol_filter(envelope, 
+                                                           min(1001, len(envelope)//10), 3)
+                envelope_variation = np.std(envelope_smooth) / (np.mean(envelope_smooth) + 1e-10)
+                
+                # Transient preservation
+                transient_preservation = self._assess_transient_preservation(mono_audio, sample_rate)
+                
+                # Compression ratio estimation
+                compression_ratio = self._estimate_compression_ratio(mono_audio, sample_rate)
+                
+                # Artifact detection
+                limiting_artifacts = self._detect_limiting_artifacts(mono_audio, sample_rate)
+                pumping_detected = self._detect_pumping_artifacts(mono_audio, sample_rate)
+                
+                return DynamicRangeAnalysis(
+                    dr_value=float(dr_value),
+                    peak_to_rms_ratio=float(peak_to_rms_ratio),
+                    envelope_variation=float(envelope_variation),
+                    transient_preservation=float(transient_preservation),
+                    compression_ratio_estimate=float(compression_ratio),
+                    limiting_artifacts=limiting_artifacts,
+                    pumping_detected=pumping_detected
+                )
+                
+            except Exception as e:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_analyze_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_result(result)
+            
+                    logger.info(f"AI processing analyze completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing analyze failed: {e}")
+                    raise
+                compression_ratio = self._estimate_compression_ratio(mono_audio, sample_rate)
+                
+                # Artifact detection
+                limiting_artifacts = self._detect_limiting_artifacts(mono_audio, sample_rate)
+                pumping_detected = self._detect_pumping_artifacts(mono_audio, sample_rate)
+                
+                return DynamicRangeAnalysis(
+                    dr_value=float(dr_value),
+                    peak_to_rms_ratio=float(peak_to_rms_ratio),
+                    envelope_variation=float(envelope_variation),
+                    transient_preservation=float(transient_preservation),
+                    compression_ratio_estimate=float(compression_ratio),
+                    limiting_artifacts=limiting_artifacts,
+                    pumping_detected=pumping_detected
+                )
+                
+            except Exception as e:
                 self.logger.error(f"Dynamic range analysis failed: {str(e)}")
-                return self._default_dynamic_analysis()
-        
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_analyze_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_result(result)
+            
+                    logger.info(f"AI processing analyze completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing analyze failed: {e}")
+                    raise
         return await asyncio.get_event_loop().run_in_executor(self.executor, analyze)
     
     async def _analyze_frequency_response(self,
@@ -553,6 +707,27 @@ class MasteringAnalyzer:
                 
                 # Frequency balance assessment
                 ideal_balance = {
+                    'sub_bass': 0.05, 'bass': 0.15, 'low_midrange': 0.20,
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_analyze_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_result(result)
+            
+                    logger.info(f"AI processing analyze completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing analyze failed: {e}")
+                    raise
                     'sub_bass': 0.05, 'bass': 0.15, 'low_midrange': 0.20,
                     'midrange': 0.25, 'upper_midrange': 0.20, 'presence': 0.10,
                     'brilliance': 0.05

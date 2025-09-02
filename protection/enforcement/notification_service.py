@@ -162,15 +162,20 @@ class EmailProvider:
 Email notification provider"""
     
     def __init__(self, config: Dict[str, Any]):
-        self.config = config
-        self.smtp_host = config.get('smtp_host', 'localhost')
-        self.smtp_port = config.get('smtp_port', 587)
-        self.smtp_username = config.get('smtp_username', '')
-        self.smtp_password = config.get('smtp_password', '')
-        self.smtp_use_tls = config.get('smtp_use_tls', True)
-        self.from_email = config.get('from_email', 'noreply@example.com')
-        self.from_name = config.get('from_name', 'IA Influencer Agent')
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     async def send_email(self, message: NotificationMessage) -> bool:
         """
 Send email notification"""

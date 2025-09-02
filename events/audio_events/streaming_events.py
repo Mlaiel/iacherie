@@ -82,7 +82,20 @@ class AudioStreamStartedEvent(BaseEvent):
     max_concurrent_listeners: int = 1000
     
     def __post_init__(self):
-        super().__init__(
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             event_type="audio.streaming.started",
             event_category=EventCategory.STREAMING,
             priority=EventPriority.HIGH,
@@ -112,7 +125,20 @@ class AudioStreamEndedEvent(BaseEvent):
     stream_duration: float
     total_listeners: int
     peak_concurrent_listeners: int
-    average_concurrent_listeners: float
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     total_data_transmitted: int  # bytes
     average_bitrate: float
     buffer_health: Dict[str, float]
@@ -144,6 +170,22 @@ class AudioStreamEndedEvent(BaseEvent):
 
 @dataclass
 class AudioStreamQualityChangedEvent(BaseEvent):
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
+@dataclass
+class AudioStreamQualityChangedEvent(BaseEvent):
     """
     Event triggered when streaming quality is dynamically adjusted.
     
@@ -165,7 +207,20 @@ class AudioStreamQualityChangedEvent(BaseEvent):
     quality_stability_score: float = 1.0
     
     def __post_init__(self):
-        super().__init__(
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             event_type="audio.streaming.quality_changed",
             event_category=EventCategory.STREAMING,
             priority=EventPriority.MEDIUM,
@@ -195,7 +250,20 @@ class AudioLiveStreamStartedEvent(BaseEvent):
     streaming_platforms: List[StreamingPlatform]
     stream_urls: Dict[str, str]  # platform -> url
     scheduled_start_time: datetime
-    actual_start_time: datetime
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     estimated_duration: Optional[float] = None
     stream_category: str = "music"
     is_monetized: bool = False
@@ -225,6 +293,22 @@ class AudioLiveStreamStartedEvent(BaseEvent):
 
 @dataclass
 class AudioLiveStreamEndedEvent(BaseEvent):
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
+@dataclass
+class AudioLiveStreamEndedEvent(BaseEvent):
     """
     Event triggered when a live audio broadcast ends.
     
@@ -244,7 +328,20 @@ class AudioLiveStreamEndedEvent(BaseEvent):
     replay_views: int = 0
     platform_performance: Dict[str, Dict[str, Any]] = field(default_factory=dict)
     technical_issues: List[str] = field(default_factory=list)
-    audience_engagement_score: float = 0.0
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     content_quality_score: float = 0.0
     recording_saved: bool = False
     recording_file_id: Optional[UUID] = None
@@ -269,7 +366,20 @@ class AudioLiveStreamEndedEvent(BaseEvent):
 
 @dataclass
 class AudioStreamListenerJoinedEvent(BaseEvent):
-    """
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     Event triggered when a listener joins an audio stream.
     
     Tracks audience engagement and listener behavior.
@@ -297,7 +407,20 @@ class AudioStreamListenerJoinedEvent(BaseEvent):
                 "stream_id": str(self.stream_id),
                 "listener_id": str(self.listener_id),
                 "session_id": str(self.listener_session_id),
-                "location": self.listener_location,
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
                 "device": self.device_type,
                 "tier": self.listener_tier,
                 "returning": self.is_returning_listener
@@ -324,7 +447,20 @@ class AudioStreamListenerLeftEvent(BaseEvent):
     engagement_score: float
     skip_count: int = 0
     replay_count: int = 0
-    interaction_count: int = 0
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     feedback_provided: bool = False
     
     def __post_init__(self):

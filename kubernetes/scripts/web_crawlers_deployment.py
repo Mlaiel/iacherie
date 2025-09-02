@@ -168,7 +168,20 @@ class CrawlerConfig:
     enabled: bool = True
     
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             'crawler_id': self.crawler_id,
             'crawler_name': self.crawler_name,
             'crawler_type': self.crawler_type.value,
@@ -197,6 +210,22 @@ class CrawlerConfig:
 
 @dataclass
 class ProxyConfig:
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
+@dataclass
+class ProxyConfig:
     """Proxy configuration for anti-detection"""
     proxy_provider: str
     proxy_list: List[str] = field(default_factory=list)
@@ -211,7 +240,20 @@ class ProxyConfig:
             'proxy_provider': self.proxy_provider,
             'proxy_list': self.proxy_list,
             'rotation_interval': self.rotation_interval,
-            'authentication_required': self.authentication_required,
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             'username': self.username,
             'password': self.password,
             'proxy_type': self.proxy_type
@@ -492,40 +534,20 @@ Initialize the Web Crawlers Deployment Manager"""
         
         configmap_manifest = {
             "apiVersion": "v1",
-            "kind": "ConfigMap",
-            "metadata": {
-                "name": "crawler-configs",
-                "namespace": "crawler-system"
-            },
-            "data": crawler_config_data
-        }
-        self._create_or_update_configmap(configmap_manifest)
-        
-        # Proxy configuration
-        proxy_config_data = {}
-        for proxy_provider, config in self.proxy_configs.items():
-            proxy_config_data[f"{proxy_provider}.yaml"] = yaml.dump(config.to_dict())
-        
-        proxy_configmap_manifest = {
-            "apiVersion": "v1",
-            "kind": "ConfigMap",
-            "metadata": {
-                "name": "proxy-configs",
-                "namespace": "crawler-system"
-            },
-            "data": proxy_config_data
-        }
-        self._create_or_update_configmap(proxy_configmap_manifest)
-        
-        # User agents configuration
-        user_agents_configmap = {
-            "apiVersion": "v1",
-            "kind": "ConfigMap",
-            "metadata": {
-                "name": "user-agents",
-                "namespace": "crawler-system"
-            },
-            "data": {
+        try:
+            logger.info(f"Executing _create_crawler_secrets")
+            
+            # Implementation for _create_crawler_secrets
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_create_crawler_secrets completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_create_crawler_secrets failed: {e}")
+            raise
                 "user-agents.json": json.dumps(self.user_agents)
             }
         }

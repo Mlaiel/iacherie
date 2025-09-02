@@ -826,10 +826,39 @@ class UltraAdvancedProtectionAdvisor:
         return None
     
     async def _save_protection_profile(self, profile: ProtectionProfile):
-        """Save protection profile"""
-        # Implementation would save to database
-        pass
-    
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _save_protection_profile completed")
+                        return True
+                
+                except Exception as e:
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_initialize_creator_monitoring",
+                        "value": profile if profile else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _initialize_creator_monitoring collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _initialize_creator_monitoring failed: {e}")
+                    return None
+                    logger.error(f"Database operation _save_protection_profile failed: {e}")
+                    raise
     async def _initialize_creator_monitoring(self, profile: ProtectionProfile):
         """
 Initialize monitoring for creator"""

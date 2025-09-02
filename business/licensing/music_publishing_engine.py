@@ -612,11 +612,26 @@ class MusicPublishingEngine:
         pass
     
     async def _analyze_song_commercial_potential(self, song_id: str) -> Dict[str, Any]:
-        """
-Analyze commercial potential of song"""
-        # Implementation for commercial analysis
-        pass
-    
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__analyze_song_commercial_potential_input(song_id)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__analyze_song_commercial_potential_result(result)
+            
+                    logger.info(f"AI processing _analyze_song_commercial_potential completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _analyze_song_commercial_potential failed: {e}")
+                    raise
     async def _generate_intelligent_publishing_terms(
         self, 
         request: PublishingAgreementRequest, 

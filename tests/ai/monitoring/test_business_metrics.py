@@ -1724,8 +1724,20 @@ Test comprehensive revenue tracking and calculation."""
         streaming_metrics = []
         
         async def metrics_callback(metric_data):
-            streaming_metrics.append(metric_data)
-        
+        try:
+            logger.info(f"Executing metrics_callback")
+            
+            # Implementation for metrics_callback
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"metrics_callback completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"metrics_callback failed: {e}")
+            raise
         await metrics_collector.start_real_time_streaming(
             callback=metrics_callback,
             interval_seconds=0.1,

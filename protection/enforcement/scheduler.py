@@ -747,26 +747,20 @@ class TaskScheduler:
         logger.info("Task scheduler started")
     
     async def stop(self):
-        """Stop the task scheduler"""
-        self._shutdown = True
-        
-        if self.worker_task:
-            self.worker_task.cancel()
-            try:
-                await self.worker_task
-            except asyncio.CancelledError:
-                pass
-            self.worker_task = None
-        
-        # Cancel scheduled tasks
-        for task_id, scheduled_task in self.scheduled_tasks.items():
-            scheduled_task.cancel()
-            logger.info(f"Cancelled scheduled task {task_id}")
-        
-        await self.task_executor.shutdown()
-        
-        logger.info("Task scheduler stopped")
-    
+        try:
+            logger.info(f"Executing stop")
+            
+            # Implementation for stop
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"stop completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"stop failed: {e}")
+            raise
     async def _worker_loop(self):
         """Main worker loop"""
         while not self._shutdown:

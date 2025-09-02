@@ -129,7 +129,20 @@ class PerformanceMetric:
     confidence: float = 1.0
     
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             "metric_id": self.metric_id,
             "metric_type": self.metric_type.value,
             "value": self.value,
@@ -147,7 +160,20 @@ class PerformanceAlert:
     """Performance alert for anomalies or thresholds"""
     alert_id: str
     severity: AlertSeverity
-    metric_type: PerformanceMetricType
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
     alert_type: str
     message: str
     current_value: float
@@ -170,7 +196,20 @@ class PerformanceAlert:
             "expected_range": list(self.expected_range),
             "platform": self.platform.value if self.platform else None,
             "content_id": self.content_id,
-            "suggested_actions": self.suggested_actions,
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             "auto_resolved": self.auto_resolved,
             "created_at": self.created_at.isoformat(),
             "resolved_at": self.resolved_at.isoformat() if self.resolved_at else None
@@ -192,7 +231,20 @@ class OptimizationRecommendation:
     resource_requirements: Dict[str, Any]
     risk_assessment: Dict[str, float]
     A_B_test_candidate: bool = False
-    created_at: datetime = field(default_factory=datetime.utcnow)
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
     status: str = "pending"
     
     def to_dict(self) -> Dict[str, Any]:
@@ -214,6 +266,22 @@ class OptimizationRecommendation:
         }
 
 
+@dataclass
+class AutoOptimizationResult:
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
 @dataclass
 class AutoOptimizationResult:
     """Result of automatic optimization action"""

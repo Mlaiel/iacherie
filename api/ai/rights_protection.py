@@ -217,7 +217,20 @@ Generate multiple secondary hashes for robustness"""
             return None
         
         def compute_text_fp():
-            try:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_compute_text_fp_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler compute_text_fp failed: {e}")
+                    return {"status": "error", "message": str(e)}
                 text = content_data.decode('utf-8')
                 # Simulate semantic text fingerprinting
                 text_features = {

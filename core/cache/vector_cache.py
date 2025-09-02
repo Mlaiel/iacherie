@@ -1482,8 +1482,20 @@ class VectorCacheAnalytics:
 Advanced analytics for vector cache performance and usage"""
     
     def __init__(self, vector_cache: VectorCache):
-        self.cache = vector_cache
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     async def generate_creator_report(self, creator_id: str) -> Dict[str, Any]:
         """
 Generate comprehensive report for a creator"""

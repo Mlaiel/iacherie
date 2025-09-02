@@ -151,8 +151,20 @@ class UserPreferences(Base):
     privacy_settings = relationship("PrivacySettings", back_populates="preferences", uselist=False)
 
     def __repr__(self):
-        return f"<UserPreferences({self.user_id})>"
-    
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     def get_preference(self, key: str, default: Any = None) -> Any:
         """Récupère une préférence spécifique."""
         return getattr(self, key, default)
@@ -220,6 +232,31 @@ class NotificationSettings(Base):
     preferences = relationship("UserPreferences", back_populates="notification_settings")
 
     def __repr__(self):
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
+    email_digest_enabled = Column(Boolean, default=True)
+    digest_frequency = Column(Enum(NotificationFrequency), default=NotificationFrequency.DAILY)
+    
+    # Timestamps
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    # Relations
+    preferences = relationship("UserPreferences", back_populates="notification_settings")
+
+    def __repr__(self):
         return f"<NotificationSettings({self.user_preferences_id})>"
 
 
@@ -255,6 +292,98 @@ class PrivacySettings(Base):
     content_filtering_enabled = Column(Boolean, default=True)
     explicit_content_allowed = Column(Boolean, default=False)
     auto_moderation = Column(Boolean, default=True)
+    comment_moderation = Column(Boolean, default=False)
+    
+    # Tracking et cookies
+    analytics_cookies = Column(Boolean, default=True)
+    marketing_cookies = Column(Boolean, default=False)
+    functional_cookies = Column(Boolean, default=True)
+    performance_tracking = Column(Boolean, default=True)
+    
+    # GDPR et conformité
+    data_processing_consent = Column(Boolean, default=False)
+    marketing_consent = Column(Boolean, default=False)
+    data_retention_days = Column(Integer, default=365)
+    export_data_format = Column(String(20), default="json")
+    
+    # Blocages et restrictions
+    blocked_users = Column(JSON)  # Liste des utilisateurs bloqués
+    blocked_domains = Column(JSON)  # Domaines bloqués
+    restricted_features = Column(JSON)  # Fonctionnalités restreintes
+    
+    # Timestamps
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    consent_updated_at = Column(DateTime)
+    
+    # Relations
+    preferences = relationship("UserPreferences", back_populates="privacy_settings")
+
+    def __repr__(self):
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
+    login_alerts = Column(Boolean, default=True)
+    device_management = Column(Boolean, default=True)
+    session_timeout_minutes = Column(Integer, default=120)
+    
+    # Contenu et modération
+    content_filtering_enabled = Column(Boolean, default=True)
+    explicit_content_allowed = Column(Boolean, default=False)
+    auto_moderation = Column(Boolean, default=True)
+    comment_moderation = Column(Boolean, default=False)
+    
+    # Tracking et cookies
+    analytics_cookies = Column(Boolean, default=True)
+    marketing_cookies = Column(Boolean, default=False)
+    functional_cookies = Column(Boolean, default=True)
+    performance_tracking = Column(Boolean, default=True)
+    
+    # GDPR et conformité
+    data_processing_consent = Column(Boolean, default=False)
+    marketing_consent = Column(Boolean, default=False)
+    data_retention_days = Column(Integer, default=365)
+    export_data_format = Column(String(20), default="json")
+    
+    # Blocages et restrictions
+    blocked_users = Column(JSON)  # Liste des utilisateurs bloqués
+    blocked_domains = Column(JSON)  # Domaines bloqués
+    restricted_features = Column(JSON)  # Fonctionnalités restreintes
+    
+    # Timestamps
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    consent_updated_at = Column(DateTime)
+    
+    # Relations
+    preferences = relationship("UserPreferences", back_populates="privacy_settings")
+
+    def __repr__(self):
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     comment_moderation = Column(Boolean, default=False)
     
     # Tracking et cookies

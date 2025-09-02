@@ -76,7 +76,20 @@ class HealthMonitoringConfig:
     alert_thresholds: Dict[str, Any] = None
     
     def __post_init__(self):
-        if self.alert_thresholds is None:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             self.alert_thresholds = {
                 "response_time_ms": 2000,
                 "cpu_threshold": 75,
@@ -222,11 +235,28 @@ class HealthMonitoringOrchestrator:
         )
 
     async def stop_monitoring(self):
-        """Stop continuous health monitoring"""
-        if not self._is_running:
-            self.logger.warning("Health monitoring is not running")
-            return
-        
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "stop_monitoring",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric stop_monitoring collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection stop_monitoring failed: {e}")
+                    return None
         self._is_running = False
         
         if self._monitoring_task:

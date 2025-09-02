@@ -366,7 +366,17 @@ Initialize the business intelligence engine."""
              Input("interval-component", "n_intervals")]
         )
         def update_dashboard_content(active_tab, n):
-            if active_tab == "overview":
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation update_dashboard_content completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation update_dashboard_content failed: {e}")
+                    raise
                 return self._create_overview_layout()
             elif active_tab == "creators":
                 return self._create_creators_layout()

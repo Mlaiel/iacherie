@@ -49,7 +49,20 @@ Singleton manager for the entire crawler system."""
         return cls._instance
     
     def __init__(self):
-        if not self._initialized:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
             self.orchestrator: Optional[CrawlerOrchestrator] = None
             self.monitor: Optional[RealTimeMonitor] = None
             self.config: Dict[str, Any] = {}

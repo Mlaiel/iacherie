@@ -78,7 +78,20 @@ Chorus processor parameters"""
     low_cut_hz: float = 100.0
     
     def __post_init__(self):
-        if self.voices is None:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             self.voices = [
                 ChorusVoice(delay_ms=12.0, depth_ms=3.0, rate_hz=0.8, phase_deg=0.0),
                 ChorusVoice(delay_ms=18.0, depth_ms=2.5, rate_hz=1.2, phase_deg=120.0),
@@ -652,35 +665,20 @@ Reset processor state"""
         
         # Reset LFOs
         for lfo in self.lfos:
-            lfo.reset()
-        
-        # Reset feedback delays
-        self.feedback_delay_left.buffer.fill(0)
-        self.feedback_delay_right.buffer.fill(0)
-        
-        # Reset counters
-        self.processed_samples = 0
-        
-        self.logger.info("Chorus processor reset")
-    
-    def __del__(self):
-        """Cleanup"""
-        if hasattr(self, 'processing_lock'):
-            with self.processing_lock:
-                pass  # Ensure any ongoing processing completes
-        self.sample_rate = sample_rate
-        
-        # Chorus parameters
-        self.rate = 0.5  # Hz
-        self.depth = 0.02  # modulation depth (0-1)
-        self.delay_time = 0.02  # base delay in seconds
-        self.feedback = 0.2  # feedback amount
-        self.wet_level = 0.5
-        self.dry_level = 0.5
-        self.voices = 3  # number of chorus voices
-        self.modulation_type = ModulationType.SINE
-        
-        # Initialize delay buffer
+        try:
+            logger.info(f"Executing __del__")
+            
+            # Implementation for __del__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__del__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__del__ failed: {e}")
+            raise
         max_delay_samples = int(0.1 * sample_rate)  # 100ms max delay
         self.delay_buffer = np.zeros(max_delay_samples)
         self.buffer_index = 0

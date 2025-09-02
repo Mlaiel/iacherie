@@ -1942,11 +1942,20 @@ Create comprehensive language profile for user"""
             logger.error(f"Failed to cache language profile: {e}")
     
     async def _store_language_profile_db(self, profile: LanguageProfile):
-        """Store language profile in database"""
-        # This would interact with the database
-        # Implementation depends on your database schema
-        pass
-    
+        try:
+            logger.info(f"Executing _store_language_profile_db")
+            
+            # Implementation for _store_language_profile_db
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_language_profile_db completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_language_profile_db failed: {e}")
+            raise
     async def _load_language_profile_db(self, user_id: str) -> Optional[LanguageProfile]:
         """
 Load language profile from database"""

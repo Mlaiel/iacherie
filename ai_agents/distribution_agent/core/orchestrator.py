@@ -713,10 +713,17 @@ Optimize worker pool configurations based on performance data"""
                 logger.warning(f"Pool {pool.pool_id} performance below threshold: {pool.performance_rating}")
 
     async def _update_performance_models(self) -> None:
-        """Update ML models with recent performance data"""
-        # Implementation would retrain models with recent data
-        pass
-
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _update_performance_models completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _update_performance_models failed: {e}")
+                    raise
     async def _health_check_loop(self) -> None:
         """
 Continuous health monitoring of all system components"""

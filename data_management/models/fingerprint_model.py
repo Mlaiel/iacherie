@@ -131,7 +131,20 @@ class AudioFingerprint:
     pitch_confidence: Optional[float] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             "chromaprint_hash": self.chromaprint_hash,
             "chromaprint_duration": self.chromaprint_duration,
             "mfcc_features": self.mfcc_features,
@@ -177,6 +190,20 @@ class VideoFingerprint:
     
     # Video characteristics
     frame_rate: Optional[float] = None
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
     resolution: Optional[Tuple[int, int]] = None
     aspect_ratio: Optional[float] = None
     duration: Optional[float] = None
@@ -232,6 +259,21 @@ class ImageFingerprint:
     
     # Texture analysis
     lbp_histogram: Optional[List[float]] = None
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
+    lbp_histogram: Optional[List[float]] = None
     glcm_features: Optional[List[float]] = None
     gabor_features: Optional[List[float]] = None
     
@@ -284,8 +326,20 @@ class ImageFingerprint:
             "detected_objects": self.detected_objects,
             "face_embeddings": self.face_embeddings,
             "text_ocr": self.text_ocr
-        }
-
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
 @dataclass
 class TextFingerprint:
     """Empreinte digitale texte spécialisée"""

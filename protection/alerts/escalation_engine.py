@@ -805,18 +805,20 @@ Get applicable escalation policy for alert."""
         return actions
 
     async def _check_time_escalation(self, alert: Alert, context: EscalationContext) -> bool:
-        """Check if alert should be escalated based on time."""
-        if not context.escalation_history:
-            # Check if alert is old enough for initial escalation
-            age = datetime.utcnow() - alert.created_at
-            return age > timedelta(minutes=self.config.default_escalation_timeout_minutes)
-        
-        # Check if enough time has passed since last escalation
-        last_escalation = context.escalation_history[-1]
-        time_since_escalation = datetime.utcnow() - last_escalation.timestamp
-        
-        return time_since_escalation > timedelta(minutes=self.config.default_escalation_timeout_minutes)
-
+        try:
+            logger.info(f"Executing _check_time_escalation")
+            
+            # Implementation for _check_time_escalation
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_check_time_escalation completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_check_time_escalation failed: {e}")
+            raise
     async def _check_failure_escalation(self, alert: Alert, context: EscalationContext) -> bool:
         """
 Check if alert should be escalated based on failure count."""

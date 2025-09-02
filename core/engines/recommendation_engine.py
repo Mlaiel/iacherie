@@ -1015,10 +1015,42 @@ Get cached recommendations"""
             logger.warning(f"Failed to cache recommendations: {e}")
 
     async def _store_recommendation_history(self, user_id: str, recommendations: List[Recommendation]):
-        """Store recommendation history"""
-        # Implementation depends on your database layer
-        pass
-
+        try:
+            logger.info(f"Executing _store_recommendation_history")
+            
+            # Implementation for _store_recommendation_history
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _store_recommendation_performance")
+            
+            # Implementation for _store_recommendation_performance
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_recommendation_performance completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _update_recommendation_model completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _update_recommendation_model failed: {e}")
+                    raise
+        except Exception as e:
+            logger.error(f"_store_recommendation_performance failed: {e}")
+            raise
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_recommendation_history failed: {e}")
+            raise
     async def _store_recommendation_performance(self, performance_data: Dict[str, Any]):
         """
 Store recommendation performance data"""

@@ -568,10 +568,45 @@ Initialize distribution storage provider."""
 
     # Private helper methods
     async def _create_connections(self) -> None:
-        """Create database connections."""
-        # Implementation depends on storage backend
-        pass
-
+        try:
+            logger.info(f"Executing _create_connections")
+            
+            # Implementation for _create_connections
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _create_tables")
+            
+            # Implementation for _create_tables
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_create_tables completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _load_platform_configurations")
+            
+            # Implementation for _load_platform_configurations
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_load_platform_configurations completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_load_platform_configurations failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"_create_tables failed: {e}")
+            raise
+            return result
+            
+        except Exception as e:
+            logger.error(f"_create_connections failed: {e}")
+            raise
     async def _create_tables(self) -> None:
         """
 Create distribution tables with proper schema."""
@@ -634,8 +669,48 @@ Start background workers for job processing."""
             result = await self._publish_to_platform(job, content_variants[0], platform_config)
             
             if result['success']:
-                await self.update_job_status(
-                    job.job_id,
+        try:
+            logger.info(f"Executing _store_schedule_data")
+            
+            # Implementation for _store_schedule_data
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _store_job_data")
+            
+            # Implementation for _store_job_data
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _store_variant_data")
+            
+            # Implementation for _store_variant_data
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_variant_data completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_variant_data failed: {e}")
+            raise
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_job_data failed: {e}")
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _update_job_data completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _update_job_data failed: {e}")
+                    raise
+        except Exception as e:
+            logger.error(f"_store_schedule_data failed: {e}")
+            raise
                     PublishingStatus.PUBLISHED,
                     platform_post_id=result.get('post_id'),
                     platform_url=result.get('url')
@@ -679,15 +754,47 @@ Store job data to database."""
         pass
 
     async def _store_variant_data(self, variant: ContentVariant) -> None:
+        try:
+            logger.info(f"Executing _store_sync_config")
+            
+            # Implementation for _store_sync_config
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_sync_config completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_sync_config failed: {e}")
+            raise
         """
 Store variant data to database."""
         # Implementation depends on storage backend
         pass
 
     async def _query_jobs(self, filters: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """
-Query jobs from database."""
-        # Implementation depends on storage backend
+        try:
+            logger.info(f"Executing _apply_sync_rules")
+            
+            # Implementation for _apply_sync_rules
+            # TODO: Add specific business logic here
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _update_sync_timestamp completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _update_sync_timestamp failed: {e}")
+                    raise
+            return result
+            
+        except Exception as e:
+            logger.error(f"_apply_sync_rules failed: {e}")
+            raise
         return []
 
     async def _query_variants(self, filters: Dict[str, Any]) -> List[Dict[str, Any]]:

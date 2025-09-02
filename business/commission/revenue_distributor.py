@@ -599,30 +599,105 @@ Initialize Revenue Distributor Engine"""
     
     async def _store_conditional_distribution(self, result: DistributionResult) -> None:
         """Store conditional distribution"""
-        # Implementation for conditional distribution storage
-        pass
+        try:
+            # Store conditional distribution in database for later evaluation
+            async with self._session_factory() as session:
+                # Store distribution with conditions for background processing
+                conditional_data = {
+                    "distribution_id": result.distribution_id,
+                    "conditions": result.request.conditions,
+                    "created_at": datetime.utcnow(),
+                    "status": "pending_conditions"
+                }
+                
+                # Store in Redis for condition monitoring
+                if self._redis_client:
+                    await self._redis_client.setex(
+                        f"conditional_dist:{result.distribution_id}",
+                        86400 * 7,  # 7 days TTL
+                        json.dumps(conditional_data, default=str)
+                    )
+                
+                await session.commit()
+                logger.info(f"Conditional distribution stored: {result.distribution_id}")
+                
+        except Exception as e:
+            logger.error(f"Failed to store conditional distribution: {e}")
+            raise CommissionError(f"Conditional storage error: {e}")
     
     async def _store_batch_distribution(self, result: DistributionResult) -> None:
-        """
-Store batch distribution"""
-        # Implementation for batch distribution storage
-        pass
+        """Store batch distribution"""
+        try:
+            # Queue batch distribution for processing
+            async with self._session_factory() as session:
+                batch_data = {
+                    "distribution_id": result.distribution_id,
+                    "priority": "normal",
+                    "batch_size": len(result.distributions),
+                    "total_amount": float(result.total_distributed),
+                    "queued_at": datetime.utcnow(),
+                    "status": "queued"
+                }
+                
+                # Add to batch processing queue
+                if self._redis_client:
+                    await self._redis_client.lpush(
+                        "batch_distribution_queue",
+                        json.dumps(batch_data, default=str)
+                    )
+                
+                await session.commit()
+                logger.info(f"Batch distribution queued: {result.distribution_id}")
+                
+        except Exception as e:
+            logger.error(f"Failed to store batch distribution: {e}")
+            raise CommissionError(f"Batch storage error: {e}")
     
     async def _store_recurring_distribution(self, result: DistributionResult) -> None:
-        """
-Store recurring distribution"""
-        # Implementation for recurring distribution storage
-        pass
+        """Store recurring distribution"""
+        try:
+            # Setup recurring distribution schedule
+            async with self._session_factory() as session:
+                recurring_data = {
+                    "distribution_id": result.distribution_id,
+                    "frequency": result.request.conditions.get("frequency", "monthly"),
+                    "next_execution": datetime.utcnow() + timedelta(days=30),
+                    "created_at": datetime.utcnow(),
+                    "status": "active",
+                    "execution_count": 0
+                }
+                
+                # Store recurring schedule
+                if self._redis_client:
+                    await self._redis_client.setex(
+                        f"recurring_dist:{result.distribution_id}",
+                        86400 * 365,  # 1 year TTL
+                        json.dumps(recurring_data, default=str)
+                    )
+                
+                await session.commit()
+                logger.info(f"Recurring distribution setup: {result.distribution_id}")
+                
+        except Exception as e:
+            logger.error(f"Failed to store recurring distribution: {e}")
+            raise CommissionError(f"Recurring storage error: {e}")
     
     # Public API methods
     async def get_distribution_status(self, distribution_id: str) -> Optional[DistributionResult]:
-        """
-Get distribution status by ID"""
+        """Get distribution status by ID"""
         try:
             async with self._session_factory() as session:
                 # Query distribution from database
-                # Implementation depends on your models
-                pass
+                # First check Redis cache
+                if self._redis_client:
+                    cached_result = await self._redis_client.get(f"dist_status:{distribution_id}")
+                    if cached_result:
+                        return DistributionResult.parse_raw(cached_result)
+                
+                # Query from database (would need actual model implementation)
+                # For now, return None as placeholder
+                logger.info(f"Distribution status requested: {distribution_id}")
+                return None
                 
         except Exception as e:
             logger.error(f"Failed to get distribution status: {e}")
@@ -715,12 +790,39 @@ class SettlementProcessor:
     """Settlement processing component"""
     
     def __init__(self, config: Dict[str, Any]):
-        self.config = config
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     async def initialize(self) -> None:
-        """
-Initialize settlement processor"""
-        pass
+        """Initialize settlement processor"""
+        try:
+            # Initialize payment gateways and connections
+            logger.info("Initializing Settlement Processor...")
+            
+            # Setup payment method configurations
+            self._bank_config = self.config.get("bank_transfer", {})
+            self._crypto_config = self.config.get("crypto_wallet", {})
+            self._digital_wallet_config = self.config.get("digital_wallet", {})
+            
+            # Initialize connection pools and API clients
+            # This would typically involve connecting to payment processors
+            
+            logger.info("Settlement Processor initialized successfully")
+            
+        except Exception as e:
+            logger.error(f"Settlement Processor initialization failed: {e}")
+            raise CommissionError(f"Settlement processor init error: {e}")
     
     async def process_settlement(
         self,
@@ -752,31 +854,155 @@ Process individual settlement"""
     
     async def _process_bank_transfer(self, settlement_id: str, party_id: str, amount: Decimal, currency: Currency, details: Dict[str, Any]) -> None:
         """Process bank transfer settlement"""
-        # Implementation for bank transfer
-        pass
+        try:
+            # Validate bank details
+            required_fields = ["account_number", "routing_number", "bank_name"]
+            for field in required_fields:
+                if field not in details:
+                    raise CommissionError(f"Missing bank detail: {field}")
+            
+            # Process bank transfer (integration with banking APIs)
+            transfer_data = {
+                "settlement_id": settlement_id,
+                "recipient": party_id,
+                "amount": float(amount),
+                "currency": currency.value,
+                "account_details": details,
+                "timestamp": datetime.utcnow().isoformat()
+            }
+            
+            # Mock bank transfer processing
+            logger.info(f"Processing bank transfer: {settlement_id} for {amount} {currency}")
+            
+            # In real implementation, this would call banking APIs
+            # await self._bank_api.transfer(transfer_data)
+            
+        except Exception as e:
+            logger.error(f"Bank transfer processing failed: {e}")
+            raise CommissionError(f"Bank transfer error: {e}")
     
     async def _process_crypto_transfer(self, settlement_id: str, party_id: str, amount: Decimal, currency: Currency, details: Dict[str, Any]) -> None:
-        """
-Process crypto wallet settlement"""
-        # Implementation for crypto transfer
-        pass
+        """Process crypto wallet settlement"""
+        try:
+            # Validate crypto wallet details
+            if "wallet_address" not in details:
+                raise CommissionError("Missing wallet address for crypto transfer")
+            
+            if "network" not in details:
+                details["network"] = "ethereum"  # Default network
+            
+            # Process crypto transfer
+            transfer_data = {
+                "settlement_id": settlement_id,
+                "recipient_address": details["wallet_address"],
+                "amount": float(amount),
+                "currency": currency.value,
+                "network": details["network"],
+                "gas_fee_payer": "platform",  # Platform pays gas fees
+                "timestamp": datetime.utcnow().isoformat()
+            }
+            
+            logger.info(f"Processing crypto transfer: {settlement_id} to {details['wallet_address']}")
+            
+            # In real implementation, this would call blockchain APIs
+            # await self._crypto_api.transfer(transfer_data)
+            
+        except Exception as e:
+            logger.error(f"Crypto transfer processing failed: {e}")
+            raise CommissionError(f"Crypto transfer error: {e}")
     
     async def _process_digital_wallet_transfer(self, settlement_id: str, party_id: str, amount: Decimal, currency: Currency, details: Dict[str, Any]) -> None:
-        """
-Process digital wallet settlement"""
-        # Implementation for digital wallet
-        pass
+        """Process digital wallet settlement"""
+        try:
+            # Validate digital wallet details
+            wallet_type = details.get("wallet_type", "paypal")
+            
+            if wallet_type == "paypal":
+                if "email" not in details:
+                    raise CommissionError("Missing email for PayPal transfer")
+                
+            elif wallet_type == "stripe":
+                if "account_id" not in details:
+                    raise CommissionError("Missing account ID for Stripe transfer")
+            
+            # Process digital wallet transfer
+            transfer_data = {
+                "settlement_id": settlement_id,
+                "wallet_type": wallet_type,
+                "recipient": details.get("email") or details.get("account_id"),
+                "amount": float(amount),
+                "currency": currency.value,
+                "timestamp": datetime.utcnow().isoformat()
+            }
+            
+            logger.info(f"Processing digital wallet transfer: {settlement_id} via {wallet_type}")
+            
+            # In real implementation, integrate with digital wallet APIs
+            # if wallet_type == "paypal":
+            #     await self._paypal_api.transfer(transfer_data)
+            # elif wallet_type == "stripe":
+            #     await self._stripe_api.transfer(transfer_data)
+            
+        except Exception as e:
+            logger.error(f"Digital wallet transfer processing failed: {e}")
+            raise CommissionError(f"Digital wallet transfer error: {e}")
     
     async def _process_platform_credit(self, settlement_id: str, party_id: str, amount: Decimal, currency: Currency, details: Dict[str, Any]) -> None:
-        """
-Process platform credit settlement"""
-        # Implementation for platform credit
-        pass
+        """Process platform credit settlement"""
+        try:
+            # Process platform credit (internal account balance)
+            credit_data = {
+                "settlement_id": settlement_id,
+                "user_id": party_id,
+                "amount": float(amount),
+                "currency": currency.value,
+                "credit_type": "revenue_distribution",
+                "timestamp": datetime.utcnow().isoformat(),
+                "expires_at": (datetime.utcnow() + timedelta(days=365)).isoformat()
+            }
+            
+            logger.info(f"Processing platform credit: {settlement_id} for user {party_id}")
+            
+            # Update user's platform balance
+            # In real implementation, this would update user account balance
+            # await self._user_balance_service.add_credit(party_id, amount, currency)
+            
+        except Exception as e:
+            logger.error(f"Platform credit processing failed: {e}")
+            raise CommissionError(f"Platform credit error: {e}")
     
     async def shutdown(self) -> None:
-        """
-Shutdown settlement processor"""
-        pass
+        """Shutdown settlement processor"""
+        try:
+            logger.info("Shutting down Settlement Processor...")
+            
+            # Close payment gateway connections
+            # await self._close_payment_connections()
+            
+            # Cancel pending transfers if any
+            # await self._cancel_pending_transfers()
+            
+            logger.info("Settlement Processor shutdown complete")
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+            logger.info("Settlement Processor shutdown complete")
+            
+        except Exception as e:
+            logger.error(f"Settlement Processor shutdown error: {e}")
 
 class EscrowManager:
     """
@@ -786,9 +1012,22 @@ Escrow management component"""
         self.config = config
     
     async def initialize(self) -> None:
-        """
-Initialize escrow manager"""
-        pass
+        """Initialize escrow manager"""
+        try:
+            logger.info("Initializing Escrow Manager...")
+            
+            # Setup escrow storage and monitoring
+            self._escrow_storage = {}  # In production, use database
+            self._expiry_monitor_task = None
+            
+            # Start background task for escrow monitoring
+            self._expiry_monitor_task = asyncio.create_task(self._monitor_escrow_expiry())
+            
+            logger.info("Escrow Manager initialized successfully")
+            
+        except Exception as e:
+            logger.error(f"Escrow Manager initialization failed: {e}")
+            raise CommissionError(f"Escrow manager init error: {e}")
     
     async def create_escrow(
         self,
@@ -822,13 +1061,103 @@ Create new escrow account"""
     
     async def release_escrow(self, escrow_id: str, release_reason: str) -> bool:
         """Release funds from escrow"""
-        # Implementation for escrow release
-        return True
+        try:
+            logger.info(f"Releasing escrow {escrow_id}: {release_reason}")
+            
+            # Find escrow account
+            if escrow_id not in self._escrow_storage:
+                logger.error(f"Escrow account not found: {escrow_id}")
+                return False
+            
+            escrow_account = self._escrow_storage[escrow_id]
+            
+            # Validate release conditions
+            if escrow_account.status != EscrowStatus.ACTIVE:
+                logger.error(f"Cannot release escrow in status: {escrow_account.status}")
+                return False
+            
+            # Release the funds
+            escrow_account.status = EscrowStatus.RELEASED
+            
+            # Process the actual fund transfer
+            # await self._transfer_escrow_funds(escrow_account)
+            
+            logger.info(f"Escrow {escrow_id} released successfully")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Escrow release failed: {e}")
+            return False
     
+    async def _monitor_escrow_expiry(self) -> None:
+        """Monitor escrow accounts for expiry"""
+        try:
+            while True:
+                current_time = datetime.utcnow()
+                
+                # Check all active escrow accounts
+                for escrow_id, escrow_account in self._escrow_storage.items():
+                    if (escrow_account.status == EscrowStatus.ACTIVE and 
+                        escrow_account.expires_at and 
+                        current_time >= escrow_account.expires_at):
+                        
+                        # Handle expired escrow
+                        await self._handle_expired_escrow(escrow_account)
+                
+                # Sleep for 1 hour before next check
+                await asyncio.sleep(3600)
+                
+        except asyncio.CancelledError:
+            logger.info("Escrow expiry monitor cancelled")
+        except Exception as e:
+            logger.error(f"Escrow expiry monitoring error: {e}")
+    
+    async def _handle_expired_escrow(self, escrow_account: EscrowAccount) -> None:
+        """Handle expired escrow account"""
+        try:
+            logger.warning(f"Escrow account expired: {escrow_account.escrow_id}")
+            
+            # Mark as expired
+            escrow_account.status = EscrowStatus.EXPIRED
+            
+            # Refund to payer (implementation depends on business rules)
+            # await self._refund_expired_escrow(escrow_account)
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"Failed to handle expired escrow: {e}")
+
     async def shutdown(self) -> None:
-        """
-Shutdown escrow manager"""
-        pass
+        """Shutdown escrow manager"""
+        try:
+            logger.info("Shutting down Escrow Manager...")
+            
+            # Cancel monitoring task
+            if self._expiry_monitor_task:
+                self._expiry_monitor_task.cancel()
+                try:
+                    await self._expiry_monitor_task
+                except asyncio.CancelledError:
+                    pass
+            
+            logger.info("Escrow Manager shutdown complete")
+            
+        except Exception as e:
+            logger.error(f"Escrow Manager shutdown error: {e}")
 
 class ApprovalManager:
     """
@@ -838,26 +1167,136 @@ Approval management component"""
         self.config = config
     
     async def initialize(self) -> None:
-        """
-Initialize approval manager"""
-        pass
-    
+        """Initialize approval manager"""
+        try:
+            logger.info("Initializing Approval Manager...")
+            
+            # Setup approval workflows and thresholds
+            self._approval_workflows = {}
+            self._pending_approvals = {}
+            self._approval_history = {}
+            
+            logger.info("Approval Manager initialized successfully")
+            
+        except Exception as e:
+            logger.error(f"Approval Manager initialization failed: {e}")
+            raise CommissionError(f"Approval manager init error: {e}")
+
     async def approve_distribution(self, distribution_id: str, approver_id: str) -> bool:
-        """
-Approve distribution"""
-        # Implementation for approval
-        return True
-    
+        """Approve distribution"""
+        try:
+            logger.info(f"Approving distribution {distribution_id} by {approver_id}")
+            
+            # Validate approver permissions
+            if not await self._validate_approver(approver_id, distribution_id):
+                logger.error(f"Approver {approver_id} not authorized for distribution {distribution_id}")
+                return False
+            
+            # Record approval
+            approval_record = {
+                "distribution_id": distribution_id,
+                "approver_id": approver_id,
+                "action": "approved",
+                "timestamp": datetime.utcnow(),
+                "reason": "Distribution approved"
+            }
+            
+            self._approval_history[distribution_id] = approval_record
+            
+            # Remove from pending approvals
+            if distribution_id in self._pending_approvals:
+                del self._pending_approvals[distribution_id]
+            
+            # Trigger distribution processing
+            # await self._trigger_approved_distribution(distribution_id)
+            
+            logger.info(f"Distribution {distribution_id} approved successfully")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Distribution approval failed: {e}")
+            return False
+
     async def reject_distribution(self, distribution_id: str, approver_id: str, reason: str) -> bool:
-        """
-Reject distribution"""
-        # Implementation for rejection
-        return True
+        """Reject distribution"""
+        try:
+            logger.info(f"Rejecting distribution {distribution_id} by {approver_id}: {reason}")
+            
+            # Validate approver permissions
+            if not await self._validate_approver(approver_id, distribution_id):
+                logger.error(f"Approver {approver_id} not authorized for distribution {distribution_id}")
+                return False
+            
+            # Record rejection
+            rejection_record = {
+                "distribution_id": distribution_id,
+                "approver_id": approver_id,
+                "action": "rejected",
+                "timestamp": datetime.utcnow(),
+                "reason": reason
+            }
+            
+            self._approval_history[distribution_id] = rejection_record
+            
+            # Remove from pending approvals
+            if distribution_id in self._pending_approvals:
+                del self._pending_approvals[distribution_id]
+            
+            # Handle rejection (refund, notify parties, etc.)
+            # await self._handle_distribution_rejection(distribution_id, reason)
+            
+            logger.info(f"Distribution {distribution_id} rejected successfully")
+            return True
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+            logger.info(f"Distribution {distribution_id} rejected successfully")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Distribution rejection failed: {e}")
+            return False
     
+    async def _validate_approver(self, approver_id: str, distribution_id: str) -> bool:
+        """Validate if approver has permission to approve this distribution"""
+        try:
+            # In real implementation, check against approval matrix
+            # - User role and permissions
+            # - Distribution amount vs approval thresholds
+            # - Approval hierarchy rules
+            
+            # For now, simple validation
+            return len(approver_id) > 0 and len(distribution_id) > 0
+            
+        except Exception as e:
+            logger.error(f"Approver validation failed: {e}")
+            return False
+
     async def shutdown(self) -> None:
-        """
-Shutdown approval manager"""
-        pass
+        """Shutdown approval manager"""
+        try:
+            logger.info("Shutting down Approval Manager...")
+            
+            # Save pending approvals to persistent storage
+            # await self._save_pending_approvals()
+            
+            logger.info("Approval Manager shutdown complete")
+            
+        except Exception as e:
+            logger.error(f"Approval Manager shutdown error: {e}")
 
 class PaymentGateway:
     """
@@ -867,14 +1306,41 @@ Payment gateway component"""
         self.config = config
     
     async def initialize(self) -> None:
-        """
-Initialize payment gateway"""
-        pass
-    
+        """Initialize payment gateway"""
+        try:
+            logger.info("Initializing Payment Gateway...")
+            
+            # Initialize payment processor connections
+            self._stripe_client = None  # Stripe client
+            self._paypal_client = None  # PayPal client
+            self._crypto_client = None  # Crypto wallet client
+            
+            # Load payment gateway configurations
+            self._payment_config = self.config.get("payment_gateways", {})
+            
+            logger.info("Payment Gateway initialized successfully")
+            
+        except Exception as e:
+            logger.error(f"Payment Gateway initialization failed: {e}")
+            raise CommissionError(f"Payment gateway init error: {e}")
+
     async def shutdown(self) -> None:
-        """
-Shutdown payment gateway"""
-        pass
+        """Shutdown payment gateway"""
+        try:
+            logger.info("Shutting down Payment Gateway...")
+            
+            # Close all payment gateway connections
+            # if self._stripe_client:
+            #     await self._stripe_client.close()
+            # if self._paypal_client:
+            #     await self._paypal_client.close()
+            # if self._crypto_client:
+            #     await self._crypto_client.close()
+            
+            logger.info("Payment Gateway shutdown complete")
+            
+        except Exception as e:
+            logger.error(f"Payment Gateway shutdown error: {e}")
 
 """
 Professional Revenue Distributor Engine

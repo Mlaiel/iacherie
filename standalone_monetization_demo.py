@@ -58,7 +58,20 @@ class EnterpriseCryptoProcessor:
         return self.mock_rates.get(rate_key, Decimal("1.00"))
     
     async def get_supported_cryptocurrencies(self) -> List[Dict[str, Any]]:
-        return [
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_supported_cryptocurrencies_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_supported_cryptocurrencies failed: {e}")
+                    return {"status": "error", "message": str(e)}
             {
                 "currency": "BTC",
                 "network": "bitcoin",
@@ -245,7 +258,20 @@ class AIRevenueTrackingEngine:
         
         return RevenuePrediction(
             prediction_id=f"pred_{uuid.uuid4().hex[:12]}",
-            creator_id=creator_id,
+        try:
+                    # Request validation
+                    if not creator_id:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_revenue_insights_request(creator_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_revenue_insights failed: {e}")
+                    return {"status": "error", "message": str(e)}
             predicted_revenue=predicted_revenue,
             prediction_period=(prediction_start, prediction_end),
             confidence_interval=(predicted_revenue - margin, predicted_revenue + margin),
@@ -383,7 +409,20 @@ class IntelligentPaymentRouter:
             cost_analysis={
                 "total_cost": best_metrics["total_cost"],
                 "percentage_fee": str(self.provider_costs[best_provider]["percentage"]),
-                "fixed_fee": str(self.provider_costs[best_provider]["fixed"])
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_provider_analytics_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_provider_analytics failed: {e}")
+                    return {"status": "error", "message": str(e)}
             },
             risk_analysis={
                 "risk_level": "low",

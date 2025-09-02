@@ -403,10 +403,20 @@ Initialize the data aggregator"""
     # Private Methods
     
     async def _initialize_storage(self) -> None:
-        """Initialize storage for aggregated data"""
-        # Initialize any required storage connections/setup
-        pass
-    
+        try:
+            logger.info(f"Executing _initialize_storage")
+            
+            # Implementation for _initialize_storage
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_initialize_storage completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_initialize_storage failed: {e}")
+            raise
     def _group_metrics_by_time_window(
         self,
         metrics: List[MetricPoint],

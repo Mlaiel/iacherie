@@ -93,8 +93,33 @@ class CacheNode:
     load_factor: float = 0.0
     
     def __str__(self) -> str:
-        return f"{self.host}:{self.port}"
-    
+        try:
+            logger.info(f"Executing __str__")
+            
+            # Implementation for __str__
+            # TODO: Add specific business logic here
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_endpoint_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_endpoint failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__str__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__str__ failed: {e}")
+            raise
     def get_endpoint(self) -> str:
         return f"{self.host}:{self.port}"
     
@@ -560,23 +585,20 @@ Synchronous distributed set operation"""
                 if result:
                     self._record_success(node)
                 else:
-                    self._record_failure(node, "Replication failed")
-            except Exception as e:
-                self._record_failure(node, str(e))
-    
-    async def _get_from_node(self, node: CacheNode, key: str) -> Optional[Any]:
-        """Get value from specific node"""
-        # This would be implemented with actual cache client
-        # Placeholder implementation
-        return None
-    
-    async def _set_to_node(self, node: CacheNode, key: str, value: Any, ttl: Optional[int]) -> bool:
-        """
-Set value to specific node"""
-        # This would be implemented with actual cache client
-        # Placeholder implementation
-        return True
-    
+        try:
+            logger.info(f"Executing _is_node_available")
+            
+            # Implementation for _is_node_available
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_is_node_available completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_is_node_available failed: {e}")
+            raise
     async def _delete_from_node(self, node: CacheNode, key: str) -> bool:
         """
 Delete value from specific node"""

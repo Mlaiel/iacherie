@@ -335,8 +335,20 @@ class BillingManagement(Base):
     )
     
     def __repr__(self):
-        return f"<BillingManagement(id={self.id}, customer_id={self.customer_id}, status={self.status.value}, total={self.total_amount})>"
-    
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     @classmethod
     def create_billing_account(
         cls,
@@ -592,6 +604,31 @@ class BillingInvoice(Base):
     metadata = Column(JSONB, nullable=True)
     
     # Relationships
+    billing_account = relationship("BillingManagement", backref="invoices")
+    
+    __table_args__ = (
+        Index('idx_billing_invoices_billing_status', 'billing_id', 'status'),
+        Index('idx_billing_invoices_customer_date', 'customer_id', 'invoice_date'),
+        Index('idx_billing_invoices_due_date', 'due_date'),
+        Index('idx_billing_invoices_type', 'invoice_type'),
+        Index('idx_billing_invoices_amount', 'total_amount', 'outstanding_amount'),
+    )
+    
+    def __repr__(self):
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     billing_account = relationship("BillingManagement", backref="invoices")
     
     __table_args__ = (

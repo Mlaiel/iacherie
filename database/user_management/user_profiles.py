@@ -150,8 +150,20 @@ class User(Base):
     security_logs = relationship("UserSecurityLog", back_populates="user")
 
     def __repr__(self):
-        return f"<User({self.username}, {self.email})>"
-    
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     @property
     def full_name(self) -> str:
         """Retourne le nom complet de l'utilisateur."""
@@ -228,6 +240,31 @@ class UserProfile(Base):
     user = relationship("User", back_populates="profile")
 
     def __repr__(self):
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
+    content_strategy = Column(JSON)
+    collaboration_interests = Column(JSON)
+    
+    # Timestamps
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    # Relations
+    user = relationship("User", back_populates="profile")
+
+    def __repr__(self):
         return f"<UserProfile({self.user_id})>"
 
 
@@ -238,9 +275,20 @@ class UserActivity(Base):
     __tablename__ = "user_activities"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
-    user_id = Column(String, ForeignKey("users.id"), nullable=False)
-    
-    # Informations d'activité
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     activity_type = Column(String(100), nullable=False)  # "login", "upload", "collaboration"
     activity_category = Column(String(50))  # "content", "social", "monetization"
     activity_description = Column(Text)
@@ -327,12 +375,133 @@ class UserSession(Base):
     user = relationship("User", back_populates="sessions")
 
     def end_session(self):
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
+    session_token = Column(String(255), unique=True, nullable=False)
+    device_fingerprint = Column(String(255))
+    device_type = Column(String(50))  # "desktop", "mobile", "tablet"
+    browser = Column(String(100))
+    operating_system = Column(String(100))
+    
+    # Géolocalisation
+    ip_address = Column(String(45))
+    country_code = Column(String(3))
+    city = Column(String(100))
+    timezone_detected = Column(String(50))
+    
+    # Durée et activité
+    started_at = Column(DateTime, default=datetime.utcnow)
+    last_activity_at = Column(DateTime, default=datetime.utcnow)
+    ended_at = Column(DateTime)
+    duration_seconds = Column(Integer)
+    is_active = Column(Boolean, default=True)
+    
+    # Analytics de session
+    pages_visited = Column(Integer, default=0)
+    features_used = Column(JSON)  # Features utilisées durant la session
+    ai_interactions = Column(Integer, default=0)
+    content_uploaded = Column(Integer, default=0)
+    collaborations_initiated = Column(Integer, default=0)
+    
+    # Sécurité
+    is_suspicious = Column(Boolean, default=False)
+    security_warnings = Column(JSON)
+    failed_login_attempts = Column(Integer, default=0)
+    
+    # Métadonnées
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    # Relations
+    user = relationship("User", back_populates="sessions")
+
+    def end_session(self):
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+    user = relationship("User", back_populates="sessions")
+
+    def end_session(self):
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
+    is_suspicious = Column(Boolean, default=False)
+    security_warnings = Column(JSON)
+    failed_login_attempts = Column(Integer, default=0)
+    
+    # Métadonnées
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    # Relations
+    user = relationship("User", back_populates="sessions")
+
+    def end_session(self):
         """Terminer la session."""
         self.ended_at = datetime.utcnow()
         self.is_active = False
         if self.started_at:
-            self.duration_seconds = int((self.ended_at - self.started_at).total_seconds())
-
+        try:
+            logger.info(f"Executing authenticate_user")
+            
+            # Implementation for authenticate_user
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"authenticate_user completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"authenticate_user failed: {e}")
+            raise
     def __repr__(self):
         return f"<UserSession({self.user_id}, {self.started_at})>"
 
@@ -567,7 +736,20 @@ Authentifier un utilisateur par email/username et mot de passe."""
             return activity
             
         except Exception as e:
-            self.db.rollback()
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
             logger.error(f"Erreur log activité: {str(e)}")
             raise
     

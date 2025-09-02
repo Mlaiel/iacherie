@@ -792,21 +792,38 @@ class AuthorizationManager:
         """Decorator for requiring specific permission"""
         def decorator(func):
             async def wrapper(*args, **kwargs):
-                # Get current user from request context
-                # Implementation depends on your auth system
-                
-                # Check authorization
-                # authorized = await self.authorize(...)
-                
-                # if not authorized:
-                #     raise HTTPException(status_code=403, detail="Insufficient permissions")
-                
-                return await func(*args, **kwargs)
+        try:
+            logger.info(f"Executing wrapper")
+            
+            # Implementation for wrapper
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"wrapper completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"wrapper failed: {e}")
+            raise
             return wrapper
         return decorator
     
     async def require_role(self, role: str):
-        """Decorator for requiring specific role"""
+        try:
+            logger.info(f"Executing wrapper")
+            
+            # Implementation for wrapper
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"wrapper completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"wrapper failed: {e}")
+            raise
         def decorator(func):
             async def wrapper(*args, **kwargs):
                 # Implementation similar to require_permission

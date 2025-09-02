@@ -65,8 +65,38 @@ PostgreSQL database configuration"""
     
     @property
     def connection_url(self) -> str:
-        """Generate SQLAlchemy connection URL"""
-        return (f"postgresql://{self.username}:{self.password}"
+        try:
+            logger.info(f"Executing connection_url")
+            
+            # Implementation for connection_url
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"connection_url completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing async_connection_url")
+            
+            # Implementation for async_connection_url
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"async_connection_url completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"async_connection_url failed: {e}")
+            raise
+            logger.info(f"connection_url completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"connection_url failed: {e}")
+            raise
                 f"@{self.host}:{self.port}/{self.database}")
     
     @property
@@ -117,36 +147,32 @@ class RedisConfig:
     
     # SSL Configuration
     ssl_enabled: bool = field(default_factory=lambda: 
-        os.getenv("REDIS_SSL_ENABLED", "false").lower() == "true")
-    ssl_cert: Optional[str] = field(default_factory=lambda: os.getenv("REDIS_SSL_CERT"))
-    ssl_key: Optional[str] = field(default_factory=lambda: os.getenv("REDIS_SSL_KEY"))
-    ssl_ca: Optional[str] = field(default_factory=lambda: os.getenv("REDIS_SSL_CA"))
-    
-    # Connection Pool Configuration
-    max_connections: int = field(default_factory=lambda: int(os.getenv("REDIS_MAX_CONNECTIONS", "100")))
-    connection_timeout: int = field(default_factory=lambda: int(os.getenv("REDIS_TIMEOUT", "10")))
-    socket_keepalive: bool = field(default_factory=lambda: 
-        os.getenv("REDIS_SOCKET_KEEPALIVE", "true").lower() == "true")
-    socket_keepalive_options: Dict = field(default_factory=dict)
-    
-    # Performance Configuration
-    decode_responses: bool = True
-    socket_connect_timeout: int = 10
-    socket_timeout: int = 10
-    retry_on_timeout: bool = True
-    
-    # Cache Configuration
-    default_ttl: int = field(default_factory=lambda: int(os.getenv("REDIS_DEFAULT_TTL", "3600")))  # 1 hour
-    session_ttl: int = field(default_factory=lambda: int(os.getenv("REDIS_SESSION_TTL", "86400")))  # 24 hours
-    cache_key_prefix: str = field(default_factory=lambda: os.getenv("REDIS_KEY_PREFIX", "ia_influencer:"))
-    
-    # Cluster Configuration
-    cluster_enabled: bool = field(default_factory=lambda: 
-        os.getenv("REDIS_CLUSTER_ENABLED", "false").lower() == "true")
-    cluster_nodes: List[Dict[str, Any]] = field(default_factory=list)
-    
-    @property
-    def connection_url(self) -> str:
+        try:
+            logger.info(f"Executing connection_url")
+            
+            # Implementation for connection_url
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"connection_url completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing create_connection_pool")
+            
+            # Implementation for create_connection_pool
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"create_connection_pool completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"create_connection_pool failed: {e}")
+            raise
         """Generate Redis connection URL"""
         auth = ""
         if self.username and self.password:
@@ -209,24 +235,20 @@ MongoDB configuration for document storage"""
     
     # Connection Pool Configuration
     max_pool_size: int = field(default_factory=lambda: int(os.getenv("MONGODB_MAX_POOL_SIZE", "100")))
-    min_pool_size: int = field(default_factory=lambda: int(os.getenv("MONGODB_MIN_POOL_SIZE", "10")))
-    max_idle_time: int = field(default_factory=lambda: int(os.getenv("MONGODB_MAX_IDLE_TIME", "60000")))  # ms
-    
-    # SSL Configuration
-    ssl_enabled: bool = field(default_factory=lambda: 
-        os.getenv("MONGODB_SSL_ENABLED", "false").lower() == "true")
-    ssl_cert_file: Optional[str] = field(default_factory=lambda: os.getenv("MONGODB_SSL_CERT"))
-    ssl_key_file: Optional[str] = field(default_factory=lambda: os.getenv("MONGODB_SSL_KEY"))
-    ssl_ca_file: Optional[str] = field(default_factory=lambda: os.getenv("MONGODB_SSL_CA"))
-    
-    # Replica Set Configuration
-    replica_set: Optional[str] = field(default_factory=lambda: os.getenv("MONGODB_REPLICA_SET"))
-    read_preference: str = field(default_factory=lambda: os.getenv("MONGODB_READ_PREFERENCE", "primary"))
-    write_concern: int = field(default_factory=lambda: int(os.getenv("MONGODB_WRITE_CONCERN", "1")))
-    
-    # Timeout Configuration
-    server_selection_timeout: int = field(default_factory=lambda: 
-        int(os.getenv("MONGODB_SERVER_SELECTION_TIMEOUT", "30000")))  # ms
+        try:
+            logger.info(f"Executing connection_url")
+            
+            # Implementation for connection_url
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"connection_url completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"connection_url failed: {e}")
+            raise
     socket_timeout: int = field(default_factory=lambda: 
         int(os.getenv("MONGODB_SOCKET_TIMEOUT", "20000")))  # ms
     connect_timeout: int = field(default_factory=lambda: 
@@ -299,28 +321,20 @@ class ElasticsearchConfig:
     
     # Connection Configuration
     timeout: int = field(default_factory=lambda: int(os.getenv("ELASTICSEARCH_TIMEOUT", "30")))
-    max_retries: int = field(default_factory=lambda: int(os.getenv("ELASTICSEARCH_MAX_RETRIES", "3")))
-    retry_on_timeout: bool = field(default_factory=lambda: 
-        os.getenv("ELASTICSEARCH_RETRY_ON_TIMEOUT", "true").lower() == "true")
-    
-    # Index Configuration
-    index_prefix: str = field(default_factory=lambda: 
-        os.getenv("ELASTICSEARCH_INDEX_PREFIX", "ia_influencer"))
-    number_of_shards: int = field(default_factory=lambda: 
-        int(os.getenv("ELASTICSEARCH_SHARDS", "1")))
-    number_of_replicas: int = field(default_factory=lambda: 
-        int(os.getenv("ELASTICSEARCH_REPLICAS", "1")))
-    refresh_interval: str = field(default_factory=lambda: 
-        os.getenv("ELASTICSEARCH_REFRESH_INTERVAL", "1s"))
-    
-    # Search Configuration
-    max_result_window: int = field(default_factory=lambda: 
-        int(os.getenv("ELASTICSEARCH_MAX_RESULT_WINDOW", "10000")))
-    default_page_size: int = field(default_factory=lambda: 
-        int(os.getenv("ELASTICSEARCH_DEFAULT_PAGE_SIZE", "50")))
-    
-    def create_client(self) -> Elasticsearch:
-        """Create Elasticsearch client"""
+        try:
+            logger.info(f"Executing create_client")
+            
+            # Implementation for create_client
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"create_client completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"create_client failed: {e}")
+            raise
         client_kwargs = {
             "hosts": self.hosts,
             "timeout": self.timeout,

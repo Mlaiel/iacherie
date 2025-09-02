@@ -119,8 +119,20 @@ class SubscriptionPlan(Base):
     subscriptions = relationship("UserSubscription", back_populates="plan")
 
     def __repr__(self):
-        return f"<SubscriptionPlan({self.name}, {self.tier.value})>"
-    
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     def get_price_for_cycle(self, cycle: BillingCycle) -> DecimalType:
         """Retourne le prix pour un cycle de facturation donné."""
         if cycle == BillingCycle.MONTHLY:
@@ -179,6 +191,31 @@ class UserSubscription(Base):
     next_plan_id = Column(String, ForeignKey("subscription_plans.id"))
     
     # Timestamps
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    # Relations
+    user = relationship("User", back_populates="subscriptions")
+    plan = relationship("SubscriptionPlan", back_populates="subscriptions", foreign_keys=[plan_id])
+    next_plan = relationship("SubscriptionPlan", foreign_keys=[next_plan_id])
+    payments = relationship("SubscriptionPayment", back_populates="subscription")
+    usage_logs = relationship("SubscriptionUsage", back_populates="subscription")
+
+    def __repr__(self):
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
@@ -260,6 +297,65 @@ class SubscriptionPayment(Base):
     subscription_id = Column(String, ForeignKey("user_subscriptions.id"), nullable=False)
     
     # Informations de paiement
+    amount = Column(Decimal(10, 2), nullable=False)
+    currency = Column(String(3), default="EUR")
+    tax_amount = Column(Decimal(10, 2), default=0.00)
+    discount_amount = Column(Decimal(10, 2), default=0.00)
+    total_amount = Column(Decimal(10, 2), nullable=False)
+    
+    # Provider et statut
+    payment_provider = Column(String(50), nullable=False)
+    payment_method = Column(String(50))  # "card", "paypal", "bank_transfer"
+    external_payment_id = Column(String(255))
+    status = Column(Enum(PaymentStatus), default=PaymentStatus.PENDING)
+    
+    # Période couverte
+    period_start = Column(DateTime, nullable=False)
+    period_end = Column(DateTime, nullable=False)
+    
+    # Informations de facturation
+    invoice_number = Column(String(100))
+    invoice_url = Column(String(500))
+    receipt_url = Column(String(500))
+    
+    # Métadonnées
+    payment_metadata = Column(JSON)
+    failure_reason = Column(Text)
+    refund_reason = Column(Text)
+    
+    # Timestamps
+    created_at = Column(DateTime, default=datetime.utcnow)
+    processed_at = Column(DateTime)
+    failed_at = Column(DateTime)
+    refunded_at = Column(DateTime)
+    
+    # Relations
+    subscription = relationship("UserSubscription", back_populates="payments")
+
+    def __repr__(self):
+        try:
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     amount = Column(Decimal(10, 2), nullable=False)
     currency = Column(String(3), default="EUR")
     tax_amount = Column(Decimal(10, 2), default=0.00)

@@ -223,8 +223,20 @@ class RevenueCalculator:
 Calculates revenue metrics and loss estimates."""
     
     def __init__(self, market_data_provider: MarketDataProvider):
-        self.market_data = market_data_provider
-        
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     async def calculate_baseline_revenue(self, 
                                        content_metrics: Dict[str, Any],
                                        time_period: Tuple[datetime, datetime]) -> RevenueMetrics:

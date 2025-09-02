@@ -289,35 +289,50 @@ Professional metrics registry with automatic instrumentation"""
         )
     
     def _start_background_collection(self):
-        """
-Start background metric collection"""
-        def collect_system_metrics():
-            while True:
-                try:
-                    # CPU usage
-                    cpu_percent = psutil.cpu_percent(interval=1)
-                    self.system_cpu_usage.set(cpu_percent)
-                    
-                    # Memory usage
-                    memory = psutil.virtual_memory()
-                    self.system_memory_usage.set(memory.percent)
-                    
-                    # Disk usage
-                    for disk in psutil.disk_partitions():
-                        try:
-                            usage = psutil.disk_usage(disk.mountpoint)
-                            self.system_disk_usage.labels(mount_point=disk.mountpoint).set(usage.percent)
-                        except (PermissionError, OSError):
-                            pass
-                    
-                    time.sleep(self._collection_interval)
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "collect_system_metrics",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric collect_system_metrics collected")
+                    return metrics
+            
                 except Exception as e:
-                    print(f"Error collecting system metrics: {e}")
-                    time.sleep(self._collection_interval)
-        
-        collector_thread = threading.Thread(target=collect_system_metrics, daemon=True)
-        collector_thread.start()
-    
+                    logger.error(f"Metric collection collect_system_metrics failed: {e}")
+                    return None
+                        "metric_name": "_start_background_collection",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _start_background_collection collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _start_background_collection failed: {e}")
+                    return None
     def record_http_request(self, method: str, endpoint: str, status: str, 
                            service: str, duration: float):
         """Record HTTP request metrics"""

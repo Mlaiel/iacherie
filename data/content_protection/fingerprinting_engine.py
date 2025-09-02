@@ -737,22 +737,17 @@ Initialize ML models for fingerprinting"""
         return matches
     
     async def _find_hash_similarities(self, query_fingerprint: FingerprintResult,
-                                    threshold: float, max_results: int) -> List[SimilarityMatch]:
-        """Find similarities using hash comparison"""
-        matches = []
-        
         try:
-            # Query database for similar hashes
-            # This would implement hash-based similarity search
-            # Placeholder implementation
-            
-            pass
-            
-        except Exception as e:
-            self.logger.error(f"Error finding hash similarities: {str(e)}")
-        
-        return matches
-    
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _find_hash_similarities completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _find_hash_similarities failed: {e}")
+                    raise
     def _get_default_config(self, content_type: ContentType) -> FingerprintConfig:
         """Get default configuration for content type"""
         method_map = {

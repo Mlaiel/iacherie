@@ -1402,7 +1402,45 @@ Collect metrics periodically"""
             asyncio.set_event_loop(loop)
             
             async def collect_loop():
-                while True:
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "collect_loop",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric collect_loop collected")
+                    return metrics
+            
+                except Exception as e:
+        try:
+            logger.info(f"Executing alert_loop")
+            
+            # Implementation for alert_loop
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"alert_loop completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"alert_loop failed: {e}")
+            raise
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection collect_loop failed: {e}")
+                    return None
                     try:
                         await self.collect_system_metrics()
                         await asyncio.sleep(self.monitoring_config['collection_interval'])

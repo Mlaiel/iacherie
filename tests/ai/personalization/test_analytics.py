@@ -875,8 +875,20 @@ Test concurrent analytics operations"""
         engine = AnalyticsEngine()
         
         async def analytics_task(task_id: int):
-            # Simulate different analytics operations
-            if task_id % 3 == 0:
+        try:
+            logger.info(f"Executing analytics_task")
+            
+            # Implementation for analytics_task
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"analytics_task completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"analytics_task failed: {e}")
+            raise
                 await engine.compute_real_time_metrics()
             elif task_id % 3 == 1:
                 await engine.compute_batch_analytics(

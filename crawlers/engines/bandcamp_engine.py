@@ -640,21 +640,26 @@ Extract social media links"""
         return social_links
     
     def _extract_price(self, price_elem) -> Optional[float]:
-        """
-Extract price from price element"""
-        if not price_elem:
-            return None
-        
-        price_text = price_elem.get_text(strip=True)
-        # Extract numeric value from price text
-        price_match = re.search(r'[\d.]+', price_text)
-        if price_match:
-            try:
-                return float(price_match.group())
-            except ValueError:
-                pass
-        return None
-    
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__extract_price_input(price_elem)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__extract_price_result(result)
+            
+                    logger.info(f"AI processing _extract_price completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _extract_price failed: {e}")
+                    raise
     async def monitor_independent_releases(
         self,
         genre: str,
@@ -708,6 +713,21 @@ Extract price from price element"""
                 self.driver.quit()
             await super().cleanup()
             logger.info("Bandcamp engine cleanup completed")
+        except Exception as e:
+        try:
+            logger.info(f"Executing __str__")
+            
+            # Implementation for __str__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__str__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__str__ failed: {e}")
+            raise
         except Exception as e:
             logger.error(f"Error during cleanup: {e}")
     

@@ -829,47 +829,20 @@ Categorize violations by category."""
     def _get_applicable_rules(
         self,
         content_type: Optional[str],
-        target_platforms: Optional[List[str]],
-        geographical_scope: Optional[List[str]]
-    ) -> List[ComplianceRule]:
-        """
-Get applicable compliance rules."""
-        applicable_rules = []
-        
-        for rule in self.compliance_rules:
-            # Check content type applicability
-            if content_type and rule.applicable_content_types:
-                if content_type not in rule.applicable_content_types:
-                    continue
+        try:
+                    # Request validation
+                    if not content_type:
+                        raise ValueError("Invalid request")
             
-            # Check geographical scope
-            if geographical_scope and rule.geographical_scope:
-                if not any(geo in rule.geographical_scope for geo in geographical_scope):
-                    continue
+                    # Process request
+                    result = await self._handle__get_applicable_rules_request(content_type)
             
-            # Check framework enablement
-            if rule.framework and rule.framework not in self.enabled_frameworks:
-                continue
+                    # Return response
+                    return {"status": "success", "data": result}
             
-            # Check platform applicability
-            if target_platforms and rule.platform:
-                platform_applicable = False
-                for platform_name in target_platforms:
-                    try:
-                        platform = PlatformPolicy(platform_name.lower())
-                        if platform == rule.platform:
-                            platform_applicable = True
-                            break
-                    except ValueError:
-                        pass
-                
-                if not platform_applicable:
-                    continue
-            
-            applicable_rules.append(rule)
-        
-        return applicable_rules
-    
+                except Exception as e:
+                    logger.error(f"API handler _get_applicable_rules failed: {e}")
+                    return {"status": "error", "message": str(e)}
     def _create_error_result(self, error_message: str) -> ComplianceValidationResult:
         """
 Create error validation result."""

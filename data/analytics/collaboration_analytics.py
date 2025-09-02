@@ -440,11 +440,20 @@ class CollaborationAnalytics:
         )
     
     async def _build_network_graph(self, creator_id: str, depth: int):
-        """
-Build network graph for analysis"""
-        # Network graph construction logic
-        pass
-    
+        try:
+            logger.info(f"Executing _build_network_graph")
+            
+            # Implementation for _build_network_graph
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_build_network_graph completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_build_network_graph failed: {e}")
+            raise
     async def _calculate_network_metrics(self) -> Dict[str, Any]:
         """
 Calculate various network analysis metrics"""

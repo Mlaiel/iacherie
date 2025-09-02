@@ -484,45 +484,20 @@ EXCEPTION_HIERARCHY = {
 
 def create_error_response(
     exception: IntentRecognitionError,
-    include_suggestions: bool = True,
-    include_context: bool = False
-) -> Dict[str, Any]:
-    """
-    Create standardized error response dictionary
-    
-    Args:
-        exception: The exception to convert
-        include_suggestions: Whether to include recovery suggestions
-        include_context: Whether to include context information
-        
-    Returns:
-        Standardized error response dictionary
-    """
-    response = {
-        'success': False,
-        'error': {
-            'type': exception.__class__.__name__,
-            'code': exception.error_code,
-            'message': exception.message,
-            'recoverable': exception.recoverable,
-            'timestamp': exception.timestamp.isoformat()
-        }
-    }
-    
-    if include_suggestions and exception.suggestions:
-        response['error']['suggestions'] = exception.suggestions
-    
-    if include_context and exception.context:
-        # Filter sensitive information from context
-        filtered_context = {
-            k: v for k, v in exception.context.items()
-            if k not in ['password', 'token', 'api_key', 'secret']
-        }
-        response['error']['context'] = filtered_context
-    
-    return response
-
-
+        try:
+            logger.info(f"Executing create_error_response")
+            
+            # Implementation for create_error_response
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"create_error_response completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"create_error_response failed: {e}")
+            raise
 def handle_exception(
     func_name: str,
     exception: Exception,

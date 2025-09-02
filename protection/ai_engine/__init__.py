@@ -191,7 +191,28 @@ class EnterpriseAIProtectionEngine:
     def _start_health_monitoring(self):
         """Start background health monitoring thread"""
         def health_monitor():
-            while True:
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "health_monitor",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric health_monitor collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection health_monitor failed: {e}")
+                    return None
                 try:
                     self._check_engine_health()
                     time.sleep(self.config.health_check_interval)

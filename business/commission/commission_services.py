@@ -678,11 +678,35 @@ Initialize Commission Analytics Service"""
         return start_date, end_date
     
     def _setup_report_generators(self) -> None:
-        """Setup report generators"""
-        # Report generators would be initialized here
-        # This is a placeholder for extensibility
-        pass
-    
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_setup_report_generators",
+                        "value": data if data else 0,
+        try:
+            logger.info(f"Executing _setup_metric_calculators")
+            
+            # Implementation for _setup_metric_calculators
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_setup_metric_calculators completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_setup_metric_calculators failed: {e}")
+            raise
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _setup_report_generators collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _setup_report_generators failed: {e}")
+                    return None
     def _setup_metric_calculators(self) -> None:
         """
 Setup metric calculators"""

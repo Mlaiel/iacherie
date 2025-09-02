@@ -1148,7 +1148,26 @@ Get SEO optimization by ID asynchronously"""
             semaphore = asyncio.Semaphore(self._max_concurrent_operations)
             
             async def analyze_keyword_with_semaphore(keyword):
-                async with semaphore:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_analyze_keyword_with_semaphore_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_analyze_keyword_with_semaphore_result(result)
+            
+                    logger.info(f"AI processing analyze_keyword_with_semaphore completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing analyze_keyword_with_semaphore failed: {e}")
+                    raise
                     return await self._analyze_single_keyword_async(keyword, target_platforms)
             
             keyword_tasks = [analyze_keyword_with_semaphore(keyword) for keyword in extracted_keywords]
@@ -1184,6 +1203,27 @@ Get SEO optimization by ID asynchronously"""
             platform_metadata = dict(metadata_results)
             
             # Store generated metadata
+            await self._store_seo_metadata_async(content_id, platform_metadata)
+            
+            self.logger.info(f"Async SEO metadata generated for content {content_id} on {len(target_platforms)} platforms")
+            
+            return platform_metadata
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing optimize_content_with_semaphore")
+            
+            # Implementation for optimize_content_with_semaphore
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"optimize_content_with_semaphore completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"optimize_content_with_semaphore failed: {e}")
+            raise
             await self._store_seo_metadata_async(content_id, platform_metadata)
             
             self.logger.info(f"Async SEO metadata generated for content {content_id} on {len(target_platforms)} platforms")
@@ -1492,6 +1532,23 @@ Generate platform-specific metadata asynchronously"""
             optimized_content = await self._apply_optimizations_async(content_data, suggestions)
             
             # Store optimization results
+            await self._store_optimization_results_async(content_id, platform, optimized_content, suggestions)
+            
+            self.logger.info(f"Async content optimized for {platform.value}: {len(suggestions)} suggestions applied")
+        try:
+            logger.info(f"Executing _store_optimization_results_async")
+            
+            # Implementation for _store_optimization_results_async
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_optimization_results_async completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_optimization_results_async failed: {e}")
+            raise
             await self._store_optimization_results_async(content_id, platform, optimized_content, suggestions)
             
             self.logger.info(f"Async content optimized for {platform.value}: {len(suggestions)} suggestions applied")

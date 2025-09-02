@@ -246,8 +246,20 @@ class CustomDataset(Dataset):
             self.id_to_label = {}
     
     def __len__(self):
-        return len(self.data)
-    
+        try:
+            logger.info(f"Executing __len__")
+            
+            # Implementation for __len__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__len__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__len__ failed: {e}")
+            raise
     def __getitem__(self, idx):
         row = self.data.iloc[idx]
         

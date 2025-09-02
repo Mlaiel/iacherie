@@ -320,8 +320,20 @@ class RoyaltyCalculation(Base):
     )
     
     def __repr__(self):
-        return f"<RoyaltyCalculation(id={self.id}, reference={self.calculation_reference}, amount={self.net_royalty_amount})>"
-    
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     @property
     def effective_rate(self) -> float:
         """Calculate the effective royalty rate as percentage of gross revenue"""

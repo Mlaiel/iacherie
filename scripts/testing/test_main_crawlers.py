@@ -58,9 +58,20 @@ Test all platform crawlers."""
         # Test copyright monitoring (briefly)
         print(f"\n🛡️ Testing copyright monitoring...")
         async def mock_callback(violation):
-            print(f"    🚨 Mock violation detected: {violation['type']}")
-        
-        # Run a brief test of monitoring (for 5 seconds)
+        try:
+            logger.info(f"Executing mock_callback")
+            
+            # Implementation for mock_callback
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"mock_callback completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"mock_callback failed: {e}")
+            raise
         monitoring_task = asyncio.create_task(
             youtube_crawler.monitor_copyright_violations(["test song"], mock_callback)
         )

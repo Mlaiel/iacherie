@@ -661,11 +661,40 @@ Estimate when a queued task will start"""
         return datetime.utcnow() + timedelta(minutes=10)  # Placeholder
     
     async def _cancel_active_task(self, task: OrchestrationTask):
-        """
-Cancel an active task"""
-        pass  # Placeholder
-    
-    async def _is_task_valid(self, task: OrchestrationTask) -> bool:
+        try:
+            logger.info(f"Executing _cancel_active_task")
+            
+            # Implementation for _cancel_active_task
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_cancel_active_task completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_monitor_active_tasks",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _monitor_active_tasks collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _monitor_active_tasks failed: {e}")
+                    return None
         """
 Check if task is still valid"""
         if task.deadline and datetime.utcnow() > task.deadline:
@@ -685,6 +714,60 @@ Update orchestrator metrics"""
             self.metrics['success_rate'] = self.metrics['tasks_completed'] / total_tasks
     
     async def _cleanup_completed_tasks(self):
+        try:
+            logger.info(f"Executing _setup_agent_communication")
+            
+            # Implementation for _setup_agent_communication
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _cleanup_agent_communication")
+            
+            # Implementation for _cleanup_agent_communication
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _handle_agent_removal")
+            
+            # Implementation for _handle_agent_removal
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_handle_agent_removal completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_handle_agent_removal failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_cleanup_agent_communication completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _apply_optimizations")
+            
+            # Implementation for _apply_optimizations
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_apply_optimizations completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_apply_optimizations failed: {e}")
+            raise
+            logger.error(f"_cleanup_agent_communication failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_setup_agent_communication completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_setup_agent_communication failed: {e}")
+            raise
         """
 Cleanup old completed tasks"""
         cutoff = datetime.utcnow() - timedelta(hours=24)

@@ -293,8 +293,20 @@ class SocialIntegration(Base):
     creator_profile = relationship("CreatorProfile", back_populates="social_integrations")
     
     def __repr__(self):
-        return f"<SocialIntegration(id={self.id}, platform={self.platform.value}, status={self.connection_status.value})>"
-    
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     @classmethod
     def create_integration(
         cls, 

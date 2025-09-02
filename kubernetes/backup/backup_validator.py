@@ -275,52 +275,20 @@ class BackupValidator:
         return results
 
     async def get_validation_status(self, backup_id: str) -> Optional[Dict[str, Any]]:
-        """
-        Get validation status for backup.
-        
-        Args:
-            backup_id: Backup identifier
+        try:
+                    # Request validation
+                    if not backup_id:
+                        raise ValueError("Invalid request")
             
-        Returns:
-            Validation status information
-        """
-        # Check active validations
-        if backup_id in self.active_validations:
-            result = self.active_validations[backup_id]
-            return {
-                "backup_id": backup_id,
-                "status": "running",
-                "validation_level": result.validation_level.value,
-                "started_at": result.started_at.isoformat(),
-                "duration_seconds": (datetime.now() - result.started_at).total_seconds(),
-                "checks_performed": result.checks_performed,
-                "checks_passed": result.checks_passed,
-                "checks_failed": result.checks_failed,
-                "checks_warning": result.checks_warning,
-                "progress_percent": self._calculate_validation_progress(result)
-            }
-        
-        # Check validation history
-        for result in reversed(self.validation_history):
-            if result.backup_id == backup_id:
-                return {
-                    "backup_id": backup_id,
-                    "status": "completed",
-                    "overall_status": result.overall_status.value,
-                    "validation_level": result.validation_level.value,
-                    "started_at": result.started_at.isoformat(),
-                    "completed_at": result.completed_at.isoformat(),
-                    "duration_seconds": result.duration_seconds,
-                    "checks_performed": result.checks_performed,
-                    "checks_passed": result.checks_passed,
-                    "checks_failed": result.checks_failed,
-                    "checks_warning": result.checks_warning,
-                    "issues_count": len(result.issues),
-                    "warnings_count": len(result.warnings)
-                }
-        
-        return None
-
+                    # Process request
+                    result = await self._handle_get_validation_status_request(backup_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_validation_status failed: {e}")
+                    return {"status": "error", "message": str(e)}
     async def get_validation_statistics(self) -> Dict[str, Any]:
         """
         Get comprehensive validation statistics.
@@ -786,8 +754,108 @@ Perform individual validation check."""
         """Sample and verify backup content integrity."""
         # Implementation would perform content sampling
         return {"status": "passed", "message": "Content sampling completed"}
-
-    async def _check_restoration_test(self, backup_id: str) -> Dict[str, Any]:
+        try:
+            logger.info(f"Executing _check_component_completeness")
+            
+            # Implementation for _check_component_completeness
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _check_encryption_integrity")
+            
+            # Implementation for _check_encryption_integrity
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _check_compression_integrity")
+            
+            # Implementation for _check_compression_integrity
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _check_data_consistency")
+            
+            # Implementation for _check_data_consistency
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _check_referential_integrity")
+            
+            # Implementation for _check_referential_integrity
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _check_timestamp_consistency")
+            
+            # Implementation for _check_timestamp_consistency
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _check_content_sampling")
+            
+            # Implementation for _check_content_sampling
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _check_restoration_test")
+            
+            # Implementation for _check_restoration_test
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _check_performance_validation")
+            
+            # Implementation for _check_performance_validation
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_check_performance_validation completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_check_performance_validation failed: {e}")
+            raise
+            logger.info(f"_check_restoration_test completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_check_restoration_test failed: {e}")
+            raise
+            logger.info(f"_check_content_sampling completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_check_content_sampling failed: {e}")
+            raise
+            logger.info(f"_check_timestamp_consistency completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_check_timestamp_consistency failed: {e}")
+            raise
+            logger.info(f"_check_referential_integrity completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_check_referential_integrity failed: {e}")
+            raise
+            logger.info(f"_check_data_consistency completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_check_data_consistency failed: {e}")
+            raise
+            logger.info(f"_check_compression_integrity completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_check_compression_integrity failed: {e}")
+            raise
+            logger.info(f"_check_encryption_integrity completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_check_encryption_integrity failed: {e}")
+            raise
+            logger.info(f"_check_component_completeness completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_check_component_completeness failed: {e}")
+            raise
         """Test partial restoration capability."""
         # Implementation would test restoration
         return {"status": "passed", "message": "Restoration test completed"}

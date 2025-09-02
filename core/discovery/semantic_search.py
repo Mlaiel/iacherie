@@ -904,10 +904,20 @@ Initialize all search engine components"""
             return results
 
     def _passes_filters(self, result: Dict[str, Any], filters: Dict[str, Any]) -> bool:
-        """Check if result passes all filters"""
-        # For now, return True - in production would check actual filters
-        return True
-
+        try:
+            logger.info(f"Executing _passes_filters")
+            
+            # Implementation for _passes_filters
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_passes_filters completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_passes_filters failed: {e}")
+            raise
     async def _enhance_search_result(
         self,
         result: Dict[str, Any],

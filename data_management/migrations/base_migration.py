@@ -147,26 +147,33 @@ class BaseMigration(ABC):
         
     @abstractmethod
     async def execute_up(self, session: Session) -> MigrationResult:
-        """
-        Execute migration forward operation
-        
-        Args:
-            session: Database session with transaction context
+        try:
+            logger.info(f"Executing execute_up")
             
-        Returns:
-            MigrationResult with execution details
-        """
-        pass
-        
-    @abstractmethod
-    async def execute_down(self, session: Session) -> MigrationResult:
-        """
-        Execute migration rollback operation
-        
-        Args:
-            session: Database session with transaction context
+            # Implementation for execute_up
+            # TODO: Add specific business logic here
             
-        Returns:
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"execute_up completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"execute_up failed: {e}")
+        try:
+            logger.info(f"Executing execute_down")
+            
+            # Implementation for execute_down
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"execute_down completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"execute_down failed: {e}")
+            raise
             MigrationResult with rollback details
         """
         pass

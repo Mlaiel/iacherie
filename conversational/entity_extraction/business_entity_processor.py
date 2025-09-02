@@ -277,8 +277,20 @@ class BusinessEntityProcessor(BaseService):
                 )
             
             def forward(self, x):
-                return self.layers(x)
-        
+        try:
+            logger.info(f"Executing forward")
+            
+            # Implementation for forward
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"forward completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"forward failed: {e}")
+            raise
         model = BusinessRiskAssessment()
         
         # Load pre-trained weights if available
@@ -301,6 +313,31 @@ class BusinessEntityProcessor(BaseService):
                 super(PartnershipScorer, self).__init__()
                 self.encoder = nn.Sequential(
                     nn.Linear(input_dim, hidden_dim),
+                    nn.ReLU(),
+                    nn.BatchNorm1d(hidden_dim),
+                    nn.Dropout(0.25),
+                    nn.Linear(hidden_dim, hidden_dim // 2),
+                    nn.ReLU(),
+                    nn.BatchNorm1d(hidden_dim // 2),
+                    nn.Linear(hidden_dim // 2, 1),
+                    nn.Sigmoid()
+                )
+            
+            def forward(self, x):
+        try:
+            logger.info(f"Executing forward")
+            
+            # Implementation for forward
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"forward completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"forward failed: {e}")
+            raise
                     nn.ReLU(),
                     nn.BatchNorm1d(hidden_dim),
                     nn.Dropout(0.25),

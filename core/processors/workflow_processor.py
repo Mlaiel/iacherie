@@ -895,10 +895,30 @@ class WorkflowProcessor:
         }
     
     async def _persist_workflow_definition(self, definition: WorkflowDefinition):
-        """Persist workflow definition to storage"""
-        # Implementation would depend on storage backend
-        pass
-    
+        try:
+            logger.info(f"Executing _persist_workflow_definition")
+            
+            # Implementation for _persist_workflow_definition
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _persist_execution_result")
+            
+            # Implementation for _persist_execution_result
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_persist_execution_result completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_persist_execution_result failed: {e}")
+            raise
+            return result
+            
+        except Exception as e:
+            logger.error(f"_persist_workflow_definition failed: {e}")
+            raise
     async def _persist_execution_result(self, execution: WorkflowExecution):
         """
 Persist execution result to storage"""

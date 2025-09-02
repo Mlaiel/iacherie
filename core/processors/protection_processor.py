@@ -1272,27 +1272,28 @@ class ProtectionProcessor:
     async def _monitor_platform(
         self,
         fingerprint: ContentFingerprint,
-        platform: str
-    ) -> List[ProtectionAlert]:
-        """Monitor specific platform for content violations"""
-        # This would integrate with platform APIs and web scraping
-        # For now, return placeholder alerts
-        
-        alerts = []
-        
-        # Simulate finding potential violations
-        if platform == "youtube":
-            # Would use YouTube Data API to search for similar content
-            pass
-        elif platform == "instagram":
-            # Would use Instagram API or scraping
-            pass
-        elif platform == "tiktok":
-            # Would use TikTok API or scraping
-            pass
-        
-        return alerts
-    
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_monitor_platform",
+                        "value": fingerprint if fingerprint else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _monitor_platform collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _monitor_platform failed: {e}")
+                    return None
     async def generate_dmca_notice(
         self,
         alert: ProtectionAlert,

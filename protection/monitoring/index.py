@@ -950,36 +950,42 @@ async def shutdown_monitoring_system():
 
 # FastAPI app factory
 def create_monitoring_app(config: Optional[Dict[str, Any]] = None) -> FastAPI:
-    """
-    Create and configure the monitoring FastAPI application.
-    
-    Args:
-        config: Optional configuration dictionary
-        
-    Returns:
-        FastAPI: Configured FastAPI application
-    """
-    index = MonitoringIndex(config)
-    
-    # Initialize on startup
-    async def startup():
-        await index.initialize()
-    
-    # Create app with startup event
-    app = FastAPI(
-        title="IA-Influencer Content Protection Monitoring",
-        description="Advanced monitoring system for content protection",
-        version="3.0.0",
-        on_startup=[startup]
-    )
-    
-    # Mount monitoring index app
-    if index.app:
-        app.mount("/", index.app)
-    
-    return app
-
-# Legal notice and copyright
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "create_monitoring_app",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+        try:
+            logger.info(f"Executing startup")
+            
+            # Implementation for startup
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"startup completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"startup failed: {e}")
+            raise
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric create_monitoring_app collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection create_monitoring_app failed: {e}")
+                    return None
 LEGAL_NOTICE = """⚖️ LEGAL WARNING ⚖️
 
 This software is the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de).

@@ -594,13 +594,20 @@ Initialize subscription service."""
     async def _create_feature_access_entries(
         self, 
         plan: SubscriptionPlan, 
-        db: Session
-    ) -> None:
-        """Create feature access entries for subscription plan."""
-        # This would create FeatureAccess entries based on plan configuration
-        # Implementation depends on specific feature definitions
-        pass
-    
+        try:
+            logger.info(f"Executing _create_feature_access_entries")
+            
+            # Implementation for _create_feature_access_entries
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_create_feature_access_entries completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_create_feature_access_entries failed: {e}")
+            raise
     def _generate_subscription_id(self) -> str:
         """
 Generate unique subscription ID."""

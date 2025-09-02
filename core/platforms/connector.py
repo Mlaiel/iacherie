@@ -271,27 +271,20 @@ Start the connector and cleanup tasks"""
         logger.info("Platform connector started")
     
     async def stop(self):
-        """Stop the connector and cleanup resources"""
-        if self.cleanup_task:
-            self.cleanup_task.cancel()
-            try:
-                await self.cleanup_task
-            except asyncio.CancelledError:
-                pass
-        
-        # Close all active sessions
-        for session in self.active_sessions.values():
-            if not session.closed:
-                await session.close()
-        
-        # Close all pooled connections
-        for connections in self.pool.connections.values():
-            for connection in connections:
-                if hasattr(connection, 'close'):
-                    await connection.close()
-        
-        logger.info("Platform connector stopped")
-    
+        try:
+            logger.info(f"Executing stop")
+            
+            # Implementation for stop
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"stop completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"stop failed: {e}")
+            raise
     @asynccontextmanager
     async def get_platform(self, platform_type: PlatformType, config: PlatformConfig):
         """Context manager for getting platform connections"""

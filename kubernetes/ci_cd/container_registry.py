@@ -148,27 +148,20 @@ Initialize container registry manager"""
             return False
     
     async def _load_registry_configurations(self) -> None:
-        """Load registry configurations"""
-        # AWS ECR for production
-        self.registries[RegistryType.AWS_ECR] = RegistryCredentials(
-            registry_type=RegistryType.AWS_ECR,
-            username="AWS",
-            password="",  # Will be retrieved from AWS CLI
-            registry_url="123456789.dkr.ecr.eu-west-1.amazonaws.com",
-            region="eu-west-1"
-        )
-        
-        # Docker Hub for public images
-        self.registries[RegistryType.DOCKER_HUB] = RegistryCredentials(
-            registry_type=RegistryType.DOCKER_HUB,
-            username="iainfluencer",
-            password="",  # From environment
-            registry_url="registry-1.docker.io",
-            namespace="iainfluencer"
-        )
-        
-        # Harbor for private enterprise registry
-        self.registries[RegistryType.HARBOR] = RegistryCredentials(
+        try:
+            logger.info(f"Executing _load_registry_configurations")
+            
+            # Implementation for _load_registry_configurations
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_load_registry_configurations completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_load_registry_configurations failed: {e}")
+            raise
             registry_type=RegistryType.HARBOR,
             username="admin",
             password="",  # From environment

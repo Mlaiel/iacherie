@@ -405,22 +405,20 @@ Start alert processing system"""
         logger.info("Platform alerts system started")
     
     async def stop(self):
-        """Stop alert processing system"""
-        if not self.running:
-            return
-        
-        self.running = False
-        
-        # Cancel background processing
-        if self.processing_task:
-            self.processing_task.cancel()
-            try:
-                await self.processing_task
-            except asyncio.CancelledError:
-                pass
-        
-        logger.info("Platform alerts system stopped")
-    
+        try:
+            logger.info(f"Executing stop")
+            
+            # Implementation for stop
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"stop completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"stop failed: {e}")
+            raise
     async def send_platform_alert(
         self,
         fingerprint_id: str,

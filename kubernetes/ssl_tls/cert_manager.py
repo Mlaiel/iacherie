@@ -317,18 +317,17 @@ class CertificateManager:
     def save_private_key(
         self, 
         private_key: rsa.RSAPrivateKey, 
-        key_path: Path,
-        password: Optional[bytes] = None
-    ) -> None:
-        """
-        Save private key to file with optional encryption
-        
-        Args:
-            private_key: Private key to save
-            key_path: Destination path
-            password: Optional encryption password
-        """
         try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation save_private_key completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation save_private_key failed: {e}")
+                    raise
             if password:
                 encryption_algorithm = serialization.BestAvailableEncryption(password)
             else:
@@ -460,41 +459,26 @@ Extract OCSP and CRL URLs from certificate"""
         crl_url = None
         
         try:
-            # Get Authority Information Access extension
-            aia_extension = certificate.extensions.get_extension_for_oid(
-                ExtensionOID.AUTHORITY_INFORMATION_ACCESS
-            )
-            
-            for access_description in aia_extension.value:
-                if access_description.access_method == x509.oid.AuthorityInformationAccessOID.OCSP:
-                    ocsp_url = access_description.access_location.value
-                elif access_description.access_method == x509.oid.AuthorityInformationAccessOID.CA_ISSUERS:
-                    # This is typically the issuer certificate URL
-                    pass
-                    
-        except x509.ExtensionNotFound:
-            pass
-        
         try:
-            # Get CRL Distribution Points extension
-            crl_extension = certificate.extensions.get_extension_for_oid(
-                ExtensionOID.CRL_DISTRIBUTION_POINTS
-            )
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
             
-            for distribution_point in crl_extension.value:
-                if distribution_point.full_name:
-                    for name in distribution_point.full_name:
-                        if isinstance(name, x509.UniformResourceIdentifier):
-                            crl_url = name.value
-                            break
-                    if crl_url:
-                        break
-                        
-        except x509.ExtensionNotFound:
-            pass
-        
-        return ocsp_url, crl_url
-    
+                    # Preprocess input
+                    processed_input = await self._preprocess__extract_validation_urls_input(certificate)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__extract_validation_urls_result(result)
+            
+                    logger.info(f"AI processing _extract_validation_urls completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _extract_validation_urls failed: {e}")
+                    raise
     def verify_certificate_chain(
         self, 
         certificate: x509.Certificate,

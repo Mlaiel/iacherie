@@ -1086,28 +1086,20 @@ Encrypt using Fernet"""
         return plaintext
     
     def _encrypt_rsa_oaep(self, data: bytes, private_key_bytes: bytes) -> EncryptedData:
-        """
-Encrypt using RSA-OAEP"""
-        
-        # Load private key and extract public key
-        private_key = serialization.load_pem_private_key(
-            private_key_bytes,
-            password=None,
-            backend=default_backend()
-        )
-        public_key = private_key.public_key()
-        
-        # Encrypt data
-        ciphertext = public_key.encrypt(
-            data,
-            asym_padding.OAEP(
-                mgf=asym_padding.MGF1(algorithm=hashes.SHA256()),
-                algorithm=hashes.SHA256(),
-                label=None
-            )
-        )
-        
-        return EncryptedData(
+        try:
+            logger.info(f"Executing _encrypt_rsa_oaep")
+            
+            # Implementation for _encrypt_rsa_oaep
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_encrypt_rsa_oaep completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_encrypt_rsa_oaep failed: {e}")
+            raise
             ciphertext=ciphertext,
             algorithm=EncryptionAlgorithm.RSA_OAEP,
             key_id=""
@@ -1139,9 +1131,20 @@ Encrypt using RSA-OAEP"""
 # Convenience functions for common encryption patterns
 def encrypt_creator_data(
     encryption_handler: TransactionEncryption,
-    creator_id: str,
-    data: Any,
-    security_level: SecurityLevel = SecurityLevel.HIGH
+        try:
+            logger.info(f"Executing _decrypt_rsa_oaep")
+            
+            # Implementation for _decrypt_rsa_oaep
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_decrypt_rsa_oaep completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_decrypt_rsa_oaep failed: {e}")
+            raise
 ) -> EncryptedData:
     """
 Encrypt creator-specific data"""

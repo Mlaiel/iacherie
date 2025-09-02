@@ -287,11 +287,17 @@ Get all enabled models."""
         return [model for model in self.models.values() if model.enabled]
     
     def update_model_performance(self, model_id: str, response_time: float, accuracy: float) -> None:
-        """
-Update model performance metrics."""
-        # Implementation for performance tracking
-        pass
-    
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation update_model_performance completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation update_model_performance failed: {e}")
+                    raise
     def optimize_model_selection(self, content_type: str, priority: str) -> Optional[ModelConfig]:
         """
 Select optimal model based on content type and priority."""

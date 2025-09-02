@@ -496,11 +496,20 @@ Initialize the ROI calculator."""
     
     async def _prepare_cash_flow_data(
         self, investment: Investment, cash_flows: List[CashFlow]
-    ) -> pd.DataFrame:
-        """Prepare cash flow data for analysis."""
-        # Implementation for cash flow preparation
-        pass
-    
+        try:
+            logger.info(f"Executing _prepare_cash_flow_data")
+            
+            # Implementation for _prepare_cash_flow_data
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_prepare_cash_flow_data completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_prepare_cash_flow_data failed: {e}")
+            raise
     async def _calculate_simple_roi(self, cash_flow_data: pd.DataFrame) -> float:
         """
 Calculate simple ROI."""

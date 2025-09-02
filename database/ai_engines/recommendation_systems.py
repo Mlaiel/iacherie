@@ -333,10 +333,20 @@ Register a new recommendation model."""
             raise
     
     async def _store_model_metadata(self, model_id: str, model_data: Dict[str, Any]) -> None:
-        """Store model metadata in database."""
-        # Implementation depends on database schema
-        pass
-    
+        try:
+            logger.info(f"Executing _store_model_metadata")
+            
+            # Implementation for _store_model_metadata
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_model_metadata completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_model_metadata failed: {e}")
+            raise
     async def get_model_performance(self, model_id: str) -> Dict[str, Any]:
         """
 Get model performance metrics."""

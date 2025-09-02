@@ -793,10 +793,30 @@ Execute automated follow-up action"""
         logger.info(f"Scheduling compliance verification for notice {notice_id} in {verification_delay}")
     
     async def _store_response_event(self, response_event: ResponseEvent):
-        """Store response event in database"""
-        # Implementation for storing response events
-        pass
-    
+        try:
+            logger.info(f"Executing _store_response_event")
+            
+            # Implementation for _store_response_event
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _store_compliance_verification")
+            
+            # Implementation for _store_compliance_verification
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_compliance_verification completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_compliance_verification failed: {e}")
+            raise
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_response_event failed: {e}")
+            raise
     async def _store_compliance_verification(self, verification: ComplianceVerification):
         """
 Store compliance verification in database"""

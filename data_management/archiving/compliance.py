@@ -297,12 +297,50 @@ class ComplianceChecker(ABC):
     async def check_compliance(
         self,
         archive_entry: ArchiveEntry,
-        requirement: RegulatoryRequirement
-    ) -> Tuple[bool, List[str]]:
-        """
-Check compliance for archive entry against requirement"""
-        pass
-    
+        try:
+            logger.info(f"Executing check_compliance")
+            
+            # Implementation for check_compliance
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"check_compliance completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_supported_standards_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_supported_standards failed: {e}")
+                    return {"status": "error", "message": str(e)}
+        except Exception as e:
+            logger.error(f"check_compliance failed: {e}")
+            raise
     @abstractmethod
     def get_supported_standards(self) -> Set[ComplianceStandard]:
         """
@@ -320,7 +358,35 @@ GDPR compliance checker"""
     async def check_compliance(
         self,
         archive_entry: ArchiveEntry,
-        requirement: RegulatoryRequirement
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_supported_standards_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_supported_standards failed: {e}")
+                    return {"status": "error", "message": str(e)}
     ) -> Tuple[bool, List[str]]:
         """
 Check GDPR compliance"""
@@ -341,7 +407,20 @@ Check GDPR compliance"""
             
             # Check data residency (mock check)
             if requirement.data_residency_required:
-                data_location = archive_entry.metadata.get("storage_location", "unknown")
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_supported_standards_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_supported_standards failed: {e}")
+                    return {"status": "error", "message": str(e)}
                 if requirement.allowed_countries and data_location not in requirement.allowed_countries:
                     issues.append(f"Data stored in non-compliant location: {data_location}")
             

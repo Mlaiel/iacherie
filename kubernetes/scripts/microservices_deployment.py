@@ -148,7 +148,20 @@ class ServiceEndpoint:
     cache_ttl_seconds: int = 300
     
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             'path': self.path,
             'method': self.method,
             'protocol': self.protocol.value,
@@ -163,7 +176,20 @@ class ServiceEndpoint:
 
 @dataclass
 class ServiceDependency:
-    """
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
 Service dependency configuration"""
     service_name: str
     service_type: ServiceType
@@ -198,7 +224,20 @@ class ServiceConfiguration:
     namespace: str
     replicas: int = 3
     port: int = 8080
-    management_port: int = 8081
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
     protocol: CommunicationProtocol = CommunicationProtocol.HTTP_REST
     endpoints: List[ServiceEndpoint] = field(default_factory=list)
     dependencies: List[ServiceDependency] = field(default_factory=list)
@@ -228,7 +267,20 @@ class ServiceConfiguration:
             'service_name': self.service_name,
             'service_type': self.service_type.value,
             'version': self.version,
-            'namespace': self.namespace,
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             'replicas': self.replicas,
             'port': self.port,
             'management_port': self.management_port,
@@ -251,6 +303,21 @@ class ServiceConfiguration:
 
 
 @dataclass
+class ServiceMeshConfiguration:
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
 class ServiceMeshConfiguration:
     """
 Service mesh configuration"""

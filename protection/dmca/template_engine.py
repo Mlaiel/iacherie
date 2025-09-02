@@ -251,7 +251,20 @@ Format large numbers for display"""
     
     # Template definitions (English)
     def _get_urgent_takedown_template_en(self) -> str:
-        return """<!DOCTYPE html>
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_urgent_takedown_template_en_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_urgent_takedown_template_en failed: {e}")
+                    return {"status": "error", "message": str(e)}
 <html>
 <head>
     <meta charset="UTF-8">
@@ -362,7 +375,20 @@ Format large numbers for display"""
             <p style="margin-top: 30px;"><em><strong>I swear, under penalty of perjury, that the information in this notification is accurate and that I am authorized to act on behalf of the copyright owner.</strong></em></p>
             
             <p style="margin-top: 20px;"><strong>Electronic Signature:</strong> {{ copyright_owner_name }}</p>
-            <p><strong>Date:</strong> {{ current_date }}</p>
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_standard_takedown_template_en_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_standard_takedown_template_en failed: {e}")
+                    return {"status": "error", "message": str(e)}
         </div>
 
         <div class="footer">
@@ -439,7 +465,20 @@ Format large numbers for display"""
 
         <div class="info-box">
             <h2 style="margin-top: 0;">REQUESTED ACTION</h2>
-            <p>Please remove or disable access to the infringing content within {{ response_days }} days of receiving this notice.</p>
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_formal_escalation_template_en_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_formal_escalation_template_en failed: {e}")
+                    return {"status": "error", "message": str(e)}
         </div>
 
         <div class="signature">
@@ -501,12 +540,48 @@ Format large numbers for display"""
 
         <div class="warning-box">
             <h2 style="color: #fd7e14; margin-top: 0;">NON-COMPLIANCE DETECTED</h2>
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_urgent_takedown_template_de_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_urgent_takedown_template_de failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                <tr><th>Date</th><td>{{ current_date }}</td></tr>
+                <tr><th>Original Case ID</th><td>{{ case_id }}</td></tr>
+                <tr><th>Escalation Notice ID</th><td>{{ notice_id }}</td></tr>
+            </table>
+        </div>
+
+        <div class="warning-box">
+            <h2 style="color: #fd7e14; margin-top: 0;">NON-COMPLIANCE DETECTED</h2>
             <p><strong>This is a formal escalation of our previous DMCA takedown notice. The infringing content remains active despite our initial request.</strong></p>
         </div>
 
         <div class="section">
             <h2>NEXT STEPS</h2>
             <p>If the infringing content is not removed within 48 hours, we will proceed with:</p>
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_urgent_takedown_template_fr_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_urgent_takedown_template_fr failed: {e}")
+                    return {"status": "error", "message": str(e)}
             <ul>
                 <li>Formal legal proceedings</li>
                 <li>Claims for all damages and lost revenue</li>
@@ -530,6 +605,89 @@ Format large numbers for display"""
     # Additional template methods for German and French would follow...
     # For brevity, including key templates only
     
+    def _get_urgent_takedown_template_de(self) -> str:
+        try:
+        try:
+                    # Request validation
+                    if not data:
+        try:
+                    # Request validation
+                    if not data:
+        try:
+                    # Request validation
+                    if not data:
+        try:
+                    # Request validation
+                    if not data:
+        try:
+                    # Request validation
+                    if not data:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_settlement_offer_template_en_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_settlement_offer_template_en failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                    result = await self._handle__get_counter_response_template_en_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_counter_response_template_en failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                    result = await self._handle__get_legal_escalation_template_en_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_legal_escalation_template_en failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                    result = await self._handle__get_formal_escalation_template_fr_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_formal_escalation_template_fr failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                    result = await self._handle__get_standard_takedown_template_fr_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_standard_takedown_template_fr failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                    result = await self._handle__get_formal_escalation_template_de_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_formal_escalation_template_de failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_standard_takedown_template_de_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_standard_takedown_template_de failed: {e}")
+                    return {"status": "error", "message": str(e)}
     def _get_urgent_takedown_template_de(self) -> str:
         return """<!DOCTYPE html>
 <html>

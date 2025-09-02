@@ -962,7 +962,26 @@ Extract complete video information"""
         semaphore = asyncio.Semaphore(self.config.max_concurrent)
         
         async def extract_with_semaphore(url: str) -> ExtractionResult:
-            async with semaphore:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_extract_with_semaphore_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_extract_with_semaphore_result(result)
+            
+                    logger.info(f"AI processing extract_with_semaphore completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing extract_with_semaphore failed: {e}")
+                    raise
                 return await self.extract(url)
         
         tasks = [extract_with_semaphore(url) for url in urls]

@@ -158,21 +158,28 @@ Start health check monitoring"""
         logger.info("Health check monitoring started successfully")
         
     async def stop_monitoring(self) -> None:
-        """Stop health check monitoring"""
-        if not self.is_monitoring:
-            return
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "stop_monitoring",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
             
-        self.is_monitoring = False
-        
-        if self._monitor_task:
-            self._monitor_task.cancel()
-            try:
-                await self._monitor_task
-            except asyncio.CancelledError:
-                pass
-                
-        logger.info("Health check monitoring stopped")
-        
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric stop_monitoring collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection stop_monitoring failed: {e}")
+                    return None
     def register_component(
         self,
         name: str,

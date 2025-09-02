@@ -277,9 +277,20 @@ class EventSystemManager:
         # Ici on peut ajouter des callbacks personnalisés
         
         def alert_callback(alert):
-            logger.critical("ALERT: %s - %s", alert.severity.value, alert.message)
-            # Ici on pourrait envoyer vers d'autres systèmes (PagerDuty, Slack, etc.)
-        
+        try:
+            logger.info(f"Executing alert_callback")
+            
+            # Implementation for alert_callback
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"alert_callback completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"alert_callback failed: {e}")
+            raise
         self.metrics_manager.add_alert_callback(alert_callback)
         logger.info("Default monitoring configured")
     

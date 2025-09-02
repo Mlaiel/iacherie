@@ -848,16 +848,32 @@ Apply additional content optimizations"""
     async def _upload_to_cloudfront(
         self,
         content_variants: Dict[str, bytes],
-        filename: str,
-        metadata: Dict[str, Any]
-    ) -> Dict[str, Any]:
-        """Upload content to Amazon CloudFront"""
-        # CloudFront-specific implementation
-        pass
-    
-    async def _upload_to_fastly(
-        self,
-        content_variants: Dict[str, bytes],
+        try:
+            logger.info(f"Executing _upload_to_cloudfront")
+            
+            # Implementation for _upload_to_cloudfront
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_upload_to_cloudfront completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _upload_to_fastly")
+            
+            # Implementation for _upload_to_fastly
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_upload_to_fastly completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_upload_to_fastly failed: {e}")
+            raise
         filename: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
@@ -1084,13 +1100,20 @@ Configure CDN caching policies"""
                 # Long-term caching for media
                 cache_ttl = self.config.edge_ttl
             elif content_type in ['fingerprint', 'embedding']:
-                # Medium-term caching for AI content
-                cache_ttl = self.config.cache_ttl
-            else:
-                # Default caching
-                cache_ttl = self.config.cache_ttl
+        try:
+            logger.info(f"Executing _configure_cloudflare_caching")
             
-            # Configure based on CDN provider
+            # Implementation for _configure_cloudflare_caching
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_configure_cloudflare_caching completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_configure_cloudflare_caching failed: {e}")
+            raise
             if self.config.provider == CDNProvider.CLOUDFLARE:
                 await self._configure_cloudflare_caching(urls, cache_ttl)
             # Add other providers as needed
@@ -1260,8 +1283,20 @@ Update performance metrics"""
                 'count': 0,
                 'total_time': 0.0,
                 'avg_time': 0.0
-            }
-        
+        try:
+            logger.info(f"Executing distribute_single")
+            
+            # Implementation for distribute_single
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"distribute_single completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"distribute_single failed: {e}")
+            raise
         stats = self.metrics['performance_stats'][operation]
         stats['count'] += 1
         stats['total_time'] += processing_time

@@ -237,7 +237,28 @@ Start surveillance integration system"""
     async def _start_connection_monitoring(self):
         """Start monitoring surveillance connections"""
         async def monitor_connections():
-            while self.running:
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "monitor_connections",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric monitor_connections collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection monitor_connections failed: {e}")
+                    return None
                 try:
                     await self._check_connections()
                     await asyncio.sleep(self.heartbeat_interval)

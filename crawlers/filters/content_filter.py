@@ -103,19 +103,20 @@ Run comprehensive demonstration of all filter capabilities."""
             self.logger.info(f"Text {i}: {result.overall_result.name} (Score: {result.overall_score:.2f})")
     
     async def _demo_security_filtering(self):
-        """Demonstrate security filtering capabilities."""
-        self.logger.info("\n🔒 SECURITY FILTERING DEMO")
-        self.logger.info("-" * 30)
-        
-        # Create sample content for security testing
-        suspicious_contents = [
-            "http://phishing-site.com/login?steal=password",
-            "Normal safe content without threats",
-            "javascript:alert('xss attack')",
-            "Professional business content for analysis"
-        ]
-        
-        for i, content_data in enumerate(suspicious_contents, 1):
+        try:
+            logger.info(f"Executing _demo_security_filtering")
+            
+            # Implementation for _demo_security_filtering
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_demo_security_filtering completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_demo_security_filtering failed: {e}")
+            raise
             content = ContentItem(
                 content_id=f"security_{i}",
                 content_type="text",
@@ -135,35 +136,28 @@ Run comprehensive demonstration of all filter capabilities."""
                                f"(Confidence: {security_result.confidence:.2f})")
     
     async def _demo_performance_monitoring(self):
-        """Demonstrate performance monitoring."""
-        self.logger.info("\n⚡ PERFORMANCE MONITORING DEMO")
-        self.logger.info("-" * 35)
-        
-        start_time = time.time()
-        
-        # Process multiple items to show performance
-        tasks = []
-        for i in range(10):
-            content = ContentItem(
-                content_id=f"perf_{i}",
-                content_type="text",
-                content_data=f"Performance test content item {i}",
-                metadata={"batch": "performance_test"}
-            )
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "_demo_performance_monitoring",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
             
-            task = self.engine.filter_content(
-                content,
-                filter_types=[FilterType.PERFORMANCE, FilterType.QUALITY]
-            )
-            tasks.append(task)
-        
-        results = await asyncio.gather(*tasks)
-        
-        total_time = time.time() - start_time
-        passed_count = sum(1 for r in results if r.overall_result == FilterResult.PASSED)
-        
-        self.logger.info(f"Processed 10 items in {total_time:.2f}s")
-        self.logger.info(f"Success rate: {passed_count}/10 ({passed_count*10}%)")
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric _demo_performance_monitoring collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection _demo_performance_monitoring failed: {e}")
+                    return None
         self.logger.info(f"Average time per item: {total_time/10:.3f}s")
     
     async def _demo_quality_assessment(self):
@@ -227,18 +221,20 @@ Run comprehensive demonstration of all filter capabilities."""
         stats = self.engine.get_statistics()
         
         self.logger.info(f"Total processed: {stats['total_processed']}")
-        self.logger.info(f"Total passed: {stats['total_passed']}")
-        self.logger.info(f"Total failed: {stats['total_failed']}")
-        self.logger.info(f"Average processing time: {stats['average_processing_time']:.3f}s")
-        
-        self.logger.info("\nFilter usage:")
-        for filter_type, count in stats['filter_usage'].items():
-            self.logger.info(f"  {filter_type}: {count} times")
-
-
-async def run_demo():
-    """Run the complete filtering system demonstration."""
-    demo = FilterSystemDemo()
+        try:
+            logger.info(f"Executing _show_system_stats")
+            
+            # Implementation for _show_system_stats
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_show_system_stats completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_show_system_stats failed: {e}")
+            raise
     await demo.run_comprehensive_demo()
 
 

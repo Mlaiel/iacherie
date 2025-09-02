@@ -521,29 +521,26 @@ class DataPrivacyHandler:
     # Helper methods
     
     def _classify_field_sensitivity(self, field_name: str, field_value: Any) -> DataSensitivity:
-        """Classify field sensitivity based on name and content"""
-        # Check explicit classification rules
-        if field_name in self._classification_rules:
-            return self._classification_rules[field_name]
-        
-        # Content-based classification
-        field_str = str(field_value).lower()
-        
-        # Check for personal identifiers
-        if any(pattern in field_str for pattern in ["email", "@", "phone", "ssn", "passport"]):
-            return DataSensitivity.CONFIDENTIAL
-        
-        # Check for financial data
-        if any(pattern in field_str for pattern in ["card", "account", "payment", "bank"]):
-            return DataSensitivity.HIGHLY_SENSITIVE
-        
-        # Check for biometric patterns
-        if any(pattern in field_name.lower() for pattern in ["fingerprint", "biometric", "face", "voice"]):
-            return DataSensitivity.HIGHLY_SENSITIVE
-        
-        # Default classification
-        return DataSensitivity.INTERNAL
-    
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__classify_field_sensitivity_input(field_name)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__classify_field_sensitivity_result(result)
+            
+                    logger.info(f"AI processing _classify_field_sensitivity completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _classify_field_sensitivity failed: {e}")
+                    raise
     def _determine_required_techniques(self, sensitivity: DataSensitivity, field_name: str) -> List[PrivacyTechnique]:
         """Determine required privacy techniques based on sensitivity"""
         techniques = []
@@ -712,15 +709,20 @@ Decrypt encrypted data"""
         self, 
         user_id: str, 
         field_name: str, 
-        original_value: str, 
-        pseudonym: str
-    ) -> None:
-        """Store pseudonym mapping for potential reversal"""
-        # In production, store in secure pseudonym mapping table
-        pass
-    
-    async def _log_data_access(
-        self, 
+        try:
+            logger.info(f"Executing _store_pseudonym_mapping")
+            
+            # Implementation for _store_pseudonym_mapping
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_pseudonym_mapping completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_pseudonym_mapping failed: {e}")
+            raise
         user_id: str, 
         authorized_user_id: str,
         accessed_fields: List[str], 

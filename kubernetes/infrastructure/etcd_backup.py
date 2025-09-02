@@ -48,8 +48,20 @@ class ETCDBackupManager:
     """Manages ETCD backup and restoration operations"""
     
     def __init__(self, config: ETCDBackupConfig):
-        self.config = config
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     def create_backup_service_account(self) -> List[Dict[str, Any]]:
         """Create service account for ETCD backup operations"""
         return [

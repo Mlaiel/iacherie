@@ -185,8 +185,26 @@ Initialize the file validator."""
         loop = asyncio.get_event_loop()
         
         def _extract_sync():
-            # Use librosa to get audio properties
-            try:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__extract_sync_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__extract_sync_result(result)
+            
+                    logger.info(f"AI processing _extract_sync completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _extract_sync failed: {e}")
+                    raise
                 y, sr = librosa.load(file_path, sr=None, mono=False)
                 
                 # Handle mono vs stereo

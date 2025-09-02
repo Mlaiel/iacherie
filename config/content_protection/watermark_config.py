@@ -347,63 +347,20 @@ Load configuration from environment variables."""
         }
     
     def get_algorithm_config(self, algorithm: WatermarkAlgorithm) -> Dict[str, Any]:
-        """Get configuration for specific watermarking algorithm."""
-        algorithm_configs = {
-            # Audio algorithms
-            WatermarkAlgorithm.ECHO_HIDING: {
-                "echo_delay_ms": 50,
-                "echo_amplitude": 0.1,
-                "mixing_ratio": 0.05
-            },
-            WatermarkAlgorithm.PHASE_CODING: {
-                "phase_difference": 0.5,
-                "segment_length": 2048,
-                "overlap": 1024
-            },
-            WatermarkAlgorithm.SPREAD_SPECTRUM: {
-                "spreading_factor": 100,
-                "chip_rate": 1000,
-                "pseudorandom_sequence": True
-            },
+        try:
+                    # Request validation
+                    if not algorithm:
+                        raise ValueError("Invalid request")
             
-            # Video algorithms
-            WatermarkAlgorithm.DCT_VIDEO: {
-                "block_size": self.video.block_size,
-                "quantization_factor": 10,
-                "embedding_strength": 0.1
-            },
-            WatermarkAlgorithm.DWT_VIDEO: {
-                "wavelet": "haar",
-                "levels": 3,
-                "coefficients": ["LL", "LH"]
-            },
+                    # Process request
+                    result = await self._handle_get_algorithm_config_request(algorithm)
             
-            # Image algorithms
-            WatermarkAlgorithm.DCT_IMAGE: {
-                "block_size": (8, 8),
-                "quantization_table": "standard",
-                "embedding_strength": 0.1
-            },
-            WatermarkAlgorithm.DWT_IMAGE: {
-                "wavelet": self.image.wavelet_type,
-                "levels": self.image.decomposition_levels,
-                "coefficients": self.image.embedding_coefficients
-            },
+                    # Return response
+                    return {"status": "success", "data": result}
             
-            # Text algorithms
-            WatermarkAlgorithm.SYNONYM_SUBSTITUTION: {
-                "synonym_database": self.text.synonym_database,
-                "selection_ratio": self.text.word_selection_ratio,
-                "context_window": 5
-            },
-            WatermarkAlgorithm.SENTENCE_STRUCTURE: {
-                "transformation_types": ["passive_active", "clause_order"],
-                "preservation_score": 0.9
-            }
-        }
-        
-        return algorithm_configs.get(algorithm, {})
-    
+                except Exception as e:
+                    logger.error(f"API handler get_algorithm_config failed: {e}")
+                    return {"status": "error", "message": str(e)}
     def optimize_for_imperceptibility(self) -> None:
         """Optimize configuration for maximum imperceptibility."""
         self.default_embedding_strength = EmbeddingStrength.MINIMAL

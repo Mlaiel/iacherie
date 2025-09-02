@@ -349,16 +349,26 @@ Compte les mots dans le contenu"""
         return max(1, word_count // 200)
 
     def _extract_last_modified(self, headers: Dict[str, str]) -> Optional[datetime]:
-        """
-Extrait la date de dernière modification"""
-        last_modified = headers.get('Last-Modified')
-        if last_modified:
-            try:
-                return datetime.strptime(last_modified, '%a, %d %b %Y %H:%M:%S GMT')
-            except ValueError:
-                pass
-        return None
-
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__extract_last_modified_input(headers)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__extract_last_modified_result(result)
+            
+                    logger.info(f"AI processing _extract_last_modified completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _extract_last_modified failed: {e}")
+                    raise
     async def track_search_rankings(
         self,
         target_urls: List[str],

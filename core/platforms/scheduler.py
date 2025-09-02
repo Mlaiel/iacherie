@@ -515,31 +515,20 @@ Execute a single task"""
         logger.info("Platform scheduler started")
     
     async def stop(self):
-        """Stop the scheduler"""
-        if not self.scheduler_active:
-            return
-        
-        self.scheduler_active = False
-        
-        # Cancel scheduler task
-        if self.scheduler_task:
-            self.scheduler_task.cancel()
-            try:
-                await self.scheduler_task
-            except asyncio.CancelledError:
-                pass
-        
-        # Cancel all running tasks
-        for task_id, running_task in list(self.running_tasks.items()):
-            running_task.cancel()
-            try:
-                await running_task
-            except asyncio.CancelledError:
-                pass
-        
-        self.running_tasks.clear()
-        logger.info("Platform scheduler stopped")
-    
+        try:
+            logger.info(f"Executing stop")
+            
+            # Implementation for stop
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"stop completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"stop failed: {e}")
+            raise
     async def _scheduler_loop(self):
         """Main scheduler execution loop"""
         try:

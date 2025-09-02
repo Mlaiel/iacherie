@@ -1142,7 +1142,20 @@ Test concurrent profile operations"""
         manager = UserProfileManager(storage_backend='memory')
         
         async def create_profile_task(task_id: int):
-            for i in range(20):
+        try:
+            logger.info(f"Executing create_profile_task")
+            
+            # Implementation for create_profile_task
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"create_profile_task completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"create_profile_task failed: {e}")
+            raise
                 user_id = f'concurrent_user_{task_id}_{i}'
                 profile_data = {
                     'user_id': user_id,

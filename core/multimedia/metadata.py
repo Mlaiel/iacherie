@@ -392,7 +392,26 @@ class MultimediaMetadata:
             semaphore = asyncio.Semaphore(max_concurrent)
             
             async def extract_with_semaphore(file_path):
-                async with semaphore:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_extract_with_semaphore_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_extract_with_semaphore_result(result)
+            
+                    logger.info(f"AI processing extract_with_semaphore completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing extract_with_semaphore failed: {e}")
+                    raise
                     return await self.extract_metadata(file_path)
                     
             tasks = [extract_with_semaphore(path) for path in file_paths]
@@ -568,6 +587,26 @@ class MultimediaMetadata:
                 
             return {
                 "status": status,
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__initialize_extractors_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__initialize_extractors_result(result)
+            
+                    logger.info(f"AI processing _initialize_extractors completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _initialize_extractors failed: {e}")
+                    raise
                 "timestamp": datetime.now(timezone.utc).isoformat(),
                 "libraries": libraries,
                 "cache_size": len(self.metadata_cache) if self.cache_enabled else 0,
@@ -847,24 +886,32 @@ Extract basic file information"""
             elif 'artist' in key_lower:
                 metadata_set.descriptive.creator = str(value[0]) if isinstance(value, list) else str(value)
             elif 'album' in key_lower:
-                metadata_set.descriptive.subject = str(value[0]) if isinstance(value, list) else str(value)
-            elif 'genre' in key_lower:
-                metadata_set.descriptive.genre = str(value[0]) if isinstance(value, list) else str(value)
-            elif 'date' in key_lower or 'year' in key_lower:
-                try:
-                    year_str = str(value[0]) if isinstance(value, list) else str(value)
-                    metadata_set.technical.creation_date = datetime.strptime(year_str[:4], "%Y")
-                except:
-                    pass
-                    
-        except Exception as e:
-            logger.error(f"Audio tag mapping failed for {key}: {e}")
+        try:
+            logger.info(f"Executing _write_image_metadata")
             
-    async def _write_metadata_to_file(
-        self, 
-        file_path: str, 
-        metadata_set: MultimediaMetadataSet, 
-        updates: Dict[str, Any],
+            # Implementation for _write_image_metadata
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_write_image_metadata completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _write_audio_metadata")
+            
+            # Implementation for _write_audio_metadata
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_write_audio_metadata completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_write_audio_metadata failed: {e}")
+            raise
         category: MetadataCategory
     ):
         """Write metadata back to file (if supported)"""

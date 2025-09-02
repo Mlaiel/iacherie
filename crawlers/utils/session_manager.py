@@ -315,15 +315,20 @@ Convert dictionary to ProxyInfo."""
         )
     
     def _build_proxy_url(self, proxy_dict: Dict) -> str:
-        """
-Build proxy URL for aiohttp."""
-        username = proxy_dict.get('username')
-        password = proxy_dict.get('password')
-        protocol = proxy_dict.get('protocol', 'http')
-        host = proxy_dict['host']
-        port = proxy_dict['port']
-        
-        if username and password:
+        try:
+            logger.info(f"Executing _build_proxy_url")
+            
+            # Implementation for _build_proxy_url
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_build_proxy_url completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_build_proxy_url failed: {e}")
+            raise
             return f"{protocol}://{username}:{password}@{host}:{port}"
         else:
             return f"{protocol}://{host}:{port}"

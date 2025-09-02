@@ -80,7 +80,20 @@ class CrawlingTask:
     max_errors: int = 5
     
     def __post_init__(self):
-        if not self.created_at:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             self.created_at = datetime.now()
 
 @dataclass
@@ -556,7 +569,20 @@ Initialize all available crawlers."""
                 if task.mode == MonitoringMode.CONTINUOUS:
                     # Run if not run recently
                     if not task.last_run or (current_time - task.last_run) > timedelta(minutes=30):
-                        should_run = True
+        try:
+            logger.info(f"Executing run_task_with_semaphore")
+            
+            # Implementation for run_task_with_semaphore
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"run_task_with_semaphore completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"run_task_with_semaphore failed: {e}")
+            raise
                 elif task.mode == MonitoringMode.SCHEDULED:
                     # Check schedule pattern (simplified)
                     if task.next_run and current_time >= task.next_run:

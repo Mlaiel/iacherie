@@ -248,7 +248,20 @@ class PlatformRegistry:
     """Professional platform registry for managing all supported platforms"""
     
     def __post_init__(self):
-        self._platforms = {
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             PlatformType.YOUTUBE: PlatformCapabilities(
                 max_file_size=256 * 1024 * 1024 * 1024,  # 256GB
                 supported_formats=["mp4", "mov", "avi", "wmv", "flv", "webm"],

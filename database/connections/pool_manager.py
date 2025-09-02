@@ -31,8 +31,33 @@ except ImportError:
             self.failed_connections = 0
         
         def record_connection(self):
-            self.total_connections += 1
-        
+        try:
+            logger.info(f"Executing record_connection")
+            
+            # Implementation for record_connection
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing record_failure")
+            
+            # Implementation for record_failure
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"record_failure completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"record_failure failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"record_connection completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"record_connection failed: {e}")
+            raise
         def record_failure(self):
             self.failed_connections += 1
 
@@ -105,17 +130,28 @@ Initialize pool manager with database handlers"""
             self.pool_configs[db_type] = PoolConfig()
             self.pool_stats[db_type] = {
                 "current_size": 0,
-                "active_connections": 0,
-                "idle_connections": 0,
-                "total_created": 0,
-                "total_destroyed": 0,
-                "average_usage": 0.0,
-                "peak_usage": 0.0,
-                "last_scaled": None
-            }
-            self.load_history[db_type] = []
-        
-        # Start monitoring
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "stop_monitoring",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric stop_monitoring collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection stop_monitoring failed: {e}")
+                    return None
         await self.start_monitoring()
         
         self.logger.info("Connection pool manager initialized")

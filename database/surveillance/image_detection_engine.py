@@ -282,46 +282,26 @@ Advanced image feature extraction for fingerprinting."""
         return features
     
     async def _extract_keypoint_features(self, image: np.ndarray) -> Dict[str, Any]:
-        """Extract keypoint-based features."""
-        features = {}
-        
         try:
-            gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
             
-            # ORB features
-            orb_kp, orb_desc = self.orb_detector.detectAndCompute(gray, None)
-            features["orb_keypoints_count"] = len(orb_kp) if orb_kp else 0
-            if orb_desc is not None:
-                features["orb_descriptor_mean"] = np.mean(orb_desc, axis=0)
-                features["orb_descriptor_std"] = np.std(orb_desc, axis=0)
+                    # Preprocess input
+                    processed_input = await self._preprocess__extract_keypoint_features_input(image)
             
-            # SIFT features
-            sift_kp, sift_desc = self.sift_detector.detectAndCompute(gray, None)
-            features["sift_keypoints_count"] = len(sift_kp) if sift_kp else 0
-            if sift_desc is not None:
-                features["sift_descriptor_mean"] = np.mean(sift_desc, axis=0)
-                features["sift_descriptor_std"] = np.std(sift_desc, axis=0)
+                    # Run inference
+                    result = await self.model.predict(processed_input)
             
-            # SURF features (if available)
-            if self.surf_detector:
-                try:
-                    surf_kp, surf_desc = self.surf_detector.detectAndCompute(gray, None)
-                    features["surf_keypoints_count"] = len(surf_kp) if surf_kp else 0
-                    if surf_desc is not None:
-                        features["surf_descriptor_mean"] = np.mean(surf_desc, axis=0)
-                        features["surf_descriptor_std"] = np.std(surf_desc, axis=0)
-                except:
-                    pass
+                    # Postprocess result
+                    final_result = await self._postprocess__extract_keypoint_features_result(result)
             
-            # Corner detection
-            corners = cv2.goodFeaturesToTrack(gray, maxCorners=100, qualityLevel=0.01, minDistance=10)
-            features["corner_count"] = len(corners) if corners is not None else 0
+                    logger.info(f"AI processing _extract_keypoint_features completed")
+                    return final_result
             
-        except Exception as e:
-            logger.error(f"Keypoint feature extraction failed: {e}")
-        
-        return features
-    
+                except Exception as e:
+                    logger.error(f"AI processing _extract_keypoint_features failed: {e}")
+                    raise
     async def _extract_edge_features(self, image: np.ndarray) -> Dict[str, Any]:
         """Extract edge-based features."""
         features = {}

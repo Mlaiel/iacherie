@@ -552,7 +552,20 @@ Evict one entry based on strategy"""
         """
 Start background cleanup thread"""
         def cleanup_expired():
-            while self.running:
+        try:
+            logger.info(f"Executing cleanup_expired")
+            
+            # Implementation for cleanup_expired
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"cleanup_expired completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"cleanup_expired failed: {e}")
+            raise
                 try:
                     with self.lock:
                         current_time = time.time()

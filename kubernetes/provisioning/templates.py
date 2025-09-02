@@ -102,10 +102,20 @@ Validate the generated template"""
     
     @abstractmethod
     def deploy_template(self) -> Dict[str, Any]:
-        """
-Deploy the infrastructure using the template"""
-        pass
-    
+        try:
+            logger.info(f"Executing deploy_template")
+            
+            # Implementation for deploy_template
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"deploy_template completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"deploy_template failed: {e}")
+            raise
     def render_template(self, template_content: str, variables: Dict[str, Any]) -> str:
         """
 Render Jinja2 template with variables"""

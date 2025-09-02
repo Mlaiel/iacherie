@@ -793,7 +793,17 @@ Initialize configuration manager."""
         
         # Recursively update configuration
         def update_nested(obj, data):
-            for key, value in data.items():
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation update_nested completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation update_nested failed: {e}")
+                    raise
                 if hasattr(obj, key):
                     current_value = getattr(obj, key)
                     if isinstance(current_value, dict) and isinstance(value, dict):
@@ -872,8 +882,32 @@ Validate loaded configuration."""
         logger.info("Configuration watchers initialized")
     
     def get_config(self) -> CompleteAIProcessingConfig:
-        """Get current configuration."""
-        if self.config is None:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_database_url_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_redis_url_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_redis_url failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                    logger.error(f"API handler get_database_url failed: {e}")
+                    return {"status": "error", "message": str(e)}
             raise ValueError("Configuration not initialized")
         return self.config
     

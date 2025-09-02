@@ -382,19 +382,17 @@ Remove entry from cache."""
                 pass
     
     def _update_access_patterns(self, key: str, entry: CacheEntry) -> None:
-        """
-Update access patterns for cache strategies."""
-        entry.last_accessed = datetime.now()
-        entry.access_count += 1
-        self.access_frequency[key] += 1
-        
-        # Update LRU order
         try:
-            self.access_order.remove(key)
-        except ValueError:
-            pass
-        self.access_order.append(key)
-    
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _update_access_patterns completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _update_access_patterns failed: {e}")
+                    raise
     def _calculate_size(self, value: Any) -> int:
         """
 Calculate size of value in bytes."""
@@ -914,7 +912,20 @@ Decorator to monitor function performance."""
     def decorator(func):
         if asyncio.iscoroutinefunction(func):
             async def async_wrapper(*args, **kwargs):
-                request_id = f"{func.__name__}_{int(time.time() * 1000000)}"
+        try:
+            logger.info(f"Executing decorator")
+            
+            # Implementation for decorator
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"decorator completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"decorator failed: {e}")
+            raise
                 monitor.start_request(request_id)
                 
                 try:

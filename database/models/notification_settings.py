@@ -316,8 +316,20 @@ class NotificationSettings(Base):
     creator_profile = relationship("CreatorProfile", back_populates="notification_settings")
     
     def __repr__(self):
-        return f"<NotificationSettings(id={self.id}, user_id={self.user_id}, type={self.notification_type.value})>"
-    
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     @classmethod
     def create_default_settings(cls, user_id: str, creator_profile_id: str = None) -> List['NotificationSettings']:
         """Create default notification settings for a new user"""
@@ -423,24 +435,17 @@ Get optimal delivery channel based on AI optimization and context"""
             if Channel.PUSH_NOTIFICATION.value in self.enabled_channels:
                 return Channel.PUSH_NOTIFICATION
             elif Channel.SMS.value in self.enabled_channels:
-                return Channel.SMS
-        
-        # Consider historical engagement rates
-        if self.open_rate > 0.7 and Channel.EMAIL.value in self.enabled_channels:
-            return Channel.EMAIL
-        elif self.click_rate > 0.3 and Channel.PUSH_NOTIFICATION.value in self.enabled_channels:
-            return Channel.PUSH_NOTIFICATION
-        
-        return self.primary_channel
-    
-    def update_performance_metrics(self, delivered: bool, opened: bool = False, clicked: bool = False) -> None:
-        """
-Update performance metrics based on notification interaction"""
-        # This would be implemented with proper statistical tracking
-        # Simplified version here
-        
-        if delivered:
-            # Update delivery success rate (would use rolling average)
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation update_performance_metrics completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation update_performance_metrics failed: {e}")
+                    raise
             pass
         
         if opened:

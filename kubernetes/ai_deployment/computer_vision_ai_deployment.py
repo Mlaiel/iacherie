@@ -165,7 +165,20 @@ class ComputerVisionAIConfig:
     database_storage: bool = True
     
     def __post_init__(self):
-        if not self.class_labels:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             if self.ai_type == ComputerVisionAIType.OBJECT_DETECTION:
                 self.class_labels = ["person", "vehicle", "animal", "object"]
             elif self.ai_type == ComputerVisionAIType.FACE_RECOGNITION:

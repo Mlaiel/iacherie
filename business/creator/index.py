@@ -875,16 +875,20 @@ async def shutdown_creator_system() -> None:
 
 @asynccontextmanager
 async def creator_system_context(settings: Optional[Settings] = None):
-    """
-    Context manager for creator management system lifecycle
-    
-    Usage:
-        async with creator_system_context() as system:
-            # Use system here
-            pass
-    """
-    system = await initialize_creator_system(settings)
-    try:
+        try:
+            logger.info(f"Executing creator_system_context")
+            
+            # Implementation for creator_system_context
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"creator_system_context completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"creator_system_context failed: {e}")
+            raise
         yield system
     finally:
         await shutdown_creator_system()

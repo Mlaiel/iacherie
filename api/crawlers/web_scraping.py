@@ -991,7 +991,20 @@ class WebScrapingEngine:
             semaphore = asyncio.Semaphore(max_concurrent)
             
             async def scrape_with_semaphore(url):
-                async with semaphore:
+        try:
+            logger.info(f"Executing scrape_with_semaphore")
+            
+            # Implementation for scrape_with_semaphore
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"scrape_with_semaphore completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"scrape_with_semaphore failed: {e}")
+            raise
                     try:
                         # Add delay between requests
                         delay = random.uniform(*session.delay_range)

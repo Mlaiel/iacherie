@@ -148,16 +148,20 @@ class EmailNotifier:
 Email notification handler"""
     
     def __init__(self):
-        self.smtp_server = settings.SMTP_SERVER
-        self.smtp_port = settings.SMTP_PORT
-        self.smtp_username = settings.SMTP_USERNAME
-        self.smtp_password = settings.SMTP_PASSWORD
-        self.from_email = settings.FROM_EMAIL
-        
-        # Template environment
-        template_dir = Path(__file__).parent / "templates"
-        self.template_env = Environment(loader=FileSystemLoader(template_dir))
-    
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     async def send_email_alert(self, alert: Alert, recipients: List[str]) -> bool:
         """Send email alert"""
         try:
@@ -279,6 +283,20 @@ Send webhook alert"""
 
 
 class SlackNotifier:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     """Slack notification handler"""
     
     def __init__(self):

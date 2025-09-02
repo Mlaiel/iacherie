@@ -435,7 +435,20 @@ Execute pipeline steps sequentially."""
                 semaphore = asyncio.Semaphore(pipeline.max_parallel_steps)
                 
                 async def execute_step_with_semaphore(step):
-                    async with semaphore:
+        try:
+            logger.info(f"Executing execute_step_with_semaphore")
+            
+            # Implementation for execute_step_with_semaphore
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"execute_step_with_semaphore completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"execute_step_with_semaphore failed: {e}")
+            raise
                         return await self._execute_step(step, data, context)
                 
                 # Filter steps based on skip conditions

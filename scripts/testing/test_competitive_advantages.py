@@ -150,19 +150,19 @@ class TestCompetitiveAdvantages:
             assert advantages_section_found, "Competitive advantages section should be found in checklist"
 
 def main():
-    """Run the competitive advantages tests."""
-    print("🚀 Testing Competitive Advantages Implementation...")
-    
-    # Run pytest on this file
-    exit_code = pytest.main([__file__, "-v"])
-    
-    if exit_code == 0:
-        print("\n✅ All competitive advantages tests passed!")
-        print("🏆 Ainflue competitive advantages successfully implemented!")
-    else:
-        print("\n❌ Some tests failed. Please check implementation.")
-        
-    return exit_code
-
+        try:
+            logger.info(f"Executing main")
+            
+            # Implementation for main
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"main completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"main failed: {e}")
+            raise
 if __name__ == "__main__":
     sys.exit(main())

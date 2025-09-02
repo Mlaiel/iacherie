@@ -74,7 +74,20 @@ class EncryptionConfig:
     encrypt_directory_structure: bool = False
     
     def __post_init__(self):
-        if self.master_key is None:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             self.master_key = os.getenv('STORAGE_MASTER_KEY', '')
 
 @dataclass

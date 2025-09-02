@@ -242,8 +242,35 @@ Authenticate with Discord API"""
                 
                 @self.bot.event
                 async def on_ready():
-                    logger.info(f"Discord bot logged in as {self.bot.user}")
-                
+        try:
+            logger.info(f"Executing on_ready")
+            
+            # Implementation for on_ready
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"on_ready completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing on_ready")
+            
+            # Implementation for on_ready
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"on_ready completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"on_ready failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"on_ready failed: {e}")
+            raise
                 await self.bot.login(self.bot_token)
                 return True
             

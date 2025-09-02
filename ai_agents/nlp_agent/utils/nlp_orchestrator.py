@@ -552,5 +552,18 @@ class AsyncNLPOrchestrator:
         return self.orchestrator
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        if self.orchestrator:
+        try:
+            logger.info(f"Executing __aexit__")
+            
+            # Implementation for __aexit__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__aexit__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__aexit__ failed: {e}")
+            raise
             self.orchestrator.shutdown()

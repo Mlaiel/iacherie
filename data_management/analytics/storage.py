@@ -838,8 +838,20 @@ class MetricsWarehouse:
     """
     
     def __init__(self):
-        self.logger = logging.getLogger(__name__)
-        
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     async def store_aggregated_metrics(
         self,
         metrics: List[Dict[str, Any]],
@@ -876,6 +888,20 @@ class MetricsWarehouse:
             self.logger.info(f"Stored {len(metrics)} aggregated metrics")
             
         except Exception as e:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
             self.logger.error(f"Error storing aggregated metrics: {e}")
             raise
 

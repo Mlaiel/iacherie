@@ -194,7 +194,20 @@ class ModerationAgent(BaseAgent):
         logger.info(f"ModerationAgent {agent_id} initialized")
     
     def get_required_config_keys(self) -> List[str]:
-        return [
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_required_config_keys_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_required_config_keys failed: {e}")
+                    return {"status": "error", "message": str(e)}
             'moderation_thresholds',
             'model_configs',
             'review_workflow',
@@ -1350,6 +1363,20 @@ Log moderation decision for audit purposes"""
         if result.action == ModerationAction.APPROVE:
             self.auto_moderation_stats['approved'] += 1
         elif result.action in [ModerationAction.FLAG, ModerationAction.AGE_RESTRICT]:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
             self.auto_moderation_stats['flagged'] += 1
         elif result.action in [ModerationAction.BLOCK, ModerationAction.REMOVE]:
             self.auto_moderation_stats['blocked'] += 1

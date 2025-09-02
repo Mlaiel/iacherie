@@ -724,78 +724,26 @@ Extract multiple types of perceptual hashes"""
         return features
     
     async def _extract_shape_features(self, image_array: np.ndarray) -> List[ImageFeatureVector]:
-        """Extract shape-based features"""
-        features = []
-        
         try:
-            # Convert to grayscale and binary
-            if len(image_array.shape) == 3:
-                gray_image = cv2.cvtColor(image_array, cv2.COLOR_RGB2GRAY)
-            else:
-                gray_image = image_array
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
             
-            # Apply threshold to create binary image
-            _, binary = cv2.threshold(gray_image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+                    # Preprocess input
+                    processed_input = await self._preprocess__extract_shape_features_input(image_array)
             
-            # Find contours
-            contours, _ = cv2.findContours(binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+                    # Run inference
+                    result = await self.model.predict(processed_input)
             
-            if len(contours) > 0:
-                # Select largest contour
-                largest_contour = max(contours, key=cv2.contourArea)
-                
-                # Calculate shape features
-                area = cv2.contourArea(largest_contour)
-                perimeter = cv2.arcLength(largest_contour, True)
-                
-                # Shape descriptors
-                if perimeter > 0:
-                    circularity = 4 * np.pi * area / (perimeter ** 2)
-                    
-                    # Aspect ratio of bounding rectangle
-                    x, y, w, h = cv2.boundingRect(largest_contour)
-                    aspect_ratio = w / h if h > 0 else 0
-                    
-                    # Extent (ratio of contour area to bounding rectangle area)
-                    rect_area = w * h
-                    extent = area / rect_area if rect_area > 0 else 0
-                    
-                    # Solidity (ratio of contour area to convex hull area)
-                    hull = cv2.convexHull(largest_contour)
-                    hull_area = cv2.contourArea(hull)
-                    solidity = area / hull_area if hull_area > 0 else 0
-                    
-                    shape_features = np.array([circularity, aspect_ratio, extent, solidity])
-                    
-                    features.append(ImageFeatureVector(
-                        feature_type=ImageFeatureType.SHAPE_FEATURES,
-                        vector_data=shape_features,
-                        confidence_score=0.75,
-                        extraction_params={'method': 'contour_analysis', 'area': area, 'perimeter': perimeter}
-                    ))
-                
-                # Hu moments (shape descriptors invariant to translation, rotation, scale)
-                try:
-                    moments = cv2.moments(largest_contour)
-                    if moments['m00'] != 0:  # Avoid division by zero
-                        hu_moments = cv2.HuMoments(moments).flatten()
-                        # Log transform to reduce dynamic range
-                        hu_moments = -np.sign(hu_moments) * np.log10(np.abs(hu_moments) + 1e-10)
-                        
-                        features.append(ImageFeatureVector(
-                            feature_type=ImageFeatureType.SHAPE_FEATURES,
-                            vector_data=hu_moments,
-                            confidence_score=0.8,
-                            extraction_params={'method': 'hu_moments'}
-                        ))
-                except:
-                    pass
+                    # Postprocess result
+                    final_result = await self._postprocess__extract_shape_features_result(result)
             
-        except Exception as e:
-            logger.error(f"Shape feature extraction failed: {e}")
-        
-        return features
-    
+                    logger.info(f"AI processing _extract_shape_features completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _extract_shape_features failed: {e}")
+                    raise
     async def _extract_resnet_embedding(self, image: Image.Image) -> np.ndarray:
         """Extract ResNet deep learning embedding"""
         try:

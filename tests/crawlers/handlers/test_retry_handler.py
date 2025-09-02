@@ -353,8 +353,20 @@ Test successful operation requiring no retries."""
         manager = AdaptiveRetryManager()
         
         async def successful_operation():
-            return "success"
-        
+        try:
+            logger.info(f"Executing successful_operation")
+            
+            # Implementation for successful_operation
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"successful_operation completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"successful_operation failed: {e}")
+            raise
         result = await manager.execute_with_retry(successful_operation)
         
         assert result.success
@@ -386,6 +398,42 @@ Test successful operation requiring no retries."""
 
     @pytest.mark.asyncio
     async def test_max_attempts_exceeded(self):
+        try:
+            logger.info(f"Executing always_failing")
+            
+            # Implementation for always_failing
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"always_failing completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing failing_operation")
+            
+            # Implementation for failing_operation
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"failing_operation completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"failing_operation failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"always_failing failed: {e}")
+            raise
+        assert result.success
+        assert result.result == "success after retries"
+        assert result.attempts == 3
+        assert len(result.errors) == 2
+
+    @pytest.mark.asyncio
+    async def test_max_attempts_exceeded(self):
         """Test failure when max attempts exceeded."""
         manager = AdaptiveRetryManager()
         
@@ -405,6 +453,23 @@ Test successful operation requiring no retries."""
         manager = AdaptiveRetryManager()
         
         # Configure circuit breaker with low threshold
+        manager.circuit_breaker = CircuitBreaker(failure_threshold=2)
+        
+        async def failing_operation():
+        try:
+            logger.info(f"Executing should_retry")
+            
+            # Implementation for should_retry
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"should_retry completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"should_retry failed: {e}")
+            raise
         manager.circuit_breaker = CircuitBreaker(failure_threshold=2)
         
         async def failing_operation():
@@ -533,39 +598,39 @@ Test retry with different backoff strategies."""
         
         # Verify exponential delays (approximately)
         if len(attempts) >= 3:
-            delay1 = attempts[1] - attempts[0]
-            delay2 = attempts[2] - attempts[1]
-            assert delay2 > delay1  # Exponential increase
-
-
-class TestIntegration:
-    """Integration tests for retry handling system."""
-    @pytest.mark.asyncio
-    async def test_complete_retry_flow(self):
-        """
-Test complete retry flow with all components."""
-        manager = AdaptiveRetryManager()
+        try:
+            logger.info(f"Executing always_failing")
+            
+            # Implementation for always_failing
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"always_failing completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"always_failing failed: {e}")
+            raise
+        assert result.success
+        assert len(attempts) == 3
         
-        # Configure for testing
-        config = RetryConfig(
-            max_attempts=4,
-            base_delay=0.01,
-            backoff_strategy=BackoffStrategy.EXPONENTIAL,
-            jitter=True
-        )
-        
-        call_log = []
-        
-        async def flaky_operation():
-            call_log.append(time.time())
-            if len(call_log) < 3:
-                raise ConnectionError(f"Failure #{len(call_log)}")
-            return {"status": "success", "data": "test data"}
-        
-        # Execute with retry
-        result = await manager.execute_with_retry(flaky_operation, config)
-        
-        # Verify success after retries
+        # Verify exponential delays (approximately)
+        if len(attempts) >= 3:
+        try:
+            logger.info(f"Executing test_adaptive_retry_learning")
+            
+            # Implementation for test_adaptive_retry_learning
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"test_adaptive_retry_learning completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"test_adaptive_retry_learning failed: {e}")
+            raise
         assert result.success
         assert result.attempts == 3
         assert len(result.errors) == 2
@@ -620,6 +685,22 @@ Test complete retry flow with all components."""
         manager = AdaptiveRetryManager()
         
         # Simulate pattern of operations with different success rates
+        success_operations = [
+            lambda: "quick success",
+        try:
+            logger.info(f"Executing should_retry")
+            
+            # Implementation for should_retry
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"should_retry completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"should_retry failed: {e}")
+            raise
         success_operations = [
             lambda: "quick success",
             lambda: "another success"

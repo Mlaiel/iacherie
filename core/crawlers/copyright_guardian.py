@@ -359,11 +359,43 @@ PRAYER FOR RELIEF:
             self.logger.error(f"Erreur soumission officielle: {e}")
 
     async def _submit_us_copyright_office(self, registration: CopyrightRegistration) -> None:
-        """Soumet au US Copyright Office"""
-        # Implémentation de l'API Copyright Office (si disponible)
-        # En pratique, nécessiterait une intégration manuelle ou service tiers
-        pass
-
+        try:
+            logger.info(f"Executing _submit_us_copyright_office")
+            
+            # Implementation for _submit_us_copyright_office
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_submit_us_copyright_office completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _submit_uk_copyright_office")
+            
+            # Implementation for _submit_uk_copyright_office
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_submit_uk_copyright_office completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_submit_uk_copyright_office failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_submit_eu_copyright_office completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_submit_eu_copyright_office failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"_submit_us_copyright_office failed: {e}")
+            raise
     async def _submit_eu_copyright_office(self, registration: CopyrightRegistration) -> None:
         """
 Soumet aux organismes EU"""

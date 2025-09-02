@@ -384,8 +384,20 @@ class RelationshipExtractor(BaseService):
                 self.network = nn.Sequential(*layers)
             
             def forward(self, x):
-                return self.network(x)
-        
+        try:
+            logger.info(f"Executing forward")
+            
+            # Implementation for forward
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"forward completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"forward failed: {e}")
+            raise
         model = BusinessRelationshipClassifier()
         
         # Load pre-trained weights if available

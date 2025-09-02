@@ -226,57 +226,20 @@ class RedditCrawlerEngine(BaseCrawlerEngine):
     """
     def __init__(self, 
                  client_id: Optional[str] = None,
-                 client_secret: Optional[str] = None,
-                 user_agent: Optional[str] = None,
-                 username: Optional[str] = None,
-                 password: Optional[str] = None,
-                 use_async: bool = True,
-                 proxy_config: Optional[Dict] = None,
-                 rate_limit_config: Optional[Dict] = None):
-        """
-        Initialize Reddit crawler engine.
-        
-        Args:
-            client_id: Reddit API client ID
-            client_secret: Reddit API client secret
-            user_agent: User agent string
-            username: Reddit username (for authenticated requests)
-            password: Reddit password (for authenticated requests)
-            use_async: Whether to use async PRAW
-            proxy_config: Proxy configuration
-            rate_limit_config: Rate limiting configuration
-        """
-        super().__init__()
-        
-        # API Configuration
-        self.client_id = client_id or settings.REDDIT_CLIENT_ID
-        self.client_secret = client_secret or settings.REDDIT_CLIENT_SECRET
-        self.user_agent = user_agent or settings.REDDIT_USER_AGENT or "IA-Influencer-Agent:v1.0"
-        self.username = username or settings.REDDIT_USERNAME
-        self.password = password or settings.REDDIT_PASSWORD
-        
-        # Reddit API clients
-        self.reddit = None
-        self.async_reddit = None
-        self.use_async = use_async
-        
-        # Rate limiting (Reddit: 60 requests per minute)
-        rate_config = rate_limit_config or {
-            'requests_per_minute': 60,
-            'requests_per_hour': 3600,
-            'burst_limit': 30
-        }
-        self.rate_limiter = RateLimiter(**rate_config)
-        
-        # Cache manager
-        self.cache_manager = CacheManager(
-            cache_type='redis',
-            ttl=3600,  # 1 hour cache
-            key_prefix='reddit_'
-        )
-        
-        # Proxy manager
-        if proxy_config:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
             self.proxy_manager = ProxyManager(proxy_config)
         else:
             self.proxy_manager = None

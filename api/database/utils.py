@@ -435,8 +435,20 @@ class TableUtils:
     """
     
     def __init__(self):
-        self.db_utils = DatabaseUtils()
-        
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     async def initialize(self):
         """
 Initialize table utilities"""
@@ -665,9 +677,20 @@ Find duplicate rows in a table"""
             
         except Exception as e:
             logger.error(f"Error optimizing table {table_name}: {e}")
-            return {'success': False, 'error': str(e)}
-
-
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
 class IndexUtils:
     """
     Index management utilities for:
@@ -928,6 +951,22 @@ Get index usage statistics"""
                 
                 return {
                     'success': True,
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+                return {
+                    'success': True,
                     'index_name': index_name,
                     'cascade': cascade,
                     'sql_executed': drop_sql,
@@ -1065,6 +1104,24 @@ Validate all constraints in database or specific table"""
                         LIMIT 10
                     """)
                     
+                    unique_result = await session.execute(unique_violations_query)
+                    unique_violations = unique_result.fetchall()
+                    
+                    if unique_violations:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
                     unique_result = await session.execute(unique_violations_query)
                     unique_violations = unique_result.fetchall()
                     

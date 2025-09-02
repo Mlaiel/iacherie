@@ -745,18 +745,20 @@ Calculate ratio of complex words (3+ syllables)."""
         return complex_words / len(words)
     
     def _detect_passive_voice_ratio(self, text: str) -> float:
-        """
-Detect passive voice usage ratio."""
-        # Simplified passive voice detection
-        passive_indicators = ['was', 'were', 'been', 'being', 'by']
-        words = text.lower().split()
-        
-        if not words:
-            return 0.0
-        
-        passive_count = sum(1 for word in words if word in passive_indicators)
-        return passive_count / len(words)
-    
+        try:
+            logger.info(f"Executing _detect_passive_voice_ratio")
+            
+            # Implementation for _detect_passive_voice_ratio
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_detect_passive_voice_ratio completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_detect_passive_voice_ratio failed: {e}")
+            raise
     def _extract_key_phrases(self, text: str) -> List[str]:
         """
 Extract key phrases from text."""

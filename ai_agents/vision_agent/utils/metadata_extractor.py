@@ -676,7 +676,26 @@ Extract metadata from multiple files concurrently"""
         semaphore = asyncio.Semaphore(max_concurrent)
         
         async def extract_single(file_path):
-            async with semaphore:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_extract_single_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_extract_single_result(result)
+            
+                    logger.info(f"AI processing extract_single completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing extract_single failed: {e}")
+                    raise
                 return await self.extract_from_file(file_path)
         
         tasks = [extract_single(fp) for fp in file_paths]

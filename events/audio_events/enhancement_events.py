@@ -88,7 +88,20 @@ class AudioEnhancementStartedEvent(BaseEvent):
     reference_track_id: Optional[UUID] = None
     
     def __post_init__(self):
-        super().__init__(
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             event_type="audio.enhancement.started",
             event_category=EventCategory.ENHANCEMENT,
             priority=EventPriority.HIGH,
@@ -112,7 +125,20 @@ class AudioEnhancementProgressEvent(BaseEvent):
     Provides real-time feedback about enhancement pipeline progress.
     """
     user_id: UUID
-    file_id: UUID
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     enhancement_id: UUID
     current_enhancement_type: EnhancementType
     enhancement_progress: float  # 0.0 to 1.0
@@ -142,6 +168,21 @@ class AudioEnhancementProgressEvent(BaseEvent):
 
 @dataclass
 class AudioEnhancementCompletedEvent(BaseEvent):
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
+class AudioEnhancementCompletedEvent(BaseEvent):
     """
     Event triggered when audio enhancement is successfully completed.
     
@@ -166,6 +207,20 @@ class AudioEnhancementCompletedEvent(BaseEvent):
     preservation_score: float  # how well original character was preserved
     
     def __post_init__(self):
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
         super().__init__(
             event_type="audio.enhancement.completed",
             event_category=EventCategory.ENHANCEMENT,
@@ -191,7 +246,20 @@ class AudioEnhancementFailedEvent(BaseEvent):
     """
     user_id: UUID
     file_id: UUID
-    enhancement_id: UUID
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     failed_enhancement_type: EnhancementType
     error_code: str
     error_message: str
@@ -224,6 +292,21 @@ class AudioEnhancementFailedEvent(BaseEvent):
 
 @dataclass
 class AudioNoiseReductionEvent(BaseEvent):
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
+class AudioNoiseReductionEvent(BaseEvent):
     """
     Event triggered when noise reduction process is completed.
     
@@ -253,6 +336,21 @@ class AudioNoiseReductionEvent(BaseEvent):
             user_id=self.user_id,
             metadata={
                 "file_id": str(self.file_id),
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
+                "file_id": str(self.file_id),
                 "reduction_id": str(self.reduction_id),
                 "noise_types_count": len(self.noise_types_detected),
                 "overall_reduction_db": self.overall_noise_reduction,
@@ -278,7 +376,20 @@ class AudioMasteringEvent(BaseEvent):
     dynamic_range_dr: float
     peak_level_dbfs: float
     rms_level_dbfs: float
-    true_peak_dbtp: float
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     eq_applied: Dict[str, float]  # frequency -> gain
     compression_applied: Dict[str, Any]
     limiting_applied: Dict[str, Any]
@@ -308,6 +419,21 @@ class AudioMasteringEvent(BaseEvent):
 
 
 @dataclass
+class AudioRestorationEvent(BaseEvent):
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
 class AudioRestorationEvent(BaseEvent):
     """
     Event triggered when audio restoration process is completed.

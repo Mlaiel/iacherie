@@ -624,10 +624,30 @@ class CopyrightProtection:
             )
     
     async def _store_copyright_registration(self, certificate: Dict[str, Any]):
-        """Store copyright registration"""
-        # Implementation depends on your copyright registry model
-        pass
-    
+        try:
+            logger.info(f"Executing _store_copyright_registration")
+            
+            # Implementation for _store_copyright_registration
+            # TODO: Add specific business logic here
+        try:
+                    # Request validation
+                    if not content_id:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle__get_copyright_registration_request(content_id)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_copyright_registration failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_copyright_registration failed: {e}")
+            raise
     async def _get_copyright_registration(self, content_id: str) -> Optional[Dict[str, Any]]:
         """
 Get copyright registration"""

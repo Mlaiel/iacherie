@@ -301,8 +301,20 @@ Extract SIFT keypoint features"""
         loop = asyncio.get_event_loop()
         
         def compute_sift():
-            try:
-                # Convert to grayscale if needed
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_compute_sift_request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler compute_sift failed: {e}")
+                    return {"status": "error", "message": str(e)}
                 if len(image.shape) == 3:
                     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
                 else:

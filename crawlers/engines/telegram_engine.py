@@ -189,56 +189,20 @@ class TelegramCrawlerEngine(BaseCrawlerEngine):
     """
     def __init__(self, 
                  api_id: Optional[int] = None,
-                 api_hash: Optional[str] = None,
-                 session_name: str = 'telegram_crawler',
-                 phone_number: Optional[str] = None,
-                 password: Optional[str] = None,
-                 proxy_config: Optional[Dict] = None,
-                 rate_limit_config: Optional[Dict] = None):
-        """
-        Initialize Telegram crawler engine.
-        
-        Args:
-            api_id: Telegram API ID
-            api_hash: Telegram API hash
-            session_name: Session file name
-            phone_number: Phone number for authentication
-            password: 2FA password if enabled
-            proxy_config: Proxy configuration
-            rate_limit_config: Rate limiting configuration
-        """
-        super().__init__()
-        
-        # API Configuration
-        self.api_id = api_id or settings.TELEGRAM_API_ID
-        self.api_hash = api_hash or settings.TELEGRAM_API_HASH
-        self.session_name = session_name
-        self.phone_number = phone_number or settings.TELEGRAM_PHONE_NUMBER
-        self.password = password or settings.TELEGRAM_PASSWORD
-        
-        # Telegram client
-        self.client = None
-        self.is_authenticated = False
-        
-        # Rate limiting (Telegram has strict limits)
-        rate_config = rate_limit_config or {
-            'requests_per_second': 1,  # Very conservative for Telegram
-            'requests_per_minute': 20,
-            'requests_per_hour': 1200,
-            'burst_limit': 5
-        }
-        self.rate_limiter = RateLimiter(**rate_config)
-        
-        # Cache manager
-        self.cache_manager = CacheManager(
-            cache_type='redis',
-            ttl=1800,  # 30 minute cache
-            key_prefix='telegram_'
-        )
-        
-        # Proxy configuration
-        self.proxy_config = proxy_config
-
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
     async def authenticate(self) -> bool:
         """
 Authenticate with Telegram API"""

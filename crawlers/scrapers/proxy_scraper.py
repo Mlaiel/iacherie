@@ -207,16 +207,20 @@ Get random working proxy."""
         return random.choice(working_proxies)
         
     def _format_proxy_url(self, proxy: ProxyInfo) -> str:
-        """
-Format proxy URL for aiohttp."""
-        url = f"{proxy.protocol}://"
-        
-        if proxy.username and proxy.password:
-            url += f"{proxy.username}:{proxy.password}@"
+        try:
+            logger.info(f"Executing _format_proxy_url")
             
-        url += f"{proxy.host}:{proxy.port}"
-        return url
-        
+            # Implementation for _format_proxy_url
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_format_proxy_url completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_format_proxy_url failed: {e}")
+            raise
     async def make_request_with_proxy(self, url: str, proxy: Optional[ProxyInfo] = None,
                                     **kwargs) -> aiohttp.ClientResponse:
         """Make HTTP request using proxy."""

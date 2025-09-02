@@ -640,8 +640,33 @@ Génère un rapport de santé complet"""
             logger.error(f"Error during shutdown: {e}")
 
     def __enter__(self):
-        return self
-
+        try:
+            logger.info(f"Executing __enter__")
+            
+            # Implementation for __enter__
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing __exit__")
+            
+            # Implementation for __exit__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__exit__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__exit__ failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__enter__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__enter__ failed: {e}")
+            raise
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.shutdown()
 

@@ -922,18 +922,26 @@ Analyze ML-based threats"""
         return threats
     
     async def _analyze_signature_threats(self, fingerprints: List[FingerprintData]) -> List[ThreatDetection]:
-        """
-Analyze signature-based threats"""
-        threats = []
-        
-        # Simulate signature matching against known threat database
-        for fingerprint in fingerprints:
-            # Check against threat signature database
-            # This would involve actual database lookups
-            pass
-        
-        return threats
-    
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__analyze_signature_threats_input(fingerprints)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__analyze_signature_threats_result(result)
+            
+                    logger.info(f"AI processing _analyze_signature_threats completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _analyze_signature_threats failed: {e}")
+                    raise
     def _calculate_protection_score(self, result: ProtectionResult) -> float:
         """
 Calculate overall protection score"""

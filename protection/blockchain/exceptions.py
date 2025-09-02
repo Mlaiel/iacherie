@@ -111,19 +111,32 @@ class NetworkError(BlockchainError):
     def __init__(
         self,
         message: str,
-        network: str,
-        error_code: ErrorCode = ErrorCode.NETWORK_CONNECTION_FAILED,
-        details: Optional[Dict[str, Any]] = None
-    ):
-        super().__init__(message, error_code, details, network=network)
-
-
-class TransactionError(BlockchainError):
-    """
-Transaction execution errors"""
-    
-    def __init__(
-        self,
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
         message: str,
         transaction_hash: Optional[str] = None,
         error_code: ErrorCode = ErrorCode.TRANSACTION_FAILED,
@@ -149,12 +162,20 @@ Insufficient funds for transaction"""
             "required_amount": required_amount,
             "available_amount": available_amount,
             "currency": currency
-        }
-        super().__init__(
-            message,
-            error_code=ErrorCode.INSUFFICIENT_FUNDS,
-            details=details,
-            network=network
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
         )
 
 
@@ -265,10 +286,20 @@ class NFTMintError(NFTError):
     def __init__(
         self,
         message: str,
-        metadata_uri: Optional[str] = None,
-        network: Optional[str] = None,
-        details: Optional[Dict[str, Any]] = None
-    ):
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
         details = details or {}
         if metadata_uri:
             details["metadata_uri"] = metadata_uri

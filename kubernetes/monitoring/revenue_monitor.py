@@ -215,25 +215,28 @@ class RealtimeRevenueMonitor:
         logger.info("Real-time revenue monitoring started")
     
     async def stop_monitoring(self):
-        """Stop revenue monitoring"""
-        self._running = False
-        
-        # Cancel tasks
-        if self._monitoring_task:
-            self._monitoring_task.cancel()
-        if self._analytics_task:
-            self._analytics_task.cancel()
-        
         try:
-            if self._monitoring_task:
-                await self._monitoring_task
-            if self._analytics_task:
-                await self._analytics_task
-        except asyncio.CancelledError:
-            pass
-        
-        logger.info("Real-time revenue monitoring stopped")
-    
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "stop_monitoring",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric stop_monitoring collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection stop_monitoring failed: {e}")
+                    return None
     async def _monitoring_loop(self):
         """Main revenue monitoring loop"""
         while self._running:

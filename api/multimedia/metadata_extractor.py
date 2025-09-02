@@ -244,10 +244,49 @@ Abstract base class for metadata extractors"""
     
     @abstractmethod
     async def extract(self, content_path: Path) -> BaseMetadata:
-        """
-Extract metadata from content"""
-        pass
-    
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_extract_input(content_path)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_extract_result(result)
+            
+                    logger.info(f"AI processing extract completed")
+                    return final_result
+            
+                except Exception as e:
+        try:
+            logger.info(f"Executing supports_format")
+            
+            # Implementation for supports_format
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"supports_format completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"supports_format failed: {e}")
+            raise
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_extract_result(result)
+            
+                    logger.info(f"AI processing extract completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing extract failed: {e}")
+                    raise
     @abstractmethod
     def supports_format(self, format_type: Union[str, ContentFormat]) -> bool:
         """
@@ -1100,6 +1139,25 @@ Assess overall image quality"""
             contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
             
             # Count significant objects (large contours)
+            significant_objects = [c for c in contours if cv2.contourArea(c) > 1000]
+            metadata.object_count = len(significant_objects)
+            
+            # Text region detection (simplified)
+            try:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
             significant_objects = [c for c in contours if cv2.contourArea(c) > 1000]
             metadata.object_count = len(significant_objects)
             

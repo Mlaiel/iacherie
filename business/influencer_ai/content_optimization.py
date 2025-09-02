@@ -46,10 +46,20 @@ Interface du service Content Optimization"""
     
     @abstractmethod
     async def initialize(self) -> bool:
-        """
-Initialisation du service"""
-        pass
-    
+        try:
+            logger.info(f"Executing initialize")
+            
+            # Implementation for initialize
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"initialize completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"initialize failed: {e}")
+            raise
     @abstractmethod
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """
@@ -223,7 +233,20 @@ Récupération du statut du module"""
         "module": "Content Optimization",
         "version": "1.0.0",
         "expert": "AI_SPECIALIST + ML_ENGINEER",
-        "architecture_level": "business",
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
         "compliance": "3-tier-maximum"
     }
 

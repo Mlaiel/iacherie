@@ -76,7 +76,20 @@ class AudioFingerprintingStartedEvent(BaseEvent):
     parallel_processing: bool = True
     
     def __post_init__(self):
-        super().__init__(
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             event_type="audio.fingerprinting.started",
             event_category=EventCategory.FINGERPRINTING,
             priority=EventPriority.HIGH,
@@ -100,7 +113,20 @@ class AudioFingerprintingProgressEvent(BaseEvent):
     Provides real-time feedback about fingerprinting pipeline progress.
     """
     user_id: UUID
-    file_id: UUID
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     fingerprinting_id: UUID
     current_method: FingerprintingMethod
     segments_processed: int
@@ -130,6 +156,22 @@ class AudioFingerprintingProgressEvent(BaseEvent):
 
 @dataclass
 class AudioFingerprintingCompletedEvent(BaseEvent):
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
+@dataclass
+class AudioFingerprintingCompletedEvent(BaseEvent):
     """
     Event triggered when audio fingerprinting is successfully completed.
     
@@ -150,7 +192,20 @@ class AudioFingerprintingCompletedEvent(BaseEvent):
     storage_size: int  # bytes
     indexing_completed: bool
     searchable: bool = True
-    
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     def __post_init__(self):
         super().__init__(
             event_type="audio.fingerprinting.completed",
@@ -179,7 +234,20 @@ class AudioFingerprintingFailedEvent(BaseEvent):
     file_id: UUID
     fingerprinting_id: UUID
     failed_method: FingerprintingMethod
-    error_code: str
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     error_message: str
     error_details: Dict[str, Any]
     segments_processed: int
@@ -216,6 +284,23 @@ class AudioMatchFoundEvent(BaseEvent):
     Contains detailed information about the match and similarity metrics.
     """
     user_id: UUID
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
+    Contains detailed information about the match and similarity metrics.
+    """
+    user_id: UUID
     file_id: UUID
     match_id: UUID
     matched_file_id: UUID
@@ -241,6 +326,23 @@ class AudioMatchFoundEvent(BaseEvent):
             user_id=self.user_id,
             metadata={
                 "file_id": str(self.file_id),
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
+            user_id=self.user_id,
+            metadata={
+                "file_id": str(self.file_id),
                 "match_id": str(self.match_id),
                 "matched_file_id": str(self.matched_file_id),
                 "similarity_score": self.similarity_score,
@@ -258,6 +360,21 @@ class AudioCopyrightViolationEvent(BaseEvent):
     
     Contains comprehensive violation analysis and recommended actions.
     """
+    user_id: UUID
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
     user_id: UUID
     file_id: UUID
     violation_id: UUID
@@ -279,6 +396,20 @@ class AudioCopyrightViolationEvent(BaseEvent):
     evidence_package: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
         super().__init__(
             event_type="audio.fingerprinting.copyright_violation",
             event_category=EventCategory.LEGAL,

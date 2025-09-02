@@ -682,7 +682,20 @@ Schedule interval-based task"""
             interval_seconds = int(task_config.schedule_expression)
             
             async def interval_scheduler():
-                while task_config.enabled and self.is_running:
+        try:
+            logger.info(f"Executing interval_scheduler")
+            
+            # Implementation for interval_scheduler
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"interval_scheduler completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"interval_scheduler failed: {e}")
+            raise
                     try:
                         await asyncio.sleep(interval_seconds)
                         if task_config.enabled and await self._can_execute_task(task_config):
@@ -692,7 +705,20 @@ Schedule interval-based task"""
                         break
                     except Exception as e:
                         self.logger.error(f"Error in interval scheduler for {task_config.task_id}: {str(e)}")
+        try:
+            logger.info(f"Executing cron_scheduler")
             
+            # Implementation for cron_scheduler
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"cron_scheduler completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"cron_scheduler failed: {e}")
+            raise
             self.scheduled_tasks[task_config.task_id] = asyncio.create_task(interval_scheduler())
             
         except Exception as e:
@@ -706,8 +732,20 @@ Schedule interval-based task"""
             
             async def cron_scheduler():
                 while task_config.enabled and self.is_running:
-                    try:
-                        # Calculate time until next execution
+        try:
+            logger.info(f"Executing condition_scheduler")
+            
+            # Implementation for condition_scheduler
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"condition_scheduler completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"condition_scheduler failed: {e}")
+            raise
                         next_run = cron.get_next(datetime)
                         wait_seconds = (next_run - datetime.utcnow()).total_seconds()
                         

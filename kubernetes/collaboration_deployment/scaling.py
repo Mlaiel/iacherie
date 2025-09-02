@@ -257,20 +257,28 @@ Initialize the collaboration scaling manager."""
         logger.info("Started scaling monitoring")
 
     async def stop_monitoring(self) -> None:
-        """Stop monitoring and scaling operations."""
-        if self.monitoring_task:
-            self.monitoring_task.cancel()
-            try:
-                await self.monitoring_task
-            except asyncio.CancelledError:
-                pass
-        
-        # Cancel active scaling operations
-        for operation in self.active_scaling_operations.values():
-            operation.cancel()
-        
-        logger.info("Stopped scaling monitoring")
-
+        try:
+                    # Collect metrics
+                    metrics = {
+                        "timestamp": datetime.utcnow(),
+                        "metric_name": "stop_monitoring",
+                        "value": data if data else 0,
+                        "tags": self._get_metric_tags()
+                    }
+            
+                    # Store metrics
+                    await self._store_metric(metrics)
+            
+                    # Send to monitoring system
+                    if hasattr(self, 'metrics_client'):
+                        await self.metrics_client.send(metrics)
+            
+                    logger.info(f"Metric stop_monitoring collected")
+                    return metrics
+            
+                except Exception as e:
+                    logger.error(f"Metric collection stop_monitoring failed: {e}")
+                    return None
     async def add_scaling_policy(self, policy: ScalingPolicy) -> None:
         """Add a new scaling policy for a service."""
         self.scaling_policies[policy.service_name] = policy
@@ -828,13 +836,26 @@ Setup predictive model for a service."""
     async def _has_sufficient_training_data(self, service_name: str) -> bool:
         """Check if there's sufficient data for ML model training."""
         if service_name not in self.metrics_history:
-            return False
-        
-        history = self.metrics_history[service_name]
-        
-        # Need at least 24 hours of data with 1-minute intervals
-        return len(history) >= 1440
-
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess__train_predictive_model_input(service_name)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess__train_predictive_model_result(result)
+            
+                    logger.info(f"AI processing _train_predictive_model completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing _train_predictive_model failed: {e}")
+                    raise
     async def _train_predictive_model(self, service_name: str) -> None:
         """
 Train predictive model for a service."""

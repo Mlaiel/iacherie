@@ -650,7 +650,26 @@ class OpticalCharacterReader(BaseAgent):
         semaphore = asyncio.Semaphore(max_concurrent)
         
         async def extract_single(image):
-            async with semaphore:
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
+            
+                    # Preprocess input
+                    processed_input = await self._preprocess_extract_single_input(data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_extract_single_result(result)
+            
+                    logger.info(f"AI processing extract_single completed")
+                    return final_result
+            
+                except Exception as e:
+                    logger.error(f"AI processing extract_single failed: {e}")
+                    raise
                 return await self.extract_text(image, language)
         
         tasks = [extract_single(img) for img in images]

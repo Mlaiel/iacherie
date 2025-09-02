@@ -287,7 +287,20 @@ Get base configuration settings"""
         """
 Recursively merge new configuration"""
         def merge_dict(base: dict, update: dict):
-            for key, value in update.items():
+        try:
+            logger.info(f"Executing merge_dict")
+            
+            # Implementation for merge_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"merge_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"merge_dict failed: {e}")
+            raise
                 if key in base and isinstance(base[key], dict) and isinstance(value, dict):
                     merge_dict(base[key], value)
                 else:

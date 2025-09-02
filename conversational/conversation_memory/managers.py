@@ -926,10 +926,53 @@ class MemoryIndexer:
         return " ".join(text_parts)
     
     async def _index_by_topic(self, conversation: ConversationRecord, text: str):
-        """Index conversation by topics"""
-        # Would implement topic modeling and indexing
-        pass
-    
+        try:
+            logger.info(f"Executing _index_by_topic")
+            
+            # Implementation for _index_by_topic
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing _index_by_semantics")
+            
+            # Implementation for _index_by_semantics
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_index_by_semantics completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _index_by_time")
+            
+            # Implementation for _index_by_time
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_index_by_time completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_index_by_time failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_index_by_content_type completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_index_by_content_type failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"_index_by_semantics failed: {e}")
+            raise
+            return result
+            
+        except Exception as e:
+            logger.error(f"_index_by_topic failed: {e}")
+            raise
     async def _index_by_semantics(self, conversation: ConversationRecord, text: str):
         """
 Index conversation by semantic meaning"""

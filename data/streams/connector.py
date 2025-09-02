@@ -104,10 +104,70 @@ class BaseConnector(ABC):
         
     @abstractmethod
     async def connect(self) -> bool:
-        """
-Establish connection"""
-        pass
-        
+        try:
+            logger.info(f"Executing connect")
+            
+            # Implementation for connect
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"connect completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing health_check")
+            
+            # Implementation for health_check
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"health_check completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing receive_data")
+            
+            # Implementation for receive_data
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"receive_data completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"receive_data failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"send_data completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"send_data failed: {e}")
+            raise
+            return result
+            
+        except Exception as e:
+            logger.error(f"health_check failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"disconnect completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"disconnect failed: {e}")
+            raise
+            return result
+            
+        except Exception as e:
+            logger.error(f"connect failed: {e}")
+            raise
     @abstractmethod
     async def disconnect(self) -> bool:
         """
@@ -116,10 +176,85 @@ Close connection"""
         
     @abstractmethod
     async def health_check(self) -> bool:
-        """
+        try:
+            logger.info(f"Executing connect")
+            
+            # Implementation for connect
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"connect completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"connect failed: {e}")
+            raise
 Check connection health"""
         pass
         
+    @abstractmethod
+    async def send_data(self, data: Any, **kwargs) -> bool:
+        try:
+            logger.info(f"Executing disconnect")
+            
+            # Implementation for disconnect
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"disconnect completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing health_check")
+            
+            # Implementation for health_check
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"health_check completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing send_data")
+            
+            # Implementation for send_data
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"send_data completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"send_data failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"health_check failed: {e}")
+        try:
+            logger.info(f"Executing receive_data")
+            
+            # Implementation for receive_data
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"receive_data completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"receive_data failed: {e}")
+            raise
+            logger.info(f"disconnect completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"disconnect failed: {e}")
+            raise
     @abstractmethod
     async def send_data(self, data: Any, **kwargs) -> bool:
         """
@@ -128,12 +263,90 @@ Send data through connector"""
         
     @abstractmethod
     async def receive_data(self, **kwargs) -> Optional[Any]:
+        try:
+            logger.info(f"Executing connect")
+            
+            # Implementation for connect
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"connect completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"connect failed: {e}")
+            raise
+        pass
+        
+    @abstractmethod
+    async def receive_data(self, **kwargs) -> Optional[Any]:
+        try:
+            logger.info(f"Executing disconnect")
+            
+            # Implementation for disconnect
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"disconnect completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing health_check")
+            
+            # Implementation for health_check
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"health_check completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"health_check failed: {e}")
+        try:
+            logger.info(f"Executing send_data")
+            
+            # Implementation for send_data
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"send_data completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"send_data failed: {e}")
+            raise
+            logger.info(f"disconnect completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"disconnect failed: {e}")
+            raise
+    @abstractmethod
+    async def receive_data(self, **kwargs) -> Optional[Any]:
         """
 Receive data through connector"""
         pass
         
     async def get_status(self) -> ConnectionStatus:
-        """
+        try:
+            logger.info(f"Executing receive_data")
+            
+            # Implementation for receive_data
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"receive_data completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"receive_data failed: {e}")
+            raise
 Get connection status"""
         return self.status
         
@@ -156,6 +369,95 @@ Update connection metrics"""
             
         # Update average response time
         total_requests = self.metrics.total_requests
+        current_avg = self.metrics.avg_response_time
+        self.metrics.avg_response_time = (
+            (current_avg * (total_requests - 1) + response_time) / total_requests
+        )
+        
+        # Update data transferred
+        self.metrics.data_transferred_mb += data_size / (1024 * 1024)
+        
+        # Update uptime percentage
+        if total_requests > 0:
+        try:
+            logger.info(f"Executing connect")
+            
+            # Implementation for connect
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"connect completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing disconnect")
+            
+            # Implementation for disconnect
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"disconnect completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing health_check")
+            
+            # Implementation for health_check
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"health_check completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing send_data")
+            
+            # Implementation for send_data
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"send_data completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"send_data failed: {e}")
+            raise
+            return result
+            
+        except Exception as e:
+            logger.error(f"health_check failed: {e}")
+            raise
+            logger.info(f"disconnect completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"disconnect failed: {e}")
+        try:
+            logger.info(f"Executing receive_data")
+            
+            # Implementation for receive_data
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"receive_data completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"receive_data failed: {e}")
+            raise
+            return result
+            
+        except Exception as e:
+            logger.error(f"connect failed: {e}")
+            raise
         current_avg = self.metrics.avg_response_time
         self.metrics.avg_response_time = (
             (current_avg * (total_requests - 1) + response_time) / total_requests

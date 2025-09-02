@@ -44,8 +44,20 @@ sys.modules['redis'] = MagicMock()
 # Mock numpy for our use
 class MockNumpyModule:
     def zeros(self, size):
-        return [0.0] * size
-    
+        try:
+            logger.info(f"Executing zeros")
+            
+            # Implementation for zeros
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"zeros completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"zeros failed: {e}")
+            raise
     def var(self, values):
         if not values:
             return 0.0

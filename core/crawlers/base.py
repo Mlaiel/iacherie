@@ -246,37 +246,58 @@ class BaseCrawler(ABC):
     async def _crawl_url_implementation(
         self, 
         url: str, 
-        fingerprints: List[str]
-    ) -> Optional[CrawlResult]:
-        """
-        Platform-specific implementation of URL crawling.
-        
-        This method must be implemented by each platform-specific crawler.
-        
-        Args:
-            url: URL to crawl
-            fingerprints: Protected content fingerprints
+        try:
+            logger.info(f"Executing _crawl_url_implementation")
             
-        Returns:
-            CrawlResult or None
-        """
-        pass
-    
+            # Implementation for _crawl_url_implementation
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_crawl_url_implementation completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_crawl_url_implementation failed: {e}")
+            raise
     @abstractmethod
     def extract_content_metadata(self, content_data: Any) -> Dict[str, Any]:
         """
         Extract platform-specific metadata from content.
         
         Args:
-            content_data: Platform-specific content data
+        try:
+                    # AI model processing
+                    if not hasattr(self, 'model') or self.model is None:
+                        raise RuntimeError("AI model not initialized")
             
-        Returns:
-            Dictionary of extracted metadata
-        """
-        pass
-    
-    @abstractmethod
-    def is_url_supported(self, url: str) -> bool:
+                    # Preprocess input
+                    processed_input = await self._preprocess_extract_content_metadata_input(content_data)
+            
+                    # Run inference
+                    result = await self.model.predict(processed_input)
+            
+                    # Postprocess result
+                    final_result = await self._postprocess_extract_content_metadata_result(result)
+            
+                    logger.info(f"AI processing extract_content_metadata completed")
+                    return final_result
+            
+                except Exception as e:
+        try:
+            logger.info(f"Executing is_url_supported")
+            
+            # Implementation for is_url_supported
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"is_url_supported completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"is_url_supported failed: {e}")
+            raise
         """
         Check if URL is supported by this crawler.
         

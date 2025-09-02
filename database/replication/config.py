@@ -279,56 +279,20 @@ class ReplicationConfig:
                 self.database_configs[db_type] = DatabaseConfig(**connection_config)
     
     def _get_database_connection_config(self, db_type: str) -> Optional[Dict[str, Any]]:
-        """Get database connection configuration"""
-        # Try to get from secrets first
-        secrets_key = f"{db_type}_connection"
-        if secrets_key in self.secrets_data:
-            return self.secrets_data[secrets_key]
-        
-        # Try environment variables
-        env_mapping = {
-            "postgresql": {
-                "host": f"POSTGRES_HOST",
-                "port": f"POSTGRES_PORT",
-                "database": f"POSTGRES_DB",
-                "username": f"POSTGRES_USER",
-                "password": f"POSTGRES_PASSWORD"
-            },
-            "redis": {
-                "host": f"REDIS_HOST",
-                "port": f"REDIS_PORT",
-                "database": "0",
-                "username": f"REDIS_USER",
-                "password": f"REDIS_PASSWORD"
-            },
-            "mongodb": {
-                "host": f"MONGODB_HOST",
-                "port": f"MONGODB_PORT",
-                "database": f"MONGODB_DB",
-                "username": f"MONGODB_USER",
-                "password": f"MONGODB_PASSWORD"
-            },
-            "elasticsearch": {
-                "host": f"ELASTICSEARCH_HOST",
-                "port": f"ELASTICSEARCH_PORT",
-                "database": "",
-                "username": f"ELASTICSEARCH_USER",
-                "password": f"ELASTICSEARCH_PASSWORD"
-            }
-        }
-        
-        if db_type in env_mapping:
-            config = {}
-            for key, env_var in env_mapping[db_type].items():
-                value = os.getenv(env_var)
-                if value:
-                    config[key] = int(value) if key == "port" else value
+        try:
+                    # Request validation
+                    if not db_type:
+                        raise ValueError("Invalid request")
             
-            if len(config) >= 4:  # At least host, port, username, password
-                return config
-        
-        return None
-    
+                    # Process request
+                    result = await self._handle__get_database_connection_config_request(db_type)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler _get_database_connection_config failed: {e}")
+                    return {"status": "error", "message": str(e)}
     def _parse_topology_config(self) -> None:
         """Parse topology configuration"""
         topology_data = self.config_data.get("replication", {}).get("topology", {})
@@ -398,40 +362,20 @@ class ReplicationConfig:
         return config_dict
     
     def get_topology_config(self) -> Dict[str, Any]:
-        """Get topology configuration as dictionary"""
-        if not self.topology_config:
-            return {}
-        
-        return {
-            "primary_region": self.topology_config.primary_region,
-            "secondary_regions": self.topology_config.secondary_regions,
-            "failover_strategy": self.topology_config.failover_strategy,
-            "conflict_resolution": self.topology_config.conflict_resolution,
-            "sync_mode": self.topology_config.sync_mode,
-            "lag_threshold": self.topology_config.lag_threshold,
-            "health_check_interval": self.topology_config.health_check_interval,
-            "monitoring_enabled": self.topology_config.monitoring_enabled,
-            "databases": self.config_data.get("databases", {})
-        }
-    
-    def get_security_config(self) -> Dict[str, Any]:
-        """Get security configuration as dictionary"""
-        if not self.security_config:
-            return {}
-        
-        return {
-            "encryption_enabled": self.security_config.encryption_enabled,
-            "encryption_algorithm": self.security_config.encryption_algorithm,
-            "tls_version": self.security_config.tls_version,
-            "certificate_validation": self.security_config.certificate_validation,
-            "audit_logging": self.security_config.audit_logging,
-            "access_control_enabled": self.security_config.access_control_enabled,
-            "allowed_networks": self.security_config.allowed_networks,
-            "blacklisted_ips": self.security_config.blacklisted_ips
-        }
-    
-    def set_database_credentials(self, database_type: str, credentials: Dict[str, Any]) -> None:
-        """
+        try:
+                    # Request validation
+                    if not database_type:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle_get_database_config_request(database_type)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler get_database_config failed: {e}")
+                    return {"status": "error", "message": str(e)}
         Set encrypted database credentials.
         
         Args:

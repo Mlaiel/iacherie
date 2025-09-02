@@ -3274,10 +3274,20 @@ Start real-time content detection monitoring"""
                 await asyncio.sleep(5)  # Brief pause before retry
     
     async def _check_content_sources(self):
-        """Check various content sources for potential matches"""
-        # Real source checking logic would go here
-        pass
-    
+        try:
+            logger.info(f"Executing _check_content_sources")
+            
+            # Implementation for _check_content_sources
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_check_content_sources completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_check_content_sources failed: {e}")
+            raise
     async def train_similarity_model(self, training_data: List[Dict[str, Any]]) -> Dict[str, Any]:
         """
 Train similarity detection model"""

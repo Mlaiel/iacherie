@@ -56,8 +56,20 @@ class EventStatus(Enum):
     """Event archived after completion or failure"""
     
     def __str__(self) -> str:
-        return self.value
-    
+        try:
+            logger.info(f"Executing __str__")
+            
+            # Implementation for __str__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__str__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__str__ failed: {e}")
+            raise
     def is_terminal(self) -> bool:
         """
 Check if this is a terminal status (no further processing)"""

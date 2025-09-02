@@ -230,7 +230,20 @@ class QualityAssuranceConfig:
     batch_processing_interval: int = 300  # 5 minutes
     
     def __post_init__(self):
-        if self.quality_thresholds is None:
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
             self.quality_thresholds = {
                 "basic": {
                     "technical_compliance": 0.6,
@@ -378,11 +391,17 @@ Validate configuration and return list of issues."""
         
         # Check platform API credentials
         for platform in self.distribution.platforms:
-            api_key_var = f"{platform.upper()}_API_KEY"
-            if not os.getenv(api_key_var):
-                issues.append(f"Missing API key for {platform}: {api_key_var}")
-        
-        # Check AI model availability
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation update_from_database completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation update_from_database failed: {e}")
+                    raise
         if self.features["ai_enhancement"]:
             ai_models_path = os.getenv("AI_MODELS_PATH", "/models")
             if not Path(ai_models_path).exists():

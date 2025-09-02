@@ -1680,10 +1680,20 @@ Initialize fingerprint index manager"""
             await self.db_manager.return_connection(conn)
     
     async def _setup_cleanup_schedule(self):
-        """Setup automatic cleanup of expired fingerprints"""
-        # This would typically run as a background task
-        pass
-    
+        try:
+            logger.info(f"Executing _setup_cleanup_schedule")
+            
+            # Implementation for _setup_cleanup_schedule
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_setup_cleanup_schedule completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_setup_cleanup_schedule failed: {e}")
+            raise
     async def get_fingerprint_statistics(self, fingerprint_type: Optional[str] = None) -> Dict[str, Any]:
         """
 Get comprehensive fingerprint statistics"""

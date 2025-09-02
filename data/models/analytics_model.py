@@ -250,8 +250,20 @@ class AnalyticsModel(Base):
     content = relationship("ContentModel", back_populates="analytics")
     
     def __repr__(self):
-        return f"<AnalyticsModel(id='{self.id}', type='{self.analytics_type}', metric='{self.metric_type}')>"
-    
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     def to_dict(self) -> Dict[str, Any]:
         """Convert model to dictionary representation"""
         return {

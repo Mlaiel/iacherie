@@ -55,7 +55,20 @@ class MatchResult:
     match_timestamp: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implementation for to_dict
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
             'content_id': self.content_id,
             'similarity_score': self.similarity_score,
             'content_type': self.content_type,

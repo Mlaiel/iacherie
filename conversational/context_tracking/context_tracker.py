@@ -845,11 +845,17 @@ Initialize machine learning models for pattern recognition"""
             self.pattern_models[context_type] = None
     
     async def _update_pattern_models(self):
-        """
-Update pattern recognition models with new data"""
-        # Placeholder for model training/updating
-        pass
-    
+        try:
+                    async with self.db_session() as session:
+                        # Database operation
+                
+                        await session.commit()
+                        logger.info(f"Database operation _update_pattern_models completed")
+                        return True
+                
+                except Exception as e:
+                    logger.error(f"Database operation _update_pattern_models failed: {e}")
+                    raise
     async def _load_user_profiles(self):
         """
 Load user profiles from persistent storage"""

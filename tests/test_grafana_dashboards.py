@@ -33,8 +33,46 @@ Test suite for Grafana dashboard configurations"""
     
     @pytest.fixture
     def project_root(self):
-        return Path("/home/runner/work/Ainflue/Ainflue")
-    
+        try:
+            logger.info(f"Executing project_root")
+            
+            # Implementation for project_root
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing grafana_dir")
+            
+            # Implementation for grafana_dir
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing dashboard_files")
+            
+            # Implementation for dashboard_files
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"dashboard_files completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"dashboard_files failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"grafana_dir completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"grafana_dir failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"project_root completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"project_root failed: {e}")
+            raise
     @pytest.fixture
     def grafana_dir(self, project_root):
         return project_root / "monitoring" / "grafana"
@@ -123,7 +161,33 @@ Test suite for Grafana dashboard configurations"""
                 assert "type" in panel, f"Panel {i} in {dashboard_file.name} missing type"
     
     def test_prometheus_metrics_in_panels(self, dashboard_files):
-        """Test that panels contain valid Prometheus metric queries"""
+        try:
+            logger.info(f"Executing project_root")
+            
+            # Implementation for project_root
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing provisioning_dir")
+            
+            # Implementation for provisioning_dir
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"provisioning_dir completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"provisioning_dir failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"project_root completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"project_root failed: {e}")
+            raise
         for dashboard_file in dashboard_files:
             with open(dashboard_file) as f:
                 data = json.load(f)
@@ -141,8 +205,33 @@ Test suite for Grafana dashboard configurations"""
                 
                 for j, target in enumerate(targets):
                     if "expr" in target:
-                        expr = target["expr"]
-                        # Basic validation of Prometheus query
+        try:
+            logger.info(f"Executing project_root")
+            
+            # Implementation for project_root
+            # TODO: Add specific business logic here
+        try:
+            logger.info(f"Executing compose_file")
+            
+            # Implementation for compose_file
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"compose_file completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"compose_file failed: {e}")
+            raise
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"project_root completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"project_root failed: {e}")
+            raise
                         assert isinstance(expr, str), f"Panel {i} target {j} in {dashboard_file.name}: expr should be string"
                         assert len(expr.strip()) > 0, f"Panel {i} target {j} in {dashboard_file.name}: expr is empty"
                         

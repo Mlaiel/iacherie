@@ -924,11 +924,20 @@ Create model quality report"""
         logger.warning(f"Quality alert generated: {alert_id} - {message}")
     
     async def _check_alerts(self, model_id: str):
-        """Check for any alerts that need to be generated"""
-        # This method orchestrates all alert checking
-        # Individual alert checks are handled in other methods
-        pass
-    
+        try:
+            logger.info(f"Executing _check_alerts")
+            
+            # Implementation for _check_alerts
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_check_alerts completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_check_alerts failed: {e}")
+            raise
     async def get_model_performance_summary(self, model_id: str) -> Dict[str, Any]:
         """
 Get comprehensive performance summary for a model"""

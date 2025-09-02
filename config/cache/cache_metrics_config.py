@@ -491,12 +491,20 @@ Process buffered metrics"""
                 buffer.popleft()
     
     async def _export_metrics(self, metric_name: str, values: List[MetricValue]):
-        """
-Export metrics to configured backend"""
-        # Implementation would depend on the selected storage backend
-        # This is a placeholder for the export logic
-        pass
-    
+        try:
+            logger.info(f"Executing _export_metrics")
+            
+            # Implementation for _export_metrics
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_export_metrics completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_export_metrics failed: {e}")
+            raise
     async def _aggregate_metrics(self):
         """
 Aggregate metrics for different time intervals"""
@@ -577,10 +585,35 @@ Evaluate single alert rule"""
                     alert_state["last_triggered"] = current_time
                     alert_state["trigger_count"] += 1
         else:
-            # Condition no longer met
-            alert_state["condition_met_since"] = None
-            if alert_state["active"]:
-                # Resolve alert
+        try:
+            logger.info(f"Executing _trigger_alert")
+            
+            # Implementation for _trigger_alert
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_trigger_alert completed successfully")
+            return result
+            
+        except Exception as e:
+        try:
+            logger.info(f"Executing _resolve_alert")
+            
+            # Implementation for _resolve_alert
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_resolve_alert completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_resolve_alert failed: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"_trigger_alert failed: {e}")
+            raise
                 await self._resolve_alert(alert_rule, current_value)
                 alert_state["active"] = False
     

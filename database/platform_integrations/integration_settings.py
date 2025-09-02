@@ -142,8 +142,20 @@ class PlatformIntegrationSetting(BaseModel):
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     
     def __repr__(self):
-        return f"<PlatformIntegrationSetting(platform={self.platform_name}, key={self.setting_key})>"
-    
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     def validate_value(self, value: Any) -> bool:
         """Valide une valeur selon le type et les règles de validation."""
         if self.required and (value is None or value == ""):
@@ -282,6 +294,30 @@ class IntegrationProfile(BaseModel):
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     
     def __repr__(self):
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
+    is_default = Column(Boolean, default=False)
+    is_premium = Column(Boolean, default=False)
+    popularity_score = Column(Integer, default=0)
+    usage_count = Column(Integer, default=0)
+    
+    created_by = Column(UUID(as_uuid=True))
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    
+    def __repr__(self):
         return f"<IntegrationProfile(name={self.profile_name}, type={self.target_user_type})>"
     
     def get_platform_settings(self, platform_name: str) -> Dict[str, Any]:
@@ -330,6 +366,90 @@ class PlatformCapability(BaseModel):
     deprecation_date = Column(DateTime(timezone=True))
     
     # Limitations
+    rate_limits = Column(JSONB, default=dict)
+    size_limits = Column(JSONB, default=dict)
+    format_restrictions = Column(JSONB, default=list)
+    
+    # Prérequis
+    required_scopes = Column(JSONB, default=list)
+    required_plan = Column(String(50))  # free, basic, premium, enterprise
+    required_verification = Column(Boolean, default=False)
+    
+    # Métadonnées de support
+    api_endpoints = Column(JSONB, default=list)
+    documentation_url = Column(Text)
+    examples = Column(JSONB, default=list)
+    
+    # Métriques
+    success_rate = Column(Float, default=100.0)
+    average_response_time = Column(Integer, default=0)  # ms
+    last_tested = Column(DateTime(timezone=True))
+    
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    
+    def __repr__(self):
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
+    capability_name = Column(String(100), nullable=False)
+    capability_description = Column(Text)
+    
+    # Disponibilité
+    is_available = Column(Boolean, default=True)
+    is_beta = Column(Boolean, default=False)
+    is_deprecated = Column(Boolean, default=False)
+    deprecation_date = Column(DateTime(timezone=True))
+    
+    # Limitations
+    rate_limits = Column(JSONB, default=dict)
+    size_limits = Column(JSONB, default=dict)
+    format_restrictions = Column(JSONB, default=list)
+    
+    # Prérequis
+    required_scopes = Column(JSONB, default=list)
+    required_plan = Column(String(50))  # free, basic, premium, enterprise
+    required_verification = Column(Boolean, default=False)
+    
+    # Métadonnées de support
+    api_endpoints = Column(JSONB, default=list)
+    documentation_url = Column(Text)
+    examples = Column(JSONB, default=list)
+    
+    # Métriques
+    success_rate = Column(Float, default=100.0)
+    average_response_time = Column(Integer, default=0)  # ms
+    last_tested = Column(DateTime(timezone=True))
+    
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    
+    def __repr__(self):
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     rate_limits = Column(JSONB, default=dict)
     size_limits = Column(JSONB, default=dict)
     format_restrictions = Column(JSONB, default=list)
@@ -502,8 +622,20 @@ def create_default_settings_for_platform(
     
     Args:
         user_id: ID de l'utilisateur
-        platform_name: Nom de la plateforme
-        
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     Returns:
         Liste des settings créés
     """
@@ -622,6 +754,37 @@ class PlatformIntegrationSetting(BaseModel):
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     
     def __repr__(self):
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
+    display_name = Column(String(255))
+    description = Column(Text)
+    is_required = Column(Boolean, default=False)
+    is_user_configurable = Column(Boolean, default=True)
+    
+    # Validation
+    validation_rules = Column(JSONB, default=dict)
+    default_value = Column(Text)
+    
+    # Statut
+    is_active = Column(Boolean, default=True)
+    is_sensitive = Column(Boolean, default=False)
+    
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    
+    def __repr__(self):
         return f"<PlatformIntegrationSetting(platform={self.platform_name}, key={self.setting_key})>"
     
     def get_value(self) -> Union[str, int, float, bool, dict, list]:
@@ -640,7 +803,20 @@ class PlatformIntegrationSetting(BaseModel):
             return self.string_value
     
     def set_value(self, value: Union[str, int, float, bool, dict, list]):
-        """
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
 Définit la valeur du paramètre selon son type."""
         # Réinitialise toutes les valeurs
         self.string_value = None
@@ -685,7 +861,20 @@ Valide la valeur selon les règles définies."""
         # Validation de longueur pour les chaînes
         if isinstance(value, str):
             if "min_length" in rules and len(value) < rules["min_length"]:
-                return False
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
             if "max_length" in rules and len(value) > rules["max_length"]:
                 return False
             if "pattern" in rules:

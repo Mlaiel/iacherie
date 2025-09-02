@@ -323,8 +323,20 @@ class CreatorProfile(Base):
     )
     
     def __repr__(self):
-        return f"<CreatorProfile(id={self.id}, stage_name={self.stage_name}, type={self.creator_type.value})>"
-    
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
     @classmethod
     def create_basic_profile(cls, user_id: str, stage_name: str, creator_type: CreatorType) -> 'CreatorProfile':
         """Create basic creator profile"""

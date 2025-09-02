@@ -1309,8 +1309,20 @@ Test statistical anomaly detection algorithms."""
         anomalies_detected = []
         
         async def anomaly_callback(anomaly_result):
-            anomalies_detected.append(anomaly_result)
-        
+        try:
+            logger.info(f"Executing anomaly_callback")
+            
+            # Implementation for anomaly_callback
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"anomaly_callback completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"anomaly_callback failed: {e}")
+            raise
         anomaly_detector.add_anomaly_callback("test_stream_001", anomaly_callback)
         
         # Send normal data points

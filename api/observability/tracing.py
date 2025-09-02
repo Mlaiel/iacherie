@@ -53,10 +53,34 @@ class SpanTag:
     timestamp: datetime = None
 
     def __post_init__(self):
-        if self.timestamp is None:
-            self.timestamp = datetime.utcnow()
-
-
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
+        try:
+                    # Request validation
+                    if not data:
+                        raise ValueError("Invalid request")
+            
+                    # Process request
+                    result = await self._handle___post_init___request(data)
+            
+                    # Return response
+                    return {"status": "success", "data": result}
+            
+                except Exception as e:
+                    logger.error(f"API handler __post_init__ failed: {e}")
+                    return {"status": "error", "message": str(e)}
 @dataclass
 class SpanLog:
     """
@@ -657,6 +681,21 @@ Get comprehensive tracing metrics."""
         logging.info(f"Cleaned up {len(traces_to_remove)} old traces")
 
     def export_traces_jaeger(self, trace_ids: List[str]) -> Dict:
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
+    def export_traces_jaeger(self, trace_ids: List[str]) -> Dict:
         """Export traces in Jaeger format."""
         jaeger_data = {
             "data": []
@@ -736,7 +775,20 @@ Trace content upload operation."""
                 span.set_tag("user_id", user_id)
                 span.set_tag("match_criteria_count", len(match_criteria))
                 for key, value in match_criteria.items():
-                    span.set_tag(f"criteria_{key}", str(value))
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implementation for __init__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
             yield span
 
     @contextmanager

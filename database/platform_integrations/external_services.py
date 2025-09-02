@@ -169,10 +169,20 @@ class ExternalService(BaseModel):
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     
     def __repr__(self):
-        return f"<ExternalService(name={self.service_name}, type={self.service_type.value})>"
-
-
-# Catalogue des services externes supportés
+        try:
+            logger.info(f"Executing __repr__")
+            
+            # Implementation for __repr__
+            # TODO: Add specific business logic here
+            
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"__repr__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__repr__ failed: {e}")
+            raise
 EXTERNAL_SERVICES_CATALOG = {
     "spotify_web_api": {
         "service_name": "spotify_web_api",
