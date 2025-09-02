@@ -166,11 +166,10 @@ analytics_manager = None
 
 
 def get_analytics_manager() -> AnalyticsManager:
-    """
-    Obtient l'instance du gestionnaire
+    """Get the analytics manager instance.
     
     Returns:
-        AnalyticsManager: Instance du gestionnaire
+        AnalyticsManager: Instance of the analytics manager
     """
     global analytics_manager
     if analytics_manager is None:
