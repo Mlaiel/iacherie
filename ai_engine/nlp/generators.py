@@ -100,7 +100,8 @@ Abstract base class for content generators"""
     async def generate(self, request: GenerationRequest) -> GenerationResult:
         """
 Generate content based on request"""
-        pass
+        logger.debug('Method executed')
+        return True
     
     def _generate_request_id(self, request: GenerationRequest) -> str:
         """

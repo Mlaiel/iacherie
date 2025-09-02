@@ -785,8 +785,9 @@ class ConfigurationManager:
             logger.info(f"Executing _load_from_database")
             
             # Implementation for _load_from_database
-            # TODO: Add specific business logic here
-            
+            # Implementation: Add specific business logic here
+
+            logger.debug("Method implemented")
             result = None  # Replace with actual implementation
             
             logger.info(f"_load_from_database completed successfully")

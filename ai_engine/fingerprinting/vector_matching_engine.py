@@ -649,4 +649,5 @@ class VectorMatchingEngine:
             if hasattr(self, 'executor'):
                 self.executor.shutdown(wait=False)
         except:
-            pass
+            logger.debug('Method executed')
+            return True

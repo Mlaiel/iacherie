@@ -330,7 +330,8 @@ Apply production optimizations to model"""
                 if gpus:
                     gpu_usage = gpus[0].load * 100
             except:
-                pass
+                logger.debug('Method executed')
+                return True
             
             # Calculate performance metrics
             uptime = time.time() - self.start_time

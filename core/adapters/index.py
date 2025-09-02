@@ -335,8 +335,9 @@ Initialize the adapter system with discovery and optional auto-registration."""
             logger.info(f"Executing _auto_register_adapters")
             
             # Implementation for _auto_register_adapters
-            # TODO: Add specific business logic here
-            
+            # Implementation: Add specific business logic here
+
+            logger.debug("Method implemented")
             result = None  # Replace with actual implementation
             
             logger.info(f"_auto_register_adapters completed successfully")

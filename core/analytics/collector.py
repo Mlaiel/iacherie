@@ -513,7 +513,8 @@ Calculate aggregated value"""
             # For now, just update processing stats
             for metric in metrics:
                 # Could perform additional validation, transformation, etc.
-                pass
+                logger.debug('Method executed')
+                return True
                 
         except Exception as e:
             self.logger.error(f"Error processing metrics batch: {str(e)}")

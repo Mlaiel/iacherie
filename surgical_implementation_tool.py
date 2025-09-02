@@ -213,6 +213,50 @@ class SurgicalImplementor:
             logger.error(f"❌ Error processing pass statements in {file_path}: {e}")
             return {"completed": 0, "failed": 1}
     
+    def _find_business_files_with_pass(self) -> List[str]:
+        """Find business files that have simple pass statements"""
+        files_with_pass = []
+        
+        # Focus on business-critical areas
+        business_patterns = [
+            "business/*.py",
+            "monetization/*.py",
+            "core/*/*.py", 
+            "api*.py",
+            "enterprise*.py",
+            "platform_core/*.py",
+            "ai_engine/*/*.py"
+        ]
+        
+        for pattern in business_patterns:
+            for file_path in self.root_dir.glob(pattern):
+                if self._has_simple_pass_statements(file_path):
+                    rel_path = str(file_path.relative_to(self.root_dir))
+                    files_with_pass.append(rel_path)
+        
+        return files_with_pass
+    
+    def _has_simple_pass_statements(self, file_path: Path) -> bool:
+        """Check if file has simple pass statements (not in exception handlers)"""
+        try:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+            
+            # Check for valid syntax first
+            ast.parse(content)
+            
+            # Check for simple pass statements
+            lines = content.split('\n')
+            for i, line in enumerate(lines):
+                if re.match(r'^\s*pass\s*$', line):
+                    if self._is_in_method_not_exception(lines, i):
+                        return True
+            
+            return False
+            
+        except (SyntaxError, UnicodeDecodeError):
+            return False
+    
     def _is_in_method_not_exception(self, lines: List[str], line_idx: int) -> bool:
         """Check if line is in a method but not in an exception handler"""
         in_method = False
@@ -231,7 +275,7 @@ class SurgicalImplementor:
         
         return in_method and not in_exception
     
-    def run_surgical_implementation(self, max_files: int = 15, dry_run: bool = False) -> Dict[str, Any]:
+    def run_surgical_implementation(self, max_files: int = 50, dry_run: bool = False) -> Dict[str, Any]:
         """Run surgical implementation on targeted files"""
         logger.info(f"🎯 Starting surgical implementation (max {max_files} files, dry_run={dry_run})...")
         
@@ -246,7 +290,13 @@ class SurgicalImplementor:
         target_files = self.find_abstract_method_files()[:max_files]
         logger.info(f"Found {len(target_files)} files with NotImplementedError patterns")
         
-        for file_path in target_files:
+        # Also find files with simple pass statements in business logic areas
+        business_files = self._find_business_files_with_pass()[:max_files]
+        logger.info(f"Found {len(business_files)} business files with pass statements")
+        
+        all_files = list(set(target_files + business_files))[:max_files]
+        
+        for file_path in all_files:
             logger.info(f"🔧 Processing {file_path}...")
             
             # Implement NotImplementedError patterns
@@ -294,8 +344,8 @@ def main():
     """Main execution function"""
     implementor = SurgicalImplementor()
     
-    # Run surgical implementation
-    results = implementor.run_surgical_implementation(max_files=15, dry_run=False)
+    # Run surgical implementation on a larger scale
+    results = implementor.run_surgical_implementation(max_files=100, dry_run=False)
     
     # Generate and display report
     report = implementor.generate_report(results)

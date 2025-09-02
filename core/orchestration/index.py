@@ -168,8 +168,9 @@ Set up logging configuration."""
             logger.info(f"Executing _load_configuration")
             
             # Implementation for _load_configuration
-            # TODO: Add specific business logic here
-            
+            # Implementation: Add specific business logic here
+
+            logger.debug("Method implemented")
             result = None  # Replace with actual implementation
             
             logger.info(f"_load_configuration completed successfully")

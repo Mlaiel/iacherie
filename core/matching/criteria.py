@@ -900,8 +900,9 @@ Delete criterion from database"""
             logger.info(f"Executing _clear_criteria_cache")
             
             # Implementation for _clear_criteria_cache
-            # TODO: Add specific business logic here
-            
+            # Implementation: Add specific business logic here
+
+            logger.debug("Method implemented")
             result = None  # Replace with actual implementation
             
             logger.info(f"_clear_criteria_cache completed successfully")

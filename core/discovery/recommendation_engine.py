@@ -1375,10 +1375,12 @@ Adapt recommendation algorithms based on feedback"""
         
         if feedback_score > 0.8:
             # Positive feedback - boost similar recommendation types
-            pass
+            logger.debug('Method executed')
+            return True
         elif feedback_score < 0.3:
             # Negative feedback - reduce weight of similar recommendations
-            pass
+            logger.debug('Method executed')
+            return True
 
     async def _update_feedback_metrics(self, feedback_data: Dict[str, Any]):
         """

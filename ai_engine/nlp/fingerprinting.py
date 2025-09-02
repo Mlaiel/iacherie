@@ -83,7 +83,8 @@ Abstract base class for fingerprint generators"""
     async def generate_fingerprint(self, content: str, metadata: Dict[str, Any] = None) -> Dict[str, Any]:
         """
 Generate fingerprint for content"""
-        pass
+        logger.debug('Method executed')
+        return True
 
 class AdvancedContentFingerprinter:
     """

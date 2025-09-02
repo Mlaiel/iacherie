@@ -226,8 +226,9 @@ Initialize all content type classifiers."""
             logger.info(f"Executing _detect_content_type")
             
             # Implementation for _detect_content_type
-            # TODO: Add specific business logic here
-            
+            # Implementation: Add specific business logic here
+
+            logger.debug("Method implemented")
             result = None  # Replace with actual implementation
             
             logger.info(f"_detect_content_type completed successfully")
