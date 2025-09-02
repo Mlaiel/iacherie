@@ -728,7 +728,48 @@ Twitch content parser"""
     
     async def parse_content(self, url: str, **kwargs) -> Dict[str, Any]:
         """Parse Twitch stream/video content"""
-        pass
+        try:
+            # Extract Twitch identifiers from URL
+            parsed_url = urlparse(url)
+            path_parts = parsed_url.path.strip('/').split('/')
+            
+            if not path_parts or len(path_parts) < 1:
+                raise ContentExtractionError("Invalid Twitch URL format")
+            
+            channel_name = path_parts[0]
+            content_type = "stream"  # Default to stream
+            video_id = None
+            
+            # Check if it's a video URL
+            if len(path_parts) > 1 and path_parts[1] == "videos":
+                content_type = "video"
+                video_id = path_parts[2] if len(path_parts) > 2 else None
+            
+            # Simulate API call to get content metadata
+            # In production, this would use Twitch API
+            content_data = {
+                "platform": "twitch",
+                "url": url,
+                "content_type": content_type,
+                "channel": channel_name,
+                "video_id": video_id,
+                "title": f"{channel_name} Twitch {content_type.title()}",
+                "description": f"Content from {channel_name} on Twitch",
+                "thumbnail": f"https://static-cdn.jtvnw.net/previews-ttv/live_user_{channel_name}-320x180.jpg",
+                "duration": "live" if content_type == "stream" else "unknown",
+                "view_count": 0,
+                "created_at": datetime.now(timezone.utc).isoformat(),
+                "tags": ["gaming", "live", "twitch"],
+                "language": "en",
+                "is_live": content_type == "stream",
+                "mature_content": False,
+                "category": "Gaming"
+            }
+            
+            return content_data
+            
+        except Exception as e:
+            raise ContentExtractionError(f"Failed to parse Twitch content: {str(e)}")
     
     async def parse_user_profile(self, username: str, **kwargs) -> Dict[str, Any]:
         """
@@ -753,7 +794,59 @@ LinkedIn content parser"""
     
     async def parse_content(self, url: str, **kwargs) -> Dict[str, Any]:
         """Parse LinkedIn post content"""
-        pass
+        try:
+            # Extract LinkedIn identifiers from URL
+            parsed_url = urlparse(url)
+            
+            # LinkedIn URLs can be complex, handle different formats
+            content_id = None
+            post_type = "post"
+            
+            # Extract post ID from various LinkedIn URL formats
+            if "/posts/" in parsed_url.path:
+                path_parts = parsed_url.path.split("/posts/")
+                if len(path_parts) > 1:
+                    content_id = path_parts[1].split("-")[0]
+            elif "/feed/update/" in parsed_url.path:
+                post_type = "update"
+                content_id = parsed_url.path.split("/")[-1]
+            
+            if not content_id:
+                raise ContentExtractionError("Unable to extract LinkedIn content ID")
+            
+            # Simulate LinkedIn content extraction
+            # In production, this would use LinkedIn API or web scraping
+            content_data = {
+                "platform": "linkedin",
+                "url": url,
+                "content_type": post_type,
+                "post_id": content_id,
+                "title": "Professional LinkedIn Post",
+                "description": "Professional content shared on LinkedIn platform",
+                "author": {
+                    "name": "LinkedIn User",
+                    "profile_url": "",
+                    "headline": "Professional"
+                },
+                "content": "Professional post content from LinkedIn",
+                "media": [],
+                "engagement": {
+                    "likes": 0,
+                    "comments": 0,
+                    "shares": 0,
+                    "reactions": {}
+                },
+                "created_at": datetime.now(timezone.utc).isoformat(),
+                "tags": ["professional", "networking", "business"],
+                "language": "en",
+                "is_sponsored": False,
+                "industry": "Technology"
+            }
+            
+            return content_data
+            
+        except Exception as e:
+            raise ContentExtractionError(f"Failed to parse LinkedIn content: {str(e)}")
     
     async def parse_user_profile(self, username: str, **kwargs) -> Dict[str, Any]:
         """
@@ -778,7 +871,81 @@ Facebook content parser"""
     
     async def parse_content(self, url: str, **kwargs) -> Dict[str, Any]:
         """Parse Facebook post content"""
-        pass
+        try:
+            # Extract Facebook identifiers from URL
+            parsed_url = urlparse(url)
+            
+            # Facebook URLs have various formats
+            post_id = None
+            page_name = None
+            content_type = "post"
+            
+            # Handle different Facebook URL patterns
+            if "/posts/" in parsed_url.path:
+                # Format: facebook.com/page/posts/123456789
+                path_parts = parsed_url.path.split("/posts/")
+                if len(path_parts) > 1:
+                    post_id = path_parts[1].split("/")[0]
+                    page_name = path_parts[0].strip("/").split("/")[-1]
+            elif "/videos/" in parsed_url.path:
+                content_type = "video"
+                post_id = parsed_url.path.split("/videos/")[-1].split("/")[0]
+            elif "/photos/" in parsed_url.path:
+                content_type = "photo"
+                post_id = parsed_url.path.split("/photos/")[-1].split("/")[0]
+            else:
+                # Try to extract from query parameters
+                query_params = parse_qs(parsed_url.query)
+                if "story_fbid" in query_params:
+                    post_id = query_params["story_fbid"][0]
+                elif "v" in query_params:  # Video ID
+                    post_id = query_params["v"][0]
+                    content_type = "video"
+            
+            if not post_id:
+                raise ContentExtractionError("Unable to extract Facebook content ID")
+            
+            # Simulate Facebook content extraction
+            # In production, this would use Facebook Graph API
+            content_data = {
+                "platform": "facebook",
+                "url": url,
+                "content_type": content_type,
+                "post_id": post_id,
+                "page_name": page_name or "facebook_user",
+                "title": f"Facebook {content_type.title()}",
+                "description": f"Content shared on Facebook platform",
+                "author": {
+                    "name": page_name or "Facebook User",
+                    "page_url": f"https://facebook.com/{page_name}" if page_name else "",
+                    "verified": False
+                },
+                "content": f"Facebook {content_type} content",
+                "media": [],
+                "engagement": {
+                    "likes": 0,
+                    "comments": 0,
+                    "shares": 0,
+                    "reactions": {
+                        "like": 0,
+                        "love": 0,
+                        "wow": 0,
+                        "haha": 0,
+                        "sad": 0,
+                        "angry": 0
+                    }
+                },
+                "created_at": datetime.now(timezone.utc).isoformat(),
+                "tags": ["social", "facebook", content_type],
+                "language": "en",
+                "is_sponsored": False,
+                "privacy": "public"
+            }
+            
+            return content_data
+            
+        except Exception as e:
+            raise ContentExtractionError(f"Failed to parse Facebook content: {str(e)}")
     
     async def parse_user_profile(self, username: str, **kwargs) -> Dict[str, Any]:
         """
@@ -803,7 +970,72 @@ Reddit content parser"""
     
     async def parse_content(self, url: str, **kwargs) -> Dict[str, Any]:
         """Parse Reddit post content"""
-        pass
+        try:
+            # Extract Reddit identifiers from URL
+            parsed_url = urlparse(url)
+            path_parts = parsed_url.path.strip('/').split('/')
+            
+            # Reddit URL format: /r/subreddit/comments/post_id/title
+            subreddit = None
+            post_id = None
+            content_type = "post"
+            
+            if len(path_parts) >= 5 and path_parts[0] == 'r' and path_parts[2] == 'comments':
+                subreddit = path_parts[1]
+                post_id = path_parts[3]
+            elif len(path_parts) >= 3 and path_parts[0] == 'r':
+                subreddit = path_parts[1]
+                # Could be a subreddit general URL
+                content_type = "subreddit"
+            elif len(path_parts) >= 2 and path_parts[0] == 'user':
+                # User profile URL
+                content_type = "user"
+                post_id = path_parts[1]
+            
+            if not (subreddit or post_id):
+                raise ContentExtractionError("Unable to extract Reddit identifiers")
+            
+            # Simulate Reddit content extraction
+            # In production, this would use Reddit API (PRAW)
+            content_data = {
+                "platform": "reddit",
+                "url": url,
+                "content_type": content_type,
+                "subreddit": subreddit,
+                "post_id": post_id,
+                "title": f"Reddit Post in r/{subreddit}" if subreddit else "Reddit Content",
+                "description": "Content shared on Reddit platform",
+                "author": {
+                    "username": "reddit_user",
+                    "profile_url": "",
+                    "karma": 0,
+                    "cake_day": None
+                },
+                "content": "Reddit post content text",
+                "media": [],
+                "engagement": {
+                    "upvotes": 0,
+                    "downvotes": 0,
+                    "score": 0,
+                    "comments": 0,
+                    "awards": [],
+                    "upvote_ratio": 0.5
+                },
+                "created_at": datetime.now(timezone.utc).isoformat(),
+                "tags": ["reddit", subreddit] if subreddit else ["reddit"],
+                "language": "en",
+                "is_nsfw": False,
+                "is_spoiler": False,
+                "flair": None,
+                "gilded": 0,
+                "archived": False,
+                "locked": False
+            }
+            
+            return content_data
+            
+        except Exception as e:
+            raise ContentExtractionError(f"Failed to parse Reddit content: {str(e)}")
     
     async def parse_user_profile(self, username: str, **kwargs) -> Dict[str, Any]:
         """
