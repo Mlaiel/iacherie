@@ -1047,7 +1047,39 @@ class PlatformAnalyticsEngine:
     
     async def _store_cross_platform_analysis(self, analysis: CrossPlatformAnalysis) -> None:
         """Store cross-platform analysis."""
-        pass
+        try:
+            # Prepare analysis data for storage
+            analysis_data = {
+                'creator_id': analysis.creator_id,
+                'timestamp': analysis.timestamp,
+                'platforms': [platform.value for platform in analysis.platforms],
+                'total_revenue': float(analysis.total_revenue),
+                'platform_breakdown': {
+                    platform.value: float(revenue) 
+                    for platform, revenue in analysis.platform_breakdown.items()
+                },
+                'growth_metrics': analysis.growth_metrics,
+                'engagement_insights': analysis.engagement_insights,
+                'recommendations': analysis.recommendations
+            }
+            
+            # Store in analytics database
+            storage_key = f"cross_platform_analysis:{analysis.creator_id}:{analysis.timestamp}"
+            
+            if hasattr(self, 'analytics_storage'):
+                await self.analytics_storage.set(storage_key, analysis_data, ttl=86400*30)  # 30 days
+            
+            # Update creator analytics cache
+            creator_cache_key = f"creator_analytics:{analysis.creator_id}"
+            if hasattr(self, 'cache_manager'):
+                await self.cache_manager.update_nested(creator_cache_key, 'cross_platform_analysis', analysis_data)
+            
+            # Track storage metrics
+            self.logger.info(f"Cross-platform analysis stored for creator {analysis.creator_id}")
+            
+        except Exception as e:
+            self.logger.error(f"Error storing cross-platform analysis: {e}")
+            raise
     
     # Continue with additional helper methods...
     async def _get_extended_historical_data(self, creator_id: str, platforms: List[PlatformType]) -> Dict:
@@ -1080,7 +1112,47 @@ class PlatformAnalyticsEngine:
     
     async def _store_predictions(self, predictions: PredictiveAnalytics) -> None:
         """Store predictions for accuracy tracking."""
-        pass
+        try:
+            # Prepare prediction data for storage
+            prediction_data = {
+                'creator_id': predictions.creator_id,
+                'timestamp': predictions.timestamp,
+                'prediction_period': predictions.prediction_period,
+                'revenue_forecast': {
+                    platform.value: float(revenue) 
+                    for platform, revenue in predictions.revenue_forecast.items()
+                },
+                'growth_forecast': predictions.growth_forecast,
+                'trend_predictions': predictions.trend_predictions,
+                'confidence_scores': predictions.confidence_scores,
+                'prediction_factors': predictions.prediction_factors
+            }
+            
+            # Store prediction with tracking ID
+            prediction_id = str(uuid.uuid4())
+            storage_key = f"predictions:{predictions.creator_id}:{prediction_id}"
+            
+            if hasattr(self, 'prediction_storage'):
+                await self.prediction_storage.set(storage_key, prediction_data, ttl=86400*90)  # 90 days
+            
+            # Add to prediction tracking queue for accuracy evaluation
+            tracking_data = {
+                'prediction_id': prediction_id,
+                'creator_id': predictions.creator_id,
+                'prediction_timestamp': predictions.timestamp,
+                'target_timestamp': (datetime.fromisoformat(predictions.timestamp) + 
+                                   timedelta(days=predictions.prediction_period)).isoformat(),
+                'revenue_targets': prediction_data['revenue_forecast']
+            }
+            
+            if hasattr(self, 'prediction_tracker'):
+                await self.prediction_tracker.add_prediction(tracking_data)
+            
+            self.logger.info(f"Predictions stored for creator {predictions.creator_id} (ID: {prediction_id})")
+            
+        except Exception as e:
+            self.logger.error(f"Error storing predictions: {e}")
+            raise
         """
         Generate predictive analytics for creator performance.
         
