@@ -1010,6 +1010,7 @@ class ContainerStorageManager:
                 snapshots_to_delete = []
                 
                 for snapshot_key, snapshot in self.volume_snapshots.items():
+                    pass
                     # Check if snapshot is older than retention period
                     # This is simplified - in reality, you'd get the creation time from Kubernetes
                     # For now, we'll just log what would be cleaned up

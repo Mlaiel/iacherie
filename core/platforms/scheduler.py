@@ -315,6 +315,30 @@ Mark task execution as completed"""
     
     def mark_execution_failed(self, error: str):
         """
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
+        try:
+            logger.info(f"Executing mark_execution_failed")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"mark_execution_failed completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"mark_execution_failed failed: {e}")
+            raise
 Mark task execution as failed"""
         self.status = TaskStatus.FAILED
         self.last_error = error

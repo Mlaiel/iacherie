@@ -748,6 +748,7 @@ class EventDrivenInvalidationEngine:
 
 
 class InvalidationStrategy:
+    pass
 
 import asyncio
 import logging

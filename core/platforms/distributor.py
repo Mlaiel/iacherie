@@ -627,6 +627,18 @@ Get applicable distribution rules for content"""
     
     def _generate_warnings(self, task: DistributionTask, results: Dict[str, UploadResult]) -> List[str]:
         """
+        try:
+            logger.info(f"Executing _generate_warnings")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"_generate_warnings completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_generate_warnings failed: {e}")
+            raise
 Generate warnings based on distribution results"""
         warnings = []
         

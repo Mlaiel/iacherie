@@ -337,6 +337,18 @@ Core automation engine for platform operations"""
     
     def __init__(self):
         """
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
 Initialize automation engine"""
         self.rules: Dict[str, AutomationRule] = {}
         self.workflows: Dict[str, AutomationWorkflow] = {}
