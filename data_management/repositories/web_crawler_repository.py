@@ -31,9 +31,43 @@ from datetime import datetime, timezone, timedelta
 from dataclasses import dataclass, asdict
 from enum import Enum
 from urllib.parse import urlparse, urljoin
-import aiohttp
-import requests
-from bs4 import BeautifulSoup
+
+# Optional dependencies - graceful degradation
+try:
+    import aiohttp
+    AIOHTTP_AVAILABLE = True
+except ImportError:
+    AIOHTTP_AVAILABLE = False
+    # Create a placeholder class
+    class aiohttp:
+        class ClientSession:
+            def __init__(self, *args, **kwargs):
+                pass
+            async def get(self, *args, **kwargs):
+                raise ImportError("aiohttp not available")
+            async def __aenter__(self):
+                return self
+            async def __aexit__(self, *args):
+                pass
+
+try:
+    import requests
+    REQUESTS_AVAILABLE = True
+except ImportError:
+    REQUESTS_AVAILABLE = False
+    class requests:
+        @staticmethod
+        def get(*args, **kwargs):
+            raise ImportError("requests not available")
+
+try:
+    from bs4 import BeautifulSoup
+    BS4_AVAILABLE = True
+except ImportError:
+    BS4_AVAILABLE = False
+    class BeautifulSoup:
+        def __init__(self, *args, **kwargs):
+            raise ImportError("BeautifulSoup not available")
 
 from .base_repository import BaseRepository, AsyncBaseRepository, OperationType
 
