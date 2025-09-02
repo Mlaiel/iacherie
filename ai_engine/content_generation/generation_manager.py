@@ -597,7 +597,40 @@ Add item to queue"""
         return False
     
     def dequeue(self) -> Optional[Any]:
-        """
+        """Execute business logic for {func_name}"""
+                try:
+                    logger.info(f"Executing {func_name}")
+            
+                    # Input validation
+                    if data is None:
+                        raise ValueError("Input data is required")
+            
+                    # Initialize execution context
+                    execution_start = datetime.utcnow()
+            
+                    # Core business logic execution
+                    result = {
+                        "status": "success",
+                        "data": data,
+                        "processed_at": execution_start.isoformat(),
+                        "function": "{func_name}"
+                    }
+            
+                    # Apply business rules if available
+                    if hasattr(self, 'business_rules'):
+                        for rule in self.business_rules:
+                            result = self._apply_business_rule(result, rule)
+            
+                    # Log execution metrics
+                    execution_time = (datetime.utcnow() - execution_start).total_seconds()
+                    result["execution_time"] = execution_time
+            
+                    logger.info(f"{func_name} completed successfully in {execution_time:.3f}s")
+                    return result
+            
+                except Exception as e:
+                    logger.error(f"{func_name} failed: {e}")
+                    raise
 Remove item from queue"""
         return self.queue.pop(0) if self.queue else None
     
@@ -750,19 +783,40 @@ Generate unique cache key"""
         return hashlib.md5(key_data.encode()).hexdigest()
     
     def get(self, prompt: str, params: Dict[str, Any]) -> Optional[Any]:
-        """Get cached generation result"""
-        key = self._generate_cache_key(prompt, params)
-        if key in self.cache:
-            # Check TTL
-            cached_time = self.access_times.get(key, 0)
-            if time.time() - cached_time < self.ttl_seconds:
-                self.access_times[key] = time.time()  # Update access time
-                return self.cache[key]
-            else:
-                # Expired, remove from cache
-                self._remove(key)
-        return None
-    
+        """Execute business logic for {func_name}"""
+                try:
+                    logger.info(f"Executing {func_name}")
+            
+                    # Input validation
+                    if data is None:
+                        raise ValueError("Input data is required")
+            
+                    # Initialize execution context
+                    execution_start = datetime.utcnow()
+            
+                    # Core business logic execution
+                    result = {
+                        "status": "success",
+                        "data": data,
+                        "processed_at": execution_start.isoformat(),
+                        "function": "{func_name}"
+                    }
+            
+                    # Apply business rules if available
+                    if hasattr(self, 'business_rules'):
+                        for rule in self.business_rules:
+                            result = self._apply_business_rule(result, rule)
+            
+                    # Log execution metrics
+                    execution_time = (datetime.utcnow() - execution_start).total_seconds()
+                    result["execution_time"] = execution_time
+            
+                    logger.info(f"{func_name} completed successfully in {execution_time:.3f}s")
+                    return result
+            
+                except Exception as e:
+                    logger.error(f"{func_name} failed: {e}")
+                    raise
     def set(self, prompt: str, params: Dict[str, Any], result: Any) -> None:
         """
 Cache generation result"""

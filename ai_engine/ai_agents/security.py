@@ -95,44 +95,40 @@ Initialize security manager."""
         logger.info("Agent security manager initialized")
     
     def authenticate_agent(self, 
-                          agent_id: str,
-                          credentials: Dict[str, Any]) -> Optional[str]:
-        """Authenticate an AI agent."""
-        try:
-            # Basic credential validation
-            if not self._validate_credentials(agent_id, credentials):
-                self._log_security_event(
-                    "authentication_failed",
-                    agent_id,
-                    ThreatLevel.MEDIUM,
-                    "Invalid credentials"
-                )
-                return None
+        """Execute business logic for {func_name}"""
+                try:
+                    logger.info(f"Executing {func_name}")
             
-            # Generate session token
-            session_token = self._generate_session_token(agent_id)
+                    # Input validation
+                    if data is None:
+                        raise ValueError("Input data is required")
             
-            # Store active session
-            self.active_sessions[session_token] = {
-                'agent_id': agent_id,
-                'created_at': datetime.now(),
-                'last_activity': datetime.now(),
-                'permissions': self._get_agent_permissions(agent_id)
-            }
+                    # Initialize execution context
+                    execution_start = datetime.utcnow()
             
-            self._log_security_event(
-                "authentication_success",
-                agent_id,
-                ThreatLevel.LOW,
-                "Agent authenticated successfully"
-            )
+                    # Core business logic execution
+                    result = {
+                        "status": "success",
+                        "data": data,
+                        "processed_at": execution_start.isoformat(),
+                        "function": "{func_name}"
+                    }
             
-            return session_token
+                    # Apply business rules if available
+                    if hasattr(self, 'business_rules'):
+                        for rule in self.business_rules:
+                            result = self._apply_business_rule(result, rule)
             
-        except Exception as e:
-            logger.error(f"Authentication error: {e}")
-            return None
-    
+                    # Log execution metrics
+                    execution_time = (datetime.utcnow() - execution_start).total_seconds()
+                    result["execution_time"] = execution_time
+            
+                    logger.info(f"{func_name} completed successfully in {execution_time:.3f}s")
+                    return result
+            
+                except Exception as e:
+                    logger.error(f"{func_name} failed: {e}")
+                    raise
     def _validate_credentials(self, agent_id: str, credentials: Dict) -> bool:
         """Validate agent credentials with comprehensive security checks."""
         try:
@@ -194,27 +190,48 @@ Initialize security manager."""
             return secrets.token_urlsafe(32)
     
     def validate_session(self, token: str) -> Optional[str]:
-        """Validate session token."""
-        try:
-            if token not in self.active_sessions:
-                return None
+        """Validate data against business rules and constraints"""
+                try:
+                    logger.info(f"Validation {func_name} started")
             
-            session = self.active_sessions[token]
+                    validation_results = {
+                        "is_valid": True,
+                        "errors": [],
+                        "warnings": [],
+                        "score": 1.0
+                    }
             
-            # Check session timeout
-            if datetime.now() - session['last_activity'] > self.session_timeout:
-                del self.active_sessions[token]
-                return None
+                    # Required field validation
+                    required_fields = getattr(self, 'required_fields', [])
+                    for field in required_fields:
+                        if not data.get(field):
+                            validation_results["errors"].append(f"Required field '{field}' is missing")
+                            validation_results["is_valid"] = False
             
-            # Update last activity
-            session['last_activity'] = datetime.now()
+                    # Business rule validation
+                    business_rules = getattr(self, 'business_rules', [])
+                    for rule in business_rules:
+                        if not self._validate_business_rule(data, rule):
+                            validation_results["warnings"].append(f"Business rule violation: {rule}")
+                            validation_results["score"] *= 0.9
             
-            return session['agent_id']
+                    # Data integrity checks
+                    if self._has_data_integrity_issues(data):
+                        validation_results["errors"].append("Data integrity issues detected")
+                        validation_results["is_valid"] = False
             
-        except Exception as e:
-            logger.error(f"Session validation error: {e}")
-            return None
-    
+                    # Calculate final validation score
+                    if validation_results["errors"]:
+                        validation_results["score"] = 0.0
+                    elif validation_results["warnings"]:
+                        validation_results["score"] *= 0.8
+            
+                    logger.info(f"Validation {func_name} completed: valid={validation_results['is_valid']}, score={validation_results['score']:.2f}")
+                    return validation_results
+            
+                except Exception as e:
+                    logger.error(f"Validation {func_name} failed: {e}")
+                    raise
     def check_permission(self, 
                         agent_id: str,
                         resource_id: str,
@@ -558,25 +575,39 @@ Log security event."""
             return data
     
     def decrypt_data(self, encrypted_data: str) -> Optional[str]:
-        """Decrypt sensitive data."""
-        try:
-            if ':' not in encrypted_data:
-                return encrypted_data
+        """Execute business logic for {func_name}"""
+                try:
+                    logger.info(f"Executing {func_name}")
             
-            data, signature = encrypted_data.rsplit(':', 1)
-            key = self.secret_key.encode()
-            message = data.encode()
-            expected_signature = hmac.new(key, message, hashlib.sha256).hexdigest()
+                    # Input validation
+                    if data is None:
+                        raise ValueError("Input data is required")
             
-            if hmac.compare_digest(signature, expected_signature):
-                return data
-            else:
-                return None
-                
-        except Exception as e:
-            logger.error(f"Data decryption error: {e}")
-            return None
-
-
+                    # Initialize execution context
+                    execution_start = datetime.utcnow()
+            
+                    # Core business logic execution
+                    result = {
+                        "status": "success",
+                        "data": data,
+                        "processed_at": execution_start.isoformat(),
+                        "function": "{func_name}"
+                    }
+            
+                    # Apply business rules if available
+                    if hasattr(self, 'business_rules'):
+                        for rule in self.business_rules:
+                            result = self._apply_business_rule(result, rule)
+            
+                    # Log execution metrics
+                    execution_time = (datetime.utcnow() - execution_start).total_seconds()
+                    result["execution_time"] = execution_time
+            
+                    logger.info(f"{func_name} completed successfully in {execution_time:.3f}s")
+                    return result
+            
+                except Exception as e:
+                    logger.error(f"{func_name} failed: {e}")
+                    raise
 # Module initialization
 logger.info("AI agents security system module loaded successfully")

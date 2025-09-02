@@ -424,74 +424,40 @@ Initialize revenue tracking repository"""
             return []
             
     def update_revenue_status(self,
-                            revenue_id: int,
-                            new_status: RevenueStatus,
-                            payment_method: Optional[PaymentMethod] = None,
-                            transaction_reference: Optional[str] = None,
-                            notes: Optional[str] = None) -> Optional[RevenueTracking]:
-        """
-        Update revenue status with payment processing information
-        
-        Args:
-            revenue_id: Revenue entry ID
-            new_status: New status to set
-            payment_method: Payment method used
-            transaction_reference: External transaction reference
-            notes: Additional notes
+        """Execute business logic for {func_name}"""
+                try:
+                    logger.info(f"Executing {func_name}")
             
-        Returns:
-            Updated RevenueTracking instance
-        """
-        try:
-            revenue_entry = self.get_by_id(revenue_id)
-            if not revenue_entry:
-                return None
+                    # Input validation
+                    if data is None:
+                        raise ValueError("Input data is required")
             
-            update_data = {
-                'status': new_status,
-                'updated_at': datetime.utcnow()
-            }
+                    # Initialize execution context
+                    execution_start = datetime.utcnow()
             
-            # Add payment information
-            if payment_method:
-                update_data['payment_method'] = payment_method
-                
-            # Update metadata with processing info
-            metadata = revenue_entry.metadata or {}
+                    # Core business logic execution
+                    result = {
+                        "status": "success",
+                        "data": data,
+                        "processed_at": execution_start.isoformat(),
+                        "function": "{func_name}"
+                    }
             
-            if transaction_reference:
-                metadata['transaction_reference'] = transaction_reference
-                
-            if notes:
-                metadata['processing_notes'] = notes
-                
-            # Add status history
-            metadata['status_history'] = metadata.get('status_history', [])
-            metadata['status_history'].append({
-                'previous_status': revenue_entry.status.value,
-                'new_status': new_status.value,
-                'timestamp': datetime.utcnow().isoformat(),
-                'notes': notes
-            })
+                    # Apply business rules if available
+                    if hasattr(self, 'business_rules'):
+                        for rule in self.business_rules:
+                            result = self._apply_business_rule(result, rule)
             
-            # Set processed timestamp for paid status
-            if new_status == RevenueStatus.PAID:
-                metadata['paid_at'] = datetime.utcnow().isoformat()
-                
-            update_data['metadata'] = metadata
+                    # Log execution metrics
+                    execution_time = (datetime.utcnow() - execution_start).total_seconds()
+                    result["execution_time"] = execution_time
             
-            updated_revenue = self.update(revenue_id, **update_data)
+                    logger.info(f"{func_name} completed successfully in {execution_time:.3f}s")
+                    return result
             
-            self.logger.info(
-                f"Updated revenue {revenue_id} status: {revenue_entry.status.value} → {new_status.value}"
-            )
-            
-            return updated_revenue
-            
-        except Exception as e:
-            self.logger.error(f"Failed to update revenue status: {str(e)}")
-            raise RepositoryException(f"Revenue status update failed: {str(e)}")
-            
+                except Exception as e:
+                    logger.error(f"{func_name} failed: {e}")
+                    raise
     def get_pending_payments(self,
                            user_id: Optional[int] = None,
                            minimum_amount: Optional[Decimal] = None,

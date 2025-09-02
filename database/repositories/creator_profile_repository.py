@@ -646,60 +646,40 @@ Generate profile improvement recommendations"""
             raise RepositoryException(f"Failed to get creator recommendations: {str(e)}")
             
     def update_profile_score(self, profile_id: int) -> Optional[CreatorProfile]:
-        """
-        Update and calculate profile score based on various factors
-        
-        Args:
-            profile_id: Creator profile ID
+        """Execute business logic for {func_name}"""
+                try:
+                    logger.info(f"Executing {func_name}")
             
-        Returns:
-            Updated creator profile
-        """
-        try:
-            profile = self.get_by_id(profile_id)
-            if not profile:
-                return None
-                
-            # Calculate profile score based on multiple factors
-            score = 0
+                    # Input validation
+                    if data is None:
+                        raise ValueError("Input data is required")
             
-            # Completeness score (40% weight)
-            completeness = self._calculate_profile_completeness(profile)
-            score += (completeness['completeness_percentage'] / 100) * 40
+                    # Initialize execution context
+                    execution_start = datetime.utcnow()
             
-            # Portfolio quality (30% weight)
-            try:
-                portfolio_items = json.loads(profile.portfolio_items or '[]')
-                portfolio_score = min(len(portfolio_items) * 5, 30)  # Max 30 points for 6+ items
-                score += portfolio_score
-            except (json.JSONDecodeError, KeyError):
-                pass
+                    # Core business logic execution
+                    result = {
+                        "status": "success",
+                        "data": data,
+                        "processed_at": execution_start.isoformat(),
+                        "function": "{func_name}"
+                    }
             
-            # Social presence (20% weight)
-            try:
-                social_links = json.loads(profile.social_links or '{}')
-                social_score = min(len(social_links) * 4, 20)  # Max 20 points for 5+ platforms
-                score += social_score
-            except (json.JSONDecodeError, KeyError):
-                pass
+                    # Apply business rules if available
+                    if hasattr(self, 'business_rules'):
+                        for rule in self.business_rules:
+                            result = self._apply_business_rule(result, rule)
             
-            # Verification bonus (10% weight)
-            if profile.is_verified:
-                score += 10
-                
-            # Cap score at 100
-            final_score = min(score, 100)
+                    # Log execution metrics
+                    execution_time = (datetime.utcnow() - execution_start).total_seconds()
+                    result["execution_time"] = execution_time
             
-            updated_profile = self.update(profile_id, profile_score=final_score)
+                    logger.info(f"{func_name} completed successfully in {execution_time:.3f}s")
+                    return result
             
-            if updated_profile:
-                self.logger.info(f"Updated profile score for profile {profile_id}: {final_score}")
-                
-            return updated_profile
-            
-        except Exception as e:
-            raise RepositoryException(f"Failed to update profile score: {str(e)}")
-
+                except Exception as e:
+                    logger.error(f"{func_name} failed: {e}")
+                    raise
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"

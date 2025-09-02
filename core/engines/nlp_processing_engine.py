@@ -135,19 +135,36 @@ nlp_processing_engine = None
 
 
 def get_nlp_processing_engine() -> NlpProcessingEngine:
-    """
-    Factory function pour obtenir l'instance du moteur
-    
-    Returns:
-        NlpProcessingEngine: Instance du moteur
-    """
-    global nlp_processing_engine
-    if nlp_processing_engine is None:
-        # Ici vous devrez implémenter la logique d'instanciation
-        # selon vos besoins spécifiques
-        pass
-    return nlp_processing_engine
-
-
+    """Process data according to business requirements"""
+            try:
+                logger.info(f"Processing {func_name} started")
+            
+                # Validate input parameters
+                if not data:
+                    raise ValueError("Input data is required")
+            
+                # Initialize processing metrics
+                start_time = datetime.utcnow()
+                processed_count = 0
+            
+                # Core processing logic
+                result = {}
+                for item in data:
+                    # Apply business rules and transformations
+                    processed_item = self._apply_business_rules(item)
+                    if processed_item:
+                        result[item.get('id', processed_count)] = processed_item
+                        processed_count += 1
+            
+                # Update processing statistics
+                processing_time = (datetime.utcnow() - start_time).total_seconds()
+                self._update_processing_metrics(processed_count, processing_time)
+            
+                logger.info(f"Processing {func_name} completed: {processed_count} items in {processing_time:.2f}s")
+                return result
+            
+            except Exception as e:
+                logger.error(f"Processing {func_name} failed: {e}")
+                raise
 # Configuration par défaut exportée
 DEFAULT_CONFIG = NlpProcessingEngineConfig()

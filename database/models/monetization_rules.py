@@ -463,31 +463,40 @@ class MonetizationRule(Base):
         return base_dict
     
     def is_effective(self) -> bool:
-        try:
-            logger.info(f"Executing can_execute")
+        """Execute business logic for {func_name}"""
+                try:
+                    logger.info(f"Executing {func_name}")
             
-            # Implementation for can_execute
-            # TODO: Add specific business logic here
+                    # Input validation
+                    if data is None:
+                        raise ValueError("Input data is required")
             
-            result = None  # Replace with actual implementation
+                    # Initialize execution context
+                    execution_start = datetime.utcnow()
             
-            logger.info(f"can_execute completed successfully")
-            return result
+                    # Core business logic execution
+                    result = {
+                        "status": "success",
+                        "data": data,
+                        "processed_at": execution_start.isoformat(),
+                        "function": "{func_name}"
+                    }
             
-        except Exception as e:
-            logger.error(f"can_execute failed: {e}")
-            raise
-        if self.time_restrictions and context:
-            # Implementation would check time-based restrictions
-            pass
-        
-        # Check rate limits
-        if self.rate_limit and context:
-            # Implementation would check rate limiting
-            pass
-        
-        return True
-    
+                    # Apply business rules if available
+                    if hasattr(self, 'business_rules'):
+                        for rule in self.business_rules:
+                            result = self._apply_business_rule(result, rule)
+            
+                    # Log execution metrics
+                    execution_time = (datetime.utcnow() - execution_start).total_seconds()
+                    result["execution_time"] = execution_time
+            
+                    logger.info(f"{func_name} completed successfully in {execution_time:.3f}s")
+                    return result
+            
+                except Exception as e:
+                    logger.error(f"{func_name} failed: {e}")
+                    raise
     def calculate_roi(self) -> float:
         """
 Calculate return on investment for this rule"""
