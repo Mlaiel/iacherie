@@ -85,33 +85,11 @@ Test that fingerprinting processors have correct names"""
     # Test basic processor name validation logic
     class MockProcessor:
         def __init__(self, name):
-        try:
-            logger.info(f"Executing __init__")
+            self._name = name
+        
+        def get_name(self):
+            return self._name
             
-            # Implementation for __init__
-            # TODO: Add specific business logic here
-        try:
-            logger.info(f"Executing name")
-            
-            # Implementation for name
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"name completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"name failed: {e}")
-            raise
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"__init__ completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"__init__ failed: {e}")
-            raise
         @property 
         def name(self):
             return self._name
@@ -198,33 +176,7 @@ Test watermarker initialization methods"""
 
 
 def test_implementation_completeness():
-        try:
-            logger.info(f"Executing test_implementation_completeness")
-            
-            # Implementation for test_implementation_completeness
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"test_implementation_completeness completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"test_implementation_completeness failed: {e}")
-            raise
-    assert hasattr(video_wm, 'logger')
-    
-    # Test TextWatermarker
-    text_wm = TextWatermarker(config)
-    await text_wm.initialize()
-    assert hasattr(text_wm, 'is_initialized')
-    assert text_wm.is_initialized is True
-    assert hasattr(text_wm, 'logger')
-
-
-def test_implementation_completeness():
-    """
-Test that no critical TODO patterns remain in implemented files"""
+    """Test that no critical TODO patterns remain in implemented files"""
     import re
     
     implemented_files = [

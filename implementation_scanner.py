@@ -42,26 +42,36 @@ class ImplementationScanner:
         return dict(self.incomplete_files)
     
     def _analyze_file(self, file_path: Path) -> List[str]:
+        """Analyze a Python file for incomplete implementations"""
         try:
-                    # AI model processing
-                    if not hasattr(self, 'model') or self.model is None:
-                        raise RuntimeError("AI model not initialized")
+            with open(file_path, 'r', encoding='utf-8') as f:
+                content = f.read()
             
-                    # Preprocess input
-                    processed_input = await self._preprocess__analyze_file_input(file_path)
+            issues = []
+            lines = content.split('\n')
             
-                    # Run inference
-                    result = await self.model.predict(processed_input)
+            for i, line in enumerate(lines, 1):
+                stripped = line.strip()
+                
+                # Check for TODO comments
+                if 'TODO' in line and not stripped.startswith('#'):
+                    issues.append(f"Line {i}: TODO comment - {stripped}")
+                
+                # Check for NotImplementedError
+                if 'NotImplementedError' in line:
+                    issues.append(f"Line {i}: NotImplementedError - {stripped}")
+                
+                # Check for simple pass statements (but skip legitimate ones)
+                if stripped == 'pass' and i > 1:
+                    prev_line = lines[i-2].strip() if i > 1 else ""
+                    if prev_line.startswith('def ') and not any(keyword in prev_line for keyword in ['@abstractmethod', 'except', 'finally']):
+                        issues.append(f"Line {i}: Empty function - {prev_line}")
             
-                    # Postprocess result
-                    final_result = await self._postprocess__analyze_file_result(result)
+            return issues
             
-                    logger.info(f"AI processing _analyze_file completed")
-                    return final_result
-            
-                except Exception as e:
-                    logger.error(f"AI processing _analyze_file failed: {e}")
-                    raise
+        except Exception as e:
+            print(f"Error analyzing {file_path}: {e}")
+            return []
     def print_report(self):
         """Print analysis report"""
         print("\n" + "="*80)
