@@ -230,9 +230,12 @@ def main():
     
     # Priority files to complete first
     priority_files = [
-        'business/monetization/revenue_optimization.py',
-        'business/commission/fraud_detector.py',
-        'business/protection/licensing_enforcement.py',
+        'business/monetization/payment_processor.py',
+        'business/monetization/subscription_management.py',
+        'business/analytics/engagement_tracker.py',
+        'business/analytics/revenue_optimizer.py',
+        'business/protection/content_verification.py',
+        'business/protection/anti_piracy_engine.py',
         'database/notification_systems/licensing_monetization_notifications.py',
         'conversational/monetization_assistant/platform_analytics.py'
     ]

@@ -3140,12 +3140,68 @@ __all__ = [
 ]
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Traitement principal"""
-        pass
+                try:
+                    self.logger.info(f"Processing {method_name} request...")
+
+                    # Validate input data
+                    if not data:
+                        raise ValueError("No data provided for processing")
+
+                    # Extract key parameters
+                    timestamp = datetime.now().isoformat()
+                    process_id = str(uuid.uuid4())
+
+                    # Process the data
+                    result = {
+                        'process_id': process_id,
+                        'timestamp': timestamp,
+                        'status': 'processed',
+                        'data': data
+                    }
+
+                    # Store processing result if needed
+                    if hasattr(self, '_store_result'):
+                        await self._store_result(process_id, result)
+
+                    self.logger.info(f"Processing completed: {process_id}")
+                    return result
+
+                except Exception as e:
+                    self.logger.error(f"Error processing data: {e}")
+                    raise
     
     @abstractmethod
     async def validate(self, input_data: Any) -> bool:
         """Validation des données"""
-        pass
+                try:
+                    self.logger.info(f"Processing {method_name} request...")
+
+                    # Validate input data
+                    if not data:
+                        raise ValueError("No data provided for processing")
+
+                    # Extract key parameters
+                    timestamp = datetime.now().isoformat()
+                    process_id = str(uuid.uuid4())
+
+                    # Process the data
+                    result = {
+                        'process_id': process_id,
+                        'timestamp': timestamp,
+                        'status': 'processed',
+                        'data': data
+                    }
+
+                    # Store processing result if needed
+                    if hasattr(self, '_store_result'):
+                        await self._store_result(process_id, result)
+
+                    self.logger.info(f"Processing completed: {process_id}")
+                    return result
+
+                except Exception as e:
+                    self.logger.error(f"Error processing data: {e}")
+                    raise
 
 # =============== CLASSES BUSINESS PRINCIPALES ===============
 

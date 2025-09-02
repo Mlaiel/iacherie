@@ -502,9 +502,63 @@ Export completed traces to backends"""
     
     async def _export_to_backend(self, exporter: Any, traces: List[Trace]):
         """Export traces to a specific backend"""
-        # This would be implemented based on the specific exporter
-        # (Jaeger, Zipkin, OpenTelemetry Collector, etc.)
-        pass
+        try:
+            # Prepare trace data for export
+            trace_data = []
+            
+            for trace in traces:
+                # Convert trace to export format
+                exported_trace = {
+                    'trace_id': trace.trace_id,
+                    'operation_name': trace.operation_name,
+                    'start_time': trace.start_time.isoformat(),
+                    'end_time': trace.end_time.isoformat() if trace.end_time else None,
+                    'duration': trace.duration,
+                    'spans': []
+                }
+                
+                # Convert spans to export format
+                for span in trace.spans:
+                    exported_span = {
+                        'span_id': span.span_id,
+                        'trace_id': span.trace_id,
+                        'parent_span_id': span.parent_span_id,
+                        'operation_name': span.operation_name,
+                        'start_time': span.start_time.isoformat(),
+                        'end_time': span.end_time.isoformat() if span.end_time else None,
+                        'duration': span.duration,
+                        'tags': span.tags,
+                        'logs': span.logs,
+                        'status': span.status.value if span.status else None
+                    }
+                    exported_trace['spans'].append(exported_span)
+                
+                trace_data.append(exported_trace)
+            
+            # Export based on exporter type
+            if hasattr(exporter, 'export_traces'):
+                # Standard OpenTelemetry-style exporter
+                await exporter.export_traces(trace_data)
+            elif hasattr(exporter, 'send'):
+                # Jaeger-style exporter
+                await exporter.send(trace_data)
+            elif hasattr(exporter, 'submit'):
+                # Custom exporter interface
+                await exporter.submit(trace_data)
+            else:
+                # Generic HTTP POST exporter
+                import aiohttp
+                async with aiohttp.ClientSession() as session:
+                    export_url = getattr(exporter, 'endpoint', 'http://localhost:14268/api/traces')
+                    async with session.post(export_url, json=trace_data) as response:
+                        if response.status >= 400:
+                            logger.error(f"Export failed with status {response.status}")
+            
+            logger.info(f"Successfully exported {len(traces)} traces to backend")
+            
+        except Exception as e:
+            logger.error(f"Failed to export traces to backend: {e}")
+            raise
     
     def add_exporter(self, exporter: Any):
         """
