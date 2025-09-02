@@ -741,8 +741,8 @@ class QueueManagerDocumentation:
     - Nettoyage automatique des ressources
     """
     
-    def __init__(self, config: QueueManagerConfig = None):
-        self.config = config or QueueManagerConfig()
+    def __init__(self, config: QueueConfig = None):
+        self.config = config or QueueConfig()
         self._pool = []
         self._active_connections = 0
         self._lock = threading.Lock()
