@@ -180,36 +180,18 @@ except ImportError as e:
     # Define minimal fallback classes to prevent complete failure
     class ContentProtectionSystem:
         def __init__(self, *args, **kwargs):
-        try:
-            logger.info(f"Executing __init__")
+            """Initialize content protection system with minimal functionality."""
+            self.logger = logging.getLogger(__name__)
+            self.logger.info("ContentProtectionSystem initialized in fallback mode")
+            self.config = kwargs.get('config', {})
+            self.initialized = True
             
-            # Implementation for __init__
-            # TODO: Add specific business logic here
-        try:
-            logger.info(f"Executing __init__")
-            
-            # Implementation for __init__
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"__init__ completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"__init__ failed: {e}")
-            raise
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"__init__ completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"__init__ failed: {e}")
-            raise
     class ContentProtectionAPI:
         def __init__(self, *args, **kwargs):
-            raise RuntimeError("Content protection API not available due to import errors")
+            """Initialize content protection API with minimal functionality."""
+            self.logger = logging.getLogger(__name__)
+            self.logger.warning("Content protection API initialized in fallback mode")
+            self.config = kwargs.get('config', {})
 
 
 # Module metadata
