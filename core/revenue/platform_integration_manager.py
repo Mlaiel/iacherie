@@ -203,49 +203,8 @@ Cleanup resources"""
     
     @abstractmethod
     async def authenticate(self) -> bool:
-        try:
-            logger.info(f"Executing authenticate")
-            
-            # Implementation for authenticate
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"authenticate completed successfully")
-            return result
-            
-        except Exception as e:
-        try:
-            logger.info(f"Executing fetch_revenue_data")
-            
-            # Implementation for fetch_revenue_data
-            # TODO: Add specific business logic here
-        try:
-            logger.info(f"Executing fetch_analytics_data")
-            
-            # Implementation for fetch_analytics_data
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"fetch_analytics_data completed successfully")
-            return result
-            
-        except Exception as e:
-        try:
-            logger.info(f"Executing _setup_authentication")
-            
-            # Implementation for _setup_authentication
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"_setup_authentication completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"_setup_authentication failed: {e}")
-            raise
+        """Abstract method for platform authentication."""
+        raise NotImplementedError("authenticate must be implemented by subclass")
     @abstractmethod
     async def fetch_revenue_data(
         self, 

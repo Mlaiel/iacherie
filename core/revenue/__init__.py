@@ -48,6 +48,15 @@ from .integration import RevenueIntegrationEngine, create_revenue_integration_en
 from .distribution_manager import RevenueDistributionManager, create_distribution_manager
 from .analytics_engine import RevenueAnalyticsEngine, create_revenue_analytics_engine
 from .platform_integration_manager import PlatformIntegrationManager, create_platform_integration_manager
+
+# Import new complete implementations
+from .revenue_management_system import (
+    RevenueManagementSystem, 
+    RevenueMetrics, 
+    RevenueGoal,
+    GenericPlatformManager
+)
+from .spotify_integration import SpotifyIntegrationManager
 from .payment_processor import PaymentProcessingManager, create_payment_processing_manager
 
 # Import central integration hub
@@ -87,8 +96,12 @@ __all__ = [
     'PlatformIntegrationManager',
     'PaymentProcessingManager',
     
-    # Central Integration Hub
+    # Complete Revenue Management System
     'RevenueManagementSystem',
+    'RevenueMetrics',
+    'RevenueGoal',
+    'GenericPlatformManager',
+    'SpotifyIntegrationManager',
     
     # Factory Functions
     'create_revenue_allocator',
