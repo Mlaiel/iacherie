@@ -64,7 +64,33 @@ except ImportError:
     # Mock for standalone operation
     class GamificationSystem:
         def __init__(self):
-            pass
+            """Mock gamification system for standalone operation"""
+            self.events = []
+            self.user_scores = {}
+            self.achievements = []
+            self.logger = logging.getLogger(__name__)
+            
+            # Initialize basic gamification features
+            self.point_values = {
+                'content_upload': 10,
+                'collaboration_start': 25,
+                'collaboration_complete': 50,
+                'monetization_milestone': 100,
+                'social_engagement': 5,
+                'skill_development': 20,
+                'platform_milestone': 200
+            }
+            
+            # Initialize achievement definitions
+            self.achievement_definitions = {
+                'first_upload': {'points': 50, 'description': 'Upload your first content'},
+                'collaborator': {'points': 100, 'description': 'Complete first collaboration'},
+                'influencer': {'points': 500, 'description': 'Reach 1000 followers'},
+                'content_creator': {'points': 250, 'description': 'Upload 10 contents'},
+                'mentor': {'points': 300, 'description': 'Help 5 other creators'}
+            }
+            
+            self.logger.info("Mock GamificationSystem initialized with basic features")
 
 logger = logging.getLogger(__name__)
 

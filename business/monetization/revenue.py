@@ -49,7 +49,8 @@ __all__ = [
     'RevenueGoal',
     'MonetizationAlert',
 ]
-\n\n
+
+
 # ==========================================================================================
 # MODULE 2/40: monetization_alerts.py
 # SOURCE: /app/business/creators/creator_workflow/handlers/monetization/monetization_alerts.py
@@ -772,7 +773,7 @@ class MonetizationAlertHandler:
         self.payout_records.clear()
         self.revenue_goals.clear()
         self.logger.info("Monetization alert handler shutdown complete")
-\n\n
+
 # ==========================================================================================
 # MODULE 3/40: revenue_manager.py
 # SOURCE: /app/business/creators/creator_workflow/handlers/collaboration/managers/revenue_manager.py
@@ -1757,7 +1758,7 @@ class RevenueManager:
         
         self.payment_schedules[partnership_id] = schedule
         return schedule
-\n\n
+
 # ==========================================================================================
 # MODULE 4/40: revenue_optimization_engine.py
 # SOURCE: /app/business/creators/creator_workflow/handlers/collaboration/algorithms/recommendation_engine/algorithms/revenue_optimization_engine.py
@@ -2577,7 +2578,7 @@ class RevenueOptimizationEngine:
             },
             "metrics": self.metrics_collector.get_metrics()
         }
-\n\n
+
 # ==========================================================================================
 # MODULE 5/40: monetization_service.py
 # SOURCE: /app/business/creators/creator_workflow/services/monetization_service.py
@@ -3748,7 +3749,7 @@ class ComplianceMonitor:
 # This code is proprietary and confidential. Any unauthorized use, reproduction,
 # or distribution is strictly prohibited and may result in severe civil and
 # criminal penalties. All rights reserved.
-\n\n
+
 # ==========================================================================================
 # MODULE 6/40: __init__.py
 # SOURCE: /app/analytics/blockchain/consensus/monitoring/alerts/business/handlers/creator_workflow/handlers/monetization/__init__.py
@@ -3788,7 +3789,7 @@ __all__ = [
     'RevenueGoal',
     'MonetizationAlert',
 ]
-\n\n
+
 # ==========================================================================================
 # MODULE 7/40: monetization_alerts.py
 # SOURCE: /app/analytics/blockchain/consensus/monitoring/alerts/business/handlers/creator_workflow/handlers/monetization/monetization_alerts.py
@@ -4511,7 +4512,7 @@ class MonetizationAlertHandler:
         self.payout_records.clear()
         self.revenue_goals.clear()
         self.logger.info("Monetization alert handler shutdown complete")
-\n\n
+
 # ==========================================================================================
 # MODULE 8/40: revenue_manager.py
 # SOURCE: /app/analytics/blockchain/consensus/monitoring/alerts/business/handlers/creator_workflow/handlers/collaboration/managers/revenue_manager.py
@@ -5496,7 +5497,7 @@ class RevenueManager:
         
         self.payment_schedules[partnership_id] = schedule
         return schedule
-\n\n
+
 # ==========================================================================================
 # MODULE 9/40: revenue_optimization_engine.py
 # SOURCE: /app/analytics/blockchain/consensus/monitoring/alerts/business/handlers/creator_workflow/handlers/collaboration/algorithms/recommendation_engine/algorithms/revenue_optimization_engine.py
@@ -6316,7 +6317,7 @@ class RevenueOptimizationEngine:
             },
             "metrics": self.metrics_collector.get_metrics()
         }
-\n\n
+
 # ==========================================================================================
 # MODULE 10/40: monetization_service.py
 # SOURCE: /app/analytics/blockchain/consensus/monitoring/alerts/business/handlers/creator_workflow/services/monetization_service.py
@@ -7487,7 +7488,7 @@ class ComplianceMonitor:
 # This code is proprietary and confidential. Any unauthorized use, reproduction,
 # or distribution is strictly prohibited and may result in severe civil and
 # criminal penalties. All rights reserved.
-\n\n
+
 # ==========================================================================================
 # MODULE 11/40: revenue_alerts.py
 # SOURCE: /app/analytics/blockchain/consensus/monitoring/alerts/business/handlers/financial/revenue_alerts.py
@@ -8045,7 +8046,7 @@ class RevenueAlertHandler:
                 pass
         
         self.logger.info("Revenue alert handler shutdown complete")
-\n\n
+
 # ==========================================================================================
 # MODULE 12/40: payment_alerts.py
 # SOURCE: /app/analytics/blockchain/consensus/monitoring/alerts/business/handlers/financial/payment_alerts.py
@@ -8373,7 +8374,7 @@ class PaymentAlertHandler:
                 pass
         
         self.logger.info("Payment alert handler shutdown complete")
-\n\n
+
 # ==========================================================================================
 # MODULE 13/40: __init__.py
 # SOURCE: /app/analytics/blockchain/consensus/monitoring/alerts/business/handlers/financial/__init__.py
@@ -8413,7 +8414,7 @@ __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
-\n\n
+
 # ==========================================================================================
 # MODULE 14/40: __init__.py
 # SOURCE: /app/analytics/blockchain/consensus_backup_20250730_082819/monitoring/alerts/business/handlers/creator_workflow/handlers/monetization/__init__.py
@@ -8453,7 +8454,7 @@ __all__ = [
     'RevenueGoal',
     'MonetizationAlert',
 ]
-\n\n
+
 # ==========================================================================================
 # MODULE 15/40: monetization_alerts.py
 # SOURCE: /app/analytics/blockchain/consensus_backup_20250730_082819/monitoring/alerts/business/handlers/creator_workflow/handlers/monetization/monetization_alerts.py
@@ -9176,7 +9177,7 @@ class MonetizationAlertHandler:
         self.payout_records.clear()
         self.revenue_goals.clear()
         self.logger.info("Monetization alert handler shutdown complete")
-\n\n
+
 # ==========================================================================================
 # MODULE 16/40: revenue_manager.py
 # SOURCE: /app/analytics/blockchain/consensus_backup_20250730_082819/monitoring/alerts/business/handlers/creator_workflow/handlers/collaboration/managers/revenue_manager.py
@@ -10161,7 +10162,7 @@ class RevenueManager:
         
         self.payment_schedules[partnership_id] = schedule
         return schedule
-\n\n
+
 # ==========================================================================================
 # MODULE 17/40: revenue_optimization_engine.py
 # SOURCE: /app/analytics/blockchain/consensus_backup_20250730_082819/monitoring/alerts/business/handlers/creator_workflow/handlers/collaboration/algorithms/recommendation_engine/algorithms/revenue_optimization_engine.py
@@ -10981,7 +10982,7 @@ class RevenueOptimizationEngine:
             },
             "metrics": self.metrics_collector.get_metrics()
         }
-\n\n
+
 # ==========================================================================================
 # MODULE 18/40: monetization_service.py
 # SOURCE: /app/analytics/blockchain/consensus_backup_20250730_082819/monitoring/alerts/business/handlers/creator_workflow/services/monetization_service.py
@@ -12152,7 +12153,7 @@ class ComplianceMonitor:
 # This code is proprietary and confidential. Any unauthorized use, reproduction,
 # or distribution is strictly prohibited and may result in severe civil and
 # criminal penalties. All rights reserved.
-\n\n
+
 # ==========================================================================================
 # MODULE 19/40: revenue_alerts.py
 # SOURCE: /app/analytics/blockchain/consensus_backup_20250730_082819/monitoring/alerts/business/handlers/financial/revenue_alerts.py
@@ -12710,7 +12711,7 @@ class RevenueAlertHandler:
                 pass
         
         self.logger.info("Revenue alert handler shutdown complete")
-\n\n
+
 # ==========================================================================================
 # MODULE 20/40: payment_alerts.py
 # SOURCE: /app/analytics/blockchain/consensus_backup_20250730_082819/monitoring/alerts/business/handlers/financial/payment_alerts.py
@@ -13038,7 +13039,7 @@ class PaymentAlertHandler:
                 pass
         
         self.logger.info("Payment alert handler shutdown complete")
-\n\n
+
 # ==========================================================================================
 # MODULE 21/40: __init__.py
 # SOURCE: /app/analytics/blockchain/consensus_backup_20250730_082819/monitoring/alerts/business/handlers/financial/__init__.py
@@ -13078,7 +13079,7 @@ __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
-\n\n
+
 # ==========================================================================================
 # MODULE 22/40: api.py
 # SOURCE: /app/billing/api.py
@@ -14132,7 +14133,7 @@ async def health_check():
 
 # Export router
 __all__ = ['router']
-\n\n
+
 # ==========================================================================================
 # MODULE 23/40: core.py
 # SOURCE: /app/billing/core.py
@@ -15165,7 +15166,7 @@ __all__ = [
     'subscription_manager',
     'initialize_billing_system'
 ]
-\n\n
+
 # ==========================================================================================
 # MODULE 24/40: tasks.py
 # SOURCE: /app/billing/tasks.py
@@ -15853,7 +15854,7 @@ __all__ = [
     'update_analytics_cache',
     'detect_fraud_patterns'
 ]
-\n\n
+
 # ==========================================================================================
 # MODULE 25/40: webhooks.py
 # SOURCE: /app/billing/webhooks.py
@@ -16482,7 +16483,7 @@ __all__ = [
     'PayPalWebhookProcessor',
     'get_webhook_manager'
 ]
-\n\n
+
 # ==========================================================================================
 # MODULE 26/40: models.py
 # SOURCE: /app/billing/models.py
@@ -17173,17 +17174,90 @@ class AuditLog(Base):
 @event.listens_for(Customer, 'after_update')
 @event.listens_for(Customer, 'after_delete')
 def log_customer_changes(mapper, connection, target):
-    """Log customer changes"""
-    # Implementation would be added based on specific audit requirements
-    pass
+    """Log customer changes for audit trail and compliance"""
+    try:
+        import logging
+        from datetime import datetime
+        
+        logger = logging.getLogger(__name__)
+        
+        # Determine the operation type
+        operation = "unknown"
+        if hasattr(target, '_sa_instance_state'):
+            if target._sa_instance_state.expired:
+                operation = "delete"
+            elif target._sa_instance_state.pending:
+                operation = "insert"
+            else:
+                operation = "update"
+        
+        # Log customer change for audit
+        audit_data = {
+            "timestamp": datetime.utcnow().isoformat(),
+            "operation": operation,
+            "customer_id": getattr(target, 'id', None),
+            "customer_email": getattr(target, 'email', None),
+            "table": "customers",
+            "changed_by": "system"  # This could be enhanced to track actual user
+        }
+        
+        logger.info(f"Customer audit log: {audit_data}")
+        
+        # Store in audit table or external audit system
+        # This could be enhanced to write to dedicated audit tables
+        
+    except Exception as e:
+        # Don't fail the main operation due to audit logging issues
+        logging.getLogger(__name__).error(f"Error logging customer changes: {e}")
 
 
 @event.listens_for(Payment, 'after_insert')
 @event.listens_for(Payment, 'after_update')
 def log_payment_changes(mapper, connection, target):
-    """Log payment changes"""
-    # Implementation would be added based on specific audit requirements
-    pass
+    """Log payment changes for financial audit and compliance"""
+    try:
+        import logging
+        from datetime import datetime
+        import json
+        
+        logger = logging.getLogger(__name__)
+        
+        # Determine the operation type
+        operation = "unknown"
+        if hasattr(target, '_sa_instance_state'):
+            if target._sa_instance_state.expired:
+                operation = "delete"
+            elif target._sa_instance_state.pending:
+                operation = "insert"
+            else:
+                operation = "update"
+        
+        # Collect sensitive payment information for audit
+        audit_data = {
+            "timestamp": datetime.utcnow().isoformat(),
+            "operation": operation,
+            "payment_id": getattr(target, 'id', None),
+            "customer_id": getattr(target, 'customer_id', None),
+            "amount": str(getattr(target, 'amount', 0)),  # Convert to string for JSON serialization
+            "currency": getattr(target, 'currency', 'USD'),
+            "status": getattr(target, 'status', None),
+            "payment_method": getattr(target, 'payment_method', None),
+            "table": "payments",
+            "changed_by": "system"
+        }
+        
+        # Log for financial audit trail (critical for compliance)
+        logger.info(f"Payment audit log: {json.dumps(audit_data)}")
+        
+        # For critical financial operations, also log to secure audit system
+        if operation in ["insert", "update"] and getattr(target, 'amount', 0) > 0:
+            logger.warning(f"Financial transaction {operation}: Payment ID {audit_data['payment_id']}, Amount: {audit_data['amount']} {audit_data['currency']}")
+        
+    except Exception as e:
+        # Critical: Don't fail financial transactions due to audit logging issues
+        # But ensure we log the audit failure itself
+        logging.getLogger(__name__).error(f"CRITICAL: Error logging payment changes: {e}")
+        logging.getLogger(__name__).error(f"Payment ID: {getattr(target, 'id', 'unknown')}, Operation: {operation}")
 
 
 # Database utility functions
@@ -17248,7 +17322,7 @@ __all__ = [
     'create_all_tables', 'get_customer_by_email', 'get_active_subscriptions',
     'get_overdue_invoices', 'calculate_mrr'
 ]
-\n\n
+
 # ==========================================================================================
 # MODULE 27/40: invoices.py
 # SOURCE: /app/billing/invoices.py
@@ -18208,7 +18282,7 @@ __all__ = [
     'InvoiceEmailDelivery',
     'invoice_manager'
 ]
-\n\n
+
 # ==========================================================================================
 # MODULE 28/40: __init__.py
 # SOURCE: /app/billing/__init__.py
@@ -18756,7 +18830,7 @@ __all__ = [
     'payment_manager',
     'subscription_manager'
 ]
-\n\n
+
 # ==========================================================================================
 # MODULE 29/40: tenant_billing_manager.py
 # SOURCE: /app/tenancy/billing/tenant_billing_manager.py
@@ -19626,7 +19700,7 @@ class TenantBillingManager:
 
 # Instance globale du gestionnaire de facturation
 tenant_billing_manager = TenantBillingManager()
-\n\n
+
 # ==========================================================================================
 # MODULE 30/40: tenant_billing.py
 # SOURCE: /app/tenancy/billing/tenant_billing.py
@@ -20930,7 +21004,7 @@ class DunningManager:
     async def process_overdue_payments(self):
         """Process overdue payment workflow."""
         pass
-\n\n
+
 # ==========================================================================================
 # MODULE 31/40: revenue_analytics.py
 # SOURCE: /app/models/orm/analytics/revenue_analytics.py
@@ -21002,7 +21076,7 @@ class RevenueAnalytics(Base):
             "tenant_id": self.tenant_id,
             "trace_id": self.trace_id
         }
-\n\n
+
 # ==========================================================================================
 # MODULE 32/40: user_subscription.py
 # SOURCE: /app/models/orm/users/user_subscription.py
@@ -21092,7 +21166,7 @@ class UserSubscription(Base):
             "compliance_flags": self.compliance_flags,
             "trace_id": self.trace_id
         }
-\n\n
+
 # ==========================================================================================
 # MODULE 33/40: test_revenue_predictor.py
 # SOURCE: /tests_backend/app/api/v1/analytics/test_revenue_predictor.py
@@ -21125,7 +21199,7 @@ def test_revenuepredictor_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-\n\n
+
 # ==========================================================================================
 # MODULE 34/40: test_core.py
 # SOURCE: /tests_backend/app/billing/test_core.py
@@ -21729,7 +21803,7 @@ class TestBillingEngineIntegration:
         # 5. Reactivate subscription
         subscription = await billing_engine.reactivate_subscription(subscription.id)
         assert subscription.status == SubscriptionStatus.ACTIVE
-\n\n
+
 # ==========================================================================================
 # MODULE 35/40: test_api.py
 # SOURCE: /tests_backend/app/billing/test_api.py
@@ -22447,7 +22521,7 @@ class TestErrorHandling:
         assert "detail" in data
         # Should not expose internal error details
         assert "Database connection failed" not in data["detail"]
-\n\n
+
 # ==========================================================================================
 # MODULE 36/40: test_invoices.py
 # SOURCE: /tests_backend/app/billing/test_invoices.py
@@ -23033,7 +23107,7 @@ class TestInvoiceIntegration:
         # 4. Check email content for overdue notice
         call_args = mock_smtp.send_message.call_args[0][0]
         assert "overdue" in str(call_args).lower() or "reminder" in str(call_args).lower()
-\n\n
+
 # ==========================================================================================
 # MODULE 37/40: conftest.py
 # SOURCE: /tests_backend/app/billing/conftest.py
@@ -23570,7 +23644,7 @@ pytestmark = [
 
 # Configuration
 pytest_plugins = ['pytest_asyncio']
-\n\n
+
 # ==========================================================================================
 # MODULE 38/40: test_tasks.py
 # SOURCE: /tests_backend/app/billing/test_tasks.py
@@ -24233,7 +24307,7 @@ class TestTaskIntegration:
         assert cycle_summary["invoice_generated"] is True
         assert cycle_summary["payment_processed"] is True
         assert cycle_summary["cycle_status"] == "completed"
-\n\n
+
 # ==========================================================================================
 # MODULE 39/40: test_analytics.py
 # SOURCE: /tests_backend/app/billing/test_analytics.py
@@ -24883,7 +24957,7 @@ class TestAnalyticsIntegration:
         assert execution_time < 5.0  # 5 seconds max
         assert len(results) == 4
         assert all(result is not None for result in results)
-\n\n
+
 # ==========================================================================================
 # MODULE 40/40: __init__.py
 # SOURCE: /tests_backend/app/billing/__init__.py
@@ -24902,4 +24976,3 @@ from pathlib import Path
 # Add the app directory to the Python path for imports
 app_dir = Path(__file__).parent.parent.parent.parent / "app"
 sys.path.insert(0, str(app_dir))
-\n\n

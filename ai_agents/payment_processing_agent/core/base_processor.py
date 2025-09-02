@@ -130,7 +130,31 @@ class BaseProcessor(ABC):
     
     def _initialize(self):
         """Initialize processor-specific configuration."""
-        pass
+        try:
+            # Set up default configuration
+            self.timeout = self.config.get('timeout', 30)
+            self.retry_attempts = self.config.get('retry_attempts', 3)
+            self.sandbox_mode = self.config.get('sandbox_mode', True)
+            
+            # Initialize security settings
+            self.encrypt_data = self.config.get('encrypt_data', True)
+            self.log_transactions = self.config.get('log_transactions', True)
+            
+            # Set up rate limiting
+            self.rate_limit = self.config.get('rate_limit', 100)  # transactions per minute
+            self.rate_limit_window = self.config.get('rate_limit_window', 60)  # seconds
+            
+            # Initialize processor state
+            self.is_initialized = True
+            self.last_health_check = None
+            
+            # Log initialization
+            self.logger.info(f"Payment processor {self.__class__.__name__} initialized successfully")
+            self.logger.info(f"Configuration: timeout={self.timeout}s, retry_attempts={self.retry_attempts}, sandbox_mode={self.sandbox_mode}")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to initialize payment processor: {e}")
+            raise PaymentProcessingError(f"Initialization failed: {e}")
     
     async def process_payment(
         self,
