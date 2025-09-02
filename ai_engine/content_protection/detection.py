@@ -1114,8 +1114,75 @@ Generate signature for candidate content"""
     async def _schedule_scan(self, profile: MonitoringProfile):
         """
 Schedule periodic scans for monitoring profile"""
-        # Implementation for scheduling periodic scans
-        pass
+        try:
+            profile_id = profile.profile_id
+            
+            # Create scan schedule based on monitoring profile frequency
+            scan_interval = self._get_scan_interval(profile.monitoring_frequency)
+            
+            # Store the monitoring profile
+            self.monitoring_profiles[profile_id] = profile
+            
+            # Cancel existing task if any
+            if profile_id in self.monitoring_tasks:
+                self.monitoring_tasks[profile_id].cancel()
+            
+            # Schedule the periodic scan task
+            task = asyncio.create_task(
+                self._run_periodic_scan(profile_id, profile, scan_interval)
+            )
+            self.monitoring_tasks[profile_id] = task
+            
+            logger.info(f"Scheduled periodic scan for profile {profile_id} with interval {scan_interval}s")
+            
+        except Exception as e:
+            logger.error(f"Failed to schedule periodic scan for profile {profile.profile_id}: {e}")
+            raise
+    
+    def _get_scan_interval(self, frequency: str) -> int:
+        """Get scan interval in seconds based on frequency"""
+        frequency_map = {
+            'realtime': 60,      # 1 minute
+            'hourly': 3600,      # 1 hour  
+            'daily': 86400,      # 24 hours
+            'weekly': 604800,    # 7 days
+            'monthly': 2592000   # 30 days
+        }
+        return frequency_map.get(frequency.lower(), 86400)  # Default to daily
+    
+    async def _run_periodic_scan(
+        self, 
+        profile_id: str, 
+        monitoring_profile: MonitoringProfile,
+        interval: int
+    ):
+        """Run periodic monitoring scans"""
+        try:
+            while True:
+                logger.info(f"Starting periodic scan for profile {profile_id}")
+                
+                # Perform the monitoring scan
+                alerts = await self.perform_monitoring_scan(profile_id, monitoring_profile)
+                
+                # Process any alerts found
+                if alerts:
+                    logger.warning(f"Found {len(alerts)} potential violations for profile {profile_id}")
+                    for alert in alerts:
+                        await self._process_alert(alert)
+                
+                # Update last scan time
+                monitoring_profile.last_scan = utc_now()
+                self.monitoring_profiles[profile_id] = monitoring_profile
+                
+                # Wait for next scan
+                await asyncio.sleep(interval)
+                
+        except asyncio.CancelledError:
+            logger.info(f"Periodic scan cancelled for profile {profile_id}")
+        except Exception as e:
+            logger.error(f"Error in periodic scan for profile {profile_id}: {e}")
+            # Try to reschedule after error
+            await asyncio.sleep(60)  # Wait 1 minute before retry
     
     async def detect_content_theft(
         self,
@@ -1381,8 +1448,167 @@ Initialize the unauthorized use detector asynchronously"""
         monitoring_profile: MonitoringProfile
     ) -> List[DetectionAlert]:
         """Detect commercial exploitation of protected content"""
-        # Implementation for detecting commercial use without authorization
-        pass
+        alerts = []
+        
+        try:
+            logger.info(f"Detecting commercial exploitation for content {content_id}")
+            
+            # Get content metadata for comparison
+            content_signature = await self._get_content_signature(content_id)
+            if not content_signature:
+                logger.warning(f"No content signature found for {content_id}")
+                return alerts
+            
+            # Commercial platform keywords to search for
+            commercial_indicators = [
+                'buy', 'purchase', 'sale', 'price', 'cost', 'payment',
+                'premium', 'subscription', 'license', 'royalty',
+                'commercial', 'business', 'enterprise', 'monetize'
+            ]
+            
+            # Search platforms for commercial use
+            commercial_platforms = [
+                'marketplace.', 'store.', 'shop.', 'buy.',
+                'amazon.', 'ebay.', 'etsy.', 'spotify.com',
+                'apple.com/music', 'youtube.com/premium'
+            ]
+            
+            for platform in commercial_platforms:
+                try:
+                    # Search for content on commercial platforms
+                    search_results = await self._search_platform_for_content(
+                        platform, content_signature, commercial_indicators
+                    )
+                    
+                    for result in search_results:
+                        # Analyze if this is unauthorized commercial use
+                        if await self._is_unauthorized_commercial_use(result, content_id):
+                            alert = DetectionAlert(
+                                alert_id=str(uuid.uuid4()),
+                                content_id=content_id,
+                                detection_type=DetectionType.METADATA_MATCH,
+                                confidence_score=result.get('confidence', 0.7),
+                                source_url=result.get('url', ''),
+                                detected_at=utc_now(),
+                                violation_type='commercial_exploitation',
+                                evidence={
+                                    'platform': platform,
+                                    'commercial_indicators': result.get('commercial_indicators', []),
+                                    'content_match': result.get('match_details', {}),
+                                    'pricing_info': result.get('pricing', {}),
+                                    'seller_info': result.get('seller', {})
+                                },
+                                severity='high' if result.get('confidence', 0) > 0.8 else 'medium'
+                            )
+                            alerts.append(alert)
+                            
+                except Exception as e:
+                    logger.warning(f"Failed to search platform {platform}: {e}")
+                    continue
+            
+            logger.info(f"Found {len(alerts)} commercial exploitation alerts for content {content_id}")
+            return alerts
+            
+        except Exception as e:
+            logger.error(f"Failed to detect commercial exploitation for content {content_id}: {e}")
+            return alerts
+    
+    async def _search_platform_for_content(
+        self, 
+        platform: str, 
+        content_signature: Dict[str, Any],
+        commercial_indicators: List[str]
+    ) -> List[Dict[str, Any]]:
+        """Search a specific platform for content usage"""
+        results = []
+        
+        try:
+            # Build search query based on content signature
+            search_terms = []
+            if 'title' in content_signature:
+                search_terms.append(content_signature['title'])
+            if 'artist' in content_signature:
+                search_terms.append(content_signature['artist'])
+                
+            # Add commercial indicators to search
+            search_query = ' '.join(search_terms + commercial_indicators[:3])
+            
+            # Simulate platform search (replace with actual API calls)
+            simulated_results = await self._simulate_platform_search(platform, search_query)
+            
+            for result in simulated_results:
+                # Check if result contains commercial indicators
+                content_text = result.get('title', '') + ' ' + result.get('description', '')
+                commercial_score = sum(1 for indicator in commercial_indicators 
+                                     if indicator.lower() in content_text.lower())
+                
+                if commercial_score > 0:
+                    result['commercial_indicators'] = [
+                        indicator for indicator in commercial_indicators 
+                        if indicator.lower() in content_text.lower()
+                    ]
+                    result['confidence'] = min(0.9, commercial_score * 0.15 + 0.3)
+                    results.append(result)
+            
+        except Exception as e:
+            logger.warning(f"Failed to search platform {platform}: {e}")
+            
+        return results
+    
+    async def _simulate_platform_search(self, platform: str, query: str) -> List[Dict[str, Any]]:
+        """Simulate platform search (replace with real API integration)"""
+        # This is a placeholder that simulates finding commercial usage
+        # In production, this would integrate with actual platform APIs
+        return [
+            {
+                'url': f'https://{platform}/item/12345',
+                'title': f'Premium Music Collection - {query.split()[0] if query else "Content"}',
+                'description': f'Buy and download high quality {query}',
+                'seller': {'name': 'UnknownSeller', 'id': 'seller123'},
+                'pricing': {'price': 9.99, 'currency': 'USD'},
+                'platform': platform
+            }
+        ]
+    
+    async def _is_unauthorized_commercial_use(self, result: Dict[str, Any], content_id: str) -> bool:
+        """Determine if the detected usage is unauthorized commercial use"""
+        try:
+            # Check against authorized licenses/distributors
+            authorized_sellers = await self._get_authorized_sellers(content_id)
+            seller_info = result.get('seller', {})
+            seller_id = seller_info.get('id', '')
+            
+            # If seller is in authorized list, it's legitimate
+            if seller_id in authorized_sellers:
+                return False
+            
+            # Check for pricing/commercial indicators
+            has_pricing = bool(result.get('pricing'))
+            has_commercial_indicators = len(result.get('commercial_indicators', [])) > 2
+            high_confidence = result.get('confidence', 0) > 0.7
+            
+            # Unauthorized if it has commercial elements and isn't authorized
+            return has_pricing and has_commercial_indicators and high_confidence
+            
+        except Exception as e:
+            logger.warning(f"Failed to verify authorization for result: {e}")
+            return True  # Err on side of caution
+    
+    async def _get_authorized_sellers(self, content_id: str) -> List[str]:
+        """Get list of authorized sellers/distributors for content"""
+        # Placeholder - in production, this would query licensing database
+        return ['official_distributor_123', 'authorized_platform_456']
+    
+    async def _get_content_signature(self, content_id: str) -> Optional[Dict[str, Any]]:
+        """Get content signature for matching"""
+        # Placeholder - in production, this would fetch from content database
+        return {
+            'content_id': content_id,
+            'title': 'Sample Music Track',
+            'artist': 'Sample Artist',
+            'duration': 180,
+            'fingerprint_hash': hashlib.md5(content_id.encode()).hexdigest()
+        }
 
     async def perform_monitoring_scan(
         self,
@@ -1453,8 +1679,193 @@ Perform a monitoring scan for a specific profile"""
         monitoring_profile: MonitoringProfile
     ) -> List[DetectionAlert]:
         """Detect unauthorized derivative works"""
-        # Implementation for detecting modified versions
-        pass
+        alerts = []
+        
+        try:
+            logger.info(f"Detecting unauthorized derivatives for content {content_id}")
+            
+            # Get original content signature
+            original_signature = await self._get_content_signature(content_id)
+            if not original_signature:
+                return alerts
+            
+            # Keywords that indicate derivative works
+            derivative_indicators = [
+                'remix', 'cover', 'version', 'tribute', 'parody',
+                'inspired by', 'based on', 'adapted from', 'variation',
+                'mashup', 'edit', 'remaster', 'bootleg'
+            ]
+            
+            # Search for potential derivatives across platforms
+            search_platforms = monitoring_profile.monitoring_sources or [
+                'youtube.com', 'soundcloud.com', 'spotify.com',
+                'bandcamp.com', 'mixcloud.com'
+            ]
+            
+            for platform in search_platforms:
+                try:
+                    # Search for derivatives on this platform
+                    derivative_candidates = await self._search_for_derivatives(
+                        platform, original_signature, derivative_indicators
+                    )
+                    
+                    for candidate in derivative_candidates:
+                        # Analyze if this is an unauthorized derivative
+                        similarity_score = await self._calculate_derivative_similarity(
+                            original_signature, candidate
+                        )
+                        
+                        if similarity_score > 0.6:  # Threshold for derivative detection
+                            # Check if it's authorized
+                            is_authorized = await self._check_derivative_authorization(
+                                content_id, candidate
+                            )
+                            
+                            if not is_authorized:
+                                alert = DetectionAlert(
+                                    alert_id=str(uuid.uuid4()),
+                                    content_id=content_id,
+                                    detection_type=DetectionType.MODIFIED_CONTENT,
+                                    confidence_score=similarity_score,
+                                    source_url=candidate.get('url', ''),
+                                    detected_at=utc_now(),
+                                    violation_type='unauthorized_derivative',
+                                    evidence={
+                                        'original_title': original_signature.get('title', ''),
+                                        'derivative_title': candidate.get('title', ''),
+                                        'similarity_score': similarity_score,
+                                        'derivative_indicators': candidate.get('indicators', []),
+                                        'platform': platform,
+                                        'creator_info': candidate.get('creator', {})
+                                    },
+                                    severity='medium' if similarity_score > 0.8 else 'low'
+                                )
+                                alerts.append(alert)
+                                
+                except Exception as e:
+                    logger.warning(f"Failed to search for derivatives on {platform}: {e}")
+                    continue
+            
+            logger.info(f"Found {len(alerts)} unauthorized derivative alerts for content {content_id}")
+            return alerts
+            
+        except Exception as e:
+            logger.error(f"Failed to detect unauthorized derivatives for content {content_id}: {e}")
+            return alerts
+    
+    async def _search_for_derivatives(
+        self, 
+        platform: str, 
+        original_signature: Dict[str, Any],
+        derivative_indicators: List[str]
+    ) -> List[Dict[str, Any]]:
+        """Search for derivative works on a platform"""
+        candidates = []
+        
+        try:
+            # Build search query
+            title = original_signature.get('title', '')
+            artist = original_signature.get('artist', '')
+            
+            # Search with derivative keywords
+            for indicator in derivative_indicators[:3]:  # Limit to avoid spam
+                search_query = f"{title} {artist} {indicator}"
+                results = await self._simulate_platform_search(platform, search_query)
+                
+                for result in results:
+                    # Check if result contains derivative indicators
+                    content_text = result.get('title', '') + ' ' + result.get('description', '')
+                    found_indicators = [
+                        ind for ind in derivative_indicators 
+                        if ind.lower() in content_text.lower()
+                    ]
+                    
+                    if found_indicators:
+                        result['indicators'] = found_indicators
+                        candidates.append(result)
+                        
+        except Exception as e:
+            logger.warning(f"Failed to search for derivatives on {platform}: {e}")
+            
+        return candidates
+    
+    async def _calculate_derivative_similarity(
+        self, 
+        original: Dict[str, Any], 
+        candidate: Dict[str, Any]
+    ) -> float:
+        """Calculate similarity between original and potential derivative"""
+        try:
+            # Title similarity
+            orig_title = original.get('title', '').lower()
+            cand_title = candidate.get('title', '').lower()
+            
+            # Simple word overlap similarity
+            orig_words = set(orig_title.split())
+            cand_words = set(cand_title.split())
+            
+            if not orig_words or not cand_words:
+                return 0.0
+                
+            overlap = len(orig_words.intersection(cand_words))
+            union = len(orig_words.union(cand_words))
+            
+            word_similarity = overlap / union if union > 0 else 0.0
+            
+            # Boost similarity if derivative indicators are present
+            indicator_boost = len(candidate.get('indicators', [])) * 0.1
+            
+            # Duration similarity (if available)
+            duration_similarity = 0.0
+            if 'duration' in original and 'duration' in candidate:
+                orig_dur = original['duration']
+                cand_dur = candidate['duration']
+                duration_diff = abs(orig_dur - cand_dur) / max(orig_dur, cand_dur)
+                duration_similarity = max(0, 1 - duration_diff)
+            
+            # Combined similarity score
+            final_score = (word_similarity * 0.6 + 
+                          indicator_boost + 
+                          duration_similarity * 0.3)
+            
+            return min(1.0, final_score)
+            
+        except Exception as e:
+            logger.warning(f"Failed to calculate derivative similarity: {e}")
+            return 0.0
+    
+    async def _check_derivative_authorization(
+        self, 
+        original_content_id: str, 
+        candidate: Dict[str, Any]
+    ) -> bool:
+        """Check if derivative work is authorized"""
+        try:
+            # Get authorized derivative list
+            authorized_derivatives = await self._get_authorized_derivatives(original_content_id)
+            
+            # Check by URL or creator ID
+            candidate_url = candidate.get('url', '')
+            candidate_creator = candidate.get('creator', {}).get('id', '')
+            
+            for auth_derivative in authorized_derivatives:
+                if (auth_derivative.get('url') == candidate_url or 
+                    auth_derivative.get('creator_id') == candidate_creator):
+                    return True
+                    
+            return False
+            
+        except Exception as e:
+            logger.warning(f"Failed to check derivative authorization: {e}")
+            return False  # Err on side of caution
+    
+    async def _get_authorized_derivatives(self, content_id: str) -> List[Dict[str, Any]]:
+        """Get list of authorized derivatives for content"""
+        # Placeholder - in production, this would query licensing database
+        return [
+            {'url': 'https://official-remix.com/track1', 'creator_id': 'authorized_remixer_123'},
+            {'url': 'https://licensed-covers.com/song1', 'creator_id': 'licensed_artist_456'}
+        ]
     
     async def detect_false_attribution(
         self,
@@ -1463,8 +1874,170 @@ Perform a monitoring scan for a specific profile"""
     ) -> List[DetectionAlert]:
         """
 Detect false attribution or credit claiming"""
-        # Implementation for detecting false attribution
-        pass
+        alerts = []
+        
+        try:
+            logger.info(f"Detecting false attribution for content {content_id}")
+            
+            # Get original content metadata
+            original_metadata = await self._get_content_signature(content_id)
+            if not original_metadata:
+                return alerts
+            
+            original_artist = original_metadata.get('artist', '')
+            original_title = original_metadata.get('title', '')
+            
+            if not original_artist or not original_title:
+                logger.warning(f"Insufficient metadata for attribution checking: {content_id}")
+                return alerts
+            
+            # Search platforms for content with wrong attribution
+            search_platforms = monitoring_profile.monitoring_sources or [
+                'youtube.com', 'soundcloud.com', 'spotify.com',
+                'bandcamp.com', 'apple.com', 'deezer.com'
+            ]
+            
+            for platform in search_platforms:
+                try:
+                    # Search for the content by title
+                    search_results = await self._search_platform_for_content(
+                        platform, 
+                        {'title': original_title, 'artist': original_artist},
+                        []  # No commercial indicators needed
+                    )
+                    
+                    for result in search_results:
+                        # Check if attribution is incorrect
+                        result_artist = result.get('artist', result.get('creator', {}).get('name', ''))
+                        result_title = result.get('title', '')
+                        
+                        # Calculate title similarity to confirm it's the same content
+                        title_similarity = await self._calculate_text_similarity(
+                            original_title, result_title
+                        )
+                        
+                        if title_similarity > 0.8:  # High title similarity
+                            # Check if artist attribution is wrong
+                            artist_similarity = await self._calculate_text_similarity(
+                                original_artist, result_artist
+                            )
+                            
+                            if artist_similarity < 0.3:  # Low artist similarity = wrong attribution
+                                # Verify this isn't a legitimate collaboration or cover
+                                is_legitimate = await self._verify_legitimate_attribution(
+                                    content_id, result_artist, result
+                                )
+                                
+                                if not is_legitimate:
+                                    alert = DetectionAlert(
+                                        alert_id=str(uuid.uuid4()),
+                                        content_id=content_id,
+                                        detection_type=DetectionType.METADATA_MATCH,
+                                        confidence_score=title_similarity,
+                                        source_url=result.get('url', ''),
+                                        detected_at=utc_now(),
+                                        violation_type='false_attribution',
+                                        evidence={
+                                            'original_artist': original_artist,
+                                            'claimed_artist': result_artist,
+                                            'original_title': original_title,
+                                            'found_title': result_title,
+                                            'title_similarity': title_similarity,
+                                            'artist_similarity': artist_similarity,
+                                            'platform': platform,
+                                            'uploader_info': result.get('creator', {})
+                                        },
+                                        severity='high'  # False attribution is serious
+                                    )
+                                    alerts.append(alert)
+                                    
+                except Exception as e:
+                    logger.warning(f"Failed to check attribution on {platform}: {e}")
+                    continue
+            
+            logger.info(f"Found {len(alerts)} false attribution alerts for content {content_id}")
+            return alerts
+            
+        except Exception as e:
+            logger.error(f"Failed to detect false attribution for content {content_id}: {e}")
+            return alerts
+    
+    async def _calculate_text_similarity(self, text1: str, text2: str) -> float:
+        """Calculate similarity between two text strings"""
+        try:
+            if not text1 or not text2:
+                return 0.0
+            
+            # Normalize texts
+            text1 = text1.lower().strip()
+            text2 = text2.lower().strip()
+            
+            if text1 == text2:
+                return 1.0
+            
+            # Simple word overlap similarity
+            words1 = set(text1.split())
+            words2 = set(text2.split())
+            
+            if not words1 or not words2:
+                return 0.0
+            
+            intersection = len(words1.intersection(words2))
+            union = len(words1.union(words2))
+            
+            return intersection / union if union > 0 else 0.0
+            
+        except Exception as e:
+            logger.warning(f"Failed to calculate text similarity: {e}")
+            return 0.0
+    
+    async def _verify_legitimate_attribution(
+        self, 
+        content_id: str, 
+        claimed_artist: str,
+        result: Dict[str, Any]
+    ) -> bool:
+        """Verify if the attribution might be legitimate (collaborations, covers, etc.)"""
+        try:
+            # Check if claimed artist is in authorized collaborators
+            authorized_collaborators = await self._get_authorized_collaborators(content_id)
+            
+            for collaborator in authorized_collaborators:
+                collaborator_name = collaborator.get('name', '').lower()
+                if claimed_artist.lower() in collaborator_name or collaborator_name in claimed_artist.lower():
+                    return True
+            
+            # Check for cover/tribute indicators in the title/description
+            content_text = (result.get('title', '') + ' ' + result.get('description', '')).lower()
+            cover_indicators = ['cover', 'tribute', 'version', 'rendition', 'interpretation']
+            
+            if any(indicator in content_text for indicator in cover_indicators):
+                # It's marked as a cover, so attribution might be for the performer
+                return True
+            
+            # Check if it's uploaded by an official channel/label
+            uploader = result.get('creator', {})
+            uploader_name = uploader.get('name', '').lower()
+            official_indicators = ['official', 'records', 'music', 'label', 'entertainment']
+            
+            if any(indicator in uploader_name for indicator in official_indicators):
+                # Might be uploaded by official channels with different branding
+                return True
+            
+            return False
+            
+        except Exception as e:
+            logger.warning(f"Failed to verify legitimate attribution: {e}")
+            return True  # Err on side of caution
+    
+    async def _get_authorized_collaborators(self, content_id: str) -> List[Dict[str, Any]]:
+        """Get list of authorized collaborators for content"""
+        # Placeholder - in production, this would query the content database
+        return [
+            {'name': 'Featured Artist Name', 'role': 'featuring'},
+            {'name': 'Producer Name', 'role': 'producer'},
+            {'name': 'Remix Artist', 'role': 'remixer'}
+        ]
     
     async def detect_content_theft(
         self,
