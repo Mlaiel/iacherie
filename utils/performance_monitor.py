@@ -21,12 +21,37 @@ Monitor performance metrics"""
     def set_memory_limit(self, limit_bytes: int):
         """
 Set memory limit"""
-        self.memory_limit = limit_bytes
+        try:
+            self.memory_limit = limit_bytes
+            logger.info(f"Memory limit set to {limit_bytes} bytes ({limit_bytes / 1024 / 1024:.2f} MB)")
+        except Exception as e:
+            logger.error(f"Failed to set memory limit: {e}")
+            raise
         
     def check_memory_usage(self) -> float:
         """
 Check current memory usage"""
-        return 0.0  # Placeholder implementation
+        try:
+            import psutil
+            process = psutil.Process()
+            memory_info = process.memory_info()
+            current_usage = memory_info.rss  # Resident Set Size in bytes
+            
+            if self.memory_limit:
+                usage_percentage = (current_usage / self.memory_limit) * 100
+                if usage_percentage > 80:
+                    logger.warning(f"High memory usage: {usage_percentage:.1f}% ({current_usage / 1024 / 1024:.2f} MB)")
+                return usage_percentage
+            else:
+                logger.info(f"Current memory usage: {current_usage / 1024 / 1024:.2f} MB")
+                return float(current_usage)
+        except ImportError:
+            # Fallback if psutil is not available
+            logger.warning("psutil not available, using basic memory monitoring")
+            return 0.0
+        except Exception as e:
+            logger.error(f"Error checking memory usage: {e}")
+            return 0.0
 
 
 class RateLimiter:

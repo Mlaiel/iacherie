@@ -75,20 +75,20 @@ def get_licensing_manager():
         _licensing_manager = LicensingManager()
     return _licensing_manager
 
-def create_license(content_id: int, licensee_id: int, license_type: str, terms: dict):
+async def create_license(content_id: int, licensee_id: int, license_type: str, terms: dict):
     """
 Create new content license."""
     manager = get_licensing_manager()
-    return manager.create_license(content_id, licensee_id, license_type, terms)
+    return await manager.create_license(content_id, licensee_id, license_type, terms)
 
-def track_usage(license_id: int, usage_type: str, usage_data: dict):
+async def track_usage(license_id: int, usage_type: str, usage_data: dict):
     """
 Track license usage."""
     manager = get_licensing_manager()
-    return manager.track_usage(license_id, usage_type, usage_data)
+    return await manager.track_usage(license_id, usage_type, usage_data)
 
-def calculate_royalties(license_id: int, period_start: str, period_end: str):
+async def calculate_royalties(license_id: int, period_start: str, period_end: str):
     """
 Calculate royalties for license period."""
     manager = get_licensing_manager()
-    return manager.calculate_royalties(license_id, period_start, period_end)
+    return await manager.calculate_royalties(license_id, period_start, period_end)

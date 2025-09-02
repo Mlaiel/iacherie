@@ -192,35 +192,230 @@ Configure batch size for bulk operations"""
         return self
     
     @abstractmethod
-    def create(self, entity: T, **kwargs) -> T:
+    async def create(self, entity: T, **kwargs) -> T:
         """
 Create new entity with validation and audit"""
-        pass
+        try:
+            # Validate entity
+            self._validate_entity(entity)
+            
+            # Log audit entry
+            if self._audit_enabled and self.audit_service:
+                self._log_audit(
+                    OperationType.CREATE,
+                    new_values=asdict(entity) if hasattr(entity, '__dataclass_fields__') else entity.__dict__,
+                    metadata=kwargs
+                )
+            
+            # Perform actual creation (to be implemented by subclasses)
+            result = await self._perform_create(entity, **kwargs)
+            
+            # Invalidate cache for list operations
+            if self._cache_enabled and self.cache:
+                await self._invalidate_list_cache()
+            
+            self.logger.info(f"Created entity: {type(entity).__name__}")
+            return result
+            
+        except Exception as e:
+            self.logger.error(f"Error creating entity: {e}")
+            raise
+    
+    async def _perform_create(self, entity: T, **kwargs) -> T:
+        """Override this method in subclasses for actual creation logic"""
+        raise NotImplementedError("Subclasses must implement _perform_create")
     
     @abstractmethod
-    def get_by_id(self, entity_id: str, use_cache: bool = True) -> Optional[T]:
+    async def get_by_id(self, entity_id: str, use_cache: bool = True) -> Optional[T]:
         """
 Get entity by ID with cache support"""
-        pass
+        try:
+            cache_key = f"{self.__class__.__name__}:get_by_id:{entity_id}"
+            
+            # Check cache first
+            if use_cache and self._cache_enabled and self.cache:
+                cached_result = await self._get_from_cache(cache_key)
+                if cached_result:
+                    self.logger.debug(f"Cache hit for entity ID: {entity_id}")
+                    return cached_result
+            
+            # Perform actual lookup (to be implemented by subclasses)
+            result = await self._perform_get_by_id(entity_id)
+            
+            # Cache the result
+            if result and use_cache and self._cache_enabled and self.cache:
+                await self._set_cache(cache_key, result, self._cache_ttl)
+            
+            # Log audit entry for read operation
+            if self._audit_enabled and self.audit_service:
+                self._log_audit(
+                    OperationType.READ,
+                    entity_id=entity_id,
+                    metadata={'cache_hit': use_cache and result is not None}
+                )
+            
+            return result
+            
+        except Exception as e:
+            self.logger.error(f"Error getting entity by ID {entity_id}: {e}")
+            raise
+    
+    async def _perform_get_by_id(self, entity_id: str) -> Optional[T]:
+        """Override this method in subclasses for actual lookup logic"""
+        raise NotImplementedError("Subclasses must implement _perform_get_by_id")
     
     @abstractmethod
-    def update(self, entity: T, **kwargs) -> T:
+    async def update(self, entity: T, **kwargs) -> T:
         """
 Update entity with validation and audit"""
-        pass
+        try:
+            # Validate entity
+            self._validate_entity(entity)
+            
+            # Get old values for audit
+            old_values = None
+            if self._audit_enabled and hasattr(entity, 'id'):
+                old_entity = await self.get_by_id(str(entity.id), use_cache=False)
+                if old_entity:
+                    old_values = asdict(old_entity) if hasattr(old_entity, '__dataclass_fields__') else old_entity.__dict__
+            
+            # Perform actual update (to be implemented by subclasses)
+            result = await self._perform_update(entity, **kwargs)
+            
+            # Log audit entry
+            if self._audit_enabled and self.audit_service:
+                new_values = asdict(result) if hasattr(result, '__dataclass_fields__') else result.__dict__
+                self._log_audit(
+                    OperationType.UPDATE,
+                    entity_id=str(entity.id) if hasattr(entity, 'id') else None,
+                    old_values=old_values,
+                    new_values=new_values,
+                    metadata=kwargs
+                )
+            
+            # Invalidate cache
+            if self._cache_enabled and self.cache and hasattr(entity, 'id'):
+                cache_key = f"{self.__class__.__name__}:get_by_id:{entity.id}"
+                await self._delete_from_cache(cache_key)
+                await self._invalidate_list_cache()
+            
+            self.logger.info(f"Updated entity: {type(entity).__name__}")
+            return result
+            
+        except Exception as e:
+            self.logger.error(f"Error updating entity: {e}")
+            raise
+    
+    async def _perform_update(self, entity: T, **kwargs) -> T:
+        """Override this method in subclasses for actual update logic"""
+        raise NotImplementedError("Subclasses must implement _perform_update")
     
     @abstractmethod
-    def delete(self, entity_id: str, soft_delete: bool = False) -> bool:
+    async def delete(self, entity_id: str, soft_delete: bool = False) -> bool:
         """
 Delete entity with soft delete option"""
-        pass
+        try:
+            # Get entity for audit purposes
+            old_entity = None
+            if self._audit_enabled:
+                old_entity = await self.get_by_id(entity_id, use_cache=False)
+            
+            # Perform actual deletion (to be implemented by subclasses)
+            success = await self._perform_delete(entity_id, soft_delete)
+            
+            if success:
+                # Log audit entry
+                if self._audit_enabled and self.audit_service:
+                    old_values = None
+                    if old_entity:
+                        old_values = asdict(old_entity) if hasattr(old_entity, '__dataclass_fields__') else old_entity.__dict__
+                    
+                    self._log_audit(
+                        OperationType.DELETE,
+                        entity_id=entity_id,
+                        old_values=old_values,
+                        metadata={'soft_delete': soft_delete}
+                    )
+                
+                # Invalidate cache
+                if self._cache_enabled and self.cache:
+                    cache_key = f"{self.__class__.__name__}:get_by_id:{entity_id}"
+                    await self._delete_from_cache(cache_key)
+                    await self._invalidate_list_cache()
+                
+                self.logger.info(f"Deleted entity ID: {entity_id} (soft_delete: {soft_delete})")
+            
+            return success
+            
+        except Exception as e:
+            self.logger.error(f"Error deleting entity ID {entity_id}: {e}")
+            raise
+    
+    async def _perform_delete(self, entity_id: str, soft_delete: bool = False) -> bool:
+        """Override this method in subclasses for actual deletion logic"""
+        raise NotImplementedError("Subclasses must implement _perform_delete")
     
     @abstractmethod
-    def list(self, filters: Dict[str, Any] = None, limit: int = 100, 
+    async def list(self, filters: Dict[str, Any] = None, limit: int = 100, 
              offset: int = 0, order_by: str = None) -> List[T]:
         """
 List entities with advanced filtering and ordering"""
-        pass
+        try:
+            filters = filters or {}
+            
+            # Generate cache key based on parameters
+            cache_key = self._generate_list_cache_key(filters, limit, offset, order_by)
+            
+            # Check cache first
+            if self._cache_enabled and self.cache:
+                cached_result = await self._get_from_cache(cache_key)
+                if cached_result:
+                    self.logger.debug(f"Cache hit for list query")
+                    return cached_result
+            
+            # Perform actual list query (to be implemented by subclasses)
+            results = await self._perform_list(filters, limit, offset, order_by)
+            
+            # Cache the results
+            if self._cache_enabled and self.cache:
+                await self._set_cache(cache_key, results, self._cache_ttl)
+            
+            # Log audit entry
+            if self._audit_enabled and self.audit_service:
+                self._log_audit(
+                    OperationType.READ,
+                    metadata={
+                        'operation': 'list',
+                        'filters': filters,
+                        'limit': limit,
+                        'offset': offset,
+                        'order_by': order_by,
+                        'results_count': len(results)
+                    }
+                )
+            
+            return results
+            
+        except Exception as e:
+            self.logger.error(f"Error listing entities: {e}")
+            raise
+    
+    async def _perform_list(self, filters: Dict[str, Any], limit: int, offset: int, order_by: str) -> List[T]:
+        """Override this method in subclasses for actual list logic"""
+        raise NotImplementedError("Subclasses must implement _perform_list")
+    
+    def _generate_list_cache_key(self, filters: Dict[str, Any], limit: int, offset: int, order_by: str) -> str:
+        """Generate cache key for list operations"""
+        key_data = {
+            'class': self.__class__.__name__,
+            'operation': 'list',
+            'filters': filters,
+            'limit': limit,
+            'offset': offset,
+            'order_by': order_by
+        }
+        key_string = json.dumps(key_data, sort_keys=True)
+        return hashlib.md5(key_string.encode()).hexdigest()
     
     def bulk_create(self, entities: List[T], batch_size: Optional[int] = None) -> List[T]:
         """
@@ -853,6 +1048,46 @@ Optimized async bulk creation with concurrency control"""
         
         return results
     
+    # ============ CACHE HELPER METHODS ============
+    
+    async def _get_from_cache(self, cache_key: str) -> Optional[Any]:
+        """Get value from cache asynchronously"""
+        if not self.cache:
+            return None
+        try:
+            return await self.cache.get_async(cache_key)
+        except Exception as e:
+            self.logger.warning(f"Cache get failed for key {cache_key}: {e}")
+            return None
+    
+    async def _set_cache(self, cache_key: str, value: Any, ttl: int = None) -> None:
+        """Set value in cache asynchronously"""
+        if not self.cache:
+            return
+        try:
+            await self.cache.set_async(cache_key, value, ttl or self._cache_ttl)
+        except Exception as e:
+            self.logger.warning(f"Cache set failed for key {cache_key}: {e}")
+    
+    async def _delete_from_cache(self, cache_key: str) -> None:
+        """Delete value from cache asynchronously"""
+        if not self.cache:
+            return
+        try:
+            await self.cache.delete_async(cache_key)
+        except Exception as e:
+            self.logger.warning(f"Cache delete failed for key {cache_key}: {e}")
+    
+    async def _invalidate_list_cache(self) -> None:
+        """Invalidate all list operation caches"""
+        if not self.cache:
+            return
+        try:
+            pattern = f"{self.__class__.__name__}:list:*"
+            await self.cache.delete_pattern_async(pattern)
+        except Exception as e:
+            self.logger.warning(f"Cache invalidation failed for pattern: {e}")
+
     async def invalidate_cache(self, pattern: str = None):
         """Invalidate cache entries asynchronously"""
         if not self.cache:
