@@ -196,15 +196,157 @@ Start background metric collection."""
 
     def _collect_application_metrics(self, monitor: 'PerformanceMonitor') -> None:
         """Collect application-specific metrics."""
-        # These would be collected from actual application components
-        # Placeholder implementation
-        pass
+        try:
+            # Collect DRM-specific application metrics
+            current_time = time.time()
+            
+            # License validation metrics
+            active_licenses = getattr(monitor, '_active_licenses', 0)
+            monitor.record_gauge('drm.licenses.active', active_licenses, {
+                'component': 'license_manager',
+                'timestamp': current_time
+            })
+            
+            # Content protection metrics
+            protected_items = getattr(monitor, '_protected_items', 0)
+            monitor.record_gauge('drm.content.protected_items', protected_items, {
+                'component': 'content_protection',
+                'timestamp': current_time
+            })
+            
+            # Encryption/Decryption performance
+            if hasattr(monitor, '_encryption_times'):
+                encryption_times = getattr(monitor, '_encryption_times', deque(maxlen=100))
+                if encryption_times:
+                    avg_encryption_time = statistics.mean(encryption_times)
+                    monitor.record_gauge('drm.encryption.avg_time_ms', avg_encryption_time * 1000, {
+                        'component': 'encryption_engine',
+                        'timestamp': current_time
+                    })
+            
+            # Watermarking metrics
+            watermark_operations = getattr(monitor, '_watermark_operations', 0)
+            monitor.record_counter('drm.watermarking.operations_total', watermark_operations, {
+                'component': 'watermarking_engine',
+                'timestamp': current_time
+            })
+            
+            # Rights enforcement metrics
+            access_attempts = getattr(monitor, '_access_attempts', 0)
+            access_denied = getattr(monitor, '_access_denied', 0)
+            access_granted = access_attempts - access_denied
+            
+            monitor.record_counter('drm.access.attempts_total', access_attempts, {
+                'component': 'rights_enforcement',
+                'timestamp': current_time
+            })
+            monitor.record_counter('drm.access.granted_total', access_granted, {
+                'component': 'rights_enforcement',
+                'timestamp': current_time
+            })
+            monitor.record_counter('drm.access.denied_total', access_denied, {
+                'component': 'rights_enforcement',
+                'timestamp': current_time
+            })
+            
+            # Calculate access success rate
+            if access_attempts > 0:
+                success_rate = (access_granted / access_attempts) * 100
+                monitor.record_gauge('drm.access.success_rate_percent', success_rate, {
+                    'component': 'rights_enforcement',
+                    'timestamp': current_time
+                })
+            
+            logger.debug("Application metrics collected successfully")
+            
+        except Exception as e:
+            logger.error(f"Error collecting application metrics: {e}")
 
     def _collect_custom_metrics(self, monitor: 'PerformanceMonitor') -> None:
-        """
-Collect custom business metrics."""
-        # Placeholder for custom metric collection
-        pass
+        """Collect custom business metrics."""
+        try:
+            current_time = time.time()
+            
+            # Business performance metrics
+            revenue_metrics = getattr(monitor, '_revenue_metrics', {})
+            for metric_name, value in revenue_metrics.items():
+                monitor.record_gauge(f'business.revenue.{metric_name}', value, {
+                    'component': 'revenue_tracking',
+                    'timestamp': current_time,
+                    'currency': 'USD'
+                })
+            
+            # User engagement metrics
+            engagement_metrics = getattr(monitor, '_engagement_metrics', {})
+            for metric_name, value in engagement_metrics.items():
+                monitor.record_gauge(f'business.engagement.{metric_name}', value, {
+                    'component': 'user_analytics',
+                    'timestamp': current_time
+                })
+            
+            # Content popularity metrics
+            content_views = getattr(monitor, '_content_views', {})
+            total_views = sum(content_views.values()) if content_views else 0
+            monitor.record_counter('business.content.total_views', total_views, {
+                'component': 'content_analytics',
+                'timestamp': current_time
+            })
+            
+            # Top content tracking
+            if content_views:
+                top_content = max(content_views.items(), key=lambda x: x[1])
+                monitor.record_gauge('business.content.top_views', top_content[1], {
+                    'component': 'content_analytics',
+                    'content_id': top_content[0],
+                    'timestamp': current_time
+                })
+            
+            # Platform distribution metrics
+            platform_metrics = getattr(monitor, '_platform_metrics', {})
+            for platform, stats in platform_metrics.items():
+                for stat_name, value in stats.items():
+                    monitor.record_gauge(f'business.platform.{platform}.{stat_name}', value, {
+                        'component': 'platform_analytics',
+                        'platform': platform,
+                        'timestamp': current_time
+                    })
+            
+            # Quality metrics
+            quality_scores = getattr(monitor, '_quality_scores', deque(maxlen=100))
+            if quality_scores:
+                avg_quality = statistics.mean(quality_scores)
+                monitor.record_gauge('business.quality.average_score', avg_quality, {
+                    'component': 'quality_assurance',
+                    'timestamp': current_time
+                })
+            
+            # API performance metrics
+            api_response_times = getattr(monitor, '_api_response_times', {})
+            for endpoint, times in api_response_times.items():
+                if times:
+                    avg_response_time = statistics.mean(times)
+                    monitor.record_gauge(f'api.response_time.{endpoint.replace("/", "_")}', avg_response_time, {
+                        'component': 'api_gateway',
+                        'endpoint': endpoint,
+                        'timestamp': current_time
+                    })
+            
+            # Error rate tracking
+            error_counts = getattr(monitor, '_error_counts', {})
+            total_requests = getattr(monitor, '_total_requests', 0)
+            total_errors = sum(error_counts.values()) if error_counts else 0
+            
+            if total_requests > 0:
+                error_rate = (total_errors / total_requests) * 100
+                monitor.record_gauge('business.api.error_rate_percent', error_rate, {
+                    'component': 'error_tracking',
+                    'timestamp': current_time
+                })
+            
+            logger.debug("Custom business metrics collected successfully")
+            
+        except Exception as e:
+            logger.error(f"Error collecting custom metrics: {e}")
 
     def stop(self) -> None:
         """
