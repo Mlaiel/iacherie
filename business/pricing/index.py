@@ -616,12 +616,99 @@ Advanced AI-powered metrics collector for pricing analytics and business intelli
         return {"risk_score": 0.15, "risk_factors": ["market_volatility"], "mitigation_strategies": ["dynamic_pricing"]}
     
     async def _process_real_time_analytics(self, event: Dict[str, Any]) -> None:
-        # Process real-time analytics
-        pass
+        """Process real-time analytics for pricing optimization"""
+        try:
+            # Extract key metrics from the event
+            creator_id = event.get('creator_id')
+            content_type = event.get('content_type')
+            pricing_data = event.get('pricing_data', {})
+            
+            # Update real-time pricing metrics
+            current_time = datetime.now()
+            
+            # Calculate real-time pricing trends
+            trend_data = {
+                'timestamp': current_time.isoformat(),
+                'creator_id': creator_id,
+                'content_type': content_type,
+                'pricing_velocity': pricing_data.get('current_price', 0),
+                'market_demand': pricing_data.get('demand_score', 0.5),
+                'competitive_position': pricing_data.get('competitive_score', 0.5)
+            }
+            
+            # Store in analytics pipeline
+            analytics_key = f"real_time_pricing:{creator_id}:{content_type}"
+            if hasattr(self, 'analytics_cache'):
+                await self.analytics_cache.set(analytics_key, trend_data, ttl=3600)
+            
+            # Trigger pricing alerts if needed
+            if pricing_data.get('current_price', 0) > pricing_data.get('max_threshold', 1000):
+                await self._trigger_pricing_alert(creator_id, 'price_threshold_exceeded', pricing_data)
+            
+            # Update real-time dashboard metrics
+            await self._update_real_time_dashboard(trend_data)
+            
+            self.logger.info(f"Real-time analytics processed for creator {creator_id}")
+            
+        except Exception as e:
+            self.logger.error(f"Error processing real-time analytics: {e}")
+            raise
     
     async def _update_ml_training_data(self, event: Dict[str, Any]) -> None:
-        # Update ML training datasets
-        pass
+        """Update ML training datasets with new pricing data"""
+        try:
+            # Extract training features from the event
+            training_features = {
+                'creator_id': event.get('creator_id'),
+                'content_type': event.get('content_type'),
+                'pricing_data': event.get('pricing_data', {}),
+                'market_metrics': event.get('market_metrics', {}),
+                'engagement_data': event.get('engagement_data', {}),
+                'timestamp': datetime.now().isoformat()
+            }
+            
+            # Prepare feature vector for ML model
+            feature_vector = {
+                'content_quality_score': training_features['pricing_data'].get('quality_score', 0.5),
+                'creator_reputation': training_features['pricing_data'].get('creator_reputation', 0.5),
+                'market_demand': training_features['market_metrics'].get('demand_level', 0.5),
+                'seasonal_factor': training_features['market_metrics'].get('seasonal_factor', 1.0),
+                'engagement_rate': training_features['engagement_data'].get('engagement_rate', 0.1),
+                'conversion_rate': training_features['engagement_data'].get('conversion_rate', 0.05),
+                'target_price': training_features['pricing_data'].get('optimal_price', 0)
+            }
+            
+            # Store in ML training pipeline
+            training_record = {
+                'features': feature_vector,
+                'label': feature_vector['target_price'],
+                'metadata': {
+                    'creator_id': training_features['creator_id'],
+                    'content_type': training_features['content_type'],
+                    'timestamp': training_features['timestamp']
+                }
+            }
+            
+            # Add to training queue
+            if hasattr(self, 'ml_training_queue'):
+                self.ml_training_queue.append(training_record)
+            
+            # Store in persistent training dataset
+            training_key = f"ml_training:pricing:{datetime.now().strftime('%Y%m%d')}"
+            if hasattr(self, 'training_storage'):
+                existing_data = await self.training_storage.get(training_key, [])
+                existing_data.append(training_record)
+                await self.training_storage.set(training_key, existing_data)
+            
+            # Trigger model retraining if threshold reached
+            if hasattr(self, 'ml_training_queue') and len(self.ml_training_queue) >= 100:
+                await self._trigger_model_retraining()
+            
+            self.logger.info(f"ML training data updated with new pricing record")
+            
+        except Exception as e:
+            self.logger.error(f"Error updating ML training data: {e}")
+            raise
     
     # Additional helper methods for all other analytics functions would continue here...
     # For brevity, I'm showing the pattern - each would have intelligent mock implementations
@@ -656,7 +743,45 @@ Advanced AI-powered metrics collector for pricing analytics and business intelli
     
     async def _update_platform_analytics(self, event: Dict[str, Any]) -> None:
         """Update platform-specific analytics and insights."""
-        pass
+        try:
+            platform = event.get('platform')
+            creator_id = event.get('creator_id')
+            analytics_data = event.get('analytics_data', {})
+            
+            if not platform or not creator_id:
+                return
+            
+            # Update platform-specific metrics
+            platform_metrics = {
+                'platform': platform,
+                'creator_id': creator_id,
+                'timestamp': datetime.now().isoformat(),
+                'performance_metrics': {
+                    'reach': analytics_data.get('reach', 0),
+                    'engagement_rate': analytics_data.get('engagement_rate', 0),
+                    'conversion_rate': analytics_data.get('conversion_rate', 0),
+                    'revenue_generated': analytics_data.get('revenue', 0)
+                },
+                'audience_insights': {
+                    'demographics': analytics_data.get('demographics', {}),
+                    'behavior_patterns': analytics_data.get('behavior_patterns', {}),
+                    'peak_activity_times': analytics_data.get('peak_times', [])
+                }
+            }
+            
+            # Store platform analytics
+            analytics_key = f"platform_analytics:{platform}:{creator_id}"
+            if hasattr(self, 'analytics_storage'):
+                await self.analytics_storage.set(analytics_key, platform_metrics, ttl=86400)
+            
+            # Update aggregated platform insights
+            await self._update_platform_insights(platform, platform_metrics)
+            
+            self.logger.info(f"Platform analytics updated for {platform} - creator {creator_id}")
+            
+        except Exception as e:
+            self.logger.error(f"Error updating platform analytics: {e}")
+            raise
     
     async def _analyze_creator_growth(self, creator_id: str) -> Dict[str, Any]:
         return {"growth_rate": 0.15, "growth_trajectory": "accelerating", "plateau_risk": 0.12}
@@ -690,7 +815,54 @@ Advanced AI-powered metrics collector for pricing analytics and business intelli
     
     async def _update_creator_analytics(self, event: Dict[str, Any]) -> None:
         """Update creator-specific analytics and growth tracking."""
-        pass
+        try:
+            creator_id = event.get('creator_id')
+            analytics_data = event.get('analytics_data', {})
+            content_data = event.get('content_data', {})
+            
+            if not creator_id:
+                return
+            
+            # Calculate creator performance metrics
+            creator_metrics = {
+                'creator_id': creator_id,
+                'timestamp': datetime.now().isoformat(),
+                'content_performance': {
+                    'total_content': content_data.get('content_count', 0),
+                    'avg_engagement': analytics_data.get('avg_engagement', 0),
+                    'viral_content_count': content_data.get('viral_count', 0),
+                    'content_quality_score': analytics_data.get('quality_score', 0.5)
+                },
+                'growth_metrics': {
+                    'follower_growth_rate': analytics_data.get('follower_growth', 0),
+                    'engagement_growth_rate': analytics_data.get('engagement_growth', 0),
+                    'revenue_growth_rate': analytics_data.get('revenue_growth', 0),
+                    'brand_sentiment': analytics_data.get('brand_sentiment', 0.5)
+                },
+                'monetization_insights': {
+                    'revenue_per_content': analytics_data.get('revenue_per_content', 0),
+                    'conversion_funnel_performance': analytics_data.get('funnel_performance', {}),
+                    'pricing_optimization_score': analytics_data.get('pricing_score', 0.5),
+                    'collaboration_success_rate': analytics_data.get('collab_success', 0.5)
+                }
+            }
+            
+            # Store creator analytics
+            creator_key = f"creator_analytics:{creator_id}"
+            if hasattr(self, 'analytics_storage'):
+                await self.analytics_storage.set(creator_key, creator_metrics, ttl=86400)
+            
+            # Update creator leaderboard and rankings
+            await self._update_creator_rankings(creator_id, creator_metrics)
+            
+            # Generate personalized insights and recommendations
+            await self._generate_creator_insights(creator_id, creator_metrics)
+            
+            self.logger.info(f"Creator analytics updated for {creator_id}")
+            
+        except Exception as e:
+            self.logger.error(f"Error updating creator analytics: {e}")
+            raise
     
     async def _calculate_processing_speed(self, requested: int, processed: int) -> float:
         return processed / max(requested, 1) * 100  # Processing speed percentage

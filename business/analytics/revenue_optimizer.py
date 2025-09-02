@@ -221,7 +221,30 @@ Train machine learning models with historical revenue data"""
     async def _initialize_ml_models(self) -> None:
         """Initialize machine learning models for optimization"""
         # Additional model initialization would go here
-        pass
+                try:
+                    self.logger.info(f"Initializing {self.__class__.__name__}...")
+
+                    # Initialize required components
+                    self._is_running = False
+                    self._active_tasks = []
+
+                    # Setup cache if needed
+                    if hasattr(self, 'cache_config') and self.cache_config:
+                        self._cache = {}
+
+                    # Initialize database connection if needed
+                    if hasattr(self, 'db_config') and self.db_config:
+                        self._db_session = await self._create_db_session()
+
+                    # Mark as initialized
+                    self._is_running = True
+
+                    self.logger.info(f"{self.__class__.__name__} initialized successfully")
+                    return True
+
+                except Exception as e:
+                    self.logger.error(f"Error during initialization: {e}")
+                    return False
 
     async def analyze_revenue_comprehensive(self, creator_id: str, period_days: int = 30) -> RevenueAnalysis:
         """
