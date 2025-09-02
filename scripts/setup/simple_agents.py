@@ -61,7 +61,7 @@ class BaseAgent:
     
     async def initialize(self):
         """Initialize the agent"""
-    try:
+        try:
             await self._load_models_and_resources()
             self.status = AgentStatus.ACTIVE
             self.is_initialized = True
@@ -74,7 +74,7 @@ class BaseAgent:
     
     async def _load_models_and_resources(self):
         """Load AI models and resources - default implementation"""
-    try:
+        try:
             # Default implementation - load basic resources
             logger.info(f"Loading default resources for agent {self.agent_id}")
             
@@ -103,7 +103,7 @@ class BaseAgent:
     
     def get_required_config_keys(self) -> List[str]:
         """Return required configuration keys - to be implemented by subclasses"""
-    return []
+        return []
 
 
 class ProtectionAgent(BaseAgent):
@@ -114,11 +114,11 @@ class ProtectionAgent(BaseAgent):
     
     async def _load_models_and_resources(self):
         """Load protection models"""
-    logger.info("Protection agent models loaded")
+        logger.info("Protection agent models loaded")
     
     async def process(self, request: Dict[str, Any]) -> Dict[str, Any]:
         """Process content protection request"""
-    content_id = request.get("content_id")
+        content_id = request.get("content_id")
         creator_id = request.get("creator_id")
         
         return {
@@ -139,11 +139,11 @@ class SEOAgent(BaseAgent):
     
     async def _load_models_and_resources(self):
         """Load SEO models"""
-    logger.info("SEO agent models loaded")
+        logger.info("SEO agent models loaded")
     
     async def process(self, request: Dict[str, Any]) -> Dict[str, Any]:
         """Process SEO optimization request"""
-    content_id = request.get("content_id")
+        content_id = request.get("content_id")
         
         return {
             "content_id": content_id,
@@ -163,11 +163,11 @@ class CollaborationAgent(BaseAgent):
     
     async def _load_models_and_resources(self):
         """Load collaboration models"""
-    logger.info("Collaboration agent models loaded")
+        logger.info("Collaboration agent models loaded")
     
     async def process(self, request: Dict[str, Any]) -> Dict[str, Any]:
         """Process collaboration matching request"""
-    creator_id = request.get("creator_id")
+        creator_id = request.get("creator_id")
         content_id = request.get("content_id")
         
         return {
@@ -199,11 +199,11 @@ class DistributionAgent(BaseAgent):
     
     async def _load_models_and_resources(self):
         """Load distribution models"""
-    logger.info("Distribution agent models loaded")
+        logger.info("Distribution agent models loaded")
     
     async def process(self, request: Dict[str, Any]) -> Dict[str, Any]:
         """Process distribution request"""
-    content_id = request.get("content_id")
+        content_id = request.get("content_id")
         platforms = request.get("target_platforms", ["youtube", "instagram", "tiktok"])
         
         return {
@@ -231,11 +231,11 @@ class MonetizationAgent(BaseAgent):
     
     async def _load_models_and_resources(self):
         """Load monetization models"""
-    logger.info("Monetization agent models loaded")
+        logger.info("Monetization agent models loaded")
     
     async def process(self, request: Dict[str, Any]) -> Dict[str, Any]:
         """Process monetization setup request"""
-    content_id = request.get("content_id")
+        content_id = request.get("content_id")
         creator_id = request.get("creator_id")
         
         return {
@@ -259,12 +259,12 @@ class RightsManager:
     
     async def initialize(self):
         """Initialize rights manager"""
-    self.is_initialized = True
+        self.is_initialized = True
         logger.info("Rights Manager initialized")
     
     async def validate_rights(self, content_id: str, creator_id: str) -> Dict[str, Any]:
         """Validate content rights"""
-    return {
+        return {
             "valid": True,
             "rights_data": {
                 "content_id": content_id,
@@ -282,7 +282,7 @@ class WorkflowMetrics:
     
     async def setup_content_tracking(self, config: Dict[str, Any]):
         """Setup content tracking"""
-    workflow_id = config.get("workflow_id")
+        workflow_id = config.get("workflow_id")
         self.metrics[workflow_id] = config
         logger.info(f"Tracking setup for workflow {workflow_id}")
 
@@ -295,7 +295,7 @@ class NotificationService:
     
     async def send_notification(self, notification_data: Dict[str, Any]):
         """Send notification"""
-    notification = {
+        notification = {
             "id": f"notif_{len(self.notifications)}",
             **notification_data,
             "sent": True

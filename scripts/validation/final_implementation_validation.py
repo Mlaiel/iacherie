@@ -5,11 +5,15 @@ Comprehensive validation of critical business logic implementations
 """
 
 import asyncio
-
+import sys
+import os
 import logging
 from datetime import datetime
 
-import sys
+# Add current directory to Python path for imports
+current_dir = os.path.dirname(os.path.abspath(__file__))
+root_dir = os.path.dirname(os.path.dirname(current_dir))
+sys.path.insert(0, root_dir)
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(levelname)s:%(name)s:%(message)s')
@@ -27,7 +31,7 @@ Validate all critical TODO/NotImplemented implementations."""
     
     # 1. BaseAgent Resource Loading Implementation
     try:
-        from simple_agents import BaseAgent
+        from scripts.setup.simple_agents import BaseAgent
         agent = BaseAgent('validation_agent')
         success = await agent.initialize()
         
@@ -53,7 +57,7 @@ Validate all critical TODO/NotImplemented implementations."""
     
     # 2. Business Logic Core Workflow Processing
     try:
-        from business_logic_core import BusinessLogicCore
+        from core.business_logic_core import BusinessLogicCore
         core = BusinessLogicCore()
         
         if hasattr(core, 'process_creator_workflow') and callable(core.process_creator_workflow):

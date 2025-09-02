@@ -721,6 +721,9 @@ def get_queue_manager() -> ProductionQueueManager:
 
 # Alias for backward compatibility
 QueueManager = IntelligentQueueManager
+
+
+class QueueManagerDocumentation:
     """
     🎯 Gestionnaire QueueManager - IA-Influencer-Agent
     
@@ -738,8 +741,8 @@ QueueManager = IntelligentQueueManager
     - Nettoyage automatique des ressources
     """
     
-    def __init__(self, config: QueueManagerConfig = None):
-        self.config = config or QueueManagerConfig()
+    def __init__(self, config: QueueConfig = None):
+        self.config = config or QueueConfig()
         self._pool = []
         self._active_connections = 0
         self._lock = threading.Lock()
