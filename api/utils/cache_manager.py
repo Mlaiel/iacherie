@@ -140,9 +140,42 @@ Trigger memory optimization procedures"""
         
     def _clear_low_priority_caches(self):
         """Clear low priority cache entries"""
-        # This would integrate with the cache manager
-        # to clear least recently used or expired entries
-        pass
+        try:
+            if hasattr(self, 'cache') and self.cache:
+                # Clear expired entries first
+                self.cache.clear_expired()
+                
+                # If still over memory limit, clear low priority entries
+                current_memory = self._get_cache_memory_usage()
+                max_memory = getattr(self, 'max_memory_mb', 512) * 1024 * 1024  # Default 512MB
+                
+                if current_memory > max_memory:
+                    # Clear least recently used entries
+                    entries_to_clear = int(len(self.cache) * 0.2)  # Clear 20% of entries
+                    self.cache.clear_lru(entries_to_clear)
+                    
+                    self.logger.info(f"Cleared {entries_to_clear} low priority cache entries")
+            
+        except Exception as e:
+            self.logger.warning(f"Failed to clear low priority caches: {e}")
+    
+    def _get_cache_memory_usage(self) -> int:
+        """Get approximate memory usage of cache in bytes"""
+        try:
+            if hasattr(self, 'cache') and self.cache and hasattr(self.cache, 'memory_usage'):
+                return self.cache.memory_usage()
+            
+            # Fallback estimation
+            import sys
+            total_size = 0
+            if hasattr(self, 'cache') and hasattr(self.cache, 'items'):
+                for key, value in self.cache.items():
+                    total_size += sys.getsizeof(key) + sys.getsizeof(value)
+            
+            return total_size
+            
+        except Exception:
+            return 0
     
     def optimize_data_structures(self, data: Any) -> Any:
         """
