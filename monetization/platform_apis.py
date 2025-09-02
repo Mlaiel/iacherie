@@ -62,18 +62,27 @@ Manages integrations with platform APIs"""
         try:
             logger.info(f"Executing __aexit__")
             
-            # Implementation for __aexit__
-            # TODO: Add specific business logic here
+            # Clean up HTTP session and release resources
+            if self.session and not self.session.closed:
+                await self.session.close()
+                logger.info("HTTP session closed successfully")
             
-            result = None  # Replace with actual implementation
-            
+            # Log exception details if any occurred
+            if exc_type is not None:
+                logger.error(f"Context manager exiting with exception: {exc_type.__name__}: {exc_val}")
+                
             logger.info(f"__aexit__ completed successfully")
-            return result
+            return False  # Don't suppress exceptions
             
         except Exception as e:
             logger.error(f"__aexit__ failed: {e}")
+            # Ensure session cleanup even if error occurs
+            if hasattr(self, 'session') and self.session and not self.session.closed:
+                try:
+                    await self.session.close()
+                except:
+                    pass
             raise
-            await self.session.close()
     
     async def authenticate_youtube(
         self,
@@ -406,20 +415,66 @@ Authenticate with YouTube API"""
                         timestamp=datetime.now()
                     )
                 else:
+                    logger.error(f"Spotify API error: {response.status}")
+                    return None
+                    
+        except Exception as e:
+            logger.error(f"get_spotify_analytics failed: {e}")
+            return None
+    
+    async def _check_rate_limit(self, platform: str) -> bool:
+        """Check if API rate limit allows the request"""
         try:
             logger.info(f"Executing _check_rate_limit")
             
-            # Implementation for _check_rate_limit
-            # TODO: Add specific business logic here
+            # Implement platform-specific rate limit checking
+            current_time = datetime.now()
+            platform_key = f"rate_limit_{platform}"
             
-            result = None  # Replace with actual implementation
+            # Get rate limit configuration for platform
+            limits = {
+                "youtube": {"requests": 10000, "period": timedelta(days=1)},  # 10k per day
+                "instagram": {"requests": 200, "period": timedelta(hours=1)},  # 200 per hour
+                "tiktok": {"requests": 300, "period": timedelta(hours=1)},     # 300 per hour
+                "twitter": {"requests": 900, "period": timedelta(minutes=15)}, # 900 per 15 min
+                "facebook": {"requests": 600, "period": timedelta(hours=1)},   # 600 per hour
+            }
             
-            logger.info(f"_check_rate_limit completed successfully")
-            return result
+            if platform not in limits:
+                logger.warning(f"No rate limit configured for platform: {platform}")
+                return True  # Allow by default
+                
+            limit_config = limits[platform]
+            
+            # Check if we have rate limit data for this platform
+            if platform_key not in self.rate_limits:
+                self.rate_limits[platform_key] = {
+                    "requests": 0,
+                    "reset_time": current_time + limit_config["period"]
+                }
+            
+            rate_data = self.rate_limits[platform_key]
+            
+            # Reset counter if period has expired
+            if current_time >= rate_data["reset_time"]:
+                rate_data["requests"] = 0
+                rate_data["reset_time"] = current_time + limit_config["period"]
+            
+            # Check if we've exceeded the limit
+            if rate_data["requests"] >= limit_config["requests"]:
+                wait_time = (rate_data["reset_time"] - current_time).total_seconds()
+                logger.warning(f"Rate limit exceeded for {platform}. Reset in {wait_time:.0f} seconds")
+                return False
+            
+            # Increment request counter
+            rate_data["requests"] += 1
+            
+            logger.info(f"Rate limit check passed for {platform}. Requests: {rate_data['requests']}/{limit_config['requests']}")
+            return True
             
         except Exception as e:
             logger.error(f"_check_rate_limit failed: {e}")
-            raise
+            return True  # Allow by default on error
         limits = {
             "youtube": 10000,  # Per day
             "instagram": 200,  # Per hour
