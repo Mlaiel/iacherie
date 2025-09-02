@@ -228,6 +228,42 @@ Post-initialization processing"""
     
     def mark_execution_start(self):
         """
+        try:
+            logger.info(f"Executing mark_execution_failed")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"mark_execution_failed completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"mark_execution_failed failed: {e}")
+            raise
+        try:
+            logger.info(f"Executing mark_execution_complete")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"mark_execution_complete completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"mark_execution_complete failed: {e}")
+            raise
+        try:
+            logger.info(f"Executing mark_execution_start")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"mark_execution_start completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"mark_execution_start failed: {e}")
+            raise
 Mark task execution as started"""
         self.status = TaskStatus.RUNNING
         self.last_execution = datetime.utcnow()
@@ -501,6 +537,18 @@ Get filtered list of tasks"""
     
     def get_pending_tasks(self) -> List[ScheduledTask]:
         """
+        try:
+            logger.info(f"Executing get_pending_tasks")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"get_pending_tasks completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"get_pending_tasks failed: {e}")
+            raise
 Get tasks ready for execution"""
         return [
             task for task in self.tasks.values()
@@ -674,6 +722,18 @@ Execute a single task"""
     
     def export_tasks(self) -> Dict[str, Any]:
         """
+        try:
+            logger.info(f"Executing get_scheduler")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"get_scheduler completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"get_scheduler failed: {e}")
+            raise
 Export all tasks data"""
         return {
             'export_timestamp': datetime.utcnow().isoformat(),

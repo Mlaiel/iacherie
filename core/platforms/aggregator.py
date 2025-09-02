@@ -156,6 +156,18 @@ Initialize aggregator with platform manager"""
     
     def _initialize_default_metrics(self):
         """
+        try:
+            logger.info(f"Executing _initialize_default_metrics")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"_initialize_default_metrics completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_initialize_default_metrics failed: {e}")
+            raise
 Initialize default metric definitions"""
         default_metrics = [
             MetricDefinition("total_views", "views", AggregationType.SUM, 1.0, description="Total views across platforms"),

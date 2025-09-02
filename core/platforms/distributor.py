@@ -136,6 +136,18 @@ Initialize distributor with platform manager"""
         
     def add_distribution_rule(self, rule: DistributionRule):
         """
+        try:
+            logger.info(f"Executing add_distribution_rule")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"add_distribution_rule completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"add_distribution_rule failed: {e}")
+            raise
 Add distribution rule"""
         self.distribution_rules.append(rule)
         logger.info(f"Added distribution rule for content types: {rule.content_types}")
@@ -495,6 +507,18 @@ Upload with retry logic"""
     def _detect_content_type(self, file_path: str) -> ContentType:
         """Detect content type from file"""
         try:
+            logger.info(f"Executing _is_content_type_allowed")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"_is_content_type_allowed completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_is_content_type_allowed failed: {e}")
+            raise
+        try:
             logger.info(f"Executing _is_platform_compatible")
             
             # Implement operation logic
@@ -533,6 +557,18 @@ Check if content type is allowed by rules"""
     
     def _is_platform_compatible(self, platform: PlatformBase, task: DistributionTask) -> bool:
         """
+        try:
+            logger.info(f"Executing _generate_warnings")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"_generate_warnings completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_generate_warnings failed: {e}")
+            raise
 Check if platform is compatible with content"""
         content_type = self._detect_content_type(task.content_path)
         
@@ -608,6 +644,18 @@ Generate warnings based on distribution results"""
     
     def get_task_status(self, task_id: str) -> Optional[Dict[str, Any]]:
         """
+        try:
+            logger.info(f"Executing get_task_status")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"get_task_status completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"get_task_status failed: {e}")
+            raise
 Get status of a distribution task"""
         if task_id in self.active_tasks:
             task = self.active_tasks[task_id]
