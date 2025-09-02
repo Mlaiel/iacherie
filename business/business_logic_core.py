@@ -92,6 +92,10 @@ except ImportError:
     async def process_creator_workflow(self, content: ContentUpload) -> List[WorkflowResult]:
         """Process creator workflow"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             logger.info(f"Processing creator workflow for content: {content.content_id}")
             
             # Basic workflow processing
@@ -112,7 +116,6 @@ except ImportError:
             logger.info(f"Creator workflow completed for: {content.content_id}")
             return workflow_results
             
-        except Exception as e:
             logger.error(f"Creator workflow failed: {e}")
             raise
     
@@ -172,11 +175,121 @@ try:
     if 'core_path' in locals() and str(core_path) in sys.path:
         sys.path.remove(str(core_path))
 except:
-    pass
+        try:
+            logger.info(f"Executing workflow get_workflow_status")
+            
+            # Initialize workflow state
+            workflow_state = {"status": "processing", "steps": []}
+            
+            # Execute business workflow steps
+            for step in self._get_workflow_steps():
+                result = await self._execute_workflow_step(step)
+                workflow_state["steps"].append(result)
+            
+            workflow_state["status"] = "completed"
+            logger.info(f"Workflow get_workflow_status completed successfully")
+            return workflow_state
+            
+        except Exception as e:
+            logger.error(f"Workflow get_workflow_status failed: {e}")
+            raise
 __all__ = [
     'BusinessLogicCore',
     'CreatorType', 
     'ContentUpload',
     'WorkflowResult',
     'WorkflowStage'
+
+    async def initialize_business_core(self):
+        """Initialize the core business logic system"""
+        try:
+            logger.info("Initializing business logic core...")
+            
+            # Initialize core components
+            self.agents = {}
+            self.workflows = {}
+            self.metrics = {}
+            
+            # Setup business rules engine
+            await self._setup_business_rules()
+            
+            # Initialize monetization engine
+            await self._setup_monetization_engine()
+            
+            # Initialize protection system
+            await self._setup_protection_system()
+            
+            logger.info("Business logic core initialized successfully")
+            return True
+            
+            logger.error(f"Failed to initialize business core: {e}")
+            raise
+
+
+    async def _setup_monetization_engine(self):
+        """Setup monetization engine"""
+        self.monetization_config = {
+            'payment_methods': ['stripe', 'paypal'],
+            'commission_rate': 0.15,
+            'min_payout': 50.0,
+            'currency': 'USD'
+        }
+        return self.monetization_config
+
+
+    async def _setup_protection_system(self):
+        """Setup content protection system"""
+        self.protection_config = {
+            'fingerprinting_enabled': True,
+            'dmca_protection': True,
+            'watermarking': True,
+            'usage_tracking': True
+        }
+        return self.protection_config
+
+
+    async def process_content_workflow(self, content_data):
+        """Process complete content workflow"""
+        try:
+            logger.info(f"Processing content workflow for: {content_data.get('content_id')}")
+            
+            # Step 1: Content validation
+            validation_result = await self._validate_content(content_data)
+            if not validation_result['valid']:
+                raise ValueError(f"Content validation failed: {validation_result['errors']}")
+            
+            # Step 2: Protection processing
+            protection_result = await self._process_protection(content_data)
+            
+            # Step 3: SEO optimization
+            seo_result = await self._process_seo_optimization(content_data)
+            
+            # Step 4: Collaboration matching
+            collaboration_result = await self._process_collaboration_matching(content_data)
+            
+            # Step 5: Distribution preparation
+            distribution_result = await self._process_distribution(content_data)
+            
+            # Step 6: Monetization setup
+            monetization_result = await self._process_monetization(content_data)
+            
+            workflow_result = {
+                'content_id': content_data.get('content_id'),
+                'status': 'completed',
+                'steps': {
+                    'validation': validation_result,
+                    'protection': protection_result,
+                    'seo': seo_result,
+                    'collaboration': collaboration_result,
+                    'distribution': distribution_result,
+                    'monetization': monetization_result
+                }
+            }
+            
+            logger.info(f"Content workflow completed for: {content_data.get('content_id')}")
+            return workflow_result
+            
+            logger.error(f"Content workflow failed: {e}")
+            raise
+
 ]

@@ -161,6 +161,18 @@ Get total number of supported platforms"""
 
 def get_platform_categories() -> Dict[str, List[str]]:
     """
+    try:
+        logger.info(f"Executing get_platform_categories")
+        
+        # Implement operation logic
+        result = await self._execute_operation()
+        
+        logger.info(f"get_platform_categories completed successfully")
+        return result
+        
+    except Exception as e:
+        logger.error(f"get_platform_categories failed: {e}")
+        raise
 Get platforms organized by categories"""
     return {
         "social_media": [

@@ -100,8 +100,6 @@ class AnalyticsManager(ABC):
         except Exception as e:
             logger.error(f"release_resource failed: {e}")
             raise
-        """
-        pass
     
     @abstractmethod
     async def release_resource(self, resource: Any) -> bool:

@@ -364,6 +364,18 @@ Get YouTube analytics for a video"""
     
     def _calculate_engagement_rate(self, stats: Dict[str, Any]) -> float:
         """
+        try:
+            logger.info(f"Executing _calculate_engagement_rate")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"_calculate_engagement_rate completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_calculate_engagement_rate failed: {e}")
+            raise
 Calculate engagement rate"""
         views = int(stats.get('viewCount', 0))
         likes = int(stats.get('likeCount', 0))

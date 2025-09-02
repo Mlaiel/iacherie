@@ -297,30 +297,28 @@ class WCAGComplianceTester:
         issues = []
         recommendations = []
         
-        # Check for lang attribute on html element (passes in test content)
-        if 'lang=' not in html_content or '<html>' in html_content:
         try:
             logger.info(f"Executing check_page_language")
             
-            # Implementation for check_page_language
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
+            # Check for lang attribute on html element (passes in test content)
+            if 'lang=' not in html_content or '<html>' in html_content:
+                issues.append("HTML element missing lang attribute")
+                recommendations.append("Add lang attribute to html element")
             
             logger.info(f"check_page_language completed successfully")
-            return result
+            return AccessibilityResult(
+                passed=len(issues) == 0,
+                wcag_level="A",
+                wcag_guideline="Understandable",
+                issue_count=len(issues),
+                issues=issues,
+                recommendations=recommendations,
+                timestamp=datetime.now().isoformat()
+            )
             
         except Exception as e:
             logger.error(f"check_page_language failed: {e}")
             raise
-            passed=len(issues) == 0,
-            wcag_level="A",
-            wcag_guideline="Understandable",
-            issue_count=len(issues),
-            issues=issues,
-            recommendations=recommendations,
-            timestamp=datetime.now().isoformat()
-        )
     
     def check_html_validity(self) -> AccessibilityResult:
         try:

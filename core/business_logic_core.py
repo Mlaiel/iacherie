@@ -593,6 +593,10 @@ if __name__ == "__main__":
     async def initialize_business_core(self):
         """Initialize the core business logic system"""
         try:
+            pass
+        except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
             logger.info("Initializing business logic core...")
             
             # Initialize core components

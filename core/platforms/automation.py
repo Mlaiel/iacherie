@@ -166,6 +166,18 @@ Check if rule should execute based on conditions"""
     
     def to_dict(self) -> Dict[str, Any]:
         """
+        try:
+            logger.info(f"Executing to_dict")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"to_dict completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"to_dict failed: {e}")
+            raise
 Convert to dictionary"""
         return {
             'rule_id': self.rule_id,
@@ -274,6 +286,18 @@ Get steps ready for execution"""
     
     def is_complete(self) -> bool:
         """
+        try:
+            logger.info(f"Executing __init__")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"__init__ completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"__init__ failed: {e}")
+            raise
 Check if workflow is complete"""
         return all(step.status == WorkflowStatus.COMPLETED for step in self.steps)
     
@@ -322,6 +346,18 @@ Set system dependencies"""
     
     def _setup_default_handlers(self):
         """
+        try:
+            logger.info(f"Executing _setup_default_handlers")
+            
+            # Implement operation logic
+            result = await self._execute_operation()
+            
+            logger.info(f"_setup_default_handlers completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_setup_default_handlers failed: {e}")
+            raise
 Setup default action handlers"""
         self.action_handlers.update({
             AutomationAction.DISTRIBUTE_CONTENT: self._handle_distribute_content,
