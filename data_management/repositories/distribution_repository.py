@@ -714,8 +714,31 @@ Get distribution job by ID"""
     def _schedule_distribution_job(self, job):
         """
 Schedule distribution job"""
-        # Implementation would schedule job
-        pass
+        try:
+            if not hasattr(job, 'schedule') or not job.schedule:
+                return
+            
+            self.logger.info(f"Scheduling distribution job {job.id} for {job.schedule.get('scheduled_time', 'immediate')}")
+            
+            # Create job entry in scheduler
+            if job.schedule.get('type') == ScheduleType.IMMEDIATE.value:
+                # Queue for immediate processing
+                self._queue_immediate_job(job)
+            elif job.schedule.get('type') == ScheduleType.SCHEDULED.value:
+                # Schedule for future execution
+                self._queue_scheduled_job(job)
+            elif job.schedule.get('type') == ScheduleType.OPTIMAL_TIME.value:
+                # Use AI to determine optimal posting time
+                optimal_time = self._calculate_optimal_time(job)
+                job.schedule['scheduled_time'] = optimal_time.isoformat()
+                self._queue_scheduled_job(job)
+            
+            # Update job status
+            job.status = DistributionStatus.SCHEDULED.value
+            
+        except Exception as e:
+            self.logger.error(f"Error scheduling distribution job {job.id}: {e}")
+            job.status = DistributionStatus.FAILED.value
 
     def _fetch_distribution_by_id(self, entity_id: str):
         """Fetch distribution job by ID"""
@@ -763,8 +786,39 @@ Schedule distribution job"""
     def _track_status_change(self, current_entity, new_entity):
         """
 Track status changes"""
-        # Implementation would track status changes
-        pass
+        try:
+            if not hasattr(current_entity, 'status') or not hasattr(new_entity, 'status'):
+                return
+            
+            old_status = current_entity.status
+            new_status = new_entity.status
+            
+            if old_status != new_status:
+                self.logger.info(f"Distribution job {current_entity.id} status changed: {old_status} -> {new_status}")
+                
+                # Log status change
+                status_change = {
+                    'job_id': current_entity.id,
+                    'old_status': old_status,
+                    'new_status': new_status,
+                    'timestamp': datetime.now(timezone.utc).isoformat(),
+                    'metadata': {
+                        'platform': getattr(current_entity, 'platform', None),
+                        'content_id': getattr(current_entity, 'content_id', None)
+                    }
+                }
+                
+                # Store status change history
+                self._store_status_history(status_change)
+                
+                # Trigger status-specific actions
+                if new_status == DistributionStatus.FAILED.value:
+                    self._handle_failed_distribution(current_entity)
+                elif new_status == DistributionStatus.PUBLISHED.value:
+                    self._handle_successful_distribution(current_entity)
+                
+        except Exception as e:
+            self.logger.error(f"Error tracking status change: {e}")
 
     def _update_distribution_job(self, entity):
         """Update distribution job in database"""
@@ -812,8 +866,28 @@ Track status changes"""
     def _cancel_distribution_job(self, job_id: str):
         """
 Cancel distribution job"""
-        # Implementation would cancel job
-        pass
+        try:
+            self.logger.info(f"Cancelling distribution job {job_id}")
+            
+            # Remove from scheduler queues
+            self._remove_from_immediate_queue(job_id)
+            self._remove_from_scheduled_queue(job_id)
+            
+            # If job is currently processing, mark for cancellation
+            if self._is_job_processing(job_id):
+                self._mark_for_cancellation(job_id)
+            
+            # Update job status
+            job = self._get_distribution_job(job_id)
+            if job:
+                job.status = DistributionStatus.FAILED.value
+                job.failure_reason = "Job cancelled by user"
+                self._update_distribution_job(job)
+            
+            self.logger.info(f"Successfully cancelled distribution job {job_id}")
+            
+        except Exception as e:
+            self.logger.error(f"Error cancelling distribution job {job_id}: {e}")
 
     def _delete_distribution_job(self, job_id: str, soft_delete: bool) -> bool:
         """
@@ -1382,8 +1456,31 @@ Get distribution job by ID asynchronously"""
     async def _schedule_distribution_job_async(self, job):
         """
 Schedule distribution job asynchronously"""
-        # Implementation would schedule job
-        pass
+        try:
+            if not hasattr(job, 'schedule') or not job.schedule:
+                return
+            
+            self.logger.info(f"Scheduling distribution job {job.id} for {job.schedule.get('scheduled_time', 'immediate')}")
+            
+            # Create job entry in scheduler
+            if job.schedule.get('type') == ScheduleType.IMMEDIATE.value:
+                # Queue for immediate processing
+                await self._queue_immediate_job_async(job)
+            elif job.schedule.get('type') == ScheduleType.SCHEDULED.value:
+                # Schedule for future execution
+                await self._queue_scheduled_job_async(job)
+            elif job.schedule.get('type') == ScheduleType.OPTIMAL_TIME.value:
+                # Use AI to determine optimal posting time
+                optimal_time = await self._calculate_optimal_time_async(job)
+                job.schedule['scheduled_time'] = optimal_time.isoformat()
+                await self._queue_scheduled_job_async(job)
+            
+            # Update job status
+            job.status = DistributionStatus.SCHEDULED.value
+            
+        except Exception as e:
+            self.logger.error(f"Error scheduling distribution job {job.id}: {e}")
+            job.status = DistributionStatus.FAILED.value
 
     async def _fetch_distribution_by_id_async(self, entity_id: str):
         """Fetch distribution job by ID asynchronously"""
@@ -1450,8 +1547,39 @@ Schedule distribution job asynchronously"""
     async def _track_status_change_async(self, current_entity, new_entity):
         """
 Track status changes asynchronously"""
-        # Implementation would track status changes
-        pass
+        try:
+            if not hasattr(current_entity, 'status') or not hasattr(new_entity, 'status'):
+                return
+            
+            old_status = current_entity.status
+            new_status = new_entity.status
+            
+            if old_status != new_status:
+                self.logger.info(f"Distribution job {current_entity.id} status changed: {old_status} -> {new_status}")
+                
+                # Log status change
+                status_change = {
+                    'job_id': current_entity.id,
+                    'old_status': old_status,
+                    'new_status': new_status,
+                    'timestamp': datetime.now(timezone.utc).isoformat(),
+                    'metadata': {
+                        'platform': getattr(current_entity, 'platform', None),
+                        'content_id': getattr(current_entity, 'content_id', None)
+                    }
+                }
+                
+                # Store status change history
+                await self._store_status_history_async(status_change)
+                
+                # Trigger status-specific actions
+                if new_status == DistributionStatus.FAILED.value:
+                    await self._handle_failed_distribution_async(current_entity)
+                elif new_status == DistributionStatus.PUBLISHED.value:
+                    await self._handle_successful_distribution_async(current_entity)
+                
+        except Exception as e:
+            self.logger.error(f"Error tracking status change: {e}")
 
     async def _update_distribution_job_async(self, entity):
         """Update distribution job in database asynchronously"""
@@ -1513,8 +1641,28 @@ Track status changes asynchronously"""
     async def _cancel_distribution_job_async(self, job_id: str):
         """
 Cancel distribution job asynchronously"""
-        # Implementation would cancel job
-        pass
+        try:
+            self.logger.info(f"Cancelling distribution job {job_id}")
+            
+            # Remove from scheduler queues
+            await self._remove_from_immediate_queue_async(job_id)
+            await self._remove_from_scheduled_queue_async(job_id)
+            
+            # If job is currently processing, mark for cancellation
+            if await self._is_job_processing_async(job_id):
+                await self._mark_for_cancellation_async(job_id)
+            
+            # Update job status
+            job = await self._get_distribution_job_async(job_id)
+            if job:
+                job.status = DistributionStatus.FAILED.value
+                job.failure_reason = "Job cancelled by user"
+                await self._update_distribution_job_async(job)
+            
+            self.logger.info(f"Successfully cancelled distribution job {job_id}")
+            
+        except Exception as e:
+            self.logger.error(f"Error cancelling distribution job {job_id}: {e}")
 
     async def _delete_distribution_job_async(self, job_id: str, soft_delete: bool) -> bool:
         """

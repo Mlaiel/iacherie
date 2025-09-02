@@ -142,7 +142,52 @@ Make revenue predictions"""
     def get_accuracy_metrics(self, y_true: np.ndarray, y_pred: np.ndarray) -> PredictionAccuracy:
         """
 Calculate accuracy metrics"""
-        pass
+        try:
+            # Calculate standard regression metrics
+            mae = mean_absolute_error(y_true, y_pred)
+            mse = mean_squared_error(y_true, y_pred)
+            rmse = np.sqrt(mse)
+            r2 = r2_score(y_true, y_pred)
+            
+            # Calculate Mean Absolute Percentage Error (MAPE)
+            # Avoid division by zero
+            y_true_nonzero = np.where(y_true == 0, 1e-10, y_true)
+            mape = np.mean(np.abs((y_true - y_pred) / y_true_nonzero)) * 100
+            
+            # Calculate confidence interval (95% confidence)
+            residuals = y_true - y_pred
+            confidence_level = 0.95
+            alpha = 1 - confidence_level
+            t_value = stats.t.ppf(1 - alpha/2, len(residuals) - 1)
+            residual_std = np.std(residuals)
+            margin_error = t_value * residual_std / np.sqrt(len(residuals))
+            
+            mean_prediction = np.mean(y_pred)
+            confidence_interval = (
+                mean_prediction - margin_error,
+                mean_prediction + margin_error
+            )
+            
+            return PredictionAccuracy(
+                mae=mae,
+                mse=mse,
+                rmse=rmse,
+                r2_score=r2,
+                mape=mape,
+                confidence_interval=confidence_interval,
+                prediction_date=datetime.now(),
+                model_used=ForecastModel.LINEAR_REGRESSION  # Default, subclasses should override
+            )
+            
+        except Exception as e:
+            logger.error(f"Error calculating accuracy metrics: {e}")
+            # Return default metrics in case of error
+            return PredictionAccuracy(
+                mae=0.0, mse=0.0, rmse=0.0, r2_score=0.0, mape=100.0,
+                confidence_interval=(0.0, 0.0),
+                prediction_date=datetime.now(),
+                model_used=ForecastModel.LINEAR_REGRESSION
+            )
 
 
 class LSTMForecastModel(BaseForecastModel):
