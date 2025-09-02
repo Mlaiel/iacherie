@@ -1119,11 +1119,10 @@ cache_manager = None
 
 
 def get_cache_manager() -> CacheManager:
-    """
-    Obtient l'instance du gestionnaire
+    """Gets the cache manager instance
     
     Returns:
-        CacheManager: Instance du gestionnaire
+        CacheManager: Cache manager instance
     """
     global cache_manager
     if cache_manager is None:

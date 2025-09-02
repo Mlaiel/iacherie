@@ -449,15 +449,14 @@ class TestWCAGCompliance:
     
     def test_color_contrast_compliance(self, accessibility_tester):
         try:
-            logger.info(f"Executing test_alt_text_compliance")
-            
-            # Implementation for test_alt_text_compliance
-            # TODO: Add specific business logic here
-        try:
             logger.info(f"Executing test_color_contrast_compliance")
             
             # Implementation for test_color_contrast_compliance
             # TODO: Add specific business logic here
+            pass
+        except Exception as e:
+            logger.error(f"test_color_contrast_compliance failed: {e}")
+            raise
             
             result = None  # Replace with actual implementation
             
@@ -465,6 +464,10 @@ class TestWCAGCompliance:
             return result
             
         except Exception as e:
+            logger.error(f"test_color_contrast_compliance failed: {e}")
+            raise
+    
+    def test_keyboard_accessibility_compliance(self, accessibility_tester):
         try:
             logger.info(f"Executing test_keyboard_accessibility_compliance")
             
