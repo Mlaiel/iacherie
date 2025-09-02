@@ -519,11 +519,47 @@ class ContentRepository(BaseRepository[ContentModel]):
                 # Soft delete - mark as deleted
                 content.status = ContentStatus.DELETED
                 content.updated_at = datetime.now(timezone.utc)
-                # result = self.db.update(self.table_name, asdict(content), where={'id': entity_id})
+                
+                # Perform database update for soft delete
+                try:
+                    if hasattr(self, 'db') and self.db:
+                        update_result = await self.db.update_async(
+                            self.table_name, 
+                            asdict(content), 
+                            where={'id': entity_id}
+                        )
+                        if not update_result:
+                            self.logger.warning(f"Database update returned false for soft delete of {entity_id}")
+                    else:
+                        self.logger.warning("No database connection available for soft delete update")
+                except Exception as db_error:
+                    self.logger.error(f"Database update failed for soft delete of {entity_id}: {db_error}")
+                    # Continue with in-memory update even if database fails
             else:
-                # Hard delete
-                # result = self.db.delete(self.table_name, where={'id': entity_id})
-                pass
+                # Hard delete - perform actual database deletion
+                try:
+                    if hasattr(self, 'db') and self.db:
+                        # Use proper database connection to delete
+                        delete_result = await self.db.delete_async(
+                            self.table_name, 
+                            where={'id': entity_id}
+                        )
+                        if not delete_result:
+                            self.logger.warning(f"Database deletion returned false for entity {entity_id}")
+                    else:
+                        # Fallback - mark as deleted if no database connection
+                        content = await self.get_by_id(entity_id, use_cache=False)
+                        if content:
+                            content.status = ContentStatus.DELETED
+                            content.updated_at = datetime.now(timezone.utc)
+                            self.logger.warning("No database connection - marked as deleted instead of hard delete")
+                except Exception as db_error:
+                    self.logger.error(f"Database deletion failed for {entity_id}: {db_error}")
+                    # Fallback to soft delete on database error
+                    content = await self.get_by_id(entity_id, use_cache=False)
+                    if content:
+                        content.status = ContentStatus.DELETED
+                        content.updated_at = datetime.now(timezone.utc)
             
             # Remove from protection service
             if self.protection_service:
@@ -609,7 +645,25 @@ class ContentRepository(BaseRepository[ContentModel]):
                 filters = {}
                 if fields:
                     # Build text search filters for specified fields
-                    pass
+                    # Convert search query into field-specific filters
+                    search_terms = query.lower().split()
+                    
+                    # Apply field-specific filtering
+                    if 'title' in fields and search_terms:
+                        # Simple text matching for title
+                        filters['title_contains'] = search_terms[0]
+                    
+                    if 'description' in fields and len(search_terms) > 1:
+                        # Description matching
+                        filters['description_contains'] = search_terms[1]
+                    
+                    if 'tags' in fields:
+                        # Tag matching
+                        filters['tags_contain'] = search_terms
+                    
+                    # Add content type filtering if specified
+                    if hasattr(self, '_search_content_type'):
+                        filters['content_type'] = self._search_content_type
                 
                 return self.list(filters=filters, limit=limit)
             
@@ -901,8 +955,29 @@ class AsyncContentRepository(AsyncBaseRepository[ContentModel]):
                 content.updated_at = datetime.now(timezone.utc)
                 # await self.db.update_async(self.table_name, asdict(content), where={'id': entity_id})
             else:
-                # await self.db.delete_async(self.table_name, where={'id': entity_id})
-                pass
+                # Hard delete - perform actual database deletion  
+                try:
+                    if hasattr(self, 'db') and self.db:
+                        delete_result = await self.db.delete_async(
+                            self.table_name, 
+                            where={'id': entity_id}
+                        )
+                        if not delete_result:
+                            self.logger.warning(f"Async database deletion returned false for entity {entity_id}")
+                    else:
+                        # Fallback - mark as deleted if no database connection
+                        content = await self.get_by_id(entity_id, use_cache=False)
+                        if content:
+                            content.status = ContentStatus.DELETED
+                            content.updated_at = datetime.now(timezone.utc)
+                            self.logger.warning("No database connection - marked as deleted instead of hard delete")
+                except Exception as db_error:
+                    self.logger.error(f"Async database deletion failed for {entity_id}: {db_error}")
+                    # Fallback to soft delete on database error
+                    content = await self.get_by_id(entity_id, use_cache=False)
+                    if content:
+                        content.status = ContentStatus.DELETED
+                        content.updated_at = datetime.now(timezone.utc)
             
             # Remove from protection service asynchronously
             if self.protection_service:
@@ -959,9 +1034,68 @@ class AsyncContentRepository(AsyncBaseRepository[ContentModel]):
     
     async def _process_content_async(self, file_path: str, content: ContentModel) -> ContentProcessingResult:
         """Process content asynchronously"""
-        # This would implement the async version of content processing
-        # Similar to sync version but with async operations
-        pass
+        try:
+            # Extract file information
+            file_path_obj = Path(file_path)
+            content_type = self._detect_content_format(str(file_path_obj))
+            
+            # Initialize processing result
+            result = ContentProcessingResult(
+                content_id=content.id,
+                file_path=str(file_path_obj),
+                content_type=content_type,
+                processing_time=0.0,
+                success=False
+            )
+            
+            start_time = time.time()
+            
+            # Process based on content type
+            if content_type in [ContentFormat.AUDIO_MP3, ContentFormat.AUDIO_WAV, ContentFormat.AUDIO_FLAC]:
+                # Audio processing
+                if self.ai_processor and hasattr(self.ai_processor, 'process_audio_async'):
+                    audio_features = await self.ai_processor.process_audio_async(file_path)
+                    result.features = audio_features
+                
+            elif content_type in [ContentFormat.VIDEO_MP4, ContentFormat.VIDEO_AVI, ContentFormat.VIDEO_MOV]:
+                # Video processing
+                if self.ai_processor and hasattr(self.ai_processor, 'process_video_async'):
+                    video_features = await self.ai_processor.process_video_async(file_path)
+                    result.features = video_features
+                    
+            elif content_type in [ContentFormat.IMAGE_JPEG, ContentFormat.IMAGE_PNG, ContentFormat.IMAGE_WEBP]:
+                # Image processing
+                if self.ai_processor and hasattr(self.ai_processor, 'process_image_async'):
+                    image_features = await self.ai_processor.process_image_async(file_path)
+                    result.features = image_features
+                    
+            elif content_type == ContentFormat.TEXT_MARKDOWN:
+                # Text processing
+                if self.ai_processor and hasattr(self.ai_processor, 'process_text_async'):
+                    text_features = await self.ai_processor.process_text_async(file_path)
+                    result.features = text_features
+            
+            # Generate fingerprint asynchronously
+            if self.fingerprint_service and hasattr(self.fingerprint_service, 'generate_fingerprint_async'):
+                fingerprint = await self.fingerprint_service.generate_fingerprint_async(
+                    file_path, 
+                    content_type.value
+                )
+                result.fingerprint = fingerprint
+                content.fingerprint = fingerprint
+            
+            # Calculate processing time
+            result.processing_time = time.time() - start_time
+            result.success = True
+            
+            self.logger.info(f"Async content processing completed for {content.id} in {result.processing_time:.2f}s")
+            return result
+            
+        except Exception as e:
+            self.logger.error(f"Async content processing failed for {content.id}: {str(e)}")
+            result.success = False
+            result.error_message = str(e)
+            return result
     
     async def _register_protection_async(self, content: ContentModel, fingerprint: str) -> bool:
         """
@@ -1312,21 +1446,53 @@ Register content protection asynchronously"""
             raise ValueError("original_filename is required")
     
     def _index_content_vectors(self, content: ContentModel):
-        """Indexe les vecteurs pour recherche de similarité"""
-        if self.vector_db and content.fingerprint.primary_embedding:
-            # Indexation FAISS
-            # self.vector_db.add_vector(
-            #     content.content_id,
-            #     content.fingerprint.primary_embedding,
-            #     {"creator_id": content.creator_id, "content_type": content.content_type.value}
-            # )
-            pass
+        """Index vectors for similarity search"""
+        try:
+            if not self.vector_db or not content.fingerprint:
+                self.logger.debug(f"Skipping vector indexing for {content.id} - no vector DB or fingerprint")
+                return
+            
+            # Check if primary embedding exists
+            primary_embedding = getattr(content.fingerprint, 'primary_embedding', None)
+            if not primary_embedding:
+                self.logger.warning(f"No primary embedding available for content {content.id}")
+                return
+            
+            # Prepare metadata for FAISS indexing
+            metadata = {
+                'creator_id': content.creator_id,
+                'content_type': content.content_type.value,
+                'content_id': content.id,
+                'title': content.title[:100] if content.title else '',
+                'created_at': content.created_at.isoformat(),
+                'status': content.status.value
+            }
+            
+            # Add vector to FAISS index
+            self.vector_db.add_vector(
+                content.id,
+                primary_embedding,
+                metadata
+            )
+            
+            self.logger.debug(f"Successfully indexed vectors for content {content.id}")
+            
+        except Exception as e:
+            self.logger.error(f"Error indexing content vectors for {content.id}: {str(e)}")
     
     def _remove_content_vectors(self, content_id: str):
-        """Supprime les vecteurs de l'index"""
-        if self.vector_db:
-            # self.vector_db.remove_vector(content_id)
-            pass
+        """Remove vectors from index"""
+        try:
+            if not self.vector_db:
+                self.logger.debug(f"Skipping vector removal for {content_id} - no vector DB")
+                return
+            
+            # Remove vector from FAISS index
+            self.vector_db.remove_vector(content_id)
+            self.logger.debug(f"Successfully removed vectors for content {content_id}")
+            
+        except Exception as e:
+            self.logger.error(f"Error removing content vectors for {content_id}: {str(e)}")
     
     def _build_query(self, filters: Dict[str, Any], limit: int, offset: int) -> Dict[str, Any]:
         """
@@ -1458,12 +1624,65 @@ class AsyncContentRepository(AsyncBaseRepository[ContentModel]):
             return []
     
     async def _index_content_vectors_async(self, content: ContentModel):
-        """Indexe les vecteurs de manière asynchrone"""
-        # Implementation asynchrone de l'indexation
-        pass
+        """Index content vectors asynchronously"""
+        try:
+            if not self.vector_db or not content.fingerprint:
+                self.logger.debug(f"Skipping vector indexing for {content.id} - no vector DB or fingerprint")
+                return
+            
+            # Prepare vector data
+            vector_data = {
+                'content_id': content.id,
+                'creator_id': content.creator_id,
+                'content_type': content.content_type.value,
+                'title': content.title,
+                'description': content.description[:500] if content.description else '',  # Truncate for performance
+                'tags': content.tags[:10] if content.tags else [],  # Limit tags
+                'created_at': content.created_at.isoformat(),
+                'status': content.status.value
+            }
+            
+            # Extract embeddings from fingerprint
+            primary_embedding = getattr(content.fingerprint, 'primary_embedding', None)
+            if primary_embedding and hasattr(self.vector_db, 'add_vector_async'):
+                await self.vector_db.add_vector_async(
+                    content.id,
+                    primary_embedding,
+                    vector_data
+                )
+                self.logger.debug(f"Successfully indexed vectors for content {content.id}")
+            else:
+                # Fallback to synchronous method
+                if hasattr(self.vector_db, 'add_vector') and primary_embedding:
+                    self.vector_db.add_vector(
+                        content.id,
+                        primary_embedding,
+                        vector_data
+                    )
+                    self.logger.debug(f"Successfully indexed vectors (sync fallback) for content {content.id}")
+                else:
+                    self.logger.warning(f"No suitable vector indexing method available for content {content.id}")
+                    
+        except Exception as e:
+            self.logger.error(f"Error indexing content vectors for {content.id}: {str(e)}")
     
     async def _remove_content_vectors_async(self, content_id: str):
-        """
-Supprime les vecteurs de manière asynchrone"""
-        # Implementation asynchrone de la suppression
-        pass
+        """Remove content vectors asynchronously"""
+        try:
+            if not self.vector_db:
+                self.logger.debug(f"Skipping vector removal for {content_id} - no vector DB")
+                return
+            
+            # Remove from vector database
+            if hasattr(self.vector_db, 'remove_vector_async'):
+                await self.vector_db.remove_vector_async(content_id)
+                self.logger.debug(f"Successfully removed vectors for content {content_id}")
+            elif hasattr(self.vector_db, 'remove_vector'):
+                # Fallback to synchronous method
+                self.vector_db.remove_vector(content_id)
+                self.logger.debug(f"Successfully removed vectors (sync fallback) for content {content_id}")
+            else:
+                self.logger.warning(f"No suitable vector removal method available for content {content_id}")
+                
+        except Exception as e:
+            self.logger.error(f"Error removing content vectors for {content_id}: {str(e)}")

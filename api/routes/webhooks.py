@@ -940,47 +940,470 @@ async def _update_delivery_status(delivery_id: str, status: WebhookStatus,
 # Platform-specific webhook processors
 async def _process_youtube_webhook(webhook_id: str, webhook: IncomingWebhook):
     """Process YouTube webhook"""
-    # Implementation for YouTube-specific webhook processing
-    pass
+    try:
+        logger.info(f"Processing YouTube webhook {webhook_id} for event {webhook.event}")
+        
+        # Parse YouTube webhook data
+        data = webhook.data
+        
+        if webhook.event == WebhookEvent.CONTENT_PUBLISHED:
+            # Handle new content publication
+            video_id = data.get('video_id')
+            channel_id = data.get('channel_id') 
+            title = data.get('title', '')
+            
+            if video_id and channel_id:
+                # Update content database
+                await database_manager.execute(
+                    "INSERT INTO platform_content (platform, external_id, channel_id, title, status, webhook_id) VALUES (?, ?, ?, ?, ?, ?)",
+                    ("youtube", video_id, channel_id, title, "published", webhook_id)
+                )
+                
+                # Trigger content analysis
+                await _analyze_new_content("youtube", video_id, title)
+                
+        elif webhook.event == WebhookEvent.CONTENT_UPDATED:
+            # Handle content updates
+            video_id = data.get('video_id')
+            if video_id:
+                await database_manager.execute(
+                    "UPDATE platform_content SET updated_at = ? WHERE platform = ? AND external_id = ?",
+                    (datetime.utcnow(), "youtube", video_id)
+                )
+                
+        elif webhook.event == WebhookEvent.CONTENT_DELETED:
+            # Handle content deletion
+            video_id = data.get('video_id')
+            if video_id:
+                await database_manager.execute(
+                    "UPDATE platform_content SET status = ? WHERE platform = ? AND external_id = ?",
+                    ("deleted", "youtube", video_id)
+                )
+        
+        # Update analytics
+        await _update_platform_analytics("youtube", webhook.event, data)
+        
+        logger.info(f"Successfully processed YouTube webhook {webhook_id}")
+        
+    except Exception as e:
+        logger.error(f"Error processing YouTube webhook {webhook_id}: {str(e)}")
+        raise
 
 
 async def _process_instagram_webhook(webhook_id: str, webhook: IncomingWebhook):
-    """
-Process Instagram webhook"""
-    # Implementation for Instagram-specific webhook processing
-    pass
+    """Process Instagram webhook"""
+    try:
+        logger.info(f"Processing Instagram webhook {webhook_id} for event {webhook.event}")
+        
+        data = webhook.data
+        
+        if webhook.event == WebhookEvent.CONTENT_PUBLISHED:
+            # Handle new Instagram post/story/reel
+            media_id = data.get('media_id')
+            user_id = data.get('user_id')
+            media_type = data.get('media_type', 'photo')  # photo, video, carousel, story
+            caption = data.get('caption', '')
+            
+            if media_id and user_id:
+                # Store Instagram content
+                await database_manager.execute(
+                    """INSERT INTO platform_content 
+                       (platform, external_id, user_id, media_type, caption, status, webhook_id) 
+                       VALUES (?, ?, ?, ?, ?, ?, ?)""",
+                    ("instagram", media_id, user_id, media_type, caption, "published", webhook_id)
+                )
+                
+                # Analyze engagement potential
+                await _analyze_instagram_engagement(media_id, media_type, caption)
+                
+        elif webhook.event == WebhookEvent.CONTENT_UPDATED:
+            # Handle Instagram content updates (edited captions, etc.)
+            media_id = data.get('media_id')
+            new_caption = data.get('caption')
+            
+            if media_id and new_caption:
+                await database_manager.execute(
+                    "UPDATE platform_content SET caption = ?, updated_at = ? WHERE platform = ? AND external_id = ?",
+                    (new_caption, datetime.utcnow(), "instagram", media_id)
+                )
+                
+        elif webhook.event == WebhookEvent.CONTENT_DELETED:
+            # Handle Instagram content deletion
+            media_id = data.get('media_id')
+            if media_id:
+                await database_manager.execute(
+                    "UPDATE platform_content SET status = ? WHERE platform = ? AND external_id = ?",
+                    ("deleted", "instagram", media_id)
+                )
+        
+        # Update Instagram-specific metrics
+        await _update_instagram_metrics(webhook.event, data)
+        
+        logger.info(f"Successfully processed Instagram webhook {webhook_id}")
+        
+    except Exception as e:
+        logger.error(f"Error processing Instagram webhook {webhook_id}: {str(e)}")
+        raise
 
 
 async def _process_tiktok_webhook(webhook_id: str, webhook: IncomingWebhook):
-    """
-Process TikTok webhook"""
-    # Implementation for TikTok-specific webhook processing
-    pass
+    """Process TikTok webhook"""
+    try:
+        logger.info(f"Processing TikTok webhook {webhook_id} for event {webhook.event}")
+        
+        data = webhook.data
+        
+        if webhook.event == WebhookEvent.CONTENT_PUBLISHED:
+            # Handle new TikTok video
+            video_id = data.get('video_id')
+            user_id = data.get('user_id')
+            title = data.get('title', '')
+            description = data.get('description', '')
+            hashtags = data.get('hashtags', [])
+            
+            if video_id and user_id:
+                # Store TikTok content
+                await database_manager.execute(
+                    """INSERT INTO platform_content 
+                       (platform, external_id, user_id, title, description, hashtags, status, webhook_id) 
+                       VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+                    ("tiktok", video_id, user_id, title, description, json.dumps(hashtags), "published", webhook_id)
+                )
+                
+                # Analyze TikTok trend potential
+                await _analyze_tiktok_trends(video_id, hashtags, title)
+                
+        elif webhook.event == WebhookEvent.CONTENT_UPDATED:
+            # Handle TikTok video updates
+            video_id = data.get('video_id')
+            new_description = data.get('description')
+            new_hashtags = data.get('hashtags', [])
+            
+            if video_id:
+                update_fields = {}
+                if new_description:
+                    update_fields['description'] = new_description
+                if new_hashtags:
+                    update_fields['hashtags'] = json.dumps(new_hashtags)
+                
+                if update_fields:
+                    # Build dynamic update query
+                    set_clause = ", ".join([f"{k} = ?" for k in update_fields.keys()])
+                    values = list(update_fields.values()) + [datetime.utcnow(), "tiktok", video_id]
+                    
+                    await database_manager.execute(
+                        f"UPDATE platform_content SET {set_clause}, updated_at = ? WHERE platform = ? AND external_id = ?",
+                        tuple(values)
+                    )
+                    
+        elif webhook.event == WebhookEvent.CONTENT_DELETED:
+            # Handle TikTok video deletion
+            video_id = data.get('video_id')
+            if video_id:
+                await database_manager.execute(
+                    "UPDATE platform_content SET status = ? WHERE platform = ? AND external_id = ?",
+                    ("deleted", "tiktok", video_id)
+                )
+        
+        # Update TikTok analytics and trending data
+        await _update_tiktok_analytics(webhook.event, data)
+        
+        logger.info(f"Successfully processed TikTok webhook {webhook_id}")
+        
+    except Exception as e:
+        logger.error(f"Error processing TikTok webhook {webhook_id}: {str(e)}")
+        raise
 
 
 async def _process_spotify_webhook(webhook_id: str, webhook: IncomingWebhook):
-    """
-Process Spotify webhook"""
-    # Implementation for Spotify-specific webhook processing
-    pass
+    """Process Spotify webhook"""
+    try:
+        logger.info(f"Processing Spotify webhook {webhook_id} for event {webhook.event}")
+        
+        data = webhook.data
+        
+        if webhook.event == WebhookEvent.CONTENT_PUBLISHED:
+            # Handle new track/album/playlist release
+            content_id = data.get('content_id')  # track_id, album_id, or playlist_id
+            artist_id = data.get('artist_id')
+            content_type = data.get('content_type', 'track')  # track, album, playlist
+            name = data.get('name', '')
+            artists = data.get('artists', [])
+            
+            if content_id and artist_id:
+                # Store Spotify content
+                await database_manager.execute(
+                    """INSERT INTO platform_content 
+                       (platform, external_id, user_id, title, content_type, artists, status, webhook_id) 
+                       VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+                    ("spotify", content_id, artist_id, name, content_type, json.dumps(artists), "published", webhook_id)
+                )
+                
+                # Analyze music metadata and trends
+                await _analyze_spotify_track(content_id, content_type, artists)
+                
+        elif webhook.event == WebhookEvent.CONTENT_UPDATED:
+            # Handle metadata updates (title, artist info, etc.)
+            content_id = data.get('content_id')
+            new_name = data.get('name')
+            
+            if content_id and new_name:
+                await database_manager.execute(
+                    "UPDATE platform_content SET title = ?, updated_at = ? WHERE platform = ? AND external_id = ?",
+                    (new_name, datetime.utcnow(), "spotify", content_id)
+                )
+                
+        elif webhook.event == WebhookEvent.CONTENT_DELETED:
+            # Handle content removal from Spotify
+            content_id = data.get('content_id')
+            if content_id:
+                await database_manager.execute(
+                    "UPDATE platform_content SET status = ? WHERE platform = ? AND external_id = ?",
+                    ("deleted", "spotify", content_id)
+                )
+        
+        # Update Spotify analytics and streaming data
+        await _update_spotify_analytics(webhook.event, data)
+        
+        logger.info(f"Successfully processed Spotify webhook {webhook_id}")
+        
+    except Exception as e:
+        logger.error(f"Error processing Spotify webhook {webhook_id}: {str(e)}")
+        raise
 
 
 async def _process_stripe_webhook(webhook_id: str, webhook: IncomingWebhook):
-    """
-Process Stripe webhook"""
-    # Implementation for Stripe-specific webhook processing
-    pass
+    """Process Stripe webhook"""
+    try:
+        logger.info(f"Processing Stripe webhook {webhook_id} for event {webhook.event}")
+        
+        data = webhook.data
+        event_type = data.get('type', '')
+        
+        # Handle payment-related events
+        if event_type == 'payment_intent.succeeded':
+            payment_data = data.get('data', {}).get('object', {})
+            payment_id = payment_data.get('id')
+            amount = payment_data.get('amount', 0) / 100  # Convert from cents
+            currency = payment_data.get('currency', 'usd').upper()
+            customer_id = payment_data.get('customer')
+            
+            if payment_id:
+                # Record successful payment
+                await database_manager.execute(
+                    """INSERT INTO payments 
+                       (platform, external_id, customer_id, amount, currency, status, webhook_id) 
+                       VALUES (?, ?, ?, ?, ?, ?, ?)""",
+                    ("stripe", payment_id, customer_id, amount, currency, "completed", webhook_id)
+                )
+                
+                # Trigger revenue processing
+                await _process_revenue_update(customer_id, amount, currency)
+                
+        elif event_type == 'payment_intent.payment_failed':
+            payment_data = data.get('data', {}).get('object', {})
+            payment_id = payment_data.get('id')
+            failure_reason = payment_data.get('last_payment_error', {}).get('message', 'Unknown error')
+            
+            if payment_id:
+                # Record failed payment
+                await database_manager.execute(
+                    """INSERT INTO payments 
+                       (platform, external_id, status, failure_reason, webhook_id) 
+                       VALUES (?, ?, ?, ?, ?)""",
+                    ("stripe", payment_id, "failed", failure_reason, webhook_id)
+                )
+                
+        elif event_type == 'invoice.payment_succeeded':
+            invoice_data = data.get('data', {}).get('object', {})
+            invoice_id = invoice_data.get('id')
+            subscription_id = invoice_data.get('subscription')
+            amount_paid = invoice_data.get('amount_paid', 0) / 100
+            
+            if invoice_id:
+                # Record subscription payment
+                await database_manager.execute(
+                    """INSERT INTO subscription_payments 
+                       (platform, invoice_id, subscription_id, amount, status, webhook_id) 
+                       VALUES (?, ?, ?, ?, ?, ?)""",
+                    ("stripe", invoice_id, subscription_id, amount_paid, "paid", webhook_id)
+                )
+        
+        # Update payment analytics
+        await _update_payment_analytics("stripe", event_type, data)
+        
+        logger.info(f"Successfully processed Stripe webhook {webhook_id}")
+        
+    except Exception as e:
+        logger.error(f"Error processing Stripe webhook {webhook_id}: {str(e)}")
+        raise
 
 
 async def _register_platform_webhook(webhook: WebhookEndpoint, user: dict):
-    """
-Register webhook with external platform"""
-    # Implementation for registering webhooks with platforms
-    pass
+    """Register webhook with external platform"""
+    try:
+        platform = webhook.platform
+        logger.info(f"Registering webhook for platform {platform}")
+        
+        # Platform-specific webhook registration URLs and methods
+        registration_configs = {
+            PlatformType.YOUTUBE: {
+                'url': 'https://www.googleapis.com/youtube/v3/subscriptions',
+                'method': 'POST',
+                'headers': {'Authorization': f'Bearer {user.get("youtube_token")}'}
+            },
+            PlatformType.INSTAGRAM: {
+                'url': 'https://graph.facebook.com/v18.0/subscriptions',
+                'method': 'POST',
+                'headers': {'Authorization': f'Bearer {user.get("instagram_token")}'}
+            },
+            PlatformType.STRIPE: {
+                'url': 'https://api.stripe.com/v1/webhook_endpoints',
+                'method': 'POST',
+                'headers': {'Authorization': f'Bearer {user.get("stripe_secret_key")}'}
+            },
+            PlatformType.SPOTIFY: {
+                'url': 'https://api.spotify.com/v1/webhooks',
+                'method': 'POST',
+                'headers': {'Authorization': f'Bearer {user.get("spotify_token")}'}
+            }
+        }
+        
+        config = registration_configs.get(platform)
+        if not config:
+            raise HTTPException(status_code=400, detail=f"Unsupported platform: {platform}")
+        
+        # Prepare webhook registration payload
+        payload = {
+            'url': webhook.url,
+            'events': webhook.events,
+            'description': f'Ainflue webhook for {platform}',
+            'active': True
+        }
+        
+        # Add platform-specific payload fields
+        if platform == PlatformType.STRIPE:
+            payload['enabled_events'] = webhook.events
+            
+        elif platform == PlatformType.YOUTUBE:
+            payload['type'] = 'web_hook'
+            payload['address'] = webhook.url
+            
+        # Make registration request
+        async with aiohttp.ClientSession() as session:
+            async with session.request(
+                config['method'],
+                config['url'],
+                headers=config['headers'],
+                json=payload
+            ) as response:
+                if response.status in [200, 201]:
+                    registration_data = await response.json()
+                    external_webhook_id = registration_data.get('id')
+                    
+                    # Store webhook registration in database
+                    await database_manager.execute(
+                        """INSERT INTO platform_webhooks 
+                           (platform, external_id, url, events, user_id, status) 
+                           VALUES (?, ?, ?, ?, ?, ?)""",
+                        (platform, external_webhook_id, webhook.url, json.dumps(webhook.events), user['id'], 'active')
+                    )
+                    
+                    logger.info(f"Successfully registered webhook {external_webhook_id} for platform {platform}")
+                    return external_webhook_id
+                else:
+                    error_text = await response.text()
+                    raise HTTPException(
+                        status_code=400, 
+                        detail=f"Failed to register webhook with {platform}: {error_text}"
+                    )
+                    
+    except Exception as e:
+        logger.error(f"Error registering webhook for platform {platform}: {str(e)}")
+        raise
 
 
 async def _unregister_platform_webhook(webhook_id: str, platform: str):
-    """
-Unregister webhook from external platform"""
-    # Implementation for unregistering webhooks from platforms
-    pass
+    """Unregister webhook from external platform"""
+    try:
+        logger.info(f"Unregistering webhook {webhook_id} from platform {platform}")
+        
+        # Get webhook details from database
+        webhook_data = await database_manager.fetch_one(
+            "SELECT external_id, user_id FROM platform_webhooks WHERE id = ? AND platform = ?",
+            (webhook_id, platform)
+        )
+        
+        if not webhook_data:
+            raise HTTPException(status_code=404, detail="Webhook not found")
+        
+        external_id = webhook_data['external_id']
+        user_id = webhook_data['user_id']
+        
+        # Get user credentials for platform API
+        user_data = await database_manager.fetch_one(
+            "SELECT * FROM users WHERE id = ?",
+            (user_id,)
+        )
+        
+        if not user_data:
+            raise HTTPException(status_code=404, detail="User not found")
+        
+        # Platform-specific unregistration URLs and methods
+        unregistration_configs = {
+            PlatformType.YOUTUBE: {
+                'url': f'https://www.googleapis.com/youtube/v3/subscriptions/{external_id}',
+                'method': 'DELETE',
+                'headers': {'Authorization': f'Bearer {user_data.get("youtube_token")}'}
+            },
+            PlatformType.INSTAGRAM: {
+                'url': f'https://graph.facebook.com/v18.0/{external_id}',
+                'method': 'DELETE',
+                'headers': {'Authorization': f'Bearer {user_data.get("instagram_token")}'}
+            },
+            PlatformType.STRIPE: {
+                'url': f'https://api.stripe.com/v1/webhook_endpoints/{external_id}',
+                'method': 'DELETE',
+                'headers': {'Authorization': f'Bearer {user_data.get("stripe_secret_key")}'}
+            },
+            PlatformType.SPOTIFY: {
+                'url': f'https://api.spotify.com/v1/webhooks/{external_id}',
+                'method': 'DELETE',
+                'headers': {'Authorization': f'Bearer {user_data.get("spotify_token")}'}
+            }
+        }
+        
+        config = unregistration_configs.get(platform)
+        if not config:
+            raise HTTPException(status_code=400, detail=f"Unsupported platform: {platform}")
+        
+        # Make unregistration request
+        async with aiohttp.ClientSession() as session:
+            async with session.request(
+                config['method'],
+                config['url'],
+                headers=config['headers']
+            ) as response:
+                if response.status in [200, 204]:
+                    # Update webhook status in database
+                    await database_manager.execute(
+                        "UPDATE platform_webhooks SET status = ? WHERE id = ?",
+                        ('inactive', webhook_id)
+                    )
+                    
+                    logger.info(f"Successfully unregistered webhook {webhook_id} from platform {platform}")
+                    return True
+                else:
+                    error_text = await response.text()
+                    logger.warning(f"Failed to unregister webhook from {platform}: {error_text}")
+                    
+                    # Still mark as inactive in our database even if platform API fails
+                    await database_manager.execute(
+                        "UPDATE platform_webhooks SET status = ? WHERE id = ?",
+                        ('inactive', webhook_id)
+                    )
+                    return False
+                    
+    except Exception as e:
+        logger.error(f"Error unregistering webhook {webhook_id} from platform {platform}: {str(e)}")
+        raise

@@ -1185,35 +1185,306 @@ class DeepPersonalizationModel(BasePersonalizationModel):
         self.scheduler = None
     
     async def train(self, training_data: Dict[str, Any]) -> ModelMetrics:
-        """
-Train deep learning model"""
-        # Implementation would include PyTorch neural network training
-        # This is a placeholder for the full implementation
-        pass
+        """Train deep learning model"""
+        try:
+            from .core import TrainingStatus
+            
+            self.status = TrainingStatus.TRAINING
+            start_time = datetime.now()
+            
+            # Extract training data
+            X = training_data.get('features', [])
+            y = training_data.get('targets', [])
+            
+            if not X or not y:
+                raise ModelTrainingError("Missing training data: features or targets")
+            
+            # Convert to tensors
+            X_tensor = torch.FloatTensor(X).to(self.device)
+            y_tensor = torch.FloatTensor(y).to(self.device)
+            
+            # Initialize model if not already done
+            if self.model is None:
+                input_dim = X_tensor.shape[1]
+                self._initialize_model_architecture({
+                    'embedding_dim': input_dim,
+                    'hidden_layers': self.config.hidden_layers,
+                    'output_dim': 1,
+                    'learning_rate': self.config.learning_rate
+                })
+            
+            # Training parameters
+            epochs = self.config.epochs
+            batch_size = self.config.batch_size
+            criterion = nn.MSELoss()
+            
+            # Training loop
+            self.model.train()
+            total_loss = 0.0
+            num_batches = len(X_tensor) // batch_size + (1 if len(X_tensor) % batch_size else 0)
+            
+            for epoch in range(epochs):
+                epoch_loss = 0.0
+                
+                for i in range(0, len(X_tensor), batch_size):
+                    batch_X = X_tensor[i:i+batch_size]
+                    batch_y = y_tensor[i:i+batch_size]
+                    
+                    # Forward pass
+                    self.optimizer.zero_grad()
+                    outputs = self.model(batch_X)
+                    loss = criterion(outputs.squeeze(), batch_y)
+                    
+                    # Backward pass
+                    loss.backward()
+                    self.optimizer.step()
+                    
+                    epoch_loss += loss.item()
+                
+                total_loss += epoch_loss / num_batches
+                
+                # Update learning rate
+                if self.scheduler:
+                    self.scheduler.step(epoch_loss / num_batches)
+            
+            # Calculate metrics
+            avg_loss = total_loss / epochs
+            training_time = (datetime.now() - start_time).total_seconds()
+            
+            self.metrics = ModelMetrics(
+                accuracy=max(0.0, 1.0 - avg_loss),  # Simple accuracy approximation
+                precision=0.0,  # Would need classification for precision
+                recall=0.0,     # Would need classification for recall
+                f1_score=0.0,   # Would need classification for F1
+                rmse=np.sqrt(avg_loss),
+                mae=avg_loss,
+                training_time=training_time,
+                epochs_trained=epochs
+            )
+            
+            self.status = TrainingStatus.TRAINED
+            self.logger.info(f"Model training completed. RMSE: {self.metrics.rmse:.4f}")
+            
+            return self.metrics
+            
+        except Exception as e:
+            self.status = TrainingStatus.FAILED
+            self.logger.error(f"Training failed: {str(e)}")
+            raise ModelTrainingError(f"Training failed: {str(e)}")
     
     async def predict(self, input_data: Dict[str, Any]) -> np.ndarray:
-        """
-Predict using deep learning model"""
-        # Implementation would include forward pass through neural network
-        pass
+        """Predict using deep learning model"""
+        try:
+            from .core import TrainingStatus
+            
+            if self.status != TrainingStatus.TRAINED or self.model is None:
+                raise ModelNotLoadedError("predict", self.config.model_type.value)
+            
+            # Extract input features
+            features = input_data.get('features', [])
+            if not features:
+                raise ValueError("No features provided for prediction")
+            
+            # Convert to tensor
+            X_tensor = torch.FloatTensor(features).to(self.device)
+            
+            # Make predictions
+            self.model.eval()
+            with torch.no_grad():
+                predictions = self.model(X_tensor)
+                predictions_np = predictions.cpu().numpy()
+            
+            self.logger.debug(f"Generated predictions for {len(features)} samples")
+            return predictions_np
+            
+        except Exception as e:
+            self.logger.error(f"Prediction failed: {str(e)}")
+            raise
     
     async def update(self, new_data: Dict[str, Any]) -> ModelMetrics:
-        """
-Update deep learning model"""
-        # Implementation would include incremental training
-        pass
+        """Update deep learning model with incremental training"""
+        try:
+            from .core import TrainingStatus
+            
+            if self.status != TrainingStatus.TRAINED or self.model is None:
+                raise ModelNotLoadedError("update", self.config.model_type.value)
+            
+            # Extract new training data
+            X_new = new_data.get('features', [])
+            y_new = new_data.get('targets', [])
+            
+            if not X_new or not y_new:
+                raise ValueError("Missing new data: features or targets")
+            
+            # Convert to tensors
+            X_tensor = torch.FloatTensor(X_new).to(self.device)
+            y_tensor = torch.FloatTensor(y_new).to(self.device)
+            
+            # Incremental training parameters
+            update_epochs = min(self.config.epochs // 4, 10)  # Fewer epochs for updates
+            criterion = nn.MSELoss()
+            
+            # Fine-tuning with lower learning rate
+            old_lr = self.optimizer.param_groups[0]['lr']
+            for param_group in self.optimizer.param_groups:
+                param_group['lr'] = old_lr * 0.1  # Reduce learning rate for fine-tuning
+            
+            self.model.train()
+            total_loss = 0.0
+            
+            for epoch in range(update_epochs):
+                self.optimizer.zero_grad()
+                
+                # Forward pass on new data
+                outputs = self.model(X_tensor)
+                loss = criterion(outputs.squeeze(), y_tensor)
+                
+                # Backward pass
+                loss.backward()
+                self.optimizer.step()
+                
+                total_loss += loss.item()
+            
+            # Restore original learning rate
+            for param_group in self.optimizer.param_groups:
+                param_group['lr'] = old_lr
+            
+            # Update metrics
+            avg_loss = total_loss / update_epochs
+            if self.metrics:
+                # Update existing metrics
+                self.metrics.rmse = (self.metrics.rmse + np.sqrt(avg_loss)) / 2
+                self.metrics.mae = (self.metrics.mae + avg_loss) / 2
+                self.metrics.epochs_trained += update_epochs
+            else:
+                self.metrics = ModelMetrics(
+                    accuracy=max(0.0, 1.0 - avg_loss),
+                    rmse=np.sqrt(avg_loss),
+                    mae=avg_loss,
+                    epochs_trained=update_epochs
+                )
+            
+            self.logger.info(f"Model updated with {len(X_new)} new samples. RMSE: {self.metrics.rmse:.4f}")
+            return self.metrics
+            
+        except Exception as e:
+            self.logger.error(f"Model update failed: {str(e)}")
+            raise
     
     def save_model(self, filepath: str) -> bool:
-        """
-Save PyTorch model"""
-        # Implementation would save model state dict
-        pass
+        """Save PyTorch model"""
+        try:
+            if self.model is None:
+                self.logger.error("No model to save")
+                return False
+            
+            # Create directory if it doesn't exist
+            os.makedirs(os.path.dirname(filepath), exist_ok=True)
+            
+            # Save model state
+            checkpoint = {
+                'model_state_dict': self.model.state_dict(),
+                'optimizer_state_dict': self.optimizer.state_dict() if self.optimizer else None,
+                'scheduler_state_dict': self.scheduler.state_dict() if self.scheduler else None,
+                'config': {
+                    'model_type': self.config.model_type.value,
+                    'learning_rate': self.config.learning_rate,
+                    'batch_size': self.config.batch_size,
+                    'embedding_dim': self.config.embedding_dim,
+                    'hidden_layers': self.config.hidden_layers
+                },
+                'metrics': self.metrics.__dict__ if self.metrics else None,
+                'status': self.status.value,
+                'timestamp': datetime.now().isoformat()
+            }
+            
+            torch.save(checkpoint, filepath)
+            self.logger.info(f"Model saved successfully to {filepath}")
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"Error saving model: {str(e)}")
+            return False
     
     def load_model(self, filepath: str) -> bool:
-        """
-Load PyTorch model"""
-        # Implementation would load model state dict
-        pass
+        """Load PyTorch model"""
+        try:
+            if not os.path.exists(filepath):
+                self.logger.error(f"Model file not found: {filepath}")
+                return False
+            
+            # Load checkpoint
+            checkpoint = torch.load(filepath, map_location=self.device)
+            
+            # Validate checkpoint format
+            required_keys = ['model_state_dict', 'config']
+            if not all(key in checkpoint for key in required_keys):
+                self.logger.error("Invalid checkpoint format")
+                return False
+            
+            # Initialize model architecture if needed
+            if self.model is None:
+                # Would need to recreate model architecture based on saved config
+                config_data = checkpoint['config']
+                self._initialize_model_architecture(config_data)
+            
+            # Load model state
+            self.model.load_state_dict(checkpoint['model_state_dict'])
+            
+            # Load optimizer and scheduler if available
+            if checkpoint.get('optimizer_state_dict') and self.optimizer:
+                self.optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+            
+            if checkpoint.get('scheduler_state_dict') and self.scheduler:
+                self.scheduler.load_state_dict(checkpoint['scheduler_state_dict'])
+            
+            # Restore metrics and status
+            if checkpoint.get('metrics'):
+                self.metrics = ModelMetrics(**checkpoint['metrics'])
+            
+            if checkpoint.get('status'):
+                from .core import TrainingStatus
+                self.status = TrainingStatus(checkpoint['status'])
+            
+            self.model.eval()  # Set to evaluation mode
+            self.logger.info(f"Model loaded successfully from {filepath}")
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"Error loading model: {str(e)}")
+            return False
+    
+    def _initialize_model_architecture(self, config_data: Dict[str, Any]):
+        """Initialize model architecture from saved config"""
+        try:
+            # Create a simple neural network architecture
+            input_dim = config_data.get('embedding_dim', 128)
+            hidden_layers = config_data.get('hidden_layers', [256, 128, 64])
+            output_dim = config_data.get('output_dim', 1)
+            
+            layers = []
+            prev_dim = input_dim
+            
+            for hidden_dim in hidden_layers:
+                layers.extend([
+                    nn.Linear(prev_dim, hidden_dim),
+                    nn.ReLU(),
+                    nn.Dropout(0.2)
+                ])
+                prev_dim = hidden_dim
+            
+            layers.append(nn.Linear(prev_dim, output_dim))
+            
+            self.model = nn.Sequential(*layers).to(self.device)
+            
+            # Initialize optimizer
+            learning_rate = config_data.get('learning_rate', 0.001)
+            self.optimizer = optim.Adam(self.model.parameters(), lr=learning_rate)
+            self.scheduler = optim.lr_scheduler.ReduceLROnPlateau(self.optimizer, 'min')
+            
+        except Exception as e:
+            self.logger.error(f"Error initializing model architecture: {str(e)}")
+            raise
 
 
 class UserEmbeddingModel(BasePersonalizationModel):
