@@ -4,6 +4,7 @@
 Basic validation without external dependencies
 """
 
+import pytest
 import sys
 import os
 from unittest.mock import Mock
@@ -30,10 +31,9 @@ Test that licensing repositories initialize correctly"""
         assert isinstance(content_repo.content, dict)
         
         print("✅ Licensing repositories test passed")
-        return True
     except Exception as e:
         print(f"❌ Licensing repositories test failed: {e}")
-        return False
+        pytest.fail(f"Licensing repositories test failed: {e}")
 
 
 def test_crypto_provider():
@@ -48,10 +48,12 @@ def test_crypto_provider():
         assert hasattr(crypto, 'logger')
         
         print("✅ CryptoProvider test passed")
-        return True
+    except ImportError as e:
+        print(f"⚠️  CryptoProvider test skipped due to missing dependencies: {e}")
+        # Don't fail the test for missing optional dependencies
     except Exception as e:
         print(f"❌ CryptoProvider test failed: {e}")
-        return False
+        pytest.fail(f"CryptoProvider test failed: {e}")
 
 
 def test_watermarker_configurations():
@@ -78,10 +80,12 @@ def test_watermarker_configurations():
         assert text_wm.config == config
         
         print("✅ Watermarker configurations test passed")
-        return True
+    except ImportError as e:
+        print(f"⚠️  Watermarker test skipped due to missing dependencies: {e}")
+        # Don't fail the test for missing optional dependencies
     except Exception as e:
         print(f"❌ Watermarker configurations test failed: {e}")
-        return False
+        pytest.fail(f"Watermarker configurations test failed: {e}")
 
 
 def test_implementation_completeness():
@@ -105,10 +109,9 @@ def test_implementation_completeness():
     
     if missing_files:
         print(f"❌ Missing files: {missing_files}")
-        return False
+        pytest.fail(f"Missing implementation files: {missing_files}")
     else:
         print("✅ All implemented files exist")
-        return True
 
 
 def main():

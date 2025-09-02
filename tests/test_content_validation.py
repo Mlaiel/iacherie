@@ -39,16 +39,62 @@ class ContentValidator:
     """
 Mock ContentValidator for testing"""
     def __init__(self):
-        pass
+        """Initialize ContentValidator with supported content types."""
+        self.supported_extensions = {
+            '.mp3': 'audio',
+            '.wav': 'audio', 
+            '.flac': 'audio',
+            '.m4a': 'audio',
+            '.mp4': 'video',
+            '.avi': 'video',
+            '.mov': 'video',
+            '.mkv': 'video',
+            '.jpg': 'image',
+            '.jpeg': 'image',
+            '.png': 'image',
+            '.gif': 'image',
+            '.txt': 'text',
+            '.md': 'text',
+            '.json': 'data'
+        }
+        self.magic_patterns = {
+            b'\xff\xfb': 'audio',  # MP3
+            b'RIFF': 'audio',      # WAV
+            b'\x00\x00\x00\x20ftypmp4': 'video',  # MP4
+            b'\xff\xd8\xff': 'image',  # JPEG
+            b'\x89PNG': 'image',   # PNG
+        }
     
     def _detect_content_type(self, file_path):
+        """Detect content type based on file extension and magic bytes."""
+        import os
+        
+        # Try extension-based detection first
+        _, ext = os.path.splitext(file_path.lower())
+        if ext in self.supported_extensions:
+            return self.supported_extensions[ext]
+        
+        # Try magic byte detection if file exists
+        try:
+            if os.path.exists(file_path):
+                with open(file_path, 'rb') as f:
+                    header = f.read(32)
+                    for pattern, content_type in self.magic_patterns.items():
+                        if header.startswith(pattern):
+                            return content_type
+        except (IOError, OSError):
+            pass
+            
         return 'unknown'
 
 class AsyncContentValidator:
     """
 Mock AsyncContentValidator for testing"""
     def __init__(self):
+        """Initialize AsyncContentValidator with a sync validator."""
         self.sync_validator = ContentValidator()
+        self.validation_cache = {}
+        self.async_lock = None  # Would be asyncio.Lock() in real implementation
 
 
 class TestContentValidator:

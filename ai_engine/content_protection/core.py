@@ -147,16 +147,16 @@ class ContentProtector:
             
             # Initialize result
             result = ProtectionResult(
-                success=False,
-                protection_id=protection_id,
-                protection_level=protection_level,
-                watermark_applied=False,
-                fingerprint_created=False,
-                blockchain_registered=False,
-                encryption_applied=False,
-                estimated_protection_strength=0.0,
-                protection_metadata={},
-                errors=[]
+               success=False,
+               protection_id=protection_id,
+               protection_level=protection_level,
+               watermark_applied=False,
+               fingerprint_created=False,
+               blockchain_registered=False,
+               encryption_applied=False,
+               estimated_protection_strength=0.0,
+               protection_metadata={},
+               errors=[]
             )
             
             # Apply protection based on level
@@ -167,15 +167,15 @@ class ContentProtector:
             
             # Level-based protection
             if protection_level in [ProtectionLevel.STANDARD, ProtectionLevel.PREMIUM, ProtectionLevel.ENTERPRISE]:
-                protection_tasks.append(self._apply_watermarking(content, result))
+               protection_tasks.append(self._apply_watermarking(content, result))
             
             if protection_level in [ProtectionLevel.PREMIUM, ProtectionLevel.ENTERPRISE]:
-                protection_tasks.append(self._apply_blockchain_verification(content, result))
-                protection_tasks.append(self._apply_encryption(content, result))
+               protection_tasks.append(self._apply_blockchain_verification(content, result))
+               protection_tasks.append(self._apply_encryption(content, result))
             
             if protection_level == ProtectionLevel.ENTERPRISE:
-                protection_tasks.append(self._register_with_rights_management(content, result))
-                protection_tasks.append(self._setup_advanced_monitoring(content, result))
+               protection_tasks.append(self._register_with_rights_management(content, result))
+               protection_tasks.append(self._setup_advanced_monitoring(content, result))
             
             # Execute protection tasks
             await asyncio.gather(*protection_tasks, return_exceptions=True)
@@ -192,8 +192,8 @@ class ContentProtector:
             # Update metrics
             self.metrics['protections_applied'] += 1
             self.metrics['protection_strength_avg'] = (
-                (self.metrics['protection_strength_avg'] * (self.metrics['protections_applied'] - 1) +
-                 result.estimated_protection_strength) / self.metrics['protections_applied']
+               (self.metrics['protection_strength_avg'] * (self.metrics['protections_applied'] - 1) +
+                result.estimated_protection_strength) / self.metrics['protections_applied']
             )
             
             result.success = len(result.errors) == 0
@@ -204,44 +204,44 @@ class ContentProtector:
         except Exception as e:
             self.logger.error(f"Content protection failed: {str(e)}")
             return ProtectionResult(
-                success=False,
-                protection_id="",
-                protection_level=protection_level,
-                watermark_applied=False,
-                fingerprint_created=False,
-                blockchain_registered=False,
-                encryption_applied=False,
-                estimated_protection_strength=0.0,
-                protection_metadata={},
-                errors=[str(e)]
+               success=False,
+               protection_id="",
+               protection_level=protection_level,
+               watermark_applied=False,
+               fingerprint_created=False,
+               blockchain_registered=False,
+               encryption_applied=False,
+               estimated_protection_strength=0.0,
+               protection_metadata={},
+               errors=[str(e)]
             )
     
     async def verify_protection(self, protection_id: str) -> Dict[str, Any]:
         """Verify the status and integrity of content protection"""
         try:
             if protection_id in self._protection_cache:
-                result = self._protection_cache[protection_id]
-                
-                # Check if protection is still valid
-                if result.expires_at and utc_now() > result.expires_at:
-                    return {
-                        'valid': False,
-                        'reason': 'Protection expired',
-                        'expires_at': result.expires_at
-                    }
-                
-                # Verify blockchain if applicable
-                blockchain_valid = True
-                if result.blockchain_registered and self._blockchain_verifier:
-                    blockchain_valid = await self._blockchain_verifier.verify_ownership(protection_id)
-                
-                return {
-                    'valid': blockchain_valid,
-                    'protection_level': result.protection_level.value,
-                    'protection_strength': result.estimated_protection_strength,
-                    'expires_at': result.expires_at,
-                    'blockchain_verified': blockchain_valid
-                }
+               result = self._protection_cache[protection_id]
+               
+               # Check if protection is still valid
+               if result.expires_at and utc_now() > result.expires_at:
+                   return {
+                       'valid': False,
+                       'reason': 'Protection expired',
+                       'expires_at': result.expires_at
+                   }
+               
+               # Verify blockchain if applicable
+               blockchain_valid = True
+               if result.blockchain_registered and self._blockchain_verifier:
+                   blockchain_valid = await self._blockchain_verifier.verify_ownership(protection_id)
+               
+               return {
+                   'valid': blockchain_valid,
+                   'protection_level': result.protection_level.value,
+                   'protection_strength': result.estimated_protection_strength,
+                   'expires_at': result.expires_at,
+                   'blockchain_verified': blockchain_valid
+               }
             
             return {'valid': False, 'reason': 'Protection not found'}
             
@@ -251,22 +251,23 @@ class ContentProtector:
     
     async def detect_unauthorized_use(self, content_id: str) -> Dict[str, Any]:
         """Detect unauthorized use of protected content"""
-        try:            if self._piracy_detector:
-                detections = await self._piracy_detector.scan_for_unauthorized_use(content_id)
-                
-                if detections:
-                    self.metrics['piracy_detections'] += len(detections)
-                    
-                    # Automatically initiate takedown for serious violations
-                    for detection in detections:
-                        if detection.get('severity', 'low') == 'high':
-                            await self._initiate_takedown(detection)
-                
-                return {
-                    'unauthorized_uses_found': len(detections),
-                    'detections': detections,
-                    'scan_timestamp': utc_now().isoformat()
-                }
+        try:
+            if self._piracy_detector:
+               detections = await self._piracy_detector.scan_for_unauthorized_use(content_id)
+               
+               if detections:
+                   self.metrics['piracy_detections'] += len(detections)
+                   
+                   # Automatically initiate takedown for serious violations
+                   for detection in detections:
+                       if detection.get('severity', 'low') == 'high':
+                           await self._initiate_takedown(detection)
+               
+               return {
+                   'unauthorized_uses_found': len(detections),
+                   'detections': detections,
+                   'scan_timestamp': utc_now().isoformat()
+               }
             
             return {'unauthorized_uses_found': 0, 'detections': []}
             
@@ -276,19 +277,20 @@ class ContentProtector:
     
     async def get_protection_analytics(self, creator_id: Optional[str] = None) -> Dict[str, Any]:
         """Get analytics for content protection"""
-        try:            analytics = {
-                'total_protections': self.metrics['protections_applied'],
-                'piracy_detections': self.metrics['piracy_detections'],
-                'successful_takedowns': self.metrics['successful_takedowns'],
-                'average_protection_strength': self.metrics['protection_strength_avg'],
-                'protection_levels_used': {},
-                'content_types_protected': {}
+        try:
+            analytics = {
+               'total_protections': self.metrics['protections_applied'],
+               'piracy_detections': self.metrics['piracy_detections'],
+               'successful_takedowns': self.metrics['successful_takedowns'],
+               'average_protection_strength': self.metrics['protection_strength_avg'],
+               'protection_levels_used': {},
+               'content_types_protected': {}
             }
             
             # Analyze protection cache for more detailed metrics
             for protection in self._protection_cache.values():
-                level = protection.protection_level.value
-                analytics['protection_levels_used'][level] = analytics['protection_levels_used'].get(level, 0) + 1
+               level = protection.protection_level.value
+               analytics['protection_levels_used'][level] = analytics['protection_levels_used'].get(level, 0) + 1
             
             return analytics
             
@@ -300,57 +302,64 @@ class ContentProtector:
     
     def _generate_protection_id(self, content: ContentItem) -> str:
         """Generate unique protection ID"""
-        data = f"{content.content_id}_{content.creator_id}_{utc_now().isoformat()}"        return hashlib.sha256(data.encode()).hexdigest()[:16]
+        data = f"{content.content_id}_{content.creator_id}_{utc_now().isoformat()}"
+        return hashlib.sha256(data.encode()).hexdigest()[:16]
     
     async def _apply_fingerprinting(self, content: ContentItem, result: ProtectionResult):
         """Apply content fingerprinting"""
-        try:            if self._fingerprinter:
-                fingerprint = await self._fingerprinter.create_fingerprint(content)
-                result.fingerprint_created = True
-                result.protection_metadata['fingerprint'] = fingerprint
+        try:
+            if self._fingerprinter:
+               fingerprint = await self._fingerprinter.create_fingerprint(content)
+               result.fingerprint_created = True
+               result.protection_metadata['fingerprint'] = fingerprint
         except Exception as e:
             result.errors.append(f"Fingerprinting failed: {str(e)}")
     
     async def _apply_watermarking(self, content: ContentItem, result: ProtectionResult):
         """Apply digital watermarking"""
-        try:            if self._watermark_engine:
-                watermark = await self._watermark_engine.apply_watermark(content)
-                result.watermark_applied = True
-                result.protection_metadata['watermark'] = watermark
+        try:
+            if self._watermark_engine:
+               watermark = await self._watermark_engine.apply_watermark(content)
+               result.watermark_applied = True
+               result.protection_metadata['watermark'] = watermark
         except Exception as e:
             result.errors.append(f"Watermarking failed: {str(e)}")
     
     async def _apply_blockchain_verification(self, content: ContentItem, result: ProtectionResult):
         """Apply blockchain verification"""
-        try:            if self._blockchain_verifier:
-                proof = await self._blockchain_verifier.register_ownership(content, result.protection_id)
-                result.blockchain_registered = True
-                result.protection_metadata['blockchain_proof'] = proof
+        try:
+            if self._blockchain_verifier:
+               proof = await self._blockchain_verifier.register_ownership(content, result.protection_id)
+               result.blockchain_registered = True
+               result.protection_metadata['blockchain_proof'] = proof
         except Exception as e:
             result.errors.append(f"Blockchain verification failed: {str(e)}")
     
     async def _apply_encryption(self, content: ContentItem, result: ProtectionResult):
         """Apply content encryption"""
-        try:            if self._encryption_engine:
-                encryption_key = await self._encryption_engine.encrypt_content(content)
-                result.encryption_applied = True
-                result.protection_metadata['encryption_key'] = encryption_key
+        try:
+            if self._encryption_engine:
+               encryption_key = await self._encryption_engine.encrypt_content(content)
+               result.encryption_applied = True
+               result.protection_metadata['encryption_key'] = encryption_key
         except Exception as e:
             result.errors.append(f"Encryption failed: {str(e)}")
     
     async def _register_with_rights_management(self, content: ContentItem, result: ProtectionResult):
         """Register with rights management system"""
-        try:            if self._rights_manager:
-                registration = await self._rights_manager.register_content(content, result.protection_id)
-                result.protection_metadata['rights_registration'] = registration
+        try:
+            if self._rights_manager:
+               registration = await self._rights_manager.register_content(content, result.protection_id)
+               result.protection_metadata['rights_registration'] = registration
         except Exception as e:
             result.errors.append(f"Rights management registration failed: {str(e)}")
     
     async def _setup_advanced_monitoring(self, content: ContentItem, result: ProtectionResult):
         """Setup advanced monitoring for enterprise protection"""
-        try:            if self._piracy_detector:
-                monitoring = await self._piracy_detector.setup_monitoring(content.content_id)
-                result.protection_metadata['monitoring_setup'] = monitoring
+        try:
+            if self._piracy_detector:
+               monitoring = await self._piracy_detector.setup_monitoring(content.content_id)
+               result.protection_metadata['monitoring_setup'] = monitoring
         except Exception as e:
             result.errors.append(f"Advanced monitoring setup failed: {str(e)}")
     
@@ -381,9 +390,10 @@ class ContentProtector:
     
     async def _initiate_takedown(self, detection: Dict[str, Any]):
         """Initiate DMCA takedown for serious violations"""
-        try:            if self._dmca_manager:
-                await self._dmca_manager.initiate_takedown(detection)
-                self.metrics['successful_takedowns'] += 1
+        try:
+            if self._dmca_manager:
+               await self._dmca_manager.initiate_takedown(detection)
+               self.metrics['successful_takedowns'] += 1
         except Exception as e:
             self.logger.error(f"Takedown initiation failed: {str(e)}")
     
@@ -391,7 +401,8 @@ class ContentProtector:
     
     async def _init_watermark_engine(self):
         """Initialize watermark engine"""
-        try:            from .watermarking import WatermarkEngine
+        try:
+            from .watermarking import WatermarkEngine
             self._watermark_engine = WatermarkEngine(self.config.get('watermark', {}))
             await self._watermark_engine.initialize()
         except ImportError:
@@ -399,7 +410,8 @@ class ContentProtector:
     
     async def _init_fingerprinter(self):
         """Initialize content fingerprinter"""
-        try:            from .fingerprinting import ContentFingerprinter
+        try:
+            from .fingerprinting import ContentFingerprinter
             self._fingerprinter = ContentFingerprinter(self.config.get('fingerprint', {}))
             await self._fingerprinter.initialize()
         except ImportError:
@@ -407,7 +419,8 @@ class ContentProtector:
     
     async def _init_rights_manager(self):
         """Initialize rights manager"""
-        try:            from .rights_management import RightsManager
+        try:
+            from .rights_management import RightsManager
             self._rights_manager = RightsManager(self.config.get('rights', {}))
             await self._rights_manager.initialize()
         except ImportError:
@@ -415,7 +428,8 @@ class ContentProtector:
     
     async def _init_dmca_manager(self):
         """Initialize DMCA manager"""
-        try:            from .dmca import DMCAManager
+        try:
+            from .dmca import DMCAManager
             self._dmca_manager = DMCAManager(self.config.get('dmca', {}))
             await self._dmca_manager.initialize()
         except ImportError:
@@ -423,7 +437,8 @@ class ContentProtector:
     
     async def _init_blockchain_verifier(self):
         """Initialize blockchain verifier"""
-        try:            from .blockchain import BlockchainVerifier
+        try:
+            from .blockchain import BlockchainVerifier
             self._blockchain_verifier = BlockchainVerifier(self.config.get('blockchain', {}))
             await self._blockchain_verifier.initialize()
         except ImportError:
@@ -431,7 +446,8 @@ class ContentProtector:
     
     async def _init_piracy_detector(self):
         """Initialize piracy detector"""
-        try:            from .detection import PiracyDetector
+        try:
+            from .detection import PiracyDetector
             self._piracy_detector = PiracyDetector(self.config.get('detection', {}))
             await self._piracy_detector.initialize()
         except ImportError:
@@ -439,7 +455,8 @@ class ContentProtector:
     
     async def _init_encryption_engine(self):
         """Initialize encryption engine"""
-        try:            from .encryption import ContentEncryption
+        try:
+            from .encryption import ContentEncryption
             self._encryption_engine = ContentEncryption(self.config.get('encryption', {}))
             await self._encryption_engine.initialize()
         except ImportError:
