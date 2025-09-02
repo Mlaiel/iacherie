@@ -218,7 +218,8 @@ class ContentProtector:
     
     async def verify_protection(self, protection_id: str) -> Dict[str, Any]:
         """Verify the status and integrity of content protection"""
-        try:            if protection_id in self._protection_cache:
+        try:
+            if protection_id in self._protection_cache:
                 result = self._protection_cache[protection_id]
                 
                 # Check if protection is still valid
