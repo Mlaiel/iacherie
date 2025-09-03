@@ -1,31 +1,86 @@
-"""Licensing Engine Module  
-=======================
+"""Complete Monetization Engine Module  
+=====================================
 
-Advanced licensing and rights management system for automated content licensing,
-royalty distribution, and usage tracking across platforms.
+Comprehensive monetization platform with multi-currency payments, subscription management,
+automated billing, financial analytics, cryptocurrency support, and tax compliance.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
 
+# Core monetization modules
 from .licensing_manager import LicensingManager
 from .royalty_engine import RoyaltyEngine
 from .usage_tracker import UsageTracker
 from .contract_generator import ContractGenerator
 from .rights_validator import RightsValidator
+from .payment_processor import PaymentProcessor
+from .revenue_calculator import RevenueCalculator
 
-# Only import modules that exist
+# Enhanced monetization modules
+from .billing_engine import BillingEngine, BillingPlan, Subscription, BillingCycle, PlanTier
+from .financial_dashboard import FinancialDashboard, financial_dashboard, RevenueType, MetricPeriod
+from .crypto_gateway import CryptoPaymentGateway, CryptoCurrency, PaymentRequest, crypto_gateway
+from .tax_compliance import TaxComplianceEngine, TaxJurisdiction, TaxCalculation, tax_engine
+from .subscription_manager import SubscriptionManager, CustomerSegment, subscription_manager
 
-__version__ = "1.0.0"
+# Convenience imports
+from .financial_dashboard import track_revenue_event, get_dashboard_data
+from .crypto_gateway import create_crypto_payment, get_crypto_rates
+from .tax_compliance import calculate_transaction_tax, export_financial_data
+from .subscription_manager import create_trial_subscription, upgrade_subscription
+
+__version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 
 __all__ = [
+    # Core modules
     "LicensingManager",
-    "RoyaltyEngine",
+    "RoyaltyEngine", 
     "UsageTracker",
     "ContractGenerator",
     "RightsValidator",
+    "PaymentProcessor",
+    "RevenueCalculator",
+    
+    # Enhanced modules
+    "BillingEngine",
+    "FinancialDashboard",
+    "CryptoPaymentGateway", 
+    "TaxComplianceEngine",
+    "SubscriptionManager",
+    
+    # Data classes
+    "BillingPlan",
+    "Subscription",
+    "PaymentRequest",
+    "TaxCalculation",
+    
+    # Enums
+    "BillingCycle",
+    "PlanTier",
+    "RevenueType",
+    "MetricPeriod",
+    "CryptoCurrency",
+    "TaxJurisdiction",
+    "CustomerSegment",
+    
+    # Global instances
+    "financial_dashboard",
+    "crypto_gateway", 
+    "tax_engine",
+    "subscription_manager",
+    
+    # Convenience functions
+    "track_revenue_event",
+    "get_dashboard_data",
+    "create_crypto_payment",
+    "get_crypto_rates",
+    "calculate_transaction_tax",
+    "export_financial_data",
+    "create_trial_subscription",
+    "upgrade_subscription",
 ]
 
 # Licensing configuration
