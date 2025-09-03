@@ -95,7 +95,7 @@ const EngagementMetricsComponent: React.FC<EngagementMetricsProps> = ({
   };
 
   const getMetricColor = (metric: keyof MetricsData) => {
-    const colors = {
+    const colors: Record<string, string> = {
       dailyActiveUsers: '#3B82F6',
       challengeCompletionRate: '#10B981',
       achievementUnlockRate: '#8B5CF6',

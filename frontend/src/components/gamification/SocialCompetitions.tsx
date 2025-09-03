@@ -218,7 +218,7 @@ const SocialCompetitions: React.FC<SocialCompetitionsProps> = ({
     return competition.timeRemaining;
   };
 
-  const categories = [...new Set(competitions.map(c => c.category))];
+  const categories = Array.from(new Set(competitions.map(c => c.category)));
 
   if (loading) {
     return (

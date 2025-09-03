@@ -103,16 +103,16 @@ async function loadTranslations(language: Language): Promise<TranslationMap> {
       if (gamificationModule) {
         const gamificationData = gamificationModule.default || gamificationModule;
         Object.keys(gamificationData).forEach(key => {
-          fallbackTranslations[`gamification.${key}`] = gamificationData[key];
-          fallbackTranslations[key] = gamificationData[key];
+          fallbackTranslations[`gamification.${key}`] = (gamificationData as any)[key];
+          fallbackTranslations[key] = (gamificationData as any)[key];
         });
       }
       
       if (remixModule) {
         const remixData = remixModule.default || remixModule;
         Object.keys(remixData).forEach(key => {
-          fallbackTranslations[`remix.${key}`] = remixData[key];
-          fallbackTranslations[key] = remixData[key];
+          fallbackTranslations[`remix.${key}`] = (remixData as any)[key];
+          fallbackTranslations[key] = (remixData as any)[key];
         });
       }
       
