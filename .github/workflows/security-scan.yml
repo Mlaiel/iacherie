@@ -16,113 +16,113 @@ env:
 jobs:
   # Dependency Vulnerability Scan
   dependency-scan:
-  name: 🔍 Dependency Vulnerabilities
-  runs-on: ubuntu-latest
+    name: 🔍 Dependency Vulnerabilities
+    runs-on: ubuntu-latest
 
-  steps:
-    - name: Checkout code
+    steps:
+      - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Set up Python
+      - name: Set up Python
       uses: actions/setup-python@v4
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
 
-    - name: Install dependencies
-      run: |
+      - name: Install dependencies
+        run: |
         python -m pip install --upgrade pip
         pip install safety pip-audit
 
-    - name: Safety check
-      run: |
+      - name: Safety check
+        run: |
         safety check --json --output safety-report.json || true
         safety check --short-report
 
-    - name: Pip audit
-      run: |
+      - name: Pip audit
+        run: |
         pip-audit --format=json --output=pip-audit-report.json || true
         pip-audit --desc
 
-    - name: Upload vulnerability reports
+      - name: Upload vulnerability reports
       uses: actions/upload-artifact@v3
-      if: always()
-      with:
-        name: vulnerability-reports
-        path: |
+    if: always()
+        with:
+    name: vulnerability-reports
+          path: |
           safety-report.json
           pip-audit-report.json
 
   # SAST (Static Application Security Testing)
   sast-scan:
-  name: 🕵️ Static Code Analysis
-  runs-on: ubuntu-latest
+    name: 🕵️ Static Code Analysis
+    runs-on: ubuntu-latest
 
-  steps:
-    - name: Checkout code
+    steps:
+      - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Set up Python
+      - name: Set up Python
       uses: actions/setup-python@v4
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
 
-    - name: Install security tools
-      run: |
+      - name: Install security tools
+        run: |
         python -m pip install --upgrade pip
         pip install bandit semgrep
 
-    - name: Run Bandit security scan
-      run: |
+      - name: Run Bandit security scan
+        run: |
         bandit -r . -f json -o bandit-report.json || true
         bandit -r . -f txt
 
-    - name: Run Semgrep scan
-      env:
-        SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
-      run: |
+      - name: Run Semgrep scan
+    env:
+          SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
+        run: |
         semgrep --config=auto --json --output=semgrep-report.json . || true
         semgrep --config=auto .
 
-    - name: Upload SAST reports
+      - name: Upload SAST reports
       uses: actions/upload-artifact@v3
-      if: always()
-      with:
-        name: sast-reports
-        path: |
+    if: always()
+        with:
+    name: sast-reports
+          path: |
           bandit-report.json
           semgrep-report.json
 
   # Secret Scanning
   secret-scan:
-  name: 🔐 Secret Detection
-  runs-on: ubuntu-latest
+    name: 🔐 Secret Detection
+    runs-on: ubuntu-latest
 
-  steps:
-    - name: Checkout code
+    steps:
+      - name: Checkout code
       uses: actions/checkout@v4
-      with:
-        fetch-depth: 0  # Full history for better secret detection
+        with:
+          fetch-depth: 0  # Full history for better secret detection
 
-    - name: TruffleHog secret scan
+      - name: TruffleHog secret scan
       uses: trufflesecurity/trufflehog@main
-      with:
-        path: ./
-        base: main
-        head: HEAD
+        with:
+          path: ./
+          base: main
+          head: HEAD
         extra_args: --debug --only-verified
 
-    - name: GitLeaks secret scan
+      - name: GitLeaks secret scan
       uses: gitleaks/gitleaks-action@v2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   # Enhanced dependency scanning
   enhanced-dependency-scan:
-  name: 🔍 Enhanced Dependency Scanning
-  runs-on: ubuntu-latest
-  needs: sast-scan
+    name: 🔍 Enhanced Dependency Scanning
+    runs-on: ubuntu-latest
+    needs: sast-scan
 
-  steps:
+    steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -131,153 +131,153 @@ jobs:
         with:
           scan_type: 'all'
           language: 'python'
-        secrets:
+          secrets:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
           FOSSA_API_KEY: ${{ secrets.FOSSA_API_KEY }}
 
   # Container Security Scan
   container-scan:
-  name: 🐳 Container Security
-  runs-on: ubuntu-latest
-  needs: enhanced-dependency-scan
+    name: 🐳 Container Security
+    runs-on: ubuntu-latest
+    needs: enhanced-dependency-scan
 
-  steps:
-    - name: Checkout code
+    steps:
+      - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Set up Docker Buildx
+      - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
-    - name: Build Docker image
+      - name: Build Docker image
       uses: docker/build-push-action@v5
-      with:
-        context: .
-        file: ./Dockerfile
-        load: true
+        with:
+          context: .
+          file: ./Dockerfile
+          load: true
         tags: ainflue:security-test
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
-    - name: Run Trivy vulnerability scanner
+      - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
-      with:
-        image-ref: 'ainflue:security-test'
-        format: 'sarif'
-        output: 'trivy-results.sarif'
+        with:
+          image-ref: 'ainflue:security-test'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
 
-    - name: Upload Trivy scan results to GitHub Security tab
+      - name: Upload Trivy scan results to GitHub Security tab
       uses: github/codeql-action/upload-sarif@v2
-      if: always()
-      with:
-        sarif_file: 'trivy-results.sarif'
+    if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
 
-    - name: Run Snyk Container scan
-      continue-on-error: true
+      - name: Run Snyk Container scan
+    continue-on-error: true
       uses: snyk/actions/docker@master
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      with:
-        image: ainflue:security-test
-        args: --severity-threshold=high
+    env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: ainflue:security-test
+          args: --severity-threshold=high
 
   # Infrastructure Security
   infrastructure-scan:
-  name: 🏗️ Infrastructure Security
-  runs-on: ubuntu-latest
+    name: 🏗️ Infrastructure Security
+    runs-on: ubuntu-latest
 
-  steps:
-    - name: Checkout code
+    steps:
+      - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Run Checkov
+      - name: Run Checkov
       uses: bridgecrewio/checkov-action@master
-      with:
-        directory: .
-        framework: dockerfile,kubernetes,github_configuration
-        output_format: json
+        with:
+          directory: .
+          framework: dockerfile,kubernetes,github_configuration
+          output_format: json
         output_file_path: checkov-report.json
 
-    - name: Run Terrascan
+      - name: Run Terrascan
       uses: tenable/terrascan-action@main
-      with:
-        iac_type: 'docker'
-        iac_version: 'v1'
-        policy_type: 'docker'
+        with:
+          iac_type: 'docker'
+          iac_version: 'v1'
+          policy_type: 'docker'
         only_warn: true
 
-    - name: Upload infrastructure scan reports
+      - name: Upload infrastructure scan reports
       uses: actions/upload-artifact@v3
-      if: always()
-      with:
-        name: infrastructure-reports
-        path: |
+    if: always()
+        with:
+    name: infrastructure-reports
+          path: |
           checkov-report.json
 
   # License Compliance Check
   license-scan:
-  name: 📄 License Compliance
-  runs-on: ubuntu-latest
+    name: 📄 License Compliance
+    runs-on: ubuntu-latest
 
-  steps:
-    - name: Checkout code
+    steps:
+      - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Set up Python
+      - name: Set up Python
       uses: actions/setup-python@v4
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
 
-    - name: Install dependencies
-      run: |
+      - name: Install dependencies
+        run: |
         python -m pip install --upgrade pip
         pip install pip-licenses licensecheck
         pip install -r requirements.txt
 
-    - name: Check Python package licenses
-      run: |
+      - name: Check Python package licenses
+        run: |
         pip-licenses --format=json --output-file=licenses-report.json
         pip-licenses --format=table
 
-    - name: License compatibility check
-      run: |
+      - name: License compatibility check
+        run: |
         licensecheck --report=licenses-compatibility.json || true
 
-    - name: Upload license reports
+      - name: Upload license reports
       uses: actions/upload-artifact@v3
-      if: always()
-      with:
-        name: license-reports
-        path: |
+    if: always()
+        with:
+    name: license-reports
+          path: |
           licenses-report.json
           licenses-compatibility.json
 
   # Custom Security Audit
   custom-security-audit:
-  name: 🛡️ Custom Security Audit
-  runs-on: ubuntu-latest
+    name: 🛡️ Custom Security Audit
+    runs-on: ubuntu-latest
 
-  steps:
-    - name: Checkout code
+    steps:
+      - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Set up Python
+      - name: Set up Python
       uses: actions/setup-python@v4
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
 
-    - name: Install dependencies
-      run: |
+      - name: Install dependencies
+        run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Run custom security hardening script
-      run: |
+      - name: Run custom security hardening script
+        run: |
         cd kubernetes/scripts
         python security_hardening.py --audit-only --report-format=json --output=../../security-audit-report.json
 
-    - name: Validate security configurations
-      run: |
+      - name: Validate security configurations
+        run: |
         # Check for secure headers configuration
         grep -r "SECURE_SSL_REDIRECT\|SECURE_BROWSER_XSS_FILTER\|SECURE_CONTENT_TYPE_NOSNIFF" . || echo "Security headers not configured"
 
@@ -287,34 +287,34 @@ jobs:
         # Check for debug mode in production
         grep -r "DEBUG.*=.*True" . && echo "WARNING: Debug mode enabled" || echo "Debug mode properly configured"
 
-    - name: Upload custom audit report
+      - name: Upload custom audit report
       uses: actions/upload-artifact@v3
-      if: always()
-      with:
-        name: custom-security-audit
-        path: security-audit-report.json
+    if: always()
+        with:
+    name: custom-security-audit
+          path: security-audit-report.json
 
   # Security Dashboard Update
   security-dashboard:
-  name: 📊 Security Dashboard
-  runs-on: ubuntu-latest
-  needs: [dependency-scan, sast-scan, secret-scan, container-scan, enhanced-dependency-scan, license-scan, custom-security-audit]
-  if: always()
+    name: 📊 Security Dashboard
+    runs-on: ubuntu-latest
+    needs: [dependency-scan, sast-scan, secret-scan, container-scan, enhanced-dependency-scan, license-scan, custom-security-audit]
+    if: always()
 
-  steps:
-    - name: Checkout code
+    steps:
+      - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Download all security reports
+      - name: Download all security reports
       uses: actions/download-artifact@v3
 
-    - name: Set up Python
+      - name: Set up Python
       uses: actions/setup-python@v4
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
 
-    - name: Generate security summary
-      run: |
+      - name: Generate security summary
+        run: |
         python -c "
         import json
         import os
@@ -374,17 +374,17 @@ jobs:
         print(f'Status: {security_summary[\"status\"]}')
         "
 
-    - name: Upload security summary
+      - name: Upload security summary
       uses: actions/upload-artifact@v3
-      with:
-        name: security-summary
-        path: security-summary.json
+        with:
+    name: security-summary
+          path: security-summary.json
 
-    - name: Comment PR with security summary
-      if: github.event_name == 'pull_request'
+      - name: Comment PR with security summary
+    if: github.event_name == 'pull_request'
       uses: actions/github-script@v6
-      with:
-        script: |
+        with:
+          script: |
           const fs = require('fs');
           if (fs.existsSync('security-summary.json')) {
             const summary = JSON.parse(fs.readFileSync('security-summary.json', 'utf8'));
@@ -421,19 +421,19 @@ jobs:
 
   # Security Policy Enforcement
   policy-enforcement:
-  name: 🚫 Policy Enforcement
-  runs-on: ubuntu-latest
-  needs: security-dashboard
-  if: github.event_name == 'pull_request'
+    name: 🚫 Policy Enforcement
+    runs-on: ubuntu-latest
+    needs: security-dashboard
+    if: github.event_name == 'pull_request'
 
-  steps:
-    - name: Download security summary
+    steps:
+      - name: Download security summary
       uses: actions/download-artifact@v3
-      with:
-        name: security-summary
+        with:
+    name: security-summary
 
-    - name: Enforce security policies
-      run: |
+      - name: Enforce security policies
+        run: |
         if [-f security-summary.json]; then
           STATUS=$(python -c "import json; print(json.load(open('security-summary.json'))['status'])")
 

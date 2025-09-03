@@ -41,9 +41,9 @@ env:
 
 jobs:
   security-scan:
-  name: Security Scan
-  runs-on: ubuntu-latest
-  steps:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
@@ -60,17 +60,17 @@ jobs:
       - name: Upload Security Reports
         uses: actions/upload-artifact@v3
         with:
-          name: security-reports
+    name: security-reports
           path: |
             bandit-report.json
             safety-report.json
 
   build-and-test:
-  name: Build and Test
-  runs-on: ubuntu-latest
-  needs: security-scan
+    name: Build and Test
+    runs-on: ubuntu-latest
+    needs: security-scan
 
-  steps:
+    steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
@@ -104,14 +104,14 @@ jobs:
           flags: unittests
 
   build-docker:
-  name: 🐳 Build Docker Images
-  runs-on: ubuntu-latest
-  needs: build-and-test
-  outputs:
+    name: 🐳 Build Docker Images
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    outputs:
       image-tag: ${{ steps.meta.outputs.tags }}
       image-digest: ${{ steps.build.outputs.digest }}
 
-  steps:
+    steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
@@ -160,16 +160,16 @@ jobs:
       - name: Upload SBOM
         uses: actions/upload-artifact@v3
         with:
-          name: sbom
+    name: sbom
           path: sbom.spdx.json
 
   # Enhanced vulnerability and supply chain scanning
   vulnerability-scan:
-  name: 🔍 Vulnerability & Supply Chain Scan
-  runs-on: ubuntu-latest
-  needs: build-docker
+    name: 🔍 Vulnerability & Supply Chain Scan
+    runs-on: ubuntu-latest
+    needs: build-docker
 
-  steps:
+    steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -190,47 +190,47 @@ jobs:
         with:
           scan_type: 'all'
           language: 'python'
-        secrets:
+          secrets:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
           FOSSA_API_KEY: ${{ secrets.FOSSA_API_KEY }}
 
   # Artifact signing and supply chain security
   artifact-signing:
-  name: 🔏 Artifact Signing & Supply Chain Security
-  needs: [build-docker, vulnerability-scan]
+    name: 🔏 Artifact Signing & Supply Chain Security
+    needs: [build-docker, vulnerability-scan]
   uses: ./.github/workflows/artifact-signing.yml
-  with:
-      image_tags: ${{ needs.build-docker.outputs.image-tag }}
-      environment: ${{ inputs.environment || 'production' }}
-  secrets:
+        with:
+          image_tags: ${{ needs.build-docker.outputs.image-tag }}
+    environment: ${{ inputs.environment || 'production' }}
+          secrets:
       COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
       COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
 
   # Production approval workflow
   production-approval:
-  name: 📋 Production Approval
-  needs: [build-docker, vulnerability-scan, artifact-signing]
-  if: inputs.environment == 'production' && !inputs.skip_approval
+    name: 📋 Production Approval
+    needs: [build-docker, vulnerability-scan, artifact-signing]
+    if: inputs.environment == 'production' && !inputs.skip_approval
   uses: ./.github/workflows/approval-workflow.yml
-  with:
-      environment: ${{ inputs.environment || 'production' }}
-      image_tag: ${{ needs.build-docker.outputs.image-tag }}
-      deployment_type: ${{ env.DEPLOYMENT_TYPE }}
+        with:
+    environment: ${{ inputs.environment || 'production' }}
+          image_tag: ${{ needs.build-docker.outputs.image-tag }}
+          deployment_type: ${{ env.DEPLOYMENT_TYPE }}
   secrets:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
 
   # Send deployment started notification
   notify-deployment-start:
-  name: 📢 Notify Deployment Start
-  needs: [production-approval]
-  if: always() && (needs.production-approval.result == 'success' || needs.production-approval.result == 'skipped')
+    name: 📢 Notify Deployment Start
+    needs: [production-approval]
+    if: always() && (needs.production-approval.result == 'success' || needs.production-approval.result == 'skipped')
   uses: ./.github/workflows/enhanced-notifications.yml
-  with:
-      event_type: 'deployment-started'
-      environment: ${{ inputs.environment || 'production' }}
-      service_name: 'Ainflue Platform'
+        with:
+          event_type: 'deployment-started'
+    environment: ${{ inputs.environment || 'production' }}
+          service_name: 'Ainflue Platform'
       image_tag: ${{ needs.build-docker.outputs.image-tag }}
   secrets:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -239,15 +239,15 @@ jobs:
       DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
 
   deploy-staging:
-  name: 🎭 Deploy to Staging
-  runs-on: ubuntu-latest
-  needs: [build-docker, vulnerability-scan, artifact-signing]
-  if: github.ref == 'refs/heads/main' || inputs.environment == 'staging'
-  environment: staging
-  outputs:
+    name: 🎭 Deploy to Staging
+    runs-on: ubuntu-latest
+    needs: [build-docker, vulnerability-scan, artifact-signing]
+    if: github.ref == 'refs/heads/main' || inputs.environment == 'staging'
+    environment: staging
+    outputs:
       staging-url: ${{ steps.deploy.outputs.service_url }}
 
-  steps:
+    steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
@@ -284,29 +284,29 @@ jobs:
 
   # Enhanced smoke tests on staging
   staging-smoke-tests:
-  name: 🧪 Staging Smoke Tests
-  needs: [deploy-staging]
+    name: 🧪 Staging Smoke Tests
+    needs: [deploy-staging]
   uses: ./.github/workflows/smoke-tests.yml
-  with:
-      environment: 'staging'
-      service_url: ${{ needs.deploy-staging.outputs.staging-url }}
-      image_tag: ${{ needs.build-docker.outputs.image-tag }}
+        with:
+    environment: 'staging'
+          service_url: ${{ needs.deploy-staging.outputs.staging-url }}
+          image_tag: ${{ needs.build-docker.outputs.image-tag }}
       timeout_minutes: 10
   secrets:
       API_KEY: ${{ secrets.STAGING_API_KEY }}
       DATABASE_URL: ${{ secrets.STAGING_DATABASE_URL }}
 
   deploy-production:
-  name: 🚀 Deploy to Production
-  runs-on: ubuntu-latest
-  needs: [build-docker, vulnerability-scan, artifact-signing, staging-smoke-tests, notify-deployment-start]
-  if: startsWith(github.ref, 'refs/tags/v') || inputs.environment == 'production'
-  environment: production
-  outputs:
+    name: 🚀 Deploy to Production
+    runs-on: ubuntu-latest
+    needs: [build-docker, vulnerability-scan, artifact-signing, staging-smoke-tests, notify-deployment-start]
+    if: startsWith(github.ref, 'refs/tags/v') || inputs.environment == 'production'
+    environment: production
+    outputs:
       production-url: ${{ steps.deployment-strategy.outputs.service_url }}
       deployment-type: ${{ steps.deployment-strategy.outputs.deployment_type }}
 
-  steps:
+    steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
@@ -321,7 +321,7 @@ jobs:
         with:
           action: 'read'
           secret_path: 'secret/ainflue/${{ inputs.environment || "production" }}'
-          environment: ${{ inputs.environment || 'production' }}
+    environment: ${{ inputs.environment || 'production' }}
         secrets:
           VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
           VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
@@ -543,13 +543,13 @@ jobs:
 
   # Enhanced post-deployment smoke tests
   production-smoke-tests:
-  name: 🧪 Production Smoke Tests
-  needs: [deploy-production]
+    name: 🧪 Production Smoke Tests
+    needs: [deploy-production]
   uses: ./.github/workflows/smoke-tests.yml
-  with:
-      environment: 'production'
-      service_url: ${{ needs.deploy-production.outputs.production-url }}
-      image_tag: ${{ needs.build-docker.outputs.image-tag }}
+        with:
+    environment: 'production'
+          service_url: ${{ needs.deploy-production.outputs.production-url }}
+          image_tag: ${{ needs.build-docker.outputs.image-tag }}
       timeout_minutes: 15
   secrets:
       API_KEY: ${{ secrets.PRODUCTION_API_KEY }}
@@ -557,17 +557,17 @@ jobs:
       MONITORING_TOKEN: ${{ secrets.DATADOG_API_KEY }}
 
   post-deployment:
-  name: 🔄 Post-Deployment Tasks
-  runs-on: ubuntu-latest
-  needs: [deploy-production, production-smoke-tests, health-metrics-monitoring]
-  if: success()
+    name: 🔄 Post-Deployment Tasks
+    runs-on: ubuntu-latest
+    needs: [deploy-production, production-smoke-tests, health-metrics-monitoring]
+    if: success()
 
-  steps:
+    steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
       - name: Run Database Migrations
-        env:
+    env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
           # Install database migration tools
@@ -638,14 +638,14 @@ jobs:
 
   # Send deployment success notification
   notify-deployment-success:
-  name: 📢 Notify Deployment Success
-  needs: [deploy-production, production-smoke-tests, health-metrics-monitoring, post-deployment]
-  if: success()
+    name: 📢 Notify Deployment Success
+    needs: [deploy-production, production-smoke-tests, health-metrics-monitoring, post-deployment]
+    if: success()
   uses: ./.github/workflows/enhanced-notifications.yml
-  with:
-      event_type: 'deployment-success'
-      environment: ${{ inputs.environment || 'production' }}
-      service_name: 'Ainflue Platform'
+        with:
+          event_type: 'deployment-success'
+    environment: ${{ inputs.environment || 'production' }}
+          service_name: 'Ainflue Platform'
       image_tag: ${{ needs.build-docker.outputs.image-tag }}
       deployment_url: ${{ needs.deploy-production.outputs.production-url }}
       additional_info: |
@@ -665,12 +665,12 @@ jobs:
 
   # Enhanced health metrics monitoring and automatic rollback
   health-metrics-monitoring:
-  name: 📊 Health Metrics Monitoring & Auto-Rollback
-  runs-on: ubuntu-latest
-  needs: [deploy-production]
-  if: success()
+    name: 📊 Health Metrics Monitoring & Auto-Rollback
+    runs-on: ubuntu-latest
+    needs: [deploy-production]
+    if: success()
 
-  steps:
+    steps:
       - name: Continuous Health Monitoring
         run: |
           echo "🔍 Starting continuous health metrics monitoring..."
@@ -746,14 +746,14 @@ jobs:
           fi
 
       - name: Configure kubectl for rollback
-        if: failure()
+    if: failure()
         uses: azure/k8s-set-context@v3
         with:
           method: kubeconfig
           kubeconfig: ${{ secrets.KUBE_CONFIG_PRODUCTION }}
 
       - name: Execute Automatic Health-Based Rollback
-        if: failure()
+    if: failure()
         run: |
           echo "🚨 Executing automatic rollback due to health metrics breach..."
 
@@ -803,12 +803,12 @@ jobs:
 
           echo "✅ Automatic rollback completed successfully"
 
-  steps:
+    steps:
       - name: Send rollback notification
         uses: ./.github/workflows/enhanced-notifications.yml
         with:
           event_type: 'rollback-started'
-          environment: ${{ inputs.environment || 'production' }}
+    environment: ${{ inputs.environment || 'production' }}
           service_name: 'Ainflue Platform'
           image_tag: ${{ needs.build-docker.outputs.image-tag }}
         secrets:
@@ -895,14 +895,14 @@ jobs:
       - name: Upload rollback report
         uses: actions/upload-artifact@v3
         with:
-          name: rollback-report
+    name: rollback-report
           path: rollback-report.md
 
       - name: Send rollback success notification
         uses: ./.github/workflows/enhanced-notifications.yml
         with:
           event_type: 'rollback-success'
-          environment: ${{ inputs.environment || 'production' }}
+    environment: ${{ inputs.environment || 'production' }}
           service_name: 'Ainflue Platform'
           image_tag: ${{ needs.build-docker.outputs.image-tag }}
         secrets:
@@ -912,14 +912,14 @@ jobs:
 
   # Send deployment failure notification
   notify-deployment-failure:
-  name: 📢 Notify Deployment Failure
-  needs: [deploy-production, production-smoke-tests, health-metrics-monitoring]
-  if: failure()
+    name: 📢 Notify Deployment Failure
+    needs: [deploy-production, production-smoke-tests, health-metrics-monitoring]
+    if: failure()
   uses: ./.github/workflows/enhanced-notifications.yml
-  with:
-      event_type: 'deployment-failed'
-      environment: ${{ inputs.environment || 'production' }}
-      service_name: 'Ainflue Platform'
+        with:
+          event_type: 'deployment-failed'
+    environment: ${{ inputs.environment || 'production' }}
+          service_name: 'Ainflue Platform'
       image_tag: ${{ needs.build-docker.outputs.image-tag }}
       additional_info: |
         {
