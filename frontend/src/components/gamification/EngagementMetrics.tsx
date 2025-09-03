@@ -102,7 +102,7 @@ const EngagementMetricsComponent: React.FC<EngagementMetricsProps> = ({
       socialInteractionRate: '#F59E0B',
       sessionDuration: '#EF4444'
     };
-    return colors[metric] || '#6B7280';
+    return colors[metric as keyof typeof colors] || '#6B7280';
   };
 
   if (loading) {
