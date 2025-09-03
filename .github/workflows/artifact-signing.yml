@@ -1,8 +1,9 @@
+---
 name: 🔏 Artifact Signing & Supply Chain Security
 
 on:
   workflow_call:
-    inputs:
+  inputs:
       image_tags:
         description: 'Comma-separated list of image tags to sign'
         required: true
@@ -16,7 +17,7 @@ on:
         description: 'Environment for deployment'
         required: true
         type: string
-    secrets:
+  secrets:
       COSIGN_PRIVATE_KEY:
         required: true
       COSIGN_PASSWORD:
@@ -31,17 +32,17 @@ env:
 jobs:
   # Container image signing
   container-signing:
-    name: 🐳 Container Image Signing
-    runs-on: ubuntu-latest
-    permissions:
+  name: 🐳 Container Image Signing
+  runs-on: ubuntu-latest
+  permissions:
       contents: read
       packages: read
       id-token: write
-    outputs:
+  outputs:
       signed-images: ${{ steps.sign-images.outputs.signed_images }}
       attestation-digest: ${{ steps.attest.outputs.digest }}
-    
-    steps:
+
+  steps:
       - name: Install Cosign
         uses: sigstore/cosign-installer@v3
         with:
@@ -65,50 +66,50 @@ jobs:
           COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
         run: |
           echo "Signing container images..."
-          
+
           IFS=',' read -ra IMAGES <<< "${{ inputs.image_tags }}"
           SIGNED_IMAGES=""
-          
+
           for image in "${IMAGES[@]}"; do
             image=$(echo $image | xargs)  # trim whitespace
             echo "Signing image: $image"
-            
+
             # Sign the image
             cosign sign --yes "$image"
-            
+
             # Verify the signature was created
             cosign verify "$image" --certificate-identity-regexp=".*" --certificate-oidc-issuer-regexp=".*"
-            
-            if [ -n "$SIGNED_IMAGES" ]; then
+
+            if [-n "$SIGNED_IMAGES"]; then
               SIGNED_IMAGES="$SIGNED_IMAGES,$image"
             else
               SIGNED_IMAGES="$image"
             fi
-            
+
             echo "✅ Successfully signed: $image"
           done
-          
+
           echo "signed_images=$SIGNED_IMAGES" >> $GITHUB_OUTPUT
 
       - name: Generate and sign SBOMs
         run: |
           echo "Generating and signing SBOMs..."
-          
+
           IFS=',' read -ra IMAGES <<< "${{ inputs.image_tags }}"
-          
+
           for image in "${IMAGES[@]}"; do
             image=$(echo $image | xargs)
             echo "Generating SBOM for: $image"
-            
+
             # Generate SBOM
             syft "$image" -o spdx-json > sbom-$(echo $image | tr '/:' '-').json
-            
+
             # Sign SBOM
             cosign sign-blob --yes sbom-$(echo $image | tr '/:' '-').json > sbom-$(echo $image | tr '/:' '-').json.sig
-            
+
             # Attach SBOM to image
             cosign attest --yes --predicate sbom-$(echo $image | tr '/:' '-').json "$image"
-            
+
             echo "✅ SBOM generated and signed for: $image"
           done
 
@@ -119,7 +120,7 @@ jobs:
           COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
         run: |
           echo "Creating SLSA provenance attestation..."
-          
+
           # Create provenance document
           cat > provenance.json << EOF
           {
@@ -161,11 +162,11 @@ jobs:
             }
           }
           EOF
-          
+
           # Sign provenance
           DIGEST=$(cosign sign-blob --yes provenance.json)
           echo "digest=$DIGEST" >> $GITHUB_OUTPUT
-          
+
           # Attach provenance to images
           IFS=',' read -ra IMAGES <<< "${{ inputs.image_tags }}"
           for image in "${IMAGES[@]}"; do
@@ -184,11 +185,11 @@ jobs:
 
   # File artifact signing
   file-signing:
-    name: 📦 File Artifact Signing
-    runs-on: ubuntu-latest
-    if: inputs.artifact_paths != ''
-    
-    steps:
+  name: 📦 File Artifact Signing
+  runs-on: ubuntu-latest
+  if: inputs.artifact_paths != ''
+
+  steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -206,23 +207,23 @@ jobs:
           COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
         run: |
           echo "Signing file artifacts..."
-          
+
           IFS=',' read -ra ARTIFACTS <<< "${{ inputs.artifact_paths }}"
-          
+
           for artifact in "${ARTIFACTS[@]}"; do
             artifact=$(echo $artifact | xargs)
             echo "Signing artifact: $artifact"
-            
-            if [ -f "$artifact" ]; then
+
+            if [-f "$artifact"]; then
               # Sign the file
               cosign sign-blob --yes "$artifact" > "$artifact.sig"
-              
+
               # Create checksum
               sha256sum "$artifact" > "$artifact.sha256"
-              
+
               # Sign the checksum too
               cosign sign-blob --yes "$artifact.sha256" > "$artifact.sha256.sig"
-              
+
               echo "✅ Successfully signed: $artifact"
             else
               echo "⚠️ Artifact not found: $artifact"
@@ -239,31 +240,31 @@ jobs:
 
   # Supply chain verification
   supply-chain-verification:
-    name: 🔍 Supply Chain Verification
-    runs-on: ubuntu-latest
-    needs: [container-signing]
-    
-    steps:
+  name: 🔍 Supply Chain Verification
+  runs-on: ubuntu-latest
+  needs: [container-signing]
+
+  steps:
       - name: Install verification tools
         run: |
           # Install Cosign for verification
           curl -O -L "https://github.com/sigstore/cosign/releases/latest/download/cosign-linux-amd64"
           sudo mv cosign-linux-amd64 /usr/local/bin/cosign
           sudo chmod +x /usr/local/bin/cosign
-          
+
           # Install Grype for vulnerability scanning
           curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
 
       - name: Verify container signatures
         run: |
           echo "Verifying container signatures..."
-          
+
           IFS=',' read -ra IMAGES <<< "${{ needs.container-signing.outputs.signed-images }}"
-          
+
           for image in "${IMAGES[@]}"; do
             image=$(echo $image | xargs)
             echo "Verifying signature for: $image"
-            
+
             # Verify signature
             if cosign verify "$image" --certificate-identity-regexp=".*" --certificate-oidc-issuer-regexp=".*"; then
               echo "✅ Signature verified for: $image"
@@ -271,7 +272,7 @@ jobs:
               echo "❌ Signature verification failed for: $image"
               exit 1
             fi
-            
+
             # Verify attestations
             if cosign verify-attestation "$image" --certificate-identity-regexp=".*" --certificate-oidc-issuer-regexp=".*"; then
               echo "✅ Attestations verified for: $image"
@@ -283,19 +284,19 @@ jobs:
       - name: Scan for vulnerabilities
         run: |
           echo "Scanning signed images for vulnerabilities..."
-          
+
           IFS=',' read -ra IMAGES <<< "${{ needs.container-signing.outputs.signed-images }}"
-          
+
           for image in "${IMAGES[@]}"; do
             image=$(echo $image | xargs)
             echo "Scanning vulnerabilities in: $image"
-            
+
             # Run Grype scan
             grype "$image" --output table --only-fixed
-            
+
             # Generate SARIF report for GitHub Security tab
             grype "$image" --output sarif > "grype-$(echo $image | tr '/:' '-').sarif"
-            
+
             echo "✅ Vulnerability scan completed for: $image"
           done
 
@@ -312,11 +313,11 @@ jobs:
 
   # License compliance verification
   license-compliance:
-    name: 📄 License Compliance Verification
-    runs-on: ubuntu-latest
-    needs: [container-signing]
-    
-    steps:
+  name: 📄 License Compliance Verification
+  runs-on: ubuntu-latest
+  needs: [container-signing]
+
+  steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -334,21 +335,21 @@ jobs:
       - name: Scan container licenses
         run: |
           echo "Scanning container images for license compliance..."
-          
+
           IFS=',' read -ra IMAGES <<< "${{ needs.container-signing.outputs.signed-images }}"
-          
+
           for image in "${IMAGES[@]}"; do
             image=$(echo $image | xargs)
             echo "Scanning licenses in: $image"
-            
+
             # Scan with Trivy
             trivy image --format json --output "licenses-$(echo $image | tr '/:' '-').json" "$image"
-            
+
             # Extract license information
             if command -v jq &> /dev/null; then
               jq '.Results[].Vulnerabilities[]?.PkgName' "licenses-$(echo $image | tr '/:' '-').json" 2>/dev/null || echo "No license data found"
             fi
-            
+
             echo "✅ License scan completed for: $image"
           done
 
@@ -360,16 +361,16 @@ jobs:
 
   # Security attestation generation
   security-attestation:
-    name: 🛡️ Security Attestation
-    runs-on: ubuntu-latest
-    needs: [container-signing, supply-chain-verification, license-compliance]
-    if: always()
-    
-    steps:
+  name: 🛡️ Security Attestation
+  runs-on: ubuntu-latest
+  needs: [container-signing, supply-chain-verification, license-compliance]
+  if: always()
+
+  steps:
       - name: Generate security attestation
         run: |
           echo "Generating comprehensive security attestation..."
-          
+
           cat > security-attestation.json << EOF
           {
             "attestation_version": "1.0",
@@ -393,14 +394,13 @@ jobs:
               "vulnerability_scanning": true,
               "license_scanning": true
             },
-            "compliance_frameworks": [
-              "SLSA Level 2",
+            "compliance_frameworks": ["SLSA Level 2",
               "Supply Chain Security",
               "Container Security"
-            ]
+           ]
           }
           EOF
-          
+
           echo "Security attestation generated:"
           cat security-attestation.json
 
@@ -415,10 +415,10 @@ jobs:
             sudo mv cosign-linux-amd64 /usr/local/bin/cosign
             sudo chmod +x /usr/local/bin/cosign
           fi
-          
+
           # Sign the attestation
           cosign sign-blob --yes security-attestation.json > security-attestation.json.sig
-          
+
           echo "✅ Security attestation signed"
 
       - name: Upload security attestation
@@ -436,24 +436,24 @@ jobs:
           **Environment:** ${{ inputs.environment }}
           **Workflow Run:** ${{ github.run_id }}
           **Commit:** ${{ github.sha }}
-          
+
           ### Security Controls Status:
           - ✅ **Artifact Signing:** ${{ needs.container-signing.result }}
-          - ✅ **Supply Chain Verification:** ${{ needs.supply-chain-verification.result }}  
+          - ✅ **Supply Chain Verification:** ${{ needs.supply-chain-verification.result }}
           - ✅ **License Compliance:** ${{ needs.license-compliance.result }}
-          
+
           ### Signed Artifacts:
           - **Container Images:** ${{ needs.container-signing.outputs.signed-images }}
-          
+
           ### Compliance:
           - SLSA Level 2 ✅
           - Supply Chain Security ✅
           - Container Security ✅
           "
-          
+
           # Determine overall security status
-          if [ "${{ needs.container-signing.result }}" = "success" ] && \
-             [ "${{ needs.supply-chain-verification.result }}" = "success" ]; then
+          if ["${{ needs.container-signing.result }}" = "success"] && \
+             ["${{ needs.supply-chain-verification.result }}" = "success"]; then
             echo "🎉 **Overall Security Status: PASSED**"
             echo "All security controls are in place and functioning correctly."
           else

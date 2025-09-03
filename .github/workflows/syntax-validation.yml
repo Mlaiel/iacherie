@@ -1,42 +1,43 @@
+---
 name: 🏭 Industrial Syntax Validation
 
 on:
   push:
-    branches: [ main, develop ]
+  branches: [main, develop]
   pull_request:
-    branches: [ main, develop ]
+  branches: [main, develop]
   schedule:
     # Run daily at 2 AM UTC
     - cron: '0 2 * * *'
 
 jobs:
   syntax-validation:
-    name: Python Syntax Validation
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    
-    steps:
+  name: Python Syntax Validation
+  runs-on: ubuntu-latest
+  timeout-minutes: 30
+
+  steps:
     - name: 📥 Checkout code
       uses: actions/checkout@v4
-      
+
     - name: 🐍 Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.12'
         cache: 'pip'
-        
+
     - name: 📦 Install validation tools
       run: |
         python -m pip install --upgrade pip
         pip install flake8 black autopep8 pydocstyle
-        
+
     - name: 🔍 Run comprehensive syntax validation
       run: |
         python scripts/validation/ci_cd_syntax_validation.py \
           --root . \
           --save-results \
           --fail-on-errors
-        
+
     - name: 📊 Upload validation results
       if: always()
       uses: actions/upload-artifact@v3
@@ -44,7 +45,7 @@ jobs:
         name: syntax-validation-results
         path: reports/ci_cd/syntax_validation_results.json
         retention-days: 30
-        
+
     - name: 📝 Comment PR with results
       if: github.event_name == 'pull_request' && always()
       uses: actions/github-script@v7
@@ -52,25 +53,25 @@ jobs:
         script: |
           const fs = require('fs');
           const path = 'reports/ci_cd/syntax_validation_results.json';
-          
+
           if (fs.existsSync(path)) {
             const results = JSON.parse(fs.readFileSync(path, 'utf8'));
             const syntax = results.validations.syntax;
-            
+
             const comment = `## 🏭 Syntax Validation Results
-            
+
             **Overall Status:** ${results.overall_status === 'PASSED' ? '✅' : results.overall_status === 'WARNING' ? '⚠️' : '❌'} ${results.overall_status}
-            
+
             ### 📊 Syntax Validation
             - **Files Checked:** ${syntax.files_checked.toLocaleString()}
             - **Syntax Errors:** ${syntax.syntax_errors}
             - **Success Rate:** ${syntax.success_rate.toFixed(2)}%
-            
+
             ${syntax.syntax_errors > 0 ? `### 🚨 Sample Errors:
             ${syntax.errors.slice(0, 3).map(e => `- \`${e.file}\`: ${e.error}`).join('\n')}` : ''}
-            
+
             _Validation completed at ${results.timestamp}_`;
-            
+
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
@@ -80,38 +81,38 @@ jobs:
           }
 
   automated-fixes:
-    name: Apply Automated Syntax Fixes
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
-    timeout-minutes: 15
-    
-    steps:
+  name: Apply Automated Syntax Fixes
+  runs-on: ubuntu-latest
+  if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+  timeout-minutes: 15
+
+  steps:
     - name: 📥 Checkout code
       uses: actions/checkout@v4
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        
+
     - name: 🐍 Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.12'
-        
+
     - name: 🔧 Run automated syntax fixes
       run: |
         python scripts/validation/batch_syntax_fixer.py \
           --root . \
           --workers 2 \
           --batch-size 100
-        
+
     - name: 📝 Check for changes
       id: verify-changed-files
       run: |
-        if [ -n "$(git status --porcelain)" ]; then
+        if [-n "$(git status --porcelain)"]; then
           echo "changed=true" >> $GITHUB_OUTPUT
         else
           echo "changed=false" >> $GITHUB_OUTPUT
         fi
-        
+
     - name: 💾 Commit automated fixes
       if: steps.verify-changed-files.outputs.changed == 'true'
       run: |
@@ -122,40 +123,40 @@ jobs:
         git push
 
   docstring-standardization:
-    name: PEP257 Docstring Standardization
-    runs-on: ubuntu-latest
-    if: github.event_name == 'schedule'
-    timeout-minutes: 20
-    
-    steps:
+  name: PEP257 Docstring Standardization
+  runs-on: ubuntu-latest
+  if: github.event_name == 'schedule'
+  timeout-minutes: 20
+
+  steps:
     - name: 📥 Checkout code
       uses: actions/checkout@v4
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        
+
     - name: 🐍 Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.12'
-        
+
     - name: 📦 Install validation tools
       run: |
         python -m pip install --upgrade pip
         pip install pydocstyle
-        
+
     - name: 📝 Run PEP257 standardization
       run: |
         python scripts/validation/pep257_docstring_standardizer.py --root .
-        
+
     - name: 📝 Check for changes
       id: verify-changed-files
       run: |
-        if [ -n "$(git status --porcelain)" ]; then
+        if [-n "$(git status --porcelain)"]; then
           echo "changed=true" >> $GITHUB_OUTPUT
         else
           echo "changed=false" >> $GITHUB_OUTPUT
         fi
-        
+
     - name: 💾 Commit docstring standardization
       if: steps.verify-changed-files.outputs.changed == 'true'
       run: |

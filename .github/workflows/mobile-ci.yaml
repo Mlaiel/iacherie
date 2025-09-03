@@ -1,14 +1,15 @@
+---
 name: 📱 Mobile CI Pipeline
 
 on:
   push:
-    branches: [ main, develop ]
-    paths:
+  branches: [main, develop]
+  paths:
       - 'mobile/**'
       - '.github/workflows/mobile-ci.yaml'
   pull_request:
-    branches: [ main, develop ]
-    paths:
+  branches: [main, develop]
+  paths:
       - 'mobile/**'
 
 env:
@@ -20,11 +21,11 @@ env:
 jobs:
   # Mobile Backend Services CI
   mobile-backend:
-    name: 🐍 Mobile Backend Services
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    
-    steps:
+  name: 🐍 Mobile Backend Services
+  runs-on: ubuntu-latest
+  timeout-minutes: 20
+
+  steps:
     - name: 📥 Checkout code
       uses: actions/checkout@v4
 
@@ -45,7 +46,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install black flake8 mypy pytest pytest-cov
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        if [-f requirements.txt]; then pip install -r requirements.txt; fi
 
     - name: 🎨 Python code formatting (Black)
       run: |
@@ -61,7 +62,7 @@ jobs:
 
     - name: 🧪 Run Python mobile backend tests
       run: |
-        if [ -d "mobile/tests" ]; then
+        if [-d "mobile/tests"]; then
           pytest mobile/tests/ -v --cov=mobile --cov-report=xml || true
         else
           echo "No mobile backend tests found"
@@ -69,11 +70,11 @@ jobs:
 
   # React Native CI
   react-native:
-    name: ⚛️ React Native
-    runs-on: ubuntu-latest
-    timeout-minutes: 25
-    
-    steps:
+  name: ⚛️ React Native
+  runs-on: ubuntu-latest
+  timeout-minutes: 25
+
+  steps:
     - name: 📥 Checkout code
       uses: actions/checkout@v4
 
@@ -101,7 +102,7 @@ jobs:
     - name: 🔧 Install React Native dependencies
       working-directory: mobile/react_native
       run: |
-        if [ -f "package.json" ]; then
+        if [-f "package.json"]; then
           npm ci --prefer-offline --no-audit
         else
           echo "No React Native package.json found, skipping..."
@@ -110,7 +111,7 @@ jobs:
     - name: 🔍 React Native linting
       working-directory: mobile/react_native
       run: |
-        if [ -f "package.json" ] && npm run lint --if-present; then
+        if [-f "package.json"] && npm run lint --if-present; then
           npm run lint
         else
           echo "No React Native linting configured"
@@ -119,7 +120,7 @@ jobs:
     - name: 🏷️ TypeScript type checking
       working-directory: mobile/react_native
       run: |
-        if [ -f "tsconfig.json" ]; then
+        if [-f "tsconfig.json"]; then
           npx tsc --noEmit
         else
           echo "No TypeScript configuration found"
@@ -128,7 +129,7 @@ jobs:
     - name: 🧪 React Native tests
       working-directory: mobile/react_native
       run: |
-        if [ -f "package.json" ] && npm run test --if-present; then
+        if [-f "package.json"] && npm run test --if-present; then
           npm run test -- --coverage --watchAll=false
         else
           echo "No React Native tests configured"
@@ -145,11 +146,11 @@ jobs:
 
   # Android Build & Tests
   android-build:
-    name: 🤖 Android Build
-    runs-on: ubuntu-latest
-    timeout-minutes: 45
-    
-    steps:
+  name: 🤖 Android Build
+  runs-on: ubuntu-latest
+  timeout-minutes: 45
+
+  steps:
     - name: 📥 Checkout code
       uses: actions/checkout@v4
 
@@ -180,14 +181,14 @@ jobs:
     - name: 🔧 Install dependencies
       working-directory: mobile
       run: |
-        if [ -d "react_native" ] && [ -f "react_native/package.json" ]; then
+        if [-d "react_native"] && [-f "react_native/package.json"]; then
           cd react_native && npm ci --prefer-offline --no-audit
         fi
 
     - name: 🏗️ Build Android APK
       working-directory: mobile/android
       run: |
-        if [ -f "gradlew" ]; then
+        if [-f "gradlew"]; then
           chmod +x gradlew
           ./gradlew assembleDebug --no-daemon
         else
@@ -197,7 +198,7 @@ jobs:
     - name: 🧪 Run Android unit tests
       working-directory: mobile/android
       run: |
-        if [ -f "gradlew" ]; then
+        if [-f "gradlew"]; then
           ./gradlew testDebugUnitTest --no-daemon || true
         else
           echo "No Android tests to run"
@@ -214,12 +215,12 @@ jobs:
 
   # iOS Build & Tests (macOS runner required)
   ios-build:
-    name: 🍎 iOS Build
-    runs-on: macos-latest
-    timeout-minutes: 45
-    if: github.event_name == 'pull_request'
-    
-    steps:
+  name: 🍎 iOS Build
+  runs-on: macos-latest
+  timeout-minutes: 45
+  if: github.event_name == 'pull_request'
+
+  steps:
     - name: 📥 Checkout code
       uses: actions/checkout@v4
 
@@ -244,14 +245,14 @@ jobs:
     - name: 🔧 Install dependencies
       working-directory: mobile
       run: |
-        if [ -d "react_native" ] && [ -f "react_native/package.json" ]; then
+        if [-d "react_native"] && [-f "react_native/package.json"]; then
           cd react_native && npm ci --prefer-offline --no-audit
         fi
 
     - name: 📦 Install CocoaPods
       working-directory: mobile/ios
       run: |
-        if [ -f "Podfile" ]; then
+        if [-f "Podfile"]; then
           pod install --deployment
         else
           echo "No iOS project found, skipping..."
@@ -260,7 +261,7 @@ jobs:
     - name: 🏗️ Build iOS app
       working-directory: mobile/ios
       run: |
-        if [ -f "*.xcworkspace" ] || [ -f "*.xcodeproj" ]; then
+        if [-f "*.xcworkspace"] || [-f "*.xcodeproj"]; then
           xcodebuild -workspace *.xcworkspace -scheme * -configuration Debug -sdk iphonesimulator -derivedDataPath build/ || true
         else
           echo "No iOS project found, skipping build..."
@@ -269,7 +270,7 @@ jobs:
     - name: 🧪 Run iOS tests
       working-directory: mobile/ios
       run: |
-        if [ -f "*.xcworkspace" ] || [ -f "*.xcodeproj" ]; then
+        if [-f "*.xcworkspace"] || [-f "*.xcodeproj"]; then
           xcodebuild test -workspace *.xcworkspace -scheme * -configuration Debug -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 14' || true
         else
           echo "No iOS tests to run"
@@ -286,12 +287,12 @@ jobs:
 
   # Flutter Build & Tests (if Flutter is used)
   flutter-build:
-    name: 💙 Flutter Build
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    if: hashFiles('mobile/**/pubspec.yaml') != ''
-    
-    steps:
+  name: 💙 Flutter Build
+  runs-on: ubuntu-latest
+  timeout-minutes: 30
+  if: hashFiles('mobile/**/pubspec.yaml') != ''
+
+  steps:
     - name: 📥 Checkout code
       uses: actions/checkout@v4
 
@@ -341,11 +342,11 @@ jobs:
 
   # Mobile Security & Performance
   mobile-security:
-    name: 🔒 Mobile Security
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    
-    steps:
+  name: 🔒 Mobile Security
+  runs-on: ubuntu-latest
+  timeout-minutes: 15
+
+  steps:
     - name: 📥 Checkout code
       uses: actions/checkout@v4
 
@@ -353,11 +354,11 @@ jobs:
       run: |
         echo "Scanning mobile directory for sensitive data..."
         find mobile/ -type f \( -name "*.key" -o -name "*.pem" -o -name "*.p12" -o -name "*.keystore" \) | tee sensitive-files.txt
-        
+
         # Check for hardcoded secrets in source files
         grep -r -i "api[_-]key\|secret\|password\|token" mobile/ --include="*.js" --include="*.ts" --include="*.py" --include="*.java" --include="*.swift" --include="*.dart" | grep -v "test" | head -20 > potential-secrets.txt || true
-        
-        if [ -s sensitive-files.txt ]; then
+
+        if [-s sensitive-files.txt]; then
           echo "⚠️ Sensitive files detected!"
           cat sensitive-files.txt
         fi
@@ -367,9 +368,9 @@ jobs:
         echo "Running mobile security checks..."
         # Check for debug flags in production builds
         find mobile/ -name "*.js" -o -name "*.ts" -o -name "*.py" | xargs grep -l "__DEV__\|DEBUG\|console.log" | head -10 > debug-code.txt || true
-        
+
         # Check permissions in Android manifest
-        if [ -f "mobile/android/app/src/main/AndroidManifest.xml" ]; then
+        if [-f "mobile/android/app/src/main/AndroidManifest.xml"]; then
           grep "uses-permission" mobile/android/app/src/main/AndroidManifest.xml > android-permissions.txt || true
         fi
 
@@ -386,12 +387,12 @@ jobs:
 
   # Mobile Performance Tests
   mobile-performance:
-    name: ⚡ Mobile Performance
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    if: github.event_name == 'pull_request'
-    
-    steps:
+  name: ⚡ Mobile Performance
+  runs-on: ubuntu-latest
+  timeout-minutes: 20
+  if: github.event_name == 'pull_request'
+
+  steps:
     - name: 📥 Checkout code
       uses: actions/checkout@v4
 
@@ -403,10 +404,10 @@ jobs:
     - name: ⚡ Mobile bundle size analysis
       working-directory: mobile
       run: |
-        if [ -d "react_native" ] && [ -f "react_native/package.json" ]; then
+        if [-d "react_native"] && [-f "react_native/package.json"]; then
           cd react_native
           npm ci --prefer-offline --no-audit
-          
+
           # Analyze bundle size if Metro bundler is configured
           if command -v npx && npx metro --help > /dev/null 2>&1; then
             npx metro build --platform android --dev false --minify true --bundle-output bundle-analysis.js --assets-dest assets/ || true
@@ -425,12 +426,12 @@ jobs:
 
   # Summary
   mobile-summary:
-    name: 📋 Mobile CI Summary
-    runs-on: ubuntu-latest
-    needs: [mobile-backend, react-native, android-build, ios-build, flutter-build, mobile-security, mobile-performance]
-    if: always()
-    
-    steps:
+  name: 📋 Mobile CI Summary
+  runs-on: ubuntu-latest
+  needs: [mobile-backend, react-native, android-build, ios-build, flutter-build, mobile-security, mobile-performance]
+  if: always()
+
+  steps:
     - name: 📊 Check results
       run: |
         echo "Mobile CI Pipeline Results:"
@@ -441,9 +442,9 @@ jobs:
         echo "Flutter Build: ${{ needs.flutter-build.result }}"
         echo "Security: ${{ needs.mobile-security.result }}"
         echo "Performance: ${{ needs.mobile-performance.result }}"
-        
+
         # Only fail on critical components
-        if [[ "${{ needs.mobile-backend.result }}" == "failure" || "${{ needs.react-native.result }}" == "failure" || "${{ needs.android-build.result }}" == "failure" ]]; then
+        if [["${{ needs.mobile-backend.result }}" == "failure" || "${{ needs.react-native.result }}" == "failure" || "${{ needs.android-build.result }}" == "failure"]]; then
           echo "❌ Mobile CI failed - critical issues detected"
           exit 1
         else

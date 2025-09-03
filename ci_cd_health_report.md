@@ -1,6 +1,6 @@
 # CI/CD Pipeline Health Check Report
 
-**Generated:** 2025-09-01 03:09:03 UTC  
+**Generated:** 2025-09-03 03:21:19 UTC  
 **Repository:** Mlaiel/Ainflue  
 **Checked by:** runner
 
@@ -10,8 +10,8 @@
 |-----------|--------|
 | GitHub Setup | ❌ |
 | Workflows | ✅ |
-| Vault Setup | ✅ |
-| Kubernetes | ✅ |
+| Vault Setup | ❌ |
+| Kubernetes | ❌ |
 | Container Signing | ❌ |
 | Notifications | ✅ |
 | Workflow Syntax | ❌ |

@@ -1,8 +1,9 @@
+---
 name: 🔐 Production Approval Workflow
 
 on:
   workflow_call:
-    inputs:
+  inputs:
       environment:
         description: 'Target environment for deployment'
         required: true
@@ -16,7 +17,7 @@ on:
         required: false
         type: string
         default: 'blue-green'
-    secrets:
+  secrets:
       SLACK_WEBHOOK_URL:
         required: false
       TEAMS_WEBHOOK_URL:
@@ -31,21 +32,21 @@ env:
 jobs:
   # Pre-approval validation
   pre-approval-checks:
-    name: 🔍 Pre-Approval Validation
-    runs-on: ubuntu-latest
-    outputs:
+  name: 🔍 Pre-Approval Validation
+  runs-on: ubuntu-latest
+  outputs:
       approval-required: ${{ steps.check-approval.outputs.required }}
       security-score: ${{ steps.security-check.outputs.score }}
       change-risk: ${{ steps.risk-assessment.outputs.level }}
-    
-    steps:
+
+  steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Check if approval required
         id: check-approval
         run: |
-          if [[ "${{ inputs.environment }}" == "production" ]]; then
+          if [["${{ inputs.environment }}" == "production"]]; then
             echo "required=true" >> $GITHUB_OUTPUT
           else
             echo "required=false" >> $GITHUB_OUTPUT
@@ -63,27 +64,27 @@ jobs:
         run: |
           # Assess risk based on changes
           RISK_LEVEL="low"
-          
+
           # Check for high-risk file changes
           if git diff --name-only HEAD~1 | grep -E "(migration|schema|auth|security)" >/dev/null 2>&1; then
             RISK_LEVEL="high"
           elif git diff --name-only HEAD~1 | grep -E "(config|env|secrets)" >/dev/null 2>&1; then
             RISK_LEVEL="medium"
           fi
-          
+
           echo "level=$RISK_LEVEL" >> $GITHUB_OUTPUT
 
   # Request approval for production deployments
   production-approval:
-    name: 📋 Production Deployment Approval
-    runs-on: ubuntu-latest
-    needs: pre-approval-checks
-    if: needs.pre-approval-checks.outputs.approval-required == 'true'
-    environment: 
+  name: 📋 Production Deployment Approval
+  runs-on: ubuntu-latest
+  needs: pre-approval-checks
+  if: needs.pre-approval-checks.outputs.approval-required == 'true'
+  environment:
       name: production-approval
       url: https://github.com/${{ github.repository }}/deployments
-    
-    steps:
+
+  steps:
       - name: Send approval notification
         run: |
           echo "🚀 Production deployment approval requested"
@@ -108,8 +109,7 @@ jobs:
               "username": "Production Deployment Bot",
               "icon_emoji": ":rocket:",
               "text": "🚀 *Production Deployment Approval Required*",
-              "attachments": [
-                {
+              "attachments": [{
                   "color": "${{ needs.pre-approval-checks.outputs.change-risk == 'high' && 'danger' || needs.pre-approval-checks.outputs.change-risk == 'medium' && 'warning' || 'good' }}",
                   "fields": [
                     {
@@ -152,19 +152,18 @@ jobs:
                       "value": "${{ github.ref_name }}",
                       "short": true
                     }
-                  ],
-                  "actions": [
-                    {
+                 ],
+                  "actions": [{
                       "type": "button",
                       "text": "View PR",
                       "url": "https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
                     },
                     {
-                      "type": "button", 
+                      "type": "button",
                       "text": "View Workflow",
                       "url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
                     }
-                  ]
+                 ]
                 }
               ]
             }
@@ -178,8 +177,7 @@ jobs:
             "summary": "Production Deployment Approval Required",
             "themeColor": "${{ needs.pre-approval-checks.outputs.change-risk == 'high' && 'FF0000' || needs.pre-approval-checks.outputs.change-risk == 'medium' && 'FFA500' || '00FF00' }}",
             "title": "🚀 Production Deployment Approval Required",
-            "sections": [
-              {
+            "sections": [{
                 "facts": [
                   {"name": "Environment", "value": "${{ inputs.environment }}"},
                   {"name": "Image Tag", "value": "${{ inputs.image_tag }}"},
@@ -187,7 +185,7 @@ jobs:
                   {"name": "Security Score", "value": "${{ needs.pre-approval-checks.outputs.security-score }}/100"},
                   {"name": "Change Risk", "value": "${{ needs.pre-approval-checks.outputs.change-risk }}"},
                   {"name": "Requester", "value": "${{ github.actor }}"}
-                ]
+               ]
               }
             ],
             "potentialAction": [
@@ -206,12 +204,12 @@ jobs:
 
   # Post-approval verification
   post-approval-verification:
-    name: ✅ Post-Approval Verification  
-    runs-on: ubuntu-latest
-    needs: [pre-approval-checks, production-approval]
-    if: always() && (needs.production-approval.result == 'success' || needs.pre-approval-checks.outputs.approval-required == 'false')
-    
-    steps:
+  name: ✅ Post-Approval Verification
+  runs-on: ubuntu-latest
+  needs: [pre-approval-checks, production-approval]
+  if: always() && (needs.production-approval.result == 'success' || needs.pre-approval-checks.outputs.approval-required == 'false')
+
+  steps:
       - name: Verify approval conditions
         run: |
           echo "✅ Approval verification completed"
@@ -259,11 +257,11 @@ jobs:
 
   # Emergency bypass (for critical hotfixes)
   emergency-bypass:
-    name: 🚨 Emergency Bypass
-    runs-on: ubuntu-latest
-    if: contains(github.event.head_commit.message, '[EMERGENCY]') || contains(github.event.head_commit.message, '[HOTFIX]')
-    
-    steps:
+  name: 🚨 Emergency Bypass
+  runs-on: ubuntu-latest
+  if: contains(github.event.head_commit.message, '[EMERGENCY]') || contains(github.event.head_commit.message, '[HOTFIX]')
+
+  steps:
       - name: Emergency deployment notice
         run: |
           echo "🚨 EMERGENCY DEPLOYMENT DETECTED"
@@ -283,8 +281,7 @@ jobs:
               "username": "Emergency Deployment Bot",
               "icon_emoji": ":rotating_light:",
               "text": "🚨 *EMERGENCY DEPLOYMENT IN PROGRESS*",
-              "attachments": [
-                {
+              "attachments": [{
                   "color": "danger",
                   "fields": [
                     {
@@ -302,7 +299,7 @@ jobs:
                       "value": "${{ github.event.head_commit.message }}",
                       "short": false
                     }
-                  ]
+                 ]
                 }
               ]
             }
