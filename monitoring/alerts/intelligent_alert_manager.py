@@ -473,7 +473,7 @@ Initialize the intelligent alert manager"""
             return
         
         async def escalate_alert():
-        try:
+            try:
             logger.info(f"Executing escalate_alert")
             
             # Implementation for escalate_alert
