@@ -78,14 +78,40 @@ This is the complete documentation suite for the Ainflue AI-powered content prot
 
 ### 👥 User Documentation
 
-#### 1. User Guides
-- **[User Manual](./user/user-manual.md)** - Complete user guide
-- **[Quick Start Guide](./user/quick-start.md)** - Getting started quickly
-- **[Feature Guides](./user/features/)** - Individual feature documentation
-- **[FAQ](./user/faq.md)** - Frequently asked questions
-- **[Troubleshooting](./user/troubleshooting.md)** - User issue resolution
+#### 1. Core User Guides
+- **[User Manual](./user/user-manual.md)** - Complete user guide with all platform features
+- **[Creator Guide](./user/CREATOR_GUIDE.md)** - Comprehensive guide for digital creators
+- **[Monetization Guide](./user/MONETIZATION_GUIDE.md)** - Complete revenue optimization guide
+- **[Collaboration Guide](./user/COLLABORATION_GUIDE.md)** - Multi-creator project management
 
-#### 2. Integration Guides
+#### 2. Video Learning Resources
+- **[Video Tutorials](./user/VIDEO_TUTORIALS.md)** - Complete video tutorial library
+  - Getting started tutorials (2+ hours of content)
+  - Advanced feature tutorials (4+ hours of content)
+  - Multi-language support with subtitles
+  - Interactive learning paths for all skill levels
+
+#### 3. Support Documentation
+- **[FAQ - Frequently Asked Questions](./user/FAQ.md)** - Comprehensive Q&A database
+  - 12 detailed categories covering all platform aspects
+  - 350+ language support questions
+  - Technical troubleshooting answers
+  - Business and monetization guidance
+- **[Troubleshooting Guide](./user/TROUBLESHOOTING_GUIDE.md)** - Complete problem resolution guide
+  - Emergency issue procedures
+  - Step-by-step diagnostic instructions
+  - Platform-specific solutions
+  - Performance optimization tips
+
+#### 4. Feature Documentation
+- **[Feature Guides](./user/FEATURE_GUIDES.md)** - Comprehensive feature documentation
+  - AI content protection details
+  - Multi-platform monitoring capabilities
+  - Revenue optimization tools
+  - Collaboration system features
+  - API and integration guides
+
+#### 5. Integration Guides
 - **[Platform Integrations](./integrations/)** - Third-party platform setup
 - **[API Integration Examples](./integrations/api-examples/)** - Code samples
 - **[Webhook Configuration](./integrations/webhooks.md)** - Event notification setup
