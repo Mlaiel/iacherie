@@ -81,7 +81,80 @@ docker-compose up -d
 python main.py
 ```
 
+## 📊 Surveillance et Observabilité
+
+### 🎯 Stack de Monitoring Complet - AMÉLIORÉ
+
+#### Stack ELK (Elasticsearch, Logstash, Kibana)
+- **Agrégation de logs de niveau entreprise** avec sécurité et persistance
+- **Analyse de logs temps réel** sur tous les microservices
+- **Parsing de logs personnalisé** pour les événements de workflow métier
+- **Emplacement**: `kubernetes/monitoring/elk_stack.yaml`
+
+#### Métriques Prometheus + Grafana
+- **Collecte de métriques temps réel** depuis tous les services
+- **9 tableaux de bord complets** couvrant métriques système, métier et IA
+- **Suivi KPI métier personnalisé** aligné avec les étapes de workflow
+- **Emplacement**: `monitoring/prometheus/`, `monitoring/grafana/`
+
+#### Traçage Distribué Jaeger
+- **Traçage de requêtes end-to-end** sur les microservices
+- **Corrélation de workflow métier** avec contexte de trace
+- **Identification des goulots d'étranglement de performance**
+- **Emplacement**: `monitoring/jaeger-config.yaml`
+
+#### 🆕 Suivi d'Erreurs Sentry
+- **Agrégation d'erreurs intelligente** avec détection de patterns
+- **Enrichissement de contexte métier** (utilisateur, étape workflow, service)
+- **Analyse de tendances d'erreurs automatique** avec insights ML
+- **Filtrage d'erreurs intelligent** pour réduire le bruit
+- **Emplacement**: `monitoring/error_tracking/`
+
+#### 🆕 Alertes Intelligentes PagerDuty
+- **Politiques d'escalade conscientes du métier** basées sur la criticité du service
+- **Routage d'alertes intelligent** avec analyse de contexte
+- **Notifications multi-canaux** (Slack, Email, SMS)
+- **Suppression automatique d'alertes** pour problèmes connus
+- **Emplacement**: `monitoring/pagerduty_integration/`
+
+#### 🆕 Monitoring de Workflow Métier
+- **Suivi de parcours utilisateur end-to-end**: Upload → IA → Protection → SEO → Collaboration → Distribution
+- **Détection de goulots d'étranglement temps réel** avec recommandations d'optimisation
+- **Analyse d'impact revenus** et métriques métier
+- **Insights d'optimisation expérience utilisateur**
+- **Emplacement**: `monitoring/business_workflow_dashboards/`
+
+### Variables d'Environnement Monitoring
+```bash
+# Suivi d'Erreurs Sentry
+SENTRY_DSN=https://your_sentry_dsn@sentry.io/project_id
+SENTRY_ENVIRONMENT=production
+
+# Intégration PagerDuty
+PAGERDUTY_INTEGRATION_KEY=your_pagerduty_integration_key
+PAGERDUTY_API_TOKEN=your_pagerduty_api_token
+
+# Notifications Slack
+SLACK_WEBHOOK_URL=https://hooks.slack.com/services/your/webhook/url
+
+# Notifications Email
+SMTP_PASSWORD=your_smtp_password
+SMTP_FROM=alerts@ainflue.com
+```
+
 ## 📋 Statut d'Implémentation
+
+### ✅ Surveillance et Observabilité - NOUVEAU & AMÉLIORÉ
+- [x] **Stack ELK Complète**: Elasticsearch, Logstash, Kibana avec sécurité entreprise
+- [x] **Prometheus + Grafana**: Métriques temps réel avec 9 tableaux de bord complets
+- [x] **Jaeger**: Traçage distribué pour analyse de performance end-to-end
+- [x] **🆕 Sentry**: Suivi d'erreurs intelligent avec détection de patterns IA
+- [x] **🆕 PagerDuty**: Alertes intelligentes avec escalade basée sur l'impact métier
+- [x] **🆕 Monitoring Workflow Métier**: Suivi complet du parcours utilisateur
+- [x] Tableaux de bord personnalisés par service
+- [x] Analyse d'impact métier automatisée
+- [x] Détection de goulots d'étranglement en temps réel
+- [x] Recommandations d'optimisation automatisées
 
 ### ✅ Système de Gamification - AMÉLIORÉ
 - [x] Système de points avancé et gestion des niveaux
