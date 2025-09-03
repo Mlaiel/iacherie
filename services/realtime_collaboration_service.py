@@ -20,11 +20,12 @@ from concurrent.futures import ThreadPoolExecutor
 import hashlib
 import copy
 
-# Optional Redis import
+# Optional Redis import - work around version compatibility issues
 try:
     import aioredis
     REDIS_AVAILABLE = True
-except ImportError:
+except (ImportError, TypeError) as e:
+    # Handle both import errors and the TimeoutError inheritance issue
     REDIS_AVAILABLE = False
     aioredis = None
 
