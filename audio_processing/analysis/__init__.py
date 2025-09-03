@@ -67,9 +67,34 @@ from .voice_activity_detector import VoiceActivityDetector
 
 from .metadata_extractor import AudioMetadataExtractor
 
-from .harmonic_analyzer import HarmonicAnalyzer
+from .harmonic_analyzer import (
+    HarmonicAnalyzer, 
+    UltraAdvancedHarmonicAnalyzer,
+    HarmonicAnalysisResult,
+    ChordDetectionResult,
+    HarmonicAnalysisMode,
+    ScaleType
+)
 
-from .tempo_detector import TempoDetector
+from .tempo_detector import (
+    TempoDetector,
+    UltraAdvancedTempoDetector,
+    TempoAnalysisResult,
+    TempoDetectionAlgorithm
+)
+
+from .waveform_spectrogram_generator import (
+    UltraAdvancedWaveformSpectrogramGenerator,
+    WaveformConfig,
+    SpectrogramConfig,
+    VisualizationResult,
+    SpectrogramType,
+    WaveformStyle,
+    ColorScheme,
+    create_waveform_spectrogram_generator,
+    generate_quick_waveform,
+    generate_quick_spectrogram
+)
 
 from .key_detector import KeyDetector
 
@@ -101,6 +126,26 @@ __all__ = [
     "TempoDetector",
     "KeyDetector",
     "MoodAnalyzer",
+    
+    # Ultra-Advanced Analysis Engines (NEW)
+    "UltraAdvancedHarmonicAnalyzer",
+    "HarmonicAnalysisResult",
+    "ChordDetectionResult", 
+    "HarmonicAnalysisMode",
+    "ScaleType",
+    "UltraAdvancedTempoDetector",
+    "TempoAnalysisResult",
+    "TempoDetectionAlgorithm",
+    "UltraAdvancedWaveformSpectrogramGenerator",
+    "WaveformConfig",
+    "SpectrogramConfig",
+    "VisualizationResult",
+    "SpectrogramType",
+    "WaveformStyle",
+    "ColorScheme",
+    "create_waveform_spectrogram_generator",
+    "generate_quick_waveform",
+    "generate_quick_spectrogram",
     
     # Advanced AI Analysis
     "AudioFingerprinter",

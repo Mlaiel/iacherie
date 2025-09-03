@@ -35,7 +35,26 @@ from .analysis import (
     GenreClassifier,
     InstrumentIdentifier,
     VoiceActivityDetector,
-    AudioMetadataExtractor
+    AudioMetadataExtractor,
+    # Enhanced modules
+    UltraAdvancedTempoDetector,
+    TempoAnalysisResult,
+    TempoDetectionAlgorithm,
+    UltraAdvancedHarmonicAnalyzer,
+    HarmonicAnalysisResult,
+    ChordDetectionResult,
+    HarmonicAnalysisMode,
+    ScaleType,
+    UltraAdvancedWaveformSpectrogramGenerator,
+    WaveformConfig,
+    SpectrogramConfig,
+    VisualizationResult,
+    SpectrogramType,
+    WaveformStyle,
+    ColorScheme,
+    create_waveform_spectrogram_generator,
+    generate_quick_waveform,
+    generate_quick_spectrogram
 )
 
 from .effects import (
@@ -145,7 +164,7 @@ __all__ = [
     'get_audio_hub_health',
     'get_audio_hub_stats',
     
-    # Analysis Engine
+    # Analysis Engine (Enhanced)
     'SpectralAnalyzer',
     'MelodyExtractor',
     'RhythmAnalyzer',
@@ -154,6 +173,26 @@ __all__ = [
     'InstrumentIdentifier',
     'VoiceActivityDetector',
     'AudioMetadataExtractor',
+    
+    # Ultra-Advanced Analysis (NEW)
+    'UltraAdvancedTempoDetector',
+    'TempoAnalysisResult',
+    'TempoDetectionAlgorithm',
+    'UltraAdvancedHarmonicAnalyzer',
+    'HarmonicAnalysisResult',
+    'ChordDetectionResult',
+    'HarmonicAnalysisMode',
+    'ScaleType',
+    'UltraAdvancedWaveformSpectrogramGenerator',
+    'WaveformConfig',
+    'SpectrogramConfig',
+    'VisualizationResult',
+    'SpectrogramType',
+    'WaveformStyle',
+    'ColorScheme',
+    'create_waveform_spectrogram_generator',
+    'generate_quick_waveform',
+    'generate_quick_spectrogram',
     
     # Synthesis Engine (Enhanced)
     'AudioSynthesisHub',

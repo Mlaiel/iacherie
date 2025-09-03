@@ -323,25 +323,26 @@ Hybrid beat tracking combining multiple methods"""
         
         # Simple combination: use Ellis as primary, fill gaps with Degara
         try:
-                    # AI model processing
-                    if not hasattr(self, 'model') or self.model is None:
-                        raise RuntimeError("AI model not initialized")
+            # AI model processing
+            if not hasattr(self, 'model') or self.model is None:
+                raise RuntimeError("AI model not initialized")
+    
+            # Preprocess input
+            processed_input = await self._preprocess_analyze_input(data)
+    
+            # Run inference
+            result = await self.model.predict(processed_input)
+    
+            # Postprocess result
+            final_result = await self._postprocess_analyze_result(result)
+    
+            logger.info(f"AI processing analyze completed")
+            return final_result
+    
+        except Exception as e:
+            logger.error(f"AI processing analyze failed: {e}")
+            raise
             
-                    # Preprocess input
-                    processed_input = await self._preprocess_analyze_input(data)
-            
-                    # Run inference
-                    result = await self.model.predict(processed_input)
-            
-                    # Postprocess result
-                    final_result = await self._postprocess_analyze_result(result)
-            
-                    logger.info(f"AI processing analyze completed")
-                    return final_result
-            
-                except Exception as e:
-                    logger.error(f"AI processing analyze failed: {e}")
-                    raise
         ellis_times, ellis_strengths = self._ellis_beat_tracking(onset_envelope)
         degara_times, degara_strengths = self._degara_beat_tracking(onset_envelope)
         
@@ -352,68 +353,63 @@ Hybrid beat tracking combining multiple methods"""
         return combined_times, combined_strengths
     
     async def _detect_onsets(self, audio_data: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
-        """
-Detect onset times and strengths"""
-        def detect():
+        """Detect onset times and strengths"""
         try:
-                # Onset detection
-                onset_frames = librosa.onset.onset_detect(
-                    y=audio_data,
-                    sr=self.sample_rate,
-                    hop_length=self.hop_length,
-                    pre_max=3,
-                    post_max=3,
-                    pre_avg=3,
-                    post_avg=5,
-                    delta=0.07,
-                    wait=10
-                )
-                
-                # Convert to times
-                onset_times = librosa.frames_to_time(onset_frames, sr=self.sample_rate, hop_length=self.hop_length)
-                
-                # Get onset strengths
-                onset_envelope = librosa.onset.onset_strength(
-                    y=audio_data,
-                    sr=self.sample_rate,
-                    hop_length=self.hop_length
-                )
-                
-                onset_strengths = onset_envelope[onset_frames] if len(onset_frames) > 0 else np.array([])
-                
-                return onset_times, onset_strengths
-                
-            except Exception as e:
-                self.logger.warning(f"Onset detection failed: {e}")
-                return np.array([]), np.array([])
+            # Onset detection
+            onset_frames = librosa.onset.onset_detect(
+                y=audio_data,
+                sr=self.sample_rate,
+                hop_length=self.hop_length,
+                pre_max=3,
+                post_max=3,
+                pre_avg=3,
+                post_avg=5,
+                delta=0.07,
+                wait=10
+            )
+            
+            # Convert to times
+            onset_times = librosa.frames_to_time(onset_frames, sr=self.sample_rate, hop_length=self.hop_length)
+            
+            # Get onset strengths
+            onset_envelope = librosa.onset.onset_strength(
+                y=audio_data,
+                sr=self.sample_rate,
+                hop_length=self.hop_length
+            )
+            
+            onset_strengths = onset_envelope[onset_frames] if len(onset_frames) > 0 else np.array([])
+            
+            return onset_times, onset_strengths
+            
+        except Exception as e:
+            self.logger.warning(f"Onset detection failed: {e}")
+            return np.array([]), np.array([])
         
         return await asyncio.get_event_loop().run_in_executor(self.executor, detect)
     
     async def _analyze_downbeats(self, onset_envelope: np.ndarray) -> np.ndarray:
         """Analyze downbeat locations"""
-        def analyze():
         try:
-                # Simple downbeat detection (every 4 beats for 4/4)
-                tempo, beats = librosa.beat.beat_track(
-                    onset_envelope=onset_envelope,
-                    sr=self.sample_rate,
-                    hop_length=self.hop_length
-                )
-                
-                if len(beats) == 0:
-                    return np.array([])
-                
-                # Assume 4/4 time signature for simplicity
-                downbeat_indices = beats[::4]  # Every 4th beat
-                downbeat_times = librosa.frames_to_time(downbeat_indices, sr=self.sample_rate, hop_length=self.hop_length)
-                
-                return downbeat_times
-                
-            except Exception as e:
-                self.logger.warning(f"Downbeat analysis failed: {e}")
+            # Simple downbeat detection (every 4 beats for 4/4)
+            tempo, beats = librosa.beat.beat_track(
+                onset_envelope=onset_envelope,
+                sr=self.sample_rate,
+                hop_length=self.hop_length
+            )
+            
+            if len(beats) == 0:
                 return np.array([])
-        
-        return await asyncio.get_event_loop().run_in_executor(self.executor, analyze)
+            
+            # Assume 4/4 time signature for simplicity
+            downbeat_indices = beats[::4]  # Every 4th beat
+            downbeat_times = librosa.frames_to_time(downbeat_indices, sr=self.sample_rate, hop_length=self.hop_length)
+            
+            return downbeat_times
+            
+        except Exception as e:
+            self.logger.warning(f"Downbeat analysis failed: {e}")
+            return np.array([])
     
     async def _determine_time_signature(self, 
                                       beat_times: np.ndarray, 
