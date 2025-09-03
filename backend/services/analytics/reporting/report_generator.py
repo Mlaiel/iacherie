@@ -344,8 +344,9 @@ class ReportGenerator:
         """Generate engagement analytics section"""
         try:
             # Get engagement trends
+            from ..tracking.engagement_metrics import EngagementPeriod
             trends = await self.engagement_metrics.get_engagement_trends(
-                period=self.engagement_metrics.EngagementPeriod.DAILY,
+                period=EngagementPeriod.DAILY,
                 limit=days
             )
             
