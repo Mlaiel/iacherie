@@ -948,7 +948,8 @@ Invalidate Redis cache entries matching pattern"""
     
     async def _compress_data(self, data: bytes, compression_type: CompressionType) -> bytes:
         """
-Compress data using specified algorithm"""
+        Compress data using specified algorithm
+        """
         if compression_type == CompressionType.GZIP:
             return gzip.compress(data)
         elif compression_type == CompressionType.LZ4:
@@ -1103,7 +1104,7 @@ class CacheManagerDocumentation:
         Statistiques du gestionnaire
         
         Returns:
-            Dict: Métriques actuelles
+            Dict: Metriques actuelles
         """
         with self._lock:
             return {
