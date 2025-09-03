@@ -799,3 +799,204 @@ async def get_platform_manager() -> PlatformManager:
         _platform_manager = PlatformManager()
     
     return _platform_manager
+
+
+class PlatformConnector:
+    """Unified platform connector interface.
+    
+    This class provides a simplified interface to the underlying
+    platform management system for easier integration.
+    """
+    
+    def __init__(self):
+        """Initialize platform connector."""
+        self.logger = logging.getLogger(f"{__name__}.PlatformConnector")
+        self._manager: Optional[PlatformManager] = None
+    
+    async def initialize(self) -> bool:
+        """Initialize the platform connector."""
+        try:
+            self._manager = await get_platform_manager()
+            self.logger.info("✅ Platform connector initialized")
+            return True
+        except Exception as e:
+            self.logger.error(f"❌ Failed to initialize platform connector: {e}")
+            return False
+    
+    async def connect(
+        self,
+        platform: PlatformType,
+        credentials: Dict[str, Any]
+    ) -> bool:
+        """Connect to a platform.
+        
+        Args:
+            platform: Platform to connect to
+            credentials: Platform credentials
+            
+        Returns:
+            True if connection successful
+        """
+        try:
+            if not self._manager:
+                await self.initialize()
+            
+            # Convert credentials dict to PlatformCredentials
+            platform_creds = PlatformCredentials(
+                platform=platform,
+                auth_type=AuthenticationType(credentials.get('auth_type', 'oauth2')),
+                access_token=credentials.get('access_token'),
+                refresh_token=credentials.get('refresh_token'),
+                api_key=credentials.get('api_key'),
+                api_secret=credentials.get('api_secret'),
+                client_id=credentials.get('client_id'),
+                client_secret=credentials.get('client_secret'),
+                user_id=credentials.get('user_id'),
+                username=credentials.get('username'),
+                scope=credentials.get('scope', []),
+                metadata=credentials.get('metadata', {})
+            )
+            
+            return await self._manager.add_platform(platform, platform_creds)
+            
+        except Exception as e:
+            self.logger.error(f"Error connecting to {platform}: {e}")
+            return False
+    
+    async def upload_content(
+        self,
+        platform: PlatformType,
+        content_metadata: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Upload content to a platform.
+        
+        Args:
+            platform: Target platform
+            content_metadata: Content metadata
+            
+        Returns:
+            Upload response
+        """
+        try:
+            if not self._manager:
+                await self.initialize()
+            
+            connector = await self._manager.get_connector(platform)
+            if not connector:
+                return {"success": False, "error": f"Not connected to {platform}"}
+            
+            # Convert metadata dict to ContentMetadata
+            metadata = ContentMetadata(
+                title=content_metadata.get('title', ''),
+                description=content_metadata.get('description', ''),
+                tags=content_metadata.get('tags', []),
+                category=content_metadata.get('category'),
+                privacy=content_metadata.get('privacy', 'public'),
+                file_url=content_metadata.get('file_url'),
+                file_path=content_metadata.get('file_path'),
+                scheduled_time=content_metadata.get('scheduled_time'),
+                custom_fields=content_metadata.get('custom_fields', {})
+            )
+            
+            response = await connector.upload_content(metadata)
+            
+            return {
+                "success": response.success,
+                "status_code": response.status_code,
+                "data": response.data,
+                "error": response.error,
+                "platform": response.platform.value if response.platform else None
+            }
+            
+        except Exception as e:
+            self.logger.error(f"Error uploading content to {platform}: {e}")
+            return {"success": False, "error": str(e)}
+    
+    async def get_analytics(
+        self,
+        platform: PlatformType,
+        content_id: str,
+        metrics: List[str]
+    ) -> Dict[str, Any]:
+        """Get analytics for content.
+        
+        Args:
+            platform: Platform to query
+            content_id: Content identifier
+            metrics: Metrics to retrieve
+            
+        Returns:
+            Analytics data
+        """
+        try:
+            if not self._manager:
+                await self.initialize()
+            
+            connector = await self._manager.get_connector(platform)
+            if not connector:
+                return {"success": False, "error": f"Not connected to {platform}"}
+            
+            response = await connector.get_analytics(content_id, metrics)
+            
+            return {
+                "success": response.success,
+                "status_code": response.status_code,
+                "data": response.data,
+                "error": response.error,
+                "platform": response.platform.value if response.platform else None
+            }
+            
+        except Exception as e:
+            self.logger.error(f"Error getting analytics from {platform}: {e}")
+            return {"success": False, "error": str(e)}
+    
+    async def get_connected_platforms(self) -> List[str]:
+        """Get list of connected platforms.
+        
+        Returns:
+            List of connected platform names
+        """
+        try:
+            if not self._manager:
+                await self.initialize()
+            
+            platforms = await self._manager.get_connected_platforms()
+            return [platform.value for platform in platforms]
+            
+        except Exception as e:
+            self.logger.error(f"Error getting connected platforms: {e}")
+            return []
+    
+    async def disconnect(self, platform: PlatformType) -> bool:
+        """Disconnect from a platform.
+        
+        Args:
+            platform: Platform to disconnect from
+            
+        Returns:
+            True if disconnection successful
+        """
+        try:
+            if not self._manager:
+                return False
+            
+            return await self._manager.remove_platform(platform)
+            
+        except Exception as e:
+            self.logger.error(f"Error disconnecting from {platform}: {e}")
+            return False
+
+
+# Export main classes
+__all__ = [
+    'PlatformConnector',
+    'PlatformManager',
+    'BasePlatformConnector',
+    'PlatformType',
+    'AuthenticationType',
+    'ConnectionStatus',
+    'PlatformCredentials',
+    'ContentMetadata',
+    'APIResponse',
+    'get_platform_manager'
+]

@@ -590,13 +590,98 @@ class ContentMarketplace:
         """
         return self.content_items.get(content_id)
     
-    async def get_purchase(self, purchase_id: str) -> Optional[ContentPurchase]:
-        """Get purchase record by ID.
+    async def list_content(
+        self,
+        filters: Optional[Dict[str, Any]] = None,
+        limit: int = 20,
+        offset: int = 0
+    ) -> List[ContentItem]:
+        """List content in marketplace with filters.
         
         Args:
-            purchase_id: Purchase identifier
+            filters: Optional filters (same as search_content parameters)
+            limit: Maximum results
+            offset: Results offset
             
         Returns:
-            Purchase record if found
+            List of content items
         """
-        return self.purchases.get(purchase_id)
+        try:
+            if not filters:
+                # Return all active content if no filters
+                active_content = [
+                    content for content in self.content_items.values()
+                    if content.status == ContentStatus.ACTIVE
+                ]
+                # Sort by creation date, newest first
+                active_content.sort(key=lambda x: x.created_at, reverse=True)
+                return active_content[offset:offset + limit]
+            else:
+                # Use search_content with filters
+                return await self.search_content(
+                    query=filters.get('query'),
+                    content_type=filters.get('content_type'),
+                    category=filters.get('category'),
+                    min_price=filters.get('min_price'),
+                    max_price=filters.get('max_price'),
+                    license_type=filters.get('license_type'),
+                    tags=filters.get('tags'),
+                    limit=limit,
+                    offset=offset
+                )
+        except Exception as e:
+            logger.error(f"Failed to list content: {e}")
+            return []
+    
+    async def publish_content(
+        self,
+        creator_id: str,
+        content_data: Dict[str, Any]
+    ) -> ContentItem:
+        """Publish content to marketplace (alias for submit_content).
+        
+        Args:
+            creator_id: Content creator identifier
+            content_data: Content information
+            
+        Returns:
+            Published content item
+        """
+        try:
+            return await self.submit_content(
+                creator_id=creator_id,
+                title=content_data['title'],
+                description=content_data['description'],
+                content_type=ContentType(content_data['content_type']),
+                category=MarketplaceCategory(content_data['category']),
+                file_url=content_data['file_url'],
+                price=Decimal(str(content_data['price'])),
+                license_type=LicenseType(content_data.get('license_type', 'royalty_free')),
+                tags=content_data.get('tags', []),
+                metadata=content_data.get('metadata', {})
+            )
+        except Exception as e:
+            logger.error(f"Failed to publish content: {e}")
+            raise
+    
+    async def process_transaction(
+        self,
+        transaction_data: Dict[str, Any]
+    ) -> ContentPurchase:
+        """Process a content purchase transaction.
+        
+        Args:
+            transaction_data: Transaction information
+            
+        Returns:
+            Purchase record
+        """
+        try:
+            return await self.purchase_content(
+                content_id=transaction_data['content_id'],
+                buyer_id=transaction_data['buyer_id'],
+                license_type=LicenseType(transaction_data.get('license_type')) if transaction_data.get('license_type') else None
+            )
+        except Exception as e:
+            logger.error(f"Failed to process transaction: {e}")
+            raise

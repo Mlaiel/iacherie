@@ -122,6 +122,21 @@ class GamificationServices:
             self.logger.error(f"❌ Failed to initialize gamification services: {e}")
             return False
     
+    @property
+    def achievements(self):
+        """Access to achievements module."""
+        return self.achievement_engine
+    
+    @property
+    def rewards(self):
+        """Access to rewards module."""
+        return self.reward_distributor
+    
+    @property
+    def challenges(self):
+        """Access to challenges module."""
+        return self.challenge_creator
+    
     async def process_user_action(
         self,
         user_id: str,

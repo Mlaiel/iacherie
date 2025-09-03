@@ -664,6 +664,151 @@ class ContentOptimizer:
         
         return round(total_score, 2)
     
+    async def generate_keywords(
+        self,
+        content: str,
+        target_topic: Optional[str] = None,
+        count: int = 10
+    ) -> List[str]:
+        """Generate keyword suggestions for content.
+        
+        Args:
+            content: Content to analyze
+            target_topic: Optional target topic for keyword generation
+            count: Number of keywords to generate
+            
+        Returns:
+            List of suggested keywords
+        """
+        try:
+            # Extract words from content
+            words = re.findall(r'\b\w+\b', content.lower())
+            
+            # Count word frequency
+            word_freq = {}
+            for word in words:
+                if len(word) > 3:  # Only consider words with more than 3 characters
+                    word_freq[word] = word_freq.get(word, 0) + 1
+            
+            # Generate keyword suggestions
+            keywords = []
+            
+            # Add most frequent words
+            frequent_words = sorted(word_freq.items(), key=lambda x: x[1], reverse=True)
+            for word, freq in frequent_words[:count//2]:
+                if freq > 1:  # Only include words that appear more than once
+                    keywords.append(word)
+            
+            # Add topic-related keywords if target_topic provided
+            if target_topic:
+                topic_words = target_topic.lower().split()
+                for word in topic_words:
+                    if word not in keywords and len(word) > 2:
+                        keywords.append(word)
+            
+            # Add semantic variations (simplified)
+            base_keywords = keywords.copy()
+            for keyword in base_keywords:
+                if len(keywords) < count:
+                    # Add plurals
+                    if not keyword.endswith('s'):
+                        keywords.append(f"{keyword}s")
+                    
+                    # Add variations
+                    if keyword.endswith('ing'):
+                        keywords.append(keyword[:-3])  # Remove -ing
+                    elif not keyword.endswith('ing'):
+                        keywords.append(f"{keyword}ing")  # Add -ing
+            
+            # Remove duplicates and limit to requested count
+            unique_keywords = list(dict.fromkeys(keywords))  # Preserve order
+            return unique_keywords[:count]
+            
+        except Exception as e:
+            logger.error(f"Error generating keywords: {e}")
+            return []
+    
+    async def analyze_trends(
+        self,
+        keywords: List[str],
+        timeframe: str = "30d"
+    ) -> Dict[str, Any]:
+        """Analyze keyword trends and popularity.
+        
+        Args:
+            keywords: Keywords to analyze
+            timeframe: Analysis timeframe (7d, 30d, 90d, 1y)
+            
+        Returns:
+            Trend analysis data
+        """
+        try:
+            # Simulate trend analysis (in real implementation, would use Google Trends API, etc.)
+            trend_data = {}
+            
+            for keyword in keywords:
+                # Generate simulated trend data
+                import random
+                
+                base_popularity = random.randint(20, 100)
+                trend_direction = random.choice(['rising', 'falling', 'stable'])
+                
+                # Generate historical data points
+                days = {"7d": 7, "30d": 30, "90d": 90, "1y": 365}.get(timeframe, 30)
+                historical_data = []
+                
+                current_value = base_popularity
+                for i in range(days):
+                    if trend_direction == 'rising':
+                        change = random.uniform(-2, 3)  # More likely to rise
+                    elif trend_direction == 'falling':
+                        change = random.uniform(-3, 2)  # More likely to fall
+                    else:
+                        change = random.uniform(-1.5, 1.5)  # Stable
+                    
+                    current_value = max(0, min(100, current_value + change))
+                    historical_data.append({
+                        "date": (datetime.now() - timedelta(days=days-i)).isoformat()[:10],
+                        "value": round(current_value, 1)
+                    })
+                
+                # Calculate trend metrics
+                recent_avg = sum(point["value"] for point in historical_data[-7:]) / 7
+                older_avg = sum(point["value"] for point in historical_data[:7]) / 7
+                trend_change = ((recent_avg - older_avg) / older_avg) * 100 if older_avg > 0 else 0
+                
+                trend_data[keyword] = {
+                    "current_popularity": round(recent_avg, 1),
+                    "trend_direction": trend_direction,
+                    "trend_change_percent": round(trend_change, 1),
+                    "search_volume": random.randint(1000, 50000),
+                    "competition": random.choice(['low', 'medium', 'high']),
+                    "cpc_estimate": round(random.uniform(0.50, 5.00), 2),
+                    "historical_data": historical_data,
+                    "related_keywords": [
+                        f"{keyword} tips",
+                        f"best {keyword}",
+                        f"{keyword} guide",
+                        f"how to {keyword}"
+                    ][:3]
+                }
+            
+            return {
+                "timeframe": timeframe,
+                "analysis_date": datetime.now().isoformat(),
+                "keywords": trend_data,
+                "summary": {
+                    "total_keywords": len(keywords),
+                    "rising_trends": len([k for k, v in trend_data.items() if v["trend_direction"] == "rising"]),
+                    "falling_trends": len([k for k, v in trend_data.items() if v["trend_direction"] == "falling"]),
+                    "avg_popularity": round(sum(v["current_popularity"] for v in trend_data.values()) / len(trend_data), 1) if trend_data else 0
+                }
+            }
+            
+        except Exception as e:
+            logger.error(f"Error analyzing trends: {e}")
+            return {"error": str(e)}
+    
     async def _predict_performance(
         self,
         content: str,
