@@ -8,18 +8,25 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
 
-from .watermark_engine import WatermarkEngine
-from .blockchain_registry import BlockchainRightsRegistry
-from .copyright_detector import CopyrightDetector
-from .nft_generator import NFTGenerator
-from .rights_manager import DigitalRightsManager
+from .watermark_engine import WatermarkEngine, WatermarkConfig, WatermarkType, ContentType
+from .blockchain_registry import BlockchainRightsRegistry, RightsType
+from .copyright_detector import CopyrightDetector, ViolationType
+from .nft_generator import NFTGenerator, NFTStandard
+from .rights_manager import DigitalRightsManager, ProtectionLevel
 
 __all__ = [
     'WatermarkEngine',
-    'BlockchainRightsRegistry', 
+    'WatermarkConfig', 
+    'WatermarkType',
+    'ContentType',
+    'BlockchainRightsRegistry',
+    'RightsType',
     'CopyrightDetector',
+    'ViolationType',
     'NFTGenerator',
-    'DigitalRightsManager'
+    'NFTStandard',
+    'DigitalRightsManager',
+    'ProtectionLevel'
 ]
 
 __version__ = "1.0.0"
