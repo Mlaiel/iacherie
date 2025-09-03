@@ -735,36 +735,6 @@ class RedisClusterCache(IndustrialRedisCache):
             **kwargs
         )
         super().__init__(config)
-                'db': self.config.db,
-                'password': self.config.password,
-                'ssl': self.config.ssl,
-                'socket_timeout': self.config.socket_timeout,
-                'socket_connect_timeout': self.config.socket_connect_timeout,
-                'max_connections': self.config.max_connections,
-                'decode_responses': False,  # We handle our own serialization
-                'retry_on_timeout': True,
-                'health_check_interval': 30
-            }
-            
-            if self.config.connection_pool_kwargs:
-                pool_kwargs.update(self.config.connection_pool_kwargs)
-            
-            # Create connection pool
-            self.connection_pool = redis.ConnectionPool(**pool_kwargs)
-            
-            # Create Redis client
-            self.redis = redis.Redis(connection_pool=self.connection_pool)
-            
-            # Test connection
-            await self.redis.ping()
-            
-            self.logger.info(f"Connected to Redis at {self.config.host}:{self.config.port}")
-            
-        except Exception as e:
-            self.logger.error(f"Failed to connect to Redis: {e}")
-            self._error_count += 1
-            self._last_error = str(e)
-            raise
     
     def _make_key(self, key: str) -> str:
         """Create prefixed cache key."""

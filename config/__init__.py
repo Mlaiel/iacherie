@@ -122,20 +122,9 @@ Protocol interface pour tous les gestionnaires de configuration"""
             return result
             
         except Exception as e:
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle_get_configuration_request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler get_configuration failed: {e}")
-                    return {"status": "error", "message": str(e)}
+            logger.error(f"Initialize failed: {e}")
+            raise
+    
     async def validate_configuration(self) -> Dict[str, Any]:
         """
 Validation de la configuration"""

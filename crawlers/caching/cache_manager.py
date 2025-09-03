@@ -847,11 +847,6 @@ class IndustrialCacheManager:
             self.logger.error(f"❌ Value deserialization failed: {e}")
             return None
 
-# Export main class
-CacheManager = IndustrialCacheManager
-            self.logger.error(f"Failed to initialize cache manager: {e}")
-            raise
-    
     async def _setup_cache_layers(self) -> None:
         """Setup multi-tier cache layers."""
         from .memory_cache import MemoryCache
@@ -1119,6 +1114,9 @@ CacheManager = IndustrialCacheManager
         
         self.executor.shutdown(wait=True)
         self._initialized = False
+
+# Export main class
+CacheManager = IndustrialCacheManager
 
 # Global cache manager instance
 _cache_manager: Optional[CacheManager] = None
