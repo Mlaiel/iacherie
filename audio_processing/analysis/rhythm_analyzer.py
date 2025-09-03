@@ -322,40 +322,15 @@ Hybrid beat tracking combining multiple methods"""
         degara_times, degara_strengths = self._degara_beat_tracking(onset_envelope)
         
         # Simple combination: use Ellis as primary, fill gaps with Degara
-        try:
-                    # AI model processing
-                    if not hasattr(self, 'model') or self.model is None:
-                        raise RuntimeError("AI model not initialized")
-            
-                    # Preprocess input
-                    processed_input = await self._preprocess_analyze_input(data)
-            
-                    # Run inference
-                    result = await self.model.predict(processed_input)
-            
-                    # Postprocess result
-                    final_result = await self._postprocess_analyze_result(result)
-            
-                    logger.info(f"AI processing analyze completed")
-                    return final_result
-            
-                except Exception as e:
-                    logger.error(f"AI processing analyze failed: {e}")
-                    raise
-        ellis_times, ellis_strengths = self._ellis_beat_tracking(onset_envelope)
-        degara_times, degara_strengths = self._degara_beat_tracking(onset_envelope)
-        
-        # Simple combination: use Ellis as primary, fill gaps with Degara
         combined_times = ellis_times
         combined_strengths = ellis_strengths
         
         return combined_times, combined_strengths
     
     async def _detect_onsets(self, audio_data: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
-        """
-Detect onset times and strengths"""
+        """Detect onset times and strengths"""
         def detect():
-        try:
+            try:
                 # Onset detection
                 onset_frames = librosa.onset.onset_detect(
                     y=audio_data,
@@ -392,7 +367,7 @@ Detect onset times and strengths"""
     async def _analyze_downbeats(self, onset_envelope: np.ndarray) -> np.ndarray:
         """Analyze downbeat locations"""
         def analyze():
-        try:
+            try:
                 # Simple downbeat detection (every 4 beats for 4/4)
                 tempo, beats = librosa.beat.beat_track(
                     onset_envelope=onset_envelope,

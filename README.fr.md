@@ -12,8 +12,26 @@ Ainflue est une plateforme complète alimentée par l'IA pour la protection et l
 ## 👨‍💻 Équipe Projet & Direction
 
 **Créateur du Projet & Responsable**: [Fahed Mlaiel](mailto:mlaiel@live.de)
-**Équipe de Développement Expert**: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + DevOps
-**Spécialités du Projet**: Protection de Contenu Alimentée par IA, Systèmes de Monétisation Avancés, Gamification Entreprise, Traitement de Contenu Multi-Format
+
+**Spécialisations de l'Équipe de Développement Expert**:
+- **Lead Developer AI & Machine Learning**: Fahed Mlaiel - Algorithmes IA avancés et traitement intelligent
+- **Architecture Backend Senior**: Advanced Python/FastAPI - Architecture robuste et systèmes évolutifs  
+- **Ingénieur ML**: Deep Learning & Traitement Audio - Modèles d'apprentissage automatique et intelligence audio
+- **Administrateur de Base de Données**: PostgreSQL & Vector Databases - Stockage et récupération de données optimisés
+- **Ingénieur Sécurité**: Sécurité Entreprise & Authentification - Protection de contenu et empreintes digitales
+- **Architecte Microservices**: Systèmes Distribués Évolutifs - Traitement audio distribué et architecture entreprise
+- **Ingénieur Audio**: Traitement Audio Professionnel - Standards de diffusion et mastering audio professionnel
+- **Ingénieur Diffusion**: Standards ITU-R & EBU - Conformité de diffusion internationale et standards de qualité
+- **Spécialiste Codec**: Compression Avancée & Optimisation Qualité - Conversion multi-format et optimisation
+- **Ingénieur DevOps**: CI/CD & Infrastructure Cloud - Containerisation et déploiement en production
+- **Ingénieur IA Prompt**: Formation Modèles IA Avancés - Interfaces audio en langage naturel et orchestration IA
+
+**Spécialités Centrales du Projet**: 
+- Module de Traitement Audio Avancé (Séparation de Sources, Normalisation Loudness, Conversion Format)
+- Protection de Contenu Alimentée par IA & Gestion des Droits
+- Conformité aux Standards de Diffusion Professionnels
+- Monétisation Entreprise & Systèmes de Distribution Multi-Plateforme
+- Matching de Collaboration Temps Réel & Moteur de Gamification
 
 ## ⚠️ AVERTISSEMENT STRICT DE PROPRIÉTÉ INTELLECTUELLE
 
@@ -29,6 +47,11 @@ Ce logiciel, concept et tous les droits de propriété intellectuelle associés 
 
 ### ✨ Fonctionnalités Principales
 
+- **🎵 Module de Traitement Audio Avancé**: Système d'intelligence audio industriel
+  - **Service de Séparation de Sources**: Séparation professionnelle vocal/instrument avec DEMUCS, Spleeter et modèles IA hybrides
+  - **Normalisation Audio Professionnelle**: Conformité aux standards de diffusion (EBU R128, ITU-R BS.1770, ATSC A/85)
+  - **Conversion Multi-Format**: Conversion de format haute qualité avec préservation de métadonnées et analyse qualité
+  - **Hub de Traitement Unifié**: Automatisation de workflow entreprise avec intégration logique métier
 - **🔒 Protection de Contenu Avancée**: Empreinte digitale IA pour contenu audio, vidéo et texte
 - **💰 Monétisation Intelligente**: Passerelle de paiement multi-fournisseur avec 150+ méthodes de paiement
 - **🤖 Génération de Contenu IA**: Modèles IA de pointe pour création et amélioration de contenu
