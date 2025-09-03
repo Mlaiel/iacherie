@@ -1,8 +1,75 @@
-# 🎯 Ainflue Platform - API Documentation
+# 📚 Ainflue API Documentation Hub
 
-## 📋 Overview
+Welcome to the comprehensive API documentation for the Ainflue AI Platform - your complete guide to integrating content protection, monetization, and AI-powered features.
 
-This document provides comprehensive API documentation for the Ainflue AI-powered content protection and monetization platform. Our RESTful APIs enable seamless integration with the platform's core features including content protection, monetization, analytics, and user management.
+## 🎯 Documentation Overview
+
+This documentation covers all aspects of the Ainflue API v2.0, providing everything you need to build robust integrations with our platform.
+
+## 📋 Complete Documentation Suite
+
+### 🔧 Core API Documentation
+
+| Document | Description | Use Case |
+|----------|-------------|----------|
+| **[OpenAPI Specification](./openapi-spec-complete.yaml)** | Complete OpenAPI 3.0 spec with all endpoints | API reference, code generation |
+| **[API Reference](./API_REFERENCE.md)** | Human-readable API documentation | Development guide |
+| **[Postman Collection](./ainflue-api-collection.json)** | Ready-to-use Postman requests | Testing, exploration |
+| **[Postman Environment](./ainflue-api-environment.json)** | Environment variables for testing | Configuration |
+
+### 📖 Guides & Best Practices
+
+| Document | Description | Use Case |
+|----------|-------------|----------|
+| **[API Versioning Guide](./API_VERSIONING_GUIDE.md)** | Version management and migration | Upgrades, compatibility |
+| **[Rate Limiting Guide](./RATE_LIMITING_GUIDE.md)** | Rate limits and optimization | Performance, scaling |
+| **[Error Codes Reference](./ERROR_CODES_REFERENCE.md)** | Complete error handling guide | Debugging, error handling |
+
+### 🛠️ Development Tools
+
+| File | Description | Use Case |
+|------|-------------|----------|
+| **[Postman Generator](./generate_postman_collection.py)** | Auto-generate Postman collections | Automation, updates |
+
+## 🚀 Quick Start Guide
+
+### 1. Choose Your Integration Method
+
+#### Option A: Postman Collection (Recommended for Testing)
+```bash
+# Import collection and environment files into Postman
+1. Download: ainflue-api-collection.json
+2. Download: ainflue-api-environment.json  
+3. Import both files into Postman
+4. Configure environment variables
+5. Start testing endpoints
+```
+
+#### Option B: OpenAPI Specification (Recommended for Development)
+```bash
+# Use with your favorite OpenAPI tools
+swagger-codegen generate \
+  -i openapi-spec-complete.yaml \
+  -l python \
+  -o ./ainflue-python-client
+
+# Or use with OpenAPI Generator
+openapi-generator-cli generate \
+  -i openapi-spec-complete.yaml \
+  -g typescript-axios \
+  -o ./ainflue-typescript-client
+```
+
+#### Option C: Direct API Integration
+```bash
+# Base URL
+https://api.ainflue.com/v2
+
+# Authentication
+Authorization: Bearer <your_jwt_token>
+# OR
+X-API-Key: <your_api_key>
+```
 
 ## 🔐 Authentication
 
