@@ -4,9 +4,26 @@
 
 **Version:** 2.0.0  
 **Author:** Fahed Mlaiel (mlaiel@live.de)  
-**Base URL:** `https://api.ainflue.com/v1`  
+**Base URL:** `https://api.ainflue.com/v2`  
 **Authentication:** Bearer JWT Token  
 **Content-Type:** `application/json`
+
+## 📖 Documentation Overview
+
+This is the complete API reference for the Ainflue AI Platform. For comprehensive documentation, see:
+
+- **📋 [OpenAPI Specification](./openapi-spec-complete.yaml)** - Complete OpenAPI 3.0 specification
+- **📦 [Postman Collection](./ainflue-api-collection.json)** - Ready-to-use Postman collection  
+- **🔄 [API Versioning Guide](./API_VERSIONING_GUIDE.md)** - Version management and migration
+- **🚦 [Rate Limiting Guide](./RATE_LIMITING_GUIDE.md)** - Rate limits and optimization
+- **🚨 [Error Codes Reference](./ERROR_CODES_REFERENCE.md)** - Comprehensive error handling
+
+## 🚀 Quick Start
+
+1. **Get API Access**: Sign up at https://app.ainflue.com
+2. **Import Collection**: Use our [Postman collection](./ainflue-api-collection.json)
+3. **Set Environment**: Configure your API credentials
+4. **Start Testing**: Begin with authentication endpoints
 
 ---
 
