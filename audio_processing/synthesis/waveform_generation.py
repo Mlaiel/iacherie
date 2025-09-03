@@ -129,20 +129,18 @@ class SineOscillator(BaseOscillator):
 Sine wave oscillator with high precision."""
     
     def __init__(self, config: OscillatorConfig):
-        try:
-            logger.info(f"Executing __init__")
-            
-            # Implementation for __init__
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"__init__ completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"__init__ failed: {e}")
-            raise
+        """Initialize sine oscillator with professional configuration."""
+        super().__init__(config)
+        
+        # Initialize lookup table for high-performance sine generation
+        self.wavetable_size = 4096
+        self.wavetable = np.sin(2 * np.pi * np.arange(self.wavetable_size) / self.wavetable_size)
+        
+        # Phase modulation settings
+        self.fm_phase = 0.0
+        self.am_phase = 0.0
+        
+        logger.info(f"SineOscillator initialized - SR: {config.sample_rate}Hz, Freq: {config.frequency}Hz")
     def generate(self, num_samples: int) -> np.ndarray:
         """
 Generate sine wave samples."""
@@ -277,24 +275,10 @@ Generate PolyBLEP sawtooth sample."""
         
     def _polyblep(self, t: float) -> float:
         """
-PolyBLEP function for anti-aliasing."""
+        PolyBLEP function for anti-aliasing."""
         if t < 1.0:
             return t + t - t * t - 1.0
         elif t < 2.0:
-        try:
-            logger.info(f"Executing __init__")
-            
-            # Implementation for __init__
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"__init__ completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"__init__ failed: {e}")
-            raise
             t -= 1.0
             return t * t - t - t + 1.0
         else:
