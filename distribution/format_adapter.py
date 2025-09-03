@@ -24,16 +24,52 @@ from pathlib import Path
 import mimetypes
 import json
 
-# Media processing imports
-from PIL import Image, ImageOps, ImageEnhance, ImageFilter
-import cv2
-import numpy as np
-import librosa
-import soundfile as sf
-from moviepy.editor import VideoFileClip, AudioFileClip, CompositeVideoClip, TextClip
-import ffmpeg
+# Media processing imports (optional)
+try:
+    from PIL import Image, ImageOps, ImageEnhance, ImageFilter
+except ImportError:
+    Image = ImageOps = ImageEnhance = ImageFilter = None
+
+try:
+    import cv2
+    import numpy as np
+except ImportError:
+    cv2 = np = None
+
+try:
+    import librosa
+    import soundfile as sf
+except ImportError:
+    librosa = sf = None
+
+try:
+    from moviepy.editor import VideoFileClip, AudioFileClip, CompositeVideoClip, TextClip
+except ImportError:
+    VideoFileClip = AudioFileClip = CompositeVideoClip = TextClip = None
+
+try:
+    import ffmpeg
+except ImportError:
+    ffmpeg = None
 
 from .platform_connectors import SocialPlatform, ContentFormat
+
+
+def safe_mean(values):
+    """Calculate mean safely without numpy"""
+    if not values:
+        return 0.0
+    return sum(values) / len(values)
+
+def safe_random_uniform(low, high):
+    """Generate random uniform value without numpy"""
+    import random
+    return random.uniform(low, high)
+
+def safe_sqrt(value):
+    """Calculate square root safely"""
+    import math
+    return math.sqrt(max(0, value))
 
 logger = logging.getLogger(__name__)
 
@@ -881,7 +917,7 @@ class FormatAdapter:
         # Implementation would add text watermark
         return img
     
-    def _enhance_audio_quality(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
+    def _enhance_audio_quality(self, audio_data: list, sample_rate: int) -> list:
         """Enhance audio quality"""
         # Implementation would apply audio processing
         return audio_data

@@ -21,10 +21,13 @@ from enum import Enum
 import uuid
 import json
 from collections import defaultdict
-import pytz
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from apscheduler.triggers.cron import CronTrigger
-from apscheduler.triggers.date import DateTrigger
+try:
+    import pytz
+    from apscheduler.schedulers.asyncio import AsyncIOScheduler
+    from apscheduler.triggers.cron import CronTrigger
+    from apscheduler.triggers.date import DateTrigger
+except ImportError:
+    pytz = AsyncIOScheduler = CronTrigger = DateTrigger = None
 
 from .platform_connectors import SocialPlatform, ContentPayload, PublicationResult, PlatformConnectorManager
 

@@ -19,7 +19,14 @@ from datetime import datetime, timedelta
 from dataclasses import dataclass, field, asdict
 from enum import Enum
 import json
-import numpy as np
+def safe_mean(values):
+    """Calculate mean safely without numpy"""
+    return sum(values) / len(values) if values else 0.0
+
+def safe_random_uniform(low, high):
+    """Generate random uniform value without numpy"""
+    import random
+    return random.uniform(low, high)
 from collections import defaultdict
 
 from .platform_connectors import SocialPlatform
@@ -303,7 +310,7 @@ class AnalyticsAggregator:
         rate_metrics = ['engagement_rate', 'completion_rate', 'bounce_rate', 'average_watch_time', 'cpm', 'cpc']
         for metric in rate_metrics:
             values = [getattr(dp, metric) for dp in data_points if getattr(dp, metric) > 0]
-            setattr(aggregated, metric, np.mean(values) if values else 0.0)
+            setattr(aggregated, metric, safe_mean(values) if values else 0.0)
         
         return aggregated
     
@@ -343,6 +350,13 @@ class AnalyticsAggregator:
                 cpms.extend([analytics.cpm] * analytics.impressions)
                 cpcs.extend([analytics.cpc] * analytics.clicks)
         
+        # Calculate means safely
+        avg_engagement = sum(engagement_rates) / len(engagement_rates) if engagement_rates else 0.0
+        avg_completion = sum(completion_rates) / len(completion_rates) if completion_rates else 0.0
+        avg_watch_time = sum(watch_times) / len(watch_times) if watch_times else 0.0
+        avg_cpm = sum(cpms) / len(cpms) if cpms else 0.0
+        avg_cpc = sum(cpcs) / len(cpcs) if cpcs else 0.0
+        
         # Aggregate interaction metrics
         total_likes = sum(analytics.likes for analytics in platform_analytics.values())
         total_comments = sum(analytics.comments for analytics in platform_analytics.values())
@@ -367,17 +381,17 @@ class AnalyticsAggregator:
             total_views=total_views,
             total_impressions=total_impressions,
             total_reach=total_reach,
-            average_engagement_rate=np.mean(engagement_rates) if engagement_rates else 0.0,
+            average_engagement_rate=safe_mean(engagement_rates) if engagement_rates else 0.0,
             total_likes=total_likes,
             total_comments=total_comments,
             total_shares=total_shares,
             total_saves=total_saves,
             total_clicks=total_clicks,
-            average_completion_rate=np.mean(completion_rates) if completion_rates else 0.0,
-            average_watch_time=np.mean(watch_times) if watch_times else 0.0,
+            average_completion_rate=safe_mean(completion_rates) if completion_rates else 0.0,
+            average_watch_time=safe_mean(watch_times) if watch_times else 0.0,
             total_revenue=total_revenue,
-            average_cpm=np.mean(cpms) if cpms else 0.0,
-            average_cpc=np.mean(cpcs) if cpcs else 0.0,
+            average_cpm=safe_mean(cpms) if cpms else 0.0,
+            average_cpc=safe_mean(cpcs) if cpcs else 0.0,
             best_performing_platform=best_platform,
             platform_performance_ranking=platform_ranking,
             optimization_recommendations=recommendations
@@ -728,7 +742,7 @@ class AnalyticsAggregator:
             format_performance[format_type] = {}
             for platform in platforms:
                 # Placeholder performance score
-                format_performance[format_type][platform] = np.random.uniform(0.7, 1.3)
+                format_performance[format_type][platform] = safe_random_uniform(0.7, 1.3)
         
         return format_performance
     
@@ -746,7 +760,7 @@ class AnalyticsAggregator:
             hashtag_performance[hashtag] = {}
             for platform in platforms:
                 # Placeholder performance score
-                hashtag_performance[hashtag][platform] = np.random.uniform(0.8, 1.5)
+                hashtag_performance[hashtag][platform] = safe_random_uniform(0.8, 1.5)
         
         return hashtag_performance
     

@@ -14,7 +14,10 @@ Contact: mlaiel@live.de
 """
 
 import asyncio
-import aiohttp
+try:
+    import aiohttp
+except ImportError:
+    aiohttp = None
 import logging
 import json
 import hashlib
