@@ -199,7 +199,7 @@ const ProgressTracker: React.FC<ProgressTrackerProps> = ({
   };
 
   const getMetricColor = (metric: keyof ProgressData): string => {
-    const colors = {
+    const colors: Record<string, string> = {
       experiencePoints: '#3B82F6',
       level: '#10B981',
       challengesCompleted: '#F59E0B',
