@@ -1,0 +1,140 @@
+# Ainflue Redis Cache Deployment
+# Redis cache for high-performance data caching
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ainflue-redis
+  namespace: ainflue
+  labels:
+    app: ainflue-redis
+    component: cache
+    tier: data
+    environment: production
+    version: "1.0.0"
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+    description: "Redis cache for Ainflue platform"
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: ainflue-redis
+      component: cache
+  template:
+    metadata:
+      labels:
+        app: ainflue-redis
+        component: cache
+        tier: data
+        environment: production
+        version: "1.0.0"
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9121"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: ainflue-redis
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 999
+        runAsGroup: 999
+        fsGroup: 999
+      containers:
+      - name: redis
+        image: redis:7-alpine
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: redis
+          containerPort: 6379
+          protocol: TCP
+        command:
+        - redis-server
+        - /etc/redis/redis.conf
+        env:
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-redis-secrets
+              key: password
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+            ephemeral-storage: 512Mi
+          limits:
+            cpu: 500m
+            memory: 1Gi
+            ephemeral-storage: 2Gi
+        livenessProbe:
+          exec:
+            command:
+            - redis-cli
+            - ping
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          exec:
+            command:
+            - redis-cli
+            - ping
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        volumeMounts:
+        - name: redis-data
+          mountPath: /data
+        - name: redis-config
+          mountPath: /etc/redis/redis.conf
+          subPath: redis.conf
+      - name: redis-exporter
+        image: oliver006/redis_exporter:v1.55.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: metrics
+          containerPort: 9121
+          protocol: TCP
+        env:
+        - name: REDIS_ADDR
+          value: "redis://localhost:6379"
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-redis-secrets
+              key: password
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 200m
+            memory: 256Mi
+      volumes:
+      - name: redis-data
+        persistentVolumeClaim:
+          claimName: ainflue-redis-pvc
+      - name: redis-config
+        configMap:
+          name: ainflue-redis-config
+      nodeSelector:
+        kubernetes.io/os: linux
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            preference:
+              matchExpressions:
+              - key: node-type
+                operator: In
+                values:
+                - memory-optimized
+                - general-purpose

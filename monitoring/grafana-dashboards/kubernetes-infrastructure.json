@@ -1,0 +1,109 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "Kubernetes Infrastructure",
+    "tags": ["kubernetes", "infrastructure", "cluster"],
+    "style": "dark",
+    "timezone": "browser",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Cluster Resource Usage",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "sum(rate(container_cpu_usage_seconds_total{container!=\"POD\",container!=\"\"}[5m])) by (node)",
+            "legendFormat": "CPU Usage - {{node}}"
+          }
+        ],
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": 2,
+        "title": "Memory Usage by Node",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "sum(container_memory_working_set_bytes{container!=\"POD\",container!=\"\"}) by (node)",
+            "legendFormat": "Memory Usage - {{node}}"
+          }
+        ],
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 0
+        }
+      },
+      {
+        "id": 3,
+        "title": "Pod Status",
+        "type": "table",
+        "targets": [
+          {
+            "expr": "kube_pod_info{namespace=\"ainflue\"}",
+            "format": "table"
+          }
+        ],
+        "gridPos": {
+          "h": 8,
+          "w": 24,
+          "x": 0,
+          "y": 8
+        }
+      },
+      {
+        "id": 4,
+        "title": "Network I/O",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "sum(rate(container_network_receive_bytes_total[5m])) by (pod)",
+            "legendFormat": "Receive - {{pod}}"
+          },
+          {
+            "expr": "sum(rate(container_network_transmit_bytes_total[5m])) by (pod)",
+            "legendFormat": "Transmit - {{pod}}"
+          }
+        ],
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 16
+        }
+      },
+      {
+        "id": 5,
+        "title": "Disk I/O",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "sum(rate(container_fs_reads_bytes_total[5m])) by (pod)",
+            "legendFormat": "Read - {{pod}}"
+          },
+          {
+            "expr": "sum(rate(container_fs_writes_bytes_total[5m])) by (pod)",
+            "legendFormat": "Write - {{pod}}"
+          }
+        ],
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 16
+        }
+      }
+    ],
+    "time": {
+      "from": "now-1h",
+      "to": "now"
+    },
+    "refresh": "30s"
+  }
+}

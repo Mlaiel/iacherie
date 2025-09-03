@@ -1,0 +1,406 @@
+# Elasticsearch Configuration for Ainflue Platform
+# ELK Stack configuration for centralized logging
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
+
+# Elasticsearch Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elasticsearch
+  namespace: monitoring
+  labels:
+    app: elasticsearch
+    component: logging
+    environment: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: elasticsearch
+  template:
+    metadata:
+      labels:
+        app: elasticsearch
+        component: logging
+    spec:
+      containers:
+      - name: elasticsearch
+        image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+        ports:
+        - containerPort: 9200
+          name: http
+        - containerPort: 9300
+          name: transport
+        env:
+        - name: discovery.type
+          value: single-node
+        - name: ES_JAVA_OPTS
+          value: "-Xms512m -Xmx512m"
+        - name: xpack.security.enabled
+          value: "false"
+        - name: xpack.security.enrollment.enabled
+          value: "false"
+        - name: xpack.security.http.ssl.enabled
+          value: "false"
+        - name: xpack.security.transport.ssl.enabled
+          value: "false"
+        - name: cluster.name
+          value: "ainflue-logs"
+        - name: node.name
+          value: "ainflue-es-node-1"
+        - name: bootstrap.memory_lock
+          value: "true"
+        - name: network.host
+          value: "0.0.0.0"
+        - name: http.port
+          value: "9200"
+        - name: transport.port
+          value: "9300"
+        - name: indices.query.bool.max_clause_count
+          value: "10000"
+        - name: search.max_buckets
+          value: "100000"
+        resources:
+          requests:
+            memory: 1Gi
+            cpu: 500m
+          limits:
+            memory: 2Gi
+            cpu: 1000m
+        volumeMounts:
+        - name: elasticsearch-data
+          mountPath: /usr/share/elasticsearch/data
+        - name: elasticsearch-config
+          mountPath: /usr/share/elasticsearch/config/elasticsearch.yml
+          subPath: elasticsearch.yml
+      volumes:
+      - name: elasticsearch-data
+        persistentVolumeClaim:
+          claimName: elasticsearch-pvc
+      - name: elasticsearch-config
+        configMap:
+          name: elasticsearch-config
+
+---
+# Elasticsearch Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch
+  namespace: monitoring
+  labels:
+    app: elasticsearch
+    component: logging
+spec:
+  ports:
+  - port: 9200
+    targetPort: 9200
+    name: http
+  - port: 9300
+    targetPort: 9300
+    name: transport
+  selector:
+    app: elasticsearch
+
+---
+# Elasticsearch ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: elasticsearch-config
+  namespace: monitoring
+  labels:
+    app: elasticsearch
+    component: logging
+data:
+  elasticsearch.yml: |
+    # Cluster configuration
+    cluster.name: "ainflue-logs"
+    node.name: "ainflue-es-node-1"
+    
+    # Network configuration
+    network.host: 0.0.0.0
+    http.port: 9200
+    transport.port: 9300
+    
+    # Discovery configuration
+    discovery.type: single-node
+    
+    # Path configuration
+    path.data: /usr/share/elasticsearch/data
+    path.logs: /usr/share/elasticsearch/logs
+    
+    # Memory configuration
+    bootstrap.memory_lock: true
+    
+    # Security configuration (disabled for simplicity)
+    xpack.security.enabled: false
+    xpack.security.enrollment.enabled: false
+    xpack.security.http.ssl.enabled: false
+    xpack.security.transport.ssl.enabled: false
+    
+    # Monitoring configuration
+    xpack.monitoring.collection.enabled: true
+    
+    # Index configuration
+    action.destructive_requires_name: true
+    
+    # Performance settings
+    indices.query.bool.max_clause_count: 10000
+    search.max_buckets: 100000
+    
+    # Index templates for Ainflue logs
+    index.number_of_shards: 1
+    index.number_of_replicas: 0
+    index.refresh_interval: 30s
+    
+    # Logging levels
+    logger.org.elasticsearch.discovery: WARN
+    logger.org.elasticsearch.cluster.service: WARN
+
+---
+# Logstash Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logstash
+  namespace: monitoring
+  labels:
+    app: logstash
+    component: logging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: logstash
+  template:
+    metadata:
+      labels:
+        app: logstash
+        component: logging
+    spec:
+      containers:
+      - name: logstash
+        image: docker.elastic.co/logstash/logstash:8.11.0
+        ports:
+        - containerPort: 5044
+          name: beats
+        - containerPort: 9600
+          name: http
+        env:
+        - name: LS_JAVA_OPTS
+          value: "-Xms256m -Xmx256m"
+        resources:
+          requests:
+            memory: 512Mi
+            cpu: 200m
+          limits:
+            memory: 1Gi
+            cpu: 500m
+        volumeMounts:
+        - name: logstash-config
+          mountPath: /usr/share/logstash/pipeline/logstash.conf
+          subPath: logstash.conf
+        - name: logstash-settings
+          mountPath: /usr/share/logstash/config/logstash.yml
+          subPath: logstash.yml
+      volumes:
+      - name: logstash-config
+        configMap:
+          name: logstash-config
+      - name: logstash-settings
+        configMap:
+          name: logstash-settings
+
+---
+# Logstash Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: logstash
+  namespace: monitoring
+  labels:
+    app: logstash
+    component: logging
+spec:
+  ports:
+  - port: 5044
+    targetPort: 5044
+    name: beats
+  - port: 9600
+    targetPort: 9600
+    name: http
+  selector:
+    app: logstash
+
+---
+# Logstash Configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logstash-config
+  namespace: monitoring
+  labels:
+    app: logstash
+    component: logging
+data:
+  logstash.conf: |
+    input {
+      beats {
+        port => 5044
+      }
+      
+      # HTTP input for direct log shipping
+      http {
+        port => 8080
+        codec => json
+      }
+    }
+    
+    filter {
+      # Parse Kubernetes logs
+      if [kubernetes] {
+        mutate {
+          add_field => { "log_source" => "kubernetes" }
+        }
+        
+        # Parse container logs
+        if [kubernetes][container_name] {
+          mutate {
+            add_field => { "service_name" => "%{[kubernetes][container_name]}" }
+          }
+        }
+        
+        # Add namespace information
+        if [kubernetes][namespace_name] {
+          mutate {
+            add_field => { "namespace" => "%{[kubernetes][namespace_name]}" }
+          }
+        }
+      }
+      
+      # Parse Ainflue application logs
+      if [service_name] =~ /^ainflue-/ {
+        mutate {
+          add_field => { "application" => "ainflue" }
+        }
+        
+        # Parse JSON logs from application
+        if [message] =~ /^\{.*\}$/ {
+          json {
+            source => "message"
+            target => "app_log"
+          }
+        }
+        
+        # Extract log level
+        if [app_log][level] {
+          mutate {
+            add_field => { "log_level" => "%{[app_log][level]}" }
+          }
+        }
+        
+        # Extract timestamp
+        if [app_log][timestamp] {
+          date {
+            match => [ "[app_log][timestamp]", "ISO8601" ]
+          }
+        }
+        
+        # Extract request ID for tracing
+        if [app_log][request_id] {
+          mutate {
+            add_field => { "trace_id" => "%{[app_log][request_id]}" }
+          }
+        }
+      }
+      
+      # Parse HTTP access logs
+      if [service_name] == "ainflue-api-gateway" and [message] =~ /\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/ {
+        grok {
+          match => { 
+            "message" => "%{COMBINEDAPACHELOG}"
+          }
+        }
+        
+        mutate {
+          add_field => { "log_type" => "access" }
+        }
+      }
+      
+      # Add timestamp
+      mutate {
+        add_field => { "ingestion_timestamp" => "%{@timestamp}" }
+      }
+      
+      # Remove unnecessary fields
+      mutate {
+        remove_field => [ "agent", "ecs", "host", "input", "log" ]
+      }
+    }
+    
+    output {
+      elasticsearch {
+        hosts => ["elasticsearch:9200"]
+        index => "ainflue-logs-%{+YYYY.MM.dd}"
+        
+        # Use document_type for different log types
+        template_name => "ainflue-logs"
+        template_pattern => "ainflue-logs-*"
+        template => {
+          "index_patterns" => ["ainflue-logs-*"],
+          "settings" => {
+            "number_of_shards" => 1,
+            "number_of_replicas" => 0,
+            "refresh_interval" => "30s"
+          },
+          "mappings" => {
+            "properties" => {
+              "@timestamp" => { "type" => "date" },
+              "message" => { "type" => "text" },
+              "service_name" => { "type" => "keyword" },
+              "namespace" => { "type" => "keyword" },
+              "log_level" => { "type" => "keyword" },
+              "log_type" => { "type" => "keyword" },
+              "application" => { "type" => "keyword" },
+              "trace_id" => { "type" => "keyword" }
+            }
+          }
+        }
+      }
+      
+      # Debug output (can be removed in production)
+      stdout {
+        codec => rubydebug
+      }
+    }
+
+---
+# Logstash Settings
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logstash-settings
+  namespace: monitoring
+  labels:
+    app: logstash
+    component: logging
+data:
+  logstash.yml: |
+    http.host: "0.0.0.0"
+    http.port: 9600
+    
+    # Pipeline configuration
+    pipeline.workers: 2
+    pipeline.batch.size: 125
+    pipeline.batch.delay: 50
+    
+    # Monitoring
+    monitoring.enabled: true
+    monitoring.elasticsearch.hosts: ["elasticsearch:9200"]
+    
+    # Logging
+    log.level: info
+    path.logs: /usr/share/logstash/logs
