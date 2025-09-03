@@ -37,6 +37,7 @@ Contact: mlaiel@live.de
 import numpy as np
 import logging
 import hashlib
+import struct
 from typing import Dict, List, Optional, Tuple, Any, Union
 from dataclasses import dataclass
 from enum import Enum
@@ -358,12 +359,12 @@ class AudioFingerprinter:
                 diff = chroma[:, i] - chroma[:, i-1]
                 
                 # Create bit pattern from differences
-                    bit_pattern = 0
-                    for j, d in enumerate(diff):
-                        if d > 0:
-                            bit_pattern |= (1 << j)
-                    
-                    hash_sequence.append(bit_pattern & 0xFFFFFFFF)  # 32-bit hash
+                bit_pattern = 0
+                for j, d in enumerate(diff):
+                    if d > 0:
+                        bit_pattern |= (1 << j)
+                
+                hash_sequence.append(bit_pattern & 0xFFFFFFFF)  # 32-bit hash
                 
                 # Create raw fingerprint
                 raw_fingerprint = struct.pack(f'{len(hash_sequence)}I', *hash_sequence)
