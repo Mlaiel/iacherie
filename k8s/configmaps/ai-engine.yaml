@@ -1,0 +1,132 @@
+# Ainflue AI Engine ConfigMap
+# Configuration for the AI Engine service
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ainflue-ai-engine-config
+  namespace: ainflue
+  labels:
+    app: ainflue-ai-engine
+    component: ai-engine
+    tier: processing
+    environment: production
+  annotations:
+    description: "Configuration for AI Engine service"
+data:
+  # Application Configuration
+  APP_NAME: "ainflue-ai-engine"
+  APP_VERSION: "1.0.0"
+  APP_ENVIRONMENT: "production"
+  
+  # Server Configuration
+  GRPC_HOST: "0.0.0.0"
+  GRPC_PORT: "8001"
+  GRPC_MAX_WORKERS: "10"
+  GRPC_MAX_MESSAGE_LENGTH: "104857600"  # 100MB
+  
+  # Health Check Configuration
+  HEALTH_CHECK_PORT: "8081"
+  HEALTH_CHECK_ENABLED: "true"
+  
+  # AI Model Configuration
+  MODEL_PATH: "/app/models"
+  MODEL_CACHE_SIZE: "2GB"
+  MODEL_PRELOAD: "true"
+  MODEL_WARMUP_ENABLED: "true"
+  
+  # Content Analysis Configuration
+  ANALYSIS_MAX_FILE_SIZE: "100MB"
+  ANALYSIS_TIMEOUT: "300"
+  ANALYSIS_BATCH_SIZE: "10"
+  ANALYSIS_QUEUE_SIZE: "100"
+  
+  # Audio Fingerprinting Configuration
+  FINGERPRINT_ENABLED: "true"
+  FINGERPRINT_ALGORITHM: "chromaprint"
+  FINGERPRINT_DURATION: "30"
+  FINGERPRINT_SAMPLE_RATE: "22050"
+  
+  # Video Analysis Configuration
+  VIDEO_ANALYSIS_ENABLED: "true"
+  VIDEO_FRAME_EXTRACTION: "true"
+  VIDEO_FRAME_INTERVAL: "1"
+  VIDEO_MAX_DURATION: "3600"  # 1 hour
+  
+  # Image Processing Configuration
+  IMAGE_PROCESSING_ENABLED: "true"
+  IMAGE_MAX_RESOLUTION: "4096x4096"
+  IMAGE_FORMATS: "jpg,jpeg,png,gif,webp"
+  IMAGE_QUALITY_THRESHOLD: "0.8"
+  
+  # Text Analysis Configuration
+  TEXT_ANALYSIS_ENABLED: "true"
+  TEXT_LANGUAGE_DETECTION: "true"
+  TEXT_SENTIMENT_ANALYSIS: "true"
+  TEXT_ENTITY_RECOGNITION: "true"
+  
+  # Copyright Detection Configuration
+  COPYRIGHT_DETECTION_ENABLED: "true"
+  COPYRIGHT_SIMILARITY_THRESHOLD: "0.85"
+  COPYRIGHT_DATABASE_ENABLED: "true"
+  COPYRIGHT_REAL_TIME_ENABLED: "true"
+  
+  # Performance Configuration
+  PROCESSING_WORKERS: "4"
+  PROCESSING_QUEUE_SIZE: "50"
+  PROCESSING_TIMEOUT: "300"
+  PROCESSING_RETRY_ATTEMPTS: "3"
+  
+  # GPU Configuration
+  GPU_ENABLED: "false"
+  GPU_MEMORY_FRACTION: "0.8"
+  GPU_ALLOW_GROWTH: "true"
+  
+  # Caching Configuration
+  CACHE_ENABLED: "true"
+  CACHE_TTL: "3600"
+  CACHE_MAX_SIZE: "1000"
+  
+  # Logging Configuration
+  LOG_LEVEL: "INFO"
+  LOG_FORMAT: "json"
+  LOG_PERFORMANCE: "true"
+  LOG_REQUESTS: "true"
+  
+  # Monitoring Configuration
+  METRICS_ENABLED: "true"
+  METRICS_PORT: "9091"
+  METRICS_PATH: "/metrics"
+  
+  # Tracing Configuration
+  TRACING_ENABLED: "true"
+  TRACING_JAEGER_AGENT_HOST: "jaeger-agent"
+  TRACING_JAEGER_AGENT_PORT: "6831"
+  TRACING_SERVICE_NAME: "ainflue-ai-engine"
+  
+  # External Services
+  DATABASE_POOL_SIZE: "10"
+  DATABASE_TIMEOUT: "30"
+  
+  # Security Configuration
+  SECURITY_SCAN_ENABLED: "true"
+  SECURITY_MALWARE_DETECTION: "true"
+  SECURITY_CONTENT_FILTERING: "true"
+  
+  # Feature Flags
+  FEATURE_REAL_TIME_PROCESSING: "true"
+  FEATURE_BATCH_PROCESSING: "true"
+  FEATURE_CONTENT_MODERATION: "true"
+  FEATURE_QUALITY_ASSESSMENT: "true"
+  
+  # Resource Limits
+  MAX_CONCURRENT_JOBS: "20"
+  MAX_MEMORY_USAGE: "3GB"
+  MAX_CPU_USAGE: "80"
+  
+  # Timezone
+  TIMEZONE: "UTC"
