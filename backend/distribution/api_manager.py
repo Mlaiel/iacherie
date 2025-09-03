@@ -333,9 +333,26 @@ class APIManager:
             # Create cache key
             cache_key = self._create_cache_key(endpoint_id, params)
             
-            # Try to get from cache (implementation would depend on cache client)
-            # For now, return None
-            return None
+            # Get from cache
+            cached_data = await self.cache.get(cache_key)
+            if not cached_data:
+                return None
+            
+            # Reconstruct APIResponse from cached data
+            response = APIResponse(
+                status_code=cached_data.get('status_code', 200),
+                data=cached_data.get('data'),
+                headers=cached_data.get('headers', {}),
+                endpoint_id=endpoint_id,
+                timestamp=cached_data.get('timestamp'),
+                success=cached_data.get('success', True),
+                error_message=cached_data.get('error_message'),
+                rate_limit_remaining=cached_data.get('rate_limit_remaining'),
+                cache_hit=True  # Mark as cache hit
+            )
+            
+            self.logger.debug(f"🎯 Cache hit for {endpoint_id}")
+            return response
             
         except Exception as e:
             self.logger.error(f"Error getting cached response: {e}")
@@ -353,11 +370,30 @@ class APIManager:
             if not self.cache:
                 return
             
+            # Don't cache error responses or unsuccessful responses
+            if not response.success or response.status_code >= 400:
+                return
+            
             # Create cache key
             cache_key = self._create_cache_key(endpoint_id, params)
             
-            # Cache the response (implementation would depend on cache client)
-            self.logger.debug(f"💾 Response cached for {endpoint_id}")
+            # Prepare cache data
+            cache_data = {
+                'status_code': response.status_code,
+                'data': response.data,
+                'headers': response.headers,
+                'timestamp': response.timestamp,
+                'success': response.success,
+                'error_message': response.error_message,
+                'rate_limit_remaining': response.rate_limit_remaining,
+                'cached_at': time.time(),
+                'endpoint_id': endpoint_id
+            }
+            
+            # Cache the response
+            await self.cache.set(cache_key, cache_data, ttl)
+            
+            self.logger.debug(f"💾 Response cached for {endpoint_id} (TTL: {ttl}s)")
             
         except Exception as e:
             self.logger.error(f"Error caching response: {e}")
@@ -365,11 +401,97 @@ class APIManager:
     def _create_cache_key(self, endpoint_id: str, params: Optional[Dict[str, Any]]) -> str:
         """Create cache key for request."""
         try:
-            key_data = f"{endpoint_id}:{json.dumps(params or {}, sort_keys=True)}"
+            # Include user context and request specifics in cache key
+            key_components = [
+                f"api_response",
+                endpoint_id,
+                json.dumps(params or {}, sort_keys=True)
+            ]
+            
+            # Add user context if available
+            if hasattr(self, 'current_user_id') and self.current_user_id:
+                key_components.append(f"user:{self.current_user_id}")
+            
+            key_data = ":".join(key_components)
             return hashlib.md5(key_data.encode()).hexdigest()
+            
         except Exception as e:
             self.logger.error(f"Error creating cache key: {e}")
-            return f"{endpoint_id}:default"
+            return f"api_response:{endpoint_id}:default"
+    
+    def _get_cache_ttl(self, endpoint_id: str, response: APIResponse) -> int:
+        """Determine appropriate cache TTL for response."""
+        try:
+            # Default TTLs based on endpoint patterns
+            default_ttls = {
+                'user_profile': 1800,      # 30 minutes
+                'content_list': 600,       # 10 minutes
+                'content_detail': 3600,    # 1 hour
+                'analytics': 300,          # 5 minutes
+                'search': 900,             # 15 minutes
+                'static_data': 7200,       # 2 hours
+                'config': 14400            # 4 hours
+            }
+            
+            # Check for specific endpoint patterns
+            for pattern, ttl in default_ttls.items():
+                if pattern in endpoint_id.lower():
+                    return ttl
+            
+            # Check response headers for cache control
+            cache_control = response.headers.get('Cache-Control', '')
+            if 'max-age=' in cache_control:
+                try:
+                    max_age = int(cache_control.split('max-age=')[1].split(',')[0])
+                    return min(max_age, 3600)  # Cap at 1 hour
+                except ValueError:
+                    pass
+            
+            # Default TTL
+            return 600  # 10 minutes
+            
+        except Exception as e:
+            self.logger.error(f"Error determining cache TTL: {e}")
+            return 600  # Default 10 minutes
+    
+    async def _should_cache_response(self, endpoint_id: str, response: APIResponse) -> bool:
+        """Determine if response should be cached."""
+        try:
+            # Don't cache error responses
+            if not response.success or response.status_code >= 400:
+                return False
+            
+            # Don't cache responses with no-cache header
+            cache_control = response.headers.get('Cache-Control', '').lower()
+            if 'no-cache' in cache_control or 'no-store' in cache_control:
+                return False
+            
+            # Don't cache responses that are too large
+            if response.data and len(str(response.data)) > 1048576:  # 1MB limit
+                return False
+            
+            # Cache patterns - endpoints that should be cached
+            cacheable_patterns = [
+                'user_profile',
+                'content_list', 
+                'content_detail',
+                'analytics',
+                'search',
+                'static_data',
+                'config'
+            ]
+            
+            # Check if endpoint is cacheable
+            for pattern in cacheable_patterns:
+                if pattern in endpoint_id.lower():
+                    return True
+            
+            # Don't cache by default for unknown endpoints
+            return False
+            
+        except Exception as e:
+            self.logger.error(f"Error checking if response should be cached: {e}")
+            return False
     
     async def _build_request(
         self,
