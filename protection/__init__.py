@@ -79,6 +79,22 @@ try:
 except ImportError:
     RealTimeMonitoringService = None
 
+# Import new ultra-industrial engines
+try:
+    from .watermarking.invisible_watermarking_engine import InvisibleWatermarkingEngine
+except ImportError:
+    InvisibleWatermarkingEngine = None
+
+try:
+    from .blockchain.smart_royalty_distribution import SmartRoyaltyDistributionEngine
+except ImportError:
+    SmartRoyaltyDistributionEngine = None
+
+try:
+    from .ai_plagiarism_detection_engine import AIPlagiarismDetectionEngine
+except ImportError:
+    AIPlagiarismDetectionEngine = None
+
 logger = logging.getLogger(__name__)
 
 class ContentProtectionSuite:
@@ -127,6 +143,19 @@ class ContentProtectionSuite:
             if RealTimeMonitoringService:
                 self.services['monitoring'] = RealTimeMonitoringService(self.config.get('monitoring', {}))
             
+            # Initialize new ultra-industrial engines
+            if InvisibleWatermarkingEngine:
+                self.services['invisible_watermarking'] = InvisibleWatermarkingEngine(self.config.get('invisible_watermarking', {}))
+                logger.info("Invisible Watermarking Engine initialized")
+            
+            if SmartRoyaltyDistributionEngine:
+                self.services['smart_royalty'] = SmartRoyaltyDistributionEngine(self.config.get('smart_royalty', {}))
+                logger.info("Smart Royalty Distribution Engine initialized")
+            
+            if AIPlagiarismDetectionEngine:
+                self.services['ai_plagiarism'] = AIPlagiarismDetectionEngine(self.config.get('ai_plagiarism', {}))
+                logger.info("AI Plagiarism Detection Engine initialized")
+            
             self.is_initialized = True
             initialization_time = (datetime.utcnow() - initialization_start).total_seconds()
             
@@ -160,6 +189,14 @@ if RevenueManagementService:
     __all__.append('RevenueManagementService')
 if RealTimeMonitoringService:
     __all__.append('RealTimeMonitoringService')
+
+# Export new ultra-industrial engines
+if InvisibleWatermarkingEngine:
+    __all__.append('InvisibleWatermarkingEngine')
+if SmartRoyaltyDistributionEngine:
+    __all__.append('SmartRoyaltyDistributionEngine')
+if AIPlagiarismDetectionEngine:
+    __all__.append('AIPlagiarismDetectionEngine')
 
 __all__.append('ContentProtectionSuite')
 from .monitoring import MonitoringService
