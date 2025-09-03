@@ -67,6 +67,14 @@ if not MAIN_APP_AVAILABLE:
         version="1.0.0"
     )
     
+    # Add validation endpoints
+    try:
+        from api.validation_endpoints import router as validation_router
+        app.include_router(validation_router)
+        print("✓ Validation endpoints added")
+    except ImportError as e:
+        print(f"⚠️  Validation endpoints not available: {e}")
+    
     class StatusResponse(BaseModel):
         message: str
         status: str
@@ -74,37 +82,7 @@ if not MAIN_APP_AVAILABLE:
     
     @app.get("/", response_model=StatusResponse)
     async def root():
-        try:
-            logger.info(f"Executing root")
-            
-            # Implementation for root
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"root completed successfully")
-            return result
-            
-        except Exception as e:
-        try:
-            logger.info(f"Executing health_check")
-            
-            # Implementation for health_check
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"health_check completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"health_check failed: {e}")
-            raise
-            return result
-            
-        except Exception as e:
-            logger.error(f"root failed: {e}")
-            raise
+        return StatusResponse(
             message="Ainflue AI Platform is running!",
             status="success",
             environment=settings.app.environment
