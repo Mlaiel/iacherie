@@ -3,22 +3,37 @@ Simple performance tests for sub-100ms API response validation.
 """
 
 import pytest
-import aiohttp
 import asyncio
 import time
 import sys
 import os
 
+# Optional imports with fallbacks
+try:
+    import aiohttp
+    AIOHTTP_AVAILABLE = True
+except ImportError:
+    AIOHTTP_AVAILABLE = False
+
 # Add project root to path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
-from tests.utils.mock_api_server import ensure_api_server
+try:
+    from tests.utils.mock_api_server import ensure_api_server
+    MOCK_SERVER_AVAILABLE = True
+except ImportError:
+    MOCK_SERVER_AVAILABLE = False
 
 @pytest.mark.performance
 @pytest.mark.asyncio
 async def test_health_endpoint_sub_100ms():
-    """
-Test health endpoint responds in <100ms."""
+    """Test health endpoint responds in <100ms."""
+    if not AIOHTTP_AVAILABLE:
+        pytest.skip("aiohttp not available")
+    
+    if not MOCK_SERVER_AVAILABLE:
+        pytest.skip("mock API server not available")
+    
     # Ensure API server is available
     await ensure_api_server()
     
@@ -44,20 +59,23 @@ Test health endpoint responds in <100ms."""
 @pytest.mark.performance
 @pytest.mark.asyncio
 async def test_api_endpoints_performance():
-        try:
-            logger.info(f"Executing test_api_endpoints_performance")
-            
-            # Implementation for test_api_endpoints_performance
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"test_api_endpoints_performance completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"test_api_endpoints_performance failed: {e}")
-            raise
+    """Test various API endpoints performance."""
+    if not AIOHTTP_AVAILABLE:
+        pytest.skip("aiohttp not available")
+    
+    if not MOCK_SERVER_AVAILABLE:
+        pytest.skip("mock API server not available")
+    
+    # Ensure API server is available
+    await ensure_api_server()
+    
+    user_data = {
+        "username": f"testuser_{int(time.time())}",
+        "email": f"test_{int(time.time())}@example.com",
+        "password": "SecurePassword123!"
+    }
+    
+    async with aiohttp.ClientSession() as session:
         async with session.post("http://localhost:8000/api/v1/auth/register", json=user_data) as response:
             assert response.status == 200
             data = await response.json()
@@ -130,20 +148,22 @@ async def test_concurrent_requests_performance():
 @pytest.mark.performance
 @pytest.mark.asyncio  
 async def test_large_payload_performance():
-        try:
-            logger.info(f"Executing test_large_payload_performance")
-            
-            # Implementation for test_large_payload_performance
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"test_large_payload_performance completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"test_large_payload_performance failed: {e}")
-            raise
+    """Test large payload performance."""
+    if not AIOHTTP_AVAILABLE:
+        pytest.skip("aiohttp not available")
+    
+    if not MOCK_SERVER_AVAILABLE:
+        pytest.skip("mock API server not available")
+    
+    # Ensure API server is available
+    await ensure_api_server()
+    
+    user_data = {
+        "username": f"testuser_large_{int(time.time())}",
+        "email": f"test_large_{int(time.time())}@example.com",
+        "password": "SecurePassword123!"
+    }
+    
     async with aiohttp.ClientSession() as session:
         # Register user
         async with session.post("http://localhost:8000/api/v1/auth/register", json=user_data) as response:
