@@ -284,42 +284,18 @@ class MultiTenantAuth:
     
     async def get_tenant_user(self, email: str, tenant_id: str):
         try:
-                    # Request validation
-                    if not email:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle_get_tenant_user_request(email)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-        try:
-            logger.info(f"Executing verify_password")
-            
-            # Implementation for verify_password
-            # TODO: Add specific business logic here
-        try:
-                    async with self.db_session() as session:
-                        # Database operation
-                
-                        await session.commit()
-                        logger.info(f"Database operation update_last_login completed")
-                        return True
-                
-                except Exception as e:
-                    logger.error(f"Database operation update_last_login failed: {e}")
-                    raise
-            logger.info(f"verify_password completed successfully")
-            return result
-            
+            # Request validation
+            if not email:
+                raise ValueError("Invalid request")
+    
+            # Process request
+            result = await self._handle_get_tenant_user_request(email)
+    
+            # Return response
+            return {"status": "success", "data": result}
         except Exception as e:
-            logger.error(f"verify_password failed: {e}")
+            logger.error(f"get_tenant_user failed: {e}")
             raise
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler get_tenant_user failed: {e}")
-                    return {"status": "error", "message": str(e)}
     def verify_password(self, plain_password: str, hashed_password: str) -> bool:
         """
 Verify password using bcrypt"""
@@ -556,21 +532,8 @@ class AuthenticationManager:
             return auth_token
             
         except Exception as e:
-        try:
-                    # Request validation
-                    if not user_id:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle_get_user_request(user_id)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler get_user failed: {e}")
-                    return {"status": "error", "message": str(e)}
-            raise
+            self.logger.error(f"Multi-tenant authentication failed: {str(e)}")
+            raise AuthenticationError("Authentication failed")
     
     async def get_current_user(
         self, 
