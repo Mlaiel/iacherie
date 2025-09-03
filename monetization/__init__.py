@@ -1,31 +1,131 @@
-"""Licensing Engine Module  
-=======================
+"""Enterprise Monetization Module - Complete System
+=================================================
 
-Advanced licensing and rights management system for automated content licensing,
-royalty distribution, and usage tracking across platforms.
+Advanced AI-powered monetization platform with comprehensive business logic integration.
+Complete implementation of multi-currency payments, automated billing, subscription management,
+revenue intelligence, smart payment orchestration, and compliance automation.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
 
+# Core Licensing & Rights Management
 from .licensing_manager import LicensingManager
 from .royalty_engine import RoyaltyEngine
 from .usage_tracker import UsageTracker
 from .contract_generator import ContractGenerator
 from .rights_validator import RightsValidator
 
-# Only import modules that exist
+# Payment Processing & Distribution
+from .payment_processor import PaymentProcessor, PaymentProvider, PaymentStatus, PaymentType
+from .enhanced_payment_providers import EnhancedPaymentProviderManager
+from .distribution_engine import DistributionEngine
 
-__version__ = "1.0.0"
+# Enterprise Revenue Intelligence
+from .revenue_intelligence_engine import (
+    RevenueIntelligenceEngine, 
+    RevenueMetric, 
+    CustomerLifetimeValue,
+    ChurnRiskAssessment,
+    RevenueForcast,
+    RevenueMetricType,
+    ChurnRiskLevel
+)
+
+# Smart Payment Orchestration
+from .smart_payment_orchestrator import (
+    SmartPaymentOrchestrator,
+    PaymentRoute,
+    PaymentAttempt,
+    FraudAssessment,
+    PaymentOptimization,
+    PaymentMethod,
+    FraudRiskLevel
+)
+
+# Advanced Compliance & Regulatory
+from .compliance_automation_engine import (
+    ComplianceAutomationEngine,
+    ComplianceRule,
+    ComplianceAssessment,
+    AuditTrailEntry,
+    RevenueRecognitionEntry,
+    TaxComplianceRecord,
+    ComplianceFramework,
+    TaxJurisdiction,
+    ComplianceStatus,
+    AuditTrailEventType
+)
+
+# Business Logic Integration
+from .business_logic_integrator import (
+    BusinessLogicIntegrator,
+    ContentMonetizationProfile,
+    WorkflowMonetizationEvent,
+    DynamicPricingModel,
+    WorkflowStage,
+    ContentType,
+    MonetizationStrategy
+)
+
+__version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 
 __all__ = [
+    # Core Licensing & Rights
     "LicensingManager",
-    "RoyaltyEngine",
+    "RoyaltyEngine", 
     "UsageTracker",
     "ContractGenerator",
     "RightsValidator",
+    
+    # Payment Processing
+    "PaymentProcessor",
+    "PaymentProvider",
+    "PaymentStatus", 
+    "PaymentType",
+    "EnhancedPaymentProviderManager",
+    "DistributionEngine",
+    
+    # Revenue Intelligence
+    "RevenueIntelligenceEngine",
+    "RevenueMetric",
+    "CustomerLifetimeValue",
+    "ChurnRiskAssessment",
+    "RevenueForcast",
+    "RevenueMetricType",
+    "ChurnRiskLevel",
+    
+    # Payment Orchestration
+    "SmartPaymentOrchestrator",
+    "PaymentRoute",
+    "PaymentAttempt", 
+    "FraudAssessment",
+    "PaymentOptimization",
+    "PaymentMethod",
+    "FraudRiskLevel",
+    
+    # Compliance & Regulatory
+    "ComplianceAutomationEngine",
+    "ComplianceRule",
+    "ComplianceAssessment",
+    "AuditTrailEntry",
+    "RevenueRecognitionEntry", 
+    "TaxComplianceRecord",
+    "ComplianceFramework",
+    "TaxJurisdiction",
+    "ComplianceStatus",
+    "AuditTrailEventType",
+    
+    # Business Logic Integration
+    "BusinessLogicIntegrator",
+    "ContentMonetizationProfile",
+    "WorkflowMonetizationEvent", 
+    "DynamicPricingModel",
+    "WorkflowStage",
+    "ContentType",
+    "MonetizationStrategy",
 ]
 
 # Licensing configuration
