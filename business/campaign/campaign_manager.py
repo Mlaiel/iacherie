@@ -551,6 +551,9 @@ AI-powered budget optimization"""
         except Exception as e:
             logger.error(f"_setup_content_protection failed: {e}")
             raise
+
+    async def _setup_ai_optimization(
+        self,
         config: CampaignConfiguration
     ) -> None:
         """

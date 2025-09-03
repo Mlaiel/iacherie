@@ -6,7 +6,6 @@ and content platforms, optimizing content for each platform's unique requirement
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass
@@ -17,76 +16,16 @@ logger = logging.getLogger(__name__)
 
 
 class Platform(Enum):
-    """
-    Supported platforms for SEO optimization - 35+ platforms"""
-
-    # Search & Web
-    GOOGLE = "google"
-    BLOG = "blog"
-    WEBSITE = "website"
-    
-    # Video Platforms
-    YOUTUBE = "youtube"
-    VIMEO = "vimeo"
-    DAILYMOTION = "dailymotion"
-    TWITCH = "twitch"
-    RUMBLE = "rumble"
-    
-    # Social Media
+    """Supported platforms for SEO optimization"""
     INSTAGRAM = "instagram"
+    YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
     FACEBOOK = "facebook"
-    SNAPCHAT = "snapchat"
-    DISCORD = "discord"
-    CLUBHOUSE = "clubhouse"
-    BEREAL = "bereal"
-    THREADS = "threads"
-    
-    # Professional Networks
     LINKEDIN = "linkedin"
-    GITHUB = "github"
-    STACKOVERFLOW = "stackoverflow"
-    BEHANCE = "behance"
-    DRIBBBLE = "dribbble"
-    DEVIANTART = "deviantart"
-    
-    # Music Platforms
-    SPOTIFY = "spotify"
-    SOUNDCLOUD = "soundcloud"
-    APPLE_MUSIC = "apple_music"
-    DEEZER = "deezer"
-    BANDCAMP = "bandcamp"
-    YOUTUBE_MUSIC = "youtube_music"
-    AMAZON_MUSIC = "amazon_music"
-    
-    # Content Platforms
-    MEDIUM = "medium"
-    SUBSTACK = "substack"
-    WORDPRESS = "wordpress"
-    BLOGGER = "blogger"
-    TUMBLR = "tumblr"
-    WIX = "wix"
-    SQUARESPACE = "squarespace"
-    
-    # Visual & Creative
     PINTEREST = "pinterest"
-    
-    # Forums & Communities
-    REDDIT = "reddit"
-    
-    # International Platforms
-    WECHAT = "wechat"
-    WEIBO = "weibo"
-    VKONTAKTE = "vkontakte"
-    TELEGRAM = "telegram"
-    LINE = "line"
-    
-    # Emerging Platforms
-    TRUTH_SOCIAL = "truth_social"
-    MASTODON = "mastodon"
-    BLUESKY = "bluesky"
-    MINDS = "minds"
+    BLOG = "blog"
+    WEBSITE = "website"
 
 
 @dataclass
@@ -104,8 +43,7 @@ class PlatformSEOConfig:
 
 @dataclass
 class PlatformOptimizationResult:
-    """
-Result of platform-specific optimization"""
+    """Result of platform-specific optimization"""
     platform: Platform
     optimized_title: str
     optimized_description: str
@@ -117,75 +55,31 @@ Result of platform-specific optimization"""
 
 
 class BasePlatformAdapter(ABC):
-    """
-Base class for platform-specific SEO adapters"""
+    """Base class for platform-specific SEO adapters"""
     
     @abstractmethod
     def get_config(self) -> PlatformSEOConfig:
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle_get_config_request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-        try:
-            logger.info(f"Executing optimize_content")
-            
-            # Implementation for optimize_content
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"optimize_content completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"optimize_content failed: {e}")
-            raise
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler get_config failed: {e}")
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle_get_config_request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler get_config failed: {e}")
-                    return {"status": "error", "message": str(e)}
+        """Get platform-specific configuration"""
+        pass
+    
     @abstractmethod
     def optimize_content(self, content: str, keywords: List[str]) -> str:
-        """
-Optimize content for the platform"""
+        """Optimize content for the platform"""
         pass
     
     @abstractmethod
     def generate_hashtags(self, content: str, keywords: List[str]) -> List[str]:
-        """
-Generate platform-appropriate hashtags"""
+        """Generate platform-appropriate hashtags"""
         pass
     
     @abstractmethod
     def calculate_seo_score(self, content: str, metadata: Dict[str, Any]) -> float:
-        """
-Calculate platform-specific SEO score"""
+        """Calculate platform-specific SEO score"""
         pass
 
 
 class InstagramAdapter(BasePlatformAdapter):
-    """
-Instagram SEO adapter"""
+    """Instagram SEO adapter"""
     
     def get_config(self) -> PlatformSEOConfig:
         return PlatformSEOConfig(
@@ -231,8 +125,7 @@ Instagram SEO adapter"""
         return '\n'.join(optimized_lines)
     
     def generate_hashtags(self, content: str, keywords: List[str]) -> List[str]:
-        """
-Generate Instagram hashtags"""
+        """Generate Instagram hashtags"""
         hashtags = []
         
         # Add keyword-based hashtags
@@ -252,21 +145,6 @@ Generate Instagram hashtags"""
             if len(hashtags) < 25 and hashtag not in hashtags:
                 hashtags.append(hashtag)
         
-        return hashtags[:30]  # Instagram limit
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle_get_config_request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler get_config failed: {e}")
-                    return {"status": "error", "message": str(e)}
         return hashtags[:30]  # Instagram limit
     
     def calculate_seo_score(self, content: str, metadata: Dict[str, Any]) -> float:
@@ -300,8 +178,7 @@ Generate Instagram hashtags"""
 
 
 class YouTubeAdapter(BasePlatformAdapter):
-    """
-YouTube SEO adapter"""
+    """YouTube SEO adapter"""
     
     def get_config(self) -> PlatformSEOConfig:
         return PlatformSEOConfig(
@@ -345,20 +222,6 @@ YouTube SEO adapter"""
         for keyword in keywords:
             hashtag = f"#{keyword.replace(' ', '').lower()}"
             if hashtag not in hashtags:
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle_get_config_request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler get_config failed: {e}")
-                    return {"status": "error", "message": str(e)}
                 hashtags.append(hashtag)
         
         # Add YouTube-specific hashtags
@@ -407,8 +270,7 @@ YouTube SEO adapter"""
 
 
 class TwitterAdapter(BasePlatformAdapter):
-    """
-Twitter SEO adapter"""
+    """Twitter SEO adapter"""
     
     def get_config(self) -> PlatformSEOConfig:
         return PlatformSEOConfig(
@@ -432,20 +294,7 @@ Twitter SEO adapter"""
         """Optimize content for Twitter"""
         # Ensure content fits character limit
         if len(content) > 250:  # Leave room for hashtags
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle_get_config_request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler get_config failed: {e}")
-                    return {"status": "error", "message": str(e)}
+            sentences = content.split('.')
             optimized = sentences[0] + '.'
             
             # Add more sentences if they fit
@@ -460,8 +309,7 @@ Twitter SEO adapter"""
         return content
     
     def generate_hashtags(self, content: str, keywords: List[str]) -> List[str]:
-        """
-Generate Twitter hashtags"""
+        """Generate Twitter hashtags"""
         hashtags = []
         
         # Twitter works best with 1-2 focused hashtags
@@ -508,8 +356,7 @@ Generate Twitter hashtags"""
 
 
 class LinkedInAdapter(BasePlatformAdapter):
-    """
-LinkedIn SEO adapter"""
+    """LinkedIn SEO adapter"""
     
     def get_config(self) -> PlatformSEOConfig:
         return PlatformSEOConfig(
@@ -597,8 +444,7 @@ class PlatformSEOAdapter:
     """
     
     def __init__(self):
-        """
-Initialize the platform SEO adapter with all supported platforms"""
+        """Initialize the platform SEO adapter with all supported platforms"""
         self.adapters = {
             Platform.INSTAGRAM: InstagramAdapter(),
             Platform.YOUTUBE: YouTubeAdapter(),
@@ -800,8 +646,7 @@ Initialize the platform SEO adapter with all supported platforms"""
         return list(self.adapters.keys())
     
     def get_platform_config(self, platform: Platform) -> PlatformSEOConfig:
-        """
-Get configuration for a specific platform"""
+        """Get configuration for a specific platform"""
         if platform not in self.adapters:
             raise ValueError(f"Platform {platform} not supported")
         return self.adapters[platform].get_config()
