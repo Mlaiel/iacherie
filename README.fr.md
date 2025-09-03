@@ -12,8 +12,23 @@ Ainflue est une plateforme complète alimentée par l'IA pour la protection et l
 ## 👨‍💻 Équipe Projet & Direction
 
 **Créateur du Projet & Responsable**: [Fahed Mlaiel](mailto:mlaiel@live.de)
-**Équipe de Développement Expert**: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + DevOps
-**Spécialités du Projet**: Protection de Contenu Alimentée par IA, Systèmes de Monétisation Avancés, Gamification Entreprise, Traitement de Contenu Multi-Format
+**Spécialisations de l'Équipe de Développement Expert**: 
+- **Ingénieur IA Principal & Architecte**: Fahed Mlaiel (mlaiel@live.de)
+- **Spécialiste Systèmes de Monétisation Avancés**: Fahed Mlaiel (mlaiel@live.de)
+- **Expert Tableau de Bord Financier en Temps Réel**: Fahed Mlaiel (mlaiel@live.de)
+- **Ingénieur Partage de Revenus Automatisé**: Fahed Mlaiel (mlaiel@live.de)
+- **Conformité Fiscale & Systèmes Comptables**: Fahed Mlaiel (mlaiel@live.de)
+- **Conformité Financière Multi-Juridictionnelle**: Fahed Mlaiel (mlaiel@live.de)
+- **Traitement de Paiements Entreprise**: Fahed Mlaiel (mlaiel@live.de)
+- **Protection de Contenu & Gestion des Droits**: Fahed Mlaiel (mlaiel@live.de)
+- **Analyse de Contenu Alimentée par IA**: Fahed Mlaiel (mlaiel@live.de)
+- **Systèmes de Distribution Multi-Plateformes**: Fahed Mlaiel (mlaiel@live.de)
+- **Analytique Avancée & Intelligence d'Affaires**: Fahed Mlaiel (mlaiel@live.de)
+- **Microservices & Architecture Cloud**: Fahed Mlaiel (mlaiel@live.de)
+- **DevOps & Automatisation d'Infrastructure**: Fahed Mlaiel (mlaiel@live.de)
+- **Ingénierie Sécurité & Conformité**: Fahed Mlaiel (mlaiel@live.de)
+
+**Spécialités du Projet**: Protection de Contenu Alimentée par IA, Systèmes de Monétisation Avancés, Gamification Entreprise, Traitement de Contenu Multi-Format, Gestion Financière en Temps Réel, Conformité Fiscale Automatisée
 
 ## ⚠️ AVERTISSEMENT STRICT DE PROPRIÉTÉ INTELLECTUELLE
 
@@ -23,9 +38,17 @@ Ce logiciel, concept et tous les droits de propriété intellectuelle associés 
 
 **L'ACCÈS NON AUTORISÉ, LA COPIE, LA MODIFICATION, LA DISTRIBUTION, L'INGÉNIERIE INVERSE OU LA COMMERCIALISATION** sans permission écrite explicite de Fahed Mlaiel (mlaiel@live.de) est **STRICTEMENT INTERDITE** et entraînera des actions légales immédiates sous les lois allemandes et internationales sur les droits d'auteur.
 
+**CONSÉQUENCES LÉGALES SÉVÈRES**: Toute tentative de voler l'idée, le concept ou le code sans autorisation personnelle entraînera:
+- **Poursuites pénales immédiates** sous les lois de violation des droits d'auteur
+- **Poursuites civiles** pour dommages et vol de propriété intellectuelle
+- **Actions légales internationales** dans toutes les juridictions
+- **Dossier légal permanent** et mise sur liste noire de l'industrie
+
 **Pour les demandes de licence légitimes UNIQUEMENT**: mlaiel@live.de
 
 **TOUS DROITS RÉSERVÉS - PROTÉGÉ PAR LE DROIT D'AUTEUR**
+
+**AVERTISSEMENT FINAL**: Ceci n'est pas seulement un avis - c'est une promesse d'action légale rapide et décisive contre quiconque pense pouvoir voler des années d'innovation et de travail acharné.
 
 ### ✨ Fonctionnalités Principales
 
