@@ -1,18 +1,56 @@
 # Services module initialization
-from .email_service import email_service
-from .notification_service import notification_service
-from .file_storage import file_storage
-from .collaboration_engine import CollaborationEngine
-from .remix_generator import RemixGenerator
-from .gamification_system import GamificationSystem
-from .recommendation_engine import RecommendationEngine
+from .realtime_collaboration_service import (
+    RealtimeCollaborationService,
+    SessionType,
+    AnnotationType,
+    ConflictType
+)
+from .virtual_daw_service import (
+    VirtualDAWService,
+    TrackType,
+    PluginType,
+    DAWProject,
+    DAWTrack
+)
+from .realtime_websocket_server import (
+    RealtimeWebSocketServer,
+    WebSocketConnectionManager
+)
+
+# Import existing services that are available
+try:
+    from .collaboration_engine import CollaborationEngine
+except ImportError:
+    CollaborationEngine = None
+
+try:
+    from .gamification_system import GamificationSystem
+except ImportError:
+    GamificationSystem = None
+
+try:
+    from .recommendation_engine import RecommendationEngine
+except ImportError:
+    RecommendationEngine = None
 
 __all__ = [
-    "email_service",
-    "notification_service",
-    "file_storage",
-    "CollaborationEngine",
-    "RemixGenerator", 
-    "GamificationSystem",
-    "RecommendationEngine"
+    "RealtimeCollaborationService",
+    "SessionType", 
+    "AnnotationType",
+    "ConflictType",
+    "VirtualDAWService",
+    "TrackType",
+    "PluginType",
+    "DAWProject",
+    "DAWTrack",
+    "RealtimeWebSocketServer",
+    "WebSocketConnectionManager"
 ]
+
+# Add existing services if available
+if CollaborationEngine:
+    __all__.append("CollaborationEngine")
+if GamificationSystem:
+    __all__.append("GamificationSystem") 
+if RecommendationEngine:
+    __all__.append("RecommendationEngine")
