@@ -41,11 +41,20 @@ from concurrent.futures import ThreadPoolExecutor
 import librosa
 import scipy.signal
 import scipy.fft
-import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
-from matplotlib.figure import Figure
-from matplotlib.backends.backend_agg import FigureCanvasAgg
-import seaborn as sns
+try:
+    import matplotlib.pyplot as plt
+    import matplotlib.colors as mcolors
+    from matplotlib.figure import Figure
+    from matplotlib.backends.backend_agg import FigureCanvasAgg
+    import seaborn as sns
+    MATPLOTLIB_AVAILABLE = True
+except ImportError:
+    plt = None
+    mcolors = None
+    Figure = None
+    FigureCanvasAgg = None
+    sns = None
+    MATPLOTLIB_AVAILABLE = False
 from pathlib import Path
 import base64
 import io
@@ -166,6 +175,10 @@ class UltraAdvancedWaveformSpectrogramGenerator:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
         
+        if not MATPLOTLIB_AVAILABLE:
+            self.logger.warning("Matplotlib not available. Visualization features will be limited.")
+            return
+        
         # Set professional matplotlib style
         plt.style.use('default')
         sns.set_palette("viridis")
@@ -205,6 +218,10 @@ class UltraAdvancedWaveformSpectrogramGenerator:
         Generate comprehensive audio visualization with waveforms and spectrograms
         """
         try:
+            if not MATPLOTLIB_AVAILABLE:
+                self.logger.warning("Matplotlib not available. Returning minimal result.")
+                return VisualizationResult(metadata=self._extract_visualization_metadata(audio_data))
+            
             self.logger.info("Starting comprehensive audio visualization generation")
             
             # Use default configs if not provided

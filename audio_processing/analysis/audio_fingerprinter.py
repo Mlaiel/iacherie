@@ -311,43 +311,53 @@ class AudioFingerprinter:
             self.thread_executor, normalize)
     
     async def _extract_chromaprint(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """
-Extract Chromaprint-style fingerprint"""
-        def extract():
+        """Extract Chromaprint-style fingerprint"""
         try:
-                    # AI model processing
-                    if not hasattr(self, 'model') or self.model is None:
-                        raise RuntimeError("AI model not initialized")
+            # Simple fingerprint using spectral features
+            # This is a placeholder implementation
+            stft = librosa.stft(audio_data, hop_length=self.hop_length)
+            magnitude = np.abs(stft)
             
-                    # Preprocess input
-                    processed_input = await self._preprocess_extract_input(data)
+            # Extract spectral features for fingerprinting
+            spectral_centroids = librosa.feature.spectral_centroid(S=magnitude)
+            spectral_rolloff = librosa.feature.spectral_rolloff(S=magnitude)
             
-                    # Run inference
-                    result = await self.model.predict(processed_input)
+            # Create a simple fingerprint hash
+            features = np.concatenate([
+                spectral_centroids.flatten(),
+                spectral_rolloff.flatten()
+            ])
             
-                    # Postprocess result
-                    final_result = await self._postprocess_extract_result(result)
+            # Convert to hash-like representation
+            fingerprint_data = np.clip(features * 1000, 0, 65535).astype(np.uint16)
             
-                    logger.info(f"AI processing extract completed")
-                    return final_result
+            return {
+                'fingerprint': fingerprint_data.tolist(),
+                'length': len(fingerprint_data),
+                'algorithm': 'spectral_features'
+            }
             
-                except Exception as e:
-                    logger.error(f"AI processing extract failed: {e}")
-                    raise
-                chroma = librosa.feature.chroma_cqt(
-                    y=audio_data, 
-                    sr=sample_rate,
-                    n_chroma=12,
-                    n_octaves=7
-                )
+        except Exception as e:
+            self.logger.error(f"Chromaprint extraction failed: {e}")
+            return {'fingerprint': [], 'length': 0, 'algorithm': 'none'}
+    
+    def _extract_content_fingerprint(self, audio_data: np.ndarray, sample_rate: int = 44100) -> Dict[str, Any]:
+        """Extract content-based fingerprint"""
+        try:
+            chroma = librosa.feature.chroma_cqt(
+                y=audio_data, 
+                sr=sample_rate,
+                n_chroma=12,
+                n_octaves=7
+            )
+            
+            # Generate hash sequence from chroma progression
+            hash_sequence = []
+            for i in range(1, chroma.shape[1]):
+                # Compare adjacent chroma vectors
+                diff = chroma[:, i] - chroma[:, i-1]
                 
-                # Generate hash sequence from chroma progression
-                hash_sequence = []
-                for i in range(1, chroma.shape[1]):
-                    # Compare adjacent chroma vectors
-                    diff = chroma[:, i] - chroma[:, i-1]
-                    
-                    # Create bit pattern from differences
+                # Create bit pattern from differences
                     bit_pattern = 0
                     for j, d in enumerate(diff):
                         if d > 0:

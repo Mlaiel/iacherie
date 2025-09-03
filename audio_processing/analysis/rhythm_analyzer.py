@@ -315,39 +315,38 @@ Degara beat tracking algorithm (simplified implementation)"""
         return beat_times, beat_strengths
     
     def _hybrid_beat_tracking(self, onset_envelope: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
-        """
-Hybrid beat tracking combining multiple methods"""
+        """Hybrid beat tracking combining multiple methods"""
         # Get results from multiple methods
         ellis_times, ellis_strengths = self._ellis_beat_tracking(onset_envelope)
         degara_times, degara_strengths = self._degara_beat_tracking(onset_envelope)
         
         # Simple combination: use Ellis as primary, fill gaps with Degara
-        try:
-            # AI model processing
-            if not hasattr(self, 'model') or self.model is None:
-                raise RuntimeError("AI model not initialized")
-    
-            # Preprocess input
-            processed_input = await self._preprocess_analyze_input(data)
-    
-            # Run inference
-            result = await self.model.predict(processed_input)
-    
-            # Postprocess result
-            final_result = await self._postprocess_analyze_result(result)
-    
-            logger.info(f"AI processing analyze completed")
-            return final_result
-    
-        except Exception as e:
-            logger.error(f"AI processing analyze failed: {e}")
-            raise
-            
-        ellis_times, ellis_strengths = self._ellis_beat_tracking(onset_envelope)
-        degara_times, degara_strengths = self._degara_beat_tracking(onset_envelope)
-        
-        # Simple combination: use Ellis as primary, fill gaps with Degara
         combined_times = ellis_times
+        combined_strengths = ellis_strengths
+        
+        # If Ellis didn't find many beats, supplement with Degara
+        if len(ellis_times) < 4 and len(degara_times) > 0:
+            # Merge the results
+            all_times = np.concatenate([ellis_times, degara_times])
+            all_strengths = np.concatenate([ellis_strengths, degara_strengths])
+            
+            # Sort by time
+            sort_indices = np.argsort(all_times)
+            combined_times = all_times[sort_indices]
+            combined_strengths = all_strengths[sort_indices]
+            
+            # Remove duplicates (beats too close together)
+            if len(combined_times) > 1:
+                min_interval = 0.1  # Minimum 100ms between beats
+                keep_indices = [0]
+                for i in range(1, len(combined_times)):
+                    if combined_times[i] - combined_times[keep_indices[-1]] > min_interval:
+                        keep_indices.append(i)
+                
+                combined_times = combined_times[keep_indices]
+                combined_strengths = combined_strengths[keep_indices]
+        
+        return combined_times, combined_strengths
         combined_strengths = ellis_strengths
         
         return combined_times, combined_strengths
