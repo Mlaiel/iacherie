@@ -29,7 +29,11 @@ import asyncio
 import logging
 import hashlib
 import mimetypes
-from datetime import datetime, timedelta
+import math
+import uuid
+import os
+import shutil
+from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 from uuid import uuid4
 from enum import Enum
@@ -1417,6 +1421,213 @@ Initialize storage backend"""
         except Exception as e:
             self.logger.error(f"Content deletion failed: {str(e)}")
             return False
+    
+    async def initiate_chunked_upload(
+        self,
+        session_id: str,
+        user_id: str,
+        filename: str,
+        total_size: int,
+        chunk_size: int = 1024 * 1024,  # 1MB chunks
+        content_type: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """Initiate a chunked upload session"""
+        try:
+            # Generate upload session ID
+            upload_id = f"upload_{uuid.uuid4().hex}"
+            
+            # Calculate total chunks
+            total_chunks = math.ceil(total_size / chunk_size)
+            
+            # Create upload session metadata
+            upload_session = {
+                'upload_id': upload_id,
+                'session_id': session_id,
+                'user_id': user_id,
+                'filename': filename,
+                'total_size': total_size,
+                'chunk_size': chunk_size,
+                'total_chunks': total_chunks,
+                'completed_chunks': set(),
+                'content_type': content_type,
+                'created_at': datetime.now(timezone.utc),
+                'expires_at': datetime.now(timezone.utc) + timedelta(hours=24),
+                'status': 'active',
+                'file_hash_parts': {},
+                'resumable': True
+            }
+            
+            # Store upload session (in production, use Redis or database)
+            if not hasattr(self, '_upload_sessions'):
+                self._upload_sessions = {}
+            self._upload_sessions[upload_id] = upload_session
+            
+            self.logger.info(f"Chunked upload initiated: {upload_id}")
+            
+            return {
+                'upload_id': upload_id,
+                'chunk_size': chunk_size,
+                'total_chunks': total_chunks,
+                'expires_at': upload_session['expires_at'].isoformat()
+            }
+            
+        except Exception as e:
+            self.logger.error(f"Chunked upload initiation failed: {str(e)}")
+            return None
+    
+    async def upload_chunk(
+        self,
+        upload_id: str,
+        chunk_index: int,
+        chunk_data: bytes
+    ) -> Dict[str, Any]:
+        """Upload a single chunk"""
+        try:
+            if not hasattr(self, '_upload_sessions'):
+                self._upload_sessions = {}
+                
+            if upload_id not in self._upload_sessions:
+                return {'success': False, 'error': 'Upload session not found'}
+            
+            upload_session = self._upload_sessions[upload_id]
+            
+            # Check if upload session is still valid
+            if datetime.now(timezone.utc) > upload_session['expires_at']:
+                return {'success': False, 'error': 'Upload session expired'}
+            
+            # Validate chunk index
+            if chunk_index >= upload_session['total_chunks'] or chunk_index < 0:
+                return {'success': False, 'error': 'Invalid chunk index'}
+            
+            # Check if chunk already uploaded
+            if chunk_index in upload_session['completed_chunks']:
+                return {'success': True, 'message': 'Chunk already uploaded'}
+            
+            # Store chunk (in production, store to file system or cloud storage)
+            chunk_path = f"/tmp/chunks/{upload_id}/chunk_{chunk_index}"
+            os.makedirs(os.path.dirname(chunk_path), exist_ok=True)
+            
+            with open(chunk_path, 'wb') as f:
+                f.write(chunk_data)
+            
+            # Calculate chunk hash for integrity verification
+            chunk_hash = hashlib.sha256(chunk_data).hexdigest()
+            upload_session['file_hash_parts'][chunk_index] = chunk_hash
+            
+            # Mark chunk as completed
+            upload_session['completed_chunks'].add(chunk_index)
+            
+            # Update progress
+            progress = len(upload_session['completed_chunks']) / upload_session['total_chunks'] * 100
+            
+            self.logger.debug(f"Chunk {chunk_index} uploaded for {upload_id}, progress: {progress:.1f}%")
+            
+            return {
+                'success': True,
+                'chunk_index': chunk_index,
+                'progress': progress,
+                'completed_chunks': len(upload_session['completed_chunks']),
+                'total_chunks': upload_session['total_chunks']
+            }
+            
+        except Exception as e:
+            self.logger.error(f"Chunk upload failed: {str(e)}")
+            return {'success': False, 'error': str(e)}
+    
+    async def finalize_chunked_upload(self, upload_id: str) -> Optional[SessionContentInfo]:
+        """Finalize chunked upload by combining all chunks"""
+        try:
+            if not hasattr(self, '_upload_sessions'):
+                return None
+                
+            if upload_id not in self._upload_sessions:
+                return None
+            
+            upload_session = self._upload_sessions[upload_id]
+            
+            # Check if all chunks are uploaded
+            if len(upload_session['completed_chunks']) != upload_session['total_chunks']:
+                missing_chunks = set(range(upload_session['total_chunks'])) - upload_session['completed_chunks']
+                self.logger.warning(f"Missing chunks for {upload_id}: {missing_chunks}")
+                return None
+            
+            # Combine chunks into final file
+            final_data = b''
+            for chunk_index in range(upload_session['total_chunks']):
+                chunk_path = f"/tmp/chunks/{upload_id}/chunk_{chunk_index}"
+                with open(chunk_path, 'rb') as f:
+                    chunk_data = f.read()
+                    final_data += chunk_data
+                
+                # Verify chunk integrity
+                expected_hash = upload_session['file_hash_parts'][chunk_index]
+                actual_hash = hashlib.sha256(chunk_data).hexdigest()
+                if expected_hash != actual_hash:
+                    self.logger.error(f"Chunk {chunk_index} integrity check failed")
+                    return None
+            
+            # Verify total file size
+            if len(final_data) != upload_session['total_size']:
+                self.logger.error(f"File size mismatch: expected {upload_session['total_size']}, got {len(final_data)}")
+                return None
+            
+            # Upload using existing upload_content method
+            content_info = await self.upload_content(
+                upload_session['session_id'],
+                upload_session['user_id'],
+                final_data,
+                upload_session['filename'],
+                upload_session['content_type']
+            )
+            
+            if content_info:
+                # Clean up temporary files
+                chunk_dir = f"/tmp/chunks/{upload_id}"
+                if os.path.exists(chunk_dir):
+                    shutil.rmtree(chunk_dir)
+                
+                # Remove upload session
+                del self._upload_sessions[upload_id]
+                
+                self.logger.info(f"Chunked upload finalized: {upload_id} -> {content_info.content_id}")
+            
+            return content_info
+            
+        except Exception as e:
+            self.logger.error(f"Chunked upload finalization failed: {str(e)}")
+            return None
+    
+    async def resume_upload(self, upload_id: str) -> Dict[str, Any]:
+        """Get upload session status for resume capability"""
+        try:
+            if not hasattr(self, '_upload_sessions'):
+                return {'success': False, 'error': 'No upload sessions found'}
+                
+            if upload_id not in self._upload_sessions:
+                return {'success': False, 'error': 'Upload session not found'}
+            
+            upload_session = self._upload_sessions[upload_id]
+            
+            # Check if upload session is still valid
+            if datetime.now(timezone.utc) > upload_session['expires_at']:
+                return {'success': False, 'error': 'Upload session expired'}
+            
+            missing_chunks = set(range(upload_session['total_chunks'])) - upload_session['completed_chunks']
+            
+            return {
+                'success': True,
+                'upload_id': upload_id,
+                'filename': upload_session['filename'],
+                'total_chunks': upload_session['total_chunks'],
+                'completed_chunks': len(upload_session['completed_chunks']),
+                'missing_chunks': sorted(list(missing_chunks)),
+                'progress': len(upload_session['completed_chunks']) / upload_session['total_chunks'] * 100,
+                'expires_at': upload_session['expires_at'].isoformat()
+            }
+            
+        except Exception as e:
+            self.logger.error(f"Resume upload check failed: {str(e)}")
+            return {'success': False, 'error': str(e)}
     
     async def get_content_manager_statistics(self) -> Dict[str, Any]:
         """Get comprehensive content manager statistics"""

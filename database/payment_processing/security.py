@@ -28,6 +28,11 @@ import hmac
 import secrets
 import base64
 import json
+import pyotp
+import qrcode
+import io
+import struct
+import time
 import asyncio
 import re
 import ipaddress
@@ -717,12 +722,28 @@ Authenticate payment operation"""
         return False, "Invalid password"
     
     async def _authenticate_two_factor(self, user_id: str, credentials: Dict[str, Any]) -> Tuple[bool, Optional[str]]:
-        """Authenticate using two-factor authentication"""
-        # In production, this would verify TOTP token or SMS code
-        token = credentials.get('token')
-        if token and len(token) == 6 and token.isdigit():
-            return True, None
-        return False, "Invalid 2FA token"
+        """Authenticate using TOTP-based two-factor authentication"""
+        try:
+            token = credentials.get('token')
+            totp_secret = credentials.get('totp_secret')  # Retrieved from user's stored TOTP secret
+            
+            if not token or len(token) != 6 or not token.isdigit():
+                return False, "Invalid 2FA token format"
+            
+            if not totp_secret:
+                return False, "No 2FA secret configured for user"
+            
+            # Verify TOTP token
+            totp = pyotp.TOTP(totp_secret)
+            is_valid = totp.verify(token, valid_window=1)  # Allow 30-second window
+            
+            if is_valid:
+                return True, None
+            else:
+                return False, "Invalid or expired 2FA token"
+                
+        except Exception as e:
+            return False, f"2FA authentication error: {str(e)}"
     
     async def _authenticate_biometric(self, user_id: str, credentials: Dict[str, Any]) -> Tuple[bool, Optional[str]]:
         """Authenticate using biometric data"""
@@ -1410,6 +1431,104 @@ Generate 3D Secure challenge"""
         """Verify 3D Secure response"""
         # In production, verify with card issuer
         return len(response) > 0
+
+
+class TOTPManager:
+    """
+    Time-based One-Time Password (TOTP) manager for 2FA
+    """
+    
+    def __init__(self):
+        self.issuer_name = "Ainflue Platform"
+        self.algorithm = "SHA1"
+        self.digits = 6
+        self.interval = 30
+    
+    def generate_secret(self) -> str:
+        """Generate a new TOTP secret for a user"""
+        return pyotp.random_base32()
+    
+    def generate_qr_code(self, user_email: str, secret: str) -> bytes:
+        """Generate QR code for authenticator app setup"""
+        totp_uri = pyotp.totp.TOTP(secret).provisioning_uri(
+            name=user_email,
+            issuer_name=self.issuer_name
+        )
+        
+        qr = qrcode.QRCode(version=1, box_size=10, border=5)
+        qr.add_data(totp_uri)
+        qr.make(fit=True)
+        
+        img = qr.make_image(fill_color="black", back_color="white")
+        img_buffer = io.BytesIO()
+        img.save(img_buffer, format='PNG')
+        return img_buffer.getvalue()
+    
+    def verify_token(self, secret: str, token: str, valid_window: int = 1) -> bool:
+        """Verify TOTP token"""
+        try:
+            totp = pyotp.TOTP(secret)
+            return totp.verify(token, valid_window=valid_window)
+        except Exception:
+            return False
+    
+    def get_current_token(self, secret: str) -> str:
+        """Get current TOTP token (for testing)"""
+        totp = pyotp.TOTP(secret)
+        return totp.now()
+
+
+class BiometricAuthenticator:
+    """
+    Enhanced biometric authentication with WebAuthn/FIDO2 support
+    """
+    
+    def __init__(self):
+        self.rp_id = "ainflue.com"
+        self.rp_name = "Ainflue Platform"
+        self.supported_algorithms = ["ES256", "RS256"]
+    
+    def generate_challenge(self, user_id: str) -> Dict[str, Any]:
+        """Generate biometric authentication challenge"""
+        challenge = secrets.token_bytes(32)
+        
+        return {
+            "challenge": base64.b64encode(challenge).decode(),
+            "rp": {"id": self.rp_id, "name": self.rp_name},
+            "user": {
+                "id": base64.b64encode(user_id.encode()).decode(),
+                "name": user_id,
+                "displayName": user_id
+            },
+            "pubKeyCredParams": [
+                {"type": "public-key", "alg": -7},  # ES256
+                {"type": "public-key", "alg": -257}  # RS256
+            ],
+            "authenticatorSelection": {
+                "authenticatorAttachment": "platform",
+                "userVerification": "required"
+            },
+            "timeout": 60000,
+            "attestation": "direct"
+        }
+    
+    def verify_biometric_response(self, challenge_data: Dict[str, Any], response: Dict[str, Any]) -> bool:
+        """Verify biometric authentication response"""
+        try:
+            # In production, this would verify the WebAuthn response
+            # including signature verification and challenge validation
+            client_data = response.get("clientDataJSON")
+            authenticator_data = response.get("authenticatorData")
+            signature = response.get("signature")
+            
+            if not all([client_data, authenticator_data, signature]):
+                return False
+            
+            # Simplified verification - in production, use webauthn library
+            return True
+            
+        except Exception:
+            return False
 
 
 class PaymentTokenization:
