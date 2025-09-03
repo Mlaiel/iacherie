@@ -403,8 +403,13 @@ class ChallengeCreator:
                 rewards.append(reward)
             
             # Format title and description with variables
-            title = template.title_template.format(**variables, **custom_vars)
-            description = template.description_template.format(**variables, **custom_vars)
+            format_vars = {**variables, **custom_vars}
+            # Provide default values for common template variables
+            if 'count' not in format_vars:
+                format_vars['count'] = target_value if 'target_value' in locals() else 1
+            
+            title = template.title_template.format(**format_vars)
+            description = template.description_template.format(**format_vars)
             
             # Create challenge
             challenge = Challenge(

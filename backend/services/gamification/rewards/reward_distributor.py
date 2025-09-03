@@ -371,7 +371,7 @@ class RewardDistributor:
                             user_id=user_id,
                             reward_type=RewardType(rule.reward_template["type"]),
                             name=rule.name,
-                            description=f"Automatic reward for {trigger.value}",
+                            description=f"Automatic reward for {trigger.value if hasattr(trigger, 'value') else str(trigger)}",
                             value=reward_value,
                             trigger=trigger,
                             trigger_source_id=trigger_data.get("source_id"),

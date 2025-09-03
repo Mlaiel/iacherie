@@ -103,18 +103,18 @@ class PointSystem:
         try:
             # Base exchange rates (relative to credits)
             self.exchange_rates = {
-                f"{PointType.CREDITS}_to_{PointType.COLLABORATION_COINS}": Decimal("0.8"),
-                f"{PointType.CREDITS}_to_{PointType.QUALITY_CRYSTALS}": Decimal("0.5"),
-                f"{PointType.CREDITS}_to_{PointType.ACHIEVEMENT_GEMS}": Decimal("0.3"),
-                f"{PointType.CREDITS}_to_{PointType.CREATOR_TOKENS}": Decimal("0.1"),
-                f"{PointType.CREDITS}_to_{PointType.PREMIUM_POINTS}": Decimal("0.05"),
+                "credits_to_collaboration_coins": Decimal("0.8"),
+                "credits_to_quality_crystals": Decimal("0.5"),
+                "credits_to_achievement_gems": Decimal("0.3"),
+                "credits_to_creator_tokens": Decimal("0.1"),
+                "credits_to_premium_points": Decimal("0.05"),
                 
                 # Reverse rates
-                f"{PointType.COLLABORATION_COINS}_to_{PointType.CREDITS}": Decimal("1.25"),
-                f"{PointType.QUALITY_CRYSTALS}_to_{PointType.CREDITS}": Decimal("2.0"),
-                f"{PointType.ACHIEVEMENT_GEMS}_to_{PointType.CREDITS}": Decimal("3.33"),
-                f"{PointType.CREATOR_TOKENS}_to_{PointType.CREDITS}": Decimal("10.0"),
-                f"{PointType.PREMIUM_POINTS}_to_{PointType.CREDITS}": Decimal("20.0"),
+                "collaboration_coins_to_credits": Decimal("1.25"),
+                "quality_crystals_to_credits": Decimal("2.0"),
+                "achievement_gems_to_credits": Decimal("3.33"),
+                "creator_tokens_to_credits": Decimal("10.0"),
+                "premium_points_to_credits": Decimal("20.0"),
             }
             
             self.logger.info(f"Initialized {len(self.exchange_rates)} exchange rates")
@@ -274,7 +274,9 @@ class PointSystem:
             amount = Decimal(str(amount))
             
             # Get exchange rate
-            exchange_key = f"{from_type}_to_{to_type}"
+            from_value = from_type.value if hasattr(from_type, 'value') else str(from_type)
+            to_value = to_type.value if hasattr(to_type, 'value') else str(to_type)
+            exchange_key = f"{from_value}_to_{to_value}"
             if exchange_key not in self.exchange_rates:
                 self.logger.warning(f"Exchange rate not found: {exchange_key}")
                 return False
@@ -454,7 +456,8 @@ class PointSystem:
                     total_value += amount
                 else:
                     # Convert to credits using exchange rate
-                    exchange_key = f"{pt}_to_{PointType.CREDITS}"
+                    pt_value = pt.value if hasattr(pt, 'value') else str(pt)
+                    exchange_key = f"{pt_value}_to_credits"
                     if exchange_key in self.exchange_rates:
                         total_value += amount * self.exchange_rates[exchange_key]
             

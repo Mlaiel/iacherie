@@ -323,7 +323,7 @@ class BadgeSystem:
             stats["recent_badges"] = [
                 {
                     "badge_id": ub.badge_id,
-                    "name": self.badges.get(ub.badge_id, {}).get("name", ""),
+                    "name": self.badges.get(ub.badge_id).name if self.badges.get(ub.badge_id) else "",
                     "awarded_at": ub.awarded_at.isoformat(),
                     "awarded_for": ub.awarded_for
                 }
