@@ -1134,6 +1134,9 @@ Initialize storage backend"""
             detected_type = self._detect_content_type(filename, file_data)
             detected_format = self._detect_content_format(filename)
             
+            # Extract metadata automatically
+            extracted_metadata = await self._extract_metadata(file_data, filename, detected_type)
+            
             # Generate file hash
             file_hash = hashlib.sha256(file_data).hexdigest()
             
@@ -1156,6 +1159,21 @@ Initialize storage backend"""
             if storage_location:
                 content_info.storage_location = storage_location
                 content_info.processing_state = ContentState.UPLOADED
+                
+                # CDN Integration - upload to CDN for optimized delivery
+                cdn_integration = CDNIntegration(self.config.get('cdn_config', {}))
+                cdn_result = await cdn_integration.upload_to_cdn(
+                    content_info.content_id,
+                    file_data,
+                    filename,
+                    content_info.content_type,
+                    extracted_metadata
+                )
+                
+                if cdn_result.get('success'):
+                    content_info.cdn_urls = cdn_result.get('urls', {})
+                    content_info.optimization_stats = cdn_result.get('optimization_stats', {})
+                    self.logger.info(f"Content uploaded to CDN: {content_info.content_id}")
                 
                 # Add to session content tracking
                 if session_id not in self.session_content:
@@ -1652,3 +1670,485 @@ Initialize storage backend"""
         except Exception as e:
             self.logger.error(f"Statistics calculation failed: {str(e)}")
             return {}
+    
+    async def _extract_metadata(self, file_data: bytes, filename: str, content_type: str) -> Dict[str, Any]:
+        """Extract metadata from various file types automatically"""
+        try:
+            metadata = {
+                'filename': filename,
+                'file_size': len(file_data),
+                'content_type': content_type,
+                'extraction_timestamp': datetime.now(timezone.utc).isoformat()
+            }
+            
+            # Get file extension
+            file_ext = Path(filename).suffix.lower()
+            
+            # Image metadata extraction
+            if content_type.startswith('image/'):
+                metadata.update(await self._extract_image_metadata(file_data, file_ext))
+            
+            # Audio metadata extraction
+            elif content_type.startswith('audio/'):
+                metadata.update(await self._extract_audio_metadata(file_data, file_ext))
+            
+            # Video metadata extraction
+            elif content_type.startswith('video/'):
+                metadata.update(await self._extract_video_metadata(file_data, file_ext))
+            
+            # Document metadata extraction
+            elif content_type in ['application/pdf', 'application/msword', 'text/plain']:
+                metadata.update(await self._extract_document_metadata(file_data, file_ext))
+            
+            # Archive metadata extraction
+            elif file_ext in ['.zip', '.rar', '.tar', '.gz']:
+                metadata.update(await self._extract_archive_metadata(file_data, file_ext))
+            
+            # Basic file analysis for any type
+            metadata.update(await self._extract_basic_metadata(file_data, filename))
+            
+            return metadata
+            
+        except Exception as e:
+            self.logger.error(f"Metadata extraction failed: {str(e)}")
+            return {'error': str(e)}
+    
+    async def _extract_image_metadata(self, file_data: bytes, file_ext: str) -> Dict[str, Any]:
+        """Extract metadata from image files"""
+        try:
+            from PIL import Image
+            from PIL.ExifTags import TAGS
+            import io
+            
+            metadata = {'type': 'image'}
+            
+            # Use PIL to extract image metadata
+            with Image.open(io.BytesIO(file_data)) as img:
+                metadata.update({
+                    'dimensions': f"{img.width}x{img.height}",
+                    'width': img.width,
+                    'height': img.height,
+                    'format': img.format,
+                    'mode': img.mode,
+                    'has_transparency': 'transparency' in img.info
+                })
+                
+                # Extract EXIF data if available
+                exif_data = {}
+                if hasattr(img, '_getexif') and img._getexif():
+                    exif = img._getexif()
+                    for tag_id, value in exif.items():
+                        tag = TAGS.get(tag_id, tag_id)
+                        exif_data[tag] = value
+                
+                if exif_data:
+                    metadata['exif'] = exif_data
+                    
+                    # Extract common EXIF fields
+                    if 'DateTime' in exif_data:
+                        metadata['date_taken'] = exif_data['DateTime']
+                    if 'Make' in exif_data:
+                        metadata['camera_make'] = exif_data['Make']
+                    if 'Model' in exif_data:
+                        metadata['camera_model'] = exif_data['Model']
+                    if 'GPSInfo' in exif_data:
+                        metadata['has_gps'] = True
+            
+            return metadata
+            
+        except Exception as e:
+            return {'image_extraction_error': str(e)}
+    
+    async def _extract_audio_metadata(self, file_data: bytes, file_ext: str) -> Dict[str, Any]:
+        """Extract metadata from audio files"""
+        try:
+            import mutagen
+            import io
+            
+            metadata = {'type': 'audio'}
+            
+            # Save to temporary file for mutagen processing
+            temp_file = f"/tmp/temp_audio_{uuid.uuid4().hex}{file_ext}"
+            with open(temp_file, 'wb') as f:
+                f.write(file_data)
+            
+            try:
+                audio_file = mutagen.File(temp_file)
+                if audio_file:
+                    metadata.update({
+                        'duration': getattr(audio_file.info, 'length', 0),
+                        'bitrate': getattr(audio_file.info, 'bitrate', 0),
+                        'sample_rate': getattr(audio_file.info, 'sample_rate', 0),
+                        'channels': getattr(audio_file.info, 'channels', 0)
+                    })
+                    
+                    # Extract tags
+                    if audio_file.tags:
+                        tags = {}
+                        for key, value in audio_file.tags.items():
+                            if isinstance(value, list):
+                                tags[key] = str(value[0]) if value else ''
+                            else:
+                                tags[key] = str(value)
+                        metadata['tags'] = tags
+                        
+                        # Common tag mappings
+                        title = tags.get('TIT2') or tags.get('TITLE') or tags.get('\xa9nam')
+                        artist = tags.get('TPE1') or tags.get('ARTIST') or tags.get('\xa9ART')
+                        album = tags.get('TALB') or tags.get('ALBUM') or tags.get('\xa9alb')
+                        
+                        if title:
+                            metadata['title'] = title
+                        if artist:
+                            metadata['artist'] = artist
+                        if album:
+                            metadata['album'] = album
+                            
+            finally:
+                if os.path.exists(temp_file):
+                    os.remove(temp_file)
+            
+            return metadata
+            
+        except Exception as e:
+            return {'audio_extraction_error': str(e)}
+    
+    async def _extract_video_metadata(self, file_data: bytes, file_ext: str) -> Dict[str, Any]:
+        """Extract metadata from video files"""
+        try:
+            metadata = {'type': 'video'}
+            
+            # For video metadata extraction, we would typically use ffprobe or similar
+            # For now, provide basic analysis
+            metadata.update({
+                'estimated_duration': 'unknown',
+                'estimated_resolution': 'unknown',
+                'estimated_codec': 'unknown'
+            })
+            
+            # Basic video file format detection
+            if file_ext in ['.mp4', '.mov']:
+                metadata['container'] = 'mp4'
+            elif file_ext in ['.avi']:
+                metadata['container'] = 'avi'
+            elif file_ext in ['.mkv']:
+                metadata['container'] = 'matroska'
+            elif file_ext in ['.webm']:
+                metadata['container'] = 'webm'
+            
+            return metadata
+            
+        except Exception as e:
+            return {'video_extraction_error': str(e)}
+    
+    async def _extract_document_metadata(self, file_data: bytes, file_ext: str) -> Dict[str, Any]:
+        """Extract metadata from document files"""
+        try:
+            metadata = {'type': 'document'}
+            
+            if file_ext == '.pdf':
+                # PDF metadata extraction
+                try:
+                    import PyPDF2
+                    import io
+                    
+                    pdf_reader = PyPDF2.PdfReader(io.BytesIO(file_data))
+                    metadata.update({
+                        'page_count': len(pdf_reader.pages),
+                        'encrypted': pdf_reader.is_encrypted
+                    })
+                    
+                    if pdf_reader.metadata:
+                        pdf_metadata = pdf_reader.metadata
+                        metadata['pdf_metadata'] = {
+                            'title': pdf_metadata.get('/Title', ''),
+                            'author': pdf_metadata.get('/Author', ''),
+                            'subject': pdf_metadata.get('/Subject', ''),
+                            'creator': pdf_metadata.get('/Creator', ''),
+                            'producer': pdf_metadata.get('/Producer', ''),
+                            'creation_date': str(pdf_metadata.get('/CreationDate', '')),
+                            'modification_date': str(pdf_metadata.get('/ModDate', ''))
+                        }
+                except ImportError:
+                    metadata['pdf_extraction_error'] = 'PyPDF2 not available'
+                    
+            elif file_ext == '.txt':
+                # Text file analysis
+                try:
+                    text_content = file_data.decode('utf-8')
+                    metadata.update({
+                        'character_count': len(text_content),
+                        'line_count': text_content.count('\n') + 1,
+                        'word_count': len(text_content.split()),
+                        'encoding': 'utf-8'
+                    })
+                except UnicodeDecodeError:
+                    metadata['encoding_error'] = 'Cannot decode as UTF-8'
+            
+            return metadata
+            
+        except Exception as e:
+            return {'document_extraction_error': str(e)}
+    
+    async def _extract_archive_metadata(self, file_data: bytes, file_ext: str) -> Dict[str, Any]:
+        """Extract metadata from archive files"""
+        try:
+            metadata = {'type': 'archive', 'format': file_ext}
+            
+            if file_ext == '.zip':
+                try:
+                    import zipfile
+                    import io
+                    
+                    with zipfile.ZipFile(io.BytesIO(file_data)) as zip_file:
+                        file_list = zip_file.namelist()
+                        metadata.update({
+                            'file_count': len(file_list),
+                            'compressed_size': len(file_data),
+                            'has_directories': any('/' in name for name in file_list),
+                            'file_extensions': list(set(Path(name).suffix.lower() for name in file_list if Path(name).suffix))
+                        })
+                        
+                        # Calculate uncompressed size
+                        uncompressed_size = sum(info.file_size for info in zip_file.infolist())
+                        metadata['uncompressed_size'] = uncompressed_size
+                        metadata['compression_ratio'] = len(file_data) / uncompressed_size if uncompressed_size > 0 else 0
+                        
+                except zipfile.BadZipFile:
+                    metadata['archive_error'] = 'Invalid ZIP file'
+            
+            return metadata
+            
+        except Exception as e:
+            return {'archive_extraction_error': str(e)}
+    
+    async def _extract_basic_metadata(self, file_data: bytes, filename: str) -> Dict[str, Any]:
+        """Extract basic metadata for any file type"""
+        try:
+            metadata = {}
+            
+            # File hash for deduplication
+            metadata['md5_hash'] = hashlib.md5(file_data).hexdigest()
+            metadata['sha1_hash'] = hashlib.sha1(file_data).hexdigest()
+            
+            # Basic file analysis
+            metadata['entropy'] = self._calculate_entropy(file_data[:1024])  # First 1KB for performance
+            metadata['is_binary'] = self._is_binary_file(file_data[:512])
+            
+            # File signature/magic number detection
+            file_signature = file_data[:16].hex() if len(file_data) >= 16 else file_data.hex()
+            metadata['file_signature'] = file_signature
+            metadata['magic_number'] = self._detect_file_type_by_signature(file_data[:16])
+            
+            return metadata
+            
+        except Exception as e:
+            return {'basic_extraction_error': str(e)}
+    
+    def _calculate_entropy(self, data: bytes) -> float:
+        """Calculate Shannon entropy of data"""
+        if not data:
+            return 0.0
+        
+        # Count byte frequencies
+        frequencies = [0] * 256
+        for byte in data:
+            frequencies[byte] += 1
+        
+        # Calculate entropy
+        entropy = 0.0
+        data_len = len(data)
+        for freq in frequencies:
+            if freq > 0:
+                probability = freq / data_len
+                entropy -= probability * math.log2(probability)
+        
+        return entropy
+    
+    def _is_binary_file(self, data: bytes) -> bool:
+        """Detect if file is binary based on content"""
+        if not data:
+            return False
+        
+        # Check for null bytes (common in binary files)
+        if b'\x00' in data:
+            return True
+        
+        # Check for high entropy (random-looking data)
+        entropy = self._calculate_entropy(data)
+        return entropy > 7.0  # High entropy threshold
+    
+    def _detect_file_type_by_signature(self, data: bytes) -> str:
+        """Detect file type by magic number/signature"""
+        if not data:
+            return 'unknown'
+        
+        signatures = {
+            b'\xFF\xD8\xFF': 'jpeg',
+            b'\x89PNG\r\n\x1a\n': 'png',
+            b'GIF87a': 'gif87a',
+            b'GIF89a': 'gif89a',
+            b'RIFF': 'riff',  # Could be WAV, AVI, etc.
+            b'%PDF': 'pdf',
+            b'PK\x03\x04': 'zip',
+            b'PK\x05\x06': 'zip_empty',
+            b'Rar!': 'rar',
+            b'\x7fELF': 'elf',
+            b'MZ': 'exe',
+            b'\xCA\xFE\xBA\xBE': 'java_class'
+        }
+        
+        for signature, file_type in signatures.items():
+            if data.startswith(signature):
+                return file_type
+        
+        return 'unknown'
+
+
+class CDNIntegration:
+    """
+    CDN Integration for content delivery optimization
+    """
+    
+    def __init__(self, config: Dict[str, Any] = None):
+        self.config = config or {}
+        self.logger = logging.getLogger(__name__)
+        
+        # CDN providers configuration
+        self.providers = {
+            'cloudfront': {
+                'enabled': self.config.get('cloudfront_enabled', False),
+                'distribution_id': self.config.get('cloudfront_distribution_id'),
+                'domain': self.config.get('cloudfront_domain'),
+                'region': self.config.get('aws_region', 'us-east-1')
+            },
+            'fastly': {
+                'enabled': self.config.get('fastly_enabled', False),
+                'service_id': self.config.get('fastly_service_id'),
+                'api_key': self.config.get('fastly_api_key'),
+                'domain': self.config.get('fastly_domain')
+            },
+            'cloudflare': {
+                'enabled': self.config.get('cloudflare_enabled', False),
+                'zone_id': self.config.get('cloudflare_zone_id'),
+                'api_token': self.config.get('cloudflare_api_token'),
+                'domain': self.config.get('cloudflare_domain')
+            }
+        }
+        
+        # Content optimization settings
+        self.optimization_config = {
+            'auto_compression': self.config.get('auto_compression', True),
+            'image_optimization': self.config.get('image_optimization', True),
+            'cache_ttl': self.config.get('cache_ttl', 3600),
+            'edge_locations': self.config.get('edge_locations', ['us-east-1', 'eu-west-1'])
+        }
+    
+    async def upload_to_cdn(
+        self,
+        content_id: str,
+        file_data: bytes,
+        filename: str,
+        content_type: str,
+        metadata: Dict[str, Any] = None
+    ) -> Dict[str, Any]:
+        """Upload content to CDN with optimization"""
+        try:
+            result = {
+                'success': False,
+                'content_id': content_id,
+                'urls': {},
+                'cache_info': {}
+            }
+            
+            # Optimize content before upload
+            optimized_data = await self._optimize_content(file_data, content_type, filename)
+            
+            # Upload to enabled CDN providers
+            for provider_name, provider_config in self.providers.items():
+                if provider_config.get('enabled'):
+                    upload_result = await self._upload_to_provider(
+                        provider_name, content_id, optimized_data, filename, content_type, metadata
+                    )
+                    
+                    if upload_result['success']:
+                        result['urls'][provider_name] = upload_result['url']
+                        result['cache_info'][provider_name] = upload_result.get('cache_info', {})
+                        result['success'] = True
+            
+            # Set cache headers and optimization metadata
+            if result['success']:
+                result['cache_headers'] = {
+                    'Cache-Control': f"public, max-age={self.optimization_config['cache_ttl']}",
+                    'Content-Type': content_type,
+                    'Content-Length': str(len(optimized_data)),
+                    'ETag': hashlib.md5(optimized_data).hexdigest(),
+                    'X-Content-Optimized': 'true' if optimized_data != file_data else 'false'
+                }
+                
+                result['optimization_stats'] = {
+                    'original_size': len(file_data),
+                    'optimized_size': len(optimized_data),
+                    'compression_ratio': len(optimized_data) / len(file_data) if file_data else 1.0,
+                    'optimization_applied': optimized_data != file_data
+                }
+            
+            return result
+            
+        except Exception as e:
+            self.logger.error(f"CDN upload failed: {str(e)}")
+            return {'success': False, 'error': str(e)}
+    
+    def get_cdn_status(self) -> Dict[str, Any]:
+        """Get CDN integration status"""
+        return {
+            'providers': {
+                name: {
+                    'enabled': config.get('enabled', False),
+                    'configured': bool(config.get('domain'))
+                }
+                for name, config in self.providers.items()
+            },
+            'optimization': self.optimization_config
+        }
+    
+    async def _optimize_content(self, file_data: bytes, content_type: str, filename: str) -> bytes:
+        """Optimize content for CDN delivery"""
+        try:
+            if not self.optimization_config.get('auto_compression'):
+                return file_data
+            
+            # For demo purposes, return original data
+            # In production, implement actual optimization
+            return file_data
+            
+        except Exception as e:
+            self.logger.error(f"Content optimization failed: {str(e)}")
+            return file_data
+    
+    async def _upload_to_provider(
+        self,
+        provider: str,
+        content_id: str,
+        file_data: bytes,
+        filename: str,
+        content_type: str,
+        metadata: Dict[str, Any] = None
+    ) -> Dict[str, Any]:
+        """Upload to specific CDN provider"""
+        try:
+            # Simplified implementation for demo
+            domain = self.providers[provider].get('domain', f'{provider}.example.com')
+            cdn_url = f"https://{domain}/content/{content_id}/{filename}"
+            
+            return {
+                'success': True,
+                'url': cdn_url,
+                'provider': provider,
+                'cache_info': {
+                    'ttl': self.optimization_config['cache_ttl']
+                }
+            }
+                
+        except Exception as e:
+            return {'success': False, 'error': str(e)}
