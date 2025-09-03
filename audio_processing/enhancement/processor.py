@@ -615,7 +615,7 @@ Initialize the audio enhancement processor"""
             List of EnhancementResult objects
         """
         def process_single_file(file_path):
-            try:
+        try:
                 # Load audio
                 audio, sample_rate = librosa.load(str(file_path), sr=None)
                 

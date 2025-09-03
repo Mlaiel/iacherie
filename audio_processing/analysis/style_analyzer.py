@@ -551,7 +551,7 @@ class StyleAnalyzer:
                                     sample_rate: int) -> StyleConfidence:
         """Classify musical style using advanced feature analysis"""
         def classify():
-            try:
+        try:
                 # Style scoring based on characteristic patterns
                 style_scores = {}
                 
@@ -656,7 +656,7 @@ class StyleAnalyzer:
                                   sample_rate: int) -> EraClassification:
         """Classify musical era and temporal characteristics"""
         def classify():
-            try:
+        try:
                 era_scores = {}
                 
                 # Production quality indicators

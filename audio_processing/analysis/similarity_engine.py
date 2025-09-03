@@ -673,7 +673,7 @@ class SimilarityEngine:
     async def _extract_rhythmic_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, np.ndarray]:
         """Extract rhythmic features for similarity analysis"""
         def extract():
-            try:
+        try:
         try:
                     # AI model processing
                     if not hasattr(self, 'model') or self.model is None:
@@ -769,7 +769,7 @@ class SimilarityEngine:
     async def _extract_harmonic_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, np.ndarray]:
         """Extract harmonic features for similarity analysis"""
         def extract():
-            try:
+        try:
                 features = {}
                 
                 # Chroma features
@@ -817,7 +817,7 @@ class SimilarityEngine:
     async def _extract_high_level_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, np.ndarray]:
         """Extract high-level semantic features"""
         def extract():
-            try:
+        try:
                 features = {}
                 
                 # Simplified mood features (would use trained models in production)
