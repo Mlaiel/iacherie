@@ -1,0 +1,491 @@
+# =============================================================================
+# AINFLUE PLATFORM - STAGING DOCKER COMPOSE
+# =============================================================================
+# Staging environment deployment with monitoring and testing features.
+# Mirrors production setup but with reduced resources and debug capabilities.
+#
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+# =============================================================================
+
+version: '3.8'
+
+x-common-variables: &common-variables
+  ENVIRONMENT: staging
+  LOG_LEVEL: INFO
+  POSTGRES_HOST: postgres-staging
+  POSTGRES_PORT: 5432
+  REDIS_HOST: redis-staging
+  REDIS_PORT: 6379
+  MONGODB_HOST: mongodb-staging
+  MONGODB_PORT: 27017
+  MONITORING_ENABLED: "true"
+  DEBUG_MODE: "false"
+
+x-resource-limits: &staging-resources
+  limits:
+    cpus: '1.0'
+    memory: 1G
+  reservations:
+    cpus: '0.25'
+    memory: 256M
+
+x-restart-policy: &restart-policy
+  restart_policy:
+    condition: on-failure
+    delay: 5s
+    max_attempts: 3
+    window: 120s
+
+services:
+  # =============================================================================
+  # LOAD BALANCER & REVERSE PROXY
+  # =============================================================================
+  nginx-staging:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+      - "8443:443"
+    volumes:
+      - ./nginx/staging.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      - ./nginx/logs:/var/log/nginx
+      - nginx_cache:/var/cache/nginx
+    environment:
+      <<: *common-variables
+    deploy:
+      resources:
+        <<: *staging-resources
+      <<: *restart-policy
+    networks:
+      - ainflue-staging
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # =============================================================================
+  # CORE APPLICATION SERVICES
+  # =============================================================================
+  api-gateway:
+    image: ainflue/platform:staging
+    ports:
+      - "8000:8000"
+    environment:
+      <<: *common-variables
+      SERVICE_NAME: api-gateway
+      API_PREFIX: /api/v1
+      DOCS_URL: /docs
+      REDOC_URL: /redoc
+      CORS_ORIGINS: https://staging.ainflue.com,https://staging-app.ainflue.com
+    volumes:
+      - ./config:/app/config:ro
+      - api_logs:/app/logs
+    deploy:
+      resources:
+        <<: *staging-resources
+      <<: *restart-policy
+      replicas: 2
+    networks:
+      - ainflue-staging
+    depends_on:
+      - postgres-staging
+      - redis-staging
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  ai-engine:
+    image: ainflue/ai-engine:staging
+    environment:
+      <<: *common-variables
+      SERVICE_NAME: ai-engine
+      MODEL_CACHE_SIZE: 2G
+      GPU_ENABLED: "false"
+    volumes:
+      - ai_models:/app/models
+      - ai_cache:/app/cache
+      - ai_logs:/app/logs
+    deploy:
+      resources:
+        limits:
+          cpus: '1.5'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+      <<: *restart-policy
+    networks:
+      - ainflue-staging
+    depends_on:
+      - postgres-staging
+      - redis-staging
+
+  crawler-service:
+    image: ainflue/crawler:staging
+    environment:
+      <<: *common-variables
+      SERVICE_NAME: crawler
+      CRAWL_RATE_LIMIT: "100"
+      CONCURRENT_CRAWLERS: "5"
+    volumes:
+      - crawler_data:/app/data
+      - crawler_logs:/app/logs
+    deploy:
+      resources:
+        <<: *staging-resources
+      <<: *restart-policy
+      replicas: 2
+    networks:
+      - ainflue-staging
+    depends_on:
+      - postgres-staging
+      - redis-staging
+
+  analytics-service:
+    image: ainflue/analytics:staging
+    environment:
+      <<: *common-variables
+      SERVICE_NAME: analytics
+      ANALYTICS_RETENTION_DAYS: "90"
+    volumes:
+      - analytics_data:/app/data
+      - analytics_logs:/app/logs
+    deploy:
+      resources:
+        <<: *staging-resources
+      <<: *restart-policy
+    networks:
+      - ainflue-staging
+    depends_on:
+      - postgres-staging
+      - redis-staging
+
+  # =============================================================================
+  # DATABASE SERVICES
+  # =============================================================================
+  postgres-staging:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: ainflue_platform_staging
+      POSTGRES_USER: ainflue_staging
+      POSTGRES_PASSWORD: staging_password_change_me
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --lc-collate=C --lc-ctype=C"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init:/docker-entrypoint-initdb.d:ro
+      - postgres_logs:/var/log/postgresql
+    ports:
+      - "5433:5432"  # Different port for staging
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+      <<: *restart-policy
+    networks:
+      - ainflue-staging
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ainflue_staging -d ainflue_platform_staging"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  redis-staging:
+    image: redis:7-alpine
+    command: >
+      redis-server 
+      --appendonly yes 
+      --appendfsync everysec
+      --maxmemory 512mb
+      --maxmemory-policy allkeys-lru
+      --requirepass staging_redis_password
+    volumes:
+      - redis_data:/data
+      - redis_logs:/var/log/redis
+    ports:
+      - "6380:6379"  # Different port for staging
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.1'
+          memory: 128M
+      <<: *restart-policy
+    networks:
+      - ainflue-staging
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  mongodb-staging:
+    image: mongo:7
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: staging_mongo_password
+      MONGO_INITDB_DATABASE: ainflue_staging
+    volumes:
+      - mongodb_data:/data/db
+      - mongodb_config:/data/configdb
+      - ./database/mongo-init:/docker-entrypoint-initdb.d:ro
+    ports:
+      - "27018:27017"  # Different port for staging
+    deploy:
+      resources:
+        <<: *staging-resources
+      <<: *restart-policy
+    networks:
+      - ainflue-staging
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  # =============================================================================
+  # MONITORING & OBSERVABILITY
+  # =============================================================================
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9091:9090"  # Different port for staging
+    volumes:
+      - ./monitoring/prometheus/staging.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=7d'  # Shorter retention for staging
+      - '--web.enable-lifecycle'
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.1'
+          memory: 128M
+      <<: *restart-policy
+    networks:
+      - ainflue-staging
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3001:3000"  # Different port for staging
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin123
+      GF_INSTALL_PLUGINS: grafana-piechart-panel,grafana-worldmap-panel
+      GF_SECURITY_ALLOW_EMBEDDING: "true"
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources:ro
+    deploy:
+      resources:
+        <<: *staging-resources
+      <<: *restart-policy
+    networks:
+      - ainflue-staging
+    depends_on:
+      - prometheus
+
+  # =============================================================================
+  # LOGGING
+  # =============================================================================
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+    environment:
+      discovery.type: single-node
+      ES_JAVA_OPTS: "-Xms256m -Xmx256m"  # Reduced memory for staging
+      xpack.security.enabled: "false"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    ports:
+      - "9201:9200"  # Different port for staging
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.1'
+          memory: 256M
+      <<: *restart-policy
+    networks:
+      - ainflue-staging
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.11.0
+    environment:
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    ports:
+      - "5602:5601"  # Different port for staging
+    volumes:
+      - kibana_data:/usr/share/kibana/data
+    deploy:
+      resources:
+        <<: *staging-resources
+      <<: *restart-policy
+    networks:
+      - ainflue-staging
+    depends_on:
+      - elasticsearch
+
+  # =============================================================================
+  # TESTING & UTILITIES
+  # =============================================================================
+  testing-suite:
+    image: ainflue/testing:staging
+    environment:
+      <<: *common-variables
+      TEST_ENVIRONMENT: staging
+      RUN_INTEGRATION_TESTS: "true"
+      SELENIUM_HUB_URL: http://selenium-hub:4444/wd/hub
+    volumes:
+      - ./tests:/app/tests:ro
+      - test_results:/app/test-results
+      - test_reports:/app/reports
+    deploy:
+      resources:
+        <<: *staging-resources
+      <<: *restart-policy
+      replicas: 0  # Only run when needed
+    networks:
+      - ainflue-staging
+    depends_on:
+      - api-gateway
+      - postgres-staging
+
+  # =============================================================================
+  # LOAD TESTING
+  # =============================================================================
+  load-testing:
+    image: grafana/k6:latest
+    environment:
+      K6_OUT: influxdb=http://influxdb:8086/k6
+    volumes:
+      - ./tests/load:/scripts:ro
+      - load_test_results:/results
+    deploy:
+      resources:
+        <<: *staging-resources
+      <<: *restart-policy
+      replicas: 0  # Only run when needed
+    networks:
+      - ainflue-staging
+    depends_on:
+      - api-gateway
+
+# =============================================================================
+# VOLUMES
+# =============================================================================
+volumes:
+  # Application data
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  mongodb_data:
+    driver: local
+  mongodb_config:
+    driver: local
+  
+  # Service data
+  ai_models:
+    driver: local
+  ai_cache:
+    driver: local
+  crawler_data:
+    driver: local
+  analytics_data:
+    driver: local
+  
+  # Monitoring data
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
+  elasticsearch_data:
+    driver: local
+  kibana_data:
+    driver: local
+  
+  # Logs
+  api_logs:
+    driver: local
+  ai_logs:
+    driver: local
+  crawler_logs:
+    driver: local
+  analytics_logs:
+    driver: local
+  postgres_logs:
+    driver: local
+  redis_logs:
+    driver: local
+  
+  # Cache
+  nginx_cache:
+    driver: local
+  
+  # Testing
+  test_results:
+    driver: local
+  test_reports:
+    driver: local
+  load_test_results:
+    driver: local
+
+# =============================================================================
+# NETWORKS
+# =============================================================================
+networks:
+  ainflue-staging:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/16
+
+# =============================================================================
+# CONFIGURATION NOTES
+# =============================================================================
+# 
+# Staging Environment Features:
+# - Reduced resource allocation compared to production
+# - Different ports to avoid conflicts with production
+# - Enhanced debugging and testing capabilities
+# - Simplified monitoring stack
+# - Load testing and integration testing services
+# 
+# Access URLs (when deployed):
+# - API Gateway: http://localhost:8000
+# - Grafana: http://localhost:3001 (admin/admin123)
+# - Prometheus: http://localhost:9091
+# - Kibana: http://localhost:5602
+# - PostgreSQL: localhost:5433
+# - Redis: localhost:6380
+# - MongoDB: localhost:27018
+# 
+# Commands:
+# - Deploy: docker-compose -f docker-compose.staging.yaml up -d
+# - Scale API: docker-compose -f docker-compose.staging.yaml up -d --scale api-gateway=3
+# - Logs: docker-compose -f docker-compose.staging.yaml logs -f [service]
+# - Stop: docker-compose -f docker-compose.staging.yaml down
+# 
+# =============================================================================
