@@ -43,11 +43,21 @@ import json
 import os
 from pathlib import Path
 
-# Import all protection services
+# Import IP Protection Service
 try:
-    from .ai_engine import AIProtectionEngine
-except ImportError:
-    AIProtectionEngine = None
+    from .ip_protection_service import IPProtectionService
+    from .ip_protection_service import (
+        PlagiarismDetectionAPI,
+        UnauthorizedUsageMonitor,
+        AutomatedDMCASystem,
+        quick_content_protection,
+        quick_plagiarism_detection,
+        quick_monitoring_setup,
+        quick_dmca_takedown
+    )
+except ImportError as e:
+    logging.warning(f"IP Protection Service not available: {e}")
+    IPProtectionService = None
 
 try:
     from .antipiracy_detection import AdvancedAntiPiracyService
@@ -145,6 +155,19 @@ class ContentProtectionSuite:
 
 # Export all available services
 __all__ = []
+
+# Add IP Protection Service exports
+if IPProtectionService:
+    __all__.extend([
+        'IPProtectionService',
+        'PlagiarismDetectionAPI',
+        'UnauthorizedUsageMonitor', 
+        'AutomatedDMCASystem',
+        'quick_content_protection',
+        'quick_plagiarism_detection',
+        'quick_monitoring_setup',
+        'quick_dmca_takedown'
+    ])
 
 if AIProtectionEngine:
     __all__.append('AIProtectionEngine')

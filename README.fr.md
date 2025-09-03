@@ -12,20 +12,38 @@ Ainflue est une plateforme complète alimentée par l'IA pour la protection et l
 ## 👨‍💻 Équipe Projet & Direction
 
 **Créateur du Projet & Responsable**: [Fahed Mlaiel](mailto:mlaiel@live.de)
-**Équipe de Développement Expert**: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + DevOps
-**Spécialités du Projet**: Protection de Contenu Alimentée par IA, Systèmes de Monétisation Avancés, Gamification Entreprise, Traitement de Contenu Multi-Format
+**Équipe de Développement Expert**: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security Architect + Microservices Specialist + DevOps Engineer
+**Spécialités du Projet**: 
+- **Service de Protection IP**: Détection de plagiat multi-format, surveillance d'utilisation non autorisée, application DMCA automatisée
+- **Protection de Contenu Alimentée par IA**: Empreintage avancé et analyse de similarité pour audio, vidéo, image et texte
+- **Systèmes de Monétisation Avancés**: Optimisation et protection des revenus avec analyses IA
+- **Gamification Entreprise**: Systèmes d'engagement et de preuve sociale complets
+- **Traitement de Contenu Multi-Format**: Pipelines d'analyse et d'optimisation de contenu professionnel
 
 ## ⚠️ AVERTISSEMENT STRICT DE PROPRIÉTÉ INTELLECTUELLE
 
-**🚨 AVIS DE PROTECTION DES DROITS D'AUTEUR 🚨**
+**🚨 AVIS DE PROTECTION DES DROITS D'AUTEUR MAXIMUM 🚨**
 
 Ce logiciel, concept et tous les droits de propriété intellectuelle associés sont la **PROPRIÉTÉ EXCLUSIVE** de **Fahed Mlaiel**.
 
 **L'ACCÈS NON AUTORISÉ, LA COPIE, LA MODIFICATION, LA DISTRIBUTION, L'INGÉNIERIE INVERSE OU LA COMMERCIALISATION** sans permission écrite explicite de Fahed Mlaiel (mlaiel@live.de) est **STRICTEMENT INTERDITE** et entraînera des actions légales immédiates sous les lois allemandes et internationales sur les droits d'auteur.
 
+**⚖️ AVERTISSEMENT LÉGAL POUR TENTATIVES DE VOL IP ⚖️**
+
+TOUTE TENTATIVE DE VOLER, COPIER OU S'APPROPRIER CE CONCEPT, CODE OU IDÉE COMMERCIALE SANS AUTORISATION ÉCRITE EXPLICITE DE FAHED MLAIEL EST :
+- UN CRIME FÉDÉRAL sous le Computer Fraud and Abuse Act (CFAA)
+- VIOLATION DES DROITS D'AUTEUR sous la loi allemande et internationale
+- VOL DE SECRETS COMMERCIAUX sous l'Economic Espionage Act
+- SOUMIS AUX PÉNALITÉS CRIMINELLES ET CIVILES MAXIMALES
+
+**Pénalités Criminelles**: Jusqu'à 5M€ d'amendes + 20 ans d'emprisonnement
+**Pénalités Civiles**: Dommages illimités + injonction + frais d'avocat
+**Confiscation d'Actifs**: Tous systèmes, profits et actifs personnels globalement
+
 **Pour les demandes de licence légitimes UNIQUEMENT**: mlaiel@live.de
 
 **TOUS DROITS RÉSERVÉS - PROTÉGÉ PAR LE DROIT D'AUTEUR**
+**TOUTES TENTATIVES D'ACCÈS SONT ENREGISTRÉES ET SURVEILLÉES LÉGALEMENT**
 
 ### ✨ Fonctionnalités Principales
 

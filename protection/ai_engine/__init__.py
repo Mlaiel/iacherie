@@ -191,7 +191,7 @@ class EnterpriseAIProtectionEngine:
     def _start_health_monitoring(self):
         """Start background health monitoring thread"""
         def health_monitor():
-        try:
+            try:
                     # Collect metrics
                     metrics = {
                         "timestamp": datetime.utcnow(),
