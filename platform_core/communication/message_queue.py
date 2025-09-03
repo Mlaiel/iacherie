@@ -186,21 +186,73 @@ File d'attente de messages avec Redis Streams"""
         return message.message_id
         
     async def get(self, 
-                  timeout: Optional[float] = None,
+                  timeout: Optional[float] = None) -> Optional[QueueMessage]:
+        """Récupère un message de la queue"""
         try:
-                    # Request validation
-                    if not timeout:
-                        raise ValueError("Invalid request")
+            # Process request
+            result = await self._handle_get_request(timeout)
             
-                    # Process request
-                    result = await self._handle_get_request(timeout)
+            # Return response
+            return result
             
-                    # Return response
-                    return {"status": "success", "data": result}
+        except Exception as e:
+            logger.error(f"Get message failed: {e}")
+            return None
+
+    async def _handle_get_request(self, timeout: Optional[float] = None) -> Optional[QueueMessage]:
+        """Handle the actual get request from the queue"""
+        try:
+            # Try to get message from Redis streams
+            group_name = f"{self.queue_name}:group"
+            consumer_name = f"consumer_{int(time.time())}"
             
-                except Exception as e:
-                    logger.error(f"API handler get failed: {e}")
-                    return {"status": "error", "message": str(e)}
+            # Create consumer group if it doesn't exist
+            try:
+                await self.redis_client.xgroup_create(
+                    self.queue_name, group_name, id="0", mkstream=True
+                )
+            except Exception:
+                pass  # Group already exists
+                
+            # Read from stream
+            streams = {self.queue_name: ">"}
+            messages = await self.redis_client.xreadgroup(
+                group_name, consumer_name, streams, count=1, block=timeout or 1000
+            )
+            
+            if not messages:
+                return None
+                
+            stream_name, message_list = messages[0]
+            if not message_list:
+                return None
+                
+            redis_message_id, fields = message_list[0]
+            message_data = json.loads(fields.get("data", "{}"))
+            
+            # Create QueueMessage object
+            message = QueueMessage.from_dict(message_data)
+            
+            # Store processing info
+            processing_info = {
+                "stream_key": stream_name.decode() if isinstance(stream_name, bytes) else stream_name,
+                "message_id": redis_message_id.decode() if isinstance(redis_message_id, bytes) else redis_message_id,
+                "consumer": consumer_name,
+                "started_at": datetime.utcnow().isoformat()
+            }
+            
+            await self.redis_client.hset(
+                self.processing_key, 
+                message.message_id, 
+                json.dumps(processing_info)
+            )
+            
+            message.status = MessageStatus.PROCESSING
+            return message
+            
+        except Exception as e:
+            logger.error(f"Failed to handle get request: {e}")
+            return None
     async def ack(self, message: QueueMessage, success: bool = True, error: Optional[str] = None):
         """Accuse réception d'un message traité"""
         
