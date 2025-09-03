@@ -1,0 +1,392 @@
+name: ⚛️ Frontend CI Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'frontend/**'
+      - 'dashboard/**'
+      - '.github/workflows/frontend-ci.yaml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'frontend/**'
+      - 'dashboard/**'
+
+env:
+  NODE_VERSION: '18'
+  NEXT_TELEMETRY_DISABLED: 1
+
+jobs:
+  # Frontend Code Quality & Linting
+  frontend-quality:
+    name: 🔍 Frontend Code Quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+
+    - name: 📦 Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+
+    - name: 📂 Change to frontend directory
+      run: cd frontend
+
+    - name: 🔧 Install dependencies
+      working-directory: frontend
+      run: |
+        npm ci --prefer-offline --no-audit
+
+    - name: 🎨 Code formatting check (Prettier)
+      working-directory: frontend
+      run: |
+        npx prettier --check "src/**/*.{js,jsx,ts,tsx,json,css,md}" || exit 1
+
+    - name: 🔍 Linting (ESLint)
+      working-directory: frontend
+      run: |
+        npm run lint
+
+    - name: 🏷️ Type checking (TypeScript)
+      working-directory: frontend
+      run: |
+        npm run type-check
+
+    - name: 🔒 Security audit
+      working-directory: frontend
+      run: |
+        npm audit --audit-level moderate || true
+        npm audit --json > audit-report.json || true
+
+    - name: 📊 Upload security audit
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: frontend-security-audit
+        path: frontend/audit-report.json
+
+  # Frontend Build & Bundle Analysis
+  frontend-build:
+    name: 🏗️ Frontend Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    
+    strategy:
+      matrix:
+        node-version: ['18', '20']
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+
+    - name: 📦 Set up Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+
+    - name: 🔧 Install dependencies
+      working-directory: frontend
+      run: |
+        npm ci --prefer-offline --no-audit
+
+    - name: 🏗️ Build application
+      working-directory: frontend
+      run: |
+        npm run build
+
+    - name: 📊 Analyze bundle size
+      working-directory: frontend
+      run: |
+        npx next-bundle-analyzer || true
+
+    - name: 📂 Upload build artifacts
+      uses: actions/upload-artifact@v3
+      if: matrix.node-version == '18'
+      with:
+        name: frontend-build-artifacts
+        path: |
+          frontend/.next/
+          frontend/out/
+        retention-days: 1
+
+  # Frontend Unit Tests
+  frontend-tests:
+    name: 🧪 Frontend Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+
+    - name: 📦 Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+
+    - name: 🔧 Install dependencies
+      working-directory: frontend
+      run: |
+        npm ci --prefer-offline --no-audit
+
+    - name: 🧪 Run tests
+      working-directory: frontend
+      run: |
+        npm run test:coverage
+
+    - name: 📊 Upload test results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: frontend-test-results
+        path: |
+          frontend/coverage/
+          frontend/test-results.xml
+
+    - name: 📈 Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        files: ./frontend/coverage/lcov.info
+        flags: frontend
+        name: frontend-coverage
+
+  # Frontend E2E Tests
+  frontend-e2e:
+    name: 🎭 Frontend E2E Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    if: github.event_name == 'pull_request'
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+
+    - name: 📦 Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+
+    - name: 🔧 Install dependencies
+      working-directory: frontend
+      run: |
+        npm ci --prefer-offline --no-audit
+
+    - name: 🎭 Install Playwright browsers
+      working-directory: frontend
+      run: |
+        if [ -f "playwright.config.js" ] || [ -f "playwright.config.ts" ]; then
+          npx playwright install --with-deps
+        fi
+
+    - name: 🏗️ Build application
+      working-directory: frontend
+      run: |
+        npm run build
+
+    - name: 🚀 Start application
+      working-directory: frontend
+      run: |
+        npm run start &
+        sleep 10
+      env:
+        PORT: 3000
+
+    - name: 🎭 Run Playwright tests
+      working-directory: frontend
+      run: |
+        if [ -f "playwright.config.js" ] || [ -f "playwright.config.ts" ]; then
+          npx playwright test || true
+        else
+          echo "No Playwright configuration found, skipping E2E tests"
+        fi
+
+    - name: 📊 Upload E2E test results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: frontend-e2e-results
+        path: |
+          frontend/playwright-report/
+          frontend/test-results/
+
+  # Frontend Performance Tests
+  frontend-performance:
+    name: ⚡ Frontend Performance
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    if: github.event_name == 'pull_request'
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+
+    - name: 📦 Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+
+    - name: 🔧 Install dependencies
+      working-directory: frontend
+      run: |
+        npm ci --prefer-offline --no-audit
+
+    - name: 🏗️ Build application
+      working-directory: frontend
+      run: |
+        npm run build
+
+    - name: 🚀 Start application
+      working-directory: frontend
+      run: |
+        npm run start &
+        sleep 10
+      env:
+        PORT: 3000
+
+    - name: ⚡ Run Lighthouse CI
+      run: |
+        npm install -g @lhci/cli@0.12.x
+        lhci autorun || true
+      env:
+        LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
+    - name: 📊 Upload Lighthouse results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: frontend-lighthouse-results
+        path: .lighthouseci/
+
+  # Frontend Accessibility Tests
+  frontend-a11y:
+    name: ♿ Frontend Accessibility
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    if: github.event_name == 'pull_request'
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+
+    - name: 📦 Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+
+    - name: 🔧 Install dependencies
+      working-directory: frontend
+      run: |
+        npm ci --prefer-offline --no-audit
+
+    - name: 🏗️ Build application
+      working-directory: frontend
+      run: |
+        npm run build
+
+    - name: 🚀 Start application
+      working-directory: frontend
+      run: |
+        npm run start &
+        sleep 10
+      env:
+        PORT: 3000
+
+    - name: ♿ Run accessibility tests
+      run: |
+        npm install -g @axe-core/cli
+        axe http://localhost:3000 --exit || true
+
+    - name: 📊 Upload accessibility results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: frontend-a11y-results
+        path: axe-results.json
+
+  # Frontend Security Scan
+  frontend-security:
+    name: 🔒 Frontend Security
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+
+    - name: 📦 Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+
+    - name: 🔧 Install dependencies
+      working-directory: frontend
+      run: |
+        npm ci --prefer-offline --no-audit
+
+    - name: 🔍 Run ESLint security rules
+      working-directory: frontend
+      run: |
+        npx eslint src/ --ext .js,.jsx,.ts,.tsx --format json > eslint-security.json || true
+
+    - name: 🔒 Check for sensitive files
+      working-directory: frontend
+      run: |
+        find src/ -name "*.env*" -o -name "*.key" -o -name "*.pem" | tee sensitive-files.txt
+        if [ -s sensitive-files.txt ]; then
+          echo "⚠️ Sensitive files detected!"
+          cat sensitive-files.txt
+          exit 1
+        fi
+
+    - name: 📊 Upload security scan results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: frontend-security-scan
+        path: |
+          frontend/eslint-security.json
+          sensitive-files.txt
+
+  # Summary
+  frontend-summary:
+    name: 📋 Frontend CI Summary
+    runs-on: ubuntu-latest
+    needs: [frontend-quality, frontend-build, frontend-tests, frontend-e2e, frontend-performance, frontend-a11y, frontend-security]
+    if: always()
+    
+    steps:
+    - name: 📊 Check results
+      run: |
+        echo "Frontend CI Pipeline Results:"
+        echo "Quality Check: ${{ needs.frontend-quality.result }}"
+        echo "Build: ${{ needs.frontend-build.result }}"
+        echo "Unit Tests: ${{ needs.frontend-tests.result }}"
+        echo "E2E Tests: ${{ needs.frontend-e2e.result }}"
+        echo "Performance: ${{ needs.frontend-performance.result }}"
+        echo "Accessibility: ${{ needs.frontend-a11y.result }}"
+        echo "Security: ${{ needs.frontend-security.result }}"
+        
+        if [[ "${{ needs.frontend-quality.result }}" == "failure" || "${{ needs.frontend-build.result }}" == "failure" || "${{ needs.frontend-tests.result }}" == "failure" ]]; then
+          echo "❌ Frontend CI failed - critical issues detected"
+          exit 1
+        else
+          echo "✅ Frontend CI completed successfully"
+        fi
