@@ -23,8 +23,18 @@ from enum import Enum
 from datetime import datetime, timedelta
 import uuid
 from pathlib import Path
-import aioredis
-import aiohttp
+# Optional imports with fallbacks
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except ImportError:
+    REDIS_AVAILABLE = False
+    
+try:
+    import aiohttp
+    AIOHTTP_AVAILABLE = True
+except ImportError:
+    AIOHTTP_AVAILABLE = False
 from urllib.parse import urlparse, parse_qs
 import base64
 import secrets
@@ -549,12 +559,12 @@ Initialize default rate limiting rules"""
             
         except Exception as e:
             logger.error(f"_check_token_bucket failed: {e}")
-            raise
-            'allowed': True,
-            'rule': rule.name,
-            'tokens_remaining': tokens,
-            'bucket_size': rule.requests_per_window
-        }
+            return {
+                'allowed': False,
+                'rule': rule.name,
+                'tokens_remaining': 0,
+                'bucket_size': rule.requests_per_window
+            }
     
     async def _check_leaky_bucket(self, identifier: str, rule: RateLimitRule) -> Dict[str, Any]:
         """Leaky bucket rate limiting"""
