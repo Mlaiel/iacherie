@@ -27,10 +27,12 @@ Expert Project Team - Fahed Mlaiel:
 from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
+from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.dialects.postgresql import UUID, INET, ARRAY
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from enum import Enum
 import uuid
+import logging
 from typing import Dict, Any, List, Optional
 
 Base = declarative_base()
@@ -584,3 +586,295 @@ Create AuditLog from event data"""
             timestamp=log_data.get('timestamp', datetime.now(timezone.utc)),
             event_timestamp=log_data.get('event_timestamp')
         )
+
+
+class EnhancedAuditService:
+    """
+    Enhanced audit logging service with structured format and real-time analysis
+    """
+    
+    def __init__(self, db_session: AsyncSession):
+        self.db_session = db_session
+        self.logger = logging.getLogger(__name__)
+        self.realtime_alerts = []
+        self.audit_buffer = []
+        self.buffer_size = 100
+        self.flush_interval = 30  # seconds
+        
+    async def log_authentication_event(
+        self,
+        user_id: str,
+        event_type: str,
+        ip_address: str,
+        user_agent: str,
+        success: bool,
+        method: str = "password",
+        additional_data: Dict[str, Any] = None
+    ):
+        """Log authentication-related events with structured format"""
+        try:
+            audit_data = {
+                'user_id': user_id,
+                'action_type': ActionType.AUTHENTICATION,
+                'entity_type': EntityType.USER,
+                'entity_id': user_id,
+                'event_description': f"{event_type} - {method}",
+                'status': Status.SUCCESS if success else Status.FAILURE,
+                'severity': Severity.INFO if success else Severity.WARNING,
+                'source': Source.SECURITY,
+                'source_module': 'authentication',
+                'ip_address': ip_address,
+                'user_agent': user_agent,
+                'security_event': True,
+                'metadata': {
+                    'authentication_method': method,
+                    'event_type': event_type,
+                    'success': success,
+                    **(additional_data or {})
+                },
+                'tags': ['authentication', method, 'security']
+            }
+            
+            if not success:
+                audit_data['severity'] = Severity.ERROR
+                audit_data['tags'].append('failure')
+                # Trigger real-time alert for failed authentication
+                await self._trigger_security_alert(audit_data)
+            
+            await self._log_audit_event(audit_data)
+            
+        except Exception as e:
+            self.logger.error(f"Failed to log authentication event: {e}")
+    
+    async def log_content_access(
+        self,
+        user_id: str,
+        content_id: str,
+        action: str,
+        ip_address: str,
+        session_id: str,
+        content_type: str = None,
+        additional_data: Dict[str, Any] = None
+    ):
+        """Log content access events with detailed tracking"""
+        try:
+            audit_data = {
+                'user_id': user_id,
+                'action_type': ActionType.VIEW if action == 'view' else ActionType.DOWNLOAD,
+                'entity_type': EntityType.CONTENT,
+                'entity_id': content_id,
+                'event_description': f"Content {action}: {content_id}",
+                'status': Status.SUCCESS,
+                'severity': Severity.INFO,
+                'source': Source.APPLICATION,
+                'source_module': 'content_manager',
+                'ip_address': ip_address,
+                'session_id': session_id,
+                'copyright_event': True,
+                'metadata': {
+                    'content_type': content_type,
+                    'action': action,
+                    'content_id': content_id,
+                    **(additional_data or {})
+                },
+                'tags': ['content', action, content_type or 'unknown']
+            }
+            
+            await self._log_audit_event(audit_data)
+            
+        except Exception as e:
+            self.logger.error(f"Failed to log content access: {e}")
+    
+    async def log_rate_limit_violation(
+        self,
+        ip_address: str,
+        user_id: str = None,
+        endpoint: str = None,
+        limit_type: str = "api",
+        violation_count: int = 1,
+        additional_data: Dict[str, Any] = None
+    ):
+        """Log rate limiting violations for security monitoring"""
+        try:
+            audit_data = {
+                'user_id': user_id,
+                'action_type': ActionType.ACCESS,
+                'entity_type': EntityType.SYSTEM,
+                'entity_id': f"rate_limit_{limit_type}",
+                'event_description': f"Rate limit violation - {limit_type}",
+                'status': Status.BLOCKED,
+                'severity': Severity.WARNING if violation_count < 5 else Severity.ERROR,
+                'source': Source.SECURITY,
+                'source_module': 'rate_limiter',
+                'ip_address': ip_address,
+                'endpoint': endpoint,
+                'security_event': True,
+                'threat_level': 'low' if violation_count < 3 else 'medium' if violation_count < 10 else 'high',
+                'metadata': {
+                    'limit_type': limit_type,
+                    'violation_count': violation_count,
+                    'endpoint': endpoint,
+                    **(additional_data or {})
+                },
+                'tags': ['rate_limit', 'security', 'violation', limit_type]
+            }
+            
+            # Trigger alerts for repeated violations
+            if violation_count >= 5:
+                await self._trigger_security_alert(audit_data)
+            
+            await self._log_audit_event(audit_data)
+            
+        except Exception as e:
+            self.logger.error(f"Failed to log rate limit violation: {e}")
+    
+    async def log_session_event(
+        self,
+        user_id: str,
+        session_id: str,
+        event_type: str,
+        ip_address: str,
+        device_info: Dict[str, Any] = None,
+        additional_data: Dict[str, Any] = None
+    ):
+        """Log session management events"""
+        try:
+            audit_data = {
+                'user_id': user_id,
+                'action_type': ActionType.AUTHENTICATION,
+                'entity_type': EntityType.SESSION,
+                'entity_id': session_id,
+                'event_description': f"Session {event_type}",
+                'status': Status.SUCCESS,
+                'severity': Severity.INFO,
+                'source': Source.APPLICATION,
+                'source_module': 'session_manager',
+                'ip_address': ip_address,
+                'session_id': session_id,
+                'device_info': device_info,
+                'metadata': {
+                    'event_type': event_type,
+                    'device_info': device_info,
+                    **(additional_data or {})
+                },
+                'tags': ['session', event_type, 'user_management']
+            }
+            
+            await self._log_audit_event(audit_data)
+            
+        except Exception as e:
+            self.logger.error(f"Failed to log session event: {e}")
+    
+    async def log_system_event(
+        self,
+        event_type: str,
+        component: str,
+        status: str,
+        severity: str = "info",
+        error_details: Dict[str, Any] = None,
+        additional_data: Dict[str, Any] = None
+    ):
+        """Log system-level events"""
+        try:
+            audit_data = {
+                'action_type': ActionType.SYSTEM,
+                'entity_type': EntityType.SYSTEM,
+                'entity_id': component,
+                'event_description': f"System {event_type}: {component}",
+                'status': Status(status.lower()),
+                'severity': Severity(severity.lower()),
+                'source': Source.SYSTEM,
+                'source_module': component,
+                'error_message': error_details.get('message') if error_details else None,
+                'error_code': error_details.get('code') if error_details else None,
+                'metadata': {
+                    'component': component,
+                    'event_type': event_type,
+                    'error_details': error_details,
+                    **(additional_data or {})
+                },
+                'tags': ['system', component, event_type]
+            }
+            
+            await self._log_audit_event(audit_data)
+            
+        except Exception as e:
+            self.logger.error(f"Failed to log system event: {e}")
+    
+    async def _log_audit_event(self, audit_data: Dict[str, Any]):
+        """Internal method to log audit event"""
+        try:
+            # Add to buffer for batch processing
+            self.audit_buffer.append(audit_data)
+            
+            # Flush buffer if it's full or for high-severity events
+            if (len(self.audit_buffer) >= self.buffer_size or 
+                audit_data.get('severity') in [Severity.ERROR, Severity.CRITICAL]):
+                await self._flush_audit_buffer()
+            
+        except Exception as e:
+            self.logger.error(f"Failed to buffer audit event: {e}")
+    
+    async def _flush_audit_buffer(self):
+        """Flush audit buffer to database"""
+        if not self.audit_buffer:
+            return
+        
+        try:
+            audit_logs = []
+            for audit_data in self.audit_buffer:
+                audit_log = AuditLog.create_from_dict(audit_data)
+                audit_logs.append(audit_log)
+            
+            # Batch insert
+            self.db_session.add_all(audit_logs)
+            await self.db_session.commit()
+            
+            self.audit_buffer.clear()
+            
+        except Exception as e:
+            self.logger.error(f"Failed to flush audit buffer: {e}")
+            await self.db_session.rollback()
+    
+    async def _trigger_security_alert(self, audit_data: Dict[str, Any]):
+        """Trigger real-time security alerts"""
+        try:
+            alert = {
+                'alert_id': str(uuid.uuid4()),
+                'timestamp': datetime.now(timezone.utc),
+                'severity': audit_data.get('severity'),
+                'event_type': audit_data.get('action_type'),
+                'source_ip': audit_data.get('ip_address'),
+                'user_id': audit_data.get('user_id'),
+                'description': audit_data.get('event_description'),
+                'metadata': audit_data.get('metadata', {})
+            }
+            
+            self.realtime_alerts.append(alert)
+            
+            # In production, send to monitoring system, SIEM, etc.
+            self.logger.warning(f"Security alert triggered: {alert}")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to trigger security alert: {e}")
+    
+    async def get_security_alerts(self, since: datetime = None) -> List[Dict[str, Any]]:
+        """Get recent security alerts"""
+        if since is None:
+            since = datetime.now(timezone.utc) - timedelta(hours=24)
+        
+        return [
+            alert for alert in self.realtime_alerts 
+            if alert['timestamp'] >= since
+        ]
+    
+    async def analyze_suspicious_activity(self, user_id: str = None, ip_address: str = None) -> Dict[str, Any]:
+        """Analyze patterns for suspicious activity"""
+        # This would implement sophisticated analysis in production
+        # For now, return basic statistics
+        return {
+            'risk_score': 'low',
+            'analysis_timestamp': datetime.now(timezone.utc),
+            'indicators': [],
+            'recommendations': []
+        }

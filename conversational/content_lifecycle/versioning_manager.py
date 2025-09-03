@@ -1162,3 +1162,265 @@ Load snapshot data"""
 Update version in database"""
         # Placeholder implementation
         pass
+    
+    async def create_branch(
+        self,
+        content_id: str,
+        branch_name: str,
+        source_version_id: str,
+        user_id: str,
+        description: str = ""
+    ) -> Dict[str, Any]:
+        """Create a new branch from a specific version"""
+        try:
+            # Get source version
+            source_version = await self.get_version(source_version_id)
+            if not source_version:
+                return {"success": False, "error": "Source version not found"}
+            
+            # Check if branch name already exists
+            existing_branches = await self._get_branches(content_id)
+            if any(branch.branch_name == branch_name for branch in existing_branches):
+                return {"success": False, "error": "Branch name already exists"}
+            
+            # Create branch metadata
+            branch_info = {
+                "branch_id": str(uuid.uuid4()),
+                "content_id": content_id,
+                "branch_name": branch_name,
+                "created_by": user_id,
+                "created_at": datetime.now(),
+                "source_version_id": source_version_id,
+                "description": description,
+                "is_active": True,
+                "head_version_id": source_version_id
+            }
+            
+            # Store branch info (in production, store in database)
+            cache_key = f"branch:{content_id}:{branch_name}"
+            await self.cache_manager.set(cache_key, branch_info, 3600)
+            
+            logger.info(f"Created branch '{branch_name}' for content {content_id}")
+            
+            return {
+                "success": True,
+                "branch_id": branch_info["branch_id"],
+                "branch_name": branch_name,
+                "source_version_id": source_version_id
+            }
+            
+        except Exception as e:
+            logger.error(f"Error creating branch: {e}")
+            return {"success": False, "error": str(e)}
+    
+    async def merge_branch(
+        self,
+        content_id: str,
+        source_branch: str,
+        target_branch: str,
+        user_id: str,
+        merge_strategy: str = "auto",
+        conflict_resolutions: Dict[str, Any] = None
+    ) -> Dict[str, Any]:
+        """Merge one branch into another"""
+        try:
+            # Get branch information
+            source_branch_info = await self._get_branch_info(content_id, source_branch)
+            target_branch_info = await self._get_branch_info(content_id, target_branch)
+            
+            if not source_branch_info or not target_branch_info:
+                return {"success": False, "error": "One or both branches not found"}
+            
+            # Get head versions of both branches
+            source_version = await self.get_version(source_branch_info["head_version_id"])
+            target_version = await self.get_version(target_branch_info["head_version_id"])
+            
+            # Check for conflicts
+            conflicts = await self._detect_merge_conflicts(source_version, target_version)
+            
+            if conflicts and merge_strategy == "auto":
+                return {
+                    "success": False,
+                    "error": "Conflicts detected, manual resolution required",
+                    "conflicts": [conflict.__dict__ for conflict in conflicts]
+                }
+            
+            # Perform merge
+            if conflicts and conflict_resolutions:
+                merged_data = await self._resolve_merge_conflicts(
+                    source_version, target_version, conflicts, conflict_resolutions
+                )
+            else:
+                merged_data = await self._auto_merge_versions(source_version, target_version)
+            
+            # Create merge commit
+            merge_version = await self.create_version(
+                content_id=content_id,
+                content_data=merged_data["content"],
+                metadata=merged_data["metadata"],
+                user_id=user_id,
+                version_type=VersionType.MAJOR,
+                change_summary=f"Merged branch '{source_branch}' into '{target_branch}'",
+                change_type=ChangeType.MERGE,
+                parent_version=target_version.version_id,
+                branch_name=target_branch
+            )
+            
+            # Update target branch head
+            target_branch_info["head_version_id"] = merge_version.version_id
+            await self._update_branch_info(content_id, target_branch, target_branch_info)
+            
+            logger.info(f"Merged branch '{source_branch}' into '{target_branch}' for content {content_id}")
+            
+            return {
+                "success": True,
+                "merge_version_id": merge_version.version_id,
+                "source_branch": source_branch,
+                "target_branch": target_branch
+            }
+            
+        except Exception as e:
+            logger.error(f"Error merging branches: {e}")
+            return {"success": False, "error": str(e)}
+    
+    async def delete_branch(
+        self,
+        content_id: str,
+        branch_name: str,
+        user_id: str,
+        force: bool = False
+    ) -> Dict[str, Any]:
+        """Delete a branch"""
+        try:
+            if branch_name == "main":
+                return {"success": False, "error": "Cannot delete main branch"}
+            
+            branch_info = await self._get_branch_info(content_id, branch_name)
+            if not branch_info:
+                return {"success": False, "error": "Branch not found"}
+            
+            # Check if branch has unmerged changes (unless force=True)
+            if not force:
+                main_branch_info = await self._get_branch_info(content_id, "main")
+                if main_branch_info:
+                    has_unmerged = await self._has_unmerged_changes(
+                        branch_info["head_version_id"],
+                        main_branch_info["head_version_id"]
+                    )
+                    if has_unmerged:
+                        return {
+                            "success": False,
+                            "error": "Branch has unmerged changes, use force=True to delete anyway"
+                        }
+            
+            # Mark branch as deleted
+            branch_info["is_active"] = False
+            branch_info["deleted_at"] = datetime.now()
+            branch_info["deleted_by"] = user_id
+            
+            await self._update_branch_info(content_id, branch_name, branch_info)
+            
+            logger.info(f"Deleted branch '{branch_name}' for content {content_id}")
+            
+            return {"success": True, "message": f"Branch '{branch_name}' deleted"}
+            
+        except Exception as e:
+            logger.error(f"Error deleting branch: {e}")
+            return {"success": False, "error": str(e)}
+    
+    async def list_branches(self, content_id: str) -> List[Dict[str, Any]]:
+        """List all branches for content"""
+        try:
+            branches = await self._get_branches(content_id)
+            return [
+                {
+                    "branch_name": branch.branch_name,
+                    "created_at": branch.created_at,
+                    "created_by": branch.created_by,
+                    "head_version_id": branch.head_version_id,
+                    "description": branch.description,
+                    "is_active": branch.is_active
+                }
+                for branch in branches if branch.is_active
+            ]
+        except Exception as e:
+            logger.error(f"Error listing branches: {e}")
+            return []
+    
+    async def _get_branch_info(self, content_id: str, branch_name: str) -> Optional[Dict[str, Any]]:
+        """Get branch information"""
+        try:
+            cache_key = f"branch:{content_id}:{branch_name}"
+            branch_info = await self.cache_manager.get(cache_key)
+            return branch_info
+        except Exception as e:
+            logger.error(f"Error getting branch info: {e}")
+            return None
+    
+    async def _update_branch_info(self, content_id: str, branch_name: str, branch_info: Dict[str, Any]):
+        """Update branch information"""
+        try:
+            cache_key = f"branch:{content_id}:{branch_name}"
+            await self.cache_manager.set(cache_key, branch_info, 3600)
+        except Exception as e:
+            logger.error(f"Error updating branch info: {e}")
+    
+    async def _detect_merge_conflicts(self, source_version: ContentVersion, target_version: ContentVersion) -> List[Any]:
+        """Detect conflicts between two versions"""
+        conflicts = []
+        
+        # Simple conflict detection - check if same fields were modified
+        source_content = source_version.content_data
+        target_content = target_version.content_data
+        
+        # This is a simplified implementation
+        # In production, use more sophisticated diff algorithms
+        if source_content != target_content:
+            conflicts.append({
+                "type": "content_conflict",
+                "field": "content_data",
+                "source_value": source_content,
+                "target_value": target_content
+            })
+        
+        return conflicts
+    
+    async def _resolve_merge_conflicts(
+        self,
+        source_version: ContentVersion,
+        target_version: ContentVersion,
+        conflicts: List[Any],
+        resolutions: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Resolve merge conflicts with user-provided resolutions"""
+        merged_content = target_version.content_data.copy()
+        merged_metadata = target_version.metadata.copy()
+        
+        for conflict in conflicts:
+            field = conflict["field"]
+            if field in resolutions:
+                if field == "content_data":
+                    merged_content = resolutions[field]
+                else:
+                    merged_metadata[field] = resolutions[field]
+        
+        return {"content": merged_content, "metadata": merged_metadata}
+    
+    async def _auto_merge_versions(self, source_version: ContentVersion, target_version: ContentVersion) -> Dict[str, Any]:
+        """Automatically merge two versions"""
+        # Simple auto-merge strategy - prefer source changes
+        return {
+            "content": source_version.content_data,
+            "metadata": {**target_version.metadata, **source_version.metadata}
+        }
+    
+    async def _has_unmerged_changes(self, branch_head: str, main_head: str) -> bool:
+        """Check if branch has changes not in main"""
+        # Simplified implementation
+        branch_version = await self.get_version(branch_head)
+        main_version = await self.get_version(main_head)
+        
+        if not branch_version or not main_version:
+            return False
+        
+        return branch_version.content_hash != main_version.content_hash

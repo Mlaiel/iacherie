@@ -29,7 +29,7 @@ import asyncio
 import logging
 import time
 import math
-from typing import Dict, List, Optional, Any, Callable, Tuple
+from typing import Dict, List, Optional, Any, Callable, Tuple, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum
@@ -346,6 +346,27 @@ Initialize intelligent rate limiter."""
         self.metrics_history: deque = deque(maxlen=10000)
         self.alert_callbacks: List[Callable] = []
         self.adaptive_limiters: Dict[str, AdaptiveRateLimiter] = {}
+        
+        # IP and User-based rate limiting
+        self.ip_limiters: Dict[str, SlidingWindowCounter] = {}
+        self.user_limiters: Dict[str, SlidingWindowCounter] = {}
+        self.ip_config = RateLimitConfig(
+            platform="ip_global",
+            strategy=RateLimitStrategy.SLIDING_WINDOW,
+            limit_value=1000,  # 1000 requests per window
+            window_size=3600   # 1 hour window
+        )
+        self.user_config = RateLimitConfig(
+            platform="user_global", 
+            strategy=RateLimitStrategy.SLIDING_WINDOW,
+            limit_value=500,   # 500 requests per window
+            window_size=3600   # 1 hour window
+        )
+        
+        # IP blocking and throttling
+        self.blocked_ips: Set[str] = set()
+        self.throttled_ips: Dict[str, float] = {}  # IP -> throttle_until_timestamp
+        self.suspicious_ips: Dict[str, int] = {}   # IP -> violation_count
         
         # Background task for queue processing
         self._queue_processor_task: Optional[asyncio.Task] = None
@@ -712,6 +733,136 @@ Get performance metrics."""
         except Exception as e:
             logger.error(f"shutdown failed: {e}")
             raise
+    
+    def check_ip_rate_limit(self, ip_address: str) -> Tuple[bool, Optional[float]]:
+        """Check IP-based rate limiting"""
+        if ip_address in self.blocked_ips:
+            return False, None
+        
+        # Check if IP is throttled
+        if ip_address in self.throttled_ips:
+            throttle_until = self.throttled_ips[ip_address]
+            if time.time() < throttle_until:
+                return False, throttle_until - time.time()
+            else:
+                # Remove expired throttle
+                del self.throttled_ips[ip_address]
+        
+        # Get or create IP rate limiter
+        if ip_address not in self.ip_limiters:
+            self.ip_limiters[ip_address] = SlidingWindowCounter(
+                self.ip_config.window_size, 
+                self.ip_config.limit_value
+            )
+        
+        limiter = self.ip_limiters[ip_address]
+        can_proceed = limiter.add_request()
+        
+        if not can_proceed:
+            # Track violations
+            self.suspicious_ips[ip_address] = self.suspicious_ips.get(ip_address, 0) + 1
+            
+            # Auto-throttle aggressive IPs
+            if self.suspicious_ips[ip_address] >= 3:
+                throttle_duration = min(3600 * (2 ** (self.suspicious_ips[ip_address] - 3)), 86400)
+                self.throttled_ips[ip_address] = time.time() + throttle_duration
+                logger.warning(f"IP {ip_address} throttled for {throttle_duration} seconds")
+            
+            return False, self._calculate_ip_wait_time(ip_address)
+        
+        return True, 0.0
+    
+    def check_user_rate_limit(self, user_id: str) -> Tuple[bool, Optional[float]]:
+        """Check user-based rate limiting"""
+        # Get or create user rate limiter
+        if user_id not in self.user_limiters:
+            self.user_limiters[user_id] = SlidingWindowCounter(
+                self.user_config.window_size,
+                self.user_config.limit_value
+            )
+        
+        limiter = self.user_limiters[user_id]
+        can_proceed = limiter.add_request()
+        
+        if not can_proceed:
+            return False, self._calculate_user_wait_time(user_id)
+        
+        return True, 0.0
+    
+    def block_ip(self, ip_address: str, reason: str = "security_violation"):
+        """Block an IP address"""
+        self.blocked_ips.add(ip_address)
+        logger.warning(f"IP {ip_address} blocked: {reason}")
+    
+    def unblock_ip(self, ip_address: str):
+        """Unblock an IP address"""
+        self.blocked_ips.discard(ip_address)
+        self.throttled_ips.pop(ip_address, None)
+        self.suspicious_ips.pop(ip_address, None)
+        logger.info(f"IP {ip_address} unblocked")
+    
+    def get_ip_status(self, ip_address: str) -> Dict[str, Any]:
+        """Get detailed status for an IP address"""
+        status = {
+            'ip_address': ip_address,
+            'blocked': ip_address in self.blocked_ips,
+            'throttled': ip_address in self.throttled_ips,
+            'violation_count': self.suspicious_ips.get(ip_address, 0),
+            'current_usage': 0,
+            'limit': self.ip_config.limit_value
+        }
+        
+        if ip_address in self.ip_limiters:
+            limiter = self.ip_limiters[ip_address]
+            status['current_usage'] = limiter.get_current_count()
+        
+        if ip_address in self.throttled_ips:
+            remaining_throttle = self.throttled_ips[ip_address] - time.time()
+            status['throttle_remaining'] = max(0, remaining_throttle)
+        
+        return status
+    
+    def get_user_status(self, user_id: str) -> Dict[str, Any]:
+        """Get detailed status for a user"""
+        status = {
+            'user_id': user_id,
+            'current_usage': 0,
+            'limit': self.user_config.limit_value
+        }
+        
+        if user_id in self.user_limiters:
+            limiter = self.user_limiters[user_id]
+            status['current_usage'] = limiter.get_current_count()
+        
+        return status
+    
+    def _calculate_ip_wait_time(self, ip_address: str) -> float:
+        """Calculate wait time for IP rate limit"""
+        if ip_address not in self.ip_limiters:
+            return 0.0
+        
+        # Simplified calculation - in production, use more sophisticated algorithm
+        return 60.0  # 1 minute default wait
+    
+    def _calculate_user_wait_time(self, user_id: str) -> float:
+        """Calculate wait time for user rate limit"""
+        if user_id not in self.user_limiters:
+            return 0.0
+        
+        # Simplified calculation - in production, use more sophisticated algorithm  
+        return 30.0  # 30 seconds default wait
+    
+    def configure_ip_limits(self, limit_value: int, window_size: int):
+        """Configure global IP rate limits"""
+        self.ip_config.limit_value = limit_value
+        self.ip_config.window_size = window_size
+        logger.info(f"IP rate limits configured: {limit_value} requests per {window_size} seconds")
+    
+    def configure_user_limits(self, limit_value: int, window_size: int):
+        """Configure global user rate limits"""
+        self.user_config.limit_value = limit_value
+        self.user_config.window_size = window_size
+        logger.info(f"User rate limits configured: {limit_value} requests per {window_size} seconds")
 __all__ = [
     'IntelligentRateLimiter',
     'RateLimitConfig',

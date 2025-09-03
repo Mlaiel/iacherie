@@ -154,6 +154,12 @@ class SessionManager:
             'lockout_duration': timedelta(minutes=30),
             'session_renewal_threshold': timedelta(hours=2)
         }
+        
+        # Distributed session configuration
+        self.redis_session_prefix = "session:"
+        self.redis_user_sessions_prefix = "user_sessions:"
+        self.redis_cluster_mode = True
+        self.session_replication_enabled = True
     
     def create_session(
         self,
@@ -545,3 +551,130 @@ Log security violations for monitoring"""
         except Exception as e:
             logger.error(f"_log_security_violation failed: {e}")
             raise
+    
+    def _replicate_session_to_cluster(self, session_info: SessionInfo, token: str):
+        """Replicate session data across Redis cluster nodes"""
+        if not self.session_replication_enabled:
+            return
+        
+        try:
+            session_data = {
+                'session_id': session_info.session_id,
+                'user_id': session_info.user_id,
+                'token': token,
+                'created_at': session_info.created_at.isoformat(),
+                'expires_at': session_info.expires_at.isoformat(),
+                'last_activity': session_info.last_activity.isoformat(),
+                'status': session_info.status.value,
+                'device_type': session_info.device_type.value,
+                'ip_address': session_info.ip_address
+            }
+            
+            # Store in primary Redis key
+            primary_key = f"{self.redis_session_prefix}{session_info.session_id}"
+            ttl = int((session_info.expires_at - datetime.now(timezone.utc)).total_seconds())
+            
+            # Set session data with TTL
+            self.redis_client.setex(primary_key, ttl, json.dumps(session_data))
+            
+            # Maintain user sessions index for quick lookup
+            user_sessions_key = f"{self.redis_user_sessions_prefix}{session_info.user_id}"
+            self.redis_client.sadd(user_sessions_key, session_info.session_id)
+            self.redis_client.expire(user_sessions_key, ttl)
+            
+        except Exception as e:
+            logger.error(f"Failed to replicate session to cluster: {e}")
+    
+    def _get_user_active_sessions(self, user_id: str) -> List[str]:
+        """Get all active session IDs for a user from Redis"""
+        try:
+            user_sessions_key = f"{self.redis_user_sessions_prefix}{user_id}"
+            session_ids = self.redis_client.smembers(user_sessions_key)
+            return [sid.decode() if isinstance(sid, bytes) else sid for sid in session_ids]
+        except Exception as e:
+            logger.error(f"Failed to get user sessions from Redis: {e}")
+            return []
+    
+    def _cleanup_expired_redis_sessions(self):
+        """Clean up expired sessions from Redis cluster"""
+        try:
+            # Scan for expired session keys
+            cursor = 0
+            while True:
+                cursor, keys = self.redis_client.scan(
+                    cursor, 
+                    match=f"{self.redis_session_prefix}*",
+                    count=100
+                )
+                
+                for key in keys:
+                    if self.redis_client.ttl(key) <= 0:
+                        # Remove expired session
+                        session_id = key.replace(self.redis_session_prefix.encode(), b'').decode()
+                        self._remove_session_from_user_index(session_id)
+                        self.redis_client.delete(key)
+                
+                if cursor == 0:
+                    break
+                    
+        except Exception as e:
+            logger.error(f"Failed to cleanup expired Redis sessions: {e}")
+    
+    def _remove_session_from_user_index(self, session_id: str):
+        """Remove session from user's session index"""
+        try:
+            # Find which user this session belongs to by scanning user session indexes
+            cursor = 0
+            while True:
+                cursor, keys = self.redis_client.scan(
+                    cursor,
+                    match=f"{self.redis_user_sessions_prefix}*",
+                    count=100
+                )
+                
+                for key in keys:
+                    if self.redis_client.sismember(key, session_id):
+                        self.redis_client.srem(key, session_id)
+                        break
+                
+                if cursor == 0:
+                    break
+                    
+        except Exception as e:
+            logger.error(f"Failed to remove session from user index: {e}")
+    
+    def invalidate_user_sessions(self, user_id: str, exclude_session_id: str = None):
+        """Invalidate all active sessions for a user across the cluster"""
+        try:
+            session_ids = self._get_user_active_sessions(user_id)
+            
+            for session_id in session_ids:
+                if exclude_session_id and session_id == exclude_session_id:
+                    continue
+                
+                # Remove from Redis
+                session_key = f"{self.redis_session_prefix}{session_id}"
+                self.redis_client.delete(session_key)
+                
+                # Update database
+                self.db_session.query(SessionStore).filter(
+                    SessionStore.session_id == session_id
+                ).update({
+                    'status': 'revoked',
+                    'is_active': False
+                })
+            
+            # Clear user sessions index
+            user_sessions_key = f"{self.redis_user_sessions_prefix}{user_id}"
+            if exclude_session_id:
+                # Keep only the excluded session
+                self.redis_client.delete(user_sessions_key)
+                self.redis_client.sadd(user_sessions_key, exclude_session_id)
+            else:
+                self.redis_client.delete(user_sessions_key)
+            
+            self.db_session.commit()
+            
+        except Exception as e:
+            logger.error(f"Failed to invalidate user sessions: {e}")
+            self.db_session.rollback()

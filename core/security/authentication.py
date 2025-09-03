@@ -359,6 +359,34 @@ OAuth2 integration for third-party authentication"""
                 "authorize_url": "https://accounts.google.com/o/oauth2/auth",
                 "token_url": "https://oauth2.googleapis.com/token",
                 "scope": "openid email profile"
+            },
+            "facebook": {
+                "client_id": self.settings.FACEBOOK_CLIENT_ID,
+                "client_secret": self.settings.FACEBOOK_CLIENT_SECRET,
+                "authorize_url": "https://www.facebook.com/v18.0/dialog/oauth",
+                "token_url": "https://graph.facebook.com/v18.0/oauth/access_token",
+                "scope": "email public_profile"
+            },
+            "twitter": {
+                "client_id": self.settings.TWITTER_CLIENT_ID,
+                "client_secret": self.settings.TWITTER_CLIENT_SECRET,
+                "authorize_url": "https://twitter.com/i/oauth2/authorize",
+                "token_url": "https://api.twitter.com/2/oauth2/token",
+                "scope": "tweet.read users.read offline.access"
+            },
+            "github": {
+                "client_id": self.settings.GITHUB_CLIENT_ID,
+                "client_secret": self.settings.GITHUB_CLIENT_SECRET,
+                "authorize_url": "https://github.com/login/oauth/authorize",
+                "token_url": "https://github.com/login/oauth/access_token",
+                "scope": "user:email read:user"
+            },
+            "linkedin": {
+                "client_id": self.settings.LINKEDIN_CLIENT_ID,
+                "client_secret": self.settings.LINKEDIN_CLIENT_SECRET,
+                "authorize_url": "https://www.linkedin.com/oauth/v2/authorization",
+                "token_url": "https://www.linkedin.com/oauth/v2/accessToken",
+                "scope": "r_liteprofile r_emailaddress"
             }
         }
     
