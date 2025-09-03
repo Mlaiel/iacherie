@@ -311,107 +311,36 @@ class AudioFingerprinter:
             self.thread_executor, normalize)
     
     async def _extract_chromaprint(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """
-Extract Chromaprint-style fingerprint"""
+        """Extract Chromaprint-style fingerprint"""
         def extract():
-        try:
-                    # AI model processing
-                    if not hasattr(self, 'model') or self.model is None:
-                        raise RuntimeError("AI model not initialized")
-            
-                    # Preprocess input
-                    processed_input = await self._preprocess_extract_input(data)
-            
-                    # Run inference
-                    result = await self.model.predict(processed_input)
-            
-                    # Postprocess result
-                    final_result = await self._postprocess_extract_result(result)
-            
-                    logger.info(f"AI processing extract completed")
-                    return final_result
-            
-                except Exception as e:
-                    logger.error(f"AI processing extract failed: {e}")
-                    raise
-                chroma = librosa.feature.chroma_cqt(
-                    y=audio_data, 
-                    sr=sample_rate,
-                    n_chroma=12,
-                    n_octaves=7
-                )
+            try:
+                # Simple chromaprint-style fingerprinting using spectral features
+                chroma = librosa.feature.chroma_stft(y=audio_data, sr=sample_rate)
+                mfcc = librosa.feature.mfcc(y=audio_data, sr=sample_rate, n_mfcc=12)
                 
-                # Generate hash sequence from chroma progression
-                hash_sequence = []
-                for i in range(1, chroma.shape[1]):
-                    # Compare adjacent chroma vectors
-                    diff = chroma[:, i] - chroma[:, i-1]
-                    
-                    # Create bit pattern from differences
-                    bit_pattern = 0
-                    for j, d in enumerate(diff):
-                        if d > 0:
-                            bit_pattern |= (1 << j)
-                    
-                    hash_sequence.append(bit_pattern & 0xFFFFFFFF)  # 32-bit hash
+                # Combine features
+                features = np.concatenate([
+                    np.mean(chroma, axis=1),
+                    np.mean(mfcc, axis=1)
+                ])
                 
-                # Create raw fingerprint
-                raw_fingerprint = struct.pack(f'{len(hash_sequence)}I', *hash_sequence)
+                # Convert to hash-like representation
+                fingerprint = [int(f * 1000) % 256 for f in features]
                 
                 return {
-                    'raw': raw_fingerprint,
-                    'hashes': hash_sequence,
-                    'metadata': {
-                        'chroma_shape': chroma.shape,
-                        'hash_count': len(hash_sequence),
-                        'extraction_method': 'chromaprint'
-                    },
-                    'format_info': {
-                        'hash_bits': 32,
-                        'feature_type': 'chroma_cqt'
-                    },
-                    'statistics': {
-                        'chroma_mean': float(np.mean(chroma)),
-                        'chroma_std': float(np.std(chroma)),
-                        'hash_entropy': self._calculate_entropy(hash_sequence)
-                    },
-                    'warnings': []
+                    "raw_fingerprint": fingerprint,
+                    "hash": hash(tuple(fingerprint)),
+                    "duration": len(audio_data) / sample_rate,
+                    "features": features.tolist()
                 }
                 
             except Exception as e:
-        try:
-                    # AI model processing
-                    if not hasattr(self, 'model') or self.model is None:
-                        raise RuntimeError("AI model not initialized")
-            
-                    # Preprocess input
-                    processed_input = await self._preprocess_extract_input(data)
-            
-                    # Run inference
-                    result = await self.model.predict(processed_input)
-            
-                    # Postprocess result
-                    final_result = await self._postprocess_extract_result(result)
-            
-                    logger.info(f"AI processing extract completed")
-                    return final_result
-            
-                except Exception as e:
-                    logger.error(f"AI processing extract failed: {e}")
-                    raise
-            except Exception as e:
-                self.logger.error(f"Chromaprint extraction failed: {str(e)}")
-                return {
-                    'raw': b'',
-                    'hashes': [],
-                    'metadata': {'error': str(e)},
-                    'format_info': {},
-                    'statistics': {},
-                    'warnings': [f"Chromaprint extraction failed: {str(e)}"]
-                }
+                logger.error(f"Fingerprint extraction failed: {e}")
+                return {"raw_fingerprint": [], "hash": 0, "duration": 0, "features": []}
         
         return await asyncio.get_event_loop().run_in_executor(
-            self.thread_executor, extract)
+            self.thread_executor, extract
+        )
     
     async def _extract_perceptual_hash(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
         """Extract perceptual hash fingerprint"""

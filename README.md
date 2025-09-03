@@ -12,8 +12,26 @@ Ainflue is a comprehensive AI-powered platform for content protection and moneti
 ## 👨‍💻 Project Team & Leadership
 
 **Project Creator & Lead**: [Fahed Mlaiel](mailto:mlaiel@live.de)
-**Expert Development Team**: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + DevOps
-**Project Specialties**: AI-Powered Content Protection, Advanced Monetization Systems, Enterprise Gamification, Multi-Format Content Processing
+
+**Expert Development Team Specialties**:
+- **Lead Developer AI & Machine Learning**: Fahed Mlaiel - Advanced AI algorithms and intelligent processing
+- **Senior Backend Architecture**: Advanced Python/FastAPI - Robust architecture and scalable systems  
+- **ML Engineer**: Deep Learning & Audio Processing - Machine learning models and audio intelligence
+- **Database Administrator**: PostgreSQL & Vector Databases - Optimized data storage and retrieval systems
+- **Security Engineer**: Enterprise Security & Authentication - Content protection and fingerprinting
+- **Microservices Architect**: Scalable Distributed Systems - Distributed audio processing and enterprise architecture
+- **Audio Engineer**: Professional Audio Processing - Broadcast standards and professional audio mastering
+- **Broadcast Engineer**: ITU-R & EBU Standards - International broadcasting compliance and quality standards
+- **Codec Specialist**: Advanced Compression & Quality Optimization - Multi-format conversion and optimization
+- **DevOps Engineer**: CI/CD & Cloud Infrastructure - Containerization and production deployment
+- **IA Prompt Engineer**: Advanced AI Model Training - Natural language audio interfaces and AI orchestration
+
+**Project Core Specialties**: 
+- Advanced Audio Processing Module (Source Separation, Loudness Normalization, Format Conversion)
+- AI-Powered Content Protection & Rights Management
+- Professional Broadcasting Standards Compliance
+- Enterprise Monetization & Multi-Platform Distribution Systems
+- Real-time Collaboration Matching & Gamification Engine
 
 ## ⚠️ STRICT INTELLECTUAL PROPERTY WARNING
 
@@ -29,6 +47,11 @@ This software, concept, and all associated intellectual property are the **EXCLU
 
 ### ✨ Key Features
 
+- **🎵 Advanced Audio Processing Module**: Industrial-grade audio intelligence system
+  - **Source Separation Service**: Professional vocal/instrument separation using DEMUCS, Spleeter, and hybrid AI models
+  - **Professional Audio Normalization**: Broadcasting standards compliance (EBU R128, ITU-R BS.1770, ATSC A/85)
+  - **Multi-Format Conversion**: High-quality format conversion with metadata preservation and quality analysis
+  - **Unified Processing Hub**: Enterprise workflow automation with business logic integration
 - **🔒 Advanced Content Protection**: AI-powered fingerprinting for audio, video, and text content
 - **💰 Intelligent Monetization**: Multi-provider payment gateway with 150+ payment methods
 - **🤖 AI Content Generation**: State-of-the-art AI models for content creation and enhancement

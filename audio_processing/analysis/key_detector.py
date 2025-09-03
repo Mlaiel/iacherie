@@ -9,7 +9,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 import numpy as np
 import logging
-from typing import Dict, Optional
+from typing import Dict, Optional, Any
 import librosa
 
 

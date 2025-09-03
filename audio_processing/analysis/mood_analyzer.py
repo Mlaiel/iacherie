@@ -9,7 +9,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 import numpy as np
 import logging
-from typing import Dict, List
+from typing import Dict, List, Any
 from enum import Enum
 import librosa
 
