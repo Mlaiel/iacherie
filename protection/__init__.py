@@ -198,9 +198,6 @@ class ContentProtectionService:
     including fingerprinting, monitoring, enforcement, and monetization.
     """
     
-    def __init__(self):
-        """Initialize the content protection service"""
-        self.active = True
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         """
         Initialize the Content Protection Service.
