@@ -29,6 +29,7 @@ python-multipart==0.0.6
 # Database & Cache (Core)
 asyncpg==0.29.0
 sqlalchemy[asyncio]==2.0.23
+alembic==1.13.1
 redis==5.0.1
 
 # Security (Essential)
