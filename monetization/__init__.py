@@ -1,31 +1,135 @@
-"""Licensing Engine Module  
-=======================
+"""Complete Monetization Module Suite
+====================================
 
-Advanced licensing and rights management system for automated content licensing,
-royalty distribution, and usage tracking across platforms.
+Advanced monetization platform with comprehensive financial management,
+subscription billing, payment processing, and compliance features.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
+⚠️ COPYRIGHT WARNING: Proprietary code - unauthorized use prohibited.
 """
 
+# Core monetization modules
 from .licensing_manager import LicensingManager
 from .royalty_engine import RoyaltyEngine
 from .usage_tracker import UsageTracker
 from .contract_generator import ContractGenerator
 from .rights_validator import RightsValidator
+from .payment_processor import PaymentProcessor
+from .revenue_calculator import RevenueCalculator
+from .distribution_engine import DistributionEngine
+try:
+    from .platform_apis import PlatformAPIManager
+except ImportError:
+    PlatformAPIManager = None
 
-# Only import modules that exist
+# Enhanced payment providers (import with error handling)
+try:
+    from .enhanced_payment_providers import (
+        ExtendedPaymentProvider,
+        MultiProviderPaymentGateway,
+        CryptocurrencyProcessor,
+        BankingIntegrationManager
+    )
+except ImportError:
+    # Handle missing dependencies gracefully
+    ExtendedPaymentProvider = None
+    MultiProviderPaymentGateway = None
+    CryptocurrencyProcessor = None
+    BankingIntegrationManager = None
 
-__version__ = "1.0.0"
+# Complete monetization suite - NEW MODULES
+from .subscription_manager import (
+    SubscriptionManager,
+    SubscriptionPlan,
+    Subscription,
+    SubscriptionTier,
+    BillingCycle,
+    SubscriptionStatus
+)
+
+from .billing_engine import (
+    BillingEngine,
+    Invoice,
+    InvoiceLineItem,
+    PaymentAttempt,
+    TaxRate,
+    InvoiceStatus
+)
+
+from .financial_dashboard import (
+    FinancialDashboard,
+    FinancialMetric,
+    RevenueBreakdown,
+    CohortAnalysis,
+    MetricType,
+    TimeGranularity
+)
+
+from .accounting_compliance import (
+    AccountingSystem,
+    JournalEntry,
+    ChartOfAccounts,
+    TaxCalculation,
+    FinancialReport,
+    AccountingStandard
+)
+
+__version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 
+# Complete module exports
 __all__ = [
+    # Core licensing and rights management
     "LicensingManager",
-    "RoyaltyEngine",
+    "RoyaltyEngine", 
     "UsageTracker",
     "ContractGenerator",
     "RightsValidator",
+    
+    # Payment and revenue systems
+    "PaymentProcessor",
+    "RevenueCalculator",
+    "DistributionEngine",
+    "PlatformAPIManager",
+    
+    # Enhanced payment providers
+    "ExtendedPaymentProvider",
+    "MultiProviderPaymentGateway",
+    "CryptocurrencyProcessor",
+    "BankingIntegrationManager",
+    
+    # Subscription management
+    "SubscriptionManager",
+    "SubscriptionPlan",
+    "Subscription",
+    "SubscriptionTier",
+    "BillingCycle",
+    "SubscriptionStatus",
+    
+    # Billing automation
+    "BillingEngine",
+    "Invoice",
+    "InvoiceLineItem",
+    "PaymentAttempt",
+    "TaxRate",
+    "InvoiceStatus",
+    
+    # Financial analytics
+    "FinancialDashboard",
+    "FinancialMetric",
+    "RevenueBreakdown",
+    "CohortAnalysis",
+    "MetricType",
+    "TimeGranularity",
+    
+    # Accounting and compliance
+    "AccountingSystem",
+    "JournalEntry",
+    "ChartOfAccounts",
+    "TaxCalculation",
+    "FinancialReport",
+    "AccountingStandard",
 ]
 
 # Licensing configuration
