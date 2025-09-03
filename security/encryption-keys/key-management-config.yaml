@@ -1,0 +1,256 @@
+# Encryption Key Management Configuration
+# Production-grade key management for IA Influencer Agent Platform
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+
+encryption_config:
+  version: "1.0"
+  name: "IA-Influencer-Encryption"
+  description: "Enterprise encryption key management system"
+  
+  # Master key configuration
+  master_key:
+    algorithm: "AES-256-GCM"
+    key_size: 256
+    rotation_interval: "90d"  # 90 days
+    backup_count: 3
+    storage_backend: "hashicorp_vault"
+    key_derivation:
+      algorithm: "PBKDF2"
+      iterations: 100000
+      salt_size: 32
+      
+  # Field-specific encryption keys
+  field_keys:
+    user_credentials:
+      algorithm: "AES-256-GCM"
+      key_size: 256
+      rotation_interval: "30d"
+      purpose: "User passwords, API keys, tokens"
+      
+    personal_data:
+      algorithm: "AES-256-GCM" 
+      key_size: 256
+      rotation_interval: "60d"
+      purpose: "PII, email addresses, phone numbers"
+      
+    financial_data:
+      algorithm: "AES-256-GCM"
+      key_size: 256
+      rotation_interval: "30d"
+      purpose: "Payment info, bank details, revenue data"
+      compliance: ["PCI-DSS"]
+      
+    content_metadata:
+      algorithm: "ChaCha20-Poly1305"
+      key_size: 256
+      rotation_interval: "180d"
+      purpose: "Content fingerprints, AI analysis data"
+      
+    api_keys:
+      algorithm: "AES-256-GCM"
+      key_size: 256
+      rotation_interval: "30d"
+      purpose: "External API keys, OAuth tokens"
+      
+    search_queries:
+      algorithm: "AES-256-GCM"
+      key_size: 256
+      rotation_interval: "90d"
+      purpose: "User search history, content queries"
+      
+    collaboration_data:
+      algorithm: "AES-256-GCM"
+      key_size: 256
+      rotation_interval: "60d"
+      purpose: "Collaboration requests, project data"
+      
+    analytics_data:
+      algorithm: "ChaCha20-Poly1305"
+      key_size: 256
+      rotation_interval: "180d"
+      purpose: "User analytics, performance metrics"
+
+  # Transport encryption
+  transport_encryption:
+    tls_version: "1.3"
+    cipher_suites:
+      - "TLS_AES_256_GCM_SHA384"
+      - "TLS_CHACHA20_POLY1305_SHA256"
+      - "TLS_AES_128_GCM_SHA256"
+    certificate_management:
+      auto_renewal: true
+      renewal_threshold: "30d"
+      ca_authority: "Let's Encrypt"
+      
+  # Digital signatures
+  digital_signatures:
+    algorithm: "RSA-PSS"
+    key_size: 4096
+    hash_algorithm: "SHA-256"
+    rotation_interval: "365d"
+    purposes:
+      - "API responses"
+      - "Content integrity"
+      - "Legal documents"
+      - "Audit logs"
+
+  # Key storage backends
+  storage_backends:
+    hashicorp_vault:
+      enabled: true
+      priority: 1
+      config:
+        address: "https://vault.ia-influencer.com:8200"
+        mount_path: "encryption-keys"
+        kv_version: 2
+        auth_method: "kubernetes"
+        
+    kubernetes_secrets:
+      enabled: true
+      priority: 2
+      config:
+        namespace: "ia-influencer"
+        encryption_at_rest: true
+        
+    azure_key_vault:
+      enabled: false
+      priority: 3
+      config:
+        vault_url: "https://ia-influencer-kv.vault.azure.net/"
+        key_type: "RSA-HSM"
+        
+  # Key rotation policies  
+  rotation_policies:
+    automatic_rotation:
+      enabled: true
+      check_interval: "24h"
+      pre_rotation_notice: "7d"
+      
+    manual_rotation:
+      require_approval: true
+      approvers:
+        - "security-team"
+        - "platform-admin"
+      approval_threshold: 2
+      
+    emergency_rotation:
+      enabled: true
+      trigger_conditions:
+        - "security_incident"
+        - "key_compromise"
+        - "compliance_requirement"
+      immediate_rotation: true
+      
+  # Backup and recovery
+  backup:
+    enabled: true
+    encryption: true
+    compression: true
+    storage_locations:
+      - type: "s3"
+        bucket: "ia-influencer-key-backups"
+        encryption: "AES-256"
+        
+      - type: "azure_blob"
+        container: "key-backups"
+        encryption: "AES-256"
+        
+    retention_policy:
+      daily_backups: 30
+      weekly_backups: 12
+      monthly_backups: 12
+      yearly_backups: 7
+      
+  # Access control
+  access_control:
+    rbac_enabled: true
+    roles:
+      key_administrator:
+        permissions:
+          - "create_keys"
+          - "rotate_keys"
+          - "delete_keys"
+          - "view_keys"
+          - "backup_keys"
+          
+      key_operator:
+        permissions:
+          - "view_keys"
+          - "use_keys"
+          - "rotate_keys"
+          
+      application:
+        permissions:
+          - "use_keys"
+          - "view_key_metadata"
+          
+    authentication:
+      methods:
+        - "kubernetes_service_account"
+        - "vault_token"
+        - "x509_certificate"
+        
+  # Compliance and auditing
+  compliance:
+    standards:
+      - "FIPS-140-2"
+      - "Common Criteria"
+      - "GDPR"
+      - "PCI-DSS"
+      - "SOC 2"
+      
+    auditing:
+      enabled: true
+      log_all_operations: true
+      retention_period: "7y"
+      tamper_protection: true
+      
+    reporting:
+      enabled: true
+      frequency: "monthly"
+      recipients:
+        - "security@ia-influencer.com"
+        - "compliance@ia-influencer.com"
+        
+  # Performance optimization
+  performance:
+    caching:
+      enabled: true
+      cache_size: "100MB"
+      ttl: "1h"
+      
+    connection_pooling:
+      enabled: true
+      max_connections: 50
+      idle_timeout: "5m"
+      
+    batch_operations:
+      enabled: true
+      batch_size: 100
+      
+  # Monitoring and alerting
+  monitoring:
+    enabled: true
+    metrics:
+      - "key_usage_count"
+      - "rotation_success_rate"
+      - "access_denied_count"
+      - "performance_metrics"
+      
+    alerts:
+      - name: "Key rotation failure"
+        condition: "rotation_failed"
+        severity: "critical"
+        
+      - name: "Unauthorized access attempt"
+        condition: "access_denied"
+        threshold: 5
+        time_window: "5m"
+        severity: "high"
+        
+      - name: "Key expiry warning"
+        condition: "key_expires_soon"
+        threshold: "7d"
+        severity: "warning"
