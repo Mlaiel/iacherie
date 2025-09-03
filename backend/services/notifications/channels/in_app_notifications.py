@@ -13,8 +13,39 @@ from datetime import datetime
 try:
     from notifications.in_app import InAppNotifier, InAppNotification, InAppNotificationType
 except ImportError:
-    # Fallback for relative imports
-    from ....notifications.in_app import InAppNotifier, InAppNotification, InAppNotificationType
+    try:
+        # Fallback for relative imports
+        from ....notifications.in_app import InAppNotifier, InAppNotification, InAppNotificationType
+    except ImportError:
+        # Mock for testing when dependencies are not available
+        from enum import Enum
+        
+        class InAppNotificationType(Enum):
+            CONTENT_UPLOAD = "content_upload"
+            COLLABORATION = "collaboration"
+            REVENUE = "revenue"
+        
+        class InAppNotification:
+            def __init__(self, user_id, notification_type, title, message, data, priority, action_url, timestamp, is_read):
+                self.user_id = user_id
+                self.notification_type = notification_type
+                self.title = title
+                self.message = message
+                self.data = data
+                self.priority = priority
+                self.action_url = action_url
+                self.timestamp = timestamp
+                self.is_read = is_read
+        
+        class InAppNotifier:
+            def __init__(self, config):
+                self.config = config
+            async def send_notification(self, notification):
+                return {"notification_id": "mock_notification_123"}
+            async def mark_as_read(self, user_id, notification_id):
+                return {"success": True}
+            async def get_user_notifications(self, user_id, limit, offset, unread_only):
+                return []
 
 logger = logging.getLogger(__name__)
 

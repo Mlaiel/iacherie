@@ -35,7 +35,7 @@ __all__ = [
     
     # Enums
     "NotificationPriority"
-]on system: email, SMS, push notifications, webhooks."""
+]
 from .email import EmailNotifier
 from .sms import SMSNotifier  
 from .push import PushNotifier
