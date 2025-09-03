@@ -38,6 +38,22 @@ from .analysis import (
     AudioMetadataExtractor
 )
 
+# Advanced BPM and harmonic analysis
+from .analysis.bpm_harmonic_analyzer import (
+    BPMHarmonicAnalyzer,
+    BPMAnalysisConfig,
+    BPMResult,
+    HarmonicResult,
+    MusicalAnalysisResult,
+    TempoAlgorithm,
+    HarmonicModel,
+    MusicalKey,
+    TimeSignature,
+    create_bpm_harmonic_analyzer,
+    quick_bpm_detection,
+    quick_key_detection
+)
+
 from .effects import (
     EqualizerProcessor,
     CompressorProcessor,
@@ -51,6 +67,22 @@ from .effects import (
     MasteringProcessor
 )
 
+# Advanced AI mastering capabilities
+from .effects.ai_mastering_engine import (
+    AIMasteringEngine,
+    MasteringConfig,
+    MasteringResult,
+    MasteringStyle,
+    ProcessingChain,
+    QualityTarget,
+    AIGenreDetector,
+    AIEqualizer,
+    AILimiter,
+    create_mastering_engine,
+    quick_master_for_streaming,
+    master_for_broadcast
+)
+
 from .enhancement import (
     AudioUpsampler,
     NoiseSuppressionEngine,
@@ -60,6 +92,19 @@ from .enhancement import (
     VocalEnhancer,
     AudioRestorer,
     QualityEnhancer
+)
+
+# Advanced normalization capabilities
+from .enhancement.normalization_engine import (
+    ProfessionalNormalizationEngine,
+    NormalizationConfig,
+    NormalizationStandard,
+    NormalizationResult,
+    LoudnessMeter,
+    TruePeakLimiter,
+    create_normalization_engine,
+    normalize_for_streaming,
+    normalize_for_broadcast
 )
 
 from .fingerprinting import (
@@ -98,6 +143,16 @@ from .separation import (
     HarmonyExtractor
 )
 
+# Advanced separation capabilities
+from .separation.core import (
+    AdvancedSeparationEngine,
+    SeparationConfig,
+    SeparationModel,
+    SeparationQuality,
+    SeparationResult,
+    create_separation_engine
+)
+
 from .synthesis import (
     AudioSynthesisHub,
     NeuralVocoderManager,
@@ -133,17 +188,52 @@ __copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 
 # Export main classes and hub functionality
 __all__ = [
-    # Central Hub (NEW - Main Entry Point)
-    'AudioEngineHub',
-    'get_audio_hub',
-    'AudioRequest', 
-    'AudioResponse',
-    'AudioCapability',
-    'AudioProcessingMode',
-    'process_audio',
-    'list_audio_capabilities', 
-    'get_audio_hub_health',
-    'get_audio_hub_stats',
+    # Advanced Separation Engine (NEW - Ultra-Professional)
+    'AdvancedSeparationEngine',
+    'SeparationConfig', 
+    'SeparationModel',
+    'SeparationQuality',
+    'SeparationResult',
+    'create_separation_engine',
+    
+    # Advanced Normalization Engine (NEW - Professional Standards)
+    'ProfessionalNormalizationEngine',
+    'NormalizationConfig',
+    'NormalizationStandard', 
+    'NormalizationResult',
+    'LoudnessMeter',
+    'TruePeakLimiter',
+    'create_normalization_engine',
+    'normalize_for_streaming',
+    'normalize_for_broadcast',
+    
+    # Advanced BPM & Harmonic Analysis (NEW - Music Intelligence)
+    'BPMHarmonicAnalyzer',
+    'BPMAnalysisConfig',
+    'BPMResult',
+    'HarmonicResult', 
+    'MusicalAnalysisResult',
+    'TempoAlgorithm',
+    'HarmonicModel',
+    'MusicalKey',
+    'TimeSignature',
+    'create_bpm_harmonic_analyzer',
+    'quick_bpm_detection',
+    'quick_key_detection',
+    
+    # AI Mastering Engine (NEW - Professional Mastering)
+    'AIMasteringEngine',
+    'MasteringConfig',
+    'MasteringResult',
+    'MasteringStyle',
+    'ProcessingChain', 
+    'QualityTarget',
+    'AIGenreDetector',
+    'AIEqualizer',
+    'AILimiter',
+    'create_mastering_engine',
+    'quick_master_for_streaming',
+    'master_for_broadcast',
     
     # Analysis Engine
     'SpectralAnalyzer',
