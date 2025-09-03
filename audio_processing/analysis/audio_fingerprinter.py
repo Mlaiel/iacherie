@@ -311,28 +311,28 @@ class AudioFingerprinter:
             self.thread_executor, normalize)
     
     async def _extract_chromaprint(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """
-Extract Chromaprint-style fingerprint"""
-        def extract():
+        """Extract Chromaprint-style fingerprint"""
         try:
-                    # AI model processing
-                    if not hasattr(self, 'model') or self.model is None:
-                        raise RuntimeError("AI model not initialized")
+            # Simple fingerprinting implementation
+            # In production, would use actual Chromaprint library
             
-                    # Preprocess input
-                    processed_input = await self._preprocess_extract_input(data)
+            # Compute spectral features
+            chroma = librosa.feature.chroma_stft(y=audio_data, sr=sample_rate)
+            spectral_centroid = librosa.feature.spectral_centroid(y=audio_data, sr=sample_rate)
             
-                    # Run inference
-                    result = await self.model.predict(processed_input)
+            # Create fingerprint hash
+            fingerprint = {
+                'hash': hash(chroma.tobytes()) % (10**8),  # Simple hash
+                'duration': len(audio_data) / sample_rate,
+                'sample_rate': sample_rate,
+                'confidence': 0.85  # Placeholder confidence
+            }
             
-                    # Postprocess result
-                    final_result = await self._postprocess_extract_result(result)
+            return fingerprint
             
-                    logger.info(f"AI processing extract completed")
-                    return final_result
-            
-                except Exception as e:
-                    logger.error(f"AI processing extract failed: {e}")
+        except Exception as e:
+            logger.error(f"Chromaprint extraction failed: {e}")
+            return {'hash': 0, 'duration': 0, 'sample_rate': sample_rate, 'confidence': 0.0}
                     raise
                 chroma = librosa.feature.chroma_cqt(
                     y=audio_data, 
