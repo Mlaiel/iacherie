@@ -8,8 +8,8 @@ This module provides enterprise-level abstraction layers for seamless
 integration with external services, platforms, and data sources.
 
 Business Logic Flow:
-User Content Upload → Format Detection → Platform Integration → 
-Data Processing → Authentication → Storage → Protection → Distribution
+User Content Upload -> Format Detection -> Platform Integration -> 
+Data Processing -> Authentication -> Storage -> Protection -> Distribution
 
 Core Components:
 - Content Adapters: Multi-format content processing and transformation
@@ -22,12 +22,12 @@ Core Components:
 - API Adapters: REST/GraphQL API integration and management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is protected by copyright law. Any unauthorized copying, 
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
-"""   - Binary data with compression and encryption
+   - Binary data with compression and encryption
    - Protocol Buffers for efficient serialization
    - MessagePack for compact data exchange
    - YAML for configuration management
@@ -87,7 +87,7 @@ Enterprise Features:
 - **Compliance**: SOC2, GDPR, HIPAA compliance ready
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is protected by copyright law. Any unauthorized copying, 
 distribution, or modification is strictly prohibited and will result in 
@@ -538,8 +538,8 @@ Enterprise Features:
 
 Business Logic Integration:
 The adapter system supports the complete IA-Influencer business flow:
-Content Creator → Multi-format Upload → AI Processing → Rights Protection → 
-SEO Optimization → Collaboration Matching → Multi-platform Distribution → Monetization
+Content Creator -> Multi-format Upload -> AI Processing -> Rights Protection -> 
+SEO Optimization -> Collaboration Matching -> Multi-platform Distribution -> Monetization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
