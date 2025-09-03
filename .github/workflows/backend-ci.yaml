@@ -1,9 +1,10 @@
+---
 name: 🐍 Backend CI Pipeline
 
 on:
   push:
-    branches: [ main, develop ]
-    paths:
+  branches: [main, develop]
+  paths:
       - 'backend/**'
       - 'api/**'
       - 'core/**'
@@ -18,8 +19,8 @@ on:
       - 'pytest.ini'
       - '.github/workflows/backend-ci.yaml'
   pull_request:
-    branches: [ main, develop ]
-    paths:
+  branches: [main, develop]
+  paths:
       - 'backend/**'
       - 'api/**'
       - 'core/**'
@@ -40,11 +41,11 @@ env:
 jobs:
   # Backend Code Quality & Testing
   backend-quality:
-    name: 🔍 Backend Code Quality
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    
-    steps:
+  name: 🔍 Backend Code Quality
+  runs-on: ubuntu-latest
+  timeout-minutes: 20
+
+  steps:
     - name: 📥 Checkout code
       uses: actions/checkout@v4
 
@@ -67,8 +68,8 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install black flake8 mypy bandit safety pytest pytest-cov pytest-xdist
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-        if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
+        if [-f requirements.txt]; then pip install -r requirements.txt; fi
+        if [-f requirements-dev.txt]; then pip install -r requirements-dev.txt; fi
 
     - name: 🎨 Code formatting check (Black)
       run: |
@@ -100,15 +101,15 @@ jobs:
 
   # Backend Unit Tests
   backend-tests:
-    name: 🧪 Backend Tests
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    
-    strategy:
+  name: 🧪 Backend Tests
+  runs-on: ubuntu-latest
+  timeout-minutes: 30
+
+  strategy:
       matrix:
         python-version: ['3.11', '3.12']
-    
-    services:
+
+  services:
       postgres:
         image: postgres:15
         env:
@@ -132,7 +133,7 @@ jobs:
         ports:
           - 6379:6379
 
-    steps:
+  steps:
     - name: 📥 Checkout code
       uses: actions/checkout@v4
 
@@ -155,8 +156,8 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pytest pytest-cov pytest-xdist pytest-mock
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-        if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
+        if [-f requirements.txt]; then pip install -r requirements.txt; fi
+        if [-f requirements-dev.txt]; then pip install -r requirements-dev.txt; fi
 
     - name: 🧪 Run backend tests
       env:
@@ -191,12 +192,12 @@ jobs:
 
   # Backend Performance Tests
   backend-performance:
-    name: ⚡ Backend Performance
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    if: github.event_name == 'pull_request'
-    
-    steps:
+  name: ⚡ Backend Performance
+  runs-on: ubuntu-latest
+  timeout-minutes: 15
+  if: github.event_name == 'pull_request'
+
+  steps:
     - name: 📥 Checkout code
       uses: actions/checkout@v4
 
@@ -209,12 +210,12 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install locust pytest-benchmark
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        if [-f requirements.txt]; then pip install -r requirements.txt; fi
 
     - name: ⚡ Run performance benchmarks
       run: |
         # Run basic performance tests if they exist
-        if [ -d "tests/performance" ]; then
+        if [-d "tests/performance"]; then
           pytest tests/performance/ --benchmark-only --benchmark-json=benchmark-results.json || true
         fi
 
@@ -227,12 +228,12 @@ jobs:
 
   # Backend Integration Tests
   backend-integration:
-    name: 🔗 Backend Integration Tests
-    runs-on: ubuntu-latest
-    timeout-minutes: 25
-    if: github.ref == 'refs/heads/main' || github.event_name == 'pull_request'
-    
-    services:
+  name: 🔗 Backend Integration Tests
+  runs-on: ubuntu-latest
+  timeout-minutes: 25
+  if: github.ref == 'refs/heads/main' || github.event_name == 'pull_request'
+
+  services:
       postgres:
         image: postgres:15
         env:
@@ -256,7 +257,7 @@ jobs:
         ports:
           - 6379:6379
 
-    steps:
+  steps:
     - name: 📥 Checkout code
       uses: actions/checkout@v4
 
@@ -269,8 +270,8 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pytest pytest-asyncio
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-        if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
+        if [-f requirements.txt]; then pip install -r requirements.txt; fi
+        if [-f requirements-dev.txt]; then pip install -r requirements-dev.txt; fi
 
     - name: 🔗 Run integration tests
       env:
@@ -279,7 +280,7 @@ jobs:
         TESTING: true
         INTEGRATION_TESTING: true
       run: |
-        if [ -d "tests/integration" ]; then
+        if [-d "tests/integration"]; then
           pytest tests/integration/ -v --junit-xml=integration-results.xml || true
         else
           echo "No integration tests found, skipping..."
@@ -294,12 +295,12 @@ jobs:
 
   # Summary
   backend-summary:
-    name: 📋 Backend CI Summary
-    runs-on: ubuntu-latest
-    needs: [backend-quality, backend-tests, backend-performance, backend-integration]
-    if: always()
-    
-    steps:
+  name: 📋 Backend CI Summary
+  runs-on: ubuntu-latest
+  needs: [backend-quality, backend-tests, backend-performance, backend-integration]
+  if: always()
+
+  steps:
     - name: 📊 Check results
       run: |
         echo "Backend CI Pipeline Results:"
@@ -307,8 +308,8 @@ jobs:
         echo "Unit Tests: ${{ needs.backend-tests.result }}"
         echo "Performance: ${{ needs.backend-performance.result }}"
         echo "Integration: ${{ needs.backend-integration.result }}"
-        
-        if [[ "${{ needs.backend-quality.result }}" == "failure" || "${{ needs.backend-tests.result }}" == "failure" ]]; then
+
+        if [["${{ needs.backend-quality.result }}" == "failure" || "${{ needs.backend-tests.result }}" == "failure"]]; then
           echo "❌ Backend CI failed - critical issues detected"
           exit 1
         else

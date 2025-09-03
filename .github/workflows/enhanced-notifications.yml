@@ -1,8 +1,9 @@
+---
 name: 📢 Enhanced Deployment Notifications
 
 on:
   workflow_call:
-    inputs:
+  inputs:
       event_type:
         description: 'Type of deployment event'
         required: true
@@ -30,7 +31,7 @@ on:
         required: false
         type: string
         default: '{}'
-    secrets:
+  secrets:
       SLACK_WEBHOOK_URL:
         required: false
       SLACK_WEBHOOK_DEPLOYMENTS:
@@ -60,16 +61,16 @@ env:
 jobs:
   # Determine notification settings
   notification-config:
-    name: 🔧 Notification Configuration
-    runs-on: ubuntu-latest
-    outputs:
+  name: 🔧 Notification Configuration
+  runs-on: ubuntu-latest
+  outputs:
       slack-channel: ${{ steps.config.outputs.slack_channel }}
       notification-level: ${{ steps.config.outputs.notification_level }}
       send-email: ${{ steps.config.outputs.send_email }}
       send-sms: ${{ steps.config.outputs.send_sms }}
       message-priority: ${{ steps.config.outputs.message_priority }}
-    
-    steps:
+
+  steps:
       - name: Configure notification settings
         id: config
         run: |
@@ -91,7 +92,7 @@ jobs:
               echo "send_email=false" >> $GITHUB_OUTPUT
               ;;
           esac
-          
+
           # Configure based on event type
           case "${{ inputs.event_type }}" in
             "deployment-failed"|"rollback-started")
@@ -110,22 +111,22 @@ jobs:
 
   # Generate notification content
   message-generation:
-    name: ✍️ Message Generation
-    runs-on: ubuntu-latest
-    needs: notification-config
-    outputs:
+  name: ✍️ Message Generation
+  runs-on: ubuntu-latest
+  needs: notification-config
+  outputs:
       message-title: ${{ steps.generate.outputs.message_title }}
       message-body: ${{ steps.generate.outputs.message_body }}
       message-color: ${{ steps.generate.outputs.message_color }}
       message-emoji: ${{ steps.generate.outputs.message_emoji }}
-    
-    steps:
+
+  steps:
       - name: Generate notification content
         id: generate
         run: |
           # Parse additional info
           ADDITIONAL_INFO='${{ inputs.additional_info }}'
-          
+
           # Generate title and emoji based on event type
           case "${{ inputs.event_type }}" in
             "deployment-started")
@@ -165,15 +166,15 @@ jobs:
               BODY="Deployment event: ${{ inputs.event_type }}"
               ;;
           esac
-          
+
           echo "message_title=$TITLE" >> $GITHUB_OUTPUT
           echo "message_emoji=$EMOJI" >> $GITHUB_OUTPUT
           echo "message_color=$COLOR" >> $GITHUB_OUTPUT
-          
+
           # Create detailed message body
           cat > message_body.txt << EOF
           $BODY
-          
+
           **Details:**
           - **Environment:** ${{ inputs.environment }}
           - **Service:** ${{ inputs.service_name }}
@@ -184,24 +185,24 @@ jobs:
           - **Commit:** \`${{ github.sha }}\`
           - **Branch:** ${{ github.ref_name }}
           EOF
-          
-          if [ -n "${{ inputs.image_tag }}" ]; then
+
+          if [-n "${{ inputs.image_tag }}"]; then
             echo "- **Image Tag:** \`${{ inputs.image_tag }}\`" >> message_body.txt
           fi
-          
-          if [ -n "${{ inputs.deployment_url }}" ]; then
+
+          if [-n "${{ inputs.deployment_url }}"]; then
             echo "- **Service URL:** ${{ inputs.deployment_url }}" >> message_body.txt
           fi
-          
+
           # Add repository and workflow links
           cat >> message_body.txt << EOF
-          
+
           **Links:**
           - [View Workflow Run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
           - [View Commit](https://github.com/${{ github.repository }}/commit/${{ github.sha }})
           - [Repository](https://github.com/${{ github.repository }})
           EOF
-          
+
           # Set as output (GitHub Actions doesn't handle multiline well, so we'll read from file in next steps)
           MESSAGE_BODY=$(cat message_body.txt)
           echo "message_body<<EOF" >> $GITHUB_OUTPUT
@@ -216,12 +217,12 @@ jobs:
 
   # Slack notifications
   slack-notifications:
-    name: 💬 Slack Notifications
-    runs-on: ubuntu-latest
-    needs: [notification-config, message-generation]
-    if: secrets.SLACK_WEBHOOK_URL != '' || secrets.SLACK_WEBHOOK_DEPLOYMENTS != '' || secrets.SLACK_WEBHOOK_ALERTS != ''
-    
-    steps:
+  name: 💬 Slack Notifications
+  runs-on: ubuntu-latest
+  needs: [notification-config, message-generation]
+  if: secrets.SLACK_WEBHOOK_URL != '' || secrets.SLACK_WEBHOOK_DEPLOYMENTS != '' || secrets.SLACK_WEBHOOK_ALERTS != ''
+
+  steps:
       - name: Send to main Slack webhook
         if: secrets.SLACK_WEBHOOK_URL != ''
         uses: 8398a7/action-slack@v3
@@ -234,8 +235,7 @@ jobs:
               "username": "Deployment Bot",
               "icon_emoji": "${{ needs.message-generation.outputs.message-emoji }}",
               "text": "${{ needs.message-generation.outputs.message-title }}",
-              "attachments": [
-                {
+              "attachments": [{
                   "color": "${{ needs.message-generation.outputs.message-color }}",
                   "title": "${{ inputs.service_name }} - ${{ inputs.environment }}",
                   "fields": [
@@ -259,14 +259,13 @@ jobs:
                       "value": "<https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>",
                       "short": true
                     }
-                  ],
-                  "actions": [
-                    {
+                 ],
+                  "actions": [{
                       "type": "button",
                       "text": "View Workflow",
                       "url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
                     }
-                  ],
+                 ],
                   "footer": "Ainflue Deployment System",
                   "ts": $(date +%s)
                 }
@@ -296,8 +295,7 @@ jobs:
               "username": "Alert Bot",
               "icon_emoji": ":rotating_light:",
               "text": "🚨 CRITICAL: ${{ needs.message-generation.outputs.message-title }}",
-              "attachments": [
-                {
+              "attachments": [{
                   "color": "danger",
                   "title": "Production Alert",
                   "text": "Immediate attention required for ${{ inputs.service_name }} in ${{ inputs.environment }}",
@@ -308,23 +306,23 @@ jobs:
                       "short": true
                     },
                     {
-                      "title": "Environment", 
+                      "title": "Environment",
                       "value": "${{ inputs.environment }}",
                       "short": true
                     }
-                  ]
+                 ]
                 }
               ]
             }
 
   # Microsoft Teams notifications
   teams-notifications:
-    name: 📧 Microsoft Teams Notifications
-    runs-on: ubuntu-latest
-    needs: [notification-config, message-generation]
-    if: secrets.TEAMS_WEBHOOK_URL != ''
-    
-    steps:
+  name: 📧 Microsoft Teams Notifications
+  runs-on: ubuntu-latest
+  needs: [notification-config, message-generation]
+  if: secrets.TEAMS_WEBHOOK_URL != ''
+
+  steps:
       - name: Send Teams notification
         run: |
           # Download message content
@@ -334,8 +332,7 @@ jobs:
             "summary": "${{ needs.message-generation.outputs.message-title }}",
             "themeColor": "${{ needs.message-generation.outputs.message-color == 'good' && '00FF00' || needs.message-generation.outputs.message-color == 'danger' && 'FF0000' || 'FFA500' }}",
             "title": "${{ needs.message-generation.outputs.message-title }}",
-            "sections": [
-              {
+            "sections": [{
                 "activityTitle": "${{ inputs.service_name }} Deployment",
                 "activitySubtitle": "${{ inputs.environment }} environment",
                 "activityImage": "https://github.com/github.png",
@@ -345,7 +342,7 @@ jobs:
                     "value": "${{ inputs.environment }}"
                   },
                   {
-                    "name": "Event Type", 
+                    "name": "Event Type",
                     "value": "${{ inputs.event_type }}"
                   },
                   {
@@ -360,12 +357,11 @@ jobs:
                     "name": "Time",
                     "value": "$(date -u +\"%Y-%m-%d %H:%M:%S UTC\")"
                   }
-                ],
+               ],
                 "markdown": true
               }
             ],
-            "potentialAction": [
-              {
+            "potentialAction": [{
                 "@type": "OpenUri",
                 "name": "View Workflow",
                 "targets": [
@@ -373,29 +369,28 @@ jobs:
                     "os": "default",
                     "uri": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
                   }
-                ]
+               ]
               },
               {
-                "@type": "OpenUri", 
+                "@type": "OpenUri",
                 "name": "View Commit",
-                "targets": [
-                  {
+                "targets": [{
                     "os": "default",
                     "uri": "https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
                   }
-                ]
+               ]
               }
             ]
           }' "${{ secrets.TEAMS_WEBHOOK_URL }}"
 
   # Discord notifications
   discord-notifications:
-    name: 🎮 Discord Notifications
-    runs-on: ubuntu-latest
-    needs: [notification-config, message-generation]
-    if: secrets.DISCORD_WEBHOOK_URL != ''
-    
-    steps:
+  name: 🎮 Discord Notifications
+  runs-on: ubuntu-latest
+  needs: [notification-config, message-generation]
+  if: secrets.DISCORD_WEBHOOK_URL != ''
+
+  steps:
       - name: Send Discord notification
         run: |
           # Determine color code for Discord embed
@@ -405,7 +400,7 @@ jobs:
             "warning") COLOR="16776960" ;; # Yellow
             *) COLOR="4886754" ;;         # Blue
           esac
-          
+
           curl -H "Content-Type: application/json" -d '{
             "username": "Ainflue Deployment Bot",
             "avatar_url": "https://github.com/github.png",
@@ -446,12 +441,12 @@ jobs:
 
   # Email notifications
   email-notifications:
-    name: 📧 Email Notifications
-    runs-on: ubuntu-latest
-    needs: [notification-config, message-generation]
-    if: secrets.EMAIL_API_KEY != '' && secrets.EMAIL_RECIPIENTS != '' && needs.notification-config.outputs.send-email == 'true'
-    
-    steps:
+  name: 📧 Email Notifications
+  runs-on: ubuntu-latest
+  needs: [notification-config, message-generation]
+  if: secrets.EMAIL_API_KEY != '' && secrets.EMAIL_RECIPIENTS != '' && needs.notification-config.outputs.send-email == 'true'
+
+  steps:
       - name: Download message content
         uses: actions/download-artifact@v3
         with:
@@ -461,10 +456,10 @@ jobs:
         run: |
           # Install mail tools
           sudo apt-get update && sudo apt-get install -y mailutils
-          
+
           # Prepare email content
           SUBJECT="${{ needs.message-generation.outputs.message-title }}: ${{ inputs.service_name }} - ${{ inputs.environment }}"
-          
+
           cat > email_body.html << EOF
           <!DOCTYPE html>
           <html>
@@ -487,7 +482,7 @@ jobs:
               <div class="content">
                   <p>Dear Team,</p>
                   <p>This is an automated notification regarding the deployment of <strong>${{ inputs.service_name }}</strong>.</p>
-                  
+
                   <div class="details">
                       <h3>Deployment Details:</h3>
                       <ul>
@@ -499,9 +494,9 @@ jobs:
                           <li><strong>Commit:</strong> ${{ github.sha }}</li>
                       </ul>
                   </div>
-                  
+
                   <p><a href="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}">View Workflow Run</a></p>
-                  
+
                   <p>Best regards,<br>Ainflue Deployment System</p>
               </div>
               <div class="footer">
@@ -510,17 +505,16 @@ jobs:
           </body>
           </html>
           EOF
-          
+
           # Send email using API (example with SendGrid)
           curl -X POST "https://api.sendgrid.v3/mail/send" \
             -H "Authorization: Bearer ${{ secrets.EMAIL_API_KEY }}" \
             -H "Content-Type: application/json" \
             -d '{
-              "personalizations": [
-                {
+              "personalizations": [{
                   "to": [
                     { "email": "${{ secrets.EMAIL_RECIPIENTS }}" }
-                  ],
+                 ],
                   "subject": "'"$SUBJECT"'"
                 }
               ],
@@ -528,59 +522,57 @@ jobs:
                 "email": "deployments@ainflue.com",
                 "name": "Ainflue Deployment System"
               },
-              "content": [
-                {
+              "content": [{
                   "type": "text/html",
                   "value": "'"$(cat email_body.html | sed 's/"/\\"/g' | tr '\n' ' ')"'"
                 }
-              ]
+             ]
             }'
 
   # SMS notifications for critical events
   sms-notifications:
-    name: 📱 SMS Notifications
-    runs-on: ubuntu-latest
-    needs: [notification-config, message-generation]
-    if: secrets.TWILIO_ACCOUNT_SID != '' && secrets.TWILIO_AUTH_TOKEN != '' && needs.notification-config.outputs.send-sms == 'true'
-    
-    steps:
+  name: 📱 SMS Notifications
+  runs-on: ubuntu-latest
+  needs: [notification-config, message-generation]
+  if: secrets.TWILIO_ACCOUNT_SID != '' && secrets.TWILIO_AUTH_TOKEN != '' && needs.notification-config.outputs.send-sms == 'true'
+
+  steps:
       - name: Send SMS notification
         run: |
           # Prepare SMS message (keep it short due to SMS limits)
           MESSAGE="${{ needs.message-generation.outputs.message-title }}: ${{ inputs.service_name }} in ${{ inputs.environment }}. Check: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          
+
           # Send SMS to each number in the list
           IFS=',' read -ra PHONE_NUMBERS <<< "${{ secrets.TWILIO_PHONE_NUMBERS }}"
-          
+
           for phone in "${PHONE_NUMBERS[@]}"; do
             phone=$(echo $phone | xargs)  # trim whitespace
             echo "Sending SMS to: $phone"
-            
+
             curl -X POST "https://api.twilio.com/2010-04-01/Accounts/${{ secrets.TWILIO_ACCOUNT_SID }}/Messages.json" \
               -u "${{ secrets.TWILIO_ACCOUNT_SID }}:${{ secrets.TWILIO_AUTH_TOKEN }}" \
               --data-urlencode "From=+1234567890" \
               --data-urlencode "To=$phone" \
               --data-urlencode "Body=$MESSAGE"
-            
+
             echo "✅ SMS sent to $phone"
           done
 
   # Create notification summary
   notification-summary:
-    name: 📊 Notification Summary
-    runs-on: ubuntu-latest
-    needs: [
-      notification-config,
+  name: 📊 Notification Summary
+  runs-on: ubuntu-latest
+  needs: [notification-config,
       message-generation,
       slack-notifications,
       teams-notifications,
       discord-notifications,
       email-notifications,
       sms-notifications
-    ]
-    if: always()
-    
-    steps:
+   ]
+  if: always()
+
+  steps:
       - name: Generate notification report
         run: |
           echo "# 📢 Deployment Notification Report" > notification-report.md
@@ -590,55 +582,55 @@ jobs:
           echo "**Environment:** ${{ inputs.environment }}" >> notification-report.md
           echo "**Time:** $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> notification-report.md
           echo "" >> notification-report.md
-          
+
           echo "## Notification Channels Status:" >> notification-report.md
           echo "" >> notification-report.md
-          
+
           # Check each notification channel
-          if [ "${{ needs.slack-notifications.result }}" = "success" ]; then
+          if ["${{ needs.slack-notifications.result }}" = "success"]; then
             echo "✅ **Slack:** Notifications sent successfully" >> notification-report.md
-          elif [ "${{ needs.slack-notifications.result }}" = "skipped" ]; then
+          elif ["${{ needs.slack-notifications.result }}" = "skipped"]; then
             echo "⏭️ **Slack:** Skipped (no webhook configured)" >> notification-report.md
           else
             echo "❌ **Slack:** Failed to send notifications" >> notification-report.md
           fi
-          
-          if [ "${{ needs.teams-notifications.result }}" = "success" ]; then
+
+          if ["${{ needs.teams-notifications.result }}" = "success"]; then
             echo "✅ **Microsoft Teams:** Notifications sent successfully" >> notification-report.md
-          elif [ "${{ needs.teams-notifications.result }}" = "skipped" ]; then
+          elif ["${{ needs.teams-notifications.result }}" = "skipped"]; then
             echo "⏭️ **Microsoft Teams:** Skipped (no webhook configured)" >> notification-report.md
           else
             echo "❌ **Microsoft Teams:** Failed to send notifications" >> notification-report.md
           fi
-          
-          if [ "${{ needs.discord-notifications.result }}" = "success" ]; then
+
+          if ["${{ needs.discord-notifications.result }}" = "success"]; then
             echo "✅ **Discord:** Notifications sent successfully" >> notification-report.md
-          elif [ "${{ needs.discord-notifications.result }}" = "skipped" ]; then
+          elif ["${{ needs.discord-notifications.result }}" = "skipped"]; then
             echo "⏭️ **Discord:** Skipped (no webhook configured)" >> notification-report.md
           else
             echo "❌ **Discord:** Failed to send notifications" >> notification-report.md
           fi
-          
-          if [ "${{ needs.email-notifications.result }}" = "success" ]; then
+
+          if ["${{ needs.email-notifications.result }}" = "success"]; then
             echo "✅ **Email:** Notifications sent successfully" >> notification-report.md
-          elif [ "${{ needs.email-notifications.result }}" = "skipped" ]; then
+          elif ["${{ needs.email-notifications.result }}" = "skipped"]; then
             echo "⏭️ **Email:** Skipped (not configured or not required)" >> notification-report.md
           else
             echo "❌ **Email:** Failed to send notifications" >> notification-report.md
           fi
-          
-          if [ "${{ needs.sms-notifications.result }}" = "success" ]; then
+
+          if ["${{ needs.sms-notifications.result }}" = "success"]; then
             echo "✅ **SMS:** Notifications sent successfully" >> notification-report.md
-          elif [ "${{ needs.sms-notifications.result }}" = "skipped" ]; then
+          elif ["${{ needs.sms-notifications.result }}" = "skipped"]; then
             echo "⏭️ **SMS:** Skipped (not configured or not required)" >> notification-report.md
           else
             echo "❌ **SMS:** Failed to send notifications" >> notification-report.md
           fi
-          
+
           echo "" >> notification-report.md
           echo "---" >> notification-report.md
           echo "*Generated by Ainflue Deployment Notification System*" >> notification-report.md
-          
+
           # Display report
           cat notification-report.md
 

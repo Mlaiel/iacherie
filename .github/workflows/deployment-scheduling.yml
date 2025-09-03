@@ -9,7 +9,7 @@ name: 📅 Deployment Scheduling & Maintenance Windows
 
 on:
   workflow_dispatch:
-    inputs:
+  inputs:
       deployment_type:
         description: 'Type of deployment'
         required: true
@@ -65,13 +65,13 @@ env:
 
 jobs:
   validate-schedule:
-    name: 📋 Validate Deployment Schedule
-    runs-on: ubuntu-latest
-    outputs:
+  name: 📋 Validate Deployment Schedule
+  runs-on: ubuntu-latest
+  outputs:
       should_deploy: ${{ steps.schedule-check.outputs.should_deploy }}
       deployment_window: ${{ steps.schedule-check.outputs.deployment_window }}
-      
-    steps:
+
+  steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
@@ -79,26 +79,26 @@ jobs:
         id: schedule-check
         run: |
           echo "🕐 Checking deployment schedule..."
-          
+
           CURRENT_TIME=$(date -u +"%Y-%m-%d %H:%M")
           CURRENT_TIMESTAMP=$(date -d "$CURRENT_TIME" +%s)
-          
+
           # Default values
           SHOULD_DEPLOY="false"
           DEPLOYMENT_WINDOW="none"
-          
-          if [ "${{ env.DEPLOYMENT_TYPE }}" = "emergency" ]; then
+
+          if ["${{ env.DEPLOYMENT_TYPE }}" = "emergency"]; then
             echo "🚨 Emergency deployment - bypassing schedule checks"
             SHOULD_DEPLOY="true"
             DEPLOYMENT_WINDOW="emergency"
-          elif [ "${{ env.DEPLOYMENT_TYPE }}" = "maintenance-window" ]; then
+          elif ["${{ env.DEPLOYMENT_TYPE }}" = "maintenance-window"]; then
             echo "🔧 Maintenance window deployment"
             # Check if we're in a valid maintenance window (weekends or after hours)
             DAY_OF_WEEK=$(date -u +%u)  # 1-7, Monday is 1
             HOUR=$(date -u +%H)
-            
+
             # Weekend deployment (Saturday-Sunday) or after hours (22:00-06:00 UTC)
-            if [ $DAY_OF_WEEK -ge 6 ] || [ $HOUR -ge 22 ] || [ $HOUR -le 6 ]; then
+            if [$DAY_OF_WEEK -ge 6] || [$HOUR -ge 22] || [$HOUR -le 6]; then
               echo "✅ Current time is within maintenance window"
               SHOULD_DEPLOY="true"
               DEPLOYMENT_WINDOW="maintenance"
@@ -107,18 +107,18 @@ jobs:
               echo "   Current: $CURRENT_TIME UTC (Day: $DAY_OF_WEEK, Hour: $HOUR)"
               echo "   Valid windows: Weekends or 22:00-06:00 UTC"
             fi
-          elif [ -n "${{ env.SCHEDULE_TIME }}" ]; then
+          elif [-n "${{ env.SCHEDULE_TIME }}"]; then
             echo "⏰ Scheduled deployment for: ${{ env.SCHEDULE_TIME }}"
             SCHEDULED_TIMESTAMP=$(date -d "${{ env.SCHEDULE_TIME }}" +%s 2>/dev/null || echo "0")
-            
-            if [ $SCHEDULED_TIMESTAMP -eq 0 ]; then
+
+            if [$SCHEDULED_TIMESTAMP -eq 0]; then
               echo "❌ Invalid schedule time format: ${{ env.SCHEDULE_TIME }}"
               exit 1
             fi
-            
+
             # Allow deployment if we're within 5 minutes of scheduled time
             TIME_DIFF=$((CURRENT_TIMESTAMP - SCHEDULED_TIMESTAMP))
-            if [ $TIME_DIFF -ge 0 ] && [ $TIME_DIFF -le 300 ]; then
+            if [$TIME_DIFF -ge 0] && [$TIME_DIFF -le 300]; then
               echo "✅ Current time matches scheduled deployment window"
               SHOULD_DEPLOY="true"
               DEPLOYMENT_WINDOW="scheduled"
@@ -130,12 +130,12 @@ jobs:
             fi
           else
             # Check for automatic deployment based on cron trigger
-            if [ "${{ github.event_name }}" = "schedule" ]; then
+            if ["${{ github.event_name }}" = "schedule"]; then
               echo "🤖 Automatic deployment check via cron"
               # Check if there are any scheduled deployments in the repository
-              if [ -f ".github/deployment-schedule.json" ]; then
+              if [-f ".github/deployment-schedule.json"]; then
                 SCHEDULED_DEPLOYMENTS=$(cat .github/deployment-schedule.json | jq -r ".deployments[] | select(.scheduled_time <= \"$CURRENT_TIME\") | .id" 2>/dev/null || echo "")
-                if [ -n "$SCHEDULED_DEPLOYMENTS" ]; then
+                if [-n "$SCHEDULED_DEPLOYMENTS"]; then
                   echo "✅ Found scheduled deployment(s): $SCHEDULED_DEPLOYMENTS"
                   SHOULD_DEPLOY="true"
                   DEPLOYMENT_WINDOW="auto-scheduled"
@@ -143,10 +143,10 @@ jobs:
               fi
             fi
           fi
-          
+
           echo "should_deploy=$SHOULD_DEPLOY" >> $GITHUB_OUTPUT
           echo "deployment_window=$DEPLOYMENT_WINDOW" >> $GITHUB_OUTPUT
-          
+
           echo "📊 Schedule validation results:"
           echo "   Should deploy: $SHOULD_DEPLOY"
           echo "   Deployment window: $DEPLOYMENT_WINDOW"
@@ -155,24 +155,24 @@ jobs:
         if: steps.schedule-check.outputs.should_deploy == 'true'
         run: |
           echo "🔍 Checking system status before deployment..."
-          
+
           # Check if there are any active incidents
-          if [ -f ".github/incidents.json" ]; then
+          if [-f ".github/incidents.json"]; then
             ACTIVE_INCIDENTS=$(cat .github/incidents.json | jq -r '.incidents[] | select(.status == "active") | .id' 2>/dev/null || echo "")
-            if [ -n "$ACTIVE_INCIDENTS" ]; then
+            if [-n "$ACTIVE_INCIDENTS"]; then
               echo "🚨 Active incidents detected: $ACTIVE_INCIDENTS"
               echo "❌ Blocking deployment due to active incidents"
               exit 1
             fi
           fi
-          
+
           # Check cluster health
-          if [ -n "${{ secrets.KUBE_CONFIG_PRODUCTION }}" ]; then
+          if [-n "${{ secrets.KUBE_CONFIG_PRODUCTION }}"]; then
             echo "🏥 Checking Kubernetes cluster health..."
             # This would include actual cluster health checks
             echo "✅ Cluster health check passed (placeholder)"
           fi
-          
+
           # Check monitoring systems
           echo "📊 Checking monitoring systems availability..."
           if curl -f --max-time 10 "https://prometheus.ainflue.com/-/healthy" >/dev/null 2>&1; then
@@ -180,16 +180,16 @@ jobs:
           else
             echo "⚠️ Prometheus health check failed"
           fi
-          
+
           echo "✅ System status checks completed"
 
   maintenance-notification:
-    name: 📢 Maintenance Window Notification
-    runs-on: ubuntu-latest
-    needs: validate-schedule
-    if: needs.validate-schedule.outputs.should_deploy == 'true' && needs.validate-schedule.outputs.deployment_window == 'maintenance'
-    
-    steps:
+  name: 📢 Maintenance Window Notification
+  runs-on: ubuntu-latest
+  needs: validate-schedule
+  if: needs.validate-schedule.outputs.should_deploy == 'true' && needs.validate-schedule.outputs.deployment_window == 'maintenance'
+
+  steps:
       - name: Send Maintenance Start Notification
         uses: ./.github/workflows/enhanced-notifications.yml
         with:
@@ -209,15 +209,15 @@ jobs:
           EMAIL_RECIPIENTS: ${{ secrets.EMAIL_RECIPIENTS }}
 
   trigger-deployment:
-    name: 🚀 Trigger Scheduled Deployment
-    needs: [validate-schedule, maintenance-notification]
-    if: needs.validate-schedule.outputs.should_deploy == 'true' && !failure()
-    uses: ./.github/workflows/production-deployment.yml
-    with:
+  name: 🚀 Trigger Scheduled Deployment
+  needs: [validate-schedule, maintenance-notification]
+  if: needs.validate-schedule.outputs.should_deploy == 'true' && !failure()
+  uses: ./.github/workflows/production-deployment.yml
+  with:
       environment: ${{ inputs.environment || 'production' }}
       deployment_type: ${{ inputs.deployment_strategy || 'blue-green' }}
       skip_approval: ${{ inputs.skip_approval || (needs.validate-schedule.outputs.deployment_window == 'emergency') }}
-    secrets:
+  secrets:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       KUBE_CONFIG_PRODUCTION: ${{ secrets.KUBE_CONFIG_PRODUCTION }}
       KUBE_CONFIG_STAGING: ${{ secrets.KUBE_CONFIG_STAGING }}
@@ -251,12 +251,12 @@ jobs:
       COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
 
   maintenance-complete:
-    name: 📢 Maintenance Complete Notification
-    runs-on: ubuntu-latest
-    needs: [validate-schedule, trigger-deployment]
-    if: needs.validate-schedule.outputs.deployment_window == 'maintenance' && success()
-    
-    steps:
+  name: 📢 Maintenance Complete Notification
+  runs-on: ubuntu-latest
+  needs: [validate-schedule, trigger-deployment]
+  if: needs.validate-schedule.outputs.deployment_window == 'maintenance' && success()
+
+  steps:
       - name: Send Maintenance Complete Notification
         uses: ./.github/workflows/enhanced-notifications.yml
         with:
@@ -276,20 +276,20 @@ jobs:
           EMAIL_RECIPIENTS: ${{ secrets.EMAIL_RECIPIENTS }}
 
   deployment-skipped:
-    name: ⏸️ Deployment Skipped
-    runs-on: ubuntu-latest
-    needs: validate-schedule
-    if: needs.validate-schedule.outputs.should_deploy == 'false'
-    
-    steps:
+  name: ⏸️ Deployment Skipped
+  runs-on: ubuntu-latest
+  needs: validate-schedule
+  if: needs.validate-schedule.outputs.should_deploy == 'false'
+
+  steps:
       - name: Log Deployment Skip Reason
         run: |
           echo "⏸️ Deployment skipped"
           echo "Reason: Outside of scheduled deployment window"
           echo "Current time: $(date -u +"%Y-%m-%d %H:%M") UTC"
           echo "Deployment window: ${{ needs.validate-schedule.outputs.deployment_window }}"
-          
-          if [ "${{ env.DEPLOYMENT_TYPE }}" = "maintenance-window" ]; then
+
+          if ["${{ env.DEPLOYMENT_TYPE }}" = "maintenance-window"]; then
             echo "ℹ️ For maintenance window deployments, valid times are:"
             echo "   - Weekends (Saturday-Sunday)"
             echo "   - After hours (22:00-06:00 UTC)"

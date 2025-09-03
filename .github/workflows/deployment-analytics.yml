@@ -9,7 +9,7 @@ name: 📊 Deployment Analytics & Success Metrics
 
 on:
   workflow_call:
-    inputs:
+  inputs:
       deployment_id:
         description: 'Unique deployment identifier'
         required: true
@@ -30,7 +30,7 @@ on:
         description: 'Final deployment status'
         required: true
         type: string
-    secrets:
+  secrets:
       ANALYTICS_DATABASE_URL:
         required: false
       GRAFANA_API_KEY:
@@ -39,7 +39,7 @@ on:
         required: false
 
   workflow_dispatch:
-    inputs:
+  inputs:
       deployment_id:
         description: 'Deployment ID to analyze'
         required: true
@@ -57,13 +57,13 @@ env:
 
 jobs:
   collect-deployment-metrics:
-    name: 📊 Collect Deployment Metrics
-    runs-on: ubuntu-latest
-    outputs:
+  name: 📊 Collect Deployment Metrics
+  runs-on: ubuntu-latest
+  outputs:
       metrics-collected: ${{ steps.collect.outputs.metrics_collected }}
       success-score: ${{ steps.analyze.outputs.success_score }}
-      
-    steps:
+
+  steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
@@ -80,7 +80,7 @@ jobs:
         id: collect
         run: |
           echo "📊 Collecting deployment metrics for: ${{ env.DEPLOYMENT_ID }}"
-          
+
           # Create analytics script
           cat > collect_metrics.py << 'EOF'
           import requests
@@ -89,7 +89,7 @@ jobs:
           from datetime import datetime, timedelta
           import pandas as pd
           import os
-          
+
           def query_prometheus(query, start_time, end_time):
               """Query Prometheus for metrics data"""
               try:
@@ -109,14 +109,14 @@ jobs:
               except Exception as e:
                   print(f"Error querying Prometheus: {e}")
                   return None
-          
+
           def collect_deployment_metrics(deployment_id, deployment_type, environment):
               """Collect comprehensive deployment metrics"""
-              
+
               # Calculate time range (last 2 hours for recent deployment)
               end_time = int(time.time())
               start_time = end_time - (2 * 3600)  # 2 hours ago
-              
+
               metrics = {
                   'deployment_info': {
                       'deployment_id': deployment_id,
@@ -130,7 +130,7 @@ jobs:
                   'business_metrics': {},
                   'user_experience_metrics': {}
               }
-              
+
               # Performance Metrics
               performance_queries = {
                   'response_time_p50': 'histogram_quantile(0.5, rate(http_request_duration_seconds_bucket[5m]))',
@@ -142,7 +142,7 @@ jobs:
                   'disk_io': 'rate(disk_io_total[5m])',
                   'network_io': 'rate(network_io_bytes_total[5m])'
               }
-              
+
               for metric_name, query in performance_queries.items():
                   result = query_prometheus(query, start_time, end_time)
                   if result and result.get('data', {}).get('result'):
@@ -153,7 +153,7 @@ jobs:
                                   values.append(float(value))
                               except ValueError:
                                   continue
-                      
+
                       if values:
                           metrics['performance_metrics'][metric_name] = {
                               'avg': sum(values) / len(values),
@@ -161,7 +161,7 @@ jobs:
                               'max': max(values),
                               'count': len(values)
                           }
-              
+
               # Reliability Metrics
               reliability_queries = {
                   'error_rate': 'rate(http_requests_total{status=~"5.."}[5m])',
@@ -171,7 +171,7 @@ jobs:
                   'rollback_count': 'increase(deployment_rollbacks_total[2h])',
                   'incident_count': 'increase(incidents_total[2h])'
               }
-              
+
               for metric_name, query in reliability_queries.items():
                   result = query_prometheus(query, start_time, end_time)
                   if result and result.get('data', {}).get('result'):
@@ -183,14 +183,14 @@ jobs:
                                   values.append(float(value))
                               except ValueError:
                                   continue
-                      
+
                       if values:
                           metrics['reliability_metrics'][metric_name] = {
                               'avg': sum(values) / len(values),
                               'max': max(values),
                               'total': sum(values)
                           }
-              
+
               # Business Metrics
               business_queries = {
                   'active_users': 'active_users_total',
@@ -201,7 +201,7 @@ jobs:
                   'user_complaints': 'increase(user_complaints_total[2h])',
                   'support_tickets': 'increase(support_tickets_total[2h])'
               }
-              
+
               for metric_name, query in business_queries.items():
                   result = query_prometheus(query, start_time, end_time)
                   if result and result.get('data', {}).get('result'):
@@ -212,14 +212,14 @@ jobs:
                                   values.append(float(value))
                               except ValueError:
                                   continue
-                      
+
                       if values:
                           metrics['business_metrics'][metric_name] = {
                               'avg': sum(values) / len(values),
                               'current': values[-1] if values else 0,
                               'trend': 'up' if len(values) > 1 and values[-1] > values[0] else 'down'
                           }
-              
+
               # User Experience Metrics
               ux_queries = {
                   'page_load_time': 'histogram_quantile(0.95, rate(page_load_duration_seconds_bucket[5m]))',
@@ -229,7 +229,7 @@ jobs:
                   'feature_adoption': 'rate(feature_usage_total[5m])',
                   'mobile_performance': 'histogram_quantile(0.95, rate(mobile_response_time_bucket[5m]))'
               }
-              
+
               for metric_name, query in ux_queries.items():
                   result = query_prometheus(query, start_time, end_time)
                   if result and result.get('data', {}).get('result'):
@@ -240,52 +240,52 @@ jobs:
                                   values.append(float(value))
                               except ValueError:
                                   continue
-                      
+
                       if values:
                           metrics['user_experience_metrics'][metric_name] = {
                               'avg': sum(values) / len(values),
                               'p95': sorted(values)[int(len(values) * 0.95)] if len(values) > 20 else max(values)
                           }
-              
+
               return metrics
-          
+
           # Collect metrics
           deployment_id = os.environ.get('DEPLOYMENT_ID', 'unknown')
           deployment_type = os.environ.get('DEPLOYMENT_TYPE', 'unknown')
           environment = os.environ.get('ENVIRONMENT', 'unknown')
-          
+
           print(f"Collecting metrics for deployment: {deployment_id}")
           metrics = collect_deployment_metrics(deployment_id, deployment_type, environment)
-          
+
           # Save metrics to file
           with open('deployment_metrics.json', 'w') as f:
               json.dump(metrics, f, indent=2)
-          
+
           print("✅ Metrics collection completed")
           print(f"📊 Collected {len(metrics)} metric categories")
           EOF
-          
+
           # Run metrics collection
           python collect_metrics.py
-          
+
           echo "metrics_collected=true" >> $GITHUB_OUTPUT
 
       - name: Analyze Deployment Success
         id: analyze
         run: |
           echo "🔍 Analyzing deployment success metrics..."
-          
+
           # Create analysis script
           cat > analyze_success.py << 'EOF'
           import json
           import os
-          
+
           def calculate_success_score(metrics):
               """Calculate deployment success score (0-100)"""
-              
+
               score = 100  # Start with perfect score
               penalties = []
-              
+
               # Performance penalty
               perf_metrics = metrics.get('performance_metrics', {})
               if 'response_time_p95' in perf_metrics:
@@ -294,7 +294,7 @@ jobs:
                       penalty = min(20, (p95_time - 2.0) * 10)
                       score -= penalty
                       penalties.append(f"High response time: -{penalty:.1f}")
-              
+
               # Reliability penalty
               reliability_metrics = metrics.get('reliability_metrics', {})
               if 'error_rate' in reliability_metrics:
@@ -303,14 +303,14 @@ jobs:
                       penalty = min(30, error_rate * 1000)
                       score -= penalty
                       penalties.append(f"High error rate: -{penalty:.1f}")
-              
+
               if 'rollback_count' in reliability_metrics:
                   rollbacks = reliability_metrics['rollback_count'].get('total', 0)
                   if rollbacks > 0:
                       penalty = rollbacks * 25  # 25 points per rollback
                       score -= penalty
                       penalties.append(f"Rollbacks occurred: -{penalty:.1f}")
-              
+
               # Business impact penalty
               business_metrics = metrics.get('business_metrics', {})
               if 'user_complaints' in business_metrics:
@@ -319,7 +319,7 @@ jobs:
                       penalty = min(15, (complaints - 5) * 2)
                       score -= penalty
                       penalties.append(f"User complaints: -{penalty:.1f}")
-              
+
               # User experience penalty
               ux_metrics = metrics.get('user_experience_metrics', {})
               if 'bounce_rate' in ux_metrics:
@@ -328,15 +328,15 @@ jobs:
                       penalty = min(10, (bounce_rate - 0.4) * 25)
                       score -= penalty
                       penalties.append(f"High bounce rate: -{penalty:.1f}")
-              
+
               # Ensure score doesn't go below 0
               score = max(0, score)
-              
+
               return score, penalties
-          
+
           def generate_insights(metrics, score, penalties):
               """Generate deployment insights and recommendations"""
-              
+
               insights = {
                   'score': score,
                   'grade': 'A' if score >= 90 else 'B' if score >= 80 else 'C' if score >= 70 else 'D' if score >= 60 else 'F',
@@ -344,60 +344,60 @@ jobs:
                   'recommendations': [],
                   'achievements': []
               }
-              
+
               # Generate recommendations based on metrics
               perf_metrics = metrics.get('performance_metrics', {})
               if 'response_time_p95' in perf_metrics and perf_metrics['response_time_p95'].get('avg', 0) > 1.5:
                   insights['recommendations'].append("Consider optimizing response times - current P95 is high")
-              
+
               if 'cpu_usage' in perf_metrics and perf_metrics['cpu_usage'].get('avg', 0) > 0.8:
                   insights['recommendations'].append("CPU usage is high - consider scaling or optimization")
-              
+
               reliability_metrics = metrics.get('reliability_metrics', {})
               if 'error_rate' in reliability_metrics and reliability_metrics['error_rate'].get('avg', 0) > 0.005:
                   insights['recommendations'].append("Error rate above target - investigate error patterns")
-              
+
               # Generate achievements
               if score >= 95:
                   insights['achievements'].append("Excellent deployment - minimal performance impact")
-              
+
               if 'rollback_count' in reliability_metrics and reliability_metrics['rollback_count'].get('total', 0) == 0:
                   insights['achievements'].append("Zero rollbacks - stable deployment")
-              
+
               if 'error_rate' in reliability_metrics and reliability_metrics['error_rate'].get('avg', 0) < 0.001:
                   insights['achievements'].append("Ultra-low error rate achieved")
-              
+
               return insights
-          
+
           # Load metrics
           with open('deployment_metrics.json', 'r') as f:
               metrics = json.load(f)
-          
+
           # Calculate success score
           score, penalties = calculate_success_score(metrics)
           insights = generate_insights(metrics, score, penalties)
-          
+
           print(f"📊 Deployment Success Score: {score:.1f}/100 (Grade: {insights['grade']})")
           print(f"🎯 Penalties Applied: {len(penalties)}")
           for penalty in penalties:
               print(f"   - {penalty}")
-          
+
           print(f"🏆 Achievements: {len(insights['achievements'])}")
           for achievement in insights['achievements']:
               print(f"   - {achievement}")
-          
+
           print(f"💡 Recommendations: {len(insights['recommendations'])}")
           for recommendation in insights['recommendations']:
               print(f"   - {recommendation}")
-          
+
           # Save insights
           with open('deployment_insights.json', 'w') as f:
               json.dump(insights, f, indent=2)
-          
+
           # Output for GitHub Actions
           print(f"success_score={score:.1f}" >> os.environ.get('GITHUB_OUTPUT', '/dev/null'))
           EOF
-          
+
           python analyze_success.py
 
       - name: Upload Deployment Metrics
@@ -409,12 +409,12 @@ jobs:
             deployment_insights.json
 
   generate-analytics-dashboard:
-    name: 📈 Generate Analytics Dashboard
-    runs-on: ubuntu-latest
-    needs: collect-deployment-metrics
-    if: success()
-    
-    steps:
+  name: 📈 Generate Analytics Dashboard
+  runs-on: ubuntu-latest
+  needs: collect-deployment-metrics
+  if: success()
+
+  steps:
       - name: Download Metrics
         uses: actions/download-artifact@v3
         with:
@@ -423,7 +423,7 @@ jobs:
       - name: Generate Analytics Dashboard
         run: |
           echo "📈 Generating deployment analytics dashboard..."
-          
+
           # Create dashboard generation script
           cat > generate_dashboard.py << 'EOF'
           import json
@@ -432,19 +432,19 @@ jobs:
           import seaborn as sns
           from datetime import datetime
           import numpy as np
-          
+
           # Set style
           plt.style.use('seaborn-v0_8')
           sns.set_palette("husl")
-          
+
           def create_performance_dashboard(metrics):
               """Create performance metrics dashboard"""
-              
+
               fig, axes = plt.subplots(2, 2, figsize=(15, 10))
               fig.suptitle('Deployment Performance Metrics', fontsize=16, fontweight='bold')
-              
+
               perf_metrics = metrics.get('performance_metrics', {})
-              
+
               # Response Time Chart
               if 'response_time_p50' in perf_metrics and 'response_time_p95' in perf_metrics and 'response_time_p99' in perf_metrics:
                   response_times = [
@@ -453,15 +453,15 @@ jobs:
                       perf_metrics['response_time_p99'].get('avg', 0)
                   ]
                   percentiles = ['P50', 'P95', 'P99']
-                  
+
                   axes[0,0].bar(percentiles, response_times, color=['green', 'orange', 'red'])
                   axes[0,0].set_title('Response Time Percentiles')
                   axes[0,0].set_ylabel('Seconds')
-                  
+
                   # Add threshold line
                   axes[0,0].axhline(y=2.0, color='red', linestyle='--', alpha=0.7, label='Threshold (2s)')
                   axes[0,0].legend()
-              
+
               # Resource Usage
               if 'cpu_usage' in perf_metrics and 'memory_usage' in perf_metrics:
                   resources = ['CPU', 'Memory']
@@ -469,139 +469,139 @@ jobs:
                       perf_metrics['cpu_usage'].get('avg', 0) * 100,
                       perf_metrics['memory_usage'].get('avg', 0)
                   ]
-                  
+
                   colors = ['red' if u > 80 else 'orange' if u > 60 else 'green' for u in usage]
                   axes[0,1].bar(resources, usage, color=colors)
                   axes[0,1].set_title('Resource Usage (%)')
                   axes[0,1].set_ylabel('Percentage')
                   axes[0,1].set_ylim(0, 100)
-              
+
               # Throughput
               if 'throughput' in perf_metrics:
                   throughput_data = perf_metrics['throughput']
                   axes[1,0].bar(['Throughput'], [throughput_data.get('avg', 0)], color='blue')
                   axes[1,0].set_title('Request Throughput')
                   axes[1,0].set_ylabel('Requests/second')
-              
+
               # Network I/O
               if 'network_io' in perf_metrics:
                   network_data = perf_metrics['network_io']
                   axes[1,1].bar(['Network I/O'], [network_data.get('avg', 0) / 1024 / 1024], color='purple')
                   axes[1,1].set_title('Network I/O')
                   axes[1,1].set_ylabel('MB/s')
-              
+
               plt.tight_layout()
               plt.savefig('performance_dashboard.png', dpi=300, bbox_inches='tight')
               plt.close()
-          
+
           def create_reliability_dashboard(metrics):
               """Create reliability metrics dashboard"""
-              
+
               fig, axes = plt.subplots(2, 2, figsize=(15, 10))
               fig.suptitle('Deployment Reliability Metrics', fontsize=16, fontweight='bold')
-              
+
               reliability_metrics = metrics.get('reliability_metrics', {})
-              
+
               # Error Rates
               if 'error_rate' in reliability_metrics and 'success_rate' in reliability_metrics:
                   error_rate = reliability_metrics['error_rate'].get('avg', 0) * 100
                   success_rate = reliability_metrics['success_rate'].get('avg', 0) * 100
-                  
+
                   rates = [success_rate, error_rate]
                   labels = ['Success Rate', 'Error Rate']
                   colors = ['green', 'red']
-                  
+
                   axes[0,0].pie(rates, labels=labels, colors=colors, autopct='%1.2f%%', startangle=90)
                   axes[0,0].set_title('Success vs Error Rate')
-              
+
               # Availability
               if 'availability' in reliability_metrics:
                   availability = reliability_metrics['availability'].get('avg', 0) * 100
-                  
+
                   # Create gauge chart
                   theta = np.linspace(0, np.pi, 100)
                   r = np.ones_like(theta)
-                  
+
                   axes[0,1] = plt.subplot(2, 2, 2, projection='polar')
                   axes[0,1].plot(theta, r, color='gray', linewidth=20, alpha=0.3)
-                  
+
                   # Availability arc
                   avail_theta = np.linspace(0, np.pi * availability / 100, int(availability))
                   avail_r = np.ones_like(avail_theta)
                   axes[0,1].plot(avail_theta, avail_r, color='green', linewidth=20)
-                  
+
                   axes[0,1].set_ylim(0, 1)
                   axes[0,1].set_title(f'Availability: {availability:.2f}%')
                   axes[0,1].set_theta_zero_location('W')
                   axes[0,1].set_rticks([])
-              
+
               # Incidents and Rollbacks
               incidents = reliability_metrics.get('incident_count', {}).get('total', 0)
               rollbacks = reliability_metrics.get('rollback_count', {}).get('total', 0)
-              
+
               axes[1,0].bar(['Incidents', 'Rollbacks'], [incidents, rollbacks], color=['orange', 'red'])
               axes[1,0].set_title('Incidents and Rollbacks')
               axes[1,0].set_ylabel('Count')
-              
+
               # Timeout Rate
               if 'timeout_rate' in reliability_metrics:
                   timeout_rate = reliability_metrics['timeout_rate'].get('avg', 0) * 100
                   axes[1,1].bar(['Timeout Rate'], [timeout_rate], color='orange')
                   axes[1,1].set_title('Timeout Rate (%)')
                   axes[1,1].set_ylabel('Percentage')
-              
+
               plt.tight_layout()
               plt.savefig('reliability_dashboard.png', dpi=300, bbox_inches='tight')
               plt.close()
-          
+
           def create_business_dashboard(metrics):
               """Create business metrics dashboard"""
-              
+
               fig, axes = plt.subplots(2, 2, figsize=(15, 10))
               fig.suptitle('Deployment Business Impact Metrics', fontsize=16, fontweight='bold')
-              
+
               business_metrics = metrics.get('business_metrics', {})
-              
+
               # User Metrics
               active_users = business_metrics.get('active_users', {}).get('current', 0)
               new_registrations = business_metrics.get('new_registrations', {}).get('current', 0)
-              
-              axes[0,0].bar(['Active Users', 'New Registrations'], [active_users, new_registrations], 
+
+              axes[0,0].bar(['Active Users', 'New Registrations'], [active_users, new_registrations],
                            color=['blue', 'green'])
               axes[0,0].set_title('User Metrics')
               axes[0,0].set_ylabel('Count')
-              
+
               # Revenue and Transactions
               revenue = business_metrics.get('revenue_impact', {}).get('avg', 0)
               transactions = business_metrics.get('transaction_volume', {}).get('avg', 0)
-              
-              axes[0,1].bar(['Revenue Rate', 'Transaction Rate'], [revenue, transactions], 
+
+              axes[0,1].bar(['Revenue Rate', 'Transaction Rate'], [revenue, transactions],
                            color=['gold', 'purple'])
               axes[0,1].set_title('Financial Metrics')
               axes[0,1].set_ylabel('Rate/second')
-              
+
               # Conversion Rate
               conversion_rate = business_metrics.get('conversion_rate', {}).get('avg', 0) * 100
               axes[1,0].bar(['Conversion Rate'], [conversion_rate], color='teal')
               axes[1,0].set_title('Conversion Rate (%)')
               axes[1,0].set_ylabel('Percentage')
-              
+
               # Support Metrics
               complaints = business_metrics.get('user_complaints', {}).get('current', 0)
               tickets = business_metrics.get('support_tickets', {}).get('current', 0)
-              
-              axes[1,1].bar(['Complaints', 'Support Tickets'], [complaints, tickets], 
+
+              axes[1,1].bar(['Complaints', 'Support Tickets'], [complaints, tickets],
                            color=['red', 'orange'])
               axes[1,1].set_title('Support Metrics')
               axes[1,1].set_ylabel('Count')
-              
+
               plt.tight_layout()
               plt.savefig('business_dashboard.png', dpi=300, bbox_inches='tight')
               plt.close()
-          
+
           def create_summary_report(metrics, insights):
               """Create deployment summary report"""
-              
+
               with open('deployment_summary.html', 'w') as f:
                   f.write(f"""
                   <!DOCTYPE html>
@@ -625,10 +625,10 @@ jobs:
                           <p><strong>Type:</strong> {metrics['deployment_info']['deployment_type']}</p>
                           <p><strong>Collection Time:</strong> {metrics['deployment_info']['collection_time']}</p>
                       </div>
-                      
+
                       <h2>Success Score</h2>
                       <div class="score">{insights['score']:.1f}/100 (Grade: {insights['grade']})</div>
-                      
+
                       <h2>Key Metrics</h2>
                       <div class="metric">
                           <strong>Performance:</strong> Response times, throughput, and resource usage
@@ -639,13 +639,13 @@ jobs:
                       <div class="metric">
                           <strong>Business Impact:</strong> User metrics, revenue, and conversion rates
                       </div>
-                      
+
                       <h2>Achievements</h2>
                       {"".join([f'<div class="achievement">✅ {achievement}</div>' for achievement in insights['achievements']])}
-                      
+
                       <h2>Recommendations</h2>
                       {"".join([f'<div class="recommendation">⚠️ {rec}</div>' for rec in insights['recommendations']])}
-                      
+
                       <h2>Dashboard Images</h2>
                       <img src="performance_dashboard.png" alt="Performance Dashboard" style="max-width: 100%; margin: 10px 0;">
                       <img src="reliability_dashboard.png" alt="Reliability Dashboard" style="max-width: 100%; margin: 10px 0;">
@@ -653,23 +653,23 @@ jobs:
                   </body>
                   </html>
                   """)
-          
+
           # Load data
           with open('deployment_metrics.json', 'r') as f:
               metrics = json.load(f)
-          
+
           with open('deployment_insights.json', 'r') as f:
               insights = json.load(f)
-          
+
           # Generate dashboards
           create_performance_dashboard(metrics)
           create_reliability_dashboard(metrics)
           create_business_dashboard(metrics)
           create_summary_report(metrics, insights)
-          
+
           print("✅ Analytics dashboard generated successfully")
           EOF
-          
+
           # Install additional dependencies and run
           pip install matplotlib seaborn plotly
           python generate_dashboard.py
@@ -683,32 +683,32 @@ jobs:
             deployment_summary.html
 
   store-analytics-data:
-    name: 💾 Store Analytics Data
-    runs-on: ubuntu-latest
-    needs: [collect-deployment-metrics, generate-analytics-dashboard]
-    if: success()
-    
-    steps:
+  name: 💾 Store Analytics Data
+  runs-on: ubuntu-latest
+  needs: [collect-deployment-metrics, generate-analytics-dashboard]
+  if: success()
+
+  steps:
       - name: Store in Analytics Database
         if: secrets.ANALYTICS_DATABASE_URL != ''
         run: |
           echo "💾 Storing deployment analytics in database..."
-          
+
           # This would typically store data in a time-series database
           # like InfluxDB, TimescaleDB, or send to analytics platforms
-          
+
           cat > store_analytics.py << 'EOF'
           import json
           import psycopg2
           import os
           from datetime import datetime
-          
+
           def store_deployment_analytics(metrics, insights):
               """Store deployment analytics in database"""
-              
+
               # Connection would be established here
               # conn = psycopg2.connect(os.environ.get('ANALYTICS_DATABASE_URL'))
-              
+
               # Example table structure:
               # deployment_analytics (
               #   id SERIAL PRIMARY KEY,
@@ -721,42 +721,42 @@ jobs:
               #   insights JSONB,
               #   created_at TIMESTAMP
               # )
-              
+
               print("📊 Analytics data would be stored in production database")
               print(f"Deployment ID: {metrics['deployment_info']['deployment_id']}")
               print(f"Success Score: {insights['score']}")
               print(f"Grade: {insights['grade']}")
-              
+
               return True
-          
+
           # Load data (would be downloaded from artifacts in real implementation)
           print("💾 Simulating analytics data storage...")
           print("✅ Analytics data storage completed")
           EOF
-          
+
           python store_analytics.py
 
   deployment-trend-analysis:
-    name: 📈 Deployment Trend Analysis
-    runs-on: ubuntu-latest
-    needs: store-analytics-data
-    if: success() && github.event_name == 'workflow_dispatch'
-    
-    steps:
+  name: 📈 Deployment Trend Analysis
+  runs-on: ubuntu-latest
+  needs: store-analytics-data
+  if: success() && github.event_name == 'workflow_dispatch'
+
+  steps:
       - name: Analyze Deployment Trends
         run: |
           echo "📈 Analyzing deployment trends..."
-          
+
           cat > trend_analysis.py << 'EOF'
           import json
           from datetime import datetime, timedelta
-          
+
           def analyze_deployment_trends():
               """Analyze deployment trends over time"""
-              
+
               # This would query historical data from the analytics database
               # and generate trend reports
-              
+
               trends = {
                   'success_rate_trend': 'improving',
                   'deployment_frequency': 'stable',
@@ -764,24 +764,23 @@ jobs:
                   'performance_trend': 'stable',
                   'mttr_trend': 'improving'  # Mean Time To Recovery
               }
-              
-              recommendations = [
-                  "Deployment success rate has improved by 5% this month",
+
+              recommendations = ["Deployment success rate has improved by 5% this month",
                   "Consider increasing deployment frequency during low-traffic periods",
                   "Rollback rate is trending downward - good job on quality improvements"
-              ]
-              
+             ]
+
               print("📊 Deployment Trend Analysis:")
               for metric, trend in trends.items():
                   print(f"   {metric}: {trend}")
-              
+
               print("\n💡 Trend-based Recommendations:")
               for rec in recommendations:
                   print(f"   - {rec}")
-              
+
               return trends, recommendations
-          
+
           analyze_deployment_trends()
           EOF
-          
+
           python trend_analysis.py
