@@ -1,32 +1,89 @@
-"""Licensing Engine Module  
-=======================
+"""Complete Monetization Module
+============================
 
-Advanced licensing and rights management system for automated content licensing,
-royalty distribution, and usage tracking across platforms.
+Industrial-grade comprehensive monetization system with automated revenue sharing,
+real-time financial dashboard, accounting export, and tax compliance.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
 
-from .licensing_manager import LicensingManager
-from .royalty_engine import RoyaltyEngine
-from .usage_tracker import UsageTracker
-from .contract_generator import ContractGenerator
-from .rights_validator import RightsValidator
+# Core new modules - our main implementation
+from .automated_revenue_sharing import (
+    AutomatedRevenueSharingEngine,
+    get_revenue_sharing_engine,
+    register_content_revenue_sharing,
+    distribute_content_revenue
+)
+from .realtime_financial_dashboard import (
+    RealTimeFinancialDashboard,
+    get_financial_dashboard,
+    update_revenue_metric,
+    update_expense_metric,
+    track_transaction_volume
+)
+from .accounting_export_compliance import (
+    AccountingExportCompliance,
+    get_accounting_export,
+    record_revenue_transaction,
+    export_tax_report,
+    TaxJurisdiction,
+    ExportFormat
+)
 
-# Only import modules that exist
+# Try to import existing modules with error handling
+try:
+    from .licensing_manager import LicensingManager
+except ImportError:
+    LicensingManager = None
 
-__version__ = "1.0.0"
+try:
+    from .royalty_engine import RoyaltyEngine
+except ImportError:
+    RoyaltyEngine = None
+
+try:
+    from .revenue_calculator import RevenueCalculator
+except ImportError:
+    RevenueCalculator = None
+
+try:
+    from .payment_processor import PaymentProcessor
+except ImportError:
+    PaymentProcessor = None
+
+__version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 
 __all__ = [
-    "LicensingManager",
-    "RoyaltyEngine",
-    "UsageTracker",
-    "ContractGenerator",
-    "RightsValidator",
+    # New core modules - always available
+    "AutomatedRevenueSharingEngine",
+    "get_revenue_sharing_engine", 
+    "register_content_revenue_sharing",
+    "distribute_content_revenue",
+    "RealTimeFinancialDashboard",
+    "get_financial_dashboard",
+    "update_revenue_metric",
+    "update_expense_metric", 
+    "track_transaction_volume",
+    "AccountingExportCompliance",
+    "get_accounting_export",
+    "record_revenue_transaction",
+    "export_tax_report",
+    "TaxJurisdiction",
+    "ExportFormat",
 ]
+
+# Add existing modules if they imported successfully
+if LicensingManager:
+    __all__.append("LicensingManager")
+if RoyaltyEngine:
+    __all__.append("RoyaltyEngine")
+if RevenueCalculator:
+    __all__.append("RevenueCalculator")
+if PaymentProcessor:
+    __all__.append("PaymentProcessor")
 
 # Licensing configuration
 LICENSING_CONFIG = {
