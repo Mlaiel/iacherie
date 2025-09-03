@@ -1,0 +1,452 @@
+name: 🔒 Security Scan
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Run security scan daily at 2 AM UTC
+    - cron: '0 2 * * *'
+
+env:
+  PYTHON_VERSION: '3.12'
+
+jobs:
+  # Dependency Vulnerability Scan
+  dependency-scan:
+    name: 🔍 Dependency Vulnerabilities
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install safety pip-audit
+
+    - name: Safety check
+      run: |
+        safety check --json --output safety-report.json || true
+        safety check --short-report
+
+    - name: Pip audit
+      run: |
+        pip-audit --format=json --output=pip-audit-report.json || true
+        pip-audit --desc
+
+    - name: Upload vulnerability reports
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: vulnerability-reports
+        path: |
+          safety-report.json
+          pip-audit-report.json
+
+  # SAST (Static Application Security Testing)
+  sast-scan:
+    name: 🕵️ Static Code Analysis
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Install security tools
+      run: |
+        python -m pip install --upgrade pip
+        pip install bandit semgrep
+
+    - name: Run Bandit security scan
+      run: |
+        bandit -r . -f json -o bandit-report.json || true
+        bandit -r . -f txt
+
+    - name: Run Semgrep scan
+      env:
+        SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
+      run: |
+        semgrep --config=auto --json --output=semgrep-report.json . || true
+        semgrep --config=auto .
+
+    - name: Upload SAST reports
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: sast-reports
+        path: |
+          bandit-report.json
+          semgrep-report.json
+
+  # Secret Scanning
+  secret-scan:
+    name: 🔐 Secret Detection
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Full history for better secret detection
+
+    - name: TruffleHog secret scan
+      uses: trufflesecurity/trufflehog@main
+      with:
+        path: ./
+        base: main
+        head: HEAD
+        extra_args: --debug --only-verified
+
+    - name: GitLeaks secret scan
+      uses: gitleaks/gitleaks-action@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Enhanced dependency scanning
+  enhanced-dependency-scan:
+    name: 🔍 Enhanced Dependency Scanning
+    runs-on: ubuntu-latest
+    needs: sast-scan
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run enhanced dependency scanning
+        uses: ./.github/workflows/enhanced-dependency-scan.yml
+        with:
+          scan_type: 'all'
+          language: 'python'
+        secrets:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          FOSSA_API_KEY: ${{ secrets.FOSSA_API_KEY }}
+
+  # Container Security Scan
+  container-scan:
+    name: 🐳 Container Security
+    runs-on: ubuntu-latest
+    needs: enhanced-dependency-scan
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Build Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: ./Dockerfile
+        load: true
+        tags: ainflue:security-test
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: 'ainflue:security-test'
+        format: 'sarif'
+        output: 'trivy-results.sarif'
+
+    - name: Upload Trivy scan results to GitHub Security tab
+      uses: github/codeql-action/upload-sarif@v2
+      if: always()
+      with:
+        sarif_file: 'trivy-results.sarif'
+
+    - name: Run Snyk Container scan
+      continue-on-error: true
+      uses: snyk/actions/docker@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        image: ainflue:security-test
+        args: --severity-threshold=high
+
+  # Infrastructure Security
+  infrastructure-scan:
+    name: 🏗️ Infrastructure Security
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Run Checkov
+      uses: bridgecrewio/checkov-action@master
+      with:
+        directory: .
+        framework: dockerfile,kubernetes,github_configuration
+        output_format: json
+        output_file_path: checkov-report.json
+
+    - name: Run Terrascan
+      uses: tenable/terrascan-action@main
+      with:
+        iac_type: 'docker'
+        iac_version: 'v1'
+        policy_type: 'docker'
+        only_warn: true
+
+    - name: Upload infrastructure scan reports
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: infrastructure-reports
+        path: |
+          checkov-report.json
+
+  # License Compliance Check
+  license-scan:
+    name: 📄 License Compliance
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pip-licenses licensecheck
+        pip install -r requirements.txt
+
+    - name: Check Python package licenses
+      run: |
+        pip-licenses --format=json --output-file=licenses-report.json
+        pip-licenses --format=table
+
+    - name: License compatibility check
+      run: |
+        licensecheck --report=licenses-compatibility.json || true
+
+    - name: Upload license reports
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: license-reports
+        path: |
+          licenses-report.json
+          licenses-compatibility.json
+
+  # Custom Security Audit
+  custom-security-audit:
+    name: 🛡️ Custom Security Audit
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run custom security hardening script
+      run: |
+        cd kubernetes/scripts
+        python security_hardening.py --audit-only --report-format=json --output=../../security-audit-report.json
+
+    - name: Validate security configurations
+      run: |
+        # Check for secure headers configuration
+        grep -r "SECURE_SSL_REDIRECT\|SECURE_BROWSER_XSS_FILTER\|SECURE_CONTENT_TYPE_NOSNIFF" . || echo "Security headers not configured"
+        
+        # Check for proper authentication setup
+        grep -r "JWT_SECRET\|SECRET_KEY" . && echo "WARNING: Secrets found in code" || echo "No hardcoded secrets found"
+        
+        # Check for debug mode in production
+        grep -r "DEBUG.*=.*True" . && echo "WARNING: Debug mode enabled" || echo "Debug mode properly configured"
+
+    - name: Upload custom audit report
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: custom-security-audit
+        path: security-audit-report.json
+
+  # Security Dashboard Update
+  security-dashboard:
+    name: 📊 Security Dashboard
+    runs-on: ubuntu-latest
+    needs: [dependency-scan, sast-scan, secret-scan, container-scan, enhanced-dependency-scan, license-scan, custom-security-audit]
+    if: always()
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Download all security reports
+      uses: actions/download-artifact@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Generate security summary
+      run: |
+        python -c "
+        import json
+        import os
+        from datetime import datetime
+        
+        # Collect all security findings
+        security_summary = {
+            'scan_date': datetime.utcnow().isoformat(),
+            'repository': '${{ github.repository }}',
+            'branch': '${{ github.ref_name }}',
+            'commit': '${{ github.sha }}',
+            'findings': {
+                'vulnerabilities': 0,
+                'secrets': 0,
+                'license_issues': 0,
+                'sast_issues': 0,
+                'container_issues': 0
+            },
+            'status': 'unknown',
+            'reports': []
+        }
+        
+        # Process reports if they exist
+        report_files = [
+            'vulnerability-reports/safety-report.json',
+            'sast-reports/bandit-report.json', 
+            'license-reports/licenses-report.json'
+        ]
+        
+        total_issues = 0
+        for report_file in report_files:
+            if os.path.exists(report_file):
+                try:
+                    with open(report_file, 'r') as f:
+                        data = json.load(f)
+                        # Count issues based on report type
+                        if 'safety' in report_file:
+                            total_issues += len(data.get('vulnerabilities', []))
+                        elif 'bandit' in report_file:
+                            total_issues += len(data.get('results', []))
+                        security_summary['reports'].append(report_file)
+                except Exception as e:
+                    print(f'Error processing {report_file}: {e}')
+        
+        # Determine overall status
+        if total_issues == 0:
+            security_summary['status'] = 'pass'
+        elif total_issues < 5:
+            security_summary['status'] = 'warning'
+        else:
+            security_summary['status'] = 'fail'
+            
+        # Save summary
+        with open('security-summary.json', 'w') as f:
+            json.dump(security_summary, f, indent=2)
+            
+        print(f'Security scan completed: {total_issues} issues found')
+        print(f'Status: {security_summary[\"status\"]}')
+        "
+
+    - name: Upload security summary
+      uses: actions/upload-artifact@v3
+      with:
+        name: security-summary
+        path: security-summary.json
+
+    - name: Comment PR with security summary
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const fs = require('fs');
+          if (fs.existsSync('security-summary.json')) {
+            const summary = JSON.parse(fs.readFileSync('security-summary.json', 'utf8'));
+            const statusEmoji = {
+              'pass': '✅',
+              'warning': '⚠️', 
+              'fail': '❌'
+            };
+            
+            const comment = `## ${statusEmoji[summary.status]} Security Scan Results
+            
+            **Status**: ${summary.status.toUpperCase()}
+            **Scan Date**: ${summary.scan_date}
+            **Total Issues Found**: ${Object.values(summary.findings).reduce((a, b) => a + b, 0)}
+            
+            ### Findings Summary:
+            - 🔍 Vulnerabilities: ${summary.findings.vulnerabilities}
+            - 🔐 Secrets: ${summary.findings.secrets}
+            - 📄 License Issues: ${summary.findings.license_issues}
+            - 🕵️ SAST Issues: ${summary.findings.sast_issues}
+            - 🐳 Container Issues: ${summary.findings.container_issues}
+            
+            ### Reports Generated:
+            ${summary.reports.map(report => `- ${report}`).join('\n')}
+            `;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+          }
+
+  # Security Policy Enforcement  
+  policy-enforcement:
+    name: 🚫 Policy Enforcement
+    runs-on: ubuntu-latest
+    needs: security-dashboard
+    if: github.event_name == 'pull_request'
+    
+    steps:
+    - name: Download security summary
+      uses: actions/download-artifact@v3
+      with:
+        name: security-summary
+
+    - name: Enforce security policies
+      run: |
+        if [ -f security-summary.json ]; then
+          STATUS=$(python -c "import json; print(json.load(open('security-summary.json'))['status'])")
+          
+          if [ "$STATUS" = "fail" ]; then
+            echo "❌ Security scan failed - blocking PR merge"
+            echo "Please fix security issues before merging"
+            exit 1
+          elif [ "$STATUS" = "warning" ]; then
+            echo "⚠️ Security warnings found - review required"
+            echo "Consider fixing warnings before merging"
+          else
+            echo "✅ Security scan passed"
+          fi
+        else
+          echo "⚠️ No security summary found"
+        fi
