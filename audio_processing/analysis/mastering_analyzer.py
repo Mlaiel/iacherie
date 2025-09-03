@@ -531,7 +531,7 @@ class MasteringAnalyzer:
                                    sample_rate: int) -> DynamicRangeAnalysis:
         """Analyze dynamic range and compression characteristics"""
         def analyze():
-            try:
+        try:
                 mono_audio = np.mean(audio_stereo, axis=0)
                 
                 # Official DR meter calculation
@@ -688,7 +688,7 @@ class MasteringAnalyzer:
                                         sample_rate: int) -> FrequencyAnalysis:
         """Analyze frequency response and tonal balance"""
         def analyze():
-            try:
+        try:
                 mono_audio = np.mean(audio_stereo, axis=0)
                 
                 # Compute power spectral density
@@ -778,7 +778,7 @@ class MasteringAnalyzer:
                                     sample_rate: int) -> StereoAnalysis:
         """Analyze stereo imaging and spatial characteristics"""
         def analyze():
-            try:
+        try:
                 left_channel = audio_stereo[0]
                 right_channel = audio_stereo[1]
                 
@@ -836,7 +836,7 @@ class MasteringAnalyzer:
                                 sample_rate: int) -> DistortionAnalysis:
         """Analyze harmonic and nonlinear distortion"""
         def analyze():
-            try:
+        try:
                 mono_audio = np.mean(audio_stereo, axis=0)
                 
                 # THD calculation using fundamental frequency estimation
@@ -881,7 +881,7 @@ class MasteringAnalyzer:
                                 sample_rate: int) -> TransientAnalysis:
         """Analyze transient response and dynamic characteristics"""
         def analyze():
-            try:
+        try:
                 mono_audio = np.mean(audio_stereo, axis=0)
                 
                 # Attack preservation

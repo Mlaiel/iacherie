@@ -473,7 +473,7 @@ Calculate checksum of model state dict."""
         """
 Schedule model optimization in background."""
         def optimize():
-            try:
+        try:
                 self.optimize_model(model_name)
             except Exception as e:
                 logger.error(f"Background optimization failed for {model_name}: {e}")

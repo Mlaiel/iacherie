@@ -603,7 +603,7 @@ class AudioEnhancerAnalyzer:
     async def _analyze_frequency_balance(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, float]:
         """Analyze frequency balance and spectral characteristics"""
         def analyze():
-            try:
+        try:
                 results = {}
                 
                 # Compute power spectrum
@@ -779,7 +779,7 @@ class AudioEnhancerAnalyzer:
     async def _analyze_dynamic_range(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, float]:
         """Analyze dynamic range characteristics"""
         def analyze():
-            try:
+        try:
                 results = {}
                 
                 # Convert to dB for dynamic range analysis
@@ -830,7 +830,7 @@ class AudioEnhancerAnalyzer:
     async def _analyze_stereo_quality(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, float]:
         """Analyze stereo quality and spatial characteristics"""
         def analyze():
-            try:
+        try:
                 results = {}
                 
                 # Check if stereo
@@ -883,7 +883,7 @@ class AudioEnhancerAnalyzer:
     async def _detect_quality_issues(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
         """Detect specific quality issues"""
         def detect():
-            try:
+        try:
                 issues = []
                 severities = {}
                 
@@ -951,7 +951,7 @@ class AudioEnhancerAnalyzer:
     async def _generate_critical_fixes(self, quality_assessment: QualityAssessment) -> List[EnhancementRecommendation]:
         """Generate critical enhancement recommendations"""
         def generate():
-            try:
+        try:
                 recommendations = []
                 
                 for issue in quality_assessment.quality_issues:
@@ -981,7 +981,7 @@ class AudioEnhancerAnalyzer:
     async def _generate_quality_improvements(self, quality_assessment: QualityAssessment) -> List[EnhancementRecommendation]:
         """Generate quality improvement recommendations"""
         def generate():
-            try:
+        try:
                 recommendations = []
                 
                 # Noise reduction
@@ -1019,7 +1019,7 @@ class AudioEnhancerAnalyzer:
     async def _generate_creative_enhancements(self, quality_assessment: QualityAssessment, target_quality: float) -> List[EnhancementRecommendation]:
         """Generate creative enhancement recommendations"""
         def generate():
-            try:
+        try:
                 recommendations = []
                 
                 # Only suggest creative enhancements if quality is already decent

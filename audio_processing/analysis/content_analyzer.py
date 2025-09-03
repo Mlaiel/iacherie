@@ -336,7 +336,7 @@ class ContentAnalyzer:
     async def _classify_content_type(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
         """Classify the primary content type"""
         def classify():
-            try:
+        try:
                 # Extract features for classification
                 features = {}
                 
@@ -458,7 +458,7 @@ class ContentAnalyzer:
     async def _analyze_speech_content(self, audio_data: np.ndarray, sample_rate: int) -> Optional[Dict[str, Any]]:
         """Analyze speech content if present"""
         def analyze_speech():
-            try:
+        try:
                 # Convert numpy array to audio format for speech recognition
                 audio_int16 = (audio_data * 32767).astype(np.int16)
                 
@@ -591,7 +591,7 @@ class ContentAnalyzer:
     async def _analyze_music_content(self, audio_data: np.ndarray, sample_rate: int) -> Optional[Dict[str, Any]]:
         """Analyze music content if present"""
         def analyze_music():
-            try:
+        try:
                 # Extract musical features
                 features = {}
                 
@@ -674,7 +674,7 @@ class ContentAnalyzer:
     async def _analyze_emotions(self, audio_data: np.ndarray, sample_rate: int) -> EmotionAnalysis:
         """Analyze emotional content of audio"""
         def analyze():
-            try:
+        try:
                 # Extract emotional features
                 features = {}
                 
@@ -847,7 +847,7 @@ class ContentAnalyzer:
     async def _analyze_production_quality(self, audio_data: np.ndarray, sample_rate: int) -> ProductionAnalysis:
         """Analyze production quality and technical aspects"""
         def analyze():
-            try:
+        try:
                 # Technical quality metrics
                 metrics = {}
                 

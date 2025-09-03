@@ -416,7 +416,7 @@ Extract Chromaprint-style fingerprint"""
     async def _extract_perceptual_hash(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
         """Extract perceptual hash fingerprint"""
         def extract():
-            try:
+        try:
                 # Compute mel-spectrogram
                 mel_spec = librosa.feature.melspectrogram(
                     y=audio_data,
@@ -511,7 +511,7 @@ Extract Chromaprint-style fingerprint"""
     async def _extract_spectral_hash(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
         """Extract spectral-based hash fingerprint"""
         def extract():
-            try:
+        try:
                 # Compute STFT with high resolution
                 stft = librosa.stft(
                     audio_data,
@@ -615,7 +615,7 @@ Extract Chromaprint-style fingerprint"""
     async def _extract_neural_embedding(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
         """Extract neural network-based embedding fingerprint"""
         def extract():
-            try:
+        try:
                 # Extract comprehensive audio features for neural embedding
                 features = {}
                 
@@ -788,7 +788,7 @@ Extract Chromaprint-style fingerprint"""
                                   candidate: AudioFingerprint) -> Optional[SimilarityMatch]:
         """Compare two fingerprints for similarity"""
         def compare():
-            try:
+        try:
                 # Different comparison strategies based on fingerprint type
                 if query.fingerprint_type == candidate.fingerprint_type:
                     similarity = self._compute_same_type_similarity(query, candidate)

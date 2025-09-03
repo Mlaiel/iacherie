@@ -215,20 +215,8 @@ class RhythmAnalyzer:
     async def _estimate_tempo(self, onset_envelope: np.ndarray) -> Tuple[float, float]:
         """Estimate tempo using multiple methods"""
         def estimate():
-        try:
-            logger.info(f"Executing estimate")
-            
-            # Implementation for estimate
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"estimate completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"estimate failed: {e}")
-            raise
+            try:
+                # Use librosa's beat tracking algorithm
                 tempo, beats = librosa.beat.beat_track(
                     onset_envelope=onset_envelope,
                     sr=self.sample_rate,
@@ -248,31 +236,6 @@ class RhythmAnalyzer:
                 else:
                     confidence = 0.0
                 
-                return float(tempo), float(confidence)
-                
-            except Exception as e:
-        try:
-                    # Collect metrics
-                    metrics = {
-                        "timestamp": datetime.utcnow(),
-                        "metric_name": "track_beats",
-                        "value": data if data else 0,
-                        "tags": self._get_metric_tags()
-                    }
-            
-                    # Store metrics
-                    await self._store_metric(metrics)
-            
-                    # Send to monitoring system
-                    if hasattr(self, 'metrics_client'):
-                        await self.metrics_client.send(metrics)
-            
-                    logger.info(f"Metric track_beats collected")
-                    return metrics
-            
-                except Exception as e:
-                    logger.error(f"Metric collection track_beats failed: {e}")
-                    return None
                 return float(tempo), float(confidence)
                 
             except Exception as e:
@@ -392,7 +355,7 @@ Hybrid beat tracking combining multiple methods"""
         """
 Detect onset times and strengths"""
         def detect():
-            try:
+        try:
                 # Onset detection
                 onset_frames = librosa.onset.onset_detect(
                     y=audio_data,
@@ -429,7 +392,7 @@ Detect onset times and strengths"""
     async def _analyze_downbeats(self, onset_envelope: np.ndarray) -> np.ndarray:
         """Analyze downbeat locations"""
         def analyze():
-            try:
+        try:
                 # Simple downbeat detection (every 4 beats for 4/4)
                 tempo, beats = librosa.beat.beat_track(
                     onset_envelope=onset_envelope,
