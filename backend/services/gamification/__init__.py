@@ -45,6 +45,7 @@ try:
     from .achievements.achievement_engine import AchievementEngine, get_achievement_engine
     from .achievements.badge_system import BadgeSystem, get_badge_system
     from .achievements.leaderboards import Leaderboards, get_leaderboards
+    from .achievements.social_proof_engine import SocialProofEngine, get_social_proof_engine
     achievements_available = True
     logger.info("✅ Achievements module loaded successfully")
 except ImportError as e:
@@ -88,6 +89,7 @@ class GamificationServices:
         # Initialize services
         self.achievement_engine = None
         self.badge_system = None
+        self.social_proof_engine = None
         self.point_system = None
         self.reward_distributor = None
         self.tier_manager = None
@@ -103,6 +105,7 @@ class GamificationServices:
             if achievements_available:
                 self.achievement_engine = get_achievement_engine()
                 self.badge_system = get_badge_system()
+                self.social_proof_engine = get_social_proof_engine()
             
             # Initialize rewards
             if rewards_available:
@@ -151,6 +154,7 @@ class GamificationServices:
             "achievements": [],
             "rewards": [],
             "challenges": [],
+            "social_proofs": [],
             "tier_changes": []
         }
         
@@ -161,6 +165,13 @@ class GamificationServices:
                     user_id, action_type, action_data
                 )
                 results["achievements"] = achievement_results
+            
+            # Process social proof (NEW)
+            if self.social_proof_engine and achievements_available:
+                social_proof_results = await self.social_proof_engine.process_user_action(
+                    user_id, action_type, action_data
+                )
+                results["social_proofs"] = social_proof_results
             
             # Process rewards
             if self.reward_distributor and rewards_available:
@@ -196,6 +207,7 @@ class GamificationServices:
             "achievements": {},
             "rewards": {},
             "challenges": {},
+            "social_proofs": {},
             "tier": {}
         }
         
@@ -203,6 +215,10 @@ class GamificationServices:
             # Get achievement summary
             if self.achievement_engine and achievements_available:
                 summary["achievements"] = await self.achievement_engine.get_user_summary(user_id)
+            
+            # Get social proof summary (NEW)
+            if self.social_proof_engine and achievements_available:
+                summary["social_proofs"] = await self.social_proof_engine.get_user_social_proofs(user_id)
             
             # Get rewards summary
             if self.point_system and rewards_available:
@@ -232,9 +248,11 @@ __all__ = [
     "AchievementEngine",
     "BadgeSystem", 
     "Leaderboards",
+    "SocialProofEngine",
     "get_achievement_engine",
     "get_badge_system",
     "get_leaderboards",
+    "get_social_proof_engine",
     
     # Reward services
     "PointSystem",
