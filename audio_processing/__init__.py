@@ -35,7 +35,14 @@ from .analysis import (
     GenreClassifier,
     InstrumentIdentifier,
     VoiceActivityDetector,
-    AudioMetadataExtractor
+    AudioMetadataExtractor,
+    ProfessionalAudioVisualizer,
+    WaveformConfig,
+    SpectrogramConfig,
+    WaveformStyle,
+    SpectrogramMode,
+    ColorScheme,
+    VisualizationResult
 )
 
 from .effects import (
@@ -154,6 +161,15 @@ __all__ = [
     'InstrumentIdentifier',
     'VoiceActivityDetector',
     'AudioMetadataExtractor',
+    
+    # Professional Visualization Engine (NEW)
+    'ProfessionalAudioVisualizer',
+    'WaveformConfig',
+    'SpectrogramConfig',
+    'WaveformStyle',
+    'SpectrogramMode',
+    'ColorScheme',
+    'VisualizationResult',
     
     # Synthesis Engine (Enhanced)
     'AudioSynthesisHub',

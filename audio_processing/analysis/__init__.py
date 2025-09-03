@@ -87,6 +87,16 @@ from .similarity_engine import SimilarityEngine
 
 from .audio_enhancer_analyzer import AudioEnhancerAnalyzer
 
+from .professional_visualization import (
+    ProfessionalAudioVisualizer,
+    WaveformConfig,
+    SpectrogramConfig,
+    WaveformStyle,
+    SpectrogramMode,
+    ColorScheme,
+    VisualizationResult
+)
+
 __all__ = [
     # Core Analysis Engines
     "SpectralAnalyzer",
@@ -108,5 +118,14 @@ __all__ = [
     "MasteringAnalyzer", 
     "StyleAnalyzer",
     "SimilarityEngine",
-    "AudioEnhancerAnalyzer"
+    "AudioEnhancerAnalyzer",
+    
+    # Professional Visualization
+    "ProfessionalAudioVisualizer",
+    "WaveformConfig",
+    "SpectrogramConfig", 
+    "WaveformStyle",
+    "SpectrogramMode",
+    "ColorScheme",
+    "VisualizationResult"
 ]
