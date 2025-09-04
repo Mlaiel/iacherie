@@ -26,10 +26,19 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 # Import existing monitoring components
 try:
-    from monitoring.observability import MonitoringSystem, PrometheusMetricsCollector, ELKStackIntegration, AlertManager
+    from monitoring.observability import (
+        MonitoringSystem, PrometheusMetricsCollector, ELKStackIntegration, 
+        AlertManager, CollectorRegistry
+    )
     HAS_BASE_MONITORING = True
 except ImportError:
     HAS_BASE_MONITORING = False
+    # Define dummy classes for when not available
+    MonitoringSystem = None
+    PrometheusMetricsCollector = None
+    ELKStackIntegration = None
+    AlertManager = None
+    CollectorRegistry = None
 
 # Enterprise observability dependencies
 try:
