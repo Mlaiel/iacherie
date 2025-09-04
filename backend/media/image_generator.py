@@ -29,7 +29,11 @@ from enum import Enum
 from PIL import Image
 import json
 
-from ...ai_engine.content_generation.base_generator import BaseContentGenerator, ContentGenerationContext
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
+from ai_engine.content_generation.base_generator import BaseContentGenerator, ContentGenerationContext
 
 
 class ImageType(Enum):

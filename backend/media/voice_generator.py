@@ -24,7 +24,11 @@ from datetime import datetime
 from enum import Enum
 import numpy as np
 
-from ...ai_engine.content_generation.base_generator import BaseContentGenerator, ContentGenerationContext
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
+from ai_engine.content_generation.base_generator import BaseContentGenerator, ContentGenerationContext
 
 
 class VoiceType(Enum):
