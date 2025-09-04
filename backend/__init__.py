@@ -29,5 +29,10 @@ __all__ = [
     "__version__",
     "__author__", 
     "__email__",
-    "__copyright__"
+    "__copyright__",
+    # Multilingual Support
+    "languages"
 ]
+
+# Import submodules for direct access
+from . import languages
