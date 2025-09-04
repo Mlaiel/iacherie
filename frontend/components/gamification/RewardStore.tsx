@@ -27,8 +27,8 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { Reward, RewardType, AchievementTier, ApiResponse, PaginatedResponse } from './types';
-import { gamificationStyles } from './gamification.styles';
+import { Reward, RewardType, AchievementTier, ApiResponse, PaginatedResponse } from '../gamification/types';
+import { gamificationStyles } from '../gamification/gamification.styles';
 import { 
   ShoppingCartIcon, 
   StarIcon, 

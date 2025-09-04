@@ -33,17 +33,17 @@ import {
 } from '@heroicons/react/24/outline';
 import { useAppContext } from '@/app/providers';
 import { useNotifications } from '@/hooks/useNotifications';
-import TimelineEditor from './TimelineEditor';
-import TrackMixer from './TrackMixer';
-import EffectsPanel from './EffectsPanel';
-import InstrumentSelector from './InstrumentSelector';
-import AIAssistantInterface from './AIAssistantInterface';
-import CollaborativeWorkspace from './CollaborativeWorkspace';
-import WaveformVisualizer from './WaveformVisualizer';
-import SpectrogramAnalyzer from './SpectrogramAnalyzer';
-import ExportManager from './ExportManager';
-import { studioColors, studioUtils } from './remix_studio.styles';
-import type { StudioState, AudioTrack, RemixStudioComponent } from './index';
+import TimelineEditor from '../remix_studio/TimelineEditor';
+import TrackMixer from '../remix_studio_audio/TrackMixer';
+import EffectsPanel from '../remix_studio_effects/EffectsPanel';
+import InstrumentSelector from '../remix_studio_effects/InstrumentSelector';
+import AIAssistantInterface from '../remix_studio_effects/AIAssistantInterface';
+import CollaborativeWorkspace from '../remix_studio_effects/CollaborativeWorkspace';
+import WaveformVisualizer from '../remix_studio_audio/WaveformVisualizer';
+import SpectrogramAnalyzer from '../remix_studio_audio/SpectrogramAnalyzer';
+import ExportManager from '../remix_studio_effects/ExportManager';
+import { studioColors, studioUtils } from '../remix_studio/remix_studio.styles';
+import type { StudioState, AudioTrack, RemixStudioComponent } from '../remix_studio/index';
 
 interface RemixStudioMainProps {
   projectId?: string;

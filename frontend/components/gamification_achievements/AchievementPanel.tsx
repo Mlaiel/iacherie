@@ -33,8 +33,8 @@ import {
   ApiResponse,
   PaginatedResponse,
   FilterOptions
-} from './types';
-import { gamificationStyles, tierIcons } from './gamification.styles';
+} from '../gamification/types';
+import { gamificationStyles, tierIcons } from '../gamification/gamification.styles';
 import { 
   TrophyIcon,
   LockClosedIcon,

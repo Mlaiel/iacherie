@@ -27,8 +27,8 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { Competition, ApiResponse } from './types';
-import { gamificationStyles } from './gamification.styles';
+import { Competition, ApiResponse } from '../gamification/types';
+import { gamificationStyles } from '../gamification/gamification.styles';
 import { CalendarIcon, ClockIcon, UsersIcon, TrophyIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 

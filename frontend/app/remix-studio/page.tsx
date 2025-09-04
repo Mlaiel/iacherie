@@ -18,7 +18,7 @@
  */
 
 import React from 'react';
-import RemixStudioMain from '@/components/remix_studio/RemixStudioMain';
+import RemixStudioMain from '@/components/remix_studio_core/RemixStudioMain';
 
 export default function RemixStudioPage() {
   const handleSave = async (projectData: any) => {

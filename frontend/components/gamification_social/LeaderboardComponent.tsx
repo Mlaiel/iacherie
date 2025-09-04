@@ -31,8 +31,8 @@ import {
   Leaderboard, 
   LeaderboardEntry,
   ApiResponse 
-} from './types';
-import { gamificationStyles } from './gamification.styles';
+} from '../gamification/types';
+import { gamificationStyles } from '../gamification/gamification.styles';
 import { 
   TrophyIcon,
   ArrowUpIcon,

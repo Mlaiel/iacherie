@@ -27,8 +27,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ChallengeCreatorData, ChallengeType } from './types';
-import { gamificationStyles } from './gamification.styles';
+import { ChallengeCreatorData, ChallengeType } from '../gamification/types';
+import { gamificationStyles } from '../gamification/gamification.styles';
 import { PlusIcon, SparklesIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 

@@ -33,8 +33,8 @@ import {
   AchievementTier,
   ApiResponse,
   PaginatedResponse
-} from './types';
-import { gamificationStyles } from './gamification.styles';
+} from '../gamification/types';
+import { gamificationStyles } from '../gamification/gamification.styles';
 import { 
   GiftIcon,
   SparklesIcon,

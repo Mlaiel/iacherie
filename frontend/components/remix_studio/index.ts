@@ -16,36 +16,36 @@
  */
 
 // Main Studio Component
-export { default as RemixStudioMain } from './RemixStudioMain';
+export { default as RemixStudioMain } from '../remix_studio_core/RemixStudioMain';
 
 // Collaboration Components
-export { default as CollaborativeWorkspace } from './CollaborativeWorkspace';
+export { default as CollaborativeWorkspace } from '../remix_studio_effects/CollaborativeWorkspace';
 
 // AI-Powered Components
-export { default as AIAssistantInterface } from './AIAssistantInterface';
-export { default as StyleTransferPanel } from './StyleTransferPanel';
-export { default as QualityEnhancer } from './QualityEnhancer';
+export { default as AIAssistantInterface } from '../remix_studio_effects/AIAssistantInterface';
+export { default as StyleTransferPanel } from '../remix_studio_effects/StyleTransferPanel';
+export { default as QualityEnhancer } from '../remix_studio_effects/QualityEnhancer';
 
 // Timeline and Editing Components
 export { default as TimelineEditor } from './TimelineEditor';
 export { default as LoopManager } from './LoopManager';
 
 // Audio Processing Components
-export { default as EffectsPanel } from './EffectsPanel';
-export { default as TrackMixer } from './TrackMixer';
-export { default as VocalProcessor } from './VocalProcessor';
+export { default as EffectsPanel } from '../remix_studio_effects/EffectsPanel';
+export { default as TrackMixer } from '../remix_studio_audio/TrackMixer';
+export { default as VocalProcessor } from '../remix_studio_audio/VocalProcessor';
 
 // Instrument and MIDI Components
-export { default as InstrumentSelector } from './InstrumentSelector';
+export { default as InstrumentSelector } from '../remix_studio_effects/InstrumentSelector';
 export { default as TempoController } from './TempoController';
-export { default as KeyTransposer } from './KeyTransposer';
+export { default as KeyTransposer } from '../remix_studio_effects/KeyTransposer';
 
 // Visualization Components
-export { default as WaveformVisualizer } from './WaveformVisualizer';
-export { default as SpectrogramAnalyzer } from './SpectrogramAnalyzer';
+export { default as WaveformVisualizer } from '../remix_studio_audio/WaveformVisualizer';
+export { default as SpectrogramAnalyzer } from '../remix_studio_audio/SpectrogramAnalyzer';
 
 // Export and Management Components
-export { default as ExportManager } from './ExportManager';
+export { default as ExportManager } from '../remix_studio_effects/ExportManager';
 
 // Styling System
 export * from './remix_studio.styles';

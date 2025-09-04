@@ -10,11 +10,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import MediaUploader from '../../../components/MediaUploader';
-import AIProtection from '../../../components/AIProtection';
-import CollaborationHub from '../../../components/CollaborationHub';
-import Analytics from '../../../components/Analytics';
-import Monetization from '../../../components/Monetization';
+import { UploadInterface as MediaUploader } from '@/components/upload/UploadInterface';
+import CopyrightManager from '@/components/protection/CopyrightManager';
+import CollaborationHub from '@/components/dashboard/CollaborationHub';
+import AnalyticsView from '@/components/dashboard_analytics/AnalyticsView';
+import MonetizationPanel from '@/components/dashboard/MonetizationPanel';
 
 const ComponentDemo: React.FC = () => {
   const [activeComponent, setActiveComponent] = useState<string>('media');
@@ -26,7 +26,7 @@ const ComponentDemo: React.FC = () => {
     },
     protection: {
       name: 'AI Protection',
-      component: <AIProtection />
+      component: <CopyrightManager />
     },
     collaboration: {
       name: 'Collaboration Hub',
@@ -34,11 +34,11 @@ const ComponentDemo: React.FC = () => {
     },
     analytics: {
       name: 'Analytics Dashboard',
-      component: <Analytics />
+      component: <AnalyticsView />
     },
     monetization: {
       name: 'Monetization Center',
-      component: <Monetization />
+      component: <MonetizationPanel />
     }
   };
 

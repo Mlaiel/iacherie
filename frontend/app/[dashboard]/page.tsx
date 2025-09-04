@@ -1,7 +1,7 @@
 'use client';
 
 import { notFound } from 'next/navigation';
-import { DashboardNavigation } from '@/components/dashboard/DashboardNavigation';
+import { DashboardNavigation } from '@/components/dashboard_core/DashboardNavigation';
 import { 
   DASHBOARD_COMPONENTS,
   Dashboard,
@@ -13,7 +13,7 @@ import {
   SettingsManager,
   UploadWizard,
   ContentLibrary
-} from '@/../dashboard';
+} from '@/dashboard';
 
 // Map component names to actual components
 const componentMap = {
