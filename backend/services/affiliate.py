@@ -686,21 +686,21 @@ class AffiliateService:
         """Créer les programmes partenaires par défaut"""
         default_programs = [
             {
-                "type": ProgramType.BASIC_AFFILIATE,
+                "program_type": ProgramType.BASIC_AFFILIATE,
                 "name": "Programme Affilié Basique",
                 "description": "Programme d'entrée pour nouveaux affiliés",
                 "commission_rate": Decimal("3.0"),
                 "requirements": {"min_followers": 1000}
             },
             {
-                "type": ProgramType.PREMIUM_PARTNER,
+                "program_type": ProgramType.PREMIUM_PARTNER,
                 "name": "Partenaire Premium",
                 "description": "Programme avancé pour partenaires expérimentés",
                 "commission_rate": Decimal("5.0"),
                 "requirements": {"min_followers": 10000, "min_engagement": 0.03}
             },
             {
-                "type": ProgramType.BRAND_AMBASSADOR,
+                "program_type": ProgramType.BRAND_AMBASSADOR,
                 "name": "Ambassadeur de Marque",
                 "description": "Programme exclusif pour ambassadeurs",
                 "commission_rate": Decimal("8.0"),
