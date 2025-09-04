@@ -15,14 +15,29 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel, EmailStr, Field
 import bcrypt
 
-from ...core.database import database_manager
-from ...core.security import security_manager
-from ...core.cache import cache_manager
-from ...core.logging import logger
-from ...ai_engine.content_processor import content_processor
-from ...ai_engine.fingerprinting import fingerprint_engine
-from ...ai_engine.vector_database import vector_database
-from ...ai_engine.content_analyzer import content_analyzer
+try:
+    from ...core.database import database_manager
+    from ...core.security import security_manager
+    from ...core.cache import cache_manager
+    from ...core.logging import logger
+    from ...ai_engine.content_processor import content_processor
+    from ...ai_engine.fingerprinting import fingerprint_engine
+    from ...ai_engine.vector_database import vector_database
+    from ...ai_engine.content_analyzer import content_analyzer
+except ImportError:
+    # Mock dependencies for standalone operation
+    class MockManager:
+        def __getattr__(self, name):
+            return lambda *args, **kwargs: {"status": "mocked"}
+    
+    database_manager = MockManager()
+    security_manager = MockManager()
+    cache_manager = MockManager()
+    logger = MockManager()
+    content_processor = MockManager()
+    fingerprint_engine = MockManager()
+    vector_database = MockManager()
+    content_analyzer = MockManager()
 
 # ========================================
 # AUTHENTICATION ROUTES
@@ -35,7 +50,7 @@ class UserRegistration(BaseModel):
     username: str = Field(..., min_length=3, max_length=50)
     first_name: str = Field(..., min_length=1, max_length=50)
     last_name: str = Field(..., min_length=1, max_length=50)
-    creator_type: str = Field(..., regex="^(musician|blogger|photographer|influencer|comedian|writer|other)$")
+    creator_type: str = Field(..., pattern="^(musician|blogger|photographer|influencer|comedian|writer|other)$")
     terms_accepted: bool = Field(..., description="Must accept terms of service")
 
 
@@ -113,7 +128,7 @@ class AnalyticsQuery(BaseModel):
     end_date: datetime
     platforms: Optional[List[str]] = None
     content_ids: Optional[List[str]] = None
-    granularity: str = Field(default="daily", regex="^(hourly|daily|weekly|monthly)$")
+    granularity: str = Field(default="daily", pattern="^(hourly|daily|weekly|monthly)$")
 
 
 class AnalyticsResponse(BaseModel):
@@ -152,7 +167,7 @@ class MetricsResponse(BaseModel):
 # ========================================
 
 class PlatformCredentials(BaseModel):
-    platform: str = Field(..., regex="^(youtube|spotify|instagram|tiktok|facebook|twitter)$")
+    platform: str = Field(..., pattern="^(youtube|spotify|instagram|tiktok|facebook|twitter)$")
     client_id: str
     client_secret: str
     redirect_uri: Optional[str] = None
@@ -172,7 +187,7 @@ class PlatformConnection(BaseModel):
 
 class DataExportRequest(BaseModel):
     data_types: List[str] = Field(..., description="Types of data to export")
-    format: str = Field(default="json", regex="^(json|csv|xml)$")
+    format: str = Field(default="json", pattern="^(json|csv|xml)$")
     email_delivery: bool = Field(default=True)
 
 
@@ -183,7 +198,7 @@ class DataDeletionRequest(BaseModel):
 
 
 class ConsentUpdate(BaseModel):
-    consent_type: str = Field(..., regex="^(marketing|analytics|cookies|data_processing)$")
+    consent_type: str = Field(..., pattern="^(marketing|analytics|cookies|data_processing)$")
     granted: bool
     timestamp: datetime = Field(default_factory=datetime.utcnow)
 

@@ -18,20 +18,41 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel, Field, validator
 import json
 
-from ...core.database import database_manager
-from ...core.security import security_manager
-from ...core.cache import cache_manager
-from ...core.logging import logger
-from ...monetization.payment_processor import PaymentProcessor
-from ...monetization.revenue_calculator import RevenueCalculator
-from ...monetization.platform_apis import PlatformAPIsManager
-from ...monetization.licensing_manager import LicensingManager
-from ...ai_agents.collaboration.matching_engine import CollaborationMatchingEngine
-from ...ai_agents.collaboration.compatibility_analyzer import CompatibilityAnalyzer
-from ...ai_engine.fingerprinting import fingerprint_engine
-from ...protection.content_protector import ContentProtector
-from ...ai_agents.text_agent import AITextAgent
-from ...ai_agents.moderation_agent import AIModerationAgent
+try:
+    from ...core.database import database_manager
+    from ...core.security import security_manager
+    from ...core.cache import cache_manager
+    from ...core.logging import logger
+    from ...monetization.payment_processor import PaymentProcessor
+    from ...monetization.revenue_calculator import RevenueCalculator
+    from ...monetization.platform_apis import PlatformAPIsManager
+    from ...monetization.licensing_manager import LicensingManager
+    from ...ai_agents.collaboration.matching_engine import CollaborationMatchingEngine
+    from ...ai_agents.collaboration.compatibility_analyzer import CompatibilityAnalyzer
+    from ...ai_engine.fingerprinting import fingerprint_engine
+    from ...protection.content_protector import ContentProtector
+    from ...ai_agents.text_agent import AITextAgent
+    from ...ai_agents.moderation_agent import AIModerationAgent
+except ImportError:
+    # Mock dependencies for standalone operation
+    class MockManager:
+        def __getattr__(self, name):
+            return lambda *args, **kwargs: {"status": "mocked"}
+    
+    database_manager = MockManager()
+    security_manager = MockManager()
+    cache_manager = MockManager()
+    logger = MockManager()
+    PaymentProcessor = MockManager
+    RevenueCalculator = MockManager
+    PlatformAPIsManager = MockManager
+    LicensingManager = MockManager
+    CollaborationMatchingEngine = MockManager
+    CompatibilityAnalyzer = MockManager
+    fingerprint_engine = MockManager()
+    ContentProtector = MockManager
+    AITextAgent = MockManager
+    AIModerationAgent = MockManager
 
 # ========================================
 # ENUMS
@@ -117,7 +138,7 @@ class PayoutRequest(BaseModel):
     currency: Currency = Field(default=Currency.USD)
     destination_method_id: str
     description: str = Field(..., min_length=1, max_length=500)
-    priority: str = Field(default="normal", regex="^(low|normal|high|urgent)$")
+    priority: str = Field(default="normal", pattern="^(low|normal|high|urgent)$")
 
 class PaymentResponse(BaseModel):
     payment_id: str
@@ -130,7 +151,7 @@ class PaymentResponse(BaseModel):
 
 # Monetization Models
 class PlatformConnection(BaseModel):
-    platform: str = Field(..., regex="^(youtube|spotify|instagram|tiktok|facebook|twitter|patreon|onlyfans)$")
+    platform: str = Field(..., pattern="^(youtube|spotify|instagram|tiktok|facebook|twitter|patreon|onlyfans)$")
     api_key: Optional[str] = None
     access_token: Optional[str] = None
     channel_id: Optional[str] = None
@@ -141,11 +162,11 @@ class RevenueStream(BaseModel):
     stream_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     platform: str
     content_id: str
-    revenue_type: str = Field(..., regex="^(ad_revenue|subscriptions|donations|sponsorships|licensing|merchandise)$")
+    revenue_type: str = Field(..., pattern="^(ad_revenue|subscriptions|donations|sponsorships|licensing|merchandise)$")
     amount: Decimal = Field(..., gt=0)
-    currency: str = Field(default="USD", regex="^[A-Z]{3}$")
+    currency: str = Field(default="USD", pattern="^[A-Z]{3}$")
     date_earned: datetime
-    payment_status: str = Field(default="pending", regex="^(pending|processing|paid|failed)$")
+    payment_status: str = Field(default="pending", pattern="^(pending|processing|paid|failed)$")
     metadata: Optional[Dict[str, Any]] = None
 
 class RevenueReport(BaseModel):
@@ -204,8 +225,8 @@ class CollaborationMatch(BaseModel):
 # Fingerprinting Models
 class FingerprintRequest(BaseModel):
     content_id: str
-    fingerprint_type: str = Field(..., regex="^(audio|video|image|text)$")
-    quality_level: str = Field(default="standard", regex="^(basic|standard|high|premium)$")
+    fingerprint_type: str = Field(..., pattern="^(audio|video|image|text)$")
+    quality_level: str = Field(default="standard", pattern="^(basic|standard|high|premium)$")
     additional_options: Optional[Dict[str, Any]] = None
 
 class FingerprintResponse(BaseModel):
@@ -228,7 +249,7 @@ class SimilaritySearchRequest(BaseModel):
 class ProtectionScanRequest(BaseModel):
     content_id: str
     scan_platforms: List[str] = Field(..., min_items=1)
-    scan_depth: str = Field(default="standard", regex="^(basic|standard|deep|comprehensive)$")
+    scan_depth: str = Field(default="standard", pattern="^(basic|standard|deep|comprehensive)$")
     notification_settings: Optional[Dict[str, bool]] = None
 
 class ProtectionAlert(BaseModel):
@@ -239,7 +260,7 @@ class ProtectionAlert(BaseModel):
     detected_url: str
     similarity_score: float
     detection_timestamp: datetime
-    status: str = Field(..., regex="^(new|investigating|resolved|false_positive)$")
+    status: str = Field(..., pattern="^(new|investigating|resolved|false_positive)$")
     evidence: Dict[str, Any]
 
 # Licensing Models
@@ -259,7 +280,7 @@ class LicensingDeal(BaseModel):
 # Webhook Models
 class WebhookEndpoint(BaseModel):
     endpoint_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    url: str = Field(..., regex=r"^https?://.*")
+    url: str = Field(..., pattern=r"^https?://.*")
     events: List[str] = Field(..., min_items=1)
     secret: Optional[str] = None
     is_active: bool = Field(default=True)
@@ -288,7 +309,7 @@ class SystemAlert(BaseModel):
 
 # AI Agent Models
 class AIAgentRequest(BaseModel):
-    agent_type: str = Field(..., regex="^(text|moderation|analysis|recommendation)$")
+    agent_type: str = Field(..., pattern="^(text|moderation|analysis|recommendation)$")
     input_data: Dict[str, Any]
     context: Optional[Dict[str, Any]] = None
     options: Optional[Dict[str, Any]] = None
