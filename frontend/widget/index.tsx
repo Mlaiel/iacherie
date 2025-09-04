@@ -32,7 +32,7 @@ export interface EmbeddableWidgetProps {
       text?: string;
     };
   };
-  data?: any;
+  data?: Record<string, unknown>;
 }
 
 export function EmbeddableWidget({ type, config = {}, data }: EmbeddableWidgetProps) {

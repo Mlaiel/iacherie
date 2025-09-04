@@ -38,8 +38,8 @@ export function MobileInterface() {
           <div className="bg-blue-600 text-white p-3 rounded-lg shadow-lg">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium">Installer l'application</p>
-                <p className="text-xs opacity-90">Accès rapide depuis votre écran d'accueil</p>
+                <p className="text-sm font-medium">Installer l&apos;application</p>
+                <p className="text-xs opacity-90">Accès rapide depuis votre écran d&apos;accueil</p>
               </div>
               <button className="bg-white text-blue-600 px-3 py-1 rounded text-sm font-medium">
                 Installer
