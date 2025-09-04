@@ -525,6 +525,13 @@ AI-powered budget optimization"""
             
             # Implementation for _store_campaign
             # TODO: Add specific business logic here
+            pass
+            
+        except Exception as e:
+            logger.error(f"_store_campaign failed: {e}")
+            raise
+    
+    async def _initialize_ai_optimization(self):
         try:
             logger.info(f"Executing _initialize_ai_optimization")
             
@@ -537,7 +544,8 @@ AI-powered budget optimization"""
             return result
             
         except Exception as e:
-        try:
+            logger.error(f"_initialize_ai_optimization failed: {e}")
+            raise
             logger.info(f"Executing _setup_content_protection")
             
             # Implementation for _setup_content_protection
@@ -563,27 +571,35 @@ Initialize AI optimization models"""
     
     async def _setup_content_protection(
         self, 
-        campaign_id: str, 
+        campaign_id: str
+    ) -> None:
+        """Setup content protection for campaign"""
         try:
-                    async with self.db_session() as session:
-                        # Database operation
+            async with self.db_session() as session:
+                # Database operation
+                await session.commit()
+                logger.info(f"Database operation _update_campaign_status completed")
+                return True
                 
-                        await session.commit()
-                        logger.info(f"Database operation _update_campaign_status completed")
-                        return True
-                
-                except Exception as e:
-                    logger.error(f"Database operation _update_campaign_status failed: {e}")
-                    raise
+        except Exception as e:
+            logger.error(f"Database operation _update_campaign_status failed: {e}")
+            raise
+            
     async def _get_campaign(
         self, 
-        campaign_id: str, 
+        campaign_id: str
+    ) -> Dict[str, Any]:
+        """Get campaign by ID"""
         try:
             logger.info(f"Executing _start_ai_optimization")
             
             # Implementation for _start_ai_optimization
             # TODO: Add specific business logic here
-        try:
+            return {}
+            
+        except Exception as e:
+            logger.error(f"_get_campaign failed: {e}")
+            raise
             logger.info(f"Executing _activate_content_protection")
             
             # Implementation for _activate_content_protection
