@@ -19,9 +19,18 @@ try:
 except ImportError:
     database = None
 
+# Database Cluster Architecture
+try:
+    from .database_cluster import AinflueDataArchitecture, create_ainflue_data_architecture
+except ImportError:
+    AinflueDataArchitecture = None
+    create_ainflue_data_architecture = None
+
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 
 __all__ = [
-    "database"
+    "database",
+    "AinflueDataArchitecture", 
+    "create_ainflue_data_architecture"
 ]
