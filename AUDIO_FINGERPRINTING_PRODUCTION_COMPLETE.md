@@ -35,7 +35,7 @@ Audio Upload → Fast Processing → Feature Extraction → FAISS Index → <100
 ```
 api/routes/audio_fingerprinting_production.py  # Main production API
 config/audio_fingerprinting_production.py      # Production configuration
-tests/test_audio_fingerprinting_production.py  # Comprehensive tests
+backend/tests/test_audio_fingerprinting_production.py  # Comprehensive tests
 demo_production_fingerprinting.py              # Working demo
 ```
 

@@ -70,7 +70,7 @@ kubectl get pods -n ainflue-production
 - `validation/` - Complete validation framework
 - `validation_app.py` - Standalone validation application
 - `api/validation_endpoints.py` - FastAPI validation endpoints
-- `tests/test_validation_criteria.py` - Comprehensive test suite
+- `backend/tests/test_validation_criteria.py` - Comprehensive test suite
 
 ### Kubernetes Configuration
 - `k8s/production/deployment.yaml` - Production deployment

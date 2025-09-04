@@ -190,13 +190,13 @@ All major requirements have been successfully implemented:
 ### Run All Tests
 ```bash
 # Unit and integration tests
-python -m pytest tests/ -v
+python -m pytest backend/tests/ -v
 
 # Performance tests
-./tests/performance/run_load_tests.sh --users 1000
+./backend/tests/performance/run_load_tests.sh --users 1000
 
 # Security tests
-python -m pytest tests/security/ -v
+python -m pytest backend/tests/security/ -v
 
 # Load testing validation
 python simple_load_test.py

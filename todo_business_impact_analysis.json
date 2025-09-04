@@ -928,7 +928,7 @@
       "priority_score": 62.4
     },
     {
-      "file_path": "tests/simple_validation.py",
+      "file_path": "backend/tests/simple_validation.py",
       "code_type": "tests",
       "business_impact": "minimal",
       "todo_count": 2,
@@ -951,7 +951,7 @@
       "priority_score": 13.7
     },
     {
-      "file_path": "tests/test_remix_generation.py",
+      "file_path": "backend/tests/test_remix_generation.py",
       "code_type": "tests",
       "business_impact": "minimal",
       "todo_count": 1,
@@ -974,7 +974,7 @@
       "priority_score": 14.366666666666669
     },
     {
-      "file_path": "tests/industrial_test_suite_zero_mocks.py",
+      "file_path": "backend/tests/industrial_test_suite_zero_mocks.py",
       "code_type": "tests",
       "business_impact": "high",
       "todo_count": 1,
@@ -1011,7 +1011,7 @@
       "priority_score": 52.05244755244755
     },
     {
-      "file_path": "tests/test_todo_implementations.py",
+      "file_path": "backend/tests/test_todo_implementations.py",
       "code_type": "tests",
       "business_impact": "minimal",
       "todo_count": 3,
@@ -1873,7 +1873,7 @@
       "priority_score": 54.0625
     },
     {
-      "file_path": "tests/integration/test_todo_implementations_validation.py",
+      "file_path": "backend/tests/integration/test_todo_implementations_validation.py",
       "code_type": "tests",
       "business_impact": "minimal",
       "todo_count": 10,
@@ -1897,7 +1897,7 @@
       "priority_score": 22.096338028169015
     },
     {
-      "file_path": "tests/integration/test_todo_completion.py",
+      "file_path": "backend/tests/integration/test_todo_completion.py",
       "code_type": "tests",
       "business_impact": "minimal",
       "todo_count": 57,
@@ -1917,7 +1917,7 @@
       "priority_score": 26.38
     },
     {
-      "file_path": "tests/integration/database/test_crud_operations.py",
+      "file_path": "backend/tests/integration/database/test_crud_operations.py",
       "code_type": "infrastructure",
       "business_impact": "low",
       "todo_count": 0,
@@ -1944,7 +1944,7 @@
       "priority_score": 20.03453382084095
     },
     {
-      "file_path": "tests/ai/computer_vision/test_streaming.py",
+      "file_path": "backend/tests/ai/computer_vision/test_streaming.py",
       "code_type": "tests",
       "business_impact": "minimal",
       "todo_count": 0,
@@ -1987,7 +1987,7 @@
       "priority_score": 25.059642147117298
     },
     {
-      "file_path": "tests/ai/nlp/test_analyzers.py",
+      "file_path": "backend/tests/ai/nlp/test_analyzers.py",
       "code_type": "tests",
       "business_impact": "high",
       "todo_count": 0,
@@ -2019,7 +2019,7 @@
       "priority_score": 50.0395256916996
     },
     {
-      "file_path": "tests/ai/nlp/conftest.py",
+      "file_path": "backend/tests/ai/nlp/conftest.py",
       "code_type": "tests",
       "business_impact": "high",
       "todo_count": 1,
@@ -2074,7 +2074,7 @@
       "priority_score": 52.08862629246676
     },
     {
-      "file_path": "tests/ai/quality_assessment/test_content_analysis.py",
+      "file_path": "backend/tests/ai/quality_assessment/test_content_analysis.py",
       "code_type": "tests",
       "business_impact": "high",
       "todo_count": 0,
@@ -2115,7 +2115,7 @@
       "priority_score": 50.505359877488516
     },
     {
-      "file_path": "tests/ai/quality_assessment/test_compliance.py",
+      "file_path": "backend/tests/ai/quality_assessment/test_compliance.py",
       "code_type": "tests",
       "business_impact": "high",
       "todo_count": 0,
@@ -2156,7 +2156,7 @@
       "priority_score": 50.390117035110535
     },
     {
-      "file_path": "tests/ai/quality_assessment/test_enhancement.py",
+      "file_path": "backend/tests/ai/quality_assessment/test_enhancement.py",
       "code_type": "tests",
       "business_impact": "high",
       "todo_count": 0,
@@ -2194,7 +2194,7 @@
       "priority_score": 50.40880503144654
     },
     {
-      "file_path": "tests/ai/quality_assessment/test_benchmarking.py",
+      "file_path": "backend/tests/ai/quality_assessment/test_benchmarking.py",
       "code_type": "tests",
       "business_impact": "high",
       "todo_count": 0,
@@ -2232,7 +2232,7 @@
       "priority_score": 50.37696335078534
     },
     {
-      "file_path": "tests/ai/quality_assessment/test_reporting.py",
+      "file_path": "backend/tests/ai/quality_assessment/test_reporting.py",
       "code_type": "tests",
       "business_impact": "high",
       "todo_count": 0,
