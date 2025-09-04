@@ -19,7 +19,7 @@ written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
 
-from .post_quantum_crypto import PostQuantumCrypto, LatticeBasedEncryption
+from .post_quantum_crypto import PostQuantumCrypto, LatticeBasedEncryption, LatticeAlgorithm
 from .quantum_key_distribution import QuantumKeyDistribution, QKDProtocol
 from .quantum_random_generator import QuantumRandomGenerator, TrueRandomSource
 from .quantum_factory import (
@@ -34,6 +34,7 @@ from .quantum_factory import (
 __all__ = [
     "PostQuantumCrypto",
     "LatticeBasedEncryption", 
+    "LatticeAlgorithm",
     "QuantumKeyDistribution",
     "QKDProtocol",
     "QuantumRandomGenerator",
