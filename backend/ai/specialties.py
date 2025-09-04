@@ -3,10 +3,11 @@ Specialty AI Agents - Specialized Human-Centric Services
 ======================================================
 
 Consolidated interface for specialized AI agents providing human-centric services:
-- Therapy and mental health support
-- Educational tutoring and learning management 
-- Virtual companionship and conversation
+- Therapy and mental health support (agent_therapist.py)
+- Educational tutoring and learning management (agent_educator.py)
+- Virtual companionship and conversation (agent_companion.py)
 - Specialized content agents (audio, video, image, text, engagement)
+- tous agents spécialisés
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.

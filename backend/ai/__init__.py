@@ -15,8 +15,40 @@ Unauthorized use is strictly prohibited. Contact: mlaiel@live.de
 
 from .agent_registry import AgentRegistry, get_agent, list_agents
 from .core_business_agents import CoreBusinessAgents
-from .content_agents import ContentAgents  
+from .content import ContentAgents, ContentProcessingResult, create_content_agents
 from .technical_agents import TechnicalAgents
+from .personality import (
+    PersonalityAgents,
+    PersonalityType,
+    ExpertiseLevel,
+    PersonalityTone,
+    PersonalityProfile,
+    PersonalityResponse,
+    BasePersonalityAgent,
+    FashionExpertAgent,
+    FitnessCoachAgent,
+    TechReviewerAgent,
+    FoodCriticAgent,
+    create_personality_agents,
+    create_fashion_expert,
+    create_fitness_coach,
+    create_tech_reviewer,
+    create_food_critic
+)
+from .analytics import (
+    AnalyticsHub,
+    TrendAnalyzer,
+    EngagementPredictor,
+    AudienceAnalyzer,
+    CompetitorMonitor,
+    AnalyticsRequest,
+    AnalyticsResponse,
+    analyze_trends,
+    predict_engagement,
+    analyze_audience,
+    monitor_competitors,
+    comprehensive_analytics
+)
 from .specialties import (
     SpecialtyAgents,
     SpecialtyType,
@@ -67,7 +99,39 @@ __all__ = [
     "list_agents",
     "CoreBusinessAgents",
     "ContentAgents",
+    "ContentProcessingResult",
+    "create_content_agents",
     "TechnicalAgents",
+    # Personality Agents - Expert AI Personalities
+    "PersonalityAgents",
+    "PersonalityType",
+    "ExpertiseLevel",
+    "PersonalityTone",
+    "PersonalityProfile",
+    "PersonalityResponse",
+    "BasePersonalityAgent",
+    "FashionExpertAgent",
+    "FitnessCoachAgent",
+    "TechReviewerAgent",
+    "FoodCriticAgent",
+    "create_personality_agents",
+    "create_fashion_expert",
+    "create_fitness_coach",
+    "create_tech_reviewer",
+    "create_food_critic",
+    # Analytics Agents - Data Analysis and Insights
+    "AnalyticsHub",
+    "TrendAnalyzer",
+    "EngagementPredictor",
+    "AudienceAnalyzer",
+    "CompetitorMonitor",
+    "AnalyticsRequest",
+    "AnalyticsResponse",
+    "analyze_trends",
+    "predict_engagement",
+    "analyze_audience",
+    "monitor_competitors",
+    "comprehensive_analytics",
     # Specialty Agents - Human-centric AI Services
     "SpecialtyAgents",
     "SpecialtyType",

@@ -4,11 +4,11 @@ Ce module consolide tous les agents d'analyse pour fournir une interface unifié
 pour l'analytique, les tendances, l'engagement, l'audience et la surveillance concurrentielle.
 
 Consolide:
-- agent_trend_analyzer.py
-- agent_engagement_predictor.py  
-- agent_audience_analyzer.py
-- agent_competitor_monitor.py
-- tous les agents d'analyse
+- agent_trend_analyzer.py - Analyse des tendances et prédiction de contenu viral
+- agent_engagement_predictor.py - Prédiction et optimisation de l'engagement
+- agent_audience_analyzer.py - Analyse approfondie de l'audience et segmentation  
+- agent_competitor_monitor.py - Surveillance et analyse concurrentielle
+- tous les agents d'analyse et de métriques
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
