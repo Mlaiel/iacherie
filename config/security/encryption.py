@@ -42,6 +42,16 @@ Supported encryption algorithms - Enhanced for data protection requirements."""
     # Digital signatures and key exchange
     ECDSA_P256 = "ecdsa-p256"
     ECDH_P256 = "ecdh-p256"
+    
+    # Quantum-resistant algorithms
+    QUANTUM_RESISTANT = "quantum-resistant"
+    CRYSTALS_KYBER_512 = "crystals-kyber-512"
+    CRYSTALS_KYBER_768 = "crystals-kyber-768"
+    CRYSTALS_KYBER_1024 = "crystals-kyber-1024"
+    CRYSTALS_DILITHIUM = "crystals-dilithium"
+    FALCON_512 = "falcon-512"
+    FALCON_1024 = "falcon-1024"
+    SPHINCS_PLUS = "sphincs-plus"
 
 
 class TransitSecurityLevel(Enum):
@@ -365,6 +375,24 @@ class QuantumResistanceConfig:
     quantum_migration_planned: bool = True
     migration_start_date: Optional[str] = "2030-01-01"
     full_migration_deadline: Optional[str] = "2035-01-01"
+    
+    # New quantum modules integration
+    enable_quantum_modules: bool = True
+    qkd_enabled: bool = True
+    quantum_rng_enabled: bool = True
+    
+    # QKD configuration
+    qkd_error_threshold: float = 0.11
+    qkd_key_length: int = 256
+    qkd_security_parameter: int = 64
+    
+    # Quantum RNG configuration
+    qrng_pool_size: int = 10000
+    qrng_min_entropy_per_byte: float = 7.0
+    qrng_entropy_sources: List[str] = field(default_factory=lambda: [
+        "photon_shot_noise",
+        "quantum_tunneling"
+    ])
 
 
 @dataclass

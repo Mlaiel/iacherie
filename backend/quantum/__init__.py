@@ -7,6 +7,7 @@ to protect against future quantum computer attacks. It includes:
 - Post-quantum cryptography (lattice-based encryption)
 - Quantum key distribution protocols
 - True quantum random number generation
+- Integration factory for existing systems
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend + Security Experts
@@ -21,6 +22,14 @@ Contact: mlaiel@live.de for licensing inquiries.
 from .post_quantum_crypto import PostQuantumCrypto, LatticeBasedEncryption
 from .quantum_key_distribution import QuantumKeyDistribution, QKDProtocol
 from .quantum_random_generator import QuantumRandomGenerator, TrueRandomSource
+from .quantum_factory import (
+    QuantumEncryptionFactory, 
+    QuantumConfig,
+    get_quantum_factory,
+    encrypt_with_quantum,
+    generate_quantum_key,
+    get_quantum_status
+)
 
 __all__ = [
     "PostQuantumCrypto",
@@ -28,7 +37,13 @@ __all__ = [
     "QuantumKeyDistribution",
     "QKDProtocol",
     "QuantumRandomGenerator",
-    "TrueRandomSource"
+    "TrueRandomSource",
+    "QuantumEncryptionFactory",
+    "QuantumConfig",
+    "get_quantum_factory",
+    "encrypt_with_quantum",
+    "generate_quantum_key",
+    "get_quantum_status"
 ]
 
 __version__ = "1.0.0"
