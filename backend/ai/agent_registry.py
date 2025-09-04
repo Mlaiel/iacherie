@@ -18,7 +18,7 @@ from datetime import datetime
 
 # Import consolidated agent classes
 from .core_business_agents import CoreBusinessAgents
-from .content_agents import ContentAgents
+from .content import ContentAgents
 from .technical_agents import TechnicalAgents
 
 logger = logging.getLogger(__name__)
