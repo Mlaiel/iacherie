@@ -1,9 +1,10 @@
 """Main API router for Ainflue AI Platform.
 
 This router consolidates all API endpoints with comprehensive architecture compliance.
-Routes have been consolidated from 17+ individual files into 2 main routers:
+Routes have been consolidated from 17+ individual files into 3 main routers:
 - Core API: Authentication, content management, analytics, monitoring, platform integration, GDPR
 - Business API: Monetization, payments, collaboration, fingerprinting, protection, licensing, webhooks, alerts, AI agents
+- Public API: Public-facing API for developers, SDK integration, and testing sandbox
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
@@ -12,7 +13,7 @@ of this code without explicit written permission from Fahed Mlaiel is strictly p
 
 from fastapi import APIRouter
 # Import consolidated API routers from backend/api
-from ...backend.api import core_router, business_router
+from ...backend.api import core_router, business_router, public_router
 # Import remaining individual routers that haven't been consolidated yet
 from .monitoring_endpoints import router as monitoring_router
 from .documentation_endpoints import router as documentation_router
@@ -29,6 +30,9 @@ v1_router.include_router(core_router, tags=["Core API"])
 
 # Consolidated business functionality (monetization, payments, collaboration, fingerprinting, protection, etc.)
 v1_router.include_router(business_router, tags=["Business API"])
+
+# Public API for developers, SDK integration, and testing sandbox
+v1_router.include_router(public_router, tags=["Public API"])
 
 # Individual routers that haven't been consolidated yet
 v1_router.include_router(monitoring_router, tags=["System Monitoring"])
