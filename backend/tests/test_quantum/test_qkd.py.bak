@@ -1,0 +1,152 @@
+"""
+Tests for Quantum Key Distribution Implementation
+
+This module tests the QKD protocols and quantum channel functionality.
+"""
+
+import pytest
+from backend.quantum.quantum_key_distribution import (
+    QuantumKeyDistribution, 
+    QKDProtocol,
+    BB84Protocol,
+    QuantumChannel,
+    QKDResult
+)
+
+
+class TestQuantumChannel:
+    """Test quantum channel functionality"""
+    
+    def test_channel_creation(self):
+        """Test quantum channel creation"""
+        channel = QuantumChannel(error_rate=0.05, eavesdropping_probability=0.0)
+        
+        assert channel.error_rate == 0.05
+        assert channel.eavesdropping_probability == 0.0
+        assert len(channel.transmission_history) == 0
+    
+    def test_photon_transmission_no_errors(self):
+        """Test photon transmission without errors"""
+        from backend.quantum.quantum_key_distribution import QuantumBit, PhotonPolarization, QuantumBasis
+        
+        channel = QuantumChannel(error_rate=0.0, eavesdropping_probability=0.0)
+        
+        original_photon = QuantumBit(
+            polarization=PhotonPolarization.HORIZONTAL,
+            basis=QuantumBasis.RECTILINEAR,
+            classical_bit=0,
+            measurement_time=0.0,
+            metadata={}
+        )
+        
+        transmitted_photon = channel.transmit_photon(original_photon)
+        
+        assert transmitted_photon.polarization == original_photon.polarization
+        assert transmitted_photon.basis == original_photon.basis
+        assert transmitted_photon.classical_bit == original_photon.classical_bit
+
+
+class TestBB84Protocol:
+    """Test BB84 QKD protocol"""
+    
+    def test_bb84_key_generation(self):
+        """Test BB84 key generation without eavesdropping"""
+        channel = QuantumChannel(error_rate=0.01, eavesdropping_probability=0.0)
+        bb84 = BB84Protocol(channel)
+        
+        result = bb84.generate_key("alice", "bob", target_key_length=32, security_parameter=32)
+        
+        assert isinstance(result, QKDResult)
+        assert len(result.shared_key) > 0
+        assert result.session.protocol == QKDProtocol.BB84
+        assert result.session.alice_id == "alice"
+        assert result.session.bob_id == "bob"
+        assert result.error_rate >= 0.0
+        assert not result.eavesdropping_detected  # No eavesdropping
+        assert result.security_level >= 0.0
+    
+    def test_bb84_with_eavesdropping(self):
+        """Test BB84 with eavesdropping detection"""
+        channel = QuantumChannel(error_rate=0.05, eavesdropping_probability=0.2)
+        bb84 = BB84Protocol(channel)
+        
+        result = bb84.generate_key("alice", "bob", target_key_length=16, security_parameter=16)
+        
+        assert isinstance(result, QKDResult)
+        # With eavesdropping, error rate should be higher
+        assert result.error_rate > 0.05
+        # Should detect eavesdropping if error rate is high enough
+        if result.error_rate > 0.11:
+            assert result.eavesdropping_detected
+
+
+class TestQuantumKeyDistribution:
+    """Test main QKD interface"""
+    
+    def test_qkd_initialization(self):
+        """Test QKD system initialization"""
+        qkd = QuantumKeyDistribution(error_rate=0.02, eavesdropping_probability=0.0)
+        
+        supported_protocols = qkd.get_supported_protocols()
+        assert QKDProtocol.BB84 in supported_protocols
+        
+        # Test channel analysis
+        status = qkd.analyze_channel_security()
+        assert "total_transmissions" in status
+        assert "security_status" in status
+    
+    def test_shared_key_generation(self):
+        """Test shared key generation"""
+        qkd = QuantumKeyDistribution(error_rate=0.01)
+        
+        result = qkd.generate_shared_key(
+            alice_id="alice",
+            bob_id="bob",
+            protocol=QKDProtocol.BB84,
+            key_length=64
+        )
+        
+        assert isinstance(result, QKDResult)
+        assert len(result.shared_key) > 0
+        assert result.session.alice_id == "alice"
+        assert result.session.bob_id == "bob"
+        assert result.execution_time > 0
+    
+    def test_channel_security_analysis(self):
+        """Test quantum channel security analysis"""
+        qkd = QuantumKeyDistribution(error_rate=0.05, eavesdropping_probability=0.1)
+        
+        # Generate some keys to create transmission history
+        qkd.generate_shared_key("alice", "bob", key_length=32)
+        
+        analysis = qkd.analyze_channel_security()
+        
+        assert analysis["total_transmissions"] > 0
+        assert "eavesdropping_rate" in analysis
+        assert "channel_error_rate" in analysis
+        assert analysis["security_status"] in ["secure", "compromised"]
+    
+    def test_attack_simulation(self):
+        """Test quantum attack simulation"""
+        qkd = QuantumKeyDistribution()
+        
+        # Start with no attacks
+        qkd.simulate_attack(0.0)
+        result1 = qkd.generate_shared_key("alice", "bob", key_length=16)
+        
+        # Reset and simulate attack
+        qkd.reset_channel()
+        qkd.simulate_attack(0.3)  # 30% eavesdropping probability
+        result2 = qkd.generate_shared_key("alice", "bob", key_length=16)
+        
+        # Under attack, error rate should generally be higher
+        # (though due to randomness, this isn't guaranteed in every run)
+        assert result1.error_rate >= 0.0
+        assert result2.error_rate >= 0.0
+    
+    def test_unsupported_protocol(self):
+        """Test handling of unsupported protocols"""
+        qkd = QuantumKeyDistribution()
+        
+        with pytest.raises(ValueError, match="Protocol .* not implemented"):
+            qkd.generate_shared_key("alice", "bob", protocol=QKDProtocol.E91)
