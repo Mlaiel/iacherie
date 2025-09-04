@@ -17,6 +17,7 @@ from .agent_registry import AgentRegistry, get_agent, list_agents
 from .core_business_agents import CoreBusinessAgents
 from .content_agents import ContentAgents  
 from .technical_agents import TechnicalAgents
+from .therapy import TherapyAIService, create_therapy_service
 
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
@@ -28,5 +29,7 @@ __all__ = [
     "list_agents",
     "CoreBusinessAgents",
     "ContentAgents",
-    "TechnicalAgents"
+    "TechnicalAgents",
+    "TherapyAIService",
+    "create_therapy_service"
 ]
