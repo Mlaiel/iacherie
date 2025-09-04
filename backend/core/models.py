@@ -52,6 +52,7 @@ class BaseModel:
     """Base model with common fields and functionality"""
     
     def __init__(self):
+        super().__init__()
         self.id = str(uuid.uuid4())
         self.created_at = datetime.now(timezone.utc)
         self.updated_at = datetime.now(timezone.utc)
@@ -222,6 +223,9 @@ class UserModel(BaseModel):
     analytics, subscription management, and content creator features.
     """
     
+    def __post_init__(self):
+        super().__init__()
+    
     # Primary identification
     username: str = ""
     email: str = ""
@@ -283,6 +287,9 @@ class UserModel(BaseModel):
 class InfluencerModel(BaseModel):
     """Influencer-specific data model"""
     
+    def __post_init__(self):
+        super().__init__()
+    
     user_id: str = ""
     niche: str = ""
     follower_count: int = 0
@@ -298,6 +305,9 @@ class InfluencerModel(BaseModel):
 @dataclass
 class PersonalityModel(BaseModel):
     """Personality traits and AI persona model"""
+    
+    def __post_init__(self):
+        super().__init__()
     
     user_id: str = ""
     personality_type: str = ""  # MBTI, Big Five, etc.
@@ -319,6 +329,9 @@ class ContentModel(BaseModel):
     Advanced content data model for multi-format creator content 
     with AI protection and monetization
     """
+    
+    def __post_init__(self):
+        super().__init__()
     
     # Basic content information
     title: str = ""
@@ -479,6 +492,9 @@ class SubscriptionModel(BaseModel):
 class PaymentModel(BaseModel):
     """Payment processing model"""
     
+    def __post_init__(self):
+        super().__init__()
+    
     user_id: str = ""
     amount: Decimal = Decimal('0.00')
     currency: str = "EUR"
@@ -623,6 +639,9 @@ class RatingModel(BaseModel):
 class AnalyticsModel(BaseModel):
     """Comprehensive analytics data model"""
     
+    def __post_init__(self):
+        super().__init__()
+    
     entity_id: str = ""  # user, content, etc.
     entity_type: str = ""
     metric_type: MetricType = MetricType.CONTENT
@@ -720,6 +739,9 @@ class LocationModel(BaseModel):
 @dataclass
 class CollaborationModel(BaseModel):
     """Collaboration management model"""
+    
+    def __post_init__(self):
+        super().__init__()
     
     initiator_id: str = ""
     collaborator_id: str = ""
