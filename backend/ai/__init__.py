@@ -29,6 +29,21 @@ from .companion import (
     create_creative_companion,
     create_mentor_companion
 )
+from .education import (
+    EducationAIService,
+    IEducationAIService,
+    CourseType,
+    DifficultyLevel,
+    AssessmentType,
+    LearningStyle,
+    TutoringMode,
+    Course,
+    StudentProfile,
+    Assessment,
+    create_education_service,
+    create_content_creator_tutor,
+    create_business_development_tutor
+)
 
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
@@ -52,5 +67,19 @@ __all__ = [
     "create_friendly_companion",
     "create_professional_companion",
     "create_creative_companion",
-    "create_mentor_companion"
+    "create_mentor_companion",
+    # Education Service - AI Tutor & Learning Management
+    "EducationAIService",
+    "IEducationAIService",
+    "CourseType",
+    "DifficultyLevel", 
+    "AssessmentType",
+    "LearningStyle",
+    "TutoringMode",
+    "Course",
+    "StudentProfile",
+    "Assessment",
+    "create_education_service",
+    "create_content_creator_tutor",
+    "create_business_development_tutor"
 ]
