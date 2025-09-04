@@ -15,11 +15,11 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 # Try to import the app, fallback to a simple one if complex dependencies fail
 try:
-    from api.asgi import app
-    print("✓ Successfully imported api.asgi app")
+    from backend.api.asgi import app
+    print("✓ Successfully imported backend.api.asgi app")
     MAIN_APP_AVAILABLE = True
 except ImportError as e:
-    print(f"⚠️  Could not import api.asgi app: {e}")
+    print(f"⚠️  Could not import backend.api.asgi app: {e}")
     MAIN_APP_AVAILABLE = False
 
 # Try to import config, fallback to simple config if needed
@@ -35,8 +35,8 @@ try:
 except ImportError as e:
     try:
         # Fallback to unified app_config module
-        from config.app_config import settings
-        print("✓ Successfully imported config.app_config as fallback")
+        from backend.config.app_config import settings
+        print("✓ Successfully imported backend.config.app_config as fallback")
         print(f"✓ Environment: {settings.app.environment}")
         print(f"✓ Debug mode: {settings.app.debug}")
         print(f"✓ Host: {settings.app.host}")
@@ -69,7 +69,7 @@ if not MAIN_APP_AVAILABLE:
     
     # Add validation endpoints
     try:
-        from api.validation_endpoints import router as validation_router
+        from backend.api.validation_endpoints import router as validation_router
         app.include_router(validation_router)
         print("✓ Validation endpoints added")
     except ImportError as e:

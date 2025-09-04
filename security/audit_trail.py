@@ -16,7 +16,7 @@ from enum import Enum
 from dataclasses import dataclass, field
 import uuid
 
-from database.audit_logs.security_events import SecurityEventLogger, SecurityEventType
+from backend.database.audit_logs.security_events import SecurityEventLogger, SecurityEventType
 from data_management.governance.access import AccessController, AccessLog
 from ai_engine.ml.audit_logger import AuditLogger, AuditLevel, AuditCategory
 

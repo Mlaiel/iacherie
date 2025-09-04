@@ -26,7 +26,7 @@ import aiohttp
 
 # Internal imports
 try:
-    from business.collaboration.matching_engine import CollaborationMatcher
+    from backend.business.collaboration.matching_engine import CollaborationMatcher
     from ai_engine.content_processor import ContentProcessor
     from core.config import get_settings
     from core.logging import get_logger

@@ -19,7 +19,7 @@ except ImportError:
     except ImportError:
         try:
             # Fallback to database import
-            from database.communication.notification_engine import NotificationPreference
+            from backend.database.communication.notification_engine import NotificationPreference
         except ImportError:
             # Mock for testing when dependencies are not available
             class NotificationPreference:

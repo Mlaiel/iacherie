@@ -1116,7 +1116,7 @@ Initialise le service blockchain"""
             try:
                 # Attempt to connect to database and load certificates
                 # This would typically use SQLAlchemy or similar ORM
-                from database.repositories.blockchain_repository import BlockchainRepository
+                from backend.database.repositories.blockchain_repository import BlockchainRepository
                 
                 repository = BlockchainRepository()
                 stored_certificates = await repository.get_all_certificates()
@@ -1293,7 +1293,7 @@ Initialise le service blockchain"""
             # Database saving implementation for certificates
             try:
                 # Attempt to connect to database and save certificates
-                from database.repositories.blockchain_repository import BlockchainRepository
+                from backend.database.repositories.blockchain_repository import BlockchainRepository
                 
                 repository = BlockchainRepository()
                 

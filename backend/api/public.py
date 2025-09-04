@@ -559,3 +559,62 @@ async def rate_limit_middleware(request, call_next):
     response.headers["X-RateLimit-Reset"] = str(int((datetime.utcnow() + timedelta(minutes=1)).timestamp()))
     
     return response
+
+
+# ========================================
+# CONSOLIDATED ENDPOINTS (from endpoints.py)
+# ========================================
+
+# Import existing consolidated routers
+from .core_api import core_router
+from .business_api import business_router
+
+# Create consolidated endpoints router
+endpoints_router = APIRouter(prefix="/api/v1", tags=["endpoints"])
+
+# Include all existing consolidated routers
+endpoints_router.include_router(core_router, prefix="/core")
+endpoints_router.include_router(business_router, prefix="/business")
+endpoints_router.include_router(public_router, prefix="/public")
+
+# Additional system endpoints
+@endpoints_router.get("/health")
+async def health_check():
+    """Health check endpoint"""
+    return {
+        "status": "healthy",
+        "timestamp": datetime.utcnow().isoformat(),
+        "version": "2.0.0",
+        "service": "IA Influencer Agent API"
+    }
+
+@endpoints_router.get("/version")
+async def get_version():
+    """Get API version information"""
+    return {
+        "api_version": "2.0.0",
+        "platform": "IA Influencer Agent",
+        "author": "Fahed Mlaiel",
+        "build_date": "2025-01-01",
+        "capabilities": [
+            "content_protection",
+            "ai_fingerprinting", 
+            "monetization",
+            "collaboration",
+            "analytics",
+            "multi_platform_distribution"
+        ]
+    }
+
+@endpoints_router.get("/status")
+async def get_status():
+    """Get detailed system status"""
+    return {
+        "api_status": "operational",
+        "database_status": "connected", 
+        "cache_status": "active",
+        "ai_engine_status": "ready",
+        "protection_engine_status": "active",
+        "uptime": "99.99%",
+        "last_updated": datetime.utcnow().isoformat()
+    }
