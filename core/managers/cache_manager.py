@@ -1129,3 +1129,5 @@ def get_cache_manager() -> CacheManager:
     if cache_manager is None:
         cache_manager = CacheManager()
     return cache_manager
+# END OF FILE
+"""
