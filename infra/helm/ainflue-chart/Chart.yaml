@@ -1,0 +1,40 @@
+apiVersion: v2
+name: ainflue-chart
+description: A Helm chart for Ainflue AI Influencer Platform
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+keywords:
+  - ainflue
+  - ai
+  - influencer
+  - social-media
+  - content-generation
+home: https://ainflue.com
+sources:
+  - https://github.com/Mlaiel/Ainflue
+maintainers:
+  - name: Fahed Mlaiel
+    email: mlaiel@live.de
+    url: https://github.com/Mlaiel
+dependencies:
+  - name: postgresql
+    version: 12.x.x
+    repository: https://charts.bitnami.com/bitnami
+    condition: postgresql.enabled
+  - name: redis
+    version: 18.x.x
+    repository: https://charts.bitnami.com/bitnami
+    condition: redis.enabled
+  - name: nginx-ingress
+    version: 4.x.x
+    repository: https://kubernetes.github.io/ingress-nginx
+    condition: ingress.enabled
+  - name: cert-manager
+    version: 1.x.x
+    repository: https://charts.jetstack.io
+    condition: certManager.enabled
+  - name: prometheus
+    version: 25.x.x
+    repository: https://prometheus-community.github.io/helm-charts
+    condition: monitoring.enabled

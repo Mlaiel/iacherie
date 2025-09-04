@@ -1,0 +1,90 @@
+# Development Environment Variables
+# =================================
+
+# Environment configuration
+environment: dev
+project_name: ainflue
+aws_region: us-west-2
+
+# Infrastructure sizing (smaller for dev)
+cluster_size: 2
+db_instance_class: db.t3.micro
+
+# Domain configuration
+domain_name: dev.ainflue.com
+
+# Feature flags
+enable_monitoring: true
+enable_backup: false
+
+# Docker configuration
+docker_registry: ainflue
+image_tag: dev
+
+# Database configuration
+postgresql:
+  enabled: true
+  auth:
+    password: "dev-password-change-me"
+
+# Redis configuration
+redis:
+  enabled: true
+  auth:
+    enabled: false
+
+# API Keys (should be overridden via environment variables or vault)
+openai_api_key: ""
+elevenlabs_api_key: ""
+stripe_secret_key: ""
+stripe_publishable_key: ""
+shopify_api_key: ""
+midjourney_api_token: ""
+
+# Resource limits (smaller for dev)
+api:
+  replicaCount: 2
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "125m"
+    limits:
+      memory: "512Mi"
+      cpu: "250m"
+
+aiEngine:
+  replicaCount: 1
+  resources:
+    requests:
+      memory: "1Gi"
+      cpu: "500m"
+    limits:
+      memory: "2Gi"
+      cpu: "1000m"
+
+mobileApi:
+  replicaCount: 1
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+    limits:
+      memory: "256Mi"
+      cpu: "200m"
+
+workers:
+  replicaCount: 2
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "125m"
+    limits:
+      memory: "512Mi"
+      cpu: "250m"
+
+# Monitoring configuration
+grafana_admin_password: "dev-admin-password"
+
+# SSL configuration
+ssl_enabled: false  # Use HTTP for dev
+cert_manager_enabled: false
