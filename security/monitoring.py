@@ -18,7 +18,7 @@ import uuid
 from security.audit_trail import SecurityAuditTrail, AuditTrailLevel, security_audit_trail
 from security.vulnerability_scanner import SecurityScanner, security_scanner
 from database.audit_logs.security_events import SecurityEventLogger, SecurityEventType
-from data_management.seeds.security_seeds import SecuritySeedsManager
+from backend.core.seeds.security_seeds import SecuritySeedsManager
 
 logger = logging.getLogger(__name__)
 

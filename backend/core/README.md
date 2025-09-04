@@ -1,24 +1,54 @@
-# Consolidated Models Documentation
+# Backend Core - Database Consolidation
 
 ## Overview
 
-The `backend/core/models.py` file contains all 39+ data models for the IA Influencer Agent Platform, consolidating previously scattered model definitions into a single, comprehensive module.
+The `backend/core` module contains the consolidated database infrastructure for the IA Influencer Agent Platform, bringing together migrations, schemas, seeds, and models into a unified location.
+
+## Structure
+
+### Consolidated Components
+
+- **`migrations/`** - Database migration scripts and utilities (50+ files)
+  - SQL migrations from `database/migrations/`
+  - Python migration utilities from `data_management/migrations/`
+  
+- **`schemas/`** - Database schema definitions (30+ files)
+  - Pydantic schemas from `database/schemas/`
+  
+- **`seeds/`** - Database seed data initialization (20+ files) 
+  - Seed managers from `data_management/seeds/`
+  
+- **`models.py`** - Consolidated data models (39+ models)
 
 ## Features
 
-- **39 Comprehensive Models** covering all business domains
+- **Database Consolidation** - All database-related code in one location
+- **50+ Migration Files** - SQL and Python migration scripts  
+- **30+ Schema Definitions** - Comprehensive Pydantic schemas
+- **20+ Seed Managers** - Enterprise-grade data initialization
+- **39+ Data Models** - Complete business domain coverage
 - **Type-safe Enumerations** for data consistency  
 - **Dynamic Model Registry** for programmatic access
 - **Utility Functions** for model management
 - **Professional Documentation** with clear structure
-- **Full Test Coverage** ensuring reliability
+- **Import Path Updates** - All imports updated to new consolidated location
 
 ## Usage
 
-### Basic Import
+### Import Paths (Updated)
 
 ```python
-from backend.core.models import *
+# Schemas
+from backend.core.schemas import ContentFingerprintCreateSchema
+
+# Seeds
+from backend.core.seeds import SeedManager, ContentSeedsManager
+
+# Migrations  
+from backend.core.migrations import MigrationManager, PerformanceOptimizer
+
+# Models
+from backend.core.models import UserModel, ContentModel
 ```
 
 ### Creating Models

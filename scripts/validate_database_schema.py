@@ -322,7 +322,7 @@ async def run_migrations():
     
     # Run individual migrations if available
     try:
-        from database.migrations.migration_runner import MigrationRunner
+        from backend.core.migrations.migration_runner import MigrationRunner
         runner = MigrationRunner()
         await runner.run_all_migrations()
         print('✅ All migrations completed')

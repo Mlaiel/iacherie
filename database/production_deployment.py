@@ -30,7 +30,7 @@ from database.ssl_manager import DatabaseSSLManager, SSLConfig, SSLMode
 from database.user_manager import DatabaseUserManager, ServiceRole
 from database.pools.manager import PostgreSQLConnectionPool, PoolConfig, DatabaseConnectionInfo
 from data.models.migrations import MigrationManager
-from data_management.migrations.performance_optimizer import PerformanceOptimizer
+from backend.core.migrations.performance_optimizer import PerformanceOptimizer
 from kubernetes.scripts.backup_management import BackupManager
 from database.replication.master import ReplicationMaster
 from kubernetes.database.performance_monitor import DatabasePerformanceMonitor
