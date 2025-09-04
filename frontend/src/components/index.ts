@@ -81,88 +81,82 @@ export const Tables = {
 // 12. MODALS & NOTIFICATIONS - Modal dialogs, alerts, notifications
 export const Modals = {
   // Modal components will be dynamically loaded here
-  placeholder: 'Modals and notifications components consolidated here'
+  placeholder: 'Modals and notifications components consolidated here',
+  
+  // Consolidated metadata for all components
+  metadata: {
+    totalGroupsBefore: '150+ individual components',
+    totalGroupsAfter: 12,
+    approach: 'Namespace-based consolidation by functionality',
+    benefits: [
+      'Reduced top-level exports from 150+ to 12',
+      'Logical grouping by functionality',
+      'Improved discoverability',
+      'Easier maintenance',
+      'Clear separation of concerns'
+    ],
+    implementation: 'Gradual migration with backward compatibility',
+    groups: {
+      forms: {
+        name: 'Forms & Input',
+        description: 'Form components, input fields, and multi-step wizards',
+        count: 20, // Based on problem statement
+      },
+      charts: {
+        name: 'Charts & Analytics', 
+        description: 'Data visualization, analytics, and chart components',
+        count: 20, // Based on problem statement
+      },
+      layout: {
+        name: 'Navigation & Layout',
+        description: 'Navigation bars, layout containers, and structural components',
+        count: 25, // Based on problem statement (15 layouts + 10 navigation)
+      },
+      media: {
+        name: 'Media & Upload',
+        description: 'Media processing, upload handling, and remix studio tools',
+        count: 10, // Estimated
+      },
+      dashboard: {
+        name: 'Dashboard & Metrics',
+        description: 'Dashboard interfaces, metric cards, and real-time displays',
+        count: 15, // Estimated
+      },
+      protection: {
+        name: 'Protection & Security',
+        description: 'Content protection, copyright management, and security tools',
+        count: 10, // Estimated
+      },
+      monetization: {
+        name: 'Monetization & Revenue',
+        description: 'Payment processing, revenue tracking, and subscription management',
+        count: 5, // Estimated
+      },
+      content: {
+        name: 'Content Management',
+        description: 'Content organization, scheduling, and preview tools',
+        count: 15, // Estimated
+      },
+      social: {
+        name: 'Collaboration & Social',
+        description: 'Collaboration tools, gamification, and social features',
+        count: 15, // Estimated
+      },
+      monitoring: {
+        name: 'Monitoring & Settings',
+        description: 'System monitoring, settings management, and PWA controls',
+        count: 10, // Estimated
+      },
+      tables: {
+        name: 'Tables & Lists',
+        description: 'Data tables, lists, and activity feeds',
+        count: 10, // Based on problem statement
+      },
+      modals: {
+        name: 'Modals & Notifications',
+        description: 'Modal dialogs, alerts, and notification systems',
+        count: 15, // Based on problem statement
+      },
+    }
+  }
 };
-
-// ============================================================================
-// COMPONENT METADATA FOR DOCUMENTATION
-// ============================================================================
-export const CONSOLIDATED_GROUPS = {
-  forms: {
-    name: 'Forms & Input',
-    description: 'Form components, input fields, and multi-step wizards',
-    count: 20, // Based on problem statement
-  },
-  charts: {
-    name: 'Charts & Analytics', 
-    description: 'Data visualization, analytics, and chart components',
-    count: 20, // Based on problem statement
-  },
-  layout: {
-    name: 'Navigation & Layout',
-    description: 'Navigation bars, layout containers, and structural components',
-    count: 25, // Based on problem statement (15 layouts + 10 navigation)
-  },
-  media: {
-    name: 'Media & Upload',
-    description: 'Media processing, upload handling, and remix studio tools',
-    count: 10, // Estimated
-  },
-  dashboard: {
-    name: 'Dashboard & Metrics',
-    description: 'Dashboard interfaces, metric cards, and real-time displays',
-    count: 15, // Estimated
-  },
-  protection: {
-    name: 'Protection & Security',
-    description: 'Content protection, copyright management, and security tools',
-    count: 10, // Estimated
-  },
-  monetization: {
-    name: 'Monetization & Revenue',
-    description: 'Payment processing, revenue tracking, and subscription management',
-    count: 5, // Estimated
-  },
-  content: {
-    name: 'Content Management',
-    description: 'Content organization, scheduling, and preview tools',
-    count: 15, // Estimated
-  },
-  social: {
-    name: 'Collaboration & Social',
-    description: 'Collaboration tools, gamification, and social features',
-    count: 15, // Estimated
-  },
-  monitoring: {
-    name: 'Monitoring & Settings',
-    description: 'System monitoring, settings management, and PWA controls',
-    count: 10, // Estimated
-  },
-  tables: {
-    name: 'Tables & Lists',
-    description: 'Data tables, lists, and activity feeds',
-    count: 10, // Based on problem statement
-  },
-  modals: {
-    name: 'Modals & Notifications',
-    description: 'Modal dialogs, alerts, and notification systems',
-    count: 15, // Based on problem statement
-  },
-} as const;
-
-// ============================================================================
-// CONSOLIDATION SUMMARY
-// ============================================================================
-export const CONSOLIDATION_SUMMARY = {
-  totalGroupsBefore: '150+ individual components',
-  totalGroupsAfter: 12,
-  approach: 'Namespace-based consolidation by functionality',
-  benefits: [
-    'Reduced top-level exports from 150+ to 12',
-    'Logical grouping by functionality',
-    'Improved discoverability',
-    'Easier maintenance',
-    'Clear separation of concerns'
-  ],
-  implementation: 'Gradual migration with backward compatibility'
-} as const;
