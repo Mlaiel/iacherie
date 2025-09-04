@@ -37,11 +37,7 @@ export {
   Social,
   Monitoring,
   Tables,
-  Modals,
-  
-  // Metadata exports
-  CONSOLIDATED_GROUPS,
-  CONSOLIDATION_SUMMARY
+  Modals
 } from '../src/components';
 
 // Component metadata for documentation and routing

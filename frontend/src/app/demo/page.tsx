@@ -10,11 +10,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import MediaUploader from '../components/MediaUploader';
-import AIProtection from '../components/AIProtection';
-import CollaborationHub from '../components/CollaborationHub';
-import Analytics from '../components/Analytics';
-import Monetization from '../components/Monetization';
+import MediaUploader from '../../../components/MediaUploader';
+import AIProtection from '../../../components/AIProtection';
+import CollaborationHub from '../../../components/CollaborationHub';
+import Analytics from '../../../components/Analytics';
+import Monetization from '../../../components/Monetization';
 
 const ComponentDemo: React.FC = () => {
   const [activeComponent, setActiveComponent] = useState<string>('media');
