@@ -40,10 +40,7 @@ from .migrations import *
 from .pools import *
 
 # Caching and performance
-try:
-    from .cache import *
-except ImportError:
-    pass  # Cache module optional
+from .cache import *
 
 # Security and monitoring
 from .security import *
@@ -54,11 +51,7 @@ from .analytics import *
 from .optimization import *
 
 # Infrastructure
-try:
-    from .backup import *
-except ImportError:
-    pass  # Backup module optional
-
+from .backup import *
 from .replication import *
 
 __all__ = [

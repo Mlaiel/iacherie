@@ -98,7 +98,7 @@ if not MAIN_APP_AVAILABLE:
 
 # Try to import optional components
 try:
-    from database.schema import create_tables
+    from backend.database.migrations import create_tables
     CREATE_TABLES_AVAILABLE = True
 except ImportError as e:
     print(f"⚠️  Database schema not available: {e}")
