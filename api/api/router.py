@@ -1,9 +1,9 @@
 """Main API router for Ainflue AI Platform.
 
 This router consolidates all API endpoints with comprehensive architecture compliance.
-Includes authentication, content management, collaboration, fingerprinting, protection, 
-monetization, analytics, security management, and comprehensive documentation endpoints 
-according to the unified business requirements.
+Routes have been consolidated from 17+ individual files into 2 main routers:
+- Core API: Authentication, content management, analytics, monitoring, platform integration, GDPR
+- Business API: Monetization, payments, collaboration, fingerprinting, protection, licensing, webhooks, alerts, AI agents
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
@@ -11,13 +11,9 @@ of this code without explicit written permission from Fahed Mlaiel is strictly p
 """
 
 from fastapi import APIRouter
-from .auth_endpoints import router as auth_router
-from .content_endpoints import router as content_router  
-from .collaboration_endpoints import router as collaboration_router
-from .fingerprinting_endpoints import router as fingerprinting_router
-from .protection_endpoints import router as protection_router
-from .monetization_endpoints import router as monetization_router
-from .analytics_endpoints import router as analytics_router
+# Import consolidated API routers from backend/api
+from ...backend.api import core_router, business_router
+# Import remaining individual routers that haven't been consolidated yet
 from .monitoring_endpoints import router as monitoring_router
 from .documentation_endpoints import router as documentation_router
 from .security_endpoints import router as security_router
@@ -28,19 +24,16 @@ router = APIRouter()
 # Include all endpoint routers with v1 prefix for versioning
 v1_router = APIRouter(prefix="/v1")
 
-# Core business functionality
-v1_router.include_router(auth_router)
-v1_router.include_router(content_router)
-v1_router.include_router(collaboration_router)
-v1_router.include_router(fingerprinting_router)
-v1_router.include_router(protection_router)
-v1_router.include_router(monetization_router)
-v1_router.include_router(analytics_router)
+# Consolidated core functionality (auth, content, analytics, monitoring, platform integration, GDPR)
+v1_router.include_router(core_router, tags=["Core API"])
 
-# System and operations
-v1_router.include_router(monitoring_router)
-v1_router.include_router(security_router)
-v1_router.include_router(documentation_router)
+# Consolidated business functionality (monetization, payments, collaboration, fingerprinting, protection, etc.)
+v1_router.include_router(business_router, tags=["Business API"])
+
+# Individual routers that haven't been consolidated yet
+v1_router.include_router(monitoring_router, tags=["System Monitoring"])
+v1_router.include_router(security_router, tags=["Security"])
+v1_router.include_router(documentation_router, tags=["Documentation"])
 
 # Enhanced comprehensive health check endpoint
 @v1_router.get(
