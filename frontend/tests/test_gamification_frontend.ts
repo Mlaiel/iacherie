@@ -48,7 +48,7 @@ import {
   
   // Utilities
   GamificationUtils
-} from '../src/components/gamification';
+} from '../components/gamification';
 
 describe('Gamification System', () => {
   describe('Types and Enums', () => {
