@@ -24,8 +24,8 @@ import {
   CheckIcon,
   ClockIcon
 } from '@heroicons/react/24/outline';
-import { studioUtils } from './remix_studio.styles';
-import type { StudioState, ExportSettings } from './index';
+import { studioUtils } from '../remix_studio/remix_studio.styles';
+import type { StudioState, ExportSettings } from '../remix_studio/index';
 
 interface ExportManagerProps {
   studioState: StudioState;

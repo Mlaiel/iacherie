@@ -26,8 +26,8 @@ import {
   PowerIcon,
   Cog6ToothIcon
 } from '@heroicons/react/24/outline';
-import { studioColors, studioUtils } from './remix_studio.styles';
-import type { AudioTrack, AudioEffect } from './index';
+import { studioColors, studioUtils } from '../remix_studio/remix_studio.styles';
+import type { AudioTrack, AudioEffect } from '../remix_studio/index';
 
 interface EffectsPanelProps {
   selectedTracks: string[];

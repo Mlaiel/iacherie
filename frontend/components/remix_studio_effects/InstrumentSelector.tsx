@@ -24,7 +24,7 @@ import {
   PlayIcon,
   PlusIcon
 } from '@heroicons/react/24/outline';
-import { studioColors, studioUtils } from './remix_studio.styles';
+import { studioColors, studioUtils } from '../remix_studio/remix_studio.styles';
 
 interface Instrument {
   id: string;

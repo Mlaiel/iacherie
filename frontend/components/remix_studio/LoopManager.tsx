@@ -19,7 +19,7 @@
 
 import React, { useState } from 'react';
 import { ArrowPathIcon, PlayIcon, StopIcon } from '@heroicons/react/24/outline';
-import { studioUtils } from './remix_studio.styles';
+import { studioUtils } from '../remix_studio/remix_studio.styles';
 
 interface LoopManagerProps {
   className?: string;

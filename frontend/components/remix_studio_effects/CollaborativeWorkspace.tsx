@@ -25,8 +25,8 @@ import {
   LockClosedIcon,
   EyeIcon
 } from '@heroicons/react/24/outline';
-import { studioUtils } from './remix_studio.styles';
-import type { CollaborationUser } from './index';
+import { studioUtils } from '../remix_studio/remix_studio.styles';
+import type { CollaborationUser } from '../remix_studio/index';
 
 interface CollaborativeWorkspaceProps {
   projectId: string;

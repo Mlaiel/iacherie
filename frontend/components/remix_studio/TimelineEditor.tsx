@@ -27,8 +27,8 @@ import {
   MagnifyingGlassPlusIcon,
   MagnifyingGlassMinusIcon
 } from '@heroicons/react/24/outline';
-import { studioColors, studioComponents, studioUtils } from './remix_studio.styles';
-import type { AudioTrack } from './index';
+import { studioColors, studioComponents, studioUtils } from '../remix_studio/remix_studio.styles';
+import type { AudioTrack } from '../remix_studio/index';
 
 interface TimelineEditorProps {
   tracks: AudioTrack[];

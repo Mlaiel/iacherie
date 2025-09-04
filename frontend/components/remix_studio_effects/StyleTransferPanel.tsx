@@ -19,7 +19,7 @@
 
 import React, { useState } from 'react';
 import { SparklesIcon, PlayIcon } from '@heroicons/react/24/outline';
-import { studioUtils } from './remix_studio.styles';
+import { studioUtils } from '../remix_studio/remix_studio.styles';
 
 interface StyleTransferPanelProps {
   className?: string;

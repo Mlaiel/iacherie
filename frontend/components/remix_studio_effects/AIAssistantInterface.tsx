@@ -31,8 +31,8 @@ import {
   MusicalNoteIcon,
   AdjustmentsHorizontalIcon
 } from '@heroicons/react/24/outline';
-import { studioColors, studioUtils } from './remix_studio.styles';
-import type { StudioState, AIAssistantSuggestion } from './index';
+import { studioColors, studioUtils } from '../remix_studio/remix_studio.styles';
+import type { StudioState, AIAssistantSuggestion } from '../remix_studio/index';
 
 interface AIAssistantInterfaceProps {
   studioState: StudioState;

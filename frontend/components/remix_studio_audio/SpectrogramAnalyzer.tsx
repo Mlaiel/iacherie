@@ -18,7 +18,7 @@
  */
 
 import React, { useRef, useEffect, useCallback } from 'react';
-import { studioColors, studioUtils } from './remix_studio.styles';
+import { studioColors, studioUtils } from '../remix_studio/remix_studio.styles';
 
 interface SpectrogramAnalyzerProps {
   audioUrl?: string;

@@ -18,7 +18,7 @@
  */
 
 import React, { useRef, useEffect, useState, useCallback, useMemo } from 'react';
-import { studioColors, studioComponents, studioUtils } from './remix_studio.styles';
+import { studioColors, studioComponents, studioUtils } from '../remix_studio/remix_studio.styles';
 
 interface WaveformVisualizerProps {
   audioUrl?: string;
