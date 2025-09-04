@@ -84,7 +84,6 @@ class MetricPoint:
 
 
 @dataclass
-@dataclass
 class PerformanceMetrics:
     """
 Performance-related metrics"""
