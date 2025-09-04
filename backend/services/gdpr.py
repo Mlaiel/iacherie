@@ -514,7 +514,7 @@ class GDPRService:
                 "request_type": gdpr_request.request_type.value,
                 "request_status": gdpr_request.status,
                 "submitted_at": gdpr_request.submitted_at.isoformat(),
-                "updated_at": gdpr_request.updated_at.isoformat() if gdpr_request.updated_at else None,
+                "completed_at": gdpr_request.completed_at.isoformat() if gdpr_request.completed_at else None,
                 "user_id": str(gdpr_request.user_id),
                 "service_id": self.service_id
             }
