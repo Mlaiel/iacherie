@@ -40,15 +40,53 @@ try:
 except ImportError:
     AI_AVAILABLE = False
 
-# Additional modules will be imported as they are created
-# from . import api  
-# from . import security
-# from . import monetization
-# from . import monitoring
-# from . import storage
-# from . import deployment
-# from . import integrations
-# from . import business
+try:
+    from . import security
+    SECURITY_AVAILABLE = True
+except ImportError:
+    SECURITY_AVAILABLE = False
+
+try:
+    from . import monetization
+    MONETIZATION_AVAILABLE = True
+except ImportError:
+    MONETIZATION_AVAILABLE = False
+
+try:
+    from . import api
+    API_AVAILABLE = True
+except ImportError:
+    API_AVAILABLE = False
+
+try:
+    from . import monitoring
+    MONITORING_AVAILABLE = True
+except ImportError:
+    MONITORING_AVAILABLE = False
+
+try:
+    from . import storage
+    STORAGE_AVAILABLE = True
+except ImportError:
+    STORAGE_AVAILABLE = False
+
+try:
+    from . import deployment
+    DEPLOYMENT_AVAILABLE = True
+except ImportError:
+    DEPLOYMENT_AVAILABLE = False
+
+try:
+    from . import integrations
+    INTEGRATIONS_AVAILABLE = True
+except ImportError:
+    INTEGRATIONS_AVAILABLE = False
+
+try:
+    from . import business
+    BUSINESS_AVAILABLE = True
+except ImportError:
+    BUSINESS_AVAILABLE = False
 
 # Version information
 __version__ = "1.0.0"
@@ -64,5 +102,21 @@ if CACHE_AVAILABLE:
     available_modules.append("cache")
 if AI_AVAILABLE:
     available_modules.append("ai")
+if SECURITY_AVAILABLE:
+    available_modules.append("security")
+if MONETIZATION_AVAILABLE:
+    available_modules.append("monetization")
+if API_AVAILABLE:
+    available_modules.append("api")
+if MONITORING_AVAILABLE:
+    available_modules.append("monitoring")
+if STORAGE_AVAILABLE:
+    available_modules.append("storage")
+if DEPLOYMENT_AVAILABLE:
+    available_modules.append("deployment")
+if INTEGRATIONS_AVAILABLE:
+    available_modules.append("integrations")
+if BUSINESS_AVAILABLE:
+    available_modules.append("business")
 
 __all__ = available_modules
