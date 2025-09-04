@@ -18,6 +18,17 @@ from .core_business_agents import CoreBusinessAgents
 from .content_agents import ContentAgents  
 from .technical_agents import TechnicalAgents
 from .therapy import TherapyAIService, create_therapy_service
+from .companion import (
+    CompanionService, 
+    ICompanionService,
+    CompanionPersonalityType,
+    ConversationContext,
+    create_companion_service,
+    create_friendly_companion,
+    create_professional_companion,
+    create_creative_companion,
+    create_mentor_companion
+)
 
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
@@ -31,5 +42,15 @@ __all__ = [
     "ContentAgents",
     "TechnicalAgents",
     "TherapyAIService",
-    "create_therapy_service"
+    "create_therapy_service",
+    # Companion Service - Virtual AI Companion
+    "CompanionService",
+    "ICompanionService",
+    "CompanionPersonalityType", 
+    "ConversationContext",
+    "create_companion_service",
+    "create_friendly_companion",
+    "create_professional_companion",
+    "create_creative_companion",
+    "create_mentor_companion"
 ]
