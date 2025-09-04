@@ -1,1 +1,0 @@
-"""Subscription Agent Adapters Module"""

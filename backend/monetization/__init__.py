@@ -40,7 +40,7 @@ __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 
-# Subscription Engine imports
+# Subscription Engine imports (consolidated with licensing)
 try:
     from .subscription_engine import (
         SubscriptionEngine,
@@ -49,15 +49,21 @@ try:
         SubscriptionTier,
         SubscriptionStatus,
         BillingCycle,
-        get_subscription_engine
+        get_subscription_engine,
+        # Consolidated licensing imports
+        LicensingManager,
+        LicenseType,
+        LicenseStatus,
+        ContentLicense,
+        UsageTracker
     )
     subscription_engine_available = True
-    logger.info("✅ Subscription Engine loaded successfully")
+    logger.info("✅ Subscription Engine + Licensing loaded successfully")
 except ImportError as e:
     logger.warning(f"❌ Subscription Engine not available: {e}")
     subscription_engine_available = False
 
-# Payment Processor imports
+# Payment Processor imports (consolidated with enhanced providers)
 try:
     from .payment_processor import (
         PaymentProcessor,
@@ -67,10 +73,16 @@ try:
         PaymentMethod,
         PaymentStatus,
         Currency,
-        get_payment_processor
+        get_payment_processor,
+        # Consolidated enhanced payment imports
+        ExtendedPaymentProvider,
+        PaymentProviderConfig,
+        EnhancedMultiProviderPaymentService,
+        SmartPaymentOrchestrator,
+        PaymentStrategy
     )
     payment_processor_available = True
-    logger.info("✅ Payment Processor loaded successfully")
+    logger.info("✅ Payment Processor + Enhanced Providers loaded successfully")
 except ImportError as e:
     logger.warning(f"❌ Payment Processor not available: {e}")
     payment_processor_available = False
@@ -95,22 +107,27 @@ except ImportError as e:
     logger.warning(f"❌ Crypto Wallet not available: {e}")
     crypto_wallet_available = False
 
-# Revenue Optimizer imports
+# Revenue Optimizer imports (consolidated with calculator and royalty engine)
 try:
     from .revenue_optimizer import (
         RevenueOptimizer,
         RevenueMetric,
         OptimizationRecommendation,
         OptimizationStrategy,
-        get_revenue_optimizer
+        get_revenue_optimizer,
+        # Consolidated revenue calculation imports
+        RevenueCalculator,
+        RevenueData,
+        RoyaltyEngine,
+        RoyaltyDistribution
     )
     revenue_optimizer_available = True
-    logger.info("✅ Revenue Optimizer loaded successfully")
+    logger.info("✅ Revenue Optimizer + Calculator + Royalty Engine loaded successfully")
 except ImportError as e:
     logger.warning(f"❌ Revenue Optimizer not available: {e}")
     revenue_optimizer_available = False
 
-# Tax Calculator imports
+# Tax Calculator imports (consolidated with compliance)
 try:
     from .tax_calculator import (
         TaxCalculator,
@@ -121,10 +138,14 @@ try:
         TaxJurisdiction,
         IncomeType,
         TaxPeriod,
-        get_tax_calculator
+        get_tax_calculator,
+        # Consolidated compliance imports
+        ComplianceEngine,
+        ComplianceFramework,
+        ComplianceCheck
     )
     tax_calculator_available = True
-    logger.info("✅ Tax Calculator loaded successfully")
+    logger.info("✅ Tax Calculator + Compliance loaded successfully")
 except ImportError as e:
     logger.warning(f"❌ Tax Calculator not available: {e}")
     tax_calculator_available = False

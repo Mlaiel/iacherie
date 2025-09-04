@@ -549,3 +549,133 @@ async def get_tax_calculator() -> TaxCalculator:
         _tax_calculator = TaxCalculator()
     
     return _tax_calculator
+
+
+# ============================================================================
+# COMPLIANCE AUTOMATION - Consolidated from compliance_automation_engine.py
+# ============================================================================
+
+class ComplianceFramework(Enum):
+    """Compliance frameworks and standards"""
+    GDPR = "gdpr"                    # General Data Protection Regulation
+    CCPA = "ccpa"                    # California Consumer Privacy Act
+    SOX = "sox"                      # Sarbanes-Oxley Act
+    PCI_DSS = "pci_dss"             # Payment Card Industry Data Security Standard
+    ASC_606 = "asc_606"             # Revenue Recognition Standard
+    IFRS_15 = "ifrs_15"             # International Revenue Recognition
+    KYC = "kyc"                      # Know Your Customer
+    AML = "aml"                      # Anti-Money Laundering
+
+
+@dataclass
+class ComplianceCheck:
+    """Compliance check result"""
+    framework: ComplianceFramework
+    status: str  # compliant, non_compliant, pending
+    score: float
+    issues: List[str]
+    recommendations: List[str]
+    last_check: datetime
+
+
+class ComplianceEngine:
+    """Simplified compliance automation engine"""
+    
+    def __init__(self):
+        self.logger = logging.getLogger(__name__)
+        self.compliance_rules: Dict[ComplianceFramework, Dict] = {}
+        self._initialize_compliance_rules()
+    
+    def _initialize_compliance_rules(self):
+        """Initialize basic compliance rules"""
+        self.compliance_rules = {
+            ComplianceFramework.GDPR: {
+                "data_retention_max_days": 730,
+                "consent_required": True,
+                "right_to_deletion": True
+            },
+            ComplianceFramework.PCI_DSS: {
+                "encryption_required": True,
+                "secure_transmission": True,
+                "access_control": True
+            },
+            ComplianceFramework.KYC: {
+                "identity_verification": True,
+                "document_verification": True,
+                "ongoing_monitoring": True
+            }
+        }
+    
+    async def run_compliance_check(
+        self, 
+        framework: ComplianceFramework,
+        data_context: Dict[str, Any] = None
+    ) -> ComplianceCheck:
+        """Run compliance check for specific framework"""
+        
+        issues = []
+        recommendations = []
+        score = 1.0
+        
+        rules = self.compliance_rules.get(framework, {})
+        
+        # Mock compliance checking
+        if framework == ComplianceFramework.GDPR:
+            if not data_context.get("user_consent", False):
+                issues.append("Missing user consent for data processing")
+                recommendations.append("Implement consent management system")
+                score -= 0.3
+        
+        elif framework == ComplianceFramework.PCI_DSS:
+            if not data_context.get("encrypted_payments", True):
+                issues.append("Payment data not properly encrypted")
+                recommendations.append("Implement end-to-end encryption for payments")
+                score -= 0.5
+        
+        status = "compliant" if score >= 0.8 else "non_compliant"
+        
+        return ComplianceCheck(
+            framework=framework,
+            status=status,
+            score=max(0.0, score),
+            issues=issues,
+            recommendations=recommendations,
+            last_check=datetime.now()
+        )
+    
+    async def generate_compliance_report(
+        self, 
+        frameworks: List[ComplianceFramework]
+    ) -> Dict[str, Any]:
+        """Generate comprehensive compliance report"""
+        
+        report = {
+            "generated_at": datetime.now().isoformat(),
+            "frameworks_checked": len(frameworks),
+            "checks": {},
+            "overall_score": 0.0,
+            "critical_issues": [],
+            "recommendations": []
+        }
+        
+        total_score = 0.0
+        
+        for framework in frameworks:
+            check = await self.run_compliance_check(framework)
+            report["checks"][framework.value] = {
+                "status": check.status,
+                "score": check.score,
+                "issues": check.issues,
+                "recommendations": check.recommendations
+            }
+            
+            total_score += check.score
+            
+            if check.status == "non_compliant":
+                report["critical_issues"].extend(check.issues)
+            
+            report["recommendations"].extend(check.recommendations)
+        
+        report["overall_score"] = total_score / len(frameworks) if frameworks else 0.0
+        
+        return report

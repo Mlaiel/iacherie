@@ -18,9 +18,9 @@ def test_licensing_repositories():
 Test that licensing repositories initialize correctly"""
     print("Testing licensing repositories...")
     try:
-        from monetization.licensing_manager import LicenseRepository, ContentRepository
+        from backend.monetization import LicensingManager, ContentLicense
         
-        # Test LicenseRepository
+        # Test LicensingManager
         license_repo = LicenseRepository()
         assert hasattr(license_repo, 'licenses')
         assert isinstance(license_repo.licenses, dict)

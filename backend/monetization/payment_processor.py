@@ -485,3 +485,221 @@ async def get_payment_processor() -> PaymentProcessor:
         _payment_processor = PaymentProcessor()
     
     return _payment_processor
+
+
+# ============================================================================
+# ENHANCED PAYMENT PROVIDERS - Consolidated from enhanced_payment_providers.py
+# ============================================================================
+
+class ExtendedPaymentProvider(Enum):
+    """Extended payment provider support."""
+    # Traditional providers
+    STRIPE = "stripe"
+    PAYPAL = "paypal"
+    WISE = "wise"
+    SQUARE = "square"
+    
+    # Digital wallets
+    APPLE_PAY = "apple_pay"
+    GOOGLE_PAY = "google_pay"
+    SAMSUNG_PAY = "samsung_pay"
+    
+    # Banking
+    PLAID = "plaid"
+    OPEN_BANKING = "open_banking"
+    ACH_DIRECT = "ach_direct"
+    SEPA = "sepa"
+    
+    # Cryptocurrency
+    COINBASE_COMMERCE = "coinbase_commerce"
+    BITPAY = "bitpay"
+    CRYPTO_COM = "crypto_com"
+    
+    # Regional providers
+    ALIPAY = "alipay"
+    WECHAT_PAY = "wechat_pay"
+    PAYU = "payu"
+    RAZORPAY = "razorpay"
+    MERCADO_PAGO = "mercado_pago"
+    
+    # Buy now, pay later
+    KLARNA = "klarna"
+    AFTERPAY = "afterpay"
+    AFFIRM = "affirm"
+    
+    # Wire transfers
+    BANK_TRANSFER = "bank_transfer"
+    SWIFT = "swift"
+
+
+@dataclass
+class PaymentProviderConfig:
+    """Enhanced payment provider configuration."""
+    provider: ExtendedPaymentProvider
+    enabled: bool = True
+    api_key: Optional[str] = None
+    secret_key: Optional[str] = None
+    webhook_secret: Optional[str] = None
+    sandbox_mode: bool = False
+    supported_currencies: List[str] = None
+    transaction_fees: Dict[str, float] = None
+    payout_schedule: str = "daily"  # instant, daily, weekly, monthly
+    minimum_payout: Decimal = Decimal("10.00")
+    maximum_transaction: Decimal = Decimal("50000.00")
+    geographic_restrictions: List[str] = None
+    compliance_features: List[str] = None
+    
+    def __post_init__(self):
+        if self.supported_currencies is None:
+            self.supported_currencies = ["USD", "EUR", "GBP"]
+        if self.transaction_fees is None:
+            self.transaction_fees = {"base": 0.029, "fixed": 0.30}
+        if self.geographic_restrictions is None:
+            self.geographic_restrictions = []
+        if self.compliance_features is None:
+            self.compliance_features = ["pci_dss", "gdpr"]
+
+
+class EnhancedMultiProviderPaymentService:
+    """Enhanced multi-provider payment processing service."""
+    
+    def __init__(self):
+        self.providers: Dict[ExtendedPaymentProvider, PaymentProviderConfig] = {}
+        self._initialize_providers()
+    
+    def _initialize_providers(self):
+        """Initialize all payment providers with enhanced configurations."""
+        # Traditional providers
+        self.providers[ExtendedPaymentProvider.STRIPE] = PaymentProviderConfig(
+            provider=ExtendedPaymentProvider.STRIPE,
+            supported_currencies=["USD", "EUR", "GBP", "CAD", "AUD"],
+            transaction_fees={"base": 0.029, "fixed": 0.30},
+            compliance_features=["pci_dss", "gdpr", "strong_auth"]
+        )
+        
+        self.providers[ExtendedPaymentProvider.PAYPAL] = PaymentProviderConfig(
+            provider=ExtendedPaymentProvider.PAYPAL,
+            supported_currencies=["USD", "EUR", "GBP", "CAD", "AUD", "JPY"],
+            transaction_fees={"base": 0.034, "fixed": 0.30},
+            payout_schedule="instant"
+        )
+        
+        logger.info("Enhanced payment providers initialized")
+    
+    async def process_payment_with_provider(
+        self, 
+        provider: ExtendedPaymentProvider,
+        payment_data: Dict[str, Any]
+    ) -> PaymentResult:
+        """Process payment with specific provider."""
+        try:
+            if provider not in self.providers:
+                raise PaymentError(f"Provider {provider} not configured")
+            
+            config = self.providers[provider]
+            if not config.enabled:
+                raise PaymentError(f"Provider {provider} is disabled")
+            
+            # Mock payment processing
+            result = PaymentResult(
+                transaction_id=str(uuid4()),
+                status=PaymentStatus.COMPLETED,
+                amount=payment_data.get("amount", Decimal("0")),
+                currency=payment_data.get("currency", "USD"),
+                provider=provider.value,
+                timestamp=datetime.utcnow(),
+                fees=config.transaction_fees,
+                metadata={"provider_config": config.__dict__}
+            )
+            
+            logger.info(f"Payment processed with {provider.value}: {result.transaction_id}")
+            return result
+            
+        except Exception as e:
+            logger.error(f"Payment processing failed with {provider.value}: {e}")
+            raise PaymentError(f"Payment processing failed: {e}")
+
+
+# ============================================================================
+# SMART PAYMENT ORCHESTRATOR - Consolidated from smart_payment_orchestrator.py
+# ============================================================================
+
+class PaymentStrategy(Enum):
+    """Payment processing strategies."""
+    LOWEST_COST = "lowest_cost"
+    FASTEST = "fastest"
+    HIGHEST_SUCCESS_RATE = "highest_success_rate"
+    GEOGRAPHIC_PREFERENCE = "geographic_preference"
+    CURRENCY_NATIVE = "currency_native"
+
+
+class SmartPaymentOrchestrator:
+    """Smart payment orchestrator with provider optimization."""
+    
+    def __init__(self):
+        self.payment_service = EnhancedMultiProviderPaymentService()
+        self.provider_metrics: Dict[str, Dict[str, float]] = {}
+        self._initialize_metrics()
+    
+    def _initialize_metrics(self):
+        """Initialize provider performance metrics."""
+        for provider in ExtendedPaymentProvider:
+            self.provider_metrics[provider.value] = {
+                "success_rate": 0.95,
+                "avg_processing_time": 2.5,
+                "cost_score": 0.85,
+                "reliability_score": 0.92
+            }
+    
+    async def process_smart_payment(
+        self,
+        payment_data: Dict[str, Any],
+        strategy: PaymentStrategy = PaymentStrategy.LOWEST_COST
+    ) -> PaymentResult:
+        """Process payment using smart provider selection."""
+        try:
+            # Select optimal provider based on strategy
+            optimal_provider = self._select_optimal_provider(payment_data, strategy)
+            
+            # Process payment with selected provider
+            result = await self.payment_service.process_payment_with_provider(
+                optimal_provider, payment_data
+            )
+            
+            # Update metrics
+            self._update_provider_metrics(optimal_provider.value, True)
+            
+            return result
+            
+        except Exception as e:
+            logger.error(f"Smart payment processing failed: {e}")
+            raise PaymentError(f"Smart payment processing failed: {e}")
+    
+    def _select_optimal_provider(
+        self, 
+        payment_data: Dict[str, Any], 
+        strategy: PaymentStrategy
+    ) -> ExtendedPaymentProvider:
+        """Select optimal payment provider based on strategy."""
+        
+        if strategy == PaymentStrategy.LOWEST_COST:
+            # Select provider with lowest fees
+            return ExtendedPaymentProvider.STRIPE
+        elif strategy == PaymentStrategy.FASTEST:
+            # Select provider with fastest processing
+            return ExtendedPaymentProvider.PAYPAL
+        elif strategy == PaymentStrategy.HIGHEST_SUCCESS_RATE:
+            # Select most reliable provider
+            return ExtendedPaymentProvider.STRIPE
+        else:
+            # Default to Stripe
+            return ExtendedPaymentProvider.STRIPE
+    
+    def _update_provider_metrics(self, provider: str, success: bool):
+        """Update provider performance metrics."""
+        if provider in self.provider_metrics:
+            current_rate = self.provider_metrics[provider]["success_rate"]
+            if success:
+                self.provider_metrics[provider]["success_rate"] = min(1.0, current_rate + 0.001)
+            else:
+                self.provider_metrics[provider]["success_rate"] = max(0.0, current_rate - 0.005)

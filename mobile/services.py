@@ -24,7 +24,7 @@ import aiohttp
 try:
     from ai_engine.content_processor import ContentProcessor
     from protection.fingerprinting import FingerprintEngine
-    from monetization.licensing_engine import LicensingEngine
+    from backend.monetization import LicensingManager
     from services.collaboration import CollaborationService
     from core.config import get_settings
     from core.logging import get_logger

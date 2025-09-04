@@ -15,7 +15,7 @@ from api.middleware.session_middleware import SessionManagerMiddleware, SessionA
 
 # Import optimization components
 from data_management.optimization.image_optimizer import ImageOptimizer, BatchImageOptimizer
-from config.database.redis_config import RedisConfig, RedisDeploymentType
+from backend.config.database.redis_config import RedisConfig, RedisDeploymentType
 
 
 def create_optimized_app() -> FastAPI:

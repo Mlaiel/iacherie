@@ -259,3 +259,224 @@ async def get_subscription_engine() -> SubscriptionEngine:
         _subscription_engine = SubscriptionEngine()
     
     return _subscription_engine
+
+
+# ============================================================================
+# LICENSING MANAGEMENT - Consolidated from licensing_manager.py, licensing_engine.py, usage_tracker.py
+# ============================================================================
+
+class LicenseType(Enum):
+    """License types for content"""
+    EXCLUSIVE = "exclusive"
+    NON_EXCLUSIVE = "non_exclusive"
+    ROYALTY_FREE = "royalty_free"
+    CREATIVE_COMMONS = "creative_commons"
+    COMMERCIAL = "commercial"
+    PERSONAL = "personal"
+
+
+class LicenseStatus(Enum):
+    """License status"""
+    ACTIVE = "active"
+    EXPIRED = "expired"
+    REVOKED = "revoked"
+    PENDING = "pending"
+
+
+@dataclass
+class ContentLicense:
+    """Content license data structure"""
+    id: str
+    content_id: str
+    license_type: LicenseType
+    status: LicenseStatus
+    start_date: datetime
+    end_date: Optional[datetime]
+    price: Decimal
+    currency: str
+    terms: Dict[str, Any]
+    licensee_id: Optional[str] = None
+    usage_restrictions: Dict[str, Any] = field(default_factory=dict)
+
+
+class LicensingManager:
+    """Simplified licensing management system"""
+    
+    def __init__(self):
+        self.logger = logging.getLogger(__name__)
+        self.licenses: Dict[str, ContentLicense] = {}
+        self.usage_tracking: Dict[str, Dict] = {}
+    
+    async def create_license(
+        self, 
+        content_id: str, 
+        license_type: LicenseType,
+        price: Decimal,
+        duration_days: Optional[int] = None,
+        terms: Dict[str, Any] = None
+    ) -> ContentLicense:
+        """Create a new content license"""
+        
+        license_id = f"lic_{content_id}_{int(datetime.now().timestamp())}"
+        start_date = datetime.now()
+        end_date = None
+        
+        if duration_days:
+            end_date = start_date + timedelta(days=duration_days)
+        
+        license = ContentLicense(
+            id=license_id,
+            content_id=content_id,
+            license_type=license_type,
+            status=LicenseStatus.ACTIVE,
+            start_date=start_date,
+            end_date=end_date,
+            price=price,
+            currency="EUR",
+            terms=terms or {}
+        )
+        
+        self.licenses[license_id] = license
+        self.logger.info(f"License created: {license_id}")
+        
+        return license
+    
+    async def purchase_license(
+        self, 
+        license_id: str, 
+        licensee_id: str
+    ) -> Dict[str, Any]:
+        """Purchase a license"""
+        
+        if license_id not in self.licenses:
+            raise ValueError(f"License {license_id} not found")
+        
+        license = self.licenses[license_id]
+        license.licensee_id = licensee_id
+        
+        # Mock purchase process
+        purchase_result = {
+            "purchase_id": f"pur_{license_id}_{licensee_id}",
+            "license_id": license_id,
+            "licensee_id": licensee_id,
+            "amount": float(license.price),
+            "currency": license.currency,
+            "status": "completed",
+            "timestamp": datetime.now().isoformat()
+        }
+        
+        self.logger.info(f"License purchased: {license_id} by {licensee_id}")
+        return purchase_result
+    
+    async def track_usage(
+        self, 
+        license_id: str, 
+        usage_data: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Track license usage"""
+        
+        if license_id not in self.usage_tracking:
+            self.usage_tracking[license_id] = {
+                "total_uses": 0,
+                "usage_history": []
+            }
+        
+        self.usage_tracking[license_id]["total_uses"] += 1
+        self.usage_tracking[license_id]["usage_history"].append({
+            "timestamp": datetime.now().isoformat(),
+            "usage_data": usage_data
+        })
+        
+        return self.usage_tracking[license_id]
+    
+    async def validate_license(
+        self, 
+        license_id: str, 
+        usage_context: Dict[str, Any] = None
+    ) -> Dict[str, Any]:
+        """Validate license for usage"""
+        
+        if license_id not in self.licenses:
+            return {"valid": False, "reason": "License not found"}
+        
+        license = self.licenses[license_id]
+        
+        # Check expiration
+        if license.end_date and datetime.now() > license.end_date:
+            return {"valid": False, "reason": "License expired"}
+        
+        # Check status
+        if license.status != LicenseStatus.ACTIVE:
+            return {"valid": False, "reason": f"License status: {license.status.value}"}
+        
+        return {
+            "valid": True,
+            "license": license.__dict__,
+            "remaining_time": (license.end_date - datetime.now()).days if license.end_date else None
+        }
+
+
+class UsageTracker:
+    """Usage tracking system"""
+    
+    def __init__(self):
+        self.logger = logging.getLogger(__name__)
+        self.usage_data: Dict[str, List] = {}
+    
+    async def track_content_usage(
+        self, 
+        content_id: str, 
+        platform: str, 
+        usage_type: str,
+        metrics: Dict[str, Any] = None
+    ) -> Dict[str, Any]:
+        """Track content usage across platforms"""
+        
+        if content_id not in self.usage_data:
+            self.usage_data[content_id] = []
+        
+        usage_entry = {
+            "timestamp": datetime.now().isoformat(),
+            "platform": platform,
+            "usage_type": usage_type,
+            "metrics": metrics or {}
+        }
+        
+        self.usage_data[content_id].append(usage_entry)
+        
+        return {
+            "content_id": content_id,
+            "total_usage_count": len(self.usage_data[content_id]),
+            "latest_usage": usage_entry
+        }
+    
+    async def get_usage_analytics(
+        self, 
+        content_id: str
+    ) -> Dict[str, Any]:
+        """Get usage analytics for content"""
+        
+        if content_id not in self.usage_data:
+            return {"content_id": content_id, "usage_count": 0, "analytics": {}}
+        
+        usage_list = self.usage_data[content_id]
+        
+        # Calculate basic analytics
+        platform_usage = {}
+        usage_type_counts = {}
+        
+        for usage in usage_list:
+            platform = usage["platform"]
+            usage_type = usage["usage_type"]
+            
+            platform_usage[platform] = platform_usage.get(platform, 0) + 1
+            usage_type_counts[usage_type] = usage_type_counts.get(usage_type, 0) + 1
+        
+        return {
+            "content_id": content_id,
+            "usage_count": len(usage_list),
+            "platform_distribution": platform_usage,
+            "usage_type_distribution": usage_type_counts,
+            "first_usage": usage_list[0]["timestamp"] if usage_list else None,
+            "latest_usage": usage_list[-1]["timestamp"] if usage_list else None
+        }

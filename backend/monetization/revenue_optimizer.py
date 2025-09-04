@@ -327,3 +327,222 @@ async def get_revenue_optimizer() -> RevenueOptimizer:
         _revenue_optimizer = RevenueOptimizer()
     
     return _revenue_optimizer
+
+
+# ============================================================================
+# REVENUE CALCULATOR - Consolidated from revenue_calculator.py
+# ============================================================================
+
+@dataclass
+class RevenueData:
+    """Revenue data structure"""
+    platform: str
+    content_id: str
+    views: int
+    engagement_rate: float
+    revenue: float
+    currency: str = "EUR"
+    period_start: datetime = None
+    period_end: datetime = None
+
+
+class RevenueCalculator:
+    """Automated revenue calculation engine"""
+    
+    # Platform-specific CPM and conversion rates
+    PLATFORM_RATES = {
+        "youtube": {
+            "cpm_min": 0.25,
+            "cpm_max": 4.0,
+            "engagement_multiplier": 1.5,
+            "monetization_threshold": 1000  # subscribers
+        },
+        "instagram": {
+            "cpm_min": 0.50,
+            "cpm_max": 6.0, 
+            "engagement_multiplier": 2.0,
+            "monetization_threshold": 1000  # followers
+        },
+        "tiktok": {
+            "cpm_min": 0.02,
+            "cpm_max": 2.0,
+            "engagement_multiplier": 3.0,
+            "monetization_threshold": 10000  # followers
+        },
+        "spotify": {
+            "cpm_min": 0.003,
+            "cpm_max": 0.005,
+            "engagement_multiplier": 1.2,
+            "monetization_threshold": 250  # streams
+        },
+        "twitch": {
+            "cpm_min": 1.0,
+            "cpm_max": 5.0,
+            "engagement_multiplier": 2.5,
+            "monetization_threshold": 50  # followers
+        }
+    }
+    
+    def __init__(self):
+        self.logger = logging.getLogger(__name__)
+        self.conversion_rates = {"EUR": 1.0, "USD": 1.1, "GBP": 0.85}
+    
+    async def calculate_platform_revenue(
+        self, 
+        platform: str, 
+        views: int, 
+        engagement_rate: float,
+        subscriber_count: int = 0,
+        currency: str = "EUR"
+    ) -> RevenueData:
+        """Calculate revenue for a specific platform."""
+        
+        platform_data = self.PLATFORM_RATES.get(platform.lower(), {})
+        if not platform_data:
+            raise ValueError(f"Platform {platform} not supported")
+        
+        # Check monetization threshold
+        if subscriber_count < platform_data.get("monetization_threshold", 0):
+            revenue = 0.0
+        else:
+            # Calculate base CPM
+            cpm_min = platform_data["cpm_min"]
+            cpm_max = platform_data["cpm_max"]
+            
+            # Adjust CPM based on engagement
+            engagement_factor = min(engagement_rate * platform_data["engagement_multiplier"], 3.0)
+            adjusted_cpm = cpm_min + (cpm_max - cpm_min) * (engagement_factor / 3.0)
+            
+            # Calculate revenue
+            revenue = (views / 1000) * adjusted_cpm
+        
+        # Convert currency if needed
+        if currency != "EUR":
+            conversion_rate = self.conversion_rates.get(currency, 1.0)
+            revenue = revenue * conversion_rate
+        
+        return RevenueData(
+            platform=platform,
+            content_id=f"content_{platform}_{views}",
+            views=views,
+            engagement_rate=engagement_rate,
+            revenue=round(revenue, 2),
+            currency=currency,
+            period_start=datetime.now() - timedelta(days=30),
+            period_end=datetime.now()
+        )
+    
+    async def calculate_multi_platform_revenue(
+        self, 
+        platform_data: Dict[str, Dict]
+    ) -> List[RevenueData]:
+        """Calculate revenue across multiple platforms."""
+        
+        revenue_results = []
+        
+        for platform, data in platform_data.items():
+            try:
+                revenue = await self.calculate_platform_revenue(
+                    platform=platform,
+                    views=data.get("views", 0),
+                    engagement_rate=data.get("engagement_rate", 0.0),
+                    subscriber_count=data.get("subscribers", 0),
+                    currency=data.get("currency", "EUR")
+                )
+                revenue_results.append(revenue)
+            except Exception as e:
+                self.logger.error(f"Failed to calculate revenue for {platform}: {e}")
+        
+        return revenue_results
+    
+    async def get_revenue_forecast(
+        self, 
+        historical_data: List[RevenueData], 
+        forecast_days: int = 30
+    ) -> Dict[str, float]:
+        """Generate revenue forecast based on historical data."""
+        
+        if not historical_data:
+            return {"forecast_revenue": 0.0, "confidence": 0.0}
+        
+        # Simple linear projection
+        total_revenue = sum(data.revenue for data in historical_data)
+        avg_daily_revenue = total_revenue / len(historical_data)
+        
+        forecast_revenue = avg_daily_revenue * forecast_days
+        
+        # Mock confidence calculation
+        confidence = min(0.95, len(historical_data) / 30.0)
+        
+        return {
+            "forecast_revenue": round(forecast_revenue, 2),
+            "confidence": round(confidence, 2),
+            "avg_daily_revenue": round(avg_daily_revenue, 2)
+        }
+
+
+# ============================================================================
+# ROYALTY ENGINE - Consolidated from royalty_engine.py  
+# ============================================================================
+
+@dataclass
+class RoyaltyDistribution:
+    """Royalty distribution data structure"""
+    recipient_id: str
+    recipient_type: str  # creator, label, publisher, etc.
+    percentage: float
+    amount: float
+    currency: str
+    payment_date: datetime
+
+
+class RoyaltyEngine:
+    """Automated royalty calculation and distribution engine"""
+    
+    def __init__(self):
+        self.logger = logging.getLogger(__name__)
+        self.distribution_rules = {}
+    
+    async def calculate_royalties(
+        self, 
+        content_id: str, 
+        total_revenue: float,
+        distribution_rules: Dict[str, float]
+    ) -> List[RoyaltyDistribution]:
+        """Calculate royalty distributions."""
+        
+        distributions = []
+        
+        for recipient_id, percentage in distribution_rules.items():
+            amount = (total_revenue * percentage) / 100
+            
+            distribution = RoyaltyDistribution(
+                recipient_id=recipient_id,
+                recipient_type="creator",
+                percentage=percentage,
+                amount=round(amount, 2),
+                currency="EUR",
+                payment_date=datetime.now() + timedelta(days=30)
+            )
+            distributions.append(distribution)
+        
+        return distributions
+    
+    async def process_royalty_payment(
+        self, 
+        distribution: RoyaltyDistribution
+    ) -> Dict[str, Any]:
+        """Process royalty payment."""
+        
+        # Mock payment processing
+        payment_result = {
+            "payment_id": f"pay_{distribution.recipient_id}_{int(datetime.now().timestamp())}",
+            "status": "completed",
+            "amount": distribution.amount,
+            "currency": distribution.currency,
+            "recipient": distribution.recipient_id,
+            "processed_at": datetime.now().isoformat()
+        }
+        
+        self.logger.info(f"Royalty payment processed: {payment_result['payment_id']}")
+        return payment_result

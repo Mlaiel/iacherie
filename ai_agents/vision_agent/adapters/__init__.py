@@ -1,1 +1,0 @@
-"""\nAdapters module initialization\n"""\n

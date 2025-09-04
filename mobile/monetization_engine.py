@@ -27,9 +27,7 @@ import aiohttp
 
 # Internal imports
 try:
-    from monetization.payment_processor import PaymentProcessor
-    from monetization.revenue_calculator import RevenueCalculator
-    from monetization.licensing_engine import LicensingEngine
+    from backend.monetization import PaymentProcessor, RevenueCalculator, LicensingManager
     from core.config import get_settings
     from core.logging import get_logger
     from core.database import get_database_session
