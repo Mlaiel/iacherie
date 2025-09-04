@@ -31,6 +31,7 @@ from .voice_generator import VoiceGenerator
 from .image_generator import MediaImageGenerator
 from .video_generator import MediaVideoGenerator
 from .text_generator import MediaTextGenerator
+from .audio import MediaAudioGenerator
 from ai_engine.content_generation.base_generator import BaseContentGenerator, ContentGenerationContext
 
 
@@ -41,6 +42,7 @@ class MediaType(Enum):
     IMAGE = "image"
     VIDEO = "video"
     TEXT = "text"
+    AUDIO = "audio"
 
 
 class GenerationWorkflow(Enum):
@@ -123,6 +125,10 @@ class MediaGeneratorOrchestrator:
             # Text generator
             text_config = self.config.get('text', {})
             self.generators[MediaType.TEXT] = MediaTextGenerator(text_config)
+            
+            # Audio generator
+            audio_config = self.config.get('audio', {})
+            self.generators[MediaType.AUDIO] = MediaAudioGenerator(audio_config)
             
             self.logger.info("All media generators initialized")
             
