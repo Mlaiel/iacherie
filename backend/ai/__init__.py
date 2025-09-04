@@ -17,6 +17,25 @@ from .agent_registry import AgentRegistry, get_agent, list_agents
 from .core_business_agents import CoreBusinessAgents
 from .content_agents import ContentAgents  
 from .technical_agents import TechnicalAgents
+from .content import (
+    ConsolidatedContentAgent,
+    ContentOptimizer,
+    HashtagGenerator,
+    CaptionWriter,
+    StoryTeller,
+    ReplyGenerator,
+    ViralPredictor,
+    ContentScheduler,
+    ContentRequest,
+    ContentResult,
+    ScheduleRequest,
+    ContentType,
+    Platform,
+    ContentStyle,
+    ViralPotential,
+    create_content_agent,
+    process_content_async
+)
 from .therapy import TherapyAIService, create_therapy_service
 from .companion import (
     CompanionService, 
@@ -56,6 +75,24 @@ __all__ = [
     "CoreBusinessAgents",
     "ContentAgents",
     "TechnicalAgents",
+    # Consolidated Content Agents - NEW
+    "ConsolidatedContentAgent",
+    "ContentOptimizer",
+    "HashtagGenerator", 
+    "CaptionWriter",
+    "StoryTeller",
+    "ReplyGenerator",
+    "ViralPredictor", 
+    "ContentScheduler",
+    "ContentRequest",
+    "ContentResult",
+    "ScheduleRequest",
+    "ContentType",
+    "Platform",
+    "ContentStyle",
+    "ViralPotential",
+    "create_content_agent",
+    "process_content_async",
     "TherapyAIService",
     "create_therapy_service",
     # Companion Service - Virtual AI Companion
