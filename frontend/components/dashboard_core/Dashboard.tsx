@@ -12,14 +12,14 @@ import {
   InformationCircleIcon,
   BoltIcon
 } from '@heroicons/react/24/outline';
-import { MetricCard } from './MetricCard';
-import { ProtectionStatus } from './ProtectionStatus';
-import { RecentActivity } from './RecentActivity';
-import { RevenueChart } from './RevenueChart';
-import { RealTimeAnalytics } from './RealTimeAnalytics';
-import { ContentPreview } from './ContentPreview';
-import { VisualPortfolioManagement } from './VisualPortfolio';
-import { ContentPlanningCalendar } from './ContentCalendar';
+import { MetricCard } from '../dashboard/MetricCard';
+import { ProtectionStatus } from '../dashboard/ProtectionStatus';
+import { RecentActivity } from '../dashboard/RecentActivity';
+import { RevenueChart } from '../dashboard_analytics/RevenueChart';
+import { RealTimeAnalytics } from '../dashboard_analytics/RealTimeAnalytics';
+import { ContentPreview } from '../dashboard_content/ContentPreview';
+import { VisualPortfolioManagement } from '../dashboard_content/VisualPortfolio';
+import { ContentPlanningCalendar } from '../dashboard_content/ContentCalendar';
 import { useContent } from '@/hooks/useContent';
 import { useNotifications } from '@/hooks/useNotifications';
 

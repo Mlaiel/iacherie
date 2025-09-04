@@ -12,7 +12,7 @@ import {
   FolderIcon,
   CogIcon
 } from '@heroicons/react/24/outline';
-import { DASHBOARD_NAVIGATION } from '@/../dashboard';
+import { DASHBOARD_NAVIGATION } from '@/dashboard';
 
 // Map icon names to actual icons
 const iconMap = {
