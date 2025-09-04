@@ -29,25 +29,25 @@ __email__ = "mlaiel@live.de"
 __copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 __description__ = "Consolidated backend services for AI-powered creator platform"
 
-# Import all consolidated services
+# Import all consolidated services (12 unified modules)
 try:
-    from .user_service import UserService
+    from .users import UsersService
     user_service_available = True
-    logger.info("✅ User Service loaded")
+    logger.info("✅ Users Service loaded")
 except ImportError as e:
-    logger.warning(f"❌ User Service not available: {e}")
+    logger.warning(f"❌ Users Service not available: {e}")
     user_service_available = False
 
 try:
-    from .payment_service import PaymentService
-    payment_service_available = True
-    logger.info("✅ Payment Service loaded")
+    from .influencers import InfluencersService
+    influencer_service_available = True
+    logger.info("✅ Influencers Service loaded")
 except ImportError as e:
-    logger.warning(f"❌ Payment Service not available: {e}")
-    payment_service_available = False
+    logger.warning(f"❌ Influencers Service not available: {e}")
+    influencer_service_available = False
 
 try:
-    from .content_service import ContentService
+    from .content import ContentService
     content_service_available = True
     logger.info("✅ Content Service loaded")
 except ImportError as e:
@@ -55,7 +55,15 @@ except ImportError as e:
     content_service_available = False
 
 try:
-    from .analytics_service import AnalyticsService
+    from .payments import PaymentsService
+    payment_service_available = True
+    logger.info("✅ Payments Service loaded")
+except ImportError as e:
+    logger.warning(f"❌ Payments Service not available: {e}")
+    payment_service_available = False
+
+try:
+    from .analytics import AnalyticsService
     analytics_service_available = True
     logger.info("✅ Analytics Service loaded")
 except ImportError as e:
@@ -63,15 +71,15 @@ except ImportError as e:
     analytics_service_available = False
 
 try:
-    from .notification_service import NotificationService
+    from .notifications import NotificationsService
     notification_service_available = True
-    logger.info("✅ Notification Service loaded")
+    logger.info("✅ Notifications Service loaded")
 except ImportError as e:
-    logger.warning(f"❌ Notification Service not available: {e}")
+    logger.warning(f"❌ Notifications Service not available: {e}")
     notification_service_available = False
 
 try:
-    from .marketplace_service import MarketplaceService
+    from .marketplace import MarketplaceService
     marketplace_service_available = True
     logger.info("✅ Marketplace Service loaded")
 except ImportError as e:
@@ -79,31 +87,7 @@ except ImportError as e:
     marketplace_service_available = False
 
 try:
-    from .cache_service import CacheService
-    cache_service_available = True
-    logger.info("✅ Cache Service loaded")
-except ImportError as e:
-    logger.warning(f"❌ Cache Service not available: {e}")
-    cache_service_available = False
-
-try:
-    from .queue_service import QueueService
-    queue_service_available = True
-    logger.info("✅ Queue Service loaded")
-except ImportError as e:
-    logger.warning(f"❌ Queue Service not available: {e}")
-    queue_service_available = False
-
-try:
-    from .storage_service import StorageService
-    storage_service_available = True
-    logger.info("✅ Storage Service loaded")
-except ImportError as e:
-    logger.warning(f"❌ Storage Service not available: {e}")
-    storage_service_available = False
-
-try:
-    from .collaboration_service import CollaborationService
+    from .collaboration import CollaborationService
     collaboration_service_available = True
     logger.info("✅ Collaboration Service loaded")
 except ImportError as e:
@@ -111,7 +95,7 @@ except ImportError as e:
     collaboration_service_available = False
 
 try:
-    from .distribution_service import DistributionService
+    from .distribution import DistributionService
     distribution_service_available = True
     logger.info("✅ Distribution Service loaded")
 except ImportError as e:
@@ -119,12 +103,28 @@ except ImportError as e:
     distribution_service_available = False
 
 try:
-    from .security_service import SecurityService
+    from .security import SecurityService
     security_service_available = True
     logger.info("✅ Security Service loaded")
 except ImportError as e:
     logger.warning(f"❌ Security Service not available: {e}")
     security_service_available = False
+
+try:
+    from .infrastructure import InfrastructureService
+    infrastructure_service_available = True
+    logger.info("✅ Infrastructure Service loaded")
+except ImportError as e:
+    logger.warning(f"❌ Infrastructure Service not available: {e}")
+    infrastructure_service_available = False
+
+try:
+    from .gamification import GamificationService
+    gamification_service_available = True
+    logger.info("✅ Gamification Service loaded")
+except ImportError as e:
+    logger.warning(f"❌ Gamification Service not available: {e}")
+    gamification_service_available = False
 
 
 class ServiceRegistry:
@@ -349,17 +349,17 @@ class ServiceRegistry:
 service_registry = ServiceRegistry()
 
 
-# Factory functions for backward compatibility
-def get_user_service(config: Dict[str, Any] = None):
-    """Get User Service instance"""
+# Factory functions for 12 consolidated services
+def get_users_service(config: Dict[str, Any] = None):
+    """Get Users Service instance"""
     if user_service_available:
-        return UserService(config)
+        return UsersService(config)
     return None
 
-def get_payment_service(config: Dict[str, Any] = None):
-    """Get Payment Service instance"""
-    if payment_service_available:
-        return PaymentService(config)
+def get_influencers_service(config: Dict[str, Any] = None):
+    """Get Influencers Service instance"""
+    if influencer_service_available:
+        return InfluencersService(config)
     return None
 
 def get_content_service(config: Dict[str, Any] = None):
@@ -368,40 +368,28 @@ def get_content_service(config: Dict[str, Any] = None):
         return ContentService(config)
     return None
 
+def get_payments_service(config: Dict[str, Any] = None):
+    """Get Payments Service instance"""
+    if payment_service_available:
+        return PaymentsService(config)
+    return None
+
 def get_analytics_service(config: Dict[str, Any] = None):
     """Get Analytics Service instance"""
     if analytics_service_available:
         return AnalyticsService(config)
     return None
 
-def get_notification_service(config: Dict[str, Any] = None):
-    """Get Notification Service instance"""
+def get_notifications_service(config: Dict[str, Any] = None):
+    """Get Notifications Service instance"""
     if notification_service_available:
-        return NotificationService(config)
+        return NotificationsService(config)
     return None
 
 def get_marketplace_service(config: Dict[str, Any] = None):
     """Get Marketplace Service instance"""
     if marketplace_service_available:
         return MarketplaceService(config)
-    return None
-
-def get_cache_service(config: Dict[str, Any] = None):
-    """Get Cache Service instance"""
-    if cache_service_available:
-        return CacheService(config)
-    return None
-
-def get_queue_service(config: Dict[str, Any] = None):
-    """Get Queue Service instance"""
-    if queue_service_available:
-        return QueueService(config)
-    return None
-
-def get_storage_service(config: Dict[str, Any] = None):
-    """Get Storage Service instance"""
-    if storage_service_available:
-        return StorageService(config)
     return None
 
 def get_collaboration_service(config: Dict[str, Any] = None):
@@ -422,54 +410,66 @@ def get_security_service(config: Dict[str, Any] = None):
         return SecurityService(config)
     return None
 
+def get_infrastructure_service(config: Dict[str, Any] = None):
+    """Get Infrastructure Service instance"""
+    if infrastructure_service_available:
+        return InfrastructureService(config)
+    return None
+
+def get_gamification_service(config: Dict[str, Any] = None):
+    """Get Gamification Service instance"""
+    if gamification_service_available:
+        return GamificationService(config)
+    return None
+
 
 # Export all classes and functions
 __all__ = [
-    # Service Classes
-    "UserService",
-    "PaymentService",
-    "ContentService", 
+    # Service Classes (12 consolidated services)
+    "UsersService",
+    "InfluencersService", 
+    "ContentService",
+    "PaymentsService",
     "AnalyticsService",
-    "NotificationService",
+    "NotificationsService",
     "MarketplaceService",
-    "CacheService",
-    "QueueService",
-    "StorageService",
     "CollaborationService",
-    "DistributionService", 
+    "DistributionService",
     "SecurityService",
+    "InfrastructureService",
+    "GamificationService",
     
     # Service Registry
     "ServiceRegistry",
     "service_registry",
     
     # Factory Functions
-    "get_user_service",
-    "get_payment_service",
+    "get_users_service",
+    "get_influencers_service",
     "get_content_service",
+    "get_payments_service",
     "get_analytics_service",
-    "get_notification_service",
+    "get_notifications_service",
     "get_marketplace_service",
-    "get_cache_service",
-    "get_queue_service",
-    "get_storage_service",
     "get_collaboration_service",
     "get_distribution_service",
     "get_security_service",
+    "get_infrastructure_service",
+    "get_gamification_service",
     
     # Availability flags
     "user_service_available",
-    "payment_service_available",
+    "influencer_service_available",
     "content_service_available",
+    "payment_service_available",
     "analytics_service_available",
     "notification_service_available",
     "marketplace_service_available",
-    "cache_service_available",
-    "queue_service_available",
-    "storage_service_available",
     "collaboration_service_available",
     "distribution_service_available",
-    "security_service_available"
+    "security_service_available",
+    "infrastructure_service_available",
+    "gamification_service_available"
 ]
 
 # Module initialization
@@ -479,10 +479,10 @@ logger.info("⚠️ Protected by copyright - Unauthorized use prohibited")
 
 # Calculate availability summary
 available_services = sum([
-    user_service_available, payment_service_available, content_service_available,
-    analytics_service_available, notification_service_available, marketplace_service_available,
-    cache_service_available, queue_service_available, storage_service_available,
-    collaboration_service_available, distribution_service_available, security_service_available
+    user_service_available, influencer_service_available, content_service_available,
+    payment_service_available, analytics_service_available, notification_service_available,
+    marketplace_service_available, collaboration_service_available, distribution_service_available,
+    security_service_available, infrastructure_service_available, gamification_service_available
 ])
 
 logger.info(f"🏗️ Consolidated Services loaded: {available_services}/12 service modules available")
