@@ -1,20 +1,48 @@
 /**
- * Components Index - Export all component modules
+ * Components Index - Consolidated Exports (Max 12 Groups)
+ * 
+ * This file provides the main consolidated component exports following
+ * the new structure that limits exports to 12 logical groups maximum.
  * 
  * Author: Fahed Mlaiel (mlaiel@live.de)
  * Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
  */
 
-// Export existing components
+// Export existing components for backward compatibility
 export { default as UploadWizard } from './upload_wizard';
 export { default as ContentLibrary } from './content_library';
 
-// Export new advanced components
+// Export advanced components
 export { default as MediaUploader } from './MediaUploader';
 export { default as AIProtection } from './AIProtection';
 export { default as CollaborationHub } from './CollaborationHub';
 export { default as Analytics } from './Analytics';
 export { default as Monetization } from './Monetization';
+
+// ============================================================================
+// CONSOLIDATED COMPONENT GROUPS (12 MAX EXPORTS)
+// ============================================================================
+
+// Re-export all consolidated groups from src/components
+export {
+  // 12 Consolidated Component Groups
+  Forms,
+  Charts,
+  Layout,
+  Media,
+  Dashboards,
+  Protection,
+  Monetization as MonetizationGroup,
+  Content,
+  Social,
+  Monitoring,
+  Tables,
+  Modals,
+  
+  // Metadata exports
+  CONSOLIDATED_GROUPS,
+  CONSOLIDATION_SUMMARY
+} from '../src/components';
 
 // Component metadata for documentation and routing
 export const COMPONENT_METADATA = {
