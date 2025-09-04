@@ -20,6 +20,7 @@ from datetime import datetime
 from .core_business_agents import CoreBusinessAgents
 from .content_agents import ContentAgents
 from .technical_agents import TechnicalAgents
+from .personality import PersonalityAgentOrchestrator
 
 logger = logging.getLogger(__name__)
 
@@ -28,6 +29,7 @@ class AgentCategory(Enum):
     CORE_BUSINESS = "core_business"
     CONTENT = "content"
     TECHNICAL = "technical"
+    PERSONALITY = "personality"
 
 class AgentStatus(Enum):
     """Agent status enumeration"""
@@ -74,14 +76,16 @@ class AgentRegistry:
             self._categories[AgentCategory.CORE_BUSINESS] = CoreBusinessAgents()
             self._categories[AgentCategory.CONTENT] = ContentAgents()
             self._categories[AgentCategory.TECHNICAL] = TechnicalAgents()
+            self._categories[AgentCategory.PERSONALITY] = PersonalityAgentOrchestrator()
             
             # Register all agents
             self._register_core_business_agents()
             self._register_content_agents()
             self._register_technical_agents()
+            self._register_personality_agents()
             
             self._initialized = True
-            logger.info("✅ Agent registry initialized with 53 agents")
+            logger.info("✅ Agent registry initialized with 53+ agents")
             
         except Exception as e:
             logger.error(f"❌ Failed to initialize agent registry: {e}")
@@ -182,6 +186,73 @@ class AgentRegistry:
                 capabilities=["infrastructure", "monitoring", "security"]
             )
     
+    def _register_personality_agents(self):
+        """Register personality-focused agents"""
+        personality_agents = [
+            ("FashionExpertAgent", "Fashion and style expertise"),
+            ("FitnessCoachAgent", "Fitness and wellness coaching"),
+            ("TechReviewerAgent", "Technology analysis and reviews"),
+            ("FoodCriticAgent", "Culinary expertise and food reviews"),
+            ("TravelGuideAgent", "Travel and adventure guidance"),
+            ("GamingExpertAgent", "Gaming and esports analysis"),
+            ("MusicCuratorAgent", "Music discovery and curation"),
+            ("BeautyGuruAgent", "Beauty and skincare expertise"),
+            ("BusinessConsultantAgent", "Business strategy and entrepreneurship"),
+            ("ComedianAgent", "Comedy and entertainment content"),
+            ("LifestyleAgent", "Lifestyle and wellness guidance"),
+            ("EducationAgent", "Educational content and tutoring"),
+            ("HealthAgent", "Health and medical information"),
+            ("SportsAgent", "Sports analysis and fitness"),
+            ("ArtAgent", "Art and creative expression"),
+            ("PhotographyAgent", "Photography tips and techniques"),
+            ("FinanceAgent", "Financial planning and advice"),
+            ("AutomotiveAgent", "Car reviews and automotive content"),
+            ("ScienceAgent", "Scientific information and education"),
+            ("ParentingAgent", "Parenting advice and family content"),
+            ("PetsAgent", "Pet care and animal content"),
+            ("HomeDecorAgent", "Interior design and home decoration"),
+            ("CookingAgent", "Cooking recipes and culinary tips"),
+            ("BooksAgent", "Book reviews and literary content"),
+            ("MoviesAgent", "Movie reviews and entertainment"),
+            ("RelationshipsAgent", "Relationship advice and dating"),
+            ("MentalHealthAgent", "Mental wellness and self-care"),
+            ("EnvironmentAgent", "Environmental awareness and sustainability"),
+            ("PoliticsAgent", "Political analysis and civic engagement"),
+            ("HistoryAgent", "Historical information and education"),
+            ("PhilosophyAgent", "Philosophical discussions and insights"),
+            ("SpiritualAgent", "Spiritual guidance and mindfulness"),
+            ("CraftsAgent", "DIY crafts and creative projects"),
+            ("GardeningAgent", "Gardening tips and plant care"),
+            ("RealEstateAgent", "Real estate advice and market analysis"),
+            ("CareerAgent", "Career development and job advice"),
+            ("ProductivityAgent", "Productivity tips and time management"),
+            ("SocialMediaAgent", "Social media strategy and content"),
+            ("MarketingAgent", "Marketing strategies and campaigns"),
+            ("DesignAgent", "Design principles and creative direction"),
+            ("LanguageAgent", "Language learning and communication"),
+            ("CultureAgent", "Cultural insights and global perspectives"),
+            ("NewsAgent", "News analysis and current events"),
+            ("WeatherAgent", "Weather information and forecasting"),
+            ("LocalAgent", "Local community and regional content"),
+            ("EventsAgent", "Event planning and entertainment"),
+            ("NetworkingAgent", "Professional networking and connections"),
+            ("VolunteeringAgent", "Volunteer opportunities and social impact"),
+            ("HobbiesAgent", "Hobby guidance and recreational activities"),
+            ("CollectiblesAgent", "Collectibles and investment items"),
+            ("AdventureAgent", "Adventure sports and outdoor activities"),
+            ("WellnessAgent", "Holistic wellness and self-improvement"),
+            ("MindfulnessAgent", "Meditation and mindfulness practices")
+        ]
+        
+        for agent_name, description in personality_agents:
+            self._agent_info[agent_name] = AgentInfo(
+                name=agent_name,
+                category=AgentCategory.PERSONALITY,
+                status=AgentStatus.READY,
+                description=description,
+                capabilities=["content_generation", "personality_matching", "user_engagement"]
+            )
+    
     def get_agent(self, agent_name: str) -> Optional[Any]:
         """Get agent instance by name"""
         if not self._initialized:
@@ -223,7 +294,8 @@ class AgentRegistry:
             "categories": {
                 "core_business": len([a for a in self._agent_info.values() if a.category == AgentCategory.CORE_BUSINESS]),
                 "content": len([a for a in self._agent_info.values() if a.category == AgentCategory.CONTENT]),
-                "technical": len([a for a in self._agent_info.values() if a.category == AgentCategory.TECHNICAL])
+                "technical": len([a for a in self._agent_info.values() if a.category == AgentCategory.TECHNICAL]),
+                "personality": len([a for a in self._agent_info.values() if a.category == AgentCategory.PERSONALITY])
             },
             "status_distribution": {}
         }

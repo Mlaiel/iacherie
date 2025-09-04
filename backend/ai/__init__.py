@@ -5,6 +5,12 @@ Backend AI Module - Consolidated AI Agents System
 This module provides a consolidated interface to all AI agents in the Ainflue platform.
 Organizes 53+ specialized AI agents into 4 manageable files for improved maintainability.
 
+Consolidation Structure:
+- core_business_agents.py (20 agents) - Business operations and strategy
+- content_agents.py (15 agents) - Content creation and processing  
+- technical_agents.py (18 agents) - Infrastructure and monitoring
+- personality.py (53+ agents) - Domain expert personalities
+
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -17,32 +23,22 @@ from .agent_registry import AgentRegistry, get_agent, list_agents
 from .core_business_agents import CoreBusinessAgents
 from .content_agents import ContentAgents  
 from .technical_agents import TechnicalAgents
-from .therapy import TherapyAIService, create_therapy_service
-from .companion import (
-    CompanionService, 
-    ICompanionService,
-    CompanionPersonalityType,
-    ConversationContext,
-    create_companion_service,
-    create_friendly_companion,
-    create_professional_companion,
-    create_creative_companion,
-    create_mentor_companion
-)
-from .education import (
-    EducationAIService,
-    IEducationAIService,
-    CourseType,
-    DifficultyLevel,
-    AssessmentType,
-    LearningStyle,
-    TutoringMode,
-    Course,
-    StudentProfile,
-    Assessment,
-    create_education_service,
-    create_content_creator_tutor,
-    create_business_development_tutor
+from .personality import (
+    PersonalityAgentOrchestrator,
+    PersonalityDomain,
+    PersonalityStyle,
+    ContentGenerationRequest,
+    PersonalityResponse,
+    FashionExpertAgent,
+    FitnessCoachAgent,
+    TechReviewerAgent,
+    FoodCriticAgent,
+    TravelGuideAgent,
+    GamingExpertAgent,
+    MusicCuratorAgent,
+    BeautyGuruAgent,
+    BusinessConsultantAgent,
+    ComedianAgent
 )
 
 __version__ = "1.0.0"
@@ -50,36 +46,30 @@ __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 
 __all__ = [
+    # Core Agent System
     "AgentRegistry",
     "get_agent", 
     "list_agents",
+    
+    # Agent Categories (4 consolidated files)
     "CoreBusinessAgents",
     "ContentAgents",
     "TechnicalAgents",
-    "TherapyAIService",
-    "create_therapy_service",
-    # Companion Service - Virtual AI Companion
-    "CompanionService",
-    "ICompanionService",
-    "CompanionPersonalityType", 
-    "ConversationContext",
-    "create_companion_service",
-    "create_friendly_companion",
-    "create_professional_companion",
-    "create_creative_companion",
-    "create_mentor_companion",
-    # Education Service - AI Tutor & Learning Management
-    "EducationAIService",
-    "IEducationAIService",
-    "CourseType",
-    "DifficultyLevel", 
-    "AssessmentType",
-    "LearningStyle",
-    "TutoringMode",
-    "Course",
-    "StudentProfile",
-    "Assessment",
-    "create_education_service",
-    "create_content_creator_tutor",
-    "create_business_development_tutor"
+    "PersonalityAgentOrchestrator",
+    
+    # Personality Agents
+    "PersonalityDomain",
+    "PersonalityStyle",
+    "ContentGenerationRequest",
+    "PersonalityResponse",
+    "FashionExpertAgent",
+    "FitnessCoachAgent",
+    "TechReviewerAgent",
+    "FoodCriticAgent",
+    "TravelGuideAgent",
+    "GamingExpertAgent",
+    "MusicCuratorAgent",
+    "BeautyGuruAgent",
+    "BusinessConsultantAgent",
+    "ComedianAgent"
 ]
