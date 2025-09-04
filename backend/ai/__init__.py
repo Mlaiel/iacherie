@@ -3,7 +3,7 @@ Backend AI Module - Consolidated AI Agents System
 ================================================
 
 This module provides a consolidated interface to all AI agents in the Ainflue platform.
-Organizes 53+ specialized AI agents into 4 manageable files for improved maintainability.
+Organizes 53+ specialized AI agents into 5 manageable files for improved maintainability.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -17,6 +17,18 @@ from .agent_registry import AgentRegistry, get_agent, list_agents
 from .core_business_agents import CoreBusinessAgents
 from .content_agents import ContentAgents  
 from .technical_agents import TechnicalAgents
+from .specialties import (
+    SpecialtyAgents,
+    SpecialtyType,
+    SpecializationLevel,
+    SpecialtyResult,
+    AudioSpecialistAgent,
+    VideoSpecialistAgent,
+    ImageSpecialistAgent,
+    TextSpecialistAgent,
+    EngagementSpecialistAgent,
+    create_specialty_agents
+)
 from .therapy import TherapyAIService, create_therapy_service
 from .companion import (
     CompanionService, 
@@ -56,6 +68,17 @@ __all__ = [
     "CoreBusinessAgents",
     "ContentAgents",
     "TechnicalAgents",
+    # Specialty Agents - Human-centric AI Services
+    "SpecialtyAgents",
+    "SpecialtyType",
+    "SpecializationLevel",
+    "SpecialtyResult",
+    "AudioSpecialistAgent",
+    "VideoSpecialistAgent", 
+    "ImageSpecialistAgent",
+    "TextSpecialistAgent",
+    "EngagementSpecialistAgent",
+    "create_specialty_agents",
     "TherapyAIService",
     "create_therapy_service",
     # Companion Service - Virtual AI Companion

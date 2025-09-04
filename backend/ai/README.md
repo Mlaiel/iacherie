@@ -2,7 +2,7 @@
 
 ## Overview
 
-The AI Agents system has been successfully consolidated from 53+ individual agent files into **4 manageable files** in the `backend/ai/` directory. This consolidation improves maintainability, reduces complexity, and provides a unified interface while preserving all original functionality.
+The AI Agents system has been successfully consolidated from 53+ individual agent files into **5 manageable files** in the `backend/ai/` directory. This consolidation improves maintainability, reduces complexity, and provides a unified interface while preserving all original functionality.
 
 ## New Structure
 
@@ -12,10 +12,26 @@ backend/ai/
 ├── agent_registry.py          # Central registry and orchestration (53 agents)
 ├── core_business_agents.py     # Business operations (20 agents)
 ├── content_agents.py          # Content creation & processing (15 agents)
-└── technical_agents.py        # Infrastructure & monitoring (18 agents)
+├── technical_agents.py        # Infrastructure & monitoring (18 agents)
+└── specialties.py             # Human-centric specialized services (8 agents)
 ```
 
 ## Agent Categories
+
+### Specialty Agents (8 agents) ⭐ **NEW**
+**File:** `specialties.py`
+
+**Core Human-Centric Services:**
+- TherapyAIService - Virtual psychology and mental health support
+- EducationAIService - Personalized tutoring and learning management
+- CompanionService - Virtual AI companion with memory and personality
+
+**Specialized Content Agents:**
+- AudioSpecialistAgent - Professional audio processing and enhancement
+- VideoSpecialistAgent - Advanced video processing and analysis
+- ImageSpecialistAgent - Image processing, generation, and enhancement
+- TextSpecialistAgent - Advanced text generation and optimization
+- EngagementSpecialistAgent - Audience engagement and community optimization
 
 ### Core Business Agents (20 agents)
 **File:** `core_business_agents.py`
@@ -96,6 +112,49 @@ technical_manager = get_agent('SystemMonitorAgent')
 
 # List all agents or by category
 all_agents = list_agents()
+```
+
+### Specialty Agents Usage ⭐ **NEW**
+
+```python
+import asyncio
+from backend.ai import SpecialtyAgents, SpecialtyType
+
+async def use_specialty_agents():
+    # Create specialty agents system
+    agents = await create_specialty_agents()
+    
+    # Audio processing
+    audio_result = await agents.process_specialty_request(
+        SpecialtyType.AUDIO_SPECIALIST,
+        "enhance",
+        {
+            'file_path': '/path/to/audio.mp3',
+            'enhancement_type': 'noise_reduction'
+        }
+    )
+    
+    # Initialize therapy service
+    therapy_service = await agents.initialize_therapy_service()
+    session_id = await therapy_service.start_therapy_session(
+        user_id="user123",
+        session_type="emotional_support"
+    )
+    
+    # Start educational tutoring
+    education_service = await agents.initialize_education_service()
+    tutoring_session = await education_service.start_tutoring_session(
+        student_id="student456",
+        course_id="content_creation_101",
+        topic="YouTube optimization"
+    )
+    
+    # Virtual companion conversation
+    companion_service = await agents.initialize_companion_service()
+    conversation = await companion_service.start_conversation(
+        user_id="user123",
+        context="creative_session"
+    )
 ```
 
 ### Content Processing Example
@@ -255,14 +314,15 @@ technical_manager = get_agent('SystemMonitorAgent')
 
 ## Benefits of Consolidation
 
-1. **Reduced Complexity**: 53+ files → 4 files
+1. **Reduced Complexity**: 53+ files → 5 files
 2. **Unified Interface**: Single entry point for all agents
-3. **Better Organization**: Logical grouping by function
+3. **Better Organization**: Logical grouping by function and specialization
 4. **Improved Maintainability**: Easier to update and debug
 5. **Enhanced Performance**: Reduced import overhead
 6. **Consistent API**: Standardized response formats
 7. **Better Documentation**: Centralized and organized
 8. **Easier Testing**: Consolidated test suites
+9. **Human-Centric Focus**: Dedicated specialties for therapy, education, and companionship
 
 ## Health Monitoring
 
