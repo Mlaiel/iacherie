@@ -43,6 +43,7 @@ import {
   CloudArrowUpIcon
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
+import studioStyles from '@/components/remix_studio/remix_studio.styles';
 
 interface RemixPageProps {
   params?: { [key: string]: string };
@@ -334,12 +335,9 @@ const RemixPage: React.FC<RemixPageProps> = ({ params }) => {
     <div className="space-y-6">
       <div className={clsx(studioStyles.container.card, "p-6")}>
         <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">AI-Powered Tools</h3>
-        <AIAssistantInterface
-          onSuggestionApply={(suggestion) => {
-            console.log('Applied AI suggestion:', suggestion);
-          }}
-          currentTrack={null}
-        />
+        <div className="text-slate-600 dark:text-slate-400">
+          AI Assistant Interface - Under Development
+        </div>
       </div>
     </div>
   );

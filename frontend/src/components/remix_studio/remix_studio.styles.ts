@@ -140,6 +140,21 @@ export const studioComponents = {
     panelPadding: '16px',
   },
   
+  // Container Styles
+  container: {
+    card: 'bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm',
+    panel: 'bg-slate-50 dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-700',
+    section: 'bg-white dark:bg-slate-800 rounded-md border border-slate-200 dark:border-slate-700',
+  },
+  
+  // Button Styles
+  buttons: {
+    primary: 'bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg transition-colors',
+    secondary: 'bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-900 dark:text-white font-medium rounded-lg transition-colors',
+    danger: 'bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-colors',
+    ghost: 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white font-medium transition-colors',
+  },
+
   // Control Styles
   controls: {
     playButton: {
@@ -209,5 +224,7 @@ export default {
   colors: studioColors,
   typography: studioTypography,
   components: studioComponents,
+  container: studioComponents.container,
+  buttons: studioComponents.buttons,
   utils: studioUtils,
 } as const;
