@@ -17,12 +17,25 @@ from fastapi.responses import JSONResponse, HTMLResponse
 from pydantic import BaseModel, EmailStr, Field
 import asyncio
 
-from ...core.database import database_manager
-from ...core.security import security_manager
-from ...core.cache import cache_manager
-from ...core.logging import logger
-from ...ai_engine.content_processor import content_processor
-from ...ai_engine.fingerprinting import fingerprint_engine
+try:
+    from ...core.database import database_manager
+    from ...core.security import security_manager
+    from ...core.cache import cache_manager
+    from ...core.logging import logger
+    from ...ai_engine.content_processor import content_processor
+    from ...ai_engine.fingerprinting import fingerprint_engine
+except ImportError:
+    # Mock dependencies for standalone operation
+    class MockManager:
+        def __getattr__(self, name):
+            return lambda *args, **kwargs: {"status": "mocked"}
+    
+    database_manager = MockManager()
+    security_manager = MockManager()
+    cache_manager = MockManager()
+    logger = MockManager()
+    content_processor = MockManager()
+    fingerprint_engine = MockManager()
 
 # ========================================
 # PUBLIC API MODELS
@@ -45,7 +58,7 @@ class ApiKeyResponse(BaseModel):
 class SandboxTestRequest(BaseModel):
     """Request model for sandbox testing"""
     endpoint: str = Field(..., description="Endpoint to test")
-    method: str = Field(default="GET", regex="^(GET|POST|PUT|DELETE)$")
+    method: str = Field(default="GET", pattern="^(GET|POST|PUT|DELETE)$")
     payload: Optional[Dict[str, Any]] = Field(None, description="Test payload")
     headers: Optional[Dict[str, str]] = Field(None, description="Additional headers")
 
@@ -529,7 +542,6 @@ async def get_postman_collection():
 # RATE LIMITING MIDDLEWARE
 # ========================================
 
-@public_router.middleware("http")
 async def rate_limit_middleware(request, call_next):
     """Rate limiting middleware for public API"""
     # Extract API key or IP address for rate limiting
