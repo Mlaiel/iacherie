@@ -17,7 +17,8 @@ from .model_ensemble import (
     EnsembleOrchestrator,
     ModelPool,
     EnsembleConfig,
-    ModelMetrics
+    ModelMetrics,
+    EnsembleStrategy
 )
 
 from .federated_learning import (
@@ -26,7 +27,8 @@ from .federated_learning import (
     FederatedClient,
     FederatedServer,
     PrivacyConfig,
-    FederatedMetrics
+    FederatedMetrics,
+    PrivacyLevel
 )
 
 from .neuromorphic_compute import (
@@ -35,7 +37,8 @@ from .neuromorphic_compute import (
     BrainInspiredCompute,
     NeuralPlasticity,
     SynapticComputing,
-    NeuromorphicConfig
+    NeuromorphicConfig,
+    NeuronModel
 )
 
 from .swarm_intelligence import (
@@ -44,7 +47,8 @@ from .swarm_intelligence import (
     SwarmAgent,
     CollectiveIntelligence,
     EmergentBehavior,
-    SwarmConfig
+    SwarmConfig,
+    SwarmBehavior
 )
 
 __all__ = [
@@ -55,6 +59,7 @@ __all__ = [
     "ModelPool",
     "EnsembleConfig",
     "ModelMetrics",
+    "EnsembleStrategy",
     
     # Federated Learning
     "FederatedOrchestrator",
@@ -63,6 +68,7 @@ __all__ = [
     "FederatedServer", 
     "PrivacyConfig",
     "FederatedMetrics",
+    "PrivacyLevel",
     
     # Neuromorphic Computing
     "NeuromorphicProcessor",
@@ -71,6 +77,7 @@ __all__ = [
     "NeuralPlasticity",
     "SynapticComputing",
     "NeuromorphicConfig",
+    "NeuronModel",
     
     # Swarm Intelligence
     "SwarmOrchestrator",
@@ -78,5 +85,6 @@ __all__ = [
     "SwarmAgent",
     "CollectiveIntelligence",
     "EmergentBehavior",
-    "SwarmConfig"
+    "SwarmConfig",
+    "SwarmBehavior"
 ]
