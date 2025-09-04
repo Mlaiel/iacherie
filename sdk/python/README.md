@@ -2,6 +2,16 @@
 
 Official Python SDK for the Ainflue AI-powered content protection and monetization platform.
 
+## 🚀 New: Public API Integration
+
+The SDK now includes full support for the **Ainflue Public API**, providing:
+- **Health Monitoring**: Check API status and performance
+- **Sandbox Testing**: Test endpoints safely before production
+- **Content Analysis**: AI-powered content analysis and fingerprinting
+- **Developer Tools**: SDK downloads and documentation access
+
+See [Public API Documentation](../../docs/api/PUBLIC_API_DOCUMENTATION.md) for complete details.
+
 ## Installation
 
 ```bash
@@ -17,6 +27,37 @@ pip install .
 ```
 
 ## Quick Start
+
+### Public API Examples (New!)
+
+```python
+import asyncio
+from ainflue_sdk import create_sdk
+
+async def main():
+    async with create_sdk(api_key="your-api-key") as sdk:
+        # Check API health (no auth required)
+        health = await sdk.get("/public/health")
+        print(f"API Status: {health['status']}")
+        
+        # Get API information
+        info = await sdk.get("/public/info")
+        print(f"SDK Version: {info['sdk_version']}")
+        
+        # Test endpoints in sandbox
+        test_result = await sdk.post("/public/sandbox/test", {
+            "endpoint": "/public/health",
+            "method": "GET"
+        })
+        print(f"Test completed: {test_result['status_code']}")
+        
+        # Analyze content
+        with open("my_audio.mp3", "rb") as f:
+            analysis = await sdk.post_file("/public/content/analyze", {"file": f})
+        print(f"Quality Score: {analysis['analysis']['quality_score']}")
+
+asyncio.run(main())
+```
 
 ### Async Usage
 

@@ -13,32 +13,151 @@ from ainflue_sdk import create_sdk, create_sync_sdk, AinflueSdkConfig
 
 # Configuration
 API_KEY = os.getenv("AINFLUE_API_KEY", "your-api-key-here")
-BASE_URL = os.getenv("AINFLUE_BASE_URL", "http://localhost:8000")
+BASE_URL = os.getenv("AINFLUE_BASE_URL", "https://api.ainflue.com")
+
+
+async def public_api_health_check():
+    """Example: Check public API health status"""
+    print("🏥 Public API Health Check")
+    print("-" * 30)
+    
+    async with create_sdk(api_key=API_KEY, base_url=BASE_URL) as sdk:
+        try:
+            # Check API health (no authentication required)
+            health = await sdk.get("/public/health")
+            
+            print(f"✅ API Status: {health['status']}")
+            print(f"   Version: {health['version']}")
+            print(f"   Response Time: {health['response_time_ms']:.2f}ms")
+            print(f"   Services: {', '.join([k for k, v in health['services'].items() if v == 'healthy'])}")
+            
+        except Exception as e:
+            print(f"❌ Error: {str(e)}")
+
+
+async def public_api_info_example():
+    """Example: Get public API information"""
+    print("\n📋 Public API Information")
+    print("-" * 30)
+    
+    async with create_sdk(api_key=API_KEY, base_url=BASE_URL) as sdk:
+        try:
+            # Get API info (no authentication required)
+            info = await sdk.get("/public/info")
+            
+            print(f"✅ SDK Version: {info['sdk_version']}")
+            print(f"   Supported Languages: {', '.join(info['supported_languages'])}")
+            print(f"   Available Endpoints: {len(info['endpoints'])} endpoints")
+            print(f"   Rate Limits: {info['rate_limits']['requests_per_minute']}/min, {info['rate_limits']['requests_per_hour']}/hour")
+            
+        except Exception as e:
+            print(f"❌ Error: {str(e)}")
+
+
+async def sandbox_testing_example():
+    """Example: Test API endpoints in sandbox"""
+    print("\n🧪 Sandbox Testing Example")
+    print("-" * 30)
+    
+    async with create_sdk(api_key=API_KEY, base_url=BASE_URL) as sdk:
+        try:
+            # Test an endpoint in sandbox environment
+            test_request = {
+                "endpoint": "/public/health",
+                "method": "GET"
+            }
+            
+            test_result = await sdk.post("/public/sandbox/test", test_request)
+            
+            print(f"✅ Sandbox Test ID: {test_result['test_id']}")
+            print(f"   Endpoint: {test_result['endpoint']}")
+            print(f"   Status Code: {test_result['status_code']}")
+            print(f"   Response Time: {test_result['response_time_ms']:.2f}ms")
+            
+        except Exception as e:
+            print(f"❌ Error: {str(e)}")
 
 
 async def content_analysis_example():
     """Example: Analyze content for fingerprinting"""
-    print("🔍 Content Analysis Example")
+    print("\n🔍 Content Analysis Example")
     print("-" * 30)
     
     # Create SDK instance
     async with create_sdk(api_key=API_KEY, base_url=BASE_URL) as sdk:
         try:
-            # Analyze text content
-            text_result = await sdk.analyze_content(
-                content_data="This is sample content for analysis",
-                content_type="text",
-                analysis_options={
-                    "generate_fingerprint": True,
-                    "detect_language": True,
-                    "extract_metadata": True
-                }
-            )
+            # Create a sample text file for analysis
+            sample_file = Path("/tmp/sample_content.txt")
+            sample_file.write_text("This is sample content for AI analysis and fingerprinting.")
             
-            print(f"✅ Text analysis completed")
-            print(f"   Content ID: {text_result.content_id}")
-            print(f"   Confidence: {text_result.confidence:.2f}")
-            print(f"   Fingerprint: {text_result.fingerprint[:20]}...")
+            # Analyze content via public API
+            with open(sample_file, "rb") as f:
+                analysis_result = await sdk.post_file("/public/content/analyze", {"file": f})
+            
+            print(f"✅ Content analysis completed")
+            print(f"   Content ID: {analysis_result['content_id']}")
+            print(f"   File Size: {analysis_result['file_size']} bytes")
+            print(f"   Quality Score: {analysis_result['analysis']['quality_score']:.2f}")
+            print(f"   Protection Recommended: {analysis_result['analysis']['protection_recommended']}")
+            
+            # Clean up
+            sample_file.unlink()
+            
+        except Exception as e:
+            print(f"❌ Error: {str(e)}")
+
+
+async def fingerprint_generation_example():
+    """Example: Generate content fingerprint"""
+    print("\n🔒 Fingerprint Generation Example")
+    print("-" * 30)
+    
+    async with create_sdk(api_key=API_KEY, base_url=BASE_URL) as sdk:
+        try:
+            # Create a sample audio file simulation
+            sample_file = Path("/tmp/sample_audio.txt")
+            sample_file.write_text("Simulated audio content for fingerprinting")
+            
+            # Generate fingerprint via public API
+            with open(sample_file, "rb") as f:
+                fingerprint_result = await sdk.post_file("/public/content/fingerprint", {"file": f})
+            
+            print(f"✅ Fingerprint generated")
+            print(f"   Fingerprint ID: {fingerprint_result['fingerprint_id']}")
+            print(f"   Algorithm: {fingerprint_result['algorithm']}")
+            print(f"   Confidence Score: {fingerprint_result['confidence_score']:.2f}")
+            print(f"   Processing Time: {fingerprint_result['processing_time']:.2f}s")
+            print(f"   Protection Features: {', '.join(fingerprint_result['protection_features'])}")
+            
+            # Clean up
+            sample_file.unlink()
+            
+        except Exception as e:
+            print(f"❌ Error: {str(e)}")
+
+
+async def sdk_download_example():
+    """Example: Download SDK and documentation"""
+    print("\n💾 SDK Download Example")
+    print("-" * 30)
+    
+    async with create_sdk(api_key=API_KEY, base_url=BASE_URL) as sdk:
+        try:
+            # Download Python SDK
+            sdk_info = await sdk.get("/public/sdk/python")
+            
+            print(f"✅ SDK downloaded")
+            print(f"   Filename: {sdk_info['filename']}")
+            print(f"   Version: {sdk_info['version']}")
+            print(f"   Installation: {sdk_info['installation']}")
+            print(f"   Content size: {len(sdk_info['content'])} characters")
+            
+            # Download Postman collection
+            postman_collection = await sdk.get("/public/docs/postman")
+            
+            print(f"✅ Postman collection downloaded")
+            print(f"   Collection Name: {postman_collection['info']['name']}")
+            print(f"   Requests: {len(postman_collection['item'])} endpoints")
             
         except Exception as e:
             print(f"❌ Error: {str(e)}")
@@ -298,25 +417,34 @@ async def main():
     print("🚀 Ainflue SDK Examples")
     print("=" * 50)
     
-    # Check if API key is set
-    if API_KEY == "your-api-key-here":
-        print("⚠️ Please set your API key in the AINFLUE_API_KEY environment variable")
-        print("   export AINFLUE_API_KEY=your_actual_api_key")
-        return
-    
     try:
-        # Run async examples
-        await content_analysis_example()
-        await content_protection_example()
-        await monetization_example()
-        await analytics_example()
-        await batch_processing_example()
-        await file_upload_example()
-        await user_management_example()
-        await error_handling_example()
+        # Run public API examples (no authentication required)
+        await public_api_health_check()
+        await public_api_info_example()
+        await sdk_download_example()
         
-        # Run sync example
-        sync_example()
+        # Check if API key is set for authenticated examples
+        if API_KEY == "your-api-key-here":
+            print("\n⚠️ Skipping authenticated examples - Please set your API key")
+            print("   export AINFLUE_API_KEY=your_actual_api_key")
+            print("   Some examples require authentication")
+        else:
+            # Run authenticated public API examples
+            await sandbox_testing_example()
+            await content_analysis_example()
+            await fingerprint_generation_example()
+            
+            # Run other authenticated examples
+            await content_protection_example()
+            await monetization_example()
+            await analytics_example()
+            await batch_processing_example()
+            await file_upload_example()
+            await user_management_example()
+            await error_handling_example()
+            
+            # Run sync example
+            sync_example()
         
     except KeyboardInterrupt:
         print("\n👋 Examples interrupted by user")
