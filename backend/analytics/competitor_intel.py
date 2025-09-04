@@ -594,7 +594,7 @@ class CompetitorIntelligence:
                         "creator_value": creator_value,
                         "market_percentile": round(percentile, 1),
                         "market_average": statistics.mean(competitor_values),
-                        "market_median": np.median(competitor_values),
+                        "market_median": statistics.median(competitor_values),
                         "market_leader": max(competitor_values) if competitor_values else 0,
                         "position_rating": self._rate_market_position(percentile)
                     }
@@ -670,10 +670,10 @@ class CompetitorIntelligence:
                     "min": min(values),
                     "max": max(values),
                     "average": statistics.mean(values),
-                    "median": np.median(values),
-                    "p25": np.percentile(values, 25),
-                    "p75": np.percentile(values, 75),
-                    "p90": np.percentile(values, 90)
+                    "median": statistics.median(values),
+                    "p25": percentile(values, 25),
+                    "p75": percentile(values, 75),
+                    "p90": percentile(values, 90)
                 }
         
         return benchmarks
@@ -750,7 +750,7 @@ class CompetitorIntelligence:
         if engagement_rates:
             engagement_analysis["engagement_benchmarks"] = {
                 "average_rate": round(statistics.mean(engagement_rates), 4),
-                "top_quartile": round(np.percentile(engagement_rates, 75), 4),
+                "top_quartile": round(percentile(engagement_rates, 75), 4),
                 "distribution": {
                     "low": sum(1 for rate in engagement_rates if rate < 0.03),
                     "medium": sum(1 for rate in engagement_rates if 0.03 <= rate < 0.06),
@@ -846,7 +846,7 @@ class CompetitorIntelligence:
         for competitor in competitors:
             # Simplified overlap calculation based on demographics similarity
             # In production, this would use actual audience data
-            overlap_score = np.random.uniform(0.1, 0.4)  # 10-40% overlap
+            overlap_score = random.uniform(0.1, 0.4)  # 10-40% overlap
             overlap_scores[competitor.competitor_id] = round(overlap_score, 3)
         
         return overlap_scores

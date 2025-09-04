@@ -311,10 +311,20 @@ class MLPredictionEngine:
             content_factor = input_data.get("content_consistency", 0.8) * 0.5
             predicted_value = current_followers * (1 + growth_rate + content_factor) ** (request.time_horizon / 30)
             
+        elif category == PredictionCategory.CONTENT_PERFORMANCE:
+            # Content performance prediction
+            base_engagement = input_data.get("historical_engagement", 1000)
+            quality_factor = input_data.get("content_quality_score", 0.7) * 0.4
+            timing_factor = input_data.get("optimal_timing_score", 0.5) * 0.3
+            trending_factor = input_data.get("trending_alignment", 0.5) * 0.3
+            predicted_value = base_engagement * (1 + quality_factor + timing_factor + trending_factor)
+            
         else:
             # Default prediction for other categories
             base_value = input_data.get("base_metric", 100)
-            improvement_factor = sum(input_data.values()) / len(input_data) if input_data else 1.0
+            # Only sum numeric values for improvement factor
+            numeric_values = [v for v in input_data.values() if isinstance(v, (int, float))]
+            improvement_factor = sum(numeric_values) / len(numeric_values) if numeric_values else 1.0
             predicted_value = base_value * improvement_factor
         
         # Add model-specific adjustments
