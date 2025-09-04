@@ -3,7 +3,7 @@ Backend AI Module - Consolidated AI Agents System
 ================================================
 
 This module provides a consolidated interface to all AI agents in the Ainflue platform.
-Organizes 53+ specialized AI agents into 4 manageable files for improved maintainability.
+Organizes 56+ specialized AI agents into 5 manageable files for improved maintainability.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -17,6 +17,7 @@ from .agent_registry import AgentRegistry, get_agent, list_agents
 from .core_business_agents import CoreBusinessAgents
 from .content_agents import ContentAgents  
 from .technical_agents import TechnicalAgents
+from .education import EducationAgents
 
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
@@ -28,5 +29,6 @@ __all__ = [
     "list_agents",
     "CoreBusinessAgents",
     "ContentAgents",
-    "TechnicalAgents"
+    "TechnicalAgents",
+    "EducationAgents"
 ]

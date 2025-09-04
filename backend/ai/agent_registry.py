@@ -20,6 +20,7 @@ from datetime import datetime
 from .core_business_agents import CoreBusinessAgents
 from .content_agents import ContentAgents
 from .technical_agents import TechnicalAgents
+from .education import EducationAgents
 
 logger = logging.getLogger(__name__)
 
@@ -28,6 +29,7 @@ class AgentCategory(Enum):
     CORE_BUSINESS = "core_business"
     CONTENT = "content"
     TECHNICAL = "technical"
+    EDUCATION = "education"
 
 class AgentStatus(Enum):
     """Agent status enumeration"""
@@ -50,12 +52,13 @@ class AgentInfo:
 
 class AgentRegistry:
     """
-    Unified agent registry managing all 53 AI agents.
+    Unified agent registry managing all 56 AI agents.
     
     Provides centralized access to:
     - 20 Core Business Agents (strategy, monetization, analytics)
     - 15 Content Agents (creation, processing, optimization)
     - 18 Technical Agents (infrastructure, monitoring, security)
+    - 3 Education Agents (tutoring, course creation, assessment)
     """
     
     def __init__(self):
@@ -74,14 +77,16 @@ class AgentRegistry:
             self._categories[AgentCategory.CORE_BUSINESS] = CoreBusinessAgents()
             self._categories[AgentCategory.CONTENT] = ContentAgents()
             self._categories[AgentCategory.TECHNICAL] = TechnicalAgents()
+            self._categories[AgentCategory.EDUCATION] = EducationAgents()
             
             # Register all agents
             self._register_core_business_agents()
             self._register_content_agents()
             self._register_technical_agents()
+            self._register_education_agents()
             
             self._initialized = True
-            logger.info("✅ Agent registry initialized with 53 agents")
+            logger.info("✅ Agent registry initialized with 56 agents")
             
         except Exception as e:
             logger.error(f"❌ Failed to initialize agent registry: {e}")
@@ -180,6 +185,23 @@ class AgentRegistry:
                 status=AgentStatus.READY,
                 description=description,
                 capabilities=["infrastructure", "monitoring", "security"]
+            )
+    
+    def _register_education_agents(self):
+        """Register education AI service agents"""
+        education_agents = [
+            ("PersonalTutorAgent", "Adaptive personalized tutoring and learning guidance"),
+            ("CourseCreatorAgent", "Dynamic course creation and curriculum design"),
+            ("LearningAssessmentAgent", "Comprehensive learning evaluation and progress tracking")
+        ]
+        
+        for agent_name, description in education_agents:
+            self._agent_info[agent_name] = AgentInfo(
+                name=agent_name,
+                category=AgentCategory.EDUCATION,
+                status=AgentStatus.READY,
+                description=description,
+                capabilities=["tutoring", "course_creation", "assessment", "personalization"]
             )
     
     def get_agent(self, agent_name: str) -> Optional[Any]:
