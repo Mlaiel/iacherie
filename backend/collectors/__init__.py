@@ -14,12 +14,17 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
 
 from .base_collector import BaseCollector, CollectorResult, CollectorStatus, CollectionConfig
-from .instagram_collector import InstagramCollector
-from .tiktok_collector import TikTokCollector
-from .youtube_collector import YouTubeCollector
-from .twitter_collector import TwitterCollector
-from .facebook_collector import FacebookCollector
-from .linkedin_collector import LinkedInCollector
+from .instagram import InstagramCollector
+from .tiktok import TikTokCollector
+from .youtube import YouTubeCollector
+from .twitter import TwitterCollector
+from .facebook import FacebookCollector
+from .linkedin import LinkedInCollector
+from .ecommerce import EcommerceCollector
+from .news import NewsCollector
+from .trends import TrendsCollector
+from .misc import MiscCollector
+# Keep the existing collectors that are not mentioned in the problem statement
 from .pinterest_collector import PinterestCollector
 from .reddit_collector import RedditCollector
 from .twitch_collector import TwitchCollector
@@ -36,6 +41,10 @@ __all__ = [
     'TwitterCollector',
     'FacebookCollector',
     'LinkedInCollector',
+    'EcommerceCollector',
+    'NewsCollector',
+    'TrendsCollector',
+    'MiscCollector',
     'PinterestCollector',
     'RedditCollector',
     'TwitchCollector',
@@ -50,6 +59,10 @@ PLATFORM_COLLECTORS = {
     'twitter': TwitterCollector,
     'facebook': FacebookCollector,
     'linkedin': LinkedInCollector,
+    'ecommerce': EcommerceCollector,
+    'news': NewsCollector,
+    'trends': TrendsCollector,
+    'misc': MiscCollector,
     'pinterest': PinterestCollector,
     'reddit': RedditCollector,
     'twitch': TwitchCollector,
