@@ -1,0 +1,384 @@
+# Docker Compose - Audio Processing Infrastructure  
+# Ainflue Platform - Professional Audio Processing Services
+#
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+#
+# Infrastructure for DEMUCS separation, EBU R128 normalization, 
+# format conversion and professional audio mastering
+
+version: '3.8'
+
+services:
+  # DEMUCS Source Separation Service
+  demucs-service:
+    image: ainflue/demucs-professional:latest
+    container_name: ainflue-demucs
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+        reservations:
+          cpus: '2.0'
+          memory: 4G
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+      - DEMUCS_MODEL=htdemucs
+      - DEMUCS_SHIFTS=1
+      - DEMUCS_OVERLAP=0.25
+      - DEVICE=cpu
+      - SEGMENT_LENGTH=8
+      - BATCH_SIZE=1
+      - OUTPUT_FORMAT=wav
+      - SEPARATION_QUALITY=high
+      - PARALLEL_JOBS=2
+    volumes:
+      - audio_processing:/app/audio
+      - demucs_models:/app/models
+      - demucs_cache:/app/cache
+      - ./audio_logs:/app/logs
+    tmpfs:
+      - /tmp:size=2G,noexec,nosuid,nodev
+    networks:
+      - ainflue-audio-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8090/health"]
+      interval: 60s
+      timeout: 30s
+      retries: 3
+      start_period: 120s
+    restart: unless-stopped
+
+  # EBU R128 Loudness Normalization Service
+  loudness-service:
+    image: ainflue/loudness-professional:latest
+    container_name: ainflue-loudness
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+    environment:
+      - EBU_R128_ENABLED=true
+      - ITU_BS1770_ENABLED=true
+      - ATSC_A85_ENABLED=true
+      - TARGET_LUFS=-23.0
+      - PEAK_LIMIT=-1.0
+      - RANGE_LIMIT=7.0
+      - GATING_MODE=relative
+      - ANALYSIS_WINDOW=3.0
+      - MEASUREMENT_SYSTEM=ebu_r128
+      - OUTPUT_FORMAT=wav
+      - PRESERVE_DYNAMICS=true
+    volumes:
+      - audio_processing:/app/audio
+      - loudness_profiles:/app/profiles
+      - ./audio_logs:/app/logs
+    networks:
+      - ainflue-audio-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8091/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    restart: unless-stopped
+
+  # Audio Format Converter Service
+  format-converter:
+    image: ainflue/audio-converter:latest
+    container_name: ainflue-converter
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 3G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    environment:
+      - SUPPORTED_FORMATS=WAV,FLAC,MP3,OPUS,DSD,AAC,OGG
+      - QUALITY_PRESERVATION=true
+      - FFMPEG_THREADS=4
+      - MP3_QUALITY=0
+      - FLAC_COMPRESSION=8
+      - OPUS_BITRATE=320k
+      - AAC_QUALITY=cvbr
+      - RESAMPLING_QUALITY=soxr_vhq
+      - DITHER_ENABLED=true
+      - METADATA_PRESERVATION=true
+    volumes:
+      - audio_processing:/app/audio
+      - conversion_cache:/app/cache
+      - ./audio_logs:/app/logs
+    networks:
+      - ainflue-audio-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8092/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+
+  # Professional Audio Mastering Service
+  mastering-service:
+    image: ainflue/audio-mastering:latest
+    container_name: ainflue-mastering
+    deploy:
+      resources:
+        limits:
+          cpus: '3.0'
+          memory: 6G
+        reservations:
+          cpus: '1.0'
+          memory: 2G
+    environment:
+      - MASTERING_CHAIN=eq,compressor,limiter
+      - EQ_ENABLED=true
+      - COMPRESSOR_ENABLED=true
+      - LIMITER_ENABLED=true
+      - STEREO_ENHANCEMENT=true
+      - HARMONIC_ENHANCEMENT=false
+      - BROADCAST_STANDARDS=ebu,atsc,itb
+      - TARGET_PLATFORM=streaming
+      - QUALITY_PROFILE=professional
+      - AUTOMATION_LEVEL=smart
+    volumes:
+      - audio_processing:/app/audio
+      - mastering_presets:/app/presets
+      - ./audio_logs:/app/logs
+    depends_on:
+      - loudness-service
+    networks:
+      - ainflue-audio-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8093/health"]
+      interval: 45s
+      timeout: 15s
+      retries: 3
+      start_period: 90s
+    restart: unless-stopped
+
+  # Audio Analysis Service
+  analysis-service:
+    image: ainflue/audio-analysis:latest
+    container_name: ainflue-analysis
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+    environment:
+      - ANALYSIS_FEATURES=mfcc,spectral,temporal,rhythmic
+      - TEMPO_DETECTION=true
+      - KEY_DETECTION=true
+      - GENRE_CLASSIFICATION=true
+      - MOOD_ANALYSIS=true
+      - ENERGY_ANALYSIS=true
+      - BPM_ACCURACY=high
+      - ML_MODELS_ENABLED=true
+      - REAL_TIME_ANALYSIS=false
+    volumes:
+      - audio_processing:/app/audio
+      - analysis_models:/app/models
+      - analysis_results:/app/results
+      - ./audio_logs:/app/logs
+    networks:
+      - ainflue-audio-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8094/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 45s
+    restart: unless-stopped
+
+  # Redis Cache for Audio Processing
+  redis-audio:
+    image: redis:7-alpine
+    container_name: ainflue-redis-audio
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 2G
+        reservations:
+          cpus: '0.1'
+          memory: 256M
+    command: >
+      redis-server
+      --appendonly yes
+      --appendfsync everysec
+      --maxmemory 1800mb
+      --maxmemory-policy allkeys-lru
+      --save 900 1
+      --save 300 10
+      --save 60 10000
+      --tcp-keepalive 300
+    volumes:
+      - redis_audio_data:/data
+    ports:
+      - "6381:6379"
+    networks:
+      - ainflue-audio-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  # Audio Processing Coordinator
+  audio-coordinator:
+    image: ainflue/audio-coordinator:latest
+    container_name: ainflue-audio-coordinator
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 2G
+        reservations:
+          cpus: '0.2'
+          memory: 256M
+    environment:
+      - PROCESSING_PIPELINE=separation,analysis,normalization,mastering,conversion
+      - QUEUE_SYSTEM=redis
+      - PARALLEL_PROCESSING=true
+      - MAX_CONCURRENT_JOBS=3
+      - JOB_TIMEOUT=3600
+      - PRIORITY_PROCESSING=true
+      - WEBHOOK_NOTIFICATIONS=true
+      - STATUS_UPDATES=true
+    volumes:
+      - audio_processing:/app/audio
+      - ./audio_logs:/app/logs
+    depends_on:
+      - redis-audio
+      - demucs-service
+      - loudness-service
+      - format-converter
+      - mastering-service
+      - analysis-service
+    ports:
+      - "8095:8080"
+    networks:
+      - ainflue-audio-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+
+  # Audio Storage Manager
+  storage-manager:
+    image: ainflue/audio-storage:latest
+    container_name: ainflue-audio-storage
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
+        reservations:
+          cpus: '0.1'
+          memory: 128M
+    environment:
+      - STORAGE_BACKEND=local,s3
+      - S3_BUCKET=${AUDIO_S3_BUCKET}
+      - S3_REGION=${AWS_REGION}
+      - COMPRESSION_ENABLED=true
+      - ENCRYPTION_ENABLED=true
+      - BACKUP_ENABLED=true
+      - CLEANUP_ENABLED=true
+      - RETENTION_DAYS=30
+    secrets:
+      - aws_access_key_id
+      - aws_secret_access_key
+    volumes:
+      - audio_processing:/app/audio
+      - audio_backup:/app/backup
+      - ./audio_logs:/app/logs
+    networks:
+      - ainflue-audio-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8096/health"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+
+# Secrets for AWS and other sensitive data
+secrets:
+  aws_access_key_id:
+    external: true
+  aws_secret_access_key:
+    external: true
+
+# Volumes for audio processing data
+volumes:
+  audio_processing:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/ainflue/audio_processing
+  demucs_models:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/ainflue/demucs_models
+  demucs_cache:
+    driver: local
+  loudness_profiles:
+    driver: local
+  conversion_cache:
+    driver: local
+  mastering_presets:
+    driver: local
+  analysis_models:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/ainflue/analysis_models
+  analysis_results:
+    driver: local
+  redis_audio_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/ainflue/redis_audio
+  audio_backup:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/ainflue/audio_backup
+
+# Networks for audio processing services
+networks:
+  ainflue-audio-network:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br-ainflue-audio
+    ipam:
+      config:
+        - subnet: 172.21.0.0/16
+          gateway: 172.21.0.1
