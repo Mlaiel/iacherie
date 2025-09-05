@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Enterprise Logo Variations -->
+<!-- © 2025 Fahed Mlaiel - Ainflue Studio -->
+<svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="primaryLogoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00ff88;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00cc6a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="darkLogoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="monochromeBg" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#1a202c;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2d3748;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="600" height="400" fill="#f8fafc"/>
+  
+  <!-- Header -->
+  <text x="50" y="40" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#1a202c">Ainflue Enterprise Logo Variations</text>
+  <text x="50" y="60" font-family="Arial, sans-serif" font-size="12" fill="#4a5568">Professional branding assets for enterprise clients</text>
+  
+  <!-- Primary Color Logo -->
+  <g id="primary-logo" transform="translate(50, 80)">
+    <rect x="0" y="0" width="200" height="80" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" rx="8"/>
+    <text x="10" y="20" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#2d3748">Primary Color</text>
+    
+    <!-- Logo Symbol -->
+    <circle cx="50" cy="50" r="15" fill="url(#primaryLogoGradient)"/>
+    <text x="50" y="56" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">A</text>
+    
+    <!-- Logo Text -->
+    <text x="75" y="48" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1a202c">AINFLUE</text>
+    <text x="75" y="62" font-family="Arial, sans-serif" font-size="8" fill="#4a5568">STUDIO</text>
+  </g>
+  
+  <!-- Dark Background Logo -->
+  <g id="dark-logo" transform="translate(270, 80)">
+    <rect x="0" y="0" width="200" height="80" fill="url(#monochromeBg)" stroke="#4a5568" stroke-width="1" rx="8"/>
+    <text x="10" y="20" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#ffffff">Dark Background</text>
+    
+    <!-- Logo Symbol -->
+    <circle cx="50" cy="50" r="15" fill="url(#primaryLogoGradient)"/>
+    <text x="50" y="56" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#1a202c" text-anchor="middle">A</text>
+    
+    <!-- Logo Text -->
+    <text x="75" y="48" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#ffffff">AINFLUE</text>
+    <text x="75" y="62" font-family="Arial, sans-serif" font-size="8" fill="#cbd5e0">STUDIO</text>
+  </g>
+  
+  <!-- Monochrome Logo -->
+  <g id="monochrome-logo" transform="translate(50, 180)">
+    <rect x="0" y="0" width="200" height="80" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" rx="8"/>
+    <text x="10" y="20" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#2d3748">Monochrome</text>
+    
+    <!-- Logo Symbol -->
+    <circle cx="50" cy="50" r="15" fill="#2d3748"/>
+    <text x="50" y="56" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">A</text>
+    
+    <!-- Logo Text -->
+    <text x="75" y="48" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#2d3748">AINFLUE</text>
+    <text x="75" y="62" font-family="Arial, sans-serif" font-size="8" fill="#4a5568">STUDIO</text>
+  </g>
+  
+  <!-- White/Reverse Logo -->
+  <g id="white-logo" transform="translate(270, 180)">
+    <rect x="0" y="0" width="200" height="80" fill="#2d3748" stroke="#4a5568" stroke-width="1" rx="8"/>
+    <text x="10" y="20" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#ffffff">White/Reverse</text>
+    
+    <!-- Logo Symbol -->
+    <circle cx="50" cy="50" r="15" fill="#ffffff"/>
+    <text x="50" y="56" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#2d3748" text-anchor="middle">A</text>
+    
+    <!-- Logo Text -->
+    <text x="75" y="48" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#ffffff">AINFLUE</text>
+    <text x="75" y="62" font-family="Arial, sans-serif" font-size="8" fill="#cbd5e0">STUDIO</text>
+  </g>
+  
+  <!-- Icon Only Variations -->
+  <g id="icon-variations" transform="translate(50, 280)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2d3748">Icon Variations</text>
+    
+    <!-- Small Icon -->
+    <g transform="translate(0, 20)">
+      <rect x="0" y="0" width="40" height="40" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" rx="4"/>
+      <circle cx="20" cy="20" r="8" fill="url(#primaryLogoGradient)"/>
+      <text x="20" y="25" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#ffffff" text-anchor="middle">A</text>
+      <text x="20" y="75" font-family="Arial, sans-serif" font-size="8" fill="#4a5568" text-anchor="middle">32x32</text>
+    </g>
+    
+    <!-- Medium Icon -->
+    <g transform="translate(60, 15)">
+      <rect x="0" y="0" width="50" height="50" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" rx="4"/>
+      <circle cx="25" cy="25" r="12" fill="url(#primaryLogoGradient)"/>
+      <text x="25" y="31" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#ffffff" text-anchor="middle">A</text>
+      <text x="25" y="80" font-family="Arial, sans-serif" font-size="8" fill="#4a5568" text-anchor="middle">64x64</text>
+    </g>
+    
+    <!-- Large Icon -->
+    <g transform="translate(130, 10)">
+      <rect x="0" y="0" width="60" height="60" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" rx="4"/>
+      <circle cx="30" cy="30" r="18" fill="url(#primaryLogoGradient)"/>
+      <text x="30" y="37" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">A</text>
+      <text x="30" y="85" font-family="Arial, sans-serif" font-size="8" fill="#4a5568" text-anchor="middle">128x128</text>
+    </g>
+  </g>
+  
+  <!-- Usage Guidelines -->
+  <g id="guidelines" transform="translate(350, 280)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2d3748">Usage Guidelines</text>
+    
+    <text x="0" y="25" font-family="Arial, sans-serif" font-size="10" fill="#4a5568">• Minimum size: 32x32 pixels</text>
+    <text x="0" y="40" font-family="Arial, sans-serif" font-size="10" fill="#4a5568">• Clear space: 1x logo height on all sides</text>
+    <text x="0" y="55" font-family="Arial, sans-serif" font-size="10" fill="#4a5568">• Do not stretch or distort</text>
+    <text x="0" y="70" font-family="Arial, sans-serif" font-size="10" fill="#4a5568">• Use appropriate contrast for background</text>
+  </g>
+  
+  <!-- Copyright Notice -->
+  <text x="50" y="380" font-family="Arial, sans-serif" font-size="10" fill="#718096">© 2025 Fahed Mlaiel - All rights reserved. Ainflue® is a registered trademark.</text>
+</svg>
