@@ -127,17 +127,33 @@ Convert message to dictionary for serialization"""
 
 
 class MessageQueue(ABC):
+    """Abstract base class for message queues"""
+    
+    async def dequeue(self):
+        """Dequeue a message from the queue"""
         try:
             logger.info(f"Executing dequeue")
             
             # Implementation for dequeue
             # TODO: Add specific business logic here
+            return None
+            
+        except Exception as e:
+            logger.error(f"dequeue failed: {e}")
+            raise
+
+    async def peek(self):
+        """Peek at next message without removing it"""
         try:
             logger.info(f"Executing peek")
             
-            # Implementation for peek
+            # Implementation for peek  
             # TODO: Add specific business logic here
-        try:
+            return None
+            
+        except Exception as e:
+            logger.error(f"peek failed: {e}")
+            raise
             logger.info(f"Executing ack")
             
             # Implementation for ack
@@ -154,11 +170,21 @@ class MessageQueue(ABC):
             return result
             
         except Exception as e:
+            logger.error(f"nack failed: {e}")
+            raise
+
+    async def purge(self):
+        """Purge all messages from the queue"""
         try:
             logger.info(f"Executing purge")
             
             # Implementation for purge
             # TODO: Add specific business logic here
+            return True
+            
+        except Exception as e:
+            logger.error(f"purge failed: {e}")
+            raise
             
             result = None  # Replace with actual implementation
             
@@ -215,9 +241,6 @@ class MessageQueue(ABC):
         except Exception as e:
             logger.error(f"enqueue failed: {e}")
             raise
-            reply_to=data.get("reply_to"),
-            headers=data.get("headers", {})
-        )
 
 
 class MessageQueue(ABC):
