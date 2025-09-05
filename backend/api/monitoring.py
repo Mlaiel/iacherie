@@ -738,11 +738,455 @@ class MonitoringService:
 # EXPORTS
 # ========================================
 
+# ========================================
+# BUSINESS INTELLIGENCE MONITORING
+# ========================================
+
+class BusinessMetricType(str, Enum):
+    """Business intelligence metric types"""
+    REVENUE = "revenue"
+    USER_ENGAGEMENT = "user_engagement"
+    CONTENT_PERFORMANCE = "content_performance"
+    CONVERSION_RATE = "conversion_rate"
+    CHURN_RATE = "churn_rate"
+    COLLABORATION_SUCCESS = "collaboration_success"
+    CREATOR_GROWTH = "creator_growth"
+    PLATFORM_ADOPTION = "platform_adoption"
+
+class AnalyticsTimeframe(str, Enum):
+    """Analytics timeframe options"""
+    REAL_TIME = "real_time"
+    HOURLY = "hourly"
+    DAILY = "daily"
+    WEEKLY = "weekly"
+    MONTHLY = "monthly"
+    QUARTERLY = "quarterly"
+
+class BusinessIntelligence:
+    """Advanced business intelligence and analytics"""
+    
+    def __init__(self, metrics_collector: MetricsCollector):
+        self.metrics_collector = metrics_collector
+        self.ml_predictions = {}
+        self.anomaly_detector = AnomalyDetector()
+        
+    async def get_revenue_analytics(self, timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
+        """Get comprehensive revenue analytics"""
+        try:
+            end_time = datetime.utcnow()
+            
+            # Calculate timeframe
+            if timeframe == AnalyticsTimeframe.DAILY:
+                start_time = end_time - timedelta(days=1)
+                interval = "hour"
+            elif timeframe == AnalyticsTimeframe.WEEKLY:
+                start_time = end_time - timedelta(weeks=1)
+                interval = "day"
+            elif timeframe == AnalyticsTimeframe.MONTHLY:
+                start_time = end_time - timedelta(days=30)
+                interval = "day"
+            else:
+                start_time = end_time - timedelta(hours=1)
+                interval = "minute"
+            
+            # Get revenue data
+            revenue_data = await self._collect_revenue_metrics(start_time, end_time, interval)
+            
+            # Calculate key metrics
+            total_revenue = sum(point["value"] for point in revenue_data)
+            avg_revenue = total_revenue / len(revenue_data) if revenue_data else 0
+            
+            # Trend analysis
+            trend = await self._calculate_revenue_trend(revenue_data)
+            
+            # Predictions
+            predictions = await self._predict_revenue(revenue_data, timeframe)
+            
+            # Anomaly detection
+            anomalies = await self.anomaly_detector.detect_revenue_anomalies(revenue_data)
+            
+            return {
+                "timeframe": timeframe.value,
+                "total_revenue": round(total_revenue, 2),
+                "average_revenue": round(avg_revenue, 2),
+                "revenue_trend": trend,
+                "predictions": predictions,
+                "anomalies": anomalies,
+                "data_points": revenue_data,
+                "analysis_timestamp": datetime.utcnow().isoformat()
+            }
+            
+        except Exception as e:
+            logger.error(f"Revenue analytics failed: {str(e)}")
+            return {"error": "Revenue analytics unavailable"}
+    
+    async def get_user_engagement_insights(self, timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
+        """Get user engagement insights with AI analysis"""
+        try:
+            # Collect engagement metrics
+            engagement_data = await self._collect_engagement_metrics(timeframe)
+            
+            # Calculate engagement scores
+            engagement_score = await self._calculate_engagement_score(engagement_data)
+            
+            # Behavioral segmentation
+            segments = await self._segment_users_by_behavior(engagement_data)
+            
+            # Engagement predictions
+            predictions = await self._predict_engagement_trends(engagement_data)
+            
+            # Recommendations
+            recommendations = await self._generate_engagement_recommendations(engagement_data)
+            
+            return {
+                "engagement_score": engagement_score,
+                "user_segments": segments,
+                "predictions": predictions,
+                "recommendations": recommendations,
+                "metrics": engagement_data,
+                "timeframe": timeframe.value
+            }
+            
+        except Exception as e:
+            logger.error(f"Engagement insights failed: {str(e)}")
+            return {"error": "Engagement insights unavailable"}
+    
+    async def get_content_performance_analytics(self, timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
+        """Get content performance analytics"""
+        try:
+            # Collect content metrics
+            content_metrics = await self._collect_content_performance_metrics(timeframe)
+            
+            # Top performing content
+            top_content = await self._identify_top_performing_content(content_metrics)
+            
+            # Content trends
+            trends = await self._analyze_content_trends(content_metrics)
+            
+            # Optimization suggestions
+            optimizations = await self._generate_content_optimizations(content_metrics)
+            
+            # Virality analysis
+            viral_content = await self._analyze_viral_potential(content_metrics)
+            
+            return {
+                "top_performing_content": top_content,
+                "content_trends": trends,
+                "optimization_suggestions": optimizations,
+                "viral_analysis": viral_content,
+                "overall_metrics": content_metrics,
+                "timeframe": timeframe.value
+            }
+            
+        except Exception as e:
+            logger.error(f"Content analytics failed: {str(e)}")
+            return {"error": "Content analytics unavailable"}
+    
+    async def get_platform_health_dashboard(self) -> Dict[str, Any]:
+        """Get comprehensive platform health dashboard"""
+        try:
+            # System health
+            system_health = await self.metrics_collector.get_system_health()
+            
+            # API performance
+            api_metrics = await self.metrics_collector.get_api_metrics()
+            
+            # Business metrics
+            business_health = await self._calculate_business_health()
+            
+            # User satisfaction
+            satisfaction_score = await self._calculate_user_satisfaction()
+            
+            # Security status
+            security_status = await self._get_security_status()
+            
+            # Infrastructure costs
+            cost_analysis = await self._analyze_infrastructure_costs()
+            
+            return {
+                "overall_health_score": await self._calculate_overall_health_score(),
+                "system_health": system_health,
+                "api_performance": api_metrics,
+                "business_health": business_health,
+                "user_satisfaction": satisfaction_score,
+                "security_status": security_status,
+                "cost_analysis": cost_analysis,
+                "alerts": await self._get_active_alerts(),
+                "last_updated": datetime.utcnow().isoformat()
+            }
+            
+        except Exception as e:
+            logger.error(f"Health dashboard failed: {str(e)}")
+            return {"error": "Health dashboard unavailable"}
+    
+    async def get_creator_success_metrics(self, creator_id: Optional[str] = None) -> Dict[str, Any]:
+        """Get creator success metrics and insights"""
+        try:
+            if creator_id:
+                # Individual creator metrics
+                metrics = await self._get_individual_creator_metrics(creator_id)
+            else:
+                # Platform-wide creator metrics
+                metrics = await self._get_platform_creator_metrics()
+            
+            # Success scoring
+            success_scores = await self._calculate_creator_success_scores(metrics)
+            
+            # Growth predictions
+            growth_predictions = await self._predict_creator_growth(metrics)
+            
+            # Recommendations
+            recommendations = await self._generate_creator_recommendations(metrics)
+            
+            return {
+                "success_scores": success_scores,
+                "growth_predictions": growth_predictions,
+                "recommendations": recommendations,
+                "metrics": metrics,
+                "analysis_type": "individual" if creator_id else "platform_wide"
+            }
+            
+        except Exception as e:
+            logger.error(f"Creator metrics failed: {str(e)}")
+            return {"error": "Creator metrics unavailable"}
+    
+    # Helper methods for business intelligence
+    
+    async def _collect_revenue_metrics(self, start_time: datetime, end_time: datetime, interval: str) -> List[Dict]:
+        """Collect revenue metrics over time period"""
+        try:
+            # Mock revenue data collection - would query actual database
+            data_points = []
+            current_time = start_time
+            
+            while current_time <= end_time:
+                # Simulate revenue data with some randomness
+                base_revenue = 1000 + (current_time.hour * 50)  # Higher during business hours
+                revenue = base_revenue + (hash(str(current_time)) % 500)  # Add variation
+                
+                data_points.append({
+                    "timestamp": current_time.isoformat(),
+                    "value": revenue,
+                    "interval": interval
+                })
+                
+                # Increment by interval
+                if interval == "minute":
+                    current_time += timedelta(minutes=1)
+                elif interval == "hour":
+                    current_time += timedelta(hours=1)
+                else:
+                    current_time += timedelta(days=1)
+            
+            return data_points
+            
+        except Exception:
+            return []
+    
+    async def _calculate_revenue_trend(self, revenue_data: List[Dict]) -> Dict[str, Any]:
+        """Calculate revenue trend analysis"""
+        try:
+            if len(revenue_data) < 2:
+                return {"trend": "insufficient_data", "change_percent": 0}
+            
+            # Calculate trend using simple linear regression
+            values = [point["value"] for point in revenue_data]
+            n = len(values)
+            
+            # Simple trend calculation
+            first_half = sum(values[:n//2]) / (n//2)
+            second_half = sum(values[n//2:]) / (n - n//2)
+            
+            change_percent = ((second_half - first_half) / first_half) * 100 if first_half > 0 else 0
+            
+            if change_percent > 5:
+                trend = "increasing"
+            elif change_percent < -5:
+                trend = "decreasing"
+            else:
+                trend = "stable"
+            
+            return {
+                "trend": trend,
+                "change_percent": round(change_percent, 2),
+                "first_half_avg": round(first_half, 2),
+                "second_half_avg": round(second_half, 2)
+            }
+            
+        except Exception:
+            return {"trend": "unknown", "change_percent": 0}
+    
+    async def _predict_revenue(self, revenue_data: List[Dict], timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
+        """Predict future revenue using simple ML models"""
+        try:
+            if len(revenue_data) < 5:
+                return {"prediction": "insufficient_data"}
+            
+            values = [point["value"] for point in revenue_data]
+            
+            # Simple moving average prediction
+            recent_avg = sum(values[-5:]) / 5
+            
+            # Trend-adjusted prediction
+            trend = await self._calculate_revenue_trend(revenue_data)
+            trend_factor = 1.0 + (trend["change_percent"] / 100)
+            
+            next_period_prediction = recent_avg * trend_factor
+            
+            # Confidence based on data consistency
+            variance = sum((v - recent_avg) ** 2 for v in values[-5:]) / 5
+            confidence = max(0.5, 1.0 - (variance / recent_avg) if recent_avg > 0 else 0.5)
+            
+            return {
+                "next_period": round(next_period_prediction, 2),
+                "confidence": round(confidence, 2),
+                "method": "trend_adjusted_moving_average",
+                "forecast_period": timeframe.value
+            }
+            
+        except Exception:
+            return {"prediction": "calculation_error"}
+    
+    async def _collect_engagement_metrics(self, timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
+        """Collect user engagement metrics"""
+        try:
+            # Mock engagement data
+            return {
+                "active_users": 15000 + (hash(str(timeframe)) % 5000),
+                "session_duration_avg": 1800 + (hash(str(timeframe)) % 600),
+                "pages_per_session": 5.2 + (hash(str(timeframe)) % 3),
+                "bounce_rate": 0.25 + (hash(str(timeframe)) % 20) / 100,
+                "return_visitor_rate": 0.65 + (hash(str(timeframe)) % 20) / 100,
+                "content_interactions": 45000 + (hash(str(timeframe)) % 15000)
+            }
+        except Exception:
+            return {}
+    
+    async def _calculate_engagement_score(self, engagement_data: Dict) -> float:
+        """Calculate overall engagement score"""
+        try:
+            # Weighted engagement score calculation
+            active_users_score = min(1.0, engagement_data.get("active_users", 0) / 20000)
+            session_score = min(1.0, engagement_data.get("session_duration_avg", 0) / 3600)
+            interaction_score = min(1.0, engagement_data.get("content_interactions", 0) / 50000)
+            retention_score = engagement_data.get("return_visitor_rate", 0)
+            
+            overall_score = (
+                active_users_score * 0.3 +
+                session_score * 0.25 +
+                interaction_score * 0.25 +
+                retention_score * 0.2
+            )
+            
+            return round(overall_score * 100, 1)  # Convert to percentage
+            
+        except Exception:
+            return 50.0  # Default neutral score
+
+class AnomalyDetector:
+    """ML-based anomaly detection for business metrics"""
+    
+    def __init__(self):
+        self.models = {}
+        self.thresholds = {
+            "revenue": {"min_change": 0.2, "max_change": 2.0},
+            "users": {"min_change": 0.15, "max_change": 1.5},
+            "performance": {"min_response_time": 0.05, "max_response_time": 2.0}
+        }
+    
+    async def detect_revenue_anomalies(self, revenue_data: List[Dict]) -> List[Dict]:
+        """Detect revenue anomalies using statistical methods"""
+        try:
+            if len(revenue_data) < 10:
+                return []
+            
+            values = [point["value"] for point in revenue_data]
+            
+            # Calculate statistical measures
+            mean_value = sum(values) / len(values)
+            variance = sum((v - mean_value) ** 2 for v in values) / len(values)
+            std_dev = variance ** 0.5
+            
+            anomalies = []
+            
+            # Detect outliers using z-score
+            for i, point in enumerate(revenue_data):
+                value = point["value"]
+                z_score = abs(value - mean_value) / std_dev if std_dev > 0 else 0
+                
+                if z_score > 2.5:  # More than 2.5 standard deviations
+                    anomalies.append({
+                        "timestamp": point["timestamp"],
+                        "value": value,
+                        "expected_range": [mean_value - 2*std_dev, mean_value + 2*std_dev],
+                        "severity": "high" if z_score > 3 else "medium",
+                        "type": "outlier",
+                        "z_score": round(z_score, 2)
+                    })
+            
+            return anomalies
+            
+        except Exception:
+            return []
+    
+    async def detect_performance_anomalies(self, performance_data: List[Dict]) -> List[Dict]:
+        """Detect performance anomalies"""
+        try:
+            anomalies = []
+            
+            for point in performance_data:
+                response_time = point.get("response_time", 0)
+                
+                if response_time > self.thresholds["performance"]["max_response_time"]:
+                    anomalies.append({
+                        "timestamp": point.get("timestamp"),
+                        "metric": "response_time",
+                        "value": response_time,
+                        "threshold": self.thresholds["performance"]["max_response_time"],
+                        "severity": "high" if response_time > 5.0 else "medium",
+                        "type": "performance_degradation"
+                    })
+            
+            return anomalies
+            
+        except Exception:
+            return []
+
+
+# Business Intelligence Endpoints
+business_intelligence = BusinessIntelligence(MetricsCollector())
+
+async def get_business_dashboard(timeframe: AnalyticsTimeframe = AnalyticsTimeframe.DAILY) -> Dict[str, Any]:
+    """Get comprehensive business intelligence dashboard"""
+    try:
+        dashboard_data = {
+            "revenue_analytics": await business_intelligence.get_revenue_analytics(timeframe),
+            "engagement_insights": await business_intelligence.get_user_engagement_insights(timeframe),
+            "content_performance": await business_intelligence.get_content_performance_analytics(timeframe),
+            "platform_health": await business_intelligence.get_platform_health_dashboard(),
+            "creator_metrics": await business_intelligence.get_creator_success_metrics(),
+            "generated_at": datetime.utcnow().isoformat(),
+            "timeframe": timeframe.value
+        }
+        
+        return dashboard_data
+        
+    except Exception as e:
+        logger.error(f"Business dashboard failed: {str(e)}")
+        return {"error": "Business dashboard unavailable"}
+
+
+# ========================================
+# UPDATED EXPORTS
+# ========================================
+
 __all__ = [
     "HealthStatus",
     "MetricType",
     "AlertSeverity",
     "ComponentType",
+    "BusinessMetricType",
+    "AnalyticsTimeframe",
     "HealthCheck",
     "SystemMetrics",
     "APIMetrics",
@@ -750,7 +1194,10 @@ __all__ = [
     "HealthCheckManager",
     "MetricsCollector",
     "AlertManager",
+    "BusinessIntelligence",
+    "AnomalyDetector",
     "MonitoringMiddleware",
     "MonitoringEndpoints",
-    "MonitoringService"
+    "MonitoringService",
+    "get_business_dashboard"
 ]
