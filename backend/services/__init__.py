@@ -126,6 +126,71 @@ except ImportError as e:
     logger.warning(f"❌ Gamification Service not available: {e}")
     gamification_service_available = False
 
+# Import new critical business logic services (Level 3 compliance)
+try:
+    from .creator_multi_format_service import CreatorMultiFormatService
+    creator_multi_format_service_available = True
+    logger.info("✅ Creator Multi-Format Service loaded")
+except ImportError as e:
+    logger.warning(f"❌ Creator Multi-Format Service not available: {e}")
+    creator_multi_format_service_available = False
+
+try:
+    from .ia_processing_service import IAProcessingService
+    ia_processing_service_available = True
+    logger.info("✅ IA Processing Service loaded")
+except ImportError as e:
+    logger.warning(f"❌ IA Processing Service not available: {e}")
+    ia_processing_service_available = False
+
+try:
+    from .protection_business_service import ProtectionBusinessService
+    protection_business_service_available = True
+    logger.info("✅ Protection Business Service loaded")
+except ImportError as e:
+    logger.warning(f"❌ Protection Business Service not available: {e}")
+    protection_business_service_available = False
+
+try:
+    from .monetization_business_service import MonetizationBusinessService
+    monetization_business_service_available = True
+    logger.info("✅ Monetization Business Service loaded")
+except ImportError as e:
+    logger.warning(f"❌ Monetization Business Service not available: {e}")
+    monetization_business_service_available = False
+
+try:
+    from .collaboration_business_service import CollaborationBusinessService
+    collaboration_business_service_available = True
+    logger.info("✅ Collaboration Business Service loaded")
+except ImportError as e:
+    logger.warning(f"❌ Collaboration Business Service not available: {e}")
+    collaboration_business_service_available = False
+
+try:
+    from .gamification_business_service import GamificationBusinessService
+    gamification_business_service_available = True
+    logger.info("✅ Gamification Business Service loaded")
+except ImportError as e:
+    logger.warning(f"❌ Gamification Business Service not available: {e}")
+    gamification_business_service_available = False
+
+try:
+    from .seo_business_service import SEOBusinessService
+    seo_business_service_available = True
+    logger.info("✅ SEO Business Service loaded")
+except ImportError as e:
+    logger.warning(f"❌ SEO Business Service not available: {e}")
+    seo_business_service_available = False
+
+try:
+    from .distribution_business_service import DistributionBusinessService
+    distribution_business_service_available = True
+    logger.info("✅ Distribution Business Service loaded")
+except ImportError as e:
+    logger.warning(f"❌ Distribution Business Service not available: {e}")
+    distribution_business_service_available = False
+
 
 class ServiceRegistry:
     """
@@ -423,6 +488,56 @@ def get_gamification_service(config: Dict[str, Any] = None):
     return None
 
 
+# Factory functions for critical business logic services (Level 3 compliant)
+def get_creator_multi_format_service(config: Dict[str, Any] = None):
+    """Get Creator Multi-Format Service instance"""
+    if creator_multi_format_service_available:
+        return CreatorMultiFormatService(config)
+    return None
+
+def get_ia_processing_service(config: Dict[str, Any] = None):
+    """Get IA Processing Service instance"""
+    if ia_processing_service_available:
+        return IAProcessingService(config)
+    return None
+
+def get_protection_business_service(config: Dict[str, Any] = None):
+    """Get Protection Business Service instance"""
+    if protection_business_service_available:
+        return ProtectionBusinessService(config)
+    return None
+
+def get_monetization_business_service(config: Dict[str, Any] = None):
+    """Get Monetization Business Service instance"""
+    if monetization_business_service_available:
+        return MonetizationBusinessService(config)
+    return None
+
+def get_collaboration_business_service(config: Dict[str, Any] = None):
+    """Get Collaboration Business Service instance"""
+    if collaboration_business_service_available:
+        return CollaborationBusinessService(config)
+    return None
+
+def get_gamification_business_service(config: Dict[str, Any] = None):
+    """Get Gamification Business Service instance"""
+    if gamification_business_service_available:
+        return GamificationBusinessService(config)
+    return None
+
+def get_seo_business_service(config: Dict[str, Any] = None):
+    """Get SEO Business Service instance"""
+    if seo_business_service_available:
+        return SEOBusinessService(config)
+    return None
+
+def get_distribution_business_service(config: Dict[str, Any] = None):
+    """Get Distribution Business Service instance"""
+    if distribution_business_service_available:
+        return DistributionBusinessService(config)
+    return None
+
+
 # Export all classes and functions
 __all__ = [
     # Service Classes (12 consolidated services)
@@ -438,6 +553,16 @@ __all__ = [
     "SecurityService",
     "InfrastructureService",
     "GamificationService",
+    
+    # Critical Business Logic Services (Level 3 compliant)
+    "CreatorMultiFormatService",
+    "IAProcessingService",
+    "ProtectionBusinessService", 
+    "MonetizationBusinessService",
+    "CollaborationBusinessService",
+    "GamificationBusinessService",
+    "SEOBusinessService",
+    "DistributionBusinessService",
     
     # Service Registry
     "ServiceRegistry",
@@ -457,6 +582,16 @@ __all__ = [
     "get_infrastructure_service",
     "get_gamification_service",
     
+    # Business Logic Service Factory Functions
+    "get_creator_multi_format_service",
+    "get_ia_processing_service", 
+    "get_protection_business_service",
+    "get_monetization_business_service",
+    "get_collaboration_business_service",
+    "get_gamification_business_service",
+    "get_seo_business_service",
+    "get_distribution_business_service",
+    
     # Availability flags
     "user_service_available",
     "influencer_service_available",
@@ -469,7 +604,17 @@ __all__ = [
     "distribution_service_available",
     "security_service_available",
     "infrastructure_service_available",
-    "gamification_service_available"
+    "gamification_service_available",
+    
+    # Business Logic Service Availability flags
+    "creator_multi_format_service_available",
+    "ia_processing_service_available",
+    "protection_business_service_available",
+    "monetization_business_service_available", 
+    "collaboration_business_service_available",
+    "gamification_business_service_available",
+    "seo_business_service_available",
+    "distribution_business_service_available"
 ]
 
 # Module initialization
@@ -482,8 +627,13 @@ available_services = sum([
     user_service_available, influencer_service_available, content_service_available,
     payment_service_available, analytics_service_available, notification_service_available,
     marketplace_service_available, collaboration_service_available, distribution_service_available,
-    security_service_available, infrastructure_service_available, gamification_service_available
+    security_service_available, infrastructure_service_available, gamification_service_available,
+    # Business logic services
+    creator_multi_format_service_available, ia_processing_service_available, 
+    protection_business_service_available, monetization_business_service_available,
+    collaboration_business_service_available, gamification_business_service_available,
+    seo_business_service_available, distribution_business_service_available
 ])
 
-logger.info(f"🏗️ Consolidated Services loaded: {available_services}/12 service modules available")
-logger.info("📋 Service consolidation complete - 60+ services consolidated into 12 unified modules")
+logger.info(f"🏗️ Consolidated Services loaded: {available_services}/20 service modules available")
+logger.info("📋 Service consolidation complete - 35+ services consolidated into 12 unified modules + 8 business logic services")

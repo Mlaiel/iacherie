@@ -165,11 +165,11 @@ class RevenueRecord:
     """Revenue tracking record"""
     revenue_id: str
     user_id: str
-    content_id: Optional[str] = None
     revenue_type: RevenueType
     gross_amount: Decimal
     net_amount: Decimal
     currency: str
+    content_id: Optional[str] = None
     fees: Decimal = Decimal('0')
     taxes: Decimal = Decimal('0')
     platform_commission: Decimal = Decimal('0')
