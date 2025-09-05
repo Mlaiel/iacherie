@@ -63,53 +63,55 @@ from .dispute_resolver import (
     Dispute,
     DisputeType,
     DisputeStatus,
-    Resolution,
-    MediationProcess
+    DisputeEvidence,
+    ResolutionAction
 )
 
 from .market_analyzer import (
     MarketAnalyzer,
-    MarketTrends,
-    PriceAnalysis,
+    MarketSegment,
+    TrendAnalysis,
     DemandForecast,
     SupplyAnalysis,
-    MarketInsights
+    MarketInsights,
+    MarketOpportunity
 )
 
 from .price_optimizer import (
     PriceOptimizer,
     PricingStrategy,
-    DynamicPricing,
-    PriceRecommendation,
-    RevenueOptimization,
-    CompetitiveAnalysis
+    PricingRecommendation,
+    PriceElasticity,
+    ABTestResult,
+    DynamicPricingRule
 )
 
 from .service_catalog import (
     ServiceCatalog,
     Service,
     ServiceCategory,
-    ServicePackage,
+    ServiceType,
     PricingTier,
-    ServiceTemplate
+    ServiceTemplate,
+    PortfolioItem as ServicePortfolioItem
 )
 
 from .portfolio_manager import (
     PortfolioManager,
     CreatorPortfolio,
     PortfolioItem,
-    PortfolioAnalytics,
-    ShowcaseOptimization,
-    PerformanceMetrics
+    PortfolioSection,
+    ShowcaseRecommendation,
+    PortfolioMetrics
 )
 
 from .commission_calculator import (
     CommissionCalculator,
-    CommissionStructure,
-    FeeCalculation,
+    FeeStructure,
+    TransactionFees,
     RevenueShare,
     PayoutSchedule,
-    TaxCalculation
+    PayoutRecord
 )
 
 from .performance_tracker import (
@@ -117,7 +119,7 @@ from .performance_tracker import (
     CreatorMetrics,
     MarketplaceKPI,
     PerformanceReport,
-    BenchmarkAnalysis,
+    BenchmarkData,
     GrowthAnalytics
 )
 
@@ -166,55 +168,57 @@ __all__ = [
     "Dispute",
     "DisputeType",
     "DisputeStatus",
-    "Resolution",
-    "MediationProcess",
+    "DisputeEvidence",
+    "ResolutionAction",
     
     # Market Analysis
     "MarketAnalyzer",
-    "MarketTrends",
-    "PriceAnalysis",
+    "MarketSegment",
+    "TrendAnalysis",
     "DemandForecast",
     "SupplyAnalysis",
     "MarketInsights",
+    "MarketOpportunity",
     
     # Price Optimization
     "PriceOptimizer",
     "PricingStrategy",
-    "DynamicPricing",
-    "PriceRecommendation",
-    "RevenueOptimization",
-    "CompetitiveAnalysis",
+    "PricingRecommendation",
+    "PriceElasticity",
+    "ABTestResult",
+    "DynamicPricingRule",
     
     # Service Catalog
     "ServiceCatalog",
     "Service",
     "ServiceCategory",
-    "ServicePackage",
+    "ServiceType",
     "PricingTier",
     "ServiceTemplate",
+    "ServicePortfolioItem",
     
     # Portfolio Management
     "PortfolioManager",
     "CreatorPortfolio",
     "PortfolioItem",
-    "PortfolioAnalytics",
-    "ShowcaseOptimization",
-    "PerformanceMetrics",
+    "PortfolioSection",
+    "ShowcaseRecommendation",
+    "PortfolioMetrics",
     
     # Commission Calculation
     "CommissionCalculator",
-    "CommissionStructure",
-    "FeeCalculation",
+    "FeeStructure",
+    "TransactionFees",
     "RevenueShare",
     "PayoutSchedule",
-    "TaxCalculation",
+    "PayoutRecord",
     
     # Performance Tracking
     "PerformanceTracker",
     "CreatorMetrics",
     "MarketplaceKPI",
     "PerformanceReport",
-    "BenchmarkAnalysis",
+    "BenchmarkData",
     "GrowthAnalytics"
 ]
 
