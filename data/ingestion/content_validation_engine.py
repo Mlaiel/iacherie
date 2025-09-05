@@ -1049,41 +1049,20 @@ Detect NSFW content in images"""
         return {'is_nsfw': False, 'confidence': 0.0}
     
     async def _extract_text_content(self, file_path: str, content_type: str) -> Optional[str]:
+        """Extract text content from files"""
         try:
-            logger.info(f"Executing _check_file_headers")
+            logger.info(f"Executing _extract_text_content")
             
-            # Implementation for _check_file_headers
+            # Implementation for text extraction
             # TODO: Add specific business logic here
-        try:
-                    # AI model processing
-                    if not hasattr(self, 'model') or self.model is None:
-                        raise RuntimeError("AI model not initialized")
-            
-                    # Preprocess input
-                    processed_input = await self._preprocess__check_embedded_content_input(file_path)
-            
-                    # Run inference
-                    result = await self.model.predict(processed_input)
-            
-                    # Postprocess result
-                    final_result = await self._postprocess__check_embedded_content_result(result)
-            
-                    logger.info(f"AI processing _check_embedded_content completed")
-                    return final_result
-            
-                except Exception as e:
-                    logger.error(f"AI processing _check_embedded_content failed: {e}")
-                    raise
             result = None  # Replace with actual implementation
             
-            logger.info(f"_check_file_headers completed successfully")
+            logger.info(f"_extract_text_content completed successfully")
             return result
             
         except Exception as e:
-            logger.error(f"_check_file_headers failed: {e}")
+            logger.error(f"_extract_text_content failed: {e}")
             raise
-Extract text content from files"""
-        return None
     
     async def _detect_text_toxicity(self, text: str) -> Dict[str, Any]:
         """

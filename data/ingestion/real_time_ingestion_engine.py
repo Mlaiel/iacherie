@@ -714,6 +714,16 @@ Get detailed session metrics"""
             
             # Implementation for _store_session_state
             # TODO: Add specific business logic here
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"_store_session_state completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"_store_session_state failed: {e}")
+            raise
+
+    async def _store_temporary_chunk(self, chunk_data):
         try:
             logger.info(f"Executing _store_temporary_chunk")
             

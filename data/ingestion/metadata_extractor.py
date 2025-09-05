@@ -266,7 +266,7 @@ Initialize AI models for content analysis"""
             semaphore = asyncio.Semaphore(3)  # Limit concurrent extractions
             
             async def extract_single(item):
-        try:
+                try:
                     # AI model processing
                     if not hasattr(self, 'model') or self.model is None:
                         raise RuntimeError("AI model not initialized")
