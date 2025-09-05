@@ -11,7 +11,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 import asyncio
 import logging
 from datetime import datetime, timedelta
-from typing import Dict, List, Optional, Any, Union
+from typing import Dict, List, Optional, Any, Union, AsyncGenerator
 from decimal import Decimal
 from enum import Enum
 from dataclasses import dataclass
