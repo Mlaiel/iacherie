@@ -1,0 +1,494 @@
+{
+  "status": "warning",
+  "infrastructure_path": "infrastructure",
+  "files": {
+    "autoscaling.py": {
+      "exists": true,
+      "syntax_valid": true,
+      "importable": true,
+      "has_definitions": true,
+      "functions_count": 4,
+      "classes_count": 8,
+      "error_message": null
+    },
+    "deployment.py": {
+      "exists": true,
+      "syntax_valid": true,
+      "importable": true,
+      "has_definitions": true,
+      "functions_count": 5,
+      "classes_count": 8,
+      "error_message": null
+    },
+    "kubernetes.py": {
+      "exists": true,
+      "syntax_valid": true,
+      "importable": true,
+      "has_definitions": true,
+      "functions_count": 12,
+      "classes_count": 15,
+      "error_message": null
+    },
+    "__init__.py": {
+      "exists": true,
+      "syntax_valid": true,
+      "importable": true,
+      "has_definitions": false,
+      "functions_count": 0,
+      "classes_count": 0,
+      "error_message": null
+    },
+    "monitoring.py": {
+      "exists": true,
+      "syntax_valid": true,
+      "importable": true,
+      "has_definitions": true,
+      "functions_count": 11,
+      "classes_count": 15,
+      "error_message": null
+    },
+    "helm.py": {
+      "exists": true,
+      "syntax_valid": true,
+      "importable": true,
+      "has_definitions": true,
+      "functions_count": 4,
+      "classes_count": 8,
+      "error_message": null
+    },
+    "ansible.py": {
+      "exists": true,
+      "syntax_valid": true,
+      "importable": true,
+      "has_definitions": true,
+      "functions_count": 5,
+      "classes_count": 6,
+      "error_message": null
+    },
+    "docker.py": {
+      "exists": true,
+      "syntax_valid": true,
+      "importable": true,
+      "has_definitions": true,
+      "functions_count": 13,
+      "classes_count": 14,
+      "error_message": null
+    },
+    "storage.py": {
+      "exists": true,
+      "syntax_valid": true,
+      "importable": true,
+      "has_definitions": true,
+      "functions_count": 5,
+      "classes_count": 9,
+      "error_message": null
+    },
+    "security.py": {
+      "exists": true,
+      "syntax_valid": true,
+      "importable": true,
+      "has_definitions": true,
+      "functions_count": 5,
+      "classes_count": 9,
+      "error_message": null
+    },
+    "operators.py": {
+      "exists": true,
+      "syntax_valid": true,
+      "importable": true,
+      "has_definitions": true,
+      "functions_count": 7,
+      "classes_count": 8,
+      "error_message": null
+    },
+    "apis.py": {
+      "exists": true,
+      "syntax_valid": true,
+      "importable": true,
+      "has_definitions": false,
+      "functions_count": 0,
+      "classes_count": 0,
+      "error_message": null
+    },
+    "networking.py": {
+      "exists": true,
+      "syntax_valid": true,
+      "importable": true,
+      "has_definitions": true,
+      "functions_count": 5,
+      "classes_count": 8,
+      "error_message": null
+    },
+    "terraform.py": {
+      "exists": true,
+      "syntax_valid": true,
+      "importable": true,
+      "has_definitions": true,
+      "functions_count": 9,
+      "classes_count": 7,
+      "error_message": null
+    },
+    "apis/graphql_api.py": {
+      "exists": true,
+      "syntax_valid": true,
+      "importable": false,
+      "has_definitions": true,
+      "functions_count": 6,
+      "classes_count": 4,
+      "error_message": "Import error: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/home/runner/work/Ainflue/Ainflue/infrastructure/apis/graphql_api.py\", line 12, in <module>\n    from fastapi import FastAPI, HTTPException, Depends, status, Request, Response\nModuleNotFoundError: No module named 'fastapi'"
+    },
+    "apis/__init__.py": {
+      "exists": true,
+      "syntax_valid": true,
+      "importable": true,
+      "has_definitions": false,
+      "functions_count": 0,
+      "classes_count": 0,
+      "error_message": null
+    },
+    "apis/rest_api.py": {
+      "exists": true,
+      "syntax_valid": true,
+      "importable": false,
+      "has_definitions": true,
+      "functions_count": 6,
+      "classes_count": 4,
+      "error_message": "Import error: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/home/runner/work/Ainflue/Ainflue/infrastructure/apis/rest_api.py\", line 12, in <module>\n    from fastapi import FastAPI, HTTPException, Depends, status, Request, Response\nModuleNotFoundError: No module named 'fastapi'"
+    },
+    "apis/middleware.py": {
+      "exists": true,
+      "syntax_valid": true,
+      "importable": false,
+      "has_definitions": true,
+      "functions_count": 6,
+      "classes_count": 4,
+      "error_message": "Import error: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/home/runner/work/Ainflue/Ainflue/infrastructure/apis/middleware.py\", line 12, in <module>\n    from fastapi import FastAPI, HTTPException, Depends, status, Request, Response\nModuleNotFoundError: No module named 'fastapi'"
+    },
+    "apis/websocket_api.py": {
+      "exists": true,
+      "syntax_valid": true,
+      "importable": false,
+      "has_definitions": true,
+      "functions_count": 6,
+      "classes_count": 4,
+      "error_message": "Import error: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/home/runner/work/Ainflue/Ainflue/infrastructure/apis/websocket_api.py\", line 12, in <module>\n    from fastapi import FastAPI, HTTPException, Depends, status, Request, Response\nModuleNotFoundError: No module named 'fastapi'"
+    },
+    "external/blockchain_networks.py": {
+      "exists": true,
+      "syntax_valid": true,
+      "importable": true,
+      "has_definitions": true,
+      "functions_count": 1,
+      "classes_count": 1,
+      "error_message": null
+    },
+    "external/__init__.py": {
+      "exists": true,
+      "syntax_valid": true,
+      "importable": true,
+      "has_definitions": false,
+      "functions_count": 0,
+      "classes_count": 0,
+      "error_message": null
+    },
+    "external/ai_services.py": {
+      "exists": true,
+      "syntax_valid": true,
+      "importable": true,
+      "has_definitions": true,
+      "functions_count": 1,
+      "classes_count": 1,
+      "error_message": null
+    },
+    "external/social_media_apis.py": {
+      "exists": true,
+      "syntax_valid": true,
+      "importable": false,
+      "has_definitions": true,
+      "functions_count": 6,
+      "classes_count": 4,
+      "error_message": "Import error: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/home/runner/work/Ainflue/Ainflue/infrastructure/external/social_media_apis.py\", line 12, in <module>\n    from fastapi import FastAPI, HTTPException, Depends, status, Request, Response\nModuleNotFoundError: No module named 'fastapi'"
+    },
+    "external/payment_gateways.py": {
+      "exists": true,
+      "syntax_valid": true,
+      "importable": true,
+      "has_definitions": true,
+      "functions_count": 1,
+      "classes_count": 1,
+      "error_message": null
+    },
+    "api/router.py": {
+      "exists": true,
+      "syntax_valid": false,
+      "importable": false,
+      "has_definitions": false,
+      "functions_count": 0,
+      "classes_count": 0,
+      "error_message": "Syntax error line 13168: closing parenthesis ']' does not match opening parenthesis '('"
+    },
+    "api/__init__.py": {
+      "exists": true,
+      "syntax_valid": true,
+      "importable": true,
+      "has_definitions": false,
+      "functions_count": 0,
+      "classes_count": 0,
+      "error_message": null
+    },
+    "security/__init__.py": {
+      "exists": true,
+      "syntax_valid": true,
+      "importable": true,
+      "has_definitions": false,
+      "functions_count": 0,
+      "classes_count": 0,
+      "error_message": null
+    },
+    "security/auth.py": {
+      "exists": true,
+      "syntax_valid": false,
+      "importable": false,
+      "has_definitions": false,
+      "functions_count": 0,
+      "classes_count": 0,
+      "error_message": "Syntax error line 76071: positional argument follows keyword argument"
+    },
+    "storage/file_storage.py": {
+      "exists": true,
+      "syntax_valid": true,
+      "importable": true,
+      "has_definitions": true,
+      "functions_count": 3,
+      "classes_count": 5,
+      "error_message": null
+    },
+    "storage/redis_adapter.py": {
+      "exists": true,
+      "syntax_valid": true,
+      "importable": true,
+      "has_definitions": true,
+      "functions_count": 3,
+      "classes_count": 5,
+      "error_message": null
+    },
+    "storage/__init__.py": {
+      "exists": true,
+      "syntax_valid": true,
+      "importable": true,
+      "has_definitions": false,
+      "functions_count": 0,
+      "classes_count": 0,
+      "error_message": null
+    },
+    "storage/database_adapter.py": {
+      "exists": true,
+      "syntax_valid": true,
+      "importable": true,
+      "has_definitions": true,
+      "functions_count": 3,
+      "classes_count": 5,
+      "error_message": null
+    },
+    "storage/mongodb_adapter.py": {
+      "exists": true,
+      "syntax_valid": false,
+      "importable": false,
+      "has_definitions": false,
+      "functions_count": 0,
+      "classes_count": 0,
+      "error_message": "Syntax error line 77: expected an indented block after 'except' statement on line 76"
+    }
+  },
+  "directories": {
+    "apis": {
+      "path": "infrastructure/apis",
+      "has_init_py": true,
+      "python_files": [
+        "graphql_api.py",
+        "__init__.py",
+        "rest_api.py",
+        "middleware.py",
+        "websocket_api.py"
+      ],
+      "subdirectories": [
+        "__pycache__"
+      ],
+      "all_files_importable": false,
+      "structure_coherent": true,
+      "errors": [
+        "graphql_api.py: Import error: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/home/runner/work/Ainflue/Ainflue/infrastructure/apis/graphql_api.py\", line 12, in <module>\n    from fastapi import FastAPI, HTTPException, Depends, status, Request, Response\nModuleNotFoundError: No module named 'fastapi'",
+        "rest_api.py: Import error: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/home/runner/work/Ainflue/Ainflue/infrastructure/apis/rest_api.py\", line 12, in <module>\n    from fastapi import FastAPI, HTTPException, Depends, status, Request, Response\nModuleNotFoundError: No module named 'fastapi'",
+        "middleware.py: Import error: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/home/runner/work/Ainflue/Ainflue/infrastructure/apis/middleware.py\", line 12, in <module>\n    from fastapi import FastAPI, HTTPException, Depends, status, Request, Response\nModuleNotFoundError: No module named 'fastapi'",
+        "websocket_api.py: Import error: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/home/runner/work/Ainflue/Ainflue/infrastructure/apis/websocket_api.py\", line 12, in <module>\n    from fastapi import FastAPI, HTTPException, Depends, status, Request, Response\nModuleNotFoundError: No module named 'fastapi'"
+      ],
+      "importable_files_count": 1,
+      "total_files_count": 5
+    },
+    "external": {
+      "path": "infrastructure/external",
+      "has_init_py": true,
+      "python_files": [
+        "blockchain_networks.py",
+        "__init__.py",
+        "ai_services.py",
+        "social_media_apis.py",
+        "payment_gateways.py"
+      ],
+      "subdirectories": [
+        "__pycache__"
+      ],
+      "all_files_importable": false,
+      "structure_coherent": true,
+      "errors": [
+        "social_media_apis.py: Import error: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/home/runner/work/Ainflue/Ainflue/infrastructure/external/social_media_apis.py\", line 12, in <module>\n    from fastapi import FastAPI, HTTPException, Depends, status, Request, Response\nModuleNotFoundError: No module named 'fastapi'"
+      ],
+      "importable_files_count": 4,
+      "total_files_count": 5
+    },
+    "api": {
+      "path": "infrastructure/api",
+      "has_init_py": true,
+      "python_files": [
+        "router.py",
+        "__init__.py"
+      ],
+      "subdirectories": [
+        "__pycache__"
+      ],
+      "all_files_importable": false,
+      "structure_coherent": true,
+      "errors": [
+        "router.py: Syntax error line 13168: closing parenthesis ']' does not match opening parenthesis '('"
+      ],
+      "importable_files_count": 1,
+      "total_files_count": 2
+    },
+    "security": {
+      "path": "infrastructure/security",
+      "has_init_py": true,
+      "python_files": [
+        "__init__.py",
+        "auth.py"
+      ],
+      "subdirectories": [
+        "__pycache__"
+      ],
+      "all_files_importable": false,
+      "structure_coherent": true,
+      "errors": [
+        "auth.py: Syntax error line 76071: positional argument follows keyword argument"
+      ],
+      "importable_files_count": 1,
+      "total_files_count": 2
+    },
+    "storage": {
+      "path": "infrastructure/storage",
+      "has_init_py": true,
+      "python_files": [
+        "file_storage.py",
+        "redis_adapter.py",
+        "__init__.py",
+        "database_adapter.py",
+        "mongodb_adapter.py"
+      ],
+      "subdirectories": [
+        "__pycache__"
+      ],
+      "all_files_importable": false,
+      "structure_coherent": true,
+      "errors": [
+        "mongodb_adapter.py: Syntax error line 77: expected an indented block after 'except' statement on line 76"
+      ],
+      "importable_files_count": 4,
+      "total_files_count": 5
+    },
+    "__pycache__": {
+      "path": "infrastructure/__pycache__",
+      "has_init_py": false,
+      "python_files": [],
+      "subdirectories": [],
+      "all_files_importable": true,
+      "structure_coherent": false,
+      "errors": [
+        "Missing __init__.py file"
+      ],
+      "importable_files_count": 0,
+      "total_files_count": 0
+    },
+    "apis/__pycache__": {
+      "path": "infrastructure/apis/__pycache__",
+      "has_init_py": false,
+      "python_files": [],
+      "subdirectories": [],
+      "all_files_importable": true,
+      "structure_coherent": false,
+      "errors": [
+        "Missing __init__.py file"
+      ],
+      "importable_files_count": 0,
+      "total_files_count": 0
+    },
+    "external/__pycache__": {
+      "path": "infrastructure/external/__pycache__",
+      "has_init_py": false,
+      "python_files": [],
+      "subdirectories": [],
+      "all_files_importable": true,
+      "structure_coherent": false,
+      "errors": [
+        "Missing __init__.py file"
+      ],
+      "importable_files_count": 0,
+      "total_files_count": 0
+    },
+    "api/__pycache__": {
+      "path": "infrastructure/api/__pycache__",
+      "has_init_py": false,
+      "python_files": [],
+      "subdirectories": [],
+      "all_files_importable": true,
+      "structure_coherent": false,
+      "errors": [
+        "Missing __init__.py file"
+      ],
+      "importable_files_count": 0,
+      "total_files_count": 0
+    },
+    "security/__pycache__": {
+      "path": "infrastructure/security/__pycache__",
+      "has_init_py": false,
+      "python_files": [],
+      "subdirectories": [],
+      "all_files_importable": true,
+      "structure_coherent": false,
+      "errors": [
+        "Missing __init__.py file"
+      ],
+      "importable_files_count": 0,
+      "total_files_count": 0
+    },
+    "storage/__pycache__": {
+      "path": "infrastructure/storage/__pycache__",
+      "has_init_py": false,
+      "python_files": [],
+      "subdirectories": [],
+      "all_files_importable": true,
+      "structure_coherent": false,
+      "errors": [
+        "Missing __init__.py file"
+      ],
+      "importable_files_count": 0,
+      "total_files_count": 0
+    }
+  },
+  "summary": {
+    "total_files": 33,
+    "valid_files": 30,
+    "importable_files": 25,
+    "files_with_definitions": 23,
+    "directories_with_init": 5,
+    "total_directories": 11,
+    "success_rate": 75.75757575757575
+  }
+}

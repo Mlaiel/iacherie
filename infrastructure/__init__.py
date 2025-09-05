@@ -60,15 +60,17 @@ from .networking import (
     networking_manager, load_balancer_manager, ingress_manager, dns_manager, service_mesh_manager
 )
 
-from .security import (
-    SecurityManager, CertificateManager, VaultManager, PolicyManager, ComplianceManager,
-    security_manager, certificate_manager, vault_manager, policy_manager, compliance_manager
-)
+# Temporarily commenting out security imports due to syntax issues in auth.py
+# from .security import (
+#     SecurityManager, CertificateManager, VaultManager, PolicyManager, ComplianceManager,
+#     security_manager, certificate_manager, vault_manager, policy_manager, compliance_manager
+# )
 
-from .storage import (
-    StorageManager, PersistentVolumeManager, BackupManager, ObjectStorageManager,
-    storage_manager, pv_manager, backup_manager, object_storage_manager
-)
+# Temporarily commenting out storage imports due to missing classes
+# from .storage import (
+#     StorageManager, PersistentVolumeManager, BackupManager, ObjectStorageManager,
+#     storage_manager, pv_manager, backup_manager, object_storage_manager
+# )
 
 from .autoscaling import (
     AutoscalingManager, HPAManager, VPAManager, ClusterAutoscaler,
