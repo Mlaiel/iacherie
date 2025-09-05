@@ -34,14 +34,17 @@ except ImportError:
     # Mock classes for standalone operation
     class BusinessKPICollector:
         async def collect_metrics(self):
-        try:
-                    # Collect metrics
-                    metrics = {
-                        "timestamp": datetime.utcnow(),
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
+            try:
+                # Collect metrics
+                metrics = {
+                    "timestamp": datetime.utcnow(),
+                }
+                return metrics
+            except Exception as e:
+                # Request validation
+                if not hasattr(self, 'data'):
+                    raise ValueError("Invalid request")
+                return {}
             
                     # Process request
                     result = await self._handle_get_current_metrics_request(data)

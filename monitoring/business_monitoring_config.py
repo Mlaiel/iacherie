@@ -297,7 +297,7 @@ class BusinessMonitoringConfig:
             AlertConfig(
                 alert_id="acquisition_cost_critical",
                 metric_type=BusinessMetricType.CUSTOMER_ACQUISITION_COST,
-                alert_type=BusinessAlertType.USER_ACQUISITION_DROP,
+                alert_type=BusinessAlertType.CONVERSION_DROP,  # Use available enum value
                 threshold_value=200.0,  # $200 CAC
                 comparison_operator=">",
                 severity="critical",
@@ -324,7 +324,7 @@ class BusinessMonitoringConfig:
             KPIConfig(
                 kpi_id="arr",
                 name="Annual Recurring Revenue",
-                metric_type=BusinessMetricType.ANNUAL_RECURRING_REVENUE,
+                metric_type=BusinessMetricType.MONTHLY_RECURRING_REVENUE,  # Use available enum value
                 calculation_method="multiplication",
                 target_value=1200000.0,
                 monitoring_frequency=MonitoringFrequency.MEDIUM

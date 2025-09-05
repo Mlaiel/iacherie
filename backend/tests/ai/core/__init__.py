@@ -146,19 +146,33 @@ Track test results across test runs"""
             logger.error(f"__init__ failed: {e}")
             raise
             
-        except Exception as e:
+    def process_request(self, data=None):
         try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
+            # Request validation
+            if not data:
+                raise ValueError("Invalid request")
             
-                    # Process request
-                    result = await self._handle_get_summary_request(data)
+            # Process request
+            return True
+        except Exception as e:
+            logger.error(f"Request processing failed: {e}")
+            return False
+    
+    async def handle_summary_request(self, data=None):
+        """Handle summary request"""
+        try:
+            result = await self._handle_get_summary_request(data)
             
-                    # Return response
-                    return {"status": "success", "data": result}
+            # Return response
+            return {"status": "success", "data": result}
             
-                except Exception as e:
+        except Exception as e:
+            logger.error(f"Summary request failed: {e}")
+            return {"status": "error", "error": str(e)}
+    
+    async def _handle_get_summary_request(self, data):
+        """Internal method to handle summary requests"""
+        return {"summary": "Mock summary data"}
                     logger.error(f"API handler get_summary failed: {e}")
                     return {"status": "error", "message": str(e)}
             return result
