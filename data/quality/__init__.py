@@ -32,31 +32,39 @@ import logging
 from datetime import datetime, timedelta
 from enum import Enum
 
-# Core quality management imports
-from .data_quality_manager import DataQualityManager
-from .validation_engine import ValidationEngine
-from .quality_metrics import QualityMetrics, QualityScore
-from .integrity_checker import IntegrityChecker
-from .compliance_validator import ComplianceValidator
-from .content_quality_assessor import ContentQualityAssessor
-from .monitoring_service import QualityMonitoringService
-from .report_generator import QualityReportGenerator
-from .automated_cleaner import AutomatedDataCleaner
+# Consolidated quality management modules (NEW ARCHITECTURE)
+from .quality_engine import (
+    QualityEngine, DataQualityManager, ValidationEngine, QualityMetrics,
+    QualityScore, QualityTrend, QualityMeasurement, ValidationResult,
+    ValidationRule, ValidationIssue, QualityPolicy, QualityWorkflow,
+    QualityBaseline, ValidationSeverity, ContentType, ValidationStatus,
+    QualityDimension, MetricType, TrendDirection
+)
 
-# Advanced quality modules
-from .business_intelligence import (
-    QualityBusinessIntelligence, QualityInsight, QualityPrediction, QualityAnomaly
+from .compliance_hub import (
+    ComplianceHub, ComplianceValidator, ProtectionEngine, IntegrityChecker,
+    ComplianceResult, ComplianceViolation, QualityThreat, ProtectionPolicy,
+    IntegrityValidationResult, IntegrityCheckResult, ComplianceRegulation,
+    ComplianceLevel, ComplianceSeverity, ComplianceScope, ProtectionLevel,
+    ThreatType, ProtectionAction, IntegrityCheckType, ChecksumAlgorithm
 )
-from .protection_engine import (
-    QualityProtectionEngine, QualityThreat, ProtectionPolicy,
-    ProtectionLevel, ThreatType, ProtectionAction
+
+from .content_assessment import (
+    ContentAssessment, ContentQualityAssessor, PerformanceBenchmark,
+    ContentQualityScore, BenchmarkResult, PerformanceProfile,
+    OptimizationRecommendation, ContentQualityDimension, QualityLevel,
+    ContentFormat, BenchmarkType, PerformanceMetric, OptimizationTarget
 )
-from .performance_benchmark import (
-    QualityPerformanceBenchmark, BenchmarkResult, PerformanceProfile,
-    OptimizationRecommendation, SystemMonitor, MetricsCollector
+
+from .intelligence_platform import (
+    IntelligencePlatform
 )
-from .documentation_generator import (
-    QualityDocumentationGenerator, ComponentDocumentation, APIEndpoint
+
+from .testing_documentation import (
+    TestingDocumentationSuite, QualityModuleIntegrationTest,
+    QualityDocumentationGenerator, TestResult, TestSuite,
+    ComponentDocumentation, DocumentationReport, TestStatus,
+    TestCategory, DocumentationType, DocumentationFormat
 )
 
 __version__ = "2.0.0"
@@ -591,22 +599,81 @@ def initialize_quality_system(config: Optional[Dict[str, Any]] = None) -> Qualit
 
 # Export all public components
 __all__ = [
-    # Core classes
+    # NEW CONSOLIDATED MODULES (12-file compliance)
+    'QualityEngine',
+    'ComplianceHub', 
+    'ContentAssessment',
+    'IntelligencePlatform',
+    'TestingDocumentationSuite',
+    
+    # Core classes from consolidated modules
     'QualityManagementSystem',
     'DataQualityManager',
     'ValidationEngine',
     'QualityMetrics',
     'QualityScore',
-    'IntegrityChecker',
+    'QualityTrend',
+    'QualityMeasurement',
+    'ValidationResult',
+    'ValidationRule',
+    'ValidationIssue',
+    'QualityPolicy',
+    'QualityWorkflow',
+    'QualityBaseline',
+    
+    # Compliance and Security
     'ComplianceValidator',
+    'ProtectionEngine', 
+    'IntegrityChecker',
+    'ComplianceResult',
+    'ComplianceViolation',
+    'QualityThreat',
+    'ProtectionPolicy',
+    'IntegrityValidationResult',
+    'IntegrityCheckResult',
+    
+    # Content Assessment
     'ContentQualityAssessor',
-    'QualityMonitoringService',
-    'QualityReportGenerator',
-    'AutomatedDataCleaner',
+    'PerformanceBenchmark',
+    'ContentQualityScore',
+    'BenchmarkResult',
+    'PerformanceProfile',
+    'OptimizationRecommendation',
+    
+    # Testing and Documentation
+    'QualityModuleIntegrationTest',
+    'QualityDocumentationGenerator',
+    'TestResult',
+    'TestSuite',
+    'ComponentDocumentation',
+    'DocumentationReport',
     
     # Enums
     'QualityLevel',
     'ValidationStatus',
+    'ValidationSeverity',
+    'ContentType',
+    'QualityDimension',
+    'MetricType',
+    'TrendDirection',
+    'ComplianceRegulation',
+    'ComplianceLevel',
+    'ComplianceSeverity',
+    'ComplianceScope',
+    'ProtectionLevel',
+    'ThreatType',
+    'ProtectionAction',
+    'IntegrityCheckType',
+    'ChecksumAlgorithm',
+    'ContentQualityDimension',
+    'ContentFormat',
+    'BenchmarkType',
+    'PerformanceMetric',
+    'OptimizationTarget',
+    'TestStatus',
+    'TestCategory', 
+    'DocumentationType',
+    'DocumentationFormat',
     
     # Functions
     'get_quality_system',
@@ -615,25 +682,4 @@ __all__ = [
     # Constants
     'QUALITY_THRESHOLDS',
     'DEFAULT_QUALITY_CONFIG'
-    
-    # Advanced quality modules
-    'QualityBusinessIntelligence',
-    'QualityInsight',
-    'QualityPrediction', 
-    'QualityAnomaly',
-    'QualityProtectionEngine',
-    'QualityThreat',
-    'ProtectionPolicy',
-    'ProtectionLevel',
-    'ThreatType',
-    'ProtectionAction',
-    'QualityPerformanceBenchmark',
-    'BenchmarkResult',
-    'PerformanceProfile',
-    'OptimizationRecommendation',
-    'SystemMonitor',
-    'MetricsCollector',
-    'QualityDocumentationGenerator',
-    'ComponentDocumentation',
-    'APIEndpoint'
 ]
