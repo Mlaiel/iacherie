@@ -506,21 +506,13 @@ Send batch of messages for a specific platform."""
         semaphore = asyncio.Semaphore(self.max_concurrent_requests)
         
         async def send_single_message(message: PushMessage):
-        try:
-            logger.info(f"Executing send_single_message")
-            
-            # Implementation for send_single_message
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"send_single_message completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"send_single_message failed: {e}")
-            raise
-                return await self._send_single(platform, message)
+            try:
+                async with semaphore:
+                    platform = await self._select_platform(message)
+                    return await self._send_single(platform, message)
+            except Exception as e:
+                logger.error(f"send_single_message failed: {e}")
+                raise
         
         # Send all messages concurrently
         tasks = [send_single_message(message) for message in messages]

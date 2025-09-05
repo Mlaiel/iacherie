@@ -438,24 +438,11 @@ Send batch of messages with rate limiting."""
         
         async def send_single(message: SMSMessage):
             try:
-                logger.info(f"Executing send_single")
-                
-                # Implementation for send_single
-                # TODO: Add specific business logic here
-                return True
+                async with semaphore:
+                    return await self._send_via_provider(provider, message)
             except Exception as e:
-                logger.error(f"Error in send_single: {e}")
-                return False
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"send_single completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"send_single failed: {e}")
-            raise
-                return await self._send_via_provider(provider, message)
+                logger.error(f"send_single failed: {e}")
+                raise
         
         # Send all messages concurrently with rate limiting
         tasks = [send_single(message) for message in messages]
