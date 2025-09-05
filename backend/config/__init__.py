@@ -88,6 +88,12 @@ try:
 except ImportError:
     BUSINESS_AVAILABLE = False
 
+try:
+    from . import environments
+    ENVIRONMENTS_AVAILABLE = True
+except ImportError:
+    ENVIRONMENTS_AVAILABLE = False
+
 # Version information
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
@@ -118,5 +124,7 @@ if INTEGRATIONS_AVAILABLE:
     available_modules.append("integrations")
 if BUSINESS_AVAILABLE:
     available_modules.append("business")
+if ENVIRONMENTS_AVAILABLE:
+    available_modules.append("environments")
 
 __all__ = available_modules
