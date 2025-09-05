@@ -803,28 +803,8 @@ Process image content with advanced analysis"""
             return result
             
         except Exception as e:
-        try:
-                    # AI model processing
-                    if not hasattr(self, 'model') or self.model is None:
-                        raise RuntimeError("AI model not initialized")
-            
-                    # Preprocess input
-                    processed_input = await self._preprocess__extract_image_metadata_input(image)
-            
-                    # Run inference
-                    result = await self.model.predict(processed_input)
-            
-                    # Postprocess result
-                    final_result = await self._postprocess__extract_image_metadata_result(result)
-            
-                    logger.info(f"AI processing _extract_image_metadata completed")
-                    return final_result
-            
-                except Exception as e:
-                    logger.error(f"AI processing _extract_image_metadata failed: {e}")
-                    raise
-        except:
-            pass
+            logger.error(f"Image processing failed: {e}")
+            raise
         
         # Image analysis
         analysis = await asyncio.get_event_loop().run_in_executor(

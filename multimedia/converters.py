@@ -112,6 +112,11 @@ class BaseConverter(ABC):
             return result
             
         except Exception as e:
+            logger.error(f"convert failed: {e}")
+            raise
+    
+    def supports_conversion(self):
+        """Check if conversion is supported"""
         try:
             logger.info(f"Executing supports_conversion")
             
@@ -126,13 +131,9 @@ class BaseConverter(ABC):
         except Exception as e:
             logger.error(f"supports_conversion failed: {e}")
             raise
-            return result
-            
-        except Exception as e:
-            logger.error(f"convert failed: {e}")
-            raise
+    
     @abstractmethod
-    def supports_conversion(self, source_format: str, target_format: str) -> bool:
+    def supports_conversion_abstract(self, source_format: str, target_format: str) -> bool:
         """
 Check if conversion is supported"""
         pass
