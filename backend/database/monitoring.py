@@ -53,6 +53,9 @@ try:
     PROMETHEUS_AVAILABLE = True
 except ImportError:
     PROMETHEUS_AVAILABLE = False
+    # Mock CollectorRegistry for when prometheus is not available
+    class CollectorRegistry:
+        pass
 
 try:
     import datadog
