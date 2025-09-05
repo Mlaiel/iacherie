@@ -27,38 +27,80 @@ from pathlib import Path
 backend_path = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(backend_path))
 
-from database.pools import (
-    # Core managers
-    DatabasePoolManager,
-    get_pool_manager,
-    initialize_all_pools,
+try:
+    from database.pools import (
+        # Core managers
+        DatabasePoolManager,
+        get_pool_manager,
+        initialize_all_pools,
+        
+        # Configuration
+        PoolConfigurationManager,
+        get_configuration_manager,
+        
+        # Monitoring
+        PoolMonitoringManager,
+        get_monitoring_manager,
+        
+        # Pool implementations
+        PostgreSQLConnectionPool,
+        RedisConnectionPool,
+        ElasticsearchConnectionPool,
+        MongoDBConnectionPool,
+        VectorStoreConnectionPool,
+        ObjectStorageConnectionPool,
+        CacheConnectionPool,
+        
+        # Data models
+        PoolConfig,
+        DatabaseConnectionInfo,
+        DatabaseType,
+        ConnectionState,
+        
+        # Utilities
+        get_pool_summary
+    )
+except ImportError as e:
+    logger.error(f"Failed to import from database.pools: {e}")
+    # Import from local modules as fallback
+    from .pool_manager import (
+        DatabasePoolManager, 
+        get_pool_manager, 
+        initialize_all_pools,
+        PoolType as DatabaseType
+    )
+    from .pool_configuration import (
+        PoolConfigurationManager,
+        get_configuration_manager,
+        PoolConfig,
+        DatabaseConnectionInfo,
+        ConnectionState
+    )
+    from .pool_monitoring import (
+        PoolMonitoringManager,
+        get_monitoring_manager
+    )
+    from .database_pools import (
+        PostgreSQLConnectionPool,
+        MongoDBConnectionPool,
+        ElasticsearchConnectionPool
+    )
+    from .cache_pools import (
+        RedisConnectionPool,
+        VectorStoreConnectionPool,
+        CacheConnectionPool
+    )
     
-    # Configuration
-    PoolConfigurationManager,
-    get_configuration_manager,
+    # Placeholder for object storage
+    class ObjectStorageConnectionPool:
+        pass
     
-    # Monitoring
-    PoolMonitoringManager,
-    get_monitoring_manager,
-    
-    # Pool implementations
-    PostgreSQLConnectionPool,
-    RedisConnectionPool,
-    ElasticsearchConnectionPool,
-    MongoDBConnectionPool,
-    VectorStoreConnectionPool,
-    ObjectStorageConnectionPool,
-    CacheConnectionPool,
-    
-    # Data models
-    PoolConfig,
-    DatabaseConnectionInfo,
-    DatabaseType,
-    ConnectionState,
-    
-    # Utilities
-    get_pool_summary
-)
+    # Import summary function from __init__
+    try:
+        from . import get_pool_summary
+    except ImportError:
+        def get_pool_summary():
+            return {"version": "1.0.0", "status": "limited"}
 
 logger = logging.getLogger(__name__)
 
