@@ -102,6 +102,43 @@ except ImportError as e:
     ai_model_available = False
     core_logger.warning(f"❌ AI Model Core not available: {e}")
 
+# Protection Business Core (PHASE 2 - KRITISCH)
+try:
+    from .protection_business_core import (
+        ProtectionBusinessCore,
+        ProtectionProfile,
+        ViolationReport,
+        LegalAction,
+        ProtectionStatus,
+        ViolationSeverity,
+        LegalActionType,
+        protection_business_core
+    )
+    protection_business_available = True
+    core_logger.info("✅ Protection Business Core loaded")
+except ImportError as e:
+    protection_business_available = False
+    core_logger.warning(f"❌ Protection Business Core not available: {e}")
+
+# Monetization Business Core (PHASE 2 - KRITISCH)
+try:
+    from .monetization_business_core import (
+        MonetizationBusinessCore,
+        RevenueStream,
+        PaymentTransaction,
+        RevenueOptimization,
+        SubscriptionPlan,
+        RevenueStreamType,
+        PaymentStatus,
+        SubscriptionTier,
+        monetization_business_core
+    )
+    monetization_business_available = True
+    core_logger.info("✅ Monetization Business Core loaded")
+except ImportError as e:
+    monetization_business_available = False
+    core_logger.warning(f"❌ Monetization Business Core not available: {e}")
+
 __all__ = [
     # Core Foundation Components
     # Logging
@@ -189,26 +226,68 @@ if ai_model_available:
         "ai_model_core"
     ])
 
-__version__ = "2.0.0"
+# Add Phase 2 Business Logic Core exports if available
+if protection_business_available:
+    __all__.extend([
+        "ProtectionBusinessCore",
+        "ProtectionProfile",
+        "ViolationReport",
+        "LegalAction",
+        "ProtectionStatus",
+        "ViolationSeverity",
+        "LegalActionType",
+        "protection_business_core"
+    ])
+
+if monetization_business_available:
+    __all__.extend([
+        "MonetizationBusinessCore",
+        "RevenueStream",
+        "PaymentTransaction",
+        "RevenueOptimization",
+        "SubscriptionPlan",
+        "RevenueStreamType",
+        "PaymentStatus",
+        "SubscriptionTier",
+        "monetization_business_core"
+    ])
+
+__version__ = "2.1.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 
 # Module status logging
 total_core_components = 4  # Foundation components
-total_business_logic_components = 4  # Business logic core components
-available_business_logic = sum([
+total_phase1_components = 4  # Phase 1 business logic cores
+total_phase2_components = 2  # Phase 2 business logic cores
+total_business_logic_components = total_phase1_components + total_phase2_components
+
+available_phase1 = sum([
     creator_multi_format_available, content_format_available, 
     ia_processing_available, ai_model_available
 ])
 
+available_phase2 = sum([
+    protection_business_available, monetization_business_available
+])
+
+available_business_logic = available_phase1 + available_phase2
+
 core_logger.info(f"🏗️ Core Module v{__version__} loaded")
 core_logger.info(f"✅ Foundation components: 4/4 loaded")
-core_logger.info(f"📊 Business Logic Core components: {available_business_logic}/{total_business_logic_components}")
+core_logger.info(f"📊 Phase 1 Business Logic cores: {available_phase1}/{total_phase1_components}")
+core_logger.info(f"📊 Phase 2 Business Logic cores: {available_phase2}/{total_phase2_components}")
+core_logger.info(f"📊 Total Business Logic cores: {available_business_logic}/{total_business_logic_components}")
 
+if available_phase1 == total_phase1_components:
+    core_logger.info("🎉 PHASE 1 COMPLETE: Creator Multi-Format → IA Processing → AI Model Management")
+
+if available_phase2 == total_phase2_components:
+    core_logger.info("🎉 PHASE 2 COMPLETE: Protection → Monetization Business Logic")
+    
 if available_business_logic == total_business_logic_components:
-    core_logger.info("🎉 ALL PHASE 1 BUSINESS LOGIC CORES LOADED SUCCESSFULLY!")
-    core_logger.info("✅ Creator Multi-Format → IA Processing → AI Model Management ready")
-    core_logger.info("🚀 Enterprise-grade core with >99.99% uptime guarantee")
+    core_logger.info("🚀 ALL CRITICAL BUSINESS LOGIC CORES LOADED SUCCESSFULLY!")
+    core_logger.info("✅ Enterprise-grade core with >99.99% uptime guarantee")
 else:
     core_logger.warning(f"⚠️ Some business logic cores unavailable: {total_business_logic_components - available_business_logic} missing")
 
