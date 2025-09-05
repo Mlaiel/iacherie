@@ -46,7 +46,7 @@ from typing import Dict, List, Optional, Any, Tuple
 import json
 from pathlib import Path
 
-# Core imports
+# Core imports from consolidated modules
 from .embeddings import (
     EmbeddingService, EmbeddingType, EmbeddingResult,
     AudioEmbeddingGenerator, VideoEmbeddingGenerator,
@@ -54,43 +54,42 @@ from .embeddings import (
     CompositeEmbeddingGenerator
 )
 
-from .faiss_store import (
-    FaissVectorStore, IndexType, SearchResult, IndexStats
+# Configuration and optimization
+from .vector_config import (
+    DEVELOPMENT_CONFIG, PRODUCTION_CONFIG, ENTERPRISE_CONFIG, TESTING_CONFIG,
+    get_config, create_custom_config, validate_config,
+    OptimizationType, OptimizationLevel, OptimizationRecommendation,
+    OptimizationResult, PerformanceBenchmark, VectorDatabaseOptimizer
 )
 
-from .similarity_search import (
-    SearchEngine, SimilarityCalculator, SimilarityResult,
-    SearchConfiguration, SimilarityMetric, MatchType
+# Vector storage backends
+from .vector_backends import (
+    StorageBackend, VectorRecord, SearchQuery, SearchResultItem,
+    VectorStorageInterface, IndexType, SearchResult, IndexStats,
+    FAISSVectorStore, VectorStorageFactory
 )
 
-from .index_manager import (
-    VectorIndexManager, IndexConfiguration, IndexInfo, IndexStatus
+# Search operations and query engine
+from .search_operations import (
+    SimilarityMetric, MatchType, SimilarityMatch, SearchRequest, SearchResponse,
+    SimilaritySearchEngine, QueryType, QueryPriority, QueryStatus,
+    QueryRequest as VectorQueryRequest, QueryResult, QueryOptimizer,
+    QueryCache, VectorQueryEngine
 )
 
-from .storage_interface import (
-    VectorStorageInterface, VectorStorageManager, VectorStorageFactory,
-    StorageBackend, VectorRecord, SearchQuery, SearchResultItem
+# Index management
+from .vector_index import (
+    VectorDatabaseStatus, ContentFingerprint, SearchRequest as DBSearchRequest,
+    DatabaseStats, VectorDatabase, IndexStatus, EmbeddingType,
+    IndexConfiguration, IndexInfo, ComprehensiveStats, VectorIndexManager
 )
 
-# Advanced modules
-from .query_engine import (
-    QueryExecutor, QueryOptimizer, QueryCache, QueryRequest, QueryResult,
-    QueryType, QueryPriority, QueryFilter, PerformanceMetric
-)
-
-from .replication_manager import (
-    ReplicationManager, ReplicationNode, ReplicationOperation, ConflictResolver,
-    ReplicationMode, NodeRole, ReplicationStatus, ConflictResolution
-)
-
-from .analytics_engine import (
-    AnalyticsEngine, MetricsCollector, PatternDetector, AnalyticsReport,
-    PerformanceBenchmark, ContentPattern, MetricType, AnalyticsLevel
-)
-
-from .optimization_engine import (
-    OptimizationEngine, IndexAnalyzer, ParameterOptimizer, BenchmarkRunner,
-    OptimizationRecommendation, OptimizationResult, OptimizationType, OptimizationLevel
+# Analytics and replication
+from .vector_analytics import (
+    AnalyticsMetric, AggregationPeriod, MetricPoint, AnalyticsReport,
+    ContentPattern, VectorAnalyticsEngine, ReplicationMode, NodeRole,
+    NodeStatus, OperationType, ReplicationNode, ReplicationOperation,
+    ConflictResolutionStrategy, VectorReplicationManager
 )
 
 try:
