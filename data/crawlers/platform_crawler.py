@@ -375,30 +375,20 @@ Cleanup HTTP session"""
     def _collect_metrics(self, data=None):
         """Collect metrics for monitoring"""
         try:
-                    # Collect metrics
-                    metrics = {
-                        "timestamp": datetime.utcnow(),
-                        "metric_name": "monitoring_task",
-                        "value": data if data else 0,
-                        "tags": self._get_metric_tags()
-                    }
+            # Collect metrics
+            metrics = {
+                "timestamp": datetime.utcnow(),
+                "metric_name": "monitoring_task", 
+                "value": data if data else 0,
+                "tags": self._get_metric_tags()
+            }
             
-                    # Store metrics
-                    await self._store_metric(metrics)
+            self.logger.info(f"Metric monitoring_task collected")
+            return metrics
             
-                    # Send to monitoring system
-                    if hasattr(self, 'metrics_client'):
-                        await self.metrics_client.send(metrics)
-            
-                    logger.info(f"Metric monitoring_task collected")
-                    return metrics
-            
-                except Exception as e:
-                    logger.error(f"Metric collection monitoring_task failed: {e}")
-                    return None
         except Exception as e:
-            self.logger.error(f"Error searching similar content: {str(e)}")
-            return []
+            self.logger.error(f"Metric collection monitoring_task failed: {e}")
+            return None
     
     async def monitor_content_continuously(self, fingerprint_data: Dict[str, Any],
                                          callback_url: str = None) -> str:
@@ -576,31 +566,27 @@ Extract key phrases from text"""
         return intersection / union if union > 0 else 0.0
     
     async def _calculate_metadata_similarity(self, content: Dict[str, Any], 
+                                           fingerprint_data: Dict[str, Any]) -> float:
+        """Calculate metadata similarity between content and fingerprint"""
         try:
-            logger.info(f"Executing _parse_upload_date")
+            similarities = []
             
-            # Implementation for _parse_upload_date
-            # TODO: Add specific business logic here
+            # Compare tags if available
+            if 'tags' in content and 'tags' in fingerprint_data:
+                content_tags = set(tag.lower() for tag in content['tags'])
+                fingerprint_tags = set(tag.lower() for tag in fingerprint_data['tags'])
+                
+                if content_tags and fingerprint_tags:
+                    intersection = len(content_tags.intersection(fingerprint_tags))
+                    union = len(content_tags.union(fingerprint_tags))
+                    tag_similarity = intersection / union if union > 0 else 0.0
+                    similarities.append(tag_similarity)
             
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"_parse_upload_date completed successfully")
-            return result
+            return sum(similarities) / len(similarities) if similarities else 0.0
             
         except Exception as e:
-            logger.error(f"_parse_upload_date failed: {e}")
-            raise
-        if 'tags' in content and 'tags' in fingerprint_data:
-            content_tags = set(tag.lower() for tag in content['tags'])
-            fingerprint_tags = set(tag.lower() for tag in fingerprint_data['tags'])
-            
-            if content_tags and fingerprint_tags:
-                intersection = len(content_tags.intersection(fingerprint_tags))
-                union = len(content_tags.union(fingerprint_tags))
-                tag_similarity = intersection / union if union > 0 else 0.0
-                similarities.append(tag_similarity)
-        
-        return sum(similarities) / len(similarities) if similarities else 0.0
+            self.logger.error(f"Error calculating metadata similarity: {e}")
+            return 0.0
     
     def _determine_match_type(self, similarity_score: float) -> ContentMatchType:
         """
