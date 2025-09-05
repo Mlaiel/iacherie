@@ -56,12 +56,62 @@ from .ab_testing_engine import (
     TestResult,
     PerformanceMetrics
 )
+from .distribution_intelligence import (
+    DistributionIntelligence,
+    DistributionStrategy,
+    EngagementPrediction,
+    PlatformPriority,
+    ContentType,
+    AudienceSegment
+)
+from .content_security import (
+    ContentSecurity,
+    SecurityConfiguration,
+    WatermarkInfo,
+    ContentFingerprint,
+    SecurityViolation,
+    SecurityLevel,
+    WatermarkType,
+    ProtectionMethod
+)
+from .automation_orchestrator import (
+    AutomationOrchestrator,
+    DistributionWorkflow,
+    WorkflowStep,
+    WorkflowStatus,
+    ExecutionReport,
+    WorkflowTemplate,
+    StepType,
+    Priority
+)
+from .revenue_distribution import (
+    RevenueDistribution,
+    RevenueStream,
+    RevenueRecord,
+    PlatformMetrics,
+    ROIAnalysis,
+    BudgetAllocation,
+    ConsolidatedReport,
+    RevenueType,
+    Currency
+)
+from .cross_platform_sync import (
+    CrossPlatformSync,
+    PlatformContent,
+    SyncRule,
+    SyncSession,
+    SyncConflict,
+    SyncStatus,
+    ConflictType,
+    ConflictResolution
+)
 
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 
 __all__ = [
+    # Existing modules
     "PlatformConnectorManager",
     "SocialPlatform", 
     "ContentFormat",
@@ -85,5 +135,49 @@ __all__ = [
     "ABTestingEngine",
     "TestVariant",
     "TestResult",
-    "PerformanceMetrics"
+    "PerformanceMetrics",
+    # New distribution intelligence module
+    "DistributionIntelligence",
+    "DistributionStrategy",
+    "EngagementPrediction",
+    "PlatformPriority",
+    "ContentType",
+    "AudienceSegment",
+    # New content security module
+    "ContentSecurity",
+    "SecurityConfiguration",
+    "WatermarkInfo",
+    "ContentFingerprint",
+    "SecurityViolation",
+    "SecurityLevel",
+    "WatermarkType",
+    "ProtectionMethod",
+    # New automation orchestrator module
+    "AutomationOrchestrator",
+    "DistributionWorkflow",
+    "WorkflowStep",
+    "WorkflowStatus",
+    "ExecutionReport",
+    "WorkflowTemplate",
+    "StepType",
+    "Priority",
+    # New revenue distribution module
+    "RevenueDistribution",
+    "RevenueStream",
+    "RevenueRecord",
+    "PlatformMetrics",
+    "ROIAnalysis",
+    "BudgetAllocation",
+    "ConsolidatedReport",
+    "RevenueType",
+    "Currency",
+    # New cross-platform sync module
+    "CrossPlatformSync",
+    "PlatformContent",
+    "SyncRule",
+    "SyncSession",
+    "SyncConflict",
+    "SyncStatus",
+    "ConflictType",
+    "ConflictResolution"
 ]
