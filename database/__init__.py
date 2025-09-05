@@ -34,6 +34,22 @@ except ImportError as e:
     MIGRATIONS_AVAILABLE = False
     CRUD_AVAILABLE = False
 
+# Enterprise database components
+try:
+    from . import database_operations
+    from . import schema_manager
+    from . import analytics_engine
+    from . import security_manager
+    DATABASE_OPERATIONS_AVAILABLE = True
+    SCHEMA_MANAGER_AVAILABLE = True
+    ANALYTICS_ENGINE_AVAILABLE = True
+    SECURITY_MANAGER_AVAILABLE = True
+except ImportError as e:
+    DATABASE_OPERATIONS_AVAILABLE = False
+    SCHEMA_MANAGER_AVAILABLE = False
+    ANALYTICS_ENGINE_AVAILABLE = False
+    SECURITY_MANAGER_AVAILABLE = False
+
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
@@ -50,6 +66,14 @@ if MIGRATIONS_AVAILABLE:
     __all__.append("migrations")
 if CRUD_AVAILABLE:
     __all__.append("crud")
+if DATABASE_OPERATIONS_AVAILABLE:
+    __all__.append("database_operations")
+if SCHEMA_MANAGER_AVAILABLE:
+    __all__.append("schema_manager")
+if ANALYTICS_ENGINE_AVAILABLE:
+    __all__.append("analytics_engine")
+if SECURITY_MANAGER_AVAILABLE:
+    __all__.append("security_manager")
 
 # Module status
 def get_module_status():
@@ -59,6 +83,10 @@ def get_module_status():
         "models": MODELS_AVAILABLE,
         "migrations": MIGRATIONS_AVAILABLE,
         "crud": CRUD_AVAILABLE,
+        "database_operations": DATABASE_OPERATIONS_AVAILABLE,
+        "schema_manager": SCHEMA_MANAGER_AVAILABLE,
+        "analytics_engine": ANALYTICS_ENGINE_AVAILABLE,
+        "security_manager": SECURITY_MANAGER_AVAILABLE,
         "version": __version__,
         "author": __author__
     }
@@ -66,6 +94,7 @@ def get_module_status():
 # Initialize database if all components are available
 def initialize():
     """Initialize the database module"""
-    if all([CONNECTION_AVAILABLE, MODELS_AVAILABLE, MIGRATIONS_AVAILABLE, CRUD_AVAILABLE]):
-        return True
-    return False
+    core_available = all([CONNECTION_AVAILABLE, MODELS_AVAILABLE, MIGRATIONS_AVAILABLE, CRUD_AVAILABLE])
+    enterprise_available = all([DATABASE_OPERATIONS_AVAILABLE, SCHEMA_MANAGER_AVAILABLE, 
+                               ANALYTICS_ENGINE_AVAILABLE, SECURITY_MANAGER_AVAILABLE])
+    return core_available and enterprise_available
