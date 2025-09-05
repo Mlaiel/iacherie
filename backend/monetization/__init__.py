@@ -150,6 +150,95 @@ except ImportError as e:
     logger.warning(f"❌ Tax Calculator not available: {e}")
     tax_calculator_available = False
 
+# Creator Monetization Orchestrator imports (CRITICAL - Phase 1)
+try:
+    from .creator_monetization_orchestrator import (
+        CreatorMonetizationOrchestrator,
+        CreatorType,
+        ContentFormat,
+        RevenueStreamType,
+        CreatorProfile,
+        RevenueStream,
+        MonetizationStrategy,
+        get_creator_monetization_orchestrator
+    )
+    creator_monetization_available = True
+    logger.info("✅ Creator Monetization Orchestrator loaded successfully")
+except ImportError as e:
+    logger.warning(f"❌ Creator Monetization Orchestrator not available: {e}")
+    creator_monetization_available = False
+
+# Multi-Format Revenue Engine imports (CRITICAL - Phase 1)
+try:
+    from .multi_format_revenue_engine import (
+        MultiFormatRevenueEngine,
+        ContentMetadata,
+        PlatformConfig,
+        RevenueOptimization,
+        get_multi_format_revenue_engine
+    )
+    multi_format_revenue_available = True
+    logger.info("✅ Multi-Format Revenue Engine loaded successfully")
+except ImportError as e:
+    logger.warning(f"❌ Multi-Format Revenue Engine not available: {e}")
+    multi_format_revenue_available = False
+
+# Creator Type Monetization Manager imports (CRITICAL - Phase 1)
+try:
+    from .creator_type_monetization_manager import (
+        CreatorTypeMonetizationManager,
+        SpecializationLevel,
+        MonetizationFocus,
+        CreatorSpecialization,
+        CreatorTypeMetrics,
+        get_creator_type_monetization_manager
+    )
+    creator_type_monetization_available = True
+    logger.info("✅ Creator Type Monetization Manager loaded successfully")
+except ImportError as e:
+    logger.warning(f"❌ Creator Type Monetization Manager not available: {e}")
+    creator_type_monetization_available = False
+
+# Creator Revenue Dashboard imports (CRITICAL - Phase 1)
+try:
+    from .creator_revenue_dashboard import (
+        CreatorRevenueDashboard,
+        DashboardMetricType,
+        TimeFrame,
+        AlertType,
+        DashboardMetric,
+        RevenueStreamData,
+        DashboardAlert,
+        RevenueForecast,
+        GoalTracker,
+        get_creator_revenue_dashboard
+    )
+    creator_revenue_dashboard_available = True
+    logger.info("✅ Creator Revenue Dashboard loaded successfully")
+except ImportError as e:
+    logger.warning(f"❌ Creator Revenue Dashboard not available: {e}")
+    creator_revenue_dashboard_available = False
+
+# AI Revenue Optimization Engine imports (CRITICAL - Phase 2)
+try:
+    from .ai_revenue_optimization_engine import (
+        AIRevenueOptimizationEngine,
+        OptimizationType,
+        AIModelType,
+        ConfidenceLevel,
+        AIOptimizationInput,
+        AIOptimizationOutput,
+        PricingOptimization,
+        ContentOptimization,
+        AudienceOptimization,
+        get_ai_revenue_optimization_engine
+    )
+    ai_revenue_optimization_available = True
+    logger.info("✅ AI Revenue Optimization Engine loaded successfully")
+except ImportError as e:
+    logger.warning(f"❌ AI Revenue Optimization Engine not available: {e}")
+    ai_revenue_optimization_available = False
+
 
 class MonetizationOrchestrator:
     """
@@ -157,6 +246,7 @@ class MonetizationOrchestrator:
     
     Coordinates between all monetization modules to provide a unified
     revenue management experience for content creators and businesses.
+    Includes new critical creator monetization and AI optimization components.
     """
     
     def __init__(self):
@@ -171,12 +261,19 @@ class MonetizationOrchestrator:
         self.revenue_optimizer = None
         self.tax_calculator = None
         
+        # New critical creator monetization components
+        self.creator_monetization_orchestrator = None
+        self.multi_format_revenue_engine = None
+        self.creator_type_monetization_manager = None
+        self.creator_revenue_dashboard = None
+        self.ai_revenue_optimization_engine = None
+        
         self.logger.info("MonetizationOrchestrator initialized")
     
     async def initialize(self) -> bool:
         """Initialize all monetization modules."""
         try:
-            # Initialize modules that are available
+            # Initialize existing modules
             if subscription_engine_available:
                 self.subscription_engine = await get_subscription_engine()
             
@@ -192,21 +289,56 @@ class MonetizationOrchestrator:
             if tax_calculator_available:
                 self.tax_calculator = await get_tax_calculator()
             
+            # Initialize new critical creator monetization components
+            if creator_monetization_available:
+                self.creator_monetization_orchestrator = await get_creator_monetization_orchestrator()
+                self.logger.info("✅ Creator Monetization Orchestrator initialized")
+            
+            if multi_format_revenue_available:
+                self.multi_format_revenue_engine = await get_multi_format_revenue_engine()
+                self.logger.info("✅ Multi-Format Revenue Engine initialized")
+            
+            if creator_type_monetization_available:
+                self.creator_type_monetization_manager = await get_creator_type_monetization_manager()
+                self.logger.info("✅ Creator Type Monetization Manager initialized")
+            
+            if creator_revenue_dashboard_available:
+                self.creator_revenue_dashboard = await get_creator_revenue_dashboard()
+                self.logger.info("✅ Creator Revenue Dashboard initialized")
+            
+            if ai_revenue_optimization_available:
+                self.ai_revenue_optimization_engine = await get_ai_revenue_optimization_engine()
+                self.logger.info("✅ AI Revenue Optimization Engine initialized")
+            
             self.initialized = True
             
+            # Count all available modules (existing + new)
             available_modules = sum([
                 subscription_engine_available,
                 payment_processor_available,
                 crypto_wallet_available,
                 revenue_optimizer_available,
-                tax_calculator_available
+                tax_calculator_available,
+                creator_monetization_available,
+                multi_format_revenue_available,
+                creator_type_monetization_available,
+                creator_revenue_dashboard_available,
+                ai_revenue_optimization_available
             ])
             
-            self.logger.info(f"✅ Monetization orchestrator initialized with {available_modules}/5 modules")
-            return True
+            total_modules = 10  # Updated total count
             
+            self.logger.info(f"✅ MonetizationOrchestrator initialized with {available_modules}/{total_modules} modules")
+            
+            if available_modules >= 8:  # Require at least 8/10 modules for full functionality
+                self.logger.info("🚀 Enterprise monetization ecosystem fully operational")
+                return True
+            else:
+                self.logger.warning(f"⚠️ Limited functionality - only {available_modules}/{total_modules} modules available")
+                return True  # Still functional with reduced capabilities
+                
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize monetization orchestrator: {e}")
+            self.logger.error(f"Failed to initialize MonetizationOrchestrator: {e}")
             return False
     
     async def process_subscription_payment(
@@ -556,12 +688,66 @@ __all__ = [
     "TaxPeriod",
     "get_tax_calculator",
     
+    # Creator Monetization Orchestrator (CRITICAL - Phase 1)
+    "CreatorMonetizationOrchestrator",
+    "CreatorType",
+    "ContentFormat",
+    "RevenueStreamType",
+    "CreatorProfile",
+    "RevenueStream",
+    "MonetizationStrategy",
+    "get_creator_monetization_orchestrator",
+    
+    # Multi-Format Revenue Engine (CRITICAL - Phase 1)
+    "MultiFormatRevenueEngine",
+    "ContentMetadata",
+    "PlatformConfig",
+    "RevenueOptimization",
+    "get_multi_format_revenue_engine",
+    
+    # Creator Type Monetization Manager (CRITICAL - Phase 1)
+    "CreatorTypeMonetizationManager",
+    "SpecializationLevel",
+    "MonetizationFocus",
+    "CreatorSpecialization",
+    "CreatorTypeMetrics",
+    "get_creator_type_monetization_manager",
+    
+    # Creator Revenue Dashboard (CRITICAL - Phase 1)
+    "CreatorRevenueDashboard",
+    "DashboardMetricType",
+    "TimeFrame",
+    "AlertType",
+    "DashboardMetric",
+    "RevenueStreamData",
+    "DashboardAlert",
+    "RevenueForecast",
+    "GoalTracker",
+    "get_creator_revenue_dashboard",
+    
+    # AI Revenue Optimization Engine (CRITICAL - Phase 2)
+    "AIRevenueOptimizationEngine",
+    "OptimizationType",
+    "AIModelType",
+    "ConfidenceLevel",
+    "AIOptimizationInput",
+    "AIOptimizationOutput",
+    "PricingOptimization",
+    "ContentOptimization",
+    "AudienceOptimization",
+    "get_ai_revenue_optimization_engine",
+    
     # Module availability flags
     "subscription_engine_available",
     "payment_processor_available",
     "crypto_wallet_available",
     "revenue_optimizer_available",
-    "tax_calculator_available"
+    "tax_calculator_available",
+    "creator_monetization_available",
+    "multi_format_revenue_available",
+    "creator_type_monetization_available",
+    "creator_revenue_dashboard_available",
+    "ai_revenue_optimization_available"
 ]
 
 # Module initialization
@@ -575,7 +761,26 @@ available_count = sum([
     payment_processor_available,
     crypto_wallet_available,
     revenue_optimizer_available,
-    tax_calculator_available
+    tax_calculator_available,
+    creator_monetization_available,
+    multi_format_revenue_available,
+    creator_type_monetization_available,
+    creator_revenue_dashboard_available,
+    ai_revenue_optimization_available
 ])
 
-logger.info(f"💰 Monetization modules loaded: {available_count}/5 systems available")
+logger.info(f"💰 Monetization modules loaded: {available_count}/10 systems available")
+
+# Critical creator monetization status
+creator_modules_count = sum([
+    creator_monetization_available,
+    multi_format_revenue_available,
+    creator_type_monetization_available,
+    creator_revenue_dashboard_available,
+    ai_revenue_optimization_available
+])
+
+if creator_modules_count >= 4:
+    logger.info(f"🚀 CRITICAL Creator Monetization: {creator_modules_count}/5 components operational")
+else:
+    logger.warning(f"⚠️ CRITICAL Creator Monetization: Only {creator_modules_count}/5 components available")
