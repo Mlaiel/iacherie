@@ -132,6 +132,90 @@ from .enterprise import (
     search_enterprise_logs
 )
 
+# Advanced Performance Intelligence (Phase 1 - Critical Business Logic)
+from .creator_performance_intelligence import (
+    CreatorPerformanceIntelligence,
+    CreatorPerformanceMetrics,
+    CreatorIntelligenceInsights,
+    CreatorType,
+    ContentFormat,
+    PerformanceMetricType,
+    creator_performance_intelligence,
+    analyze_creator_performance,
+    generate_creator_intelligence,
+    get_creator_dashboard,
+    get_creator_metrics,
+    get_creator_insights
+)
+
+from .ai_processing_performance_monitor import (
+    AIProcessingPerformanceMonitor,
+    AIProcessingMetrics,
+    AIModelPerformanceProfile,
+    AIProcessingOptimizationRecommendations,
+    AIProcessingStage,
+    AIModelType,
+    ProcessingComplexity,
+    ai_processing_monitor,
+    track_ai_processing,
+    generate_model_report,
+    get_ai_dashboard,
+    optimize_model,
+    get_model_profile,
+    get_optimization_recommendations
+)
+
+from .protection_performance_intelligence import (
+    ProtectionPerformanceIntelligence,
+    ProtectionPerformanceMetrics,
+    ViolationAnalytics,
+    ProtectionROIAnalytics,
+    ProtectionType,
+    ViolationType,
+    ProtectionSeverity,
+    protection_performance_intelligence,
+    analyze_protection_performance,
+    track_violation,
+    get_protection_dashboard,
+    optimize_protection,
+    get_protection_metrics,
+    get_violation_analytics
+)
+
+from .monetization_performance_intelligence import (
+    MonetizationPerformanceIntelligence,
+    MonetizationPerformanceMetrics,
+    PaymentProcessingAnalytics,
+    MonetizationOptimizationRecommendations,
+    MonetizationMethod,
+    PaymentProcessor,
+    RevenueCategory,
+    monetization_performance_intelligence,
+    analyze_monetization_performance,
+    track_payment_processing,
+    get_monetization_dashboard,
+    optimize_monetization_strategy,
+    get_monetization_metrics,
+    get_payment_analytics
+)
+
+from .seo_performance_intelligence import (
+    SEOPerformanceIntelligence,
+    SEOPerformanceMetrics,
+    KeywordPerformanceAnalytics,
+    SEOOptimizationRecommendations,
+    SEOOptimizationType,
+    SearchEngine,
+    ContentType,
+    seo_performance_intelligence,
+    analyze_seo_performance,
+    track_keyword_performance,
+    get_seo_dashboard,
+    optimize_seo_strategy,
+    get_seo_metrics,
+    get_keyword_analytics
+)
+
 # Consolidated exports
 __all__ = [
     # Original observability components
@@ -246,7 +330,85 @@ __all__ = [
     'get_enterprise_status',
     'setup_enterprise_dashboards',
     'query_metrics',
-    'search_enterprise_logs'
+    'search_enterprise_logs',
+    
+    # Creator Performance Intelligence (Phase 1 - Critical)
+    'CreatorPerformanceIntelligence',
+    'CreatorPerformanceMetrics',
+    'CreatorIntelligenceInsights',
+    'CreatorType',
+    'ContentFormat',
+    'PerformanceMetricType',
+    'creator_performance_intelligence',
+    'analyze_creator_performance',
+    'generate_creator_intelligence',
+    'get_creator_dashboard',
+    'get_creator_metrics',
+    'get_creator_insights',
+    
+    # AI Processing Performance Monitor (Phase 2 - Critical)
+    'AIProcessingPerformanceMonitor',
+    'AIProcessingMetrics',
+    'AIModelPerformanceProfile',
+    'AIProcessingOptimizationRecommendations',
+    'AIProcessingStage',
+    'AIModelType',
+    'ProcessingComplexity',
+    'ai_processing_monitor',
+    'track_ai_processing',
+    'generate_model_report',
+    'get_ai_dashboard',
+    'optimize_model',
+    'get_model_profile',
+    'get_optimization_recommendations',
+    
+    # Protection Performance Intelligence (Phase 3 - High Priority)
+    'ProtectionPerformanceIntelligence',
+    'ProtectionPerformanceMetrics',
+    'ViolationAnalytics',
+    'ProtectionROIAnalytics',
+    'ProtectionType',
+    'ViolationType',
+    'ProtectionSeverity',
+    'protection_performance_intelligence',
+    'analyze_protection_performance',
+    'track_violation',
+    'get_protection_dashboard',
+    'optimize_protection',
+    'get_protection_metrics',
+    'get_violation_analytics',
+    
+    # Monetization Performance Intelligence (Phase 3 - High Priority)
+    'MonetizationPerformanceIntelligence',
+    'MonetizationPerformanceMetrics',
+    'PaymentProcessingAnalytics',
+    'MonetizationOptimizationRecommendations',
+    'MonetizationMethod',
+    'PaymentProcessor',
+    'RevenueCategory',
+    'monetization_performance_intelligence',
+    'analyze_monetization_performance',
+    'track_payment_processing',
+    'get_monetization_dashboard',
+    'optimize_monetization_strategy',
+    'get_monetization_metrics',
+    'get_payment_analytics',
+    
+    # SEO Performance Intelligence (Phase 4 - High Priority)
+    'SEOPerformanceIntelligence',
+    'SEOPerformanceMetrics',
+    'KeywordPerformanceAnalytics',
+    'SEOOptimizationRecommendations',
+    'SEOOptimizationType',
+    'SearchEngine',
+    'ContentType',
+    'seo_performance_intelligence',
+    'analyze_seo_performance',
+    'track_keyword_performance',
+    'get_seo_dashboard',
+    'optimize_seo_strategy',
+    'get_seo_metrics',
+    'get_keyword_analytics'
 ]
 
 # Module information
