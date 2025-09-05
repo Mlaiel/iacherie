@@ -235,17 +235,6 @@ Start consuming from streams"""
         except Exception as e:
             logger.error(f"start failed: {e}")
             raise
-                    stream_keys,
-                    count=self.config.max_batch_size,
-                    block=self.config.polling_interval
-                )
-                
-                if messages:
-                    await self._process_messages(messages)
-                
-            except Exception as e:
-                logger.error(f"Error in consumer loop: {str(e)}")
-                await sleep(5)
     
     async def _process_messages(self, raw_messages: List):
         """Process received messages"""

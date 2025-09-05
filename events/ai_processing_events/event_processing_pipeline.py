@@ -783,11 +783,6 @@ class EventProcessingPipeline:
         except Exception as e:
             logger.error(f"SEO optimization execution error: {str(e)}")
             raise
-                    'Add more relevant keywords to improve discoverability',
-                    'Optimize meta description for better click-through rates',
-                    'Consider adding schema markup for rich snippets'
-                ]
-            }
             
             return {
                 'seo_optimization_result': seo_result,

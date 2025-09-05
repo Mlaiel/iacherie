@@ -58,44 +58,21 @@ Interface for event store implementations"""
     
     @abstractmethod
     async def save_events(self, aggregate_id: str, events: List[DomainEvent], 
-        try:
-                    async with self.db_session() as session:
-                        # Database operation
-                
-                        await session.commit()
-                        logger.info(f"Database operation save_events completed")
-                        return True
-                
-                except Exception as e:
-        try:
-                    # Request validation
-                    if not aggregate_id:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle_get_events_request(aggregate_id)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-        try:
-                    # Request validation
-                    if not from_event_id:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle_get_all_events_request(from_event_id)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler get_all_events failed: {e}")
-                    return {"status": "error", "message": str(e)}
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler get_events failed: {e}")
-                    return {"status": "error", "message": str(e)}
+                         expected_version: int = None) -> None:
+        """Save events to the store"""
+        pass
+
+    @abstractmethod
+    async def get_events(self, aggregate_id: str, 
+                        from_version: int = 0) -> List[DomainEvent]:
+        """Get events for an aggregate"""
+        pass
+
+    @abstractmethod  
+    async def get_all_events(self, from_event_id: str = None, 
+                           limit: int = 100) -> List[DomainEvent]:
+        """Get all events with optional pagination"""
+        pass
     @abstractmethod
     async def get_events(self, aggregate_id: str, 
                         from_version: int = 0) -> List[DomainEvent]:
@@ -430,8 +407,7 @@ Store for aggregate snapshots to improve performance"""
         self._ensure_tables_exist()
     
     def _ensure_tables_exist(self):
-        """
-Create snapshot tables if they don't exist"""
+        """Create snapshot tables if they do not exist"""
         create_snapshots_table = """
         CREATE TABLE IF NOT EXISTS aggregate_snapshots (
             aggregate_id VARCHAR(255) PRIMARY KEY,

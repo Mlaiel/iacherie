@@ -198,12 +198,12 @@ class DistributionResult:
                     # Process request
                     result = await self._handle_get_success_probability_request(data)
             
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler get_success_probability failed: {e}")
-                    return {"status": "error", "message": str(e)}
+                # Return response
+                return {"status": "success", "data": result}
+        
+        except Exception as e:
+            logger.error(f"API handler get_success_probability failed: {e}")
+            return {"status": "error", "message": str(e)}
 class DistributionPreparationHandler(BaseEventHandler):
     """
     Enterprise-grade distribution preparation event handler
