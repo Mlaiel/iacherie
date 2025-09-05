@@ -1,26 +1,36 @@
-"""🔗 Database Connection - Core Connection Management
-===================================================
+"""🔗 Database Connection - Enterprise Connection Management
+===========================================================
 Module: database/connection.py
 Author: Fahed Mlaiel (mlaiel@live.de)
-Type: Database Connection Management - Production-Ready
-Responsibility: Database connection handling and configuration
+Type: Enterprise Database Connection Management - Ultra Production-Ready
+Responsibility: Multi-database enterprise connectivity and advanced connection management
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
 (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
-This connection module provides database connection management for:
-- SQLite for development and testing
-- PostgreSQL for production
-- Connection pooling and health monitoring
-- Transaction management
+This enhanced connection module provides enterprise database connection management for:
+- PostgreSQL: Primary relational data (users, content, revenue tracking)
+- Redis: Caching, sessions, real-time operations
+- MongoDB: Content metadata, fingerprints, analytics data
+- Elasticsearch: Search indexing, logs, content discovery
+- Vector Stores: FAISS/Pinecone for AI similarity search
+- SQLite: Development and testing fallback
+- Multi-database connection pooling and health monitoring
+- Load balancing, failover, and disaster recovery
+- Security and encryption management
 """
 
 import os
 import logging
-from typing import Optional, Dict, Any
+import asyncio
+from typing import Optional, Dict, Any, List, Union, Callable
 from contextlib import asynccontextmanager
+from enum import Enum
+from dataclasses import dataclass, field
+from datetime import datetime, timedelta
+import json
 
 # Optional imports for production features
 try:
@@ -28,17 +38,114 @@ try:
     from sqlalchemy import create_engine, MetaData
     from sqlalchemy.ext.declarative import declarative_base
     from sqlalchemy.orm import sessionmaker
+    from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
     SQLALCHEMY_AVAILABLE = True
 except ImportError:
     SQLALCHEMY_AVAILABLE = False
     sqlalchemy = None
 
+try:
+    import redis.asyncio as redis
+    REDIS_AVAILABLE = True
+except ImportError:
+    try:
+        import redis
+        REDIS_AVAILABLE = True
+    except ImportError:
+        REDIS_AVAILABLE = False
+
+try:
+    import motor.motor_asyncio
+    MONGODB_AVAILABLE = True
+except ImportError:
+    MONGODB_AVAILABLE = False
+
+try:
+    from elasticsearch import AsyncElasticsearch
+    ELASTICSEARCH_AVAILABLE = True
+except ImportError:
+    ELASTICSEARCH_AVAILABLE = False
+
 # Configure logging
 logger = logging.getLogger(__name__)
 
-# Database configuration
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./database.db")
-TEST_DATABASE_URL = os.getenv("TEST_DATABASE_URL", "sqlite:///./test_database.db")
+# Database types enumeration
+class DatabaseType(Enum):
+    """Supported database types"""
+    POSTGRESQL = "postgresql"
+    REDIS = "redis"
+    MONGODB = "mongodb"
+    ELASTICSEARCH = "elasticsearch"
+    SQLITE = "sqlite"
+    VECTOR_STORE = "vector_store"
+
+class ConnectionStatus(Enum):
+    """Connection status enumeration"""
+    DISCONNECTED = "disconnected"
+    CONNECTING = "connecting"
+    CONNECTED = "connected"
+    ERROR = "error"
+    RECONNECTING = "reconnecting"
+
+@dataclass
+class ConnectionConfig:
+    """Database connection configuration"""
+    host: str = "localhost"
+    port: int = 5432
+    database: str = ""
+    username: str = ""
+    password: str = ""
+    ssl_mode: str = "prefer"
+    pool_size: int = 10
+    max_overflow: int = 20
+    timeout: int = 30
+    retry_attempts: int = 3
+    health_check_interval: int = 60
+    extra_params: Dict[str, Any] = field(default_factory=dict)
+
+@dataclass 
+class HealthMetrics:
+    """Database health metrics"""
+    timestamp: datetime
+    response_time_ms: float
+    active_connections: int
+    total_connections: int
+    queries_per_second: float
+    error_rate: float
+    status: ConnectionStatus
+
+# Database configuration from environment
+DATABASE_CONFIGS = {
+    DatabaseType.POSTGRESQL: ConnectionConfig(
+        host=os.getenv("POSTGRES_HOST", "localhost"),
+        port=int(os.getenv("POSTGRES_PORT", "5432")),
+        database=os.getenv("POSTGRES_DB", "ainflue"),
+        username=os.getenv("POSTGRES_USER", "postgres"),
+        password=os.getenv("POSTGRES_PASSWORD", "password")
+    ),
+    DatabaseType.REDIS: ConnectionConfig(
+        host=os.getenv("REDIS_HOST", "localhost"),
+        port=int(os.getenv("REDIS_PORT", "6379")),
+        database=os.getenv("REDIS_DB", "0"),
+        password=os.getenv("REDIS_PASSWORD", "")
+    ),
+    DatabaseType.MONGODB: ConnectionConfig(
+        host=os.getenv("MONGODB_HOST", "localhost"),
+        port=int(os.getenv("MONGODB_PORT", "27017")),
+        database=os.getenv("MONGODB_DB", "ainflue"),
+        username=os.getenv("MONGODB_USER", ""),
+        password=os.getenv("MONGODB_PASSWORD", "")
+    ),
+    DatabaseType.ELASTICSEARCH: ConnectionConfig(
+        host=os.getenv("ELASTICSEARCH_HOST", "localhost"),
+        port=int(os.getenv("ELASTICSEARCH_PORT", "9200")),
+        username=os.getenv("ELASTICSEARCH_USER", ""),
+        password=os.getenv("ELASTICSEARCH_PASSWORD", "")
+    ),
+    DatabaseType.SQLITE: ConnectionConfig(
+        database=os.getenv("SQLITE_PATH", "./ainflue.db")
+    )
+}
 
 # Global database components
 engine = None
