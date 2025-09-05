@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- MP3 Audio Codec Badge - Ainflue Desktop Assets -->
+<!-- Copyright (c) 2025 Fahed Mlaiel. All rights reserved. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 40" width="120" height="40">
+  <defs>
+    <linearGradient id="mp3Gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF9800;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#E65100;stop-opacity:1" />
+    </linearGradient>
+    <filter id="badgeShadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="2" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Badge background -->
+  <rect width="120" height="40" fill="url(#mp3Gradient)" rx="8" filter="url(#badgeShadow)"/>
+  
+  <!-- Inner border -->
+  <rect x="2" y="2" width="116" height="36" fill="none" stroke="#FFB74D" stroke-width="0.5" rx="6"/>
+  
+  <!-- Format label -->
+  <text x="60" y="16" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">MP3</text>
+  
+  <!-- Description -->
+  <text x="60" y="28" fill="#FFF3E0" font-family="Arial, sans-serif" font-size="8" text-anchor="middle">COMPRESSED</text>
+  
+  <!-- Quality indicator -->
+  <circle cx="15" cy="12" r="3" fill="#ffffff" opacity="0.9"/>
+  <circle cx="105" cy="12" r="3" fill="#ffffff" opacity="0.9"/>
+  
+  <!-- Compression icon -->
+  <g transform="translate(10, 20)" fill="#ffffff" opacity="0.8">
+    <rect x="0" y="6" width="2" height="8"/>
+    <rect x="3" y="4" width="2" height="12"/>
+    <rect x="6" y="2" width="2" height="16"/>
+    
+    <!-- Compression arrows -->
+    <path d="M12,10 L15,8 L15,12 Z" fill="#ffffff"/>
+    <path d="M18,8 L21,10 L18,12 Z" fill="#ffffff"/>
+  </g>
+  
+  <!-- Quality rating -->
+  <g transform="translate(95, 20)" fill="#ffffff" opacity="0.8">
+    <polygon points="5,2 6,4 9,4 7,6 8,9 5,7 2,9 3,6 1,4 4,4"/>
+    <polygon points="12,2 13,4 16,4 14,6 15,9 12,7 9,9 10,6 8,4 11,4"/>
+  </g>
+  
+  <!-- Bitrate indicator -->
+  <text x="92" y="32" fill="#ffffff" font-family="Arial, sans-serif" font-size="7" text-anchor="middle" opacity="0.8">320k</text>
+  
+  <!-- Copyright mark -->
+  <text x="115" y="35" fill="#ffffff" font-family="Arial, sans-serif" font-size="6" text-anchor="end" opacity="0.6">©FM</text>
+</svg>

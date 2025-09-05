@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- FLAC Audio Codec Badge - Ainflue Desktop Assets -->
+<!-- Copyright (c) 2025 Fahed Mlaiel. All rights reserved. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 40" width="120" height="40">
+  <defs>
+    <linearGradient id="flacGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4CAF50;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2E7D32;stop-opacity:1" />
+    </linearGradient>
+    <filter id="badgeShadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="2" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Badge background -->
+  <rect width="120" height="40" fill="url(#flacGradient)" rx="8" filter="url(#badgeShadow)"/>
+  
+  <!-- Inner border -->
+  <rect x="2" y="2" width="116" height="36" fill="none" stroke="#66BB6A" stroke-width="0.5" rx="6"/>
+  
+  <!-- Format label -->
+  <text x="60" y="16" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">FLAC</text>
+  
+  <!-- Description -->
+  <text x="60" y="28" fill="#E8F5E8" font-family="Arial, sans-serif" font-size="8" text-anchor="middle">LOSSLESS</text>
+  
+  <!-- Quality indicator -->
+  <circle cx="15" cy="12" r="3" fill="#ffffff" opacity="0.9"/>
+  <circle cx="105" cy="12" r="3" fill="#ffffff" opacity="0.9"/>
+  
+  <!-- Audio wave icon -->
+  <g transform="translate(8, 20)" fill="#ffffff" opacity="0.7">
+    <rect x="0" y="8" width="1" height="4"/>
+    <rect x="2" y="6" width="1" height="8"/>
+    <rect x="4" y="4" width="1" height="12"/>
+    <rect x="6" y="2" width="1" height="16"/>
+    <rect x="8" y="6" width="1" height="8"/>
+    <rect x="10" y="8" width="1" height="4"/>
+  </g>
+  
+  <!-- Quality stars -->
+  <g transform="translate(95, 20)" fill="#ffffff" opacity="0.8">
+    <polygon points="5,2 6,5 9,5 7,7 8,10 5,8 2,10 3,7 1,5 4,5"/>
+    <polygon points="12,2 13,5 16,5 14,7 15,10 12,8 9,10 10,7 8,5 11,5"/>
+  </g>
+  
+  <!-- Copyright mark -->
+  <text x="115" y="35" fill="#ffffff" font-family="Arial, sans-serif" font-size="6" text-anchor="end" opacity="0.6">©FM</text>
+</svg>
