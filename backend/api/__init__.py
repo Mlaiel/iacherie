@@ -23,68 +23,148 @@ from .core_api import core_router
 from .business_api import business_router
 from .public import public_router
 
+# Import available modules with error handling
+try:
+    from .core_api import *
+    CORE_API_AVAILABLE = True
+except ImportError as e:
+    CORE_API_AVAILABLE = False
+    logger.warning(f"Core API not available: {e}")
+
+try:
+    from .business_api import *
+    BUSINESS_API_AVAILABLE = True
+except ImportError as e:
+    BUSINESS_API_AVAILABLE = False
+    logger.warning(f"Business API not available: {e}")
+
+try:
+    from .public import *
+    PUBLIC_API_AVAILABLE = True
+except ImportError as e:
+    PUBLIC_API_AVAILABLE = False
+    logger.warning(f"Public API not available: {e}")
+
 # New consolidated modules
-from .endpoints import endpoints_router
-from .middleware import (
-    authentication_middleware,
-    setup_middleware,
-    RateLimitMiddleware,
-    RequestLoggingMiddleware,
-    SecurityHeadersMiddleware
-)
-from .authentication import (
-    AuthenticationService,
-    JWTManager,
-    OAuth2Manager,
-    SessionManager,
-    MFAManager,
-    get_auth_service
-)
-from .validation import (
-    ValidationService,
-    FileValidationService,
-    InputSanitizer,
-    UserValidation,
-    ContentMetadataValidation,
-    FileUploadValidation
-)
-from .serialization import (
-    SerializationService,
-    ResponseBuilder,
-    APIResponse,
-    PaginatedResponse,
-    ContentMetadataSerializer
-)
-from .websockets import (
-    WebSocketHandler,
-    WebSocketManager,
-    get_websocket_handler,
-    ChannelNames
-)
-from .graphql import schema as graphql_schema
-from .documentation import (
-    DocumentationService,
-    DocumentationConfig,
-    OpenAPIGenerator
-)
-from .testing import (
-    APITestClient,
-    TestDataGenerator,
-    APITestSuite,
-    PerformanceTestRunner
-)
-from .versioning import (
-    VersioningService,
-    APIVersionManager,
-    get_api_version,
-    get_compatibility_info
-)
-from .monitoring import (
-    MonitoringService,
-    HealthCheckManager,
-    MetricsCollector,
-    AlertManager
-)
+try:
+    from .middleware import (
+        authentication_middleware,
+        setup_middleware,
+        RateLimitMiddleware,
+        RequestLoggingMiddleware,
+        SecurityHeadersMiddleware
+    )
+    MIDDLEWARE_AVAILABLE = True
+except ImportError as e:
+    MIDDLEWARE_AVAILABLE = False
+    logger.warning(f"Middleware not available: {e}")
+try:
+    from .authentication import (
+        AuthenticationService,
+        JWTManager,
+        OAuth2Manager,
+        SessionManager,
+        MFAManager,
+        get_auth_service
+    )
+    AUTH_AVAILABLE = True
+except ImportError as e:
+    AUTH_AVAILABLE = False
+    logger.warning(f"Authentication not available: {e}")
+
+try:
+    from .validation import (
+        ValidationService,
+        FileValidationService,
+        InputSanitizer,
+        UserValidation,
+        ContentMetadataValidation,
+        FileUploadValidation
+    )
+    VALIDATION_AVAILABLE = True
+except ImportError as e:
+    VALIDATION_AVAILABLE = False
+    logger.warning(f"Validation not available: {e}")
+
+try:
+    from .serialization import (
+        SerializationService,
+        ResponseBuilder,
+        APIResponse,
+        PaginatedResponse,
+        ContentMetadataSerializer
+    )
+    SERIALIZATION_AVAILABLE = True
+except ImportError as e:
+    SERIALIZATION_AVAILABLE = False
+    logger.warning(f"Serialization not available: {e}")
+
+try:
+    from .websockets import (
+        WebSocketHandler,
+        WebSocketManager,
+        get_websocket_handler,
+        ChannelNames
+    )
+    WEBSOCKETS_AVAILABLE = True
+except ImportError as e:
+    WEBSOCKETS_AVAILABLE = False
+    logger.warning(f"WebSockets not available: {e}")
+
+try:
+    from .graphql import schema as graphql_schema
+    GRAPHQL_AVAILABLE = True
+except ImportError as e:
+    GRAPHQL_AVAILABLE = False
+    logger.warning(f"GraphQL not available: {e}")
+except Exception as e:
+    GRAPHQL_AVAILABLE = False
+    logger.warning(f"GraphQL module error: {e}")
+try:
+    from .documentation import (
+        DocumentationService,
+        DocumentationConfig,
+        OpenAPIGenerator
+    )
+    DOCUMENTATION_AVAILABLE = True
+except ImportError as e:
+    DOCUMENTATION_AVAILABLE = False
+    logger.warning(f"Documentation not available: {e}")
+
+try:
+    from .testing import (
+        APITestClient,
+        TestDataGenerator,
+        APITestSuite,
+        PerformanceTestRunner
+    )
+    TESTING_AVAILABLE = True
+except ImportError as e:
+    TESTING_AVAILABLE = False
+    logger.warning(f"Testing not available: {e}")
+try:
+    from .versioning import (
+        VersioningService,
+        APIVersionManager,
+        get_api_version,
+        get_compatibility_info
+    )
+    VERSIONING_AVAILABLE = True
+except ImportError as e:
+    VERSIONING_AVAILABLE = False
+    logger.warning(f"Versioning not available: {e}")
+
+try:
+    from .monitoring import (
+        MonitoringService,
+        HealthCheckManager,
+        MetricsCollector,
+        AlertManager
+    )
+    MONITORING_AVAILABLE = True
+except ImportError as e:
+    MONITORING_AVAILABLE = False
+    logger.warning(f"Monitoring not available: {e}")
 
 __all__ = [
     # Legacy routers (backward compatibility)

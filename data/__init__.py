@@ -18,22 +18,125 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Usage non autorisé strictement interdit
 """# Core Data Management Imports - Architecture Enterprise
-from .analytics import *
-from .content_protection import *
-from .crawlers import *
-from .fingerprinting import *
-from .ingestion import *
-from .licensing import *
-from .models import *
-from .monetization import *
-from .pipelines import *
-from .processors import *
-from .quality import *
-from .storage import *
-from .streams import *
-from .transformers import *
-from .validators import *
-from .vector_db import *
+# Core Data Management Imports - Architecture Enterprise with error handling
+try:
+    from .analytics import *
+    ANALYTICS_AVAILABLE = True
+except Exception as e:
+    ANALYTICS_AVAILABLE = False
+    print(f"Warning: Analytics module not available: {e}")
+
+try:
+    from .content_protection import *
+    CONTENT_PROTECTION_AVAILABLE = True
+except Exception as e:
+    CONTENT_PROTECTION_AVAILABLE = False
+    print(f"Warning: Content protection module not available: {e}")
+
+try:
+    from .crawlers import *
+    CRAWLERS_AVAILABLE = True
+except Exception as e:
+    CRAWLERS_AVAILABLE = False
+    print(f"Warning: Crawlers module not available: {e}")
+
+try:
+    from .fingerprinting import *
+    FINGERPRINTING_AVAILABLE = True
+except Exception as e:
+    FINGERPRINTING_AVAILABLE = False
+    print(f"Warning: Fingerprinting module not available: {e}")
+
+try:
+    from .ingestion import *
+    INGESTION_AVAILABLE = True
+except Exception as e:
+    INGESTION_AVAILABLE = False
+    print(f"Warning: Ingestion module not available: {e}")
+
+try:
+    from .licensing import *
+    LICENSING_AVAILABLE = True
+except Exception as e:
+    LICENSING_AVAILABLE = False
+    print(f"Warning: Licensing module not available: {e}")
+
+try:
+    from .models import *
+    MODELS_AVAILABLE = True
+except Exception as e:
+    MODELS_AVAILABLE = False
+    print(f"Warning: Models module not available: {e}")
+
+try:
+    from .monetization import *
+    MONETIZATION_AVAILABLE = True
+except Exception as e:
+    MONETIZATION_AVAILABLE = False
+    print(f"Warning: Monetization module not available: {e}")
+
+try:
+    from .pipelines import *
+    PIPELINES_AVAILABLE = True
+except Exception as e:
+    PIPELINES_AVAILABLE = False
+    print(f"Warning: Pipelines module not available: {e}")
+
+try:
+    from .processors import *
+    PROCESSORS_AVAILABLE = True
+except Exception as e:
+    PROCESSORS_AVAILABLE = False
+    print(f"Warning: Processors module not available: {e}")
+
+try:
+    from .quality import *
+    QUALITY_AVAILABLE = True
+except Exception as e:
+    QUALITY_AVAILABLE = False
+    print(f"Warning: Quality module not available: {e}")
+
+try:
+    from .storage import *
+    STORAGE_AVAILABLE = True
+except Exception as e:
+    STORAGE_AVAILABLE = False
+    print(f"Warning: Storage module not available: {e}")
+
+try:
+    from .streams import *
+    STREAMS_AVAILABLE = True
+except Exception as e:
+    STREAMS_AVAILABLE = False
+    print(f"Warning: Streams module not available: {e}")
+
+try:
+    from .transformers import *
+    TRANSFORMERS_AVAILABLE = True
+except Exception as e:
+    TRANSFORMERS_AVAILABLE = False
+    print(f"Warning: Transformers module not available: {e}")
+
+try:
+    from .validators import *
+    VALIDATORS_AVAILABLE = True
+except Exception as e:
+    VALIDATORS_AVAILABLE = False
+    print(f"Warning: Validators module not available: {e}")
+
+try:
+    from .vector_db import *
+    VECTOR_DB_AVAILABLE = True
+except Exception as e:
+    VECTOR_DB_AVAILABLE = False
+    print(f"Warning: Vector DB module not available: {e}")
+
+try:
+    from .analysis import *
+    ANALYSIS_AVAILABLE = True
+except Exception as e:
+    ANALYSIS_AVAILABLE = False
+    print(f"Warning: Analysis module not available: {e}")
 
 # Configuration Module Enterprise
 __version__ = "2.1.0"
