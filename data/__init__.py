@@ -17,25 +17,39 @@ Distribution Multi-Plateformes → Monétisation Avancée
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Usage non autorisé strictement interdit
-"""# Core Data Management Imports - Architecture Enterprise
-from .analytics import *
-from .content_protection import *
-from .crawlers import *
-from .fingerprinting import *
-from .ingestion import *
-from .licensing import *
-from .models import *
-from .monetization import *
-from .pipelines import *
-from .processors import *
-from .quality import *
-from .storage import *
-from .streams import *
-from .transformers import *
-from .validators import *
-from .vector_db import *
+"""
 
-# Configuration Module Enterprise
+# Core Data Management Imports - Architecture Enterprise
+# Import with graceful error handling for missing dependencies
+
+import logging
+logger = logging.getLogger(__name__)
+
+# Track which modules loaded successfully
+_loaded_modules = []
+_failed_modules = []
+
+def _safe_import(module_name):
+    """Safely import a module with error handling"""
+    try:
+        module = __import__(f"data.{module_name}", fromlist=[module_name])
+        globals().update(getattr(module, '__dict__', {}))
+        _loaded_modules.append(module_name)
+        logger.info(f"Successfully loaded data.{module_name}")
+        return True
+    except Exception as e:
+        _failed_modules.append((module_name, str(e)))
+        logger.warning(f"Failed to load data.{module_name}: {e}")
+        return False
+
+# Attempt to load all submodules
+for module_name in ['analytics', 'content_protection', 'crawlers', 'fingerprinting', 
+                   'ingestion', 'licensing', 'models', 'monetization', 'pipelines', 
+                   'processors', 'quality', 'storage', 'streams', 'transformers', 
+                   'validators', 'vector_db']:
+    _safe_import(module_name)
+
+# Export information about loaded modules
 __version__ = "2.1.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
