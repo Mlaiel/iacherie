@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 50" width="150" height="50">
+  <defs>
+    <linearGradient id="mp3Gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF5722;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#D84315;stop-opacity:1" />
+    </linearGradient>
+    <filter id="badgeGlow">
+      <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Badge Background -->
+  <rect x="5" y="5" width="140" height="40" fill="url(#mp3Gradient)" stroke="#BF360C" stroke-width="2" rx="8" filter="url(#badgeGlow)"/>
+  
+  <!-- Musical Note Icon -->
+  <circle cx="25" cy="22" r="3" fill="#FFFFFF" opacity="0.9"/>
+  <rect x="28" y="15" width="2" height="14" fill="#FFFFFF" opacity="0.9"/>
+  <path d="M 28 15 Q 32 13 32 17" stroke="#FFFFFF" stroke-width="2" fill="none" opacity="0.9"/>
+  
+  <!-- Text -->
+  <text x="40" y="20" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF">MP3</text>
+  <text x="40" y="35" font-family="Arial, sans-serif" font-size="10" fill="#FFCCBC">Compressed</text>
+  
+  <!-- Bitrate indicators -->
+  <rect x="115" y="13" width="8" height="4" fill="#FFFFFF" opacity="0.7"/>
+  <rect x="115" y="19" width="12" height="4" fill="#FFFFFF" opacity="0.9"/>
+  <rect x="115" y="25" width="6" height="4" fill="#FFFFFF" opacity="0.5"/>
+  <rect x="115" y="31" width="10" height="4" fill="#FFFFFF" opacity="0.8"/>
+  
+  <!-- 320kbps label -->
+  <text x="85" y="20" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#FFFFFF">320k</text>
+  
+  <!-- Copyright -->
+  <text x="75" y="48" font-family="Arial, sans-serif" font-size="6" fill="#BF360C">© Ainflue</text>
+</svg>
