@@ -805,13 +805,8 @@ Check if file already exists based on hash"""
             return result
             
         except Exception as e:
-        try:
-            logger.info(f"Executing _create_backup_copies")
-            
-            # Implementation for _create_backup_copies
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
+            logger.error(f"Operation failed: {e}")
+            raise
             
             logger.info(f"_create_backup_copies completed successfully")
             return result

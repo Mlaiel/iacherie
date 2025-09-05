@@ -2447,21 +2447,7 @@ async def validate_content(
         validation_level=ValidationLevel(validation_level),
         **kwargs
     )
-        self.supported_formats = self._init_supported_formats()
-        
-        # Validation rules
-        self.validation_rules = self._init_validation_rules()
-        
-        # Platform requirements
-        self.platform_requirements = self._init_platform_requirements()
-        
-        # Quality thresholds
-        self.quality_thresholds = self._init_quality_thresholds()
-        
-        # AI models (lazy loading)
-        self.ai_models = {}
-        
-        logger.info("ContentValidator initialized")
+    # End of validation function
     
     async def validate_content(
         self,
