@@ -26,8 +26,8 @@ except ImportError:
 
 # Try to import existing monitoring components
 try:
-    from monitoring.advanced_metrics.business_kpis import BusinessKPICollector
-    from monitoring.advanced_metrics.technical_performance_monitor import TechnicalPerformanceMonitor
+    from monitoring.performance_intelligence.business_kpis import BusinessKPICollector
+    from monitoring.performance_intelligence.technical_performance_monitor import TechnicalPerformanceMonitor
     from monitoring.metrics.performance_metrics import PerformanceMetricsCollector
     from crawlers.monitors.metrics_collector import MetricsCollector
 except ImportError:

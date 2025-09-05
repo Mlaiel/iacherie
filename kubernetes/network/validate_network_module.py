@@ -102,7 +102,7 @@ def validate_file_structure() -> bool:
         "revenue_monetization_manager.py",
         "complete_example.py",
         "enterprise_integration_example.py",
-        "config.advanced.yaml",
+        "config.enterprise.yaml",
         "config.example.yaml"
     ]
     

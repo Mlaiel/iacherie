@@ -85,19 +85,19 @@ Das Erweiterte Metriken Modul ist ein umfassendes, unternehmenstaugliches Analyt
 ```bash
 # Repository klonen
 git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/monitoring/advanced_metrics
+cd Ainflue/monitoring/performance_intelligence
 
 # Abhängigkeiten installieren
 pip install -r requirements.txt
 
 # Modul initialisieren
-python -c "from monitoring.advanced_metrics import initialize_advanced_metrics; initialize_advanced_metrics()"
+python -c "from monitoring.performance_intelligence import initialize_advanced_metrics; initialize_advanced_metrics()"
 ```
 
 ### Grundlegende Nutzung
 
 ```python
-from monitoring.advanced_metrics import (
+from monitoring.performance_intelligence import (
     AdvancedMetricsManager,
     BusinessKPICollector,
     UserEngagementAnalyzer,
@@ -159,7 +159,7 @@ Performance-Optimierung & Einblicke
 ### Basiskonfiguration
 
 ```python
-from monitoring.advanced_metrics import MetricsConfiguration, AggregationPeriod
+from monitoring.performance_intelligence import MetricsConfiguration, AggregationPeriod
 
 config = MetricsConfiguration(
     enabled_categories=[
@@ -201,7 +201,7 @@ config = MetricsConfiguration(
 
 ```bash
 # Unit-Tests ausführen
-python -m pytest tests/test_advanced_metrics/ -v
+python -m pytest tests/test_performance_intelligence/ -v
 
 # Integrationstests ausführen
 python -m pytest tests/integration/test_metrics_integration.py -v
@@ -218,7 +218,7 @@ python -m pytest tests/performance/test_metrics_performance.py -v
 FROM python:3.12-slim
 
 WORKDIR /app
-COPY monitoring/advanced_metrics/ .
+COPY monitoring/performance_intelligence/ .
 RUN pip install -r requirements.txt
 
 EXPOSE 8000

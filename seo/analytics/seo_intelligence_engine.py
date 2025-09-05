@@ -1,14 +1,6 @@
-"""Advanced SEO Analytics Engine - AI-Powered Performance Tracking
-====================================================================
-
-Module: seo/analytics/advanced_seo_analytics.py
-Architecture: Multi-Platform SEO Analytics System
-
-MISSION: Enterprise AI-powered SEO analytics with performance tracking,
-optimization insights, and predictive analysis across 35+ platforms
-
-Author: Fahed Mlaiel <mlaiel@live.de>
-Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
+"""
+Analyseur SEO Ultra-Avancé avec IA et Analytics
+Module: seo/analytics/seo_intelligence_engine.py
 """
 
 import asyncio

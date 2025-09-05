@@ -85,19 +85,19 @@ Le Module de Métriques Avancées est un système complet d'analytique et d'inte
 ```bash
 # Cloner le dépôt
 git clone https://github.com/Mlaiel/Ainflue.git
-cd Ainflue/monitoring/advanced_metrics
+cd Ainflue/monitoring/performance_intelligence
 
 # Installer les dépendances
 pip install -r requirements.txt
 
 # Initialiser le module
-python -c "from monitoring.advanced_metrics import initialize_advanced_metrics; initialize_advanced_metrics()"
+python -c "from monitoring.performance_intelligence import initialize_advanced_metrics; initialize_advanced_metrics()"
 ```
 
 ### Utilisation de Base
 
 ```python
-from monitoring.advanced_metrics import (
+from monitoring.performance_intelligence import (
     AdvancedMetricsManager,
     BusinessKPICollector,
     UserEngagementAnalyzer,
@@ -159,7 +159,7 @@ Optimisation Performance & Insights
 ### Configuration de Base
 
 ```python
-from monitoring.advanced_metrics import MetricsConfiguration, AggregationPeriod
+from monitoring.performance_intelligence import MetricsConfiguration, AggregationPeriod
 
 config = MetricsConfiguration(
     enabled_categories=[
@@ -201,7 +201,7 @@ config = MetricsConfiguration(
 
 ```bash
 # Exécuter tests unitaires
-python -m pytest tests/test_advanced_metrics/ -v
+python -m pytest tests/test_performance_intelligence/ -v
 
 # Exécuter tests intégration
 python -m pytest tests/integration/test_metrics_integration.py -v
@@ -218,11 +218,11 @@ python -m pytest tests/performance/test_metrics_performance.py -v
 FROM python:3.12-slim
 
 WORKDIR /app
-COPY monitoring/advanced_metrics/ .
+COPY monitoring/performance_intelligence/ .
 RUN pip install -r requirements.txt
 
 EXPOSE 8000
-CMD ["python", "-m", "monitoring.advanced_metrics"]
+CMD ["python", "-m", "monitoring.performance_intelligence"]
 ```
 
 ### Déploiement Kubernetes

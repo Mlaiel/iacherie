@@ -15,8 +15,8 @@ and will result in immediate legal action under German and International copyrig
 For legitimate licensing inquiries: mlaiel@live.de
 """
 
-# Advanced IA Matching Services (New)
-from .advanced_matching_service import (
+# Content Matching Engine Services
+from .content_matching_engine import (
     AdvancedMatchingService,
     MatchingStrategy,
     CreativeMatchType,
