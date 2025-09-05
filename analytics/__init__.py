@@ -43,6 +43,30 @@ from .gamification_metrics import (
     GamificationElement,
     EngagementAction
 )
+from .seo_intelligence_engine import (
+    SEOIntelligenceEngine,
+    SEOIntelligenceMetrics,
+    SEOPlatform,
+    ContentType as SEOContentType
+)
+from .distribution_intelligence import (
+    DistributionIntelligenceEngine,
+    DistributionIntelligence,
+    DistributionPlatform,
+    ContentFormat as DistributionContentFormat
+)
+from .security_intelligence import (
+    SecurityIntelligenceEngine,
+    SecurityMetrics,
+    ThreatEvent,
+    SecurityEventType
+)
+from .predictive_intelligence import (
+    PredictiveIntelligenceEngine,
+    PredictionResult,
+    TrendAnalysis,
+    PredictionType
+)
 
 __all__ = [
     # Core Analytics
@@ -81,5 +105,29 @@ __all__ = [
     "GamificationAnalytics",
     "GamificationMetrics",
     "GamificationElement",
-    "EngagementAction"
+    "EngagementAction",
+    
+    # SEO Intelligence
+    "SEOIntelligenceEngine",
+    "SEOIntelligenceMetrics",
+    "SEOPlatform",
+    "SEOContentType",
+    
+    # Distribution Intelligence
+    "DistributionIntelligenceEngine",
+    "DistributionIntelligence",
+    "DistributionPlatform",
+    "DistributionContentFormat",
+    
+    # Security Intelligence
+    "SecurityIntelligenceEngine",
+    "SecurityMetrics",
+    "ThreatEvent",
+    "SecurityEventType",
+    
+    # Predictive Intelligence
+    "PredictiveIntelligenceEngine",
+    "PredictionResult",
+    "TrendAnalysis",
+    "PredictionType"
 ]
