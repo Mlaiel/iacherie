@@ -60,8 +60,6 @@ from .recognition import (
     LanguageDetector,
     SpeakerIdentifier,
     KeywordSpotter,
-    VoiceActivityDetector,
-    SpeechToText,
     RealTimeRecognizer
 )
 
@@ -93,10 +91,7 @@ from .compression import (
     AudioCompressor,
     CodecManager,
     BitrateOptimizer,
-    LosslessCompressor,
-    StreamingCompressor,
-    AdaptiveBitrate,
-    QualityPreserver
+    CompressionSettings
 )
 
 # Real-time audio streaming
@@ -105,9 +100,7 @@ from .streaming import (
     RealTimeAnalyzer,
     StreamingEncoder,
     AdaptiveStreaming,
-    LatencyOptimizer,
-    BufferManager,
-    NetworkAdapter
+    StreamingConfig
 )
 
 # Audio effects and filters
@@ -117,9 +110,6 @@ from .effects import (
     ReverbProcessor,
     ChorusProcessor,
     DistortionProcessor,
-    NoiseReductionProcessor,
-    PitchShifter,
-    TimeStretcher,
     AudioMixer,
     MasteringProcessor
 )
@@ -191,7 +181,6 @@ __all__ = [
     'LanguageDetector',
     'SpeakerIdentifier',
     'KeywordSpotter',
-    'SpeechToText',
     'RealTimeRecognizer',
     
     # Synthesis
@@ -217,19 +206,14 @@ __all__ = [
     'AudioCompressor',
     'CodecManager',
     'BitrateOptimizer',
-    'LosslessCompressor',
-    'StreamingCompressor',
-    'AdaptiveBitrate',
-    'QualityPreserver',
+    'CompressionSettings',
     
     # Streaming
     'StreamingProcessor',
     'RealTimeAnalyzer',
     'StreamingEncoder',
     'AdaptiveStreaming',
-    'LatencyOptimizer',
-    'BufferManager',
-    'NetworkAdapter',
+    'StreamingConfig',
     
     # Effects
     'EqualizerProcessor',
@@ -237,9 +221,6 @@ __all__ = [
     'ReverbProcessor',
     'ChorusProcessor',
     'DistortionProcessor',
-    'NoiseReductionProcessor',
-    'PitchShifter',
-    'TimeStretcher',
     'AudioMixer',
     'MasteringProcessor',
     
