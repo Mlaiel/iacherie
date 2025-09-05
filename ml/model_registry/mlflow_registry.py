@@ -33,7 +33,11 @@ import shutil
 import mlflow
 import mlflow.sklearn
 import mlflow.pytorch
-import mlflow.tensorflow
+try:
+    import mlflow.tensorflow
+except ImportError:
+    # TensorFlow not available, tensorflow model support will be limited
+    pass
 from mlflow.tracking import MlflowClient
 from mlflow.entities import ViewType
 import pandas as pd
