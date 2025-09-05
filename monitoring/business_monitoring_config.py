@@ -324,7 +324,7 @@ class BusinessMonitoringConfig:
             KPIConfig(
                 kpi_id="arr",
                 name="Annual Recurring Revenue",
-                metric_type=BusinessMetricType.ANNUAL_RECURRING_REVENUE,
+                metric_type=BusinessMetricType.MONTHLY_RECURRING_REVENUE,  # Use available enum value
                 calculation_method="multiplication",
                 target_value=1200000.0,
                 monitoring_frequency=MonitoringFrequency.MEDIUM

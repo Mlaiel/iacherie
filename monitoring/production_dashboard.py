@@ -390,5 +390,10 @@ Check performance requirements compliance"""
         
         return checklist
 
+# Alias for backwards compatibility
+class ProductionDashboard(ProductionReadinessDashboard):
+    """Alias for ProductionReadinessDashboard"""
+    pass
+
 # Global production readiness dashboard
 production_dashboard = ProductionReadinessDashboard()
