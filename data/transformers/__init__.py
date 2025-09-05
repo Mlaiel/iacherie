@@ -26,12 +26,9 @@ _ADVANCED_MODULES_AVAILABLE = False
 
 try:
     from .data_transformer import DataTransformer, TransformationRequest, TransformationResult
-    from .audio_transformer import AudioTransformer
-    from .video_transformer import VideoTransformer
-    from .image_transformer import ImageTransformer
-    from .text_transformer import TextTransformer
-    from .metadata_transformer import MetadataTransformer
-    from .format_converter import FormatConverter, ConversionRule
+    from .media_transformers import AudioTransformer, VideoTransformer, ImageTransformer
+    from .content_processor import TextTransformer, MetadataTransformer
+    from .processing_suite import FormatConverter, ConversionRule, EncodingManager
     
     # Mark successful core imports
     _CORE_MODULES_AVAILABLE = True
@@ -42,10 +39,9 @@ except ImportError as e:
 
 # Advanced modules imports
 try:
-    from .encoding_manager import EncodingManager, EncodingSettings, EncodingResult
-    from .batch_processor import BatchProcessor, BatchJob, BatchTask
-    from .realtime_converter import RealtimeConverter, StreamConfiguration, StreamChunk
-    from .quality_optimizer import QualityOptimizer, QualityMetrics, OptimizationResult
+    from .performance_optimizer import BatchProcessor, BatchJob, BatchTask
+    from .performance_optimizer import RealtimeConverter, StreamConfiguration, StreamChunk
+    from .performance_optimizer import QualityOptimizer, QualityMetrics, OptimizationResult
     from .index import ModuleIndex, ModuleInfo, get_module_index
     
     # Mark successful advanced imports

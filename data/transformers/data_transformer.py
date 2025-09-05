@@ -19,16 +19,10 @@ import json
 import time
 from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
 
-from .audio_transformer import AudioTransformer
-from .video_transformer import VideoTransformer  
-from .image_transformer import ImageTransformer
-from .text_transformer import TextTransformer
-from .metadata_transformer import MetadataTransformer
-from .format_converter import FormatConverter
-from .encoding_manager import EncodingManager
-from .batch_processor import BatchProcessor
-from .realtime_converter import RealtimeConverter
-from .quality_optimizer import QualityOptimizer
+from .media_transformers import AudioTransformer, VideoTransformer, ImageTransformer
+from .content_processor import TextTransformer, MetadataTransformer
+from .processing_suite import FormatConverter, EncodingManager
+from .performance_optimizer import BatchProcessor, RealtimeConverter, QualityOptimizer
 
 logger = logging.getLogger(__name__)
 
