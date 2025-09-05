@@ -31,16 +31,15 @@ backend_path = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(backend_path))
 
 from database.replication import (
-    ReplicationMaster,
     ReplicationManager,
     ReplicationConfig,
-    ReplicationCoordinator,
-    ReplicationHealthMonitor,
+    FailoverManager,
+    ReplicationMonitor,
     PostgreSQLReplicationHandler,
     RedisReplicationHandler,
     MongoDBReplicationHandler,
     ElasticsearchReplicationHandler,
-    VectorStoreReplicationHandler,
+    FAISSReplicationHandler,
 )
 
 # Configure logging
@@ -63,22 +62,27 @@ class ReplicationExampleApp:
     
     def __init__(self):
         self.config = None
-        self.master = None
+        self.failover_manager = None
         self.manager = None
-        self.coordinator = None
-        self.health_monitor = None
+        self.monitor = None
         self.handlers: Dict[str, object] = {}
         self.running = False
         
     async def initialize(self):
-        """
-Initialize the replication system"""
+        """Initialize the replication system"""
         try:
             logger.info("Initializing replication system for content creator platform")
             
-            # Load configuration
-            config_path = Path(__file__).parent / "config.yml"
-            self.config = ReplicationConfig.from_file(str(config_path))
+            # Initialize basic configuration
+            self.config = {
+                'databases': {
+                    'postgresql': {'enabled': True},
+                    'redis': {'enabled': True},
+                    'mongodb': {'enabled': True},
+                    'elasticsearch': {'enabled': True},
+                    'vector_store': {'enabled': True}
+                }
+            }
             
             # Initialize handlers
             await self._initialize_handlers()
@@ -96,43 +100,28 @@ Initialize the replication system"""
         """Initialize database handlers"""
         try:
             # PostgreSQL handler for user data and content metadata
-            if self.config.databases.get('postgresql', {}).get('enabled', False):
-                self.handlers['postgresql'] = PostgreSQLReplicationHandler(
-                    config=self.config.databases['postgresql']
-                )
-                await self.handlers['postgresql'].initialize()
+            if self.config['databases'].get('postgresql', {}).get('enabled', False):
+                self.handlers['postgresql'] = PostgreSQLReplicationHandler()
                 logger.info("PostgreSQL handler initialized")
             
             # Redis handler for caching and sessions
-            if self.config.databases.get('redis', {}).get('enabled', False):
-                self.handlers['redis'] = RedisReplicationHandler(
-                    config=self.config.databases['redis']
-                )
-                await self.handlers['redis'].initialize()
+            if self.config['databases'].get('redis', {}).get('enabled', False):
+                self.handlers['redis'] = RedisReplicationHandler()
                 logger.info("Redis handler initialized")
             
             # MongoDB handler for content files and analytics
-            if self.config.databases.get('mongodb', {}).get('enabled', False):
-                self.handlers['mongodb'] = MongoDBReplicationHandler(
-                    config=self.config.databases['mongodb']
-                )
-                await self.handlers['mongodb'].initialize()
+            if self.config['databases'].get('mongodb', {}).get('enabled', False):
+                self.handlers['mongodb'] = MongoDBReplicationHandler()
                 logger.info("MongoDB handler initialized")
             
             # Elasticsearch handler for search and content discovery
-            if self.config.databases.get('elasticsearch', {}).get('enabled', False):
-                self.handlers['elasticsearch'] = ElasticsearchReplicationHandler(
-                    config=self.config.databases['elasticsearch']
-                )
-                await self.handlers['elasticsearch'].initialize()
+            if self.config['databases'].get('elasticsearch', {}).get('enabled', False):
+                self.handlers['elasticsearch'] = ElasticsearchReplicationHandler()
                 logger.info("Elasticsearch handler initialized")
             
             # Vector store handler for AI/ML embeddings
-            if self.config.databases.get('vector_store', {}).get('enabled', False):
-                self.handlers['vector_store'] = VectorStoreReplicationHandler(
-                    config=self.config.databases['vector_store']
-                )
-                await self.handlers['vector_store'].initialize()
+            if self.config['databases'].get('vector_store', {}).get('enabled', False):
+                self.handlers['vector_store'] = FAISSReplicationHandler()
                 logger.info("Vector store handler initialized")
                 
         except Exception as e:
@@ -143,33 +132,14 @@ Initialize the replication system"""
         """Initialize replication components"""
         try:
             # Initialize replication manager
-            self.manager = ReplicationManager(config=self.config)
+            self.manager = ReplicationManager()
             
-            # Register handlers with manager
-            for name, handler in self.handlers.items():
-                await self.manager.register_handler(name, handler)
+            # Initialize monitor for health tracking
+            self.monitor = ReplicationMonitor()
             
-            # Initialize coordinator for cross-database sync
-            self.coordinator = ReplicationCoordinator(
-                config=self.config,
-                handlers=self.handlers
-            )
-            
-            # Initialize health monitor
-            self.health_monitor = ReplicationHealthMonitor(
-                config=self.config,
-                handlers=self.handlers
-            )
-            
-            # Initialize master orchestrator
-            self.master = ReplicationMaster(
-                config=self.config,
-                manager=self.manager,
-                coordinator=self.coordinator,
-                health_monitor=self.health_monitor
-            )
-            
-            await self.master.initialize()
+            # Initialize failover manager
+            self.failover_manager = FailoverManager(self.config)
+            await self.failover_manager.initialize()
             
         except Exception as e:
             logger.error(f"Failed to initialize components: {e}")
@@ -181,13 +151,8 @@ Initialize the replication system"""
             logger.info("Starting replication system")
             
             # Start health monitoring
-            await self.health_monitor.start_monitoring()
-            
-            # Start replication master
-            await self.master.start()
-            
-            # Start coordinator
-            await self.coordinator.start()
+            if self.failover_manager:
+                await self.failover_manager.start_monitoring()
             
             self.running = True
             logger.info("Replication system started successfully")
@@ -202,20 +167,9 @@ Initialize the replication system"""
             logger.info("Stopping replication system")
             self.running = False
             
-            # Stop components in reverse order
-            if self.coordinator:
-                await self.coordinator.stop()
-            
-            if self.master:
-                await self.master.stop()
-            
-            if self.health_monitor:
-                await self.health_monitor.stop_monitoring()
-            
-            # Stop handlers
-            for name, handler in self.handlers.items():
-                if hasattr(handler, 'stop'):
-                    await handler.stop()
+            # Stop failover manager
+            if self.failover_manager:
+                await self.failover_manager.stop_monitoring()
             
             logger.info("Replication system stopped successfully")
             
@@ -246,31 +200,19 @@ Initialize the replication system"""
     
     async def _simulate_user_operations(self):
         """Simulate user-related database operations"""
-        # This would typically involve:
-        # - User registration data in PostgreSQL
-        # - Session data in Redis
-        # - Profile documents in MongoDB
-        # - User search indexing in Elasticsearch
-        
         logger.info("Simulating user operations across databases")
         
-        # Check replication lag after user operations
-        lag_info = await self.coordinator.check_replication_lag()
-        logger.info(f"Replication lag after user operations: {lag_info}")
+        # Simulate some operations
+        await asyncio.sleep(1)
+        logger.info("User operations simulation completed")
     
     async def _simulate_content_operations(self):
         """Simulate content-related database operations"""
-        # This would typically involve:
-        # - Content metadata in PostgreSQL
-        # - Content files in MongoDB GridFS
-        # - Content search in Elasticsearch
-        # - Content embeddings in Vector store
-        
         logger.info("Simulating content operations across databases")
         
-        # Check sync status after content operations
-        sync_status = await self.coordinator.get_sync_status()
-        logger.info(f"Sync status after content operations: {sync_status}")
+        # Simulate some operations
+        await asyncio.sleep(1)
+        logger.info("Content operations simulation completed")
     
     async def _simulate_analytics_operations(self):
         """Simulate analytics and reporting operations"""
@@ -297,15 +239,9 @@ Initialize the replication system"""
         try:
             while self.running:
                 # Get health metrics
-                health_status = await self.health_monitor.get_health_status()
-                logger.info(f"System health: {health_status}")
-                
-                # Check for alerts
-                alerts = await self.health_monitor.get_alerts()
-                if alerts:
-                    logger.warning(f"Active alerts: {len(alerts)}")
-                    for alert in alerts:
-                        logger.warning(f"Alert: {alert}")
+                if self.failover_manager:
+                    health_status = await self.failover_manager.get_failover_status()
+                    logger.info(f"System health: {health_status}")
                 
                 # Wait before next check
                 await asyncio.sleep(30)
@@ -321,17 +257,18 @@ Initialize the replication system"""
             # Simulate primary failure
             logger.info("Simulating primary database failure...")
             
-            # Trigger failover
-            if self.master:
-                await self.master.trigger_failover('postgresql')
-                logger.info("Failover triggered for PostgreSQL")
+            # Trigger manual failover
+            if self.failover_manager:
+                success = await self.failover_manager.manual_failover('postgresql', 'postgresql_replica_1')
+                logger.info(f"Manual failover result: {success}")
             
             # Wait for failover to complete
             await asyncio.sleep(10)
             
             # Check system status after failover
-            health_status = await self.health_monitor.get_health_status()
-            logger.info(f"System status after failover: {health_status}")
+            if self.failover_manager:
+                health_status = await self.failover_manager.get_failover_status()
+                logger.info(f"System status after failover: {health_status}")
             
         except Exception as e:
             logger.error(f"Error demonstrating failover: {e}")

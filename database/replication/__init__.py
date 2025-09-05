@@ -40,7 +40,7 @@ from .database_replication import (
 # Cache and vector database replication
 from .cache_replication import (
     RedisReplicationHandler,
-    VectorDatabaseReplicationHandler,
+    FAISSReplicationHandler,
     CacheReplicationCoordinator
 )
 
@@ -83,7 +83,7 @@ __all__ = [
     
     # Cache replication
     'RedisReplicationHandler',
-    'VectorDatabaseReplicationHandler',
+    'FAISSReplicationHandler',
     'CacheReplicationCoordinator',
     
     # Configuration management
