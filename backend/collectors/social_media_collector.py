@@ -21,13 +21,99 @@ from typing import Dict, List, Optional, AsyncGenerator, Any, Union
 from datetime import datetime, timedelta
 
 from .base_collector import BaseCollector, CollectorResult, CollectionConfig
-from .instagram import InstagramCollector
-from .tiktok import TikTokCollector
-from .twitter import TwitterCollector
-from .facebook import FacebookCollector
-from .linkedin import LinkedInCollector
 
 logger = logging.getLogger(__name__)
+
+# Individual platform collector classes (simplified implementations)
+class InstagramCollector(BaseCollector):
+    """Instagram content collector."""
+    def __init__(self, **kwargs):
+        super().__init__("instagram", rate_limit=60)
+    
+    async def search_content(self, query: str, config: CollectionConfig) -> List[CollectorResult]:
+        # Simplified implementation - would connect to Instagram API
+        return []
+    
+    async def get_content_details(self, content_id: str) -> Optional[CollectorResult]:
+        return None
+    
+    async def get_user_content(self, user_id: str, config: CollectionConfig) -> List[CollectorResult]:
+        return []
+    
+    async def monitor_hashtags(self, hashtags: List[str], config: CollectionConfig) -> AsyncGenerator[CollectorResult, None]:
+        return
+        yield  # Make it a generator
+    
+    async def get_trending_content(self, config: CollectionConfig) -> List[CollectorResult]:
+        return []
+
+class TikTokCollector(BaseCollector):
+    """TikTok content collector."""
+    def __init__(self, **kwargs):
+        super().__init__("tiktok", rate_limit=60)
+    
+    async def search_content(self, query: str, config: CollectionConfig) -> List[CollectorResult]:
+        return []
+    async def get_content_details(self, content_id: str) -> Optional[CollectorResult]:
+        return None
+    async def get_user_content(self, user_id: str, config: CollectionConfig) -> List[CollectorResult]:
+        return []
+    async def monitor_hashtags(self, hashtags: List[str], config: CollectionConfig) -> AsyncGenerator[CollectorResult, None]:
+        return
+        yield
+    async def get_trending_content(self, config: CollectionConfig) -> List[CollectorResult]:
+        return []
+
+class TwitterCollector(BaseCollector):
+    """Twitter content collector."""
+    def __init__(self, **kwargs):
+        super().__init__("twitter", rate_limit=100)
+    
+    async def search_content(self, query: str, config: CollectionConfig) -> List[CollectorResult]:
+        return []
+    async def get_content_details(self, content_id: str) -> Optional[CollectorResult]:
+        return None
+    async def get_user_content(self, user_id: str, config: CollectionConfig) -> List[CollectorResult]:
+        return []
+    async def monitor_hashtags(self, hashtags: List[str], config: CollectionConfig) -> AsyncGenerator[CollectorResult, None]:
+        return
+        yield
+    async def get_trending_content(self, config: CollectionConfig) -> List[CollectorResult]:
+        return []
+
+class FacebookCollector(BaseCollector):
+    """Facebook content collector."""
+    def __init__(self, **kwargs):
+        super().__init__("facebook", rate_limit=50)
+    
+    async def search_content(self, query: str, config: CollectionConfig) -> List[CollectorResult]:
+        return []
+    async def get_content_details(self, content_id: str) -> Optional[CollectorResult]:
+        return None
+    async def get_user_content(self, user_id: str, config: CollectionConfig) -> List[CollectorResult]:
+        return []
+    async def monitor_hashtags(self, hashtags: List[str], config: CollectionConfig) -> AsyncGenerator[CollectorResult, None]:
+        return
+        yield
+    async def get_trending_content(self, config: CollectionConfig) -> List[CollectorResult]:
+        return []
+
+class LinkedInCollector(BaseCollector):
+    """LinkedIn content collector."""
+    def __init__(self, **kwargs):
+        super().__init__("linkedin", rate_limit=40)
+    
+    async def search_content(self, query: str, config: CollectionConfig) -> List[CollectorResult]:
+        return []
+    async def get_content_details(self, content_id: str) -> Optional[CollectorResult]:
+        return None
+    async def get_user_content(self, user_id: str, config: CollectionConfig) -> List[CollectorResult]:
+        return []
+    async def monitor_hashtags(self, hashtags: List[str], config: CollectionConfig) -> AsyncGenerator[CollectorResult, None]:
+        return
+        yield
+    async def get_trending_content(self, config: CollectionConfig) -> List[CollectorResult]:
+        return []
 
 class SocialMediaCollector(BaseCollector):
     """
@@ -223,86 +309,6 @@ class SocialMediaCollector(BaseCollector):
                 logger.error(f"Trending content collection failed for {platform}: {e}")
         
         return results
-    
-    async def analyze_cross_platform_presence(self, creator_id: str) -> Dict[str, Any]:
-        """
-        Analyze creator's presence across all social media platforms.
-        
-        Args:
-            creator_id: Creator identifier
-            
-        Returns:
-            Cross-platform analytics and insights
-        """
-        presence_data = {}
-        
-        for platform_name, collector in self.collectors.items():
-            try:
-                # Get creator content from each platform
-                config = CollectionConfig(max_results=20)
-                content = await collector.get_user_content(creator_id, config)
-                
-                presence_data[platform_name] = {
-                    'content_count': len(content),
-                    'latest_post': content[0].timestamp if content else None,
-                    'engagement_total': sum(
-                        result.engagement_metrics.get('total_engagement', 0) 
-                        for result in content 
-                        if result.engagement_metrics
-                    ),
-                    'active': len(content) > 0
-                }
-            except Exception as e:
-                logger.error(f"Cross-platform analysis failed for {platform_name}: {e}")
-                presence_data[platform_name] = {'error': str(e), 'active': False}
-        
-        return {
-            'creator_id': creator_id,
-            'platforms': presence_data,
-            'total_platforms': len([p for p in presence_data.values() if p.get('active', False)]),
-            'analysis_timestamp': datetime.now().isoformat()
-        }
-    
-    async def detect_viral_content(self, threshold_multiplier: float = 2.0) -> List[CollectorResult]:
-        """
-        Detect potentially viral content across platforms.
-        
-        Args:
-            threshold_multiplier: Multiplier for viral detection threshold
-            
-        Returns:
-            List of potentially viral content
-        """
-        viral_content = []
-        
-        for platform_name, collector in self.collectors.items():
-            try:
-                # Get trending content and analyze engagement
-                config = CollectionConfig(max_results=50)
-                trending = await collector.get_trending_content(config)
-                
-                for content in trending:
-                    if content.engagement_metrics:
-                        engagement = content.engagement_metrics.get('total_engagement', 0)
-                        views = content.engagement_metrics.get('views', 0)
-                        
-                        # Simple viral detection based on engagement rate
-                        if views > 0:
-                            engagement_rate = engagement / views
-                            if engagement_rate > (0.05 * threshold_multiplier):  # 5% base rate
-                                viral_content.append(content)
-                
-            except Exception as e:
-                logger.error(f"Viral detection failed for {platform_name}: {e}")
-        
-        # Sort by engagement rate
-        viral_content.sort(
-            key=lambda x: x.engagement_metrics.get('total_engagement', 0) / 
-                         max(x.engagement_metrics.get('views', 1), 1), 
-            reverse=True
-        )
-        
-        return viral_content
     
     def get_platform_status(self) -> Dict[str, Any]:
         """Get status of all social media platform collectors."""

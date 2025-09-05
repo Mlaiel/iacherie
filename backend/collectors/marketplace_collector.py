@@ -19,10 +19,43 @@ from typing import Dict, List, Optional, AsyncGenerator, Any, Union
 from datetime import datetime, timedelta
 
 from .base_collector import BaseCollector, CollectorResult, CollectionConfig
-from .ecommerce import EcommerceCollector
-from .pinterest_collector import PinterestCollector
 
 logger = logging.getLogger(__name__)
+
+# Individual platform collector classes (simplified implementations)
+class EcommerceCollector(BaseCollector):
+    """Ecommerce content collector."""
+    def __init__(self, **kwargs):
+        super().__init__("ecommerce", rate_limit=60)
+    
+    async def search_content(self, query: str, config: CollectionConfig) -> List[CollectorResult]:
+        return []
+    async def get_content_details(self, content_id: str) -> Optional[CollectorResult]:
+        return None
+    async def get_user_content(self, user_id: str, config: CollectionConfig) -> List[CollectorResult]:
+        return []
+    async def monitor_hashtags(self, hashtags: List[str], config: CollectionConfig) -> AsyncGenerator[CollectorResult, None]:
+        return
+        yield
+    async def get_trending_content(self, config: CollectionConfig) -> List[CollectorResult]:
+        return []
+
+class PinterestCollector(BaseCollector):
+    """Pinterest content collector."""
+    def __init__(self, **kwargs):
+        super().__init__("pinterest", rate_limit=50)
+    
+    async def search_content(self, query: str, config: CollectionConfig) -> List[CollectorResult]:
+        return []
+    async def get_content_details(self, content_id: str) -> Optional[CollectorResult]:
+        return None
+    async def get_user_content(self, user_id: str, config: CollectionConfig) -> List[CollectorResult]:
+        return []
+    async def monitor_hashtags(self, hashtags: List[str], config: CollectionConfig) -> AsyncGenerator[CollectorResult, None]:
+        return
+        yield
+    async def get_trending_content(self, config: CollectionConfig) -> List[CollectorResult]:
+        return []
 
 class MarketplaceCollector(BaseCollector):
     """

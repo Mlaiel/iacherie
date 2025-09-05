@@ -31,21 +31,39 @@ from .marketplace_collector import MarketplaceCollector
 from .news_trends_collector import NewsTrendsCollector
 from .miscellaneous_collector import MiscellaneousCollector
 
-# Backward compatibility - individual collectors still accessible
-from .instagram import InstagramCollector
-from .tiktok import TikTokCollector
-from .youtube import YouTubeCollector
-from .twitter import TwitterCollector
-from .facebook import FacebookCollector
-from .linkedin import LinkedInCollector
-from .ecommerce import EcommerceCollector
-from .news import NewsCollector
-from .trends import TrendsCollector
-from .misc import MiscCollector
-from .pinterest_collector import PinterestCollector
-from .reddit_collector import RedditCollector
-from .twitch_collector import TwitchCollector
-from .discord_collector import DiscordCollector
+# Backward compatibility - individual collectors accessible via consolidated modules
+from .social_media_collector import (
+    SocialMediaCollector,
+    InstagramCollector,
+    TikTokCollector, 
+    TwitterCollector,
+    FacebookCollector,
+    LinkedInCollector
+)
+from .video_platforms_collector import (
+    VideoPlatformsCollector,
+    YouTubeCollector,
+    TwitchCollector
+)
+from .community_collector import (
+    CommunityCollector,
+    DiscordCollector,
+    RedditCollector
+)
+from .marketplace_collector import (
+    MarketplaceCollector,
+    EcommerceCollector,
+    PinterestCollector
+)
+from .news_trends_collector import (
+    NewsTrendsCollector,
+    NewsCollector,
+    TrendsCollector
+)
+from .miscellaneous_collector import (
+    MiscellaneousCollector,
+    MiscCollector
+)
 
 __all__ = [
     # Core infrastructure

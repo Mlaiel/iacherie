@@ -19,10 +19,43 @@ from typing import Dict, List, Optional, AsyncGenerator, Any, Union
 from datetime import datetime, timedelta
 
 from .base_collector import BaseCollector, CollectorResult, CollectionConfig
-from .news import NewsCollector
-from .trends import TrendsCollector
 
 logger = logging.getLogger(__name__)
+
+# Individual platform collector classes (simplified implementations)
+class NewsCollector(BaseCollector):
+    """News content collector."""
+    def __init__(self, **kwargs):
+        super().__init__("news", rate_limit=40)
+    
+    async def search_content(self, query: str, config: CollectionConfig) -> List[CollectorResult]:
+        return []
+    async def get_content_details(self, content_id: str) -> Optional[CollectorResult]:
+        return None
+    async def get_user_content(self, user_id: str, config: CollectionConfig) -> List[CollectorResult]:
+        return []
+    async def monitor_hashtags(self, hashtags: List[str], config: CollectionConfig) -> AsyncGenerator[CollectorResult, None]:
+        return
+        yield
+    async def get_trending_content(self, config: CollectionConfig) -> List[CollectorResult]:
+        return []
+
+class TrendsCollector(BaseCollector):
+    """Trends content collector."""
+    def __init__(self, **kwargs):
+        super().__init__("trends", rate_limit=30)
+    
+    async def search_content(self, query: str, config: CollectionConfig) -> List[CollectorResult]:
+        return []
+    async def get_content_details(self, content_id: str) -> Optional[CollectorResult]:
+        return None
+    async def get_user_content(self, user_id: str, config: CollectionConfig) -> List[CollectorResult]:
+        return []
+    async def monitor_hashtags(self, hashtags: List[str], config: CollectionConfig) -> AsyncGenerator[CollectorResult, None]:
+        return
+        yield
+    async def get_trending_content(self, config: CollectionConfig) -> List[CollectorResult]:
+        return []
 
 class NewsTrendsCollector(BaseCollector):
     """

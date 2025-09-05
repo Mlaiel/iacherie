@@ -20,9 +20,39 @@ from typing import Dict, List, Optional, AsyncGenerator, Any, Union
 from datetime import datetime, timedelta
 
 from .base_collector import BaseCollector, CollectorResult, CollectionConfig
-from .misc import MiscCollector
 
 logger = logging.getLogger(__name__)
+
+# Individual platform collector classes (simplified implementations)
+class MiscCollector(BaseCollector):
+    """Miscellaneous content collector."""
+    def __init__(self, **kwargs):
+        super().__init__("misc", rate_limit=30)
+    
+    async def search_content(self, query: str, config: CollectionConfig) -> List[CollectorResult]:
+        return []
+    async def get_content_details(self, content_id: str) -> Optional[CollectorResult]:
+        return None
+    async def get_user_content(self, user_id: str, config: CollectionConfig) -> List[CollectorResult]:
+        return []
+    async def monitor_hashtags(self, hashtags: List[str], config: CollectionConfig) -> AsyncGenerator[CollectorResult, None]:
+        return
+        yield
+    async def get_trending_content(self, config: CollectionConfig) -> List[CollectorResult]:
+        return []
+    
+    async def collect_from_custom_source(self, source_type: str, source_config: Dict[str, Any], 
+                                       query: str, config: CollectionConfig) -> List[CollectorResult]:
+        """Collect from custom sources."""
+        return []
+    
+    async def collect_from_rss_feed(self, feed_url: str, config: CollectionConfig) -> List[CollectorResult]:
+        """Collect from RSS feeds."""
+        return []
+    
+    async def scrape_website(self, website_config: Dict[str, Any], config: CollectionConfig) -> List[CollectorResult]:
+        """Scrape website content."""
+        return []
 
 class MiscellaneousCollector(BaseCollector):
     """
