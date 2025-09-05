@@ -7,6 +7,12 @@ import os
 from typing import Optional, List
 from pydantic_settings import BaseSettings
 
+# Import specialized configuration modules
+from .settings import ApplicationSettings, app_settings
+from .database import DatabaseSettings, db_settings, get_database_url, get_database_config
+from .redis import RedisSettings, redis_settings, get_redis_url, get_redis_config
+from .celery import CelerySettings, celery_settings, get_celery_config, create_celery_app
+
 class Settings(BaseSettings):
     # Application Settings
     app_name: str = "Ainflue"
@@ -41,7 +47,12 @@ class Settings(BaseSettings):
     
     # API Settings
     api_v1_prefix: str = "/api/v1"
-    cors_origins: List[str] = ["http://localhost:3000", "http://localhost:3001", "http://localhost:3002", "http://localhost:3003"]
+    cors_origins: str = "http://localhost:3000,http://localhost:3001,http://localhost:3002,http://localhost:3003"
+    
+    @property
+    def cors_origins_list(self) -> List[str]:
+        """Get CORS origins as a list"""
+        return [origin.strip() for origin in self.cors_origins.split(",")]
     
     # Monitoring Settings
     sentry_dsn: Optional[str] = None
@@ -71,6 +82,7 @@ class Settings(BaseSettings):
     
     class Config:
         env_file = ".env"
+        extra = "allow"
 
 # Global settings instance
 settings = Settings()
@@ -81,11 +93,20 @@ SECRET_KEY = settings.secret_key
 DEBUG = settings.debug
 ENVIRONMENT = settings.environment
 API_V1_PREFIX = settings.api_v1_prefix
-CORS_ORIGINS = settings.cors_origins
+CORS_ORIGINS = settings.cors_origins_list
 
 __all__ = [
+    # Main settings
     "settings",
     "Settings",
+    
+    # Specialized configuration classes and instances
+    "ApplicationSettings", "app_settings",
+    "DatabaseSettings", "db_settings", "get_database_url", "get_database_config",
+    "RedisSettings", "redis_settings", "get_redis_url", "get_redis_config", 
+    "CelerySettings", "celery_settings", "get_celery_config", "create_celery_app",
+    
+    # Backwards compatibility exports
     "DATABASE_URL",
     "SECRET_KEY", 
     "DEBUG",
