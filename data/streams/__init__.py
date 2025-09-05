@@ -4,6 +4,24 @@
 Professional real-time data streaming layer for multi-format content processing,
 protection monitoring, and revenue tracking workflows.
 
+⚠️ ARCHITECTURE CONSOLIDATION NOTICE ⚠️
+This module has been consolidated from 16 files to 12 files to meet enterprise
+architecture constraints while maintaining full functionality and backward compatibility.
+
+CONSOLIDATED ARCHITECTURE (12 files):
+1. __init__.py - Module exports (THIS FILE)
+2. streaming_engine.py - Core streaming engine (consolidated from manager.py + processor.py + scheduler.py)
+3. events_monitoring.py - Events and monitoring hub (consolidated from events.py + monitoring.py)
+4. platform_revenue.py - Platform integration and revenue tracking (consolidated from platform.py + revenue.py)
+5. data_flow_manager.py - Data flow orchestration (consolidated from buffer.py + queue.py + connector.py)
+6. analytics.py - Analytics streaming (preserved as standalone)
+7. index.py - Registry and utilities (preserved as standalone)
+8. README.md - English documentation
+9. README.de.md - German documentation
+10. README.fr.md - French documentation
+11. README.ar.md - Arabic documentation (newly added)
+12. [Space available for future extensions]
+
 Features:
 - Real-time content streaming and processing
 - Live protection monitoring and alerts
@@ -23,20 +41,105 @@ without explicit written permission from Fahed Mlaiel is strictly prohibited.
 Violations will be prosecuted under German and international copyright law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""# Import all core components
-from .manager import DataStreamManager, StreamType, StreamStatus, StreamEvent, StreamMetrics
-from .processor import RealTimeProcessor, ProcessingJob, ProcessingPriority, ProcessingStage, ProcessingMetrics, ProcessingResult, ContentFormat
-from .events import EventStreamer
-from .monitoring import StreamMonitor
-from .revenue import RevenueStreamer
-from .platform import PlatformStreamer
-from .analytics import StreamAnalytics
-from .buffer import StreamBuffer, BufferConfig, BufferType, CompressionType, EvictionPolicy
-from .scheduler import StreamScheduler
-from .connector import StreamConnector
-from .queue import StreamQueue
+"""
 
-# Import index module for registry and utilities
+# ============================================================================
+# CONSOLIDATED MODULES - NEW ARCHITECTURE
+# ============================================================================
+
+# Core streaming engine (consolidated from manager.py + processor.py + scheduler.py)
+from .streaming_engine import (
+    StreamingEngine,
+    # Legacy compatibility exports
+    DataStreamManager,
+    RealTimeProcessor,
+    StreamScheduler,
+    # Enums and types
+    StreamType,
+    StreamStatus,
+    ProcessingPriority,
+    ProcessingStage,
+    ContentFormat,
+    TaskPriority,
+    TaskStatus,
+    # Data classes
+    StreamEvent,
+    StreamMetrics,
+    ProcessingJob,
+    ProcessingResult,
+    ProcessingMetrics,
+    ScheduledTask
+)
+
+# Events and monitoring hub (consolidated from events.py + monitoring.py)
+from .events_monitoring import (
+    EventsMonitoringHub,
+    # Legacy compatibility exports
+    EventStreamer,
+    StreamMonitor,
+    # Enums and types
+    EventType,
+    EventPriority,
+    EventStatus,
+    AlertSeverity,
+    MonitoringMetric,
+    HealthStatus,
+    # Data classes
+    Event,
+    EventHandler,
+    MetricSample,
+    Alert,
+    HealthCheck
+)
+
+# Platform integration and revenue tracking (consolidated from platform.py + revenue.py)
+from .platform_revenue import (
+    PlatformRevenueIntegration,
+    # Legacy compatibility exports
+    PlatformStreamer,
+    RevenueStreamer,
+    # Enums and types
+    PlatformType,
+    SyncMode,
+    PlatformStatus,
+    RevenueSource,
+    PaymentStatus,
+    CurrencyType,
+    # Data classes
+    PlatformConnection,
+    PlatformData,
+    RevenueTransaction,
+    RevenueAnalytics,
+    MonetizationGoal
+)
+
+# Data flow orchestration (consolidated from buffer.py + queue.py + connector.py)
+from .data_flow_manager import (
+    DataFlowManager,
+    # Legacy compatibility exports
+    StreamBuffer,
+    StreamQueue,
+    StreamConnector,
+    # Base classes
+    BaseConnector,
+    # Enums and types
+    BufferType,
+    CompressionType,
+    EvictionPolicy,
+    QueuePriority,
+    MessageStatus,
+    ConnectorType,
+    ConnectionStatus,
+    # Data classes
+    BufferConfig,
+    BufferItem,
+    QueueMessage,
+    ConnectionConfig,
+    Connection
+)
+
+# Preserved standalone modules
+from .analytics import StreamAnalytics
 from .index import (
     streams_registry,
     StreamsRegistry,
@@ -66,44 +169,129 @@ __team_specialties__ = [
 ]
 
 __all__ = [
-    # Core Components
-    "DataStreamManager",
-    "RealTimeProcessor", 
-    "EventStreamer",
+    # ============================================================================
+    # CONSOLIDATED MODULES - NEW ARCHITECTURE
+    # ============================================================================
     
-    # Monitoring & Analytics
+    # Core streaming engine (consolidated functionality)
+    "StreamingEngine",
+    
+    # Events and monitoring hub (consolidated functionality)
+    "EventsMonitoringHub",
+    
+    # Platform revenue integration (consolidated functionality)
+    "PlatformRevenueIntegration",
+    
+    # Data flow manager (consolidated functionality)
+    "DataFlowManager",
+    
+    # ============================================================================
+    # LEGACY COMPATIBILITY EXPORTS (BACKWARD COMPATIBILITY)
+    # ============================================================================
+    
+    # Legacy stream management exports
+    "DataStreamManager",
+    "RealTimeProcessor",
+    "StreamScheduler",
+    
+    # Legacy events and monitoring exports
+    "EventStreamer",
     "StreamMonitor",
+    
+    # Legacy platform and revenue exports
+    "PlatformStreamer",
+    "RevenueStreamer",
+    
+    # Legacy data flow exports
+    "StreamBuffer",
+    "StreamQueue",
+    "StreamConnector",
+    
+    # ============================================================================
+    # PRESERVED STANDALONE MODULES
+    # ============================================================================
+    
+    # Analytics (preserved as standalone)
     "StreamAnalytics",
     
-    # Revenue & Platform Integration
-    "RevenueStreamer",
-    "PlatformStreamer",
+    # ============================================================================
+    # ENUMS AND TYPES
+    # ============================================================================
     
-    # Infrastructure
-    "StreamBuffer",
-    "StreamScheduler",
-    "StreamConnector",
-    "StreamQueue",
-    
-    # Enums and Types
+    # Core streaming types
     "StreamType",
     "StreamStatus",
     "ProcessingPriority",
     "ProcessingStage",
     "ContentFormat",
+    "TaskPriority",
+    "TaskStatus",
+    
+    # Events and monitoring types
+    "EventType",
+    "EventPriority",
+    "EventStatus",
+    "AlertSeverity",
+    "MonitoringMetric",
+    "HealthStatus",
+    
+    # Platform and revenue types
+    "PlatformType",
+    "SyncMode",
+    "PlatformStatus",
+    "RevenueSource",
+    "PaymentStatus",
+    "CurrencyType",
+    
+    # Data flow types
     "BufferType",
     "CompressionType",
     "EvictionPolicy",
+    "QueuePriority",
+    "MessageStatus",
+    "ConnectorType",
+    "ConnectionStatus",
     
-    # Data Classes
+    # ============================================================================
+    # DATA CLASSES
+    # ============================================================================
+    
+    # Core streaming data classes
     "StreamEvent",
     "StreamMetrics",
     "ProcessingJob",
-    "ProcessingMetrics",
     "ProcessingResult",
-    "BufferConfig",
+    "ProcessingMetrics",
+    "ScheduledTask",
     
-    # Registry & Utilities
+    # Events and monitoring data classes
+    "Event",
+    "EventHandler",
+    "MetricSample",
+    "Alert",
+    "HealthCheck",
+    
+    # Platform and revenue data classes
+    "PlatformConnection",
+    "PlatformData",
+    "RevenueTransaction",
+    "RevenueAnalytics",
+    "MonetizationGoal",
+    
+    # Data flow data classes
+    "BufferConfig",
+    "BufferItem",
+    "QueueMessage",
+    "ConnectionConfig",
+    "Connection",
+    
+    # Base classes
+    "BaseConnector",
+    
+    # ============================================================================
+    # REGISTRY AND UTILITIES
+    # ============================================================================
+    
     "streams_registry",
     "StreamsRegistry",
     "StreamsModuleConfig",
