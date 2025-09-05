@@ -737,26 +737,24 @@ async def example_usage():
             return result
             
         except Exception as e:
-        try:
-            logger.info(f"Executing alert_handler")
-            
-            # Implementation for alert_handler
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"alert_handler completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"alert_handler failed: {e}")
-            raise
-            return result
-            
-        except Exception as e:
             logger.error(f"example_usage failed: {e}")
             raise
-        print(f"  - {alert.message}")
+
+async def alert_handler():
+    try:
+        logger.info(f"Executing alert_handler")
+        
+        # Implementation for alert_handler
+        # TODO: Add specific business logic here
+        
+        result = None  # Replace with actual implementation
+        
+        logger.info(f"alert_handler completed successfully")
+        return result
+        
+    except Exception as e:
+        logger.error(f"alert_handler failed: {e}")
+        raise
 
 
 if __name__ == "__main__":
