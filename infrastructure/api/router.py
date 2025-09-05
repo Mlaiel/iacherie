@@ -13165,7 +13165,7 @@ import uuid
 # Beispiel: Dummy-Melodie-Generator (ersetzbar durch MusicGen, LSTM, etc.)
 def dummy_melody(seed_notes: List[int], length: int = 16) -> List[int]:
     import random
-    return seed_notes + [random.randint(60, 72) for _ in range(length - len(seed_notes)]
+    return seed_notes + [random.randint(60, 72) for _ in range(length - len(seed_notes))]
 
 class MelodyComposer:
     """

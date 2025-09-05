@@ -225,7 +225,7 @@
       "has_definitions": false,
       "functions_count": 0,
       "classes_count": 0,
-      "error_message": "Syntax error line 13168: closing parenthesis ']' does not match opening parenthesis '('"
+      "error_message": "Syntax error line 13195: closing parenthesis '}' does not match opening parenthesis '(' on line 13190"
     },
     "api/__init__.py": {
       "exists": true,
@@ -252,7 +252,7 @@
       "has_definitions": false,
       "functions_count": 0,
       "classes_count": 0,
-      "error_message": "Syntax error line 76071: positional argument follows keyword argument"
+      "error_message": "Syntax error line 76647: positional argument follows keyword argument"
     },
     "storage/file_storage.py": {
       "exists": true,
@@ -292,12 +292,12 @@
     },
     "storage/mongodb_adapter.py": {
       "exists": true,
-      "syntax_valid": false,
-      "importable": false,
-      "has_definitions": false,
-      "functions_count": 0,
-      "classes_count": 0,
-      "error_message": "Syntax error line 77: expected an indented block after 'except' statement on line 76"
+      "syntax_valid": true,
+      "importable": true,
+      "has_definitions": true,
+      "functions_count": 3,
+      "classes_count": 5,
+      "error_message": null
     }
   },
   "directories": {
@@ -359,7 +359,7 @@
       "all_files_importable": false,
       "structure_coherent": true,
       "errors": [
-        "router.py: Syntax error line 13168: closing parenthesis ']' does not match opening parenthesis '('"
+        "router.py: Syntax error line 13195: closing parenthesis '}' does not match opening parenthesis '(' on line 13190"
       ],
       "importable_files_count": 1,
       "total_files_count": 2
@@ -377,7 +377,7 @@
       "all_files_importable": false,
       "structure_coherent": true,
       "errors": [
-        "auth.py: Syntax error line 76071: positional argument follows keyword argument"
+        "auth.py: Syntax error line 76647: positional argument follows keyword argument"
       ],
       "importable_files_count": 1,
       "total_files_count": 2
@@ -395,12 +395,10 @@
       "subdirectories": [
         "__pycache__"
       ],
-      "all_files_importable": false,
+      "all_files_importable": true,
       "structure_coherent": true,
-      "errors": [
-        "mongodb_adapter.py: Syntax error line 77: expected an indented block after 'except' statement on line 76"
-      ],
-      "importable_files_count": 4,
+      "errors": [],
+      "importable_files_count": 5,
       "total_files_count": 5
     },
     "__pycache__": {
@@ -484,11 +482,11 @@
   },
   "summary": {
     "total_files": 33,
-    "valid_files": 30,
-    "importable_files": 25,
-    "files_with_definitions": 23,
+    "valid_files": 31,
+    "importable_files": 26,
+    "files_with_definitions": 24,
     "directories_with_init": 5,
     "total_directories": 11,
-    "success_rate": 75.75757575757575
+    "success_rate": 78.78787878787878
   }
 }

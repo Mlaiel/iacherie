@@ -76066,8 +76066,8 @@ class TestEncryptionPerformance:
         
         stress_results = await PerformanceTestUtils.stress_test_function(
             encrypt_sample,
-            concurrent_calls=20,
-            data_samples[0]
+            data_samples[0],
+            concurrent_calls=20
         )
         
         assert stress_results["success_rate"] >= 0.95
