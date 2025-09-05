@@ -24,55 +24,40 @@ Project Team Specializations:
 LEGAL NOTICE: Any attempt to steal, copy, reverse engineer, or use this intellectual 
 property without explicit written authorization from Fahed Mlaiel (mlaiel@live.de) 
 will result in immediate legal action under German and international copyright law.
-"""# Core Monetization Components
-from .revenue_calculator import (
-    RevenueCalculator, RevenueMetrics, RevenueProjection, RevenueReport,
-    PlatformType, RevenueType, Currency
+"""# Consolidated Enterprise Monetization Components
+from .enterprise_revenue_intelligence_engine import (
+    EnterpriseRevenueIntelligenceEngine, RevenueCalculator, AnalyticsEngine, OptimizationEngine,
+    PlatformType, RevenueType, Currency, AnalyticsType, MetricType, TimeGranularity,
+    OptimizationType, OptimizationPriority, OptimizationStatus,
+    RevenueMetrics, RevenueProjection, RevenueReport,
+    AnalyticsMetric, TimeSeriesData, PerformanceReport,
+    OptimizationRecommendation, ABTestConfiguration, ABTestResult, OptimizationStrategy
 )
 
-from .payment_processor import (
-    PaymentProcessor, PaymentRequest, PaymentResult, PayoutConfiguration,
-    PaymentGateway, PaymentStatus, PayoutFrequency
+from .payment_distribution_processor import (
+    PaymentDistributionProcessor, PaymentProcessor, DistributionEngine,
+    PaymentGateway, PaymentStatus, PayoutFrequency, DistributionType, StakeholderType, DistributionStatus,
+    PaymentRequest, PaymentResult, PayoutConfiguration,
+    Stakeholder, DistributionRule, DistributionCalculation, DistributionResult
 )
 
-from .distribution_engine import (
-    DistributionEngine, DistributionRule, DistributionCalculation,
-    DistributionResult, StakeholderType
+from .platform_licensing_integration import (
+    PlatformLicensingIntegration, PlatformAPIs, LicensingEngine,
+    ContentType, APIStatus, DataType, LicenseType, LicenseStatus, UsageType,
+    PlatformCredentials, APIResponse, RevenueData, AnalyticsData,
+    LicenseTerms, LicenseAgreement, RoyaltyPayment, LicenseReport
+)
+
+from .compliance_reporting_engine import (
+    ComplianceReportingEngine, ComplianceManager, ReportingEngine,
+    ComplianceType, ComplianceStatus, LegalJurisdiction, ReportType, ReportFormat, TimeInterval,
+    ComplianceRequirement, ComplianceCheck, DMCANotice, TaxReport, ComplianceAudit,
+    ReportConfiguration, ReportSection, RevenueReport, ReportTemplate
 )
 
 from .monetization_manager import (
     MonetizationManager, MonetizationConfig, MonetizationDashboard,
     MonetizationInsights, MonetizationStatus, OptimizationMode
-)
-
-from .platform_apis import (
-    PlatformAPIs, PlatformCredentials, APIResponse, RevenueData,
-    AnalyticsData, APIStatus, DataType
-)
-
-from .analytics_engine import (
-    AnalyticsEngine, AnalyticsMetric, TimeSeriesData, PerformanceReport,
-    AnalyticsType, MetricType, TimeGranularity
-)
-
-from .optimization_engine import (
-    OptimizationEngine, OptimizationRecommendation, ABTestConfiguration,
-    ABTestResult, OptimizationStrategy, OptimizationType, OptimizationPriority
-)
-
-from .compliance_manager import (
-    ComplianceManager, ComplianceRequirement, ComplianceCheck, DMCANotice,
-    TaxReport, ComplianceAudit, ComplianceType, ComplianceStatus
-)
-
-from .licensing_engine import (
-    LicensingEngine, LicenseAgreement, LicenseType, LicenseTerms,
-    RoyaltyCalculation, LicenseStatus
-)
-
-from .reporting_engine import (
-    ReportingEngine, ReportConfiguration, RevenueReport, ReportType,
-    ReportFormat, TimeInterval, ReportSection
 )
 
 # Module metadata
@@ -83,53 +68,31 @@ __license__ = "Proprietary - Unauthorized use prohibited"
 
 # Public API exports
 __all__ = [
-    # Core Components
-    "RevenueCalculator",
-    "PaymentProcessor", 
-    "DistributionEngine",
+    # Main Engines
+    "EnterpriseRevenueIntelligenceEngine",
+    "PaymentDistributionProcessor", 
+    "PlatformLicensingIntegration",
+    "ComplianceReportingEngine",
     "MonetizationManager",
-    "PlatformAPIs",
+    
+    # Component Engines
+    "RevenueCalculator",
     "AnalyticsEngine",
     "OptimizationEngine",
-    "ComplianceManager",
+    "PaymentProcessor",
+    "DistributionEngine",
+    "PlatformAPIs",
     "LicensingEngine",
+    "ComplianceManager",
+    "ReportingEngine",
     
-    # Revenue Calculator
+    # Revenue Intelligence
     "RevenueMetrics",
     "RevenueProjection", 
     "RevenueReport",
     "PlatformType",
     "RevenueType",
     "Currency",
-    
-    # Payment Processing
-    "PaymentRequest",
-    "PaymentResult",
-    "PayoutConfiguration", 
-    "PaymentGateway",
-    "PaymentStatus",
-    "PayoutFrequency",
-    
-    # Distribution
-    "DistributionRule",
-    "DistributionCalculation",
-    "DistributionResult",
-    "StakeholderType",
-    
-    # Monetization Management
-    "MonetizationConfig",
-    "MonetizationDashboard",
-    "MonetizationInsights",
-    "MonetizationStatus",
-    "OptimizationMode",
-    
-    # Platform APIs
-    "PlatformCredentials",
-    "APIResponse",
-    "RevenueData",
-    "AnalyticsData", 
-    "APIStatus",
-    "DataType",
     
     # Analytics
     "AnalyticsMetric",
@@ -146,8 +109,40 @@ __all__ = [
     "OptimizationStrategy",
     "OptimizationType",
     "OptimizationPriority",
+    "OptimizationStatus",
     
-    # Compliance
+    # Payment & Distribution
+    "PaymentRequest",
+    "PaymentResult",
+    "PayoutConfiguration", 
+    "PaymentGateway",
+    "PaymentStatus",
+    "PayoutFrequency",
+    "Stakeholder",
+    "DistributionRule",
+    "DistributionCalculation",
+    "DistributionResult",
+    "DistributionType",
+    "StakeholderType",
+    "DistributionStatus",
+    
+    # Platform & Licensing
+    "PlatformCredentials",
+    "APIResponse",
+    "RevenueData",
+    "AnalyticsData", 
+    "APIStatus",
+    "DataType",
+    "ContentType",
+    "LicenseType",
+    "LicenseStatus",
+    "UsageType",
+    "LicenseTerms",
+    "LicenseAgreement",
+    "RoyaltyPayment",
+    "LicenseReport",
+    
+    # Compliance & Reporting
     "ComplianceRequirement",
     "ComplianceCheck",
     "DMCANotice",
@@ -155,22 +150,20 @@ __all__ = [
     "ComplianceAudit",
     "ComplianceType", 
     "ComplianceStatus",
-    
-    # Licensing
-    "LicenseAgreement",
-    "LicenseType",
-    "LicenseTerms",
-    "RoyaltyCalculation",
-    "LicenseStatus",
-    
-    # Reporting
-    "ReportingEngine",
+    "LegalJurisdiction",
     "ReportConfiguration", 
-    "RevenueReport",
+    "ReportSection",
+    "ReportTemplate",
     "ReportType",
     "ReportFormat",
     "TimeInterval",
-    "ReportSection"
+    
+    # Monetization Management
+    "MonetizationConfig",
+    "MonetizationDashboard",
+    "MonetizationInsights",
+    "MonetizationStatus",
+    "OptimizationMode"
 ]
 
 # Module configuration
