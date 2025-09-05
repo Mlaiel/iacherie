@@ -23,7 +23,10 @@ from .processing import (
     VocalSeparator,
     InstrumentSeparator,
     StemExtractor,
-    BackgroundRemover
+    BackgroundRemover,
+    BatchProcessor,
+    RealTimeProcessor,
+    QualityPreservationEngine
 )
 
 # Audio analysis and features
@@ -39,7 +42,9 @@ from .analysis import (
     HarmonicAnalyzer,
     TempoDetector,
     KeyDetector,
-    MoodAnalyzer
+    MoodAnalyzer,
+    MusicIntelligenceEngine,
+    AudioSimilarityEngine
 )
 
 # Audio enhancement algorithms
@@ -51,7 +56,10 @@ from .enhancement import (
     BassEnhancer,
     VocalEnhancer,
     AudioRestorer,
-    QualityEnhancer
+    QualityEnhancer,
+    ProfessionalMasteringSuite,
+    LoudnessLimiter,
+    BroadcastStandardsValidator
 )
 
 # Speech recognition
@@ -60,8 +68,6 @@ from .recognition import (
     LanguageDetector,
     SpeakerIdentifier,
     KeywordSpotter,
-    VoiceActivityDetector,
-    SpeechToText,
     RealTimeRecognizer
 )
 
@@ -85,7 +91,11 @@ from .fingerprinting import (
     SimilarityEngine,
     DuplicateDetector,
     PerceptualHashGenerator,
-    FingerprintMatchingEngine
+    FingerprintMatchingEngine,
+    EnterpriseContentIdentificationSystem,
+    BlockchainRightsManager,
+    RealTimeContentMonitor,
+    RightsManagementDatabase
 )
 
 # Audio compression/codecs
@@ -93,10 +103,7 @@ from .compression import (
     AudioCompressor,
     CodecManager,
     BitrateOptimizer,
-    LosslessCompressor,
-    StreamingCompressor,
-    AdaptiveBitrate,
-    QualityPreserver
+    CompressionSettings
 )
 
 # Real-time audio streaming
@@ -105,9 +112,7 @@ from .streaming import (
     RealTimeAnalyzer,
     StreamingEncoder,
     AdaptiveStreaming,
-    LatencyOptimizer,
-    BufferManager,
-    NetworkAdapter
+    StreamingConfig
 )
 
 # Audio effects and filters
@@ -117,9 +122,6 @@ from .effects import (
     ReverbProcessor,
     ChorusProcessor,
     DistortionProcessor,
-    NoiseReductionProcessor,
-    PitchShifter,
-    TimeStretcher,
     AudioMixer,
     MasteringProcessor
 )
@@ -161,6 +163,9 @@ __all__ = [
     'InstrumentSeparator',
     'StemExtractor',
     'BackgroundRemover',
+    'BatchProcessor',
+    'RealTimeProcessor',
+    'QualityPreservationEngine',
     
     # Analysis
     'SpectralAnalyzer',
@@ -175,6 +180,8 @@ __all__ = [
     'TempoDetector',
     'KeyDetector',
     'MoodAnalyzer',
+    'MusicIntelligenceEngine',
+    'AudioSimilarityEngine',
     
     # Enhancement
     'AudioUpsampler',
@@ -185,13 +192,15 @@ __all__ = [
     'VocalEnhancer',
     'AudioRestorer',
     'QualityEnhancer',
+    'ProfessionalMasteringSuite',
+    'LoudnessLimiter',
+    'BroadcastStandardsValidator',
     
     # Recognition
     'SpeechRecognizer',
     'LanguageDetector',
     'SpeakerIdentifier',
     'KeywordSpotter',
-    'SpeechToText',
     'RealTimeRecognizer',
     
     # Synthesis
@@ -212,24 +221,23 @@ __all__ = [
     'DuplicateDetector',
     'PerceptualHashGenerator',
     'FingerprintMatchingEngine',
+    'EnterpriseContentIdentificationSystem',
+    'BlockchainRightsManager',
+    'RealTimeContentMonitor',
+    'RightsManagementDatabase',
     
     # Compression
     'AudioCompressor',
     'CodecManager',
     'BitrateOptimizer',
-    'LosslessCompressor',
-    'StreamingCompressor',
-    'AdaptiveBitrate',
-    'QualityPreserver',
+    'CompressionSettings',
     
     # Streaming
     'StreamingProcessor',
     'RealTimeAnalyzer',
     'StreamingEncoder',
     'AdaptiveStreaming',
-    'LatencyOptimizer',
-    'BufferManager',
-    'NetworkAdapter',
+    'StreamingConfig',
     
     # Effects
     'EqualizerProcessor',
@@ -237,9 +245,6 @@ __all__ = [
     'ReverbProcessor',
     'ChorusProcessor',
     'DistortionProcessor',
-    'NoiseReductionProcessor',
-    'PitchShifter',
-    'TimeStretcher',
     'AudioMixer',
     'MasteringProcessor',
     
