@@ -469,7 +469,7 @@ class MultiModalFingerprintEngine:
             self.logger.error(f"❌ Erreur recherche violations: {str(e)}")
             return []
     
-    def _get_optimized_methods(
+    async def _get_optimized_methods(
         self,
         creator_type: str,
     ) -> List[str]:

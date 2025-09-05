@@ -369,6 +369,11 @@ Cleanup HTTP session"""
             return similar_content
             
         except Exception as e:
+            logger.error(f"Error in get_similar_content: {e}")
+            raise
+            
+    def _collect_metrics(self, data=None):
+        """Collect metrics for monitoring"""
         try:
                     # Collect metrics
                     metrics = {
