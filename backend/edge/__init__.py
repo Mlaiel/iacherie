@@ -193,4 +193,13 @@ __all__ = [
     "CacheItem",
     "CacheStats",
     "create_edge_cache"
+    
+    # Monitoring module
+    # Note: Individual monitoring components available via backend.edge.monitoring
+    
+    # Network module  
+    # Note: Individual network components available via backend.edge.network
+    
+    # Security module
+    # Note: Individual security components available via backend.edge.security
 ]
