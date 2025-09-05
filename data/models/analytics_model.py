@@ -230,7 +230,7 @@ class AnalyticsModel(Base):
     percentile_rank = Column(Float)  # 0-100 percentile
     
     # Metadata and context
-    metadata = Column(JSON)  # Flexible metadata storage
+    meta_data = Column(JSON)  # Flexible metadata storage
     tags = Column(ARRAY(String))  # Analytics tags
     notes = Column(Text)  # Analysis notes
     context = Column(JSON)  # Additional context

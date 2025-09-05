@@ -665,11 +665,24 @@ Save data to cache"""
                     # Collect metrics
                     metrics = {
                         "timestamp": datetime.utcnow(),
+                    }
+                    
+        except Exception as e:
+            logger.error(f"Error in metrics collection: {e}")
+            
+    def _send_monetization_welcome(self):
+        """Send monetization welcome message"""
         try:
             logger.info(f"Executing _send_monetization_welcome")
             
             # Implementation for _send_monetization_welcome
             # TODO: Add specific business logic here
+            pass
+        except Exception as e:
+            logger.error(f"Error in _send_monetization_welcome: {e}")
+            
+    def _apply_optimization(self):
+        """Apply optimization logic"""
         try:
             logger.info(f"Executing _apply_optimization")
             

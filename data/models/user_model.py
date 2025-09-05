@@ -243,7 +243,7 @@ class UserModel(Base):
     referral_earnings = Column(DECIMAL(10, 4), default=0)
     
     # Metadata and tracking
-    metadata = Column(JSON)  # Flexible metadata storage
+    meta_data = Column(JSON)  # Flexible metadata storage
     tags = Column(ARRAY(String))  # User tags for categorization
     notes = Column(Text)  # Internal notes (admin only)
     source = Column(String(50))  # Registration source

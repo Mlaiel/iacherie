@@ -242,7 +242,7 @@ class ProtectionModel(Base):
     quality_score = Column(Float, default=100.0)  # Detection quality
     
     # Metadata and context
-    metadata = Column(JSON)  # Flexible metadata storage
+    meta_data = Column(JSON)  # Flexible metadata storage
     tags = Column(ARRAY(String))  # Protection tags
     categories = Column(ARRAY(String))  # Violation categories
     priority = Column(String(20), default="normal")  # low, normal, high, urgent

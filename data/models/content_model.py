@@ -94,7 +94,7 @@ class ContentModel(Base):
     channels = Column(Integer)  # audio channels
     
     # Content metadata
-    metadata = Column(JSON)  # Flexible metadata storage
+    meta_data = Column(JSON)  # Flexible metadata storage
     tags = Column(ARRAY(String))  # Content tags
     categories = Column(ARRAY(String))  # Content categories
     language = Column(String(10))  # ISO language code

@@ -715,6 +715,8 @@ class AudioConverter:
         self,
         input_path: str,
         output_path: str,
+    ) -> None:
+        """Initialize audio transformer"""
         try:
             logger.info(f"Executing __init__")
             
@@ -729,6 +731,12 @@ class AudioConverter:
         except Exception as e:
             logger.error(f"__init__ failed: {e}")
             raise
+            
+    async def convert_audio(
+        self,
+        input_path: str,
+        output_path: str,
+        format: str = "wav",
         quality: str = "high"
     ) -> bool:
         """Convert audio file."""
