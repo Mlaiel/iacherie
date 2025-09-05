@@ -797,18 +797,20 @@ class SimilaritySearcher:
 
 # Import and expose all main classes and functions
 try:
-    from .faiss_backend import FAISSBackend, FAISSIndexManager
+    from .vector_backends import (
+        FAISSBackend, FAISSIndexManager, 
+        ChromaDBBackend, ChromaCollectionManager,
+        VectorBackendFactory, VectorBackend, VectorSearchResult
+    )
 except ImportError:
     FAISSBackend = None
     FAISSIndexManager = None
-    logger.warning("FAISS backend components not available")
-
-try:
-    from .chroma_backend import ChromaBackend, ChromaCollectionManager  
-except ImportError:
-    ChromaBackend = None
+    ChromaDBBackend = None
     ChromaCollectionManager = None
-    logger.warning("ChromaDB backend components not available")
+    VectorBackendFactory = None
+    VectorBackend = None
+    VectorSearchResult = None
+    logger.warning("Vector backend components not available")
 
 try:
     from .embedding_engine import (
@@ -827,31 +829,65 @@ except ImportError:
     MultiModalEmbeddingEngine = None
 
 try:
-    from .similarity_search import (
+    from .search_operations import (
         SimilaritySearchEngine, 
-        DuplicateDetectionEngine, 
-        CollaborationMatchingEngine,
-        AdvancedSimilaritySearch
+        VectorDatabaseOperations,
+        SearchType, RankingStrategy, SearchResult,
+        HybridSearchEngine, ContentRecommendationEngine
     )
 except ImportError:
-    logger.warning("Similarity search components not available")
+    logger.warning("Search operations components not available")
     SimilaritySearchEngine = None
-    DuplicateDetectionEngine = None
-    CollaborationMatchingEngine = None
-    AdvancedSimilaritySearch = None
+    VectorDatabaseOperations = None
+    SearchType = None
+    RankingStrategy = None
+    SearchResult = None
+    HybridSearchEngine = None
+    ContentRecommendationEngine = None
 
 try:
-    from .operations import VectorDBOperations, VectorDBMonitor
-except ImportError:
-    logger.warning("Operations components not available")
-    VectorDBOperations = None
-    VectorDBMonitor = None
-
-try:
-    from .index import VectorDatabaseManager
+    from .vector_index import VectorDatabaseManager, VectorIndexManager
 except ImportError:
     logger.warning("Index manager component not available")
     VectorDatabaseManager = None
+    VectorIndexManager = None
+
+try:
+    from .vector_config import (
+        VectorDBConfig, VectorBackendConfig, 
+        ConfigManager, BackendType, ContentType,
+        EmbeddingConfig, FAISSConfig, ChromaConfig,
+        SearchConfig, PerformanceConfig, SecurityConfig
+    )
+except ImportError:
+    logger.warning("Configuration components not available")
+    VectorDBConfig = None
+    VectorBackendConfig = None
+    ConfigManager = None
+    BackendType = None
+    ContentType = None
+    EmbeddingConfig = None
+    FAISSConfig = None
+    ChromaConfig = None
+    SearchConfig = None
+    PerformanceConfig = None
+    SecurityConfig = None
+
+try:
+    from .vector_utils import (
+        VectorValidator, DataProcessor, PerformanceMonitor,
+        FileManager, ContentProcessor, ConfigurationManager,
+        ExampleUseCases
+    )
+except ImportError:
+    logger.warning("Utility components not available")
+    VectorValidator = None
+    DataProcessor = None
+    PerformanceMonitor = None
+    FileManager = None
+    ContentProcessor = None
+    ConfigurationManager = None
+    ExampleUseCases = None
 
 # Module exports
 __all__ = [
@@ -862,12 +898,14 @@ __all__ = [
     'VectorIndex',
     'VectorBackend',
     'VectorDatabaseManager',
+    'VectorIndexManager',
     
-    # Backend implementations
+    # Backend implementations  
     'FAISSBackend',
     'FAISSIndexManager', 
-    'ChromaBackend',
+    'ChromaDBBackend',
     'ChromaCollectionManager',
+    'VectorBackendFactory',
     
     # Embedding engines
     'TextEmbeddingGenerator',
@@ -876,18 +914,22 @@ __all__ = [
     'VideoEmbeddingGenerator',
     'MultiModalEmbeddingEngine',
     
-    # Similarity search engines
+    # Search and operations
     'SimilaritySearchEngine',
-    'DuplicateDetectionEngine',
-    'CollaborationMatchingEngine', 
-    'AdvancedSimilaritySearch',
-    
-    # Operations and monitoring
-    'VectorDBOperations',
-    'VectorDBMonitor',
+    'VectorDatabaseOperations',
+    'SearchType', 'RankingStrategy', 'SearchResult',
+    'HybridSearchEngine', 'ContentRecommendationEngine',
     
     # Configuration classes
-    'VectorBackendConfig'
+    'VectorDBConfig', 'VectorBackendConfig', 
+    'ConfigManager', 'BackendType', 'ContentType',
+    'EmbeddingConfig', 'FAISSConfig', 'ChromaConfig',
+    'SearchConfig', 'PerformanceConfig', 'SecurityConfig',
+    
+    # Utilities
+    'VectorValidator', 'DataProcessor', 'PerformanceMonitor',
+    'FileManager', 'ContentProcessor', 'ConfigurationManager',
+    'ExampleUseCases'
 ]
 
 # Module version and metadata
