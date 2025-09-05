@@ -67,6 +67,144 @@ from .locale_manager import (
     NumberFormat
 )
 
+from .language_models import (
+    LanguageModelEngine,
+    ModelRequest,
+    ModelResult,
+    SimilarityRequest,
+    SimilarityResult,
+    ModelType,
+    TaskType,
+    ModelLanguageSupport
+)
+
+from .translation_quality import (
+    TranslationQualityEngine,
+    QualityRequest,
+    QualityResult,
+    HumanFeedback,
+    QualityImprovement,
+    QualityMetric,
+    QualityLevel,
+    ErrorType,
+    ErrorAnalysis,
+    ImprovementArea
+)
+
+from .content_localizer import (
+    ContentLocalizer,
+    ContentLocalizationRequest,
+    LocalizationResult,
+    MediaElement,
+    SEOOptimization,
+    ContentAdaptation,
+    ContentType,
+    LocalizationLevel,
+    MediaType,
+    SEOStrategy,
+    AdaptationAspect
+)
+
+from .language_analytics import (
+    LanguageAnalyticsEngine,
+    AnalyticsRequest,
+    AnalyticsResult,
+    LanguageUsageData,
+    TranslationPerformanceData,
+    CulturalEngagementData,
+    MarketPenetrationData,
+    ROIAnalysisData,
+    UsageEvent,
+    LanguageInsight,
+    AnalyticsMetric,
+    TimeGranularity,
+    MarketSegment,
+    EngagementType
+)
+
+from .voice_localization import (
+    VoiceLocalizationEngine,
+    VoiceRequest,
+    VoiceResult,
+    VoiceCloningRequest,
+    AudioLocalizationRequest,
+    AudioLocalizationResult,
+    PronunciationGuide,
+    VoiceProfile,
+    VoiceGender,
+    VoiceAge,
+    VoiceStyle,
+    AudioFormat,
+    SpeechRate,
+    VoiceProvider,
+    AccentType
+)
+
+from .accessibility_languages import (
+    AccessibilityLanguageEngine,
+    AccessibilityRequest,
+    AccessibilityResult,
+    ScreenReaderOptimization,
+    SignLanguageTranslation,
+    CognitiveAdaptation,
+    VisualAccessibilityInfo,
+    AudioAccessibilityInfo,
+    AccessibilityGuideline,
+    AccessibilityLevel,
+    DisabilityType,
+    ScreenReaderType,
+    SignLanguage,
+    CognitiveSupport,
+    AccessibilityFeature
+)
+
+from .language_cache import (
+    LanguageCacheEngine,
+    CacheKey,
+    CacheEntry,
+    CacheRequest,
+    CacheResult,
+    CacheStats,
+    CacheConfig,
+    CacheLevel,
+    CacheStrategy,
+    CacheOperation,
+    CacheContentType
+)
+
+from .translation_workflows import (
+    TranslationWorkflowEngine,
+    TranslationJob,
+    TranslatorProfile,
+    WorkflowStep,
+    TranslationVersion,
+    ReviewFeedback,
+    WorkflowTemplate,
+    CollaborationSession,
+    WorkflowStatus,
+    WorkflowType,
+    TranslatorTier,
+    ReviewType,
+    PriorityLevel
+)
+
+from .language_apis import (
+    LanguageAPIManager,
+    APICredentials,
+    APIQuota,
+    RateLimit,
+    APIRequest,
+    APIResponse,
+    ProviderConfig,
+    APIStats,
+    CostOptimization,
+    APIProvider,
+    APIServiceType,
+    RateLimitStrategy,
+    APIStatus,
+    CostOptimizationStrategy
+)
+
 # Export all public classes and functions
 __all__ = [
     # Translation Engine
@@ -109,7 +247,136 @@ __all__ = [
     "LocaleCategory",
     "DateFormat",
     "TimeFormat",
-    "NumberFormat"
+    "NumberFormat",
+    
+    # Language Models Engine
+    "LanguageModelEngine",
+    "ModelRequest",
+    "ModelResult", 
+    "SimilarityRequest",
+    "SimilarityResult",
+    "ModelType",
+    "TaskType",
+    "ModelLanguageSupport",
+    
+    # Translation Quality Engine
+    "TranslationQualityEngine",
+    "QualityRequest",
+    "QualityResult",
+    "HumanFeedback",
+    "QualityImprovement",
+    "QualityMetric",
+    "QualityLevel",
+    "ErrorType",
+    "ErrorAnalysis",
+    "ImprovementArea",
+    
+    # Content Localizer
+    "ContentLocalizer",
+    "ContentLocalizationRequest",
+    "LocalizationResult",
+    "MediaElement",
+    "SEOOptimization", 
+    "ContentAdaptation",
+    "ContentType",
+    "LocalizationLevel",
+    "MediaType",
+    "SEOStrategy",
+    "AdaptationAspect",
+    
+    # Language Analytics Engine
+    "LanguageAnalyticsEngine",
+    "AnalyticsRequest",
+    "AnalyticsResult",
+    "LanguageUsageData",
+    "TranslationPerformanceData", 
+    "CulturalEngagementData",
+    "MarketPenetrationData",
+    "ROIAnalysisData",
+    "UsageEvent",
+    "LanguageInsight",
+    "AnalyticsMetric",
+    "TimeGranularity",
+    "MarketSegment",
+    "EngagementType",
+    
+    # Voice Localization Engine
+    "VoiceLocalizationEngine",
+    "VoiceRequest",
+    "VoiceResult",
+    "VoiceCloningRequest",
+    "AudioLocalizationRequest",
+    "AudioLocalizationResult",
+    "PronunciationGuide",
+    "VoiceProfile",
+    "VoiceGender",
+    "VoiceAge",
+    "VoiceStyle",
+    "AudioFormat",
+    "SpeechRate",
+    "VoiceProvider",
+    "AccentType",
+    
+    # Accessibility Languages Engine
+    "AccessibilityLanguageEngine",
+    "AccessibilityRequest",
+    "AccessibilityResult",
+    "ScreenReaderOptimization",
+    "SignLanguageTranslation",
+    "CognitiveAdaptation",
+    "VisualAccessibilityInfo",
+    "AudioAccessibilityInfo",
+    "AccessibilityGuideline",
+    "AccessibilityLevel",
+    "DisabilityType",
+    "ScreenReaderType",
+    "SignLanguage",
+    "CognitiveSupport",
+    "AccessibilityFeature",
+    
+    # Language Cache Engine
+    "LanguageCacheEngine",
+    "CacheKey",
+    "CacheEntry", 
+    "CacheRequest",
+    "CacheResult",
+    "CacheStats",
+    "CacheConfig",
+    "CacheLevel",
+    "CacheStrategy",
+    "CacheOperation",
+    "CacheContentType",
+    
+    # Translation Workflows Engine
+    "TranslationWorkflowEngine",
+    "TranslationJob",
+    "TranslatorProfile",
+    "WorkflowStep",
+    "TranslationVersion",
+    "ReviewFeedback",
+    "WorkflowTemplate",
+    "CollaborationSession",
+    "WorkflowStatus",
+    "WorkflowType",
+    "TranslatorTier",
+    "ReviewType",
+    "PriorityLevel",
+    
+    # Language APIs Manager
+    "LanguageAPIManager",
+    "APICredentials",
+    "APIQuota",
+    "RateLimit",
+    "APIRequest",
+    "APIResponse",
+    "ProviderConfig",
+    "APIStats",
+    "CostOptimization",
+    "APIProvider",
+    "APIServiceType",
+    "RateLimitStrategy",
+    "APIStatus",
+    "CostOptimizationStrategy"
 ]
 
 # Module metadata
@@ -166,6 +433,21 @@ class LanguageServiceManager:
         self.cultural_adapter = CulturalAdapter(self.config.get("cultural_adaptation"))
         self.rtl_processor = RTLProcessor(self.config.get("rtl_support"))
         self.locale_manager = LocaleManager(self.config.get("locale_management"))
+        
+        # Initialize new Tier 1 critical modules
+        self.language_model_engine = LanguageModelEngine(self.config.get("language_models"))
+        self.translation_quality_engine = TranslationQualityEngine(self.config.get("translation_quality"))
+        self.content_localizer = ContentLocalizer(self.config.get("content_localization"))
+        
+        # Initialize new Tier 2 essential modules
+        self.language_analytics_engine = LanguageAnalyticsEngine(self.config.get("language_analytics"))
+        self.voice_localization_engine = VoiceLocalizationEngine(self.config.get("voice_localization"))
+        self.accessibility_language_engine = AccessibilityLanguageEngine(self.config.get("accessibility_languages"))
+        
+        # Initialize new Tier 3 optimization modules
+        self.language_cache_engine = LanguageCacheEngine(self.config.get("language_cache"))
+        self.translation_workflow_engine = TranslationWorkflowEngine(self.config.get("translation_workflows"))
+        self.language_api_manager = LanguageAPIManager(self.config.get("language_apis"))
         
     async def process_multilingual_content(self, content: str, target_language: str, 
                                          source_language: str = None, 
