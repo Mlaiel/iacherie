@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <linearGradient id="fingerprintGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4CAF50;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#2196F3;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#9C27B0;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glowEffect">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="600" height="400" fill="#0a0a0a"/>
+  
+  <!-- Title -->
+  <text x="300" y="30" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#FFFFFF" text-anchor="middle">Audio Fingerprint Visualization</text>
+  
+  <!-- Spectrogram representation -->
+  <g transform="translate(50, 60)">
+    <!-- Frequency bins -->
+    <g fill="url(#fingerprintGradient)" opacity="0.8" filter="url(#glowEffect)">
+      <!-- Low frequencies -->
+      <rect x="0" y="280" width="500" height="20" opacity="0.9"/>
+      <rect x="0" y="260" width="480" height="18" opacity="0.8"/>
+      <rect x="0" y="240" width="460" height="16" opacity="0.7"/>
+      <rect x="0" y="220" width="440" height="14" opacity="0.6"/>
+      
+      <!-- Mid frequencies -->
+      <rect x="0" y="200" width="420" height="12" opacity="0.8"/>
+      <rect x="0" y="180" width="400" height="10" opacity="0.9"/>
+      <rect x="0" y="160" width="380" height="8" opacity="1.0"/>
+      <rect x="0" y="140" width="360" height="6" opacity="0.9"/>
+      
+      <!-- High frequencies -->
+      <rect x="0" y="120" width="340" height="4" opacity="0.7"/>
+      <rect x="0" y="100" width="320" height="3" opacity="0.6"/>
+      <rect x="0" y="80" width="300" height="2" opacity="0.5"/>
+      <rect x="0" y="60" width="280" height="1" opacity="0.4"/>
+    </g>
+    
+    <!-- Hash patterns overlay -->
+    <g fill="#00FF88" opacity="0.6">
+      <!-- Characteristic peaks -->
+      <circle cx="100" cy="160" r="4"/>
+      <circle cx="200" cy="140" r="5"/>
+      <circle cx="300" cy="180" r="3"/>
+      <circle cx="400" cy="120" r="6"/>
+      <circle cx="150" cy="200" r="4"/>
+      <circle cx="250" cy="100" r="3"/>
+      <circle cx="350" cy="220" r="5"/>
+      <circle cx="450" cy="160" r="4"/>
+      
+      <!-- Connection lines between peaks -->
+      <line x1="100" y1="160" x2="200" y2="140" stroke="#00FF88" stroke-width="1" opacity="0.5"/>
+      <line x1="200" y1="140" x2="300" y2="180" stroke="#00FF88" stroke-width="1" opacity="0.5"/>
+      <line x1="300" y1="180" x2="400" y2="120" stroke="#00FF88" stroke-width="1" opacity="0.5"/>
+      <line x1="150" y1="200" x2="250" y2="100" stroke="#00FF88" stroke-width="1" opacity="0.5"/>
+      <line x1="250" y1="100" x2="350" y2="220" stroke="#00FF88" stroke-width="1" opacity="0.5"/>
+      <line x1="350" y1="220" x2="450" y2="160" stroke="#00FF88" stroke-width="1" opacity="0.5"/>
+    </g>
+  </g>
+  
+  <!-- Frequency labels -->
+  <g fill="#FFFFFF" font-family="Arial, sans-serif" font-size="10">
+    <text x="20" y="120">22kHz</text>
+    <text x="20" y="160">11kHz</text>
+    <text x="20" y="200">5.5kHz</text>
+    <text x="20" y="240">2.7kHz</text>
+    <text x="20" y="280">1.3kHz</text>
+    <text x="20" y="320">650Hz</text>
+    <text x="20" y="360">325Hz</text>
+  </g>
+  
+  <!-- Time labels -->
+  <g fill="#FFFFFF" font-family="Arial, sans-serif" font-size="10">
+    <text x="80" y="385">0s</text>
+    <text x="180" y="385">5s</text>
+    <text x="280" y="385">10s</text>
+    <text x="380" y="385">15s</text>
+    <text x="480" y="385">20s</text>
+  </g>
+  
+  <!-- Fingerprint hash display -->
+  <rect x="50" y="50" width="500" height="30" fill="#1a1a1a" stroke="#333" stroke-width="1" rx="4"/>
+  <text x="300" y="70" font-family="Courier, monospace" font-size="12" fill="#00FF88" text-anchor="middle">SHA256: a7f5c2d9e8b4f1a3c6e9d2b5f8a1c4e7d0b3f6a9c2e5d8b1f4a7c0e3d6b9f2a5</text>
+  
+  <!-- Processing status -->
+  <g fill="#00FF88" font-family="Arial, sans-serif" font-size="12">
+    <text x="520" y="20">✓ Analyzed</text>
+    <text x="520" y="35">✓ Hashed</text>
+    <text x="520" y="50">✓ Indexed</text>
+  </g>
+  
+  <!-- Copyright -->
+  <text x="300" y="395" font-family="Arial, sans-serif" font-size="10" fill="#666" text-anchor="middle">© 2025 Ainflue Studio - Fahed Mlaiel - Audio Fingerprinting Technology</text>
+</svg>

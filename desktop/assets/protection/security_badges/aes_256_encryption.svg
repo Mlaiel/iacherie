@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 50" width="150" height="50">
+  <defs>
+    <linearGradient id="aesGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1976D2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0D47A1;stop-opacity:1" />
+    </linearGradient>
+    <filter id="securityGlow">
+      <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Badge Background -->
+  <rect x="2" y="2" width="146" height="46" fill="url(#aesGradient)" stroke="#0D47A1" stroke-width="2" rx="8" filter="url(#securityGlow)"/>
+  
+  <!-- Security Shield Icon -->
+  <path d="M 20 15 L 20 30 Q 20 35 25 35 Q 30 35 30 30 L 30 15 Z" fill="#FFFFFF" opacity="0.9"/>
+  <path d="M 22 18 L 22 28 Q 22 30 25 30 Q 28 30 28 28 L 28 18 Z" fill="#1976D2"/>
+  <path d="M 24 20 L 26 22 L 28 20" stroke="#FFFFFF" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  
+  <!-- Main Text -->
+  <text x="38" y="20" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#FFFFFF">AES-256</text>
+  <text x="38" y="34" font-family="Arial, sans-serif" font-size="10" fill="#E3F2FD">Encryption</text>
+  
+  <!-- Security Level Indicators -->
+  <g fill="#FFFFFF" opacity="0.8">
+    <rect x="105" y="12" width="3" height="6"/>
+    <rect x="110" y="10" width="3" height="10"/>
+    <rect x="115" y="8" width="3" height="14"/>
+    <rect x="120" y="6" width="3" height="18"/>
+    <rect x="125" y="8" width="3" height="14"/>
+  </g>
+  
+  <!-- Military Grade Badge -->
+  <rect x="100" y="25" width="35" height="15" fill="#FFFFFF" opacity="0.1" rx="2"/>
+  <text x="117" y="34" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#FFFFFF" text-anchor="middle">MILITARY</text>
+  <text x="117" y="42" font-family="Arial, sans-serif" font-size="6" fill="#FFFFFF" text-anchor="middle">GRADE</text>
+  
+  <!-- Copyright -->
+  <text x="75" y="48" font-family="Arial, sans-serif" font-size="6" fill="#0D47A1" text-anchor="middle">© Ainflue</text>
+</svg>

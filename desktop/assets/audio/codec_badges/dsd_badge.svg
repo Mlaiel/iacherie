@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 50" width="150" height="50">
+  <defs>
+    <linearGradient id="dsdGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF9800;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F57C00;stop-opacity:1" />
+    </linearGradient>
+    <filter id="badgeGlow">
+      <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Badge Background -->
+  <rect x="5" y="5" width="140" height="40" fill="url(#dsdGradient)" stroke="#E65100" stroke-width="2" rx="8" filter="url(#badgeGlow)"/>
+  
+  <!-- Hi-Res Audio Icon -->
+  <rect x="18" y="18" width="14" height="14" fill="none" stroke="#FFFFFF" stroke-width="2" rx="2" opacity="0.9"/>
+  <path d="M 20 25 L 22 20 L 24 28 L 26 18 L 28 26 L 30 22" stroke="#FFFFFF" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <circle cx="25" cy="16" r="1.5" fill="#FFFFFF"/>
+  
+  <!-- Text -->
+  <text x="40" y="20" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF">DSD</text>
+  <text x="40" y="35" font-family="Arial, sans-serif" font-size="10" fill="#FFE0B2">Hi-Res Audio</text>
+  
+  <!-- Sample rate indicators -->
+  <rect x="115" y="12" width="2" height="8" fill="#FFFFFF" opacity="0.6"/>
+  <rect x="118" y="10" width="2" height="12" fill="#FFFFFF" opacity="0.8"/>
+  <rect x="121" y="8" width="2" height="16" fill="#FFFFFF" opacity="1.0"/>
+  <rect x="124" y="6" width="2" height="20" fill="#FFFFFF" opacity="0.9"/>
+  <rect x="127" y="9" width="2" height="14" fill="#FFFFFF" opacity="0.7"/>
+  <rect x="130" y="11" width="2" height="10" fill="#FFFFFF" opacity="0.5"/>
+  
+  <!-- Sample rate -->
+  <text x="85" y="20" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#FFFFFF">2.8M</text>
+  <text x="85" y="30" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#FFFFFF">5.6M</text>
+  
+  <!-- Copyright -->
+  <text x="75" y="48" font-family="Arial, sans-serif" font-size="6" fill="#E65100">© Ainflue</text>
+</svg>
