@@ -22,7 +22,7 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from core.i18n.voice_localization import VoiceProfile, VoiceEmotion
-from backend.ai.conversational.intelligence_algorithms.emotional_intelligence_processor import EmotionType, SentimentLevel, MoodState
+from conversational.intelligence_algorithms.emotional_intelligence_processor import EmotionType, SentimentLevel, MoodState
 from .voice_bank import VoiceBank, EnhancedVoiceProfile
 
 logger = logging.getLogger(__name__)

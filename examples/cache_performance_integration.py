@@ -9,9 +9,9 @@ from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 
 # Import our new middleware
-from backend.api.middleware.cache_middleware import APIResponseCacheMiddleware, CacheInvalidationMiddleware
-from backend.api.middleware.compression_middleware import AssetCompressionMiddleware, StaticAssetOptimizationMiddleware
-from backend.api.middleware.session_middleware import SessionManagerMiddleware, SessionAuthMiddleware
+from api.middleware.cache_middleware import APIResponseCacheMiddleware, CacheInvalidationMiddleware
+from api.middleware.compression_middleware import AssetCompressionMiddleware, StaticAssetOptimizationMiddleware
+from api.middleware.session_middleware import SessionManagerMiddleware, SessionAuthMiddleware
 
 # Import optimization components
 from data_management.optimization.image_optimizer import ImageOptimizer, BatchImageOptimizer

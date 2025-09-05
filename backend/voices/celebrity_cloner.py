@@ -23,7 +23,7 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from core.i18n.voice_localization import VoiceProfile, VoiceGender, VoiceAge
-from backend.ai.conversational.voice_processing.voice_synthesis import VoiceProfile as SynthVoiceProfile
+from conversational.voice_processing.voice_synthesis import VoiceProfile as SynthVoiceProfile
 from ai_engine.ml.voice_processing import VoiceCloner
 from .voice_bank import VoiceBank, EnhancedVoiceProfile
 

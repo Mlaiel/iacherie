@@ -22,7 +22,7 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from core.i18n.voice_localization import VoiceProfile, VoiceGender, VoiceAge, AccentType, VoiceEmotion, SpeechStyle
-from backend.ai.conversational.voice_processing.voice_synthesis import VoiceStyle, SynthesisQuality
+from conversational.voice_processing.voice_synthesis import VoiceStyle, SynthesisQuality
 
 logger = logging.getLogger(__name__)
 

@@ -1,5 +1,5 @@
-import { Dashboard } from '@/components/dashboard_core/Dashboard';
+import { redirect } from 'next/navigation';
 
 export default function HomePage() {
-  return <Dashboard />;
+  redirect('/test');
 }

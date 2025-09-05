@@ -24,7 +24,7 @@ from .business_api import business_router
 from .public import public_router
 
 # New consolidated modules
-from .public import endpoints_router
+from .endpoints import endpoints_router
 from .middleware import (
     authentication_middleware,
     setup_middleware,
@@ -62,6 +62,11 @@ from .websockets import (
     ChannelNames
 )
 from .graphql import schema as graphql_schema
+from .documentation import (
+    DocumentationService,
+    DocumentationConfig,
+    OpenAPIGenerator
+)
 from .testing import (
     APITestClient,
     TestDataGenerator,
@@ -152,62 +157,3 @@ __all__ = [
     "MetricsCollector",
     "AlertManager"
 ]
-
-
-# ========================================
-# INTEGRATED DOCUMENTATION (from documentation.py)
-# ========================================
-
-from typing import Dict, Any, List, Optional, Union
-from datetime import datetime
-from enum import Enum
-import json
-
-from fastapi import FastAPI, Request
-from fastapi.openapi.docs import get_swagger_ui_html, get_redoc_html
-from fastapi.openapi.utils import get_openapi
-from fastapi.responses import HTMLResponse, JSONResponse
-from pydantic import BaseModel, Field
-
-class DocumentationConfig:
-    """Configuration for API documentation"""
-    
-    def __init__(self):
-        self.title = "IA Influencer Agent API"
-        self.description = """
-        # IA Influencer Agent API
-
-        The most advanced AI-powered influencer management platform with:
-        - **Content Protection**: Advanced fingerprinting and DMCA protection
-        - **AI-Powered Analytics**: Market intelligence and performance insights
-        - **Multi-Platform Distribution**: Automated content publishing
-        - **Collaboration Tools**: Smart matching and collaboration management
-        - **Monetization**: Revenue optimization and payment processing
-        - **Real-time Monitoring**: Performance tracking and alerts
-        """
-        self.version = "2.0.0"
-        self.terms_of_service = "https://ainflue.com/terms"
-        self.contact = {
-            "name": "Fahed Mlaiel",
-            "email": "mlaiel@live.de",
-            "url": "https://ainflue.com"
-        }
-        self.license_info = {
-            "name": "Proprietary License",
-            "url": "https://ainflue.com/license"
-        }
-
-class OpenAPIGenerator:
-    """Generate OpenAPI 3.0 documentation"""
-    
-    def __init__(self, config: DocumentationConfig):
-        self.config = config
-    
-    def generate_schema(self, app: FastAPI) -> Dict[str, Any]:
-        """Generate OpenAPI schema"""
-        return get_openapi(
-            title=self.config.title,
-            version=self.config.version,
-            description=self.config.description,
-            routes=app.routes,
-        )
