@@ -26,99 +26,101 @@ Architecture Enterprise 3-Niveaux | Production-Ready
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Usage non autorisé strictement interdit
-"""# Import core managers
-from .content_protection_manager import (
-    ContentProtectionManager,
-    ProtectionConfig,
+"""# Import consolidated enterprise protection engines
+from .protection_management_engine import (
+    ProtectionManagementEngine,
     ProtectionLevel,
     ViolationType,
     ProtectionStatus,
-    ViolationAlert,
-    ProtectionReport
-)
-
-from .rights_manager import (
-    RightsManager,
     RightsType,
     LicenseStatus,
     RightsTransferType,
+    AnalyticsMetric,
+    TimeGranularity,
+    ProtectionConfig,
+    ViolationAlert,
     RightsOwnership,
     LicenseAgreement,
-    RightsVerification
+    ProtectionReport,
+    ProtectionMetrics
 )
 
-from .violation_detector import (
-    ViolationDetector,
-    DetectionMethod,
+from .fingerprinting_detection_engine import (
+    FingerprintingDetectionEngine,
+    ContentType,
+    FingerprintMethod,
     ViolationSeverity,
-    DetectionConfig,
+    DetectionMethod,
+    FingerprintConfig,
+    FingerprintResult,
+    SimilarityMatch,
     ViolationEvidence,
+    DetectionConfig,
     DetectionReport
 )
 
-from .takedown_manager import (
-    TakedownManager,
-    TakedownType,
-    TakedownStatus,
-    PlatformTakedownMethod,
-    TakedownRequest,
-    DMCANotice,
-    TakedownResponse,
-    TakedownResult
-)
-
-from .protection_analytics import (
-    ProtectionAnalytics,
-    AnalyticsMetric,
-    TimeGranularity,
-    ReportType,
-    ProtectionMetrics,
-    ViolationTrend,
-    PlatformAnalytics,
-    ThreatIntelligence,
-    AnalyticsReport
-)
-
-# Import legal templates
-from .legal_templates import (
-    LegalTemplateManager,
-    TemplateType,
-    JurisdictionType,
-    DMCATemplate,
-    CopyrightNotice,
-    LegalDocument,
-    TemplateConfig
-)
-
-# Import new advanced modules
-from .fingerprinting_engine import (
-    FingerprintingEngine,
-    ContentType,
-    FingerprintMethod,
-    FingerprintResult,
-    SimilarityMatch,
-    FingerprintConfig
-)
-
-from .platform_crawler import (
-    PlatformCrawler,
+from .platform_monitoring_crawler import (
+    PlatformMonitoringCrawler,
     PlatformType,
     CrawlMethod,
     ContentStatus,
+    MonitoringMode,
+    ThreatLevel,
     CrawlTarget,
     CrawledContent,
-    CrawlResult
+    CrawlResult,
+    MonitoringConfig,
+    PlatformCapabilities
 )
 
-from .revenue_tracker import (
-    RevenueTracker,
+from .legal_dmca_automation import (
+    LegalDMCAAutomation,
+    TakedownType,
+    TakedownStatus,
+    JurisdictionType,
+    TemplateType,
+    PlatformTakedownMethod,
+    LegalStrength,
+    DMCANotice,
+    TakedownRequest,
+    LegalDocument,
+    TakedownResponse,
+    TakedownResult,
+    TemplateConfig
+)
+
+from .revenue_recovery_monetization import (
+    RevenueRecoveryMonetization,
     RevenueType,
     PlatformRevenue,
     CompensationMethod,
+    CurrencyType,
+    RecoveryStatus,
+    DamageType,
     RevenueRecord,
     ViolationImpact,
     CompensationClaim,
-    RevenueAnalytics
+    RevenueAnalytics,
+    LicensingOpportunity,
+    RecoveryStrategy
+)
+
+from .blockchain_security_infrastructure import (
+    BlockchainSecurityInfrastructure,
+    BlockchainNetwork,
+    SmartContractType,
+    OwnershipProofType,
+    DecentralizedStorageType,
+    TransactionStatus,
+    SecurityLevel,
+    BlockchainConfig,
+    OwnershipRecord,
+    SmartContract,
+    CryptographicProof,
+    DecentralizedStorage,
+    NFTProtection,
+    LicenseSmartContract,
+    BlockchainAnalytics
 )
 
 # Import unified service
@@ -136,20 +138,15 @@ __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __description__ = "Industrial-grade content protection system for IA Influencer Agent"
 
-# Export all public components
+# Export all consolidated enterprise components
 __all__ = [
-    # Core managers
-    "ContentProtectionManager",
-    "RightsManager",
-    "ViolationDetector", 
-    "TakedownManager",
-    "ProtectionAnalytics",
-    
-    # Advanced engines
-    "FingerprintingEngine",
-    "PlatformCrawler",
-    "RevenueTracker",
-    "LegalTemplateManager",
+    # Consolidated Enterprise Engines
+    "ProtectionManagementEngine",
+    "FingerprintingDetectionEngine", 
+    "PlatformMonitoringCrawler",
+    "LegalDMCAAutomation",
+    "RevenueRecoveryMonetization",
+    "BlockchainSecurityInfrastructure",
     
     # Unified service
     "ContentProtectionService",
@@ -163,6 +160,8 @@ __all__ = [
     "DetectionConfig",
     "FingerprintConfig",
     "TemplateConfig",
+    "MonitoringConfig",
+    "BlockchainConfig",
     
     # Content and method enums
     "ContentType",
@@ -170,6 +169,8 @@ __all__ = [
     "FingerprintMethod",
     "CrawlMethod",
     "DetectionMethod",
+    "BlockchainNetwork",
+    "SmartContractType",
     
     # Status and type enums
     "ProtectionLevel",
@@ -184,20 +185,28 @@ __all__ = [
     "PlatformTakedownMethod",
     "AnalyticsMetric",
     "TimeGranularity",
-    "ReportType",
     "ContentStatus",
     "RevenueType",
     "PlatformRevenue",
     "CompensationMethod",
     "TemplateType",
     "JurisdictionType",
+    "MonitoringMode",
+    "ThreatLevel",
+    "CurrencyType",
+    "RecoveryStatus",
+    "DamageType",
+    "OwnershipProofType",
+    "DecentralizedStorageType",
+    "TransactionStatus",
+    "SecurityLevel",
+    "LegalStrength",
     
-    # Data classes - Core
+    # Data classes - Core Protection
     "ViolationAlert",
     "ProtectionReport",
     "RightsOwnership",
     "LicenseAgreement", 
-    "RightsVerification",
     "ViolationEvidence",
     "DetectionReport",
     "TakedownRequest",
@@ -205,12 +214,8 @@ __all__ = [
     "TakedownResponse",
     "TakedownResult",
     "ProtectionMetrics",
-    "ViolationTrend",
-    "PlatformAnalytics",
-    "ThreatIntelligence",
-    "AnalyticsReport",
     
-    # Data classes - Advanced
+    # Data classes - Advanced Features
     "FingerprintResult",
     "SimilarityMatch",
     "CrawlTarget",
@@ -220,7 +225,17 @@ __all__ = [
     "ViolationImpact",
     "CompensationClaim",
     "RevenueAnalytics",
-    "DMCATemplate",
-    "CopyrightNotice",
-    "LegalDocument"
+    "LegalDocument",
+    "PlatformCapabilities",
+    "LicensingOpportunity",
+    "RecoveryStrategy",
+    
+    # Data classes - Blockchain
+    "OwnershipRecord",
+    "SmartContract",
+    "CryptographicProof",
+    "DecentralizedStorage",
+    "NFTProtection",
+    "LicenseSmartContract",
+    "BlockchainAnalytics"
 ]

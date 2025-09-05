@@ -25,42 +25,41 @@ import json
 from sqlalchemy.ext.asyncio import AsyncSession
 from redis import Redis
 
-# Import all core managers
-from .content_protection_manager import (
-    ContentProtectionManager, ProtectionConfig, ProtectionLevel, 
-    ViolationType, ProtectionStatus, ViolationAlert, ProtectionReport
+# Import all consolidated enterprise engines
+from .protection_management_engine import (
+    ProtectionManagementEngine, ProtectionConfig, ProtectionLevel, 
+    ViolationType, ProtectionStatus, ViolationAlert, ProtectionReport,
+    RightsType, LicenseStatus, RightsTransferType, RightsOwnership, 
+    LicenseAgreement, ProtectionMetrics, AnalyticsMetric, TimeGranularity
 )
-from .rights_manager import (
-    RightsManager, RightsType, LicenseStatus, RightsTransferType,
-    RightsOwnership, LicenseAgreement, RightsVerification
+from .fingerprinting_detection_engine import (
+    FingerprintingDetectionEngine, ContentType, FingerprintMethod, 
+    ViolationSeverity, DetectionMethod, FingerprintConfig, FingerprintResult,
+    SimilarityMatch, ViolationEvidence, DetectionConfig, DetectionReport
 )
-from .violation_detector import (
-    ViolationDetector, DetectionMethod, ViolationSeverity, DetectionConfig,
-    ViolationEvidence, DetectionReport
+from .platform_monitoring_crawler import (
+    PlatformMonitoringCrawler, PlatformType, CrawlMethod, ContentStatus,
+    MonitoringMode, ThreatLevel, CrawlTarget, CrawledContent, CrawlResult,
+    MonitoringConfig, PlatformCapabilities
 )
-from .takedown_manager import (
-    TakedownManager, TakedownType, TakedownStatus, PlatformTakedownMethod,
-    TakedownRequest, DMCANotice, TakedownResponse, TakedownResult
+from .legal_dmca_automation import (
+    LegalDMCAAutomation, TakedownType, TakedownStatus, JurisdictionType,
+    TemplateType, PlatformTakedownMethod, LegalStrength, DMCANotice,
+    TakedownRequest, LegalDocument, TakedownResponse, TakedownResult, TemplateConfig
 )
-from .protection_analytics import (
-    ProtectionAnalytics, AnalyticsMetric, TimeGranularity, ReportType,
-    ProtectionMetrics, ViolationTrend, PlatformAnalytics, ThreatIntelligence,
-    AnalyticsReport
+from .revenue_recovery_monetization import (
+    RevenueRecoveryMonetization, RevenueType, PlatformRevenue, CompensationMethod,
+    CurrencyType, RecoveryStatus, DamageType, RevenueRecord, ViolationImpact,
+    CompensationClaim, RevenueAnalytics, LicensingOpportunity, RecoveryStrategy
+)
+from .blockchain_security_infrastructure import (
+    BlockchainSecurityInfrastructure, BlockchainNetwork, SmartContractType,
+    OwnershipProofType, DecentralizedStorageType, TransactionStatus, SecurityLevel,
+    BlockchainConfig, OwnershipRecord, SmartContract, CryptographicProof,
+    DecentralizedStorage, NFTProtection, LicenseSmartContract, BlockchainAnalytics
 )
 
-# Import new modules
-from .fingerprinting_engine import (
-    FingerprintingEngine, ContentType, FingerprintMethod, FingerprintResult,
-    SimilarityMatch, FingerprintConfig
-)
-from .platform_crawler import (
-    PlatformCrawler, PlatformType, CrawlMethod, ContentStatus,
-    CrawlTarget, CrawledContent, CrawlResult
-)
-from .revenue_tracker import (
-    RevenueTracker, RevenueType, PlatformRevenue, CompensationMethod,
-    RevenueRecord, ViolationImpact, CompensationClaim, RevenueAnalytics
-)
+
 
 
 @dataclass
@@ -96,7 +95,7 @@ class ContentProtectionService:
     """
     Unified Content Protection Service.
     
-    Orchestrates all content protection components for comprehensive
+    Orchestrates all consolidated enterprise protection engines for comprehensive
     multi-format content protection across platforms.
     """
     
@@ -110,39 +109,38 @@ class ContentProtectionService:
         self.config = config
         self.logger = logging.getLogger(__name__)
         
-        # Initialize core managers
-        self.protection_manager = ContentProtectionManager(
+        # Initialize consolidated enterprise engines
+        self.protection_engine = ProtectionManagementEngine(
             config.db_session, config.redis_client, 
-            None, None  # Will be injected
+            None, None  # Vector matcher and platform crawler will be injected
         )
         
-        self.rights_manager = RightsManager(
+        self.fingerprinting_engine = FingerprintingDetectionEngine(
             config.db_session, config.redis_client
         )
         
-        self.violation_detector = ViolationDetector(
+        self.platform_crawler = PlatformMonitoringCrawler(
+            config.db_session, config.redis_client, self.fingerprinting_engine
+        )
+        
+        self.legal_automation = LegalDMCAAutomation(
             config.db_session, config.redis_client
         )
         
-        self.takedown_manager = TakedownManager(
+        self.revenue_recovery = RevenueRecoveryMonetization(
             config.db_session, config.redis_client
         )
         
-        self.protection_analytics = ProtectionAnalytics(
+        self.blockchain_security = BlockchainSecurityInfrastructure(
             config.db_session, config.redis_client
         )
         
-        # Initialize new components
-        self.fingerprinting_engine = FingerprintingEngine(
-            config.db_session, config.redis_client, config.ml_models_path
+        self.platform_crawler = PlatformMonitoringCrawler(
+            config.db_session, config.redis_client, self.fingerprinting_engine
         )
         
-        self.platform_crawler = PlatformCrawler(
-            config.db_session, config.redis_client, config.api_keys
-        )
-        
-        self.revenue_tracker = RevenueTracker(
-            config.db_session, config.redis_client, config.api_keys
+        self.blockchain_security = BlockchainSecurityInfrastructure(
+            config.db_session, config.redis_client
         )
         
         # Service state
@@ -157,20 +155,17 @@ class ContentProtectionService:
             Initialization success status
         """
         try:
-            self.logger.info("Initializing Content Protection Service...")
+            self.logger.info("Initializing Enterprise Content Protection Service...")
             
-            # Initialize fingerprinting engine
-            # (Model initialization happens in constructor)
+            # Initialize consolidated engines
+            # (Engines are initialized in constructors)
             
-            # Start platform crawler session
-            await self.platform_crawler.start_crawler_session()
-            
-            # Start real-time monitoring if enabled
+            # Start platform monitoring if enabled
             if self.config.enable_realtime_monitoring:
                 await self._start_realtime_monitoring()
             
             self.is_initialized = True
-            self.logger.info("Content Protection Service initialized successfully")
+            self.logger.info("Enterprise Content Protection Service initialized successfully")
             return True
             
         except Exception as e:
@@ -180,17 +175,14 @@ class ContentProtectionService:
     async def shutdown(self):
         """Shutdown the content protection service"""
         try:
-            self.logger.info("Shutting down Content Protection Service...")
+            self.logger.info("Shutting down Enterprise Content Protection Service...")
             
             # Stop monitoring tasks
             for task in self.monitoring_tasks:
                 task.cancel()
             
-            # Close platform crawler session
-            await self.platform_crawler.close_crawler_session()
-            
             self.is_initialized = False
-            self.logger.info("Content Protection Service shutdown completed")
+            self.logger.info("Enterprise Content Protection Service shutdown completed")
             
         except Exception as e:
             self.logger.error(f"Error during shutdown: {str(e)}")
@@ -198,7 +190,7 @@ class ContentProtectionService:
     async def protect_content(self, user_id: str, content_data: Dict[str, Any],
                             protection_config: Optional[ProtectionConfig] = None) -> Dict[str, Any]:
         """
-        Comprehensive content protection setup.
+        Comprehensive enterprise content protection setup.
         
         Args:
             user_id: User identifier
@@ -212,59 +204,56 @@ class ContentProtectionService:
             content_id = content_data.get('content_id', str(uuid.uuid4()))
             content_type = ContentType(content_data.get('content_type', 'audio'))
             
-            # Step 1: Extract fingerprints
-            fingerprints = await self.fingerprinting_engine.extract_fingerprint(
+            # Step 1: Generate multi-format fingerprints
+            fingerprint_result = await self.fingerprinting_engine.generate_fingerprint(
                 content_data['file_data'],
                 content_type
             )
             
-            if not fingerprints:
-                return {'success': False, 'error': 'Failed to extract fingerprints'}
+            if not fingerprint_result:
+                return {'success': False, 'error': 'Failed to generate fingerprints'}
             
-            # Step 2: Register ownership rights
-            ownership_id = await self.rights_manager.register_ownership(
-                content_id, user_id, content_data.get('rights_data', {})
-            )
+            # Step 2: Register ownership on blockchain (if enabled)
+            if protection_config and protection_config.get('blockchain_registration', False):
+                ownership_record = await self.blockchain_security.register_copyright_on_blockchain(
+                    content_id, user_id, fingerprint_result.content_hash, content_data
+                )
             
-            # Step 3: Enable content protection
+            # Step 3: Enable comprehensive protection
             if protection_config is None:
                 protection_config = self._get_default_protection_config(content_id, content_type)
             
-            protection_enabled = await self.protection_manager.enable_content_protection(
+            protection_enabled = await self.protection_engine.enable_content_protection(
                 content_id, protection_config
             )
             
             if not protection_enabled:
                 return {'success': False, 'error': 'Failed to enable protection'}
             
-            # Step 4: Configure violation detection
-            detection_config = DetectionConfig(
-                content_id=content_id,
-                detection_methods=[DetectionMethod.AUDIO_FINGERPRINT, DetectionMethod.METADATA_ANALYSIS],
-                similarity_threshold=protection_config.similarity_threshold,
-                scan_frequency=24,
-                platforms_to_scan=protection_config.platforms_to_monitor,
-                enable_realtime=self.config.enable_realtime_monitoring,
-                alert_threshold=protection_config.similarity_threshold,
-                auto_evidence_collection=True
+            # Step 4: Start platform monitoring
+            monitoring_config = MonitoringConfig(
+                platforms=[PlatformType.YOUTUBE, PlatformType.SPOTIFY, PlatformType.INSTAGRAM],
+                monitoring_mode=MonitoringMode.REAL_TIME,
+                similarity_threshold=protection_config.similarity_threshold
             )
             
-            detection_configured = await self.violation_detector.configure_detection(detection_config)
+            monitoring_session = await self.platform_crawler.start_monitoring(
+                content_id, monitoring_config
+            )
             
-            # Step 5: Setup revenue tracking
-            await self.revenue_tracker.sync_platform_revenue(
-                user_id, 
-                [PlatformRevenue.YOUTUBE, PlatformRevenue.SPOTIFY],
-                (datetime.utcnow() - timedelta(days=30), datetime.utcnow())
+            # Step 5: Initialize revenue tracking
+            await self.revenue_recovery.track_revenue(
+                content_id, 
+                'platform_initial',
+                {'amount': 0, 'currency': 'usd', 'type': 'streaming'}
             )
             
             return {
                 'success': True,
                 'content_id': content_id,
-                'ownership_id': ownership_id,
-                'fingerprints_extracted': len(fingerprints),
+                'fingerprint_generated': bool(fingerprint_result),
                 'protection_enabled': protection_enabled,
-                'detection_configured': detection_configured,
+                'monitoring_session': monitoring_session,
                 'monitoring_active': self.config.enable_realtime_monitoring
             }
             
@@ -274,7 +263,7 @@ class ContentProtectionService:
     
     async def scan_and_respond(self, content_id: str) -> Dict[str, Any]:
         """
-        Comprehensive violation scan and automated response.
+        Comprehensive violation scan and automated response using consolidated engines.
         
         Args:
             content_id: Content identifier to scan for
@@ -283,10 +272,17 @@ class ContentProtectionService:
             Scan and response results
         """
         try:
-            # Step 1: Scan for violations
-            violations = await self.violation_detector.scan_for_violations(content_id)
+            # Step 1: Perform violation detection scan
+            detection_config = DetectionConfig(
+                similarity_threshold=0.85,
+                platforms_to_monitor=['youtube', 'spotify', 'instagram']
+            )
             
-            if not violations:
+            detection_report = await self.fingerprinting_engine.detect_violations(
+                content_id, detection_config
+            )
+            
+            if not detection_report or detection_report.total_matches == 0:
                 return {
                     'violations_found': 0,
                     'takedowns_initiated': 0,
@@ -294,53 +290,44 @@ class ContentProtectionService:
                 }
             
             takedowns_initiated = 0
-            evidence_collected = 0
+            evidence_collected = len(detection_report.evidence_collected)
             
-            # Step 2: Process each violation
-            for violation in violations:
-                # Collect evidence
-                evidence = await self.violation_detector.collect_violation_evidence(violation)
-                evidence_collected += len(evidence)
-                
+            # Step 2: Process each violation with automated DMCA
+            for violation in detection_report.violations_found:
                 # Calculate revenue impact
-                impact = await self.revenue_tracker.calculate_violation_impact(
-                    violation.alert_id,
+                impact = await self.revenue_recovery.calculate_violation_impact(
+                    violation.content_id,
                     content_id,
                     {
-                        'views': 10000,  # Would be extracted from platform data
-                        'engagement': 500
+                        'platform': violation.evidence.get('platform', 'unknown'),
+                        'similarity': violation.similarity_score,
+                        'detected_at': violation.timestamp
                     }
                 )
                 
-                # Initiate takedown if auto-takedown is enabled
-                if (self.config.auto_takedown_enabled and 
-                    violation.severity in [ViolationSeverity.CRITICAL, ViolationSeverity.HIGH]):
+                # Generate and submit DMCA notice if automated takedown enabled
+                if self.config.auto_takedown_enabled:
+                    dmca_notice = await self.legal_automation.generate_dmca_notice(
+                        violation.content_id, content_id
+                    )
                     
-                    takedown_data = {
-                        'content_id': content_id,
-                        'violation_id': violation.alert_id,
-                        'platform': violation.platform,
-                        'infringing_url': violation.detected_url,
-                        'violation_type': violation.violation_type.value,
-                        'evidence': evidence
-                    }
+                    takedown_request = await self.legal_automation.submit_takedown_request(
+                        dmca_notice, violation.evidence.get('platform', 'unknown')
+                    )
                     
-                    takedown_id = await self.takedown_manager.submit_takedown_request(takedown_data)
-                    if takedown_id:
-                        takedowns_initiated += 1
             
             return {
-                'violations_found': len(violations),
+                'violations_found': detection_report.total_matches,
                 'takedowns_initiated': takedowns_initiated,
                 'evidence_collected': evidence_collected,
                 'violations': [
                     {
-                        'alert_id': v.alert_id,
-                        'platform': v.platform,
+                        'content_id': v.content_id,
                         'similarity_score': v.similarity_score,
-                        'severity': v.severity.value
+                        'match_type': v.match_type.value,
+                        'confidence': v.confidence
                     }
-                    for v in violations
+                    for v in detection_report.violations_found
                 ]
             }
             
@@ -350,7 +337,7 @@ class ContentProtectionService:
     
     async def get_comprehensive_status(self, user_id: str) -> ProtectionSummary:
         """
-        Get comprehensive protection status for user.
+        Get comprehensive protection status for user using consolidated engines.
         
         Args:
             user_id: User identifier
@@ -362,14 +349,15 @@ class ContentProtectionService:
             # Get protected content count
             protected_content = await self._get_protected_content_count(user_id)
             
-            # Get violation statistics
-            violation_stats = await self._get_user_violation_statistics(user_id)
+            # Get violation statistics from protection engine
+            protection_analytics = await self.protection_engine.get_protection_analytics(
+                user_id
+            )
             
-            # Get takedown statistics
-            takedown_stats = await self._get_user_takedown_statistics(user_id)
-            
-            # Get revenue data
-            revenue_analytics = await self.revenue_tracker.generate_revenue_analytics(user_id)
+            # Get revenue data from revenue recovery engine
+            revenue_analytics = await self.revenue_recovery.analyze_revenue_performance(
+                user_id
+            )
             
             # Get scan schedule
             scan_schedule = await self._get_next_scan_schedule(user_id)
@@ -377,11 +365,11 @@ class ContentProtectionService:
             summary = ProtectionSummary(
                 user_id=user_id,
                 total_content_protected=protected_content,
-                active_violations=violation_stats.get('active_violations', 0),
-                resolved_violations=violation_stats.get('resolved_violations', 0),
-                pending_takedowns=takedown_stats.get('pending_takedowns', 0),
-                revenue_recovered=float(revenue_analytics.loss_from_violations),
-                protection_effectiveness=violation_stats.get('effectiveness', 0.0),
+                active_violations=protection_analytics.get('active_violations', 0),
+                resolved_violations=protection_analytics.get('resolved_violations', 0),
+                pending_takedowns=protection_analytics.get('pending_takedowns', 0),
+                revenue_recovered=float(revenue_analytics.total_revenue) if revenue_analytics else 0.0,
+                protection_effectiveness=protection_analytics.get('effectiveness', 0.0),
                 last_scan=scan_schedule.get('last_scan', datetime.utcnow()),
                 next_scan=scan_schedule.get('next_scan', datetime.utcnow())
             )
@@ -677,485 +665,3 @@ async def quick_protection_setup(user_id: str, content_data: Dict[str, Any],
         Protection setup result
     """
     return await service.protect_content(user_id, content_data)
-
-import asyncio
-import logging
-from typing import Dict, List, Optional, Any, Union
-from datetime import datetime
-
-from sqlalchemy.ext.asyncio import AsyncSession
-from redis import Redis
-
-# Import all main components
-from .content_protection_manager import (
-    ContentProtectionManager,
-    ProtectionConfig,
-    ProtectionLevel,
-    ViolationType,
-    ProtectionStatus,
-    ViolationAlert,
-    ProtectionReport
-)
-
-from .rights_manager import (
-    RightsManager,
-    RightsType,
-    LicenseStatus,
-    RightsTransferType,
-    RightsOwnership,
-    LicenseAgreement,
-    RightsVerification
-)
-
-from .violation_detector import (
-    ViolationDetector,
-    DetectionMethod,
-    ViolationSeverity,
-    DetectionConfig,
-    ViolationEvidence,
-    DetectionReport
-)
-
-from .takedown_manager import (
-    TakedownManager,
-    TakedownType,
-    TakedownStatus,
-    PlatformTakedownMethod,
-    TakedownRequest,
-    DMCANotice,
-    TakedownResponse,
-    TakedownResult
-)
-
-from .protection_analytics import (
-    ProtectionAnalytics,
-    AnalyticsMetric,
-    TimeGranularity,
-    ReportType,
-    ProtectionMetrics,
-    ViolationTrend,
-    PlatformAnalytics,
-    ThreatIntelligence,
-    AnalyticsReport
-)
-
-
-class ContentProtectionService:
-    """
-    Unified Content Protection Service.
-    
-    Orchestrates all content protection components and provides
-    a simplified interface for comprehensive content protection.
-    """
-    
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
-        """
-        Initialize ContentProtectionService.
-        
-        Args:
-            db_session: Async database session
-            redis_client: Redis client for caching
-        """
-        self.db_session = db_session
-        self.redis = redis_client
-        self.logger = logging.getLogger(__name__)
-        
-        # Initialize all components
-        self.protection_manager = ContentProtectionManager(db_session, redis_client)
-        self.rights_manager = RightsManager(db_session, redis_client)
-        self.violation_detector = ViolationDetector(db_session, redis_client)
-        self.takedown_manager = TakedownManager(db_session, redis_client)
-        self.analytics = ProtectionAnalytics(db_session, redis_client)
-        
-        self.logger.info("Content Protection Service initialized")
-    
-    async def setup_complete_protection(self, content_id: str, user_id: str,
-                                      protection_config: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Set up complete content protection workflow.
-        
-        Args:
-            content_id: Content identifier
-            user_id: User identifier
-            protection_config: Complete protection configuration
-            
-        Returns:
-            Setup results and status
-        """
-        try:
-            results = {
-                'content_id': content_id,
-                'user_id': user_id,
-                'setup_started': datetime.utcnow().isoformat(),
-                'components': {}
-            }
-            
-            # 1. Register content ownership
-            if protection_config.get('register_ownership', True):
-                ownership_id = await self.rights_manager.register_ownership(
-                    content_id=content_id,
-                    owner_id=user_id,
-                    rights_data=protection_config.get('ownership_data', {
-                        'rights_type': 'exclusive',
-                        'percentage': 100.0,
-                        'territory': ['WORLDWIDE'],
-                        'media_types': ['ALL']
-                    })
-                )
-                results['components']['ownership'] = {
-                    'status': 'registered',
-                    'ownership_id': ownership_id
-                }
-            
-            # 2. Configure content protection
-            if protection_config.get('enable_protection', True):
-                config = ProtectionConfig(
-                    content_id=content_id,
-                    protection_level=ProtectionLevel(protection_config.get('protection_level', 'premium')),
-                    enable_automated_takedown=protection_config.get('automated_takedown', True),
-                    similarity_threshold=protection_config.get('similarity_threshold', 0.80),
-                    platforms_to_monitor=protection_config.get('platforms', ['youtube', 'instagram', 'tiktok']),
-                    notification_settings=protection_config.get('notifications', {'email': True}),
-                    watermark_enabled=protection_config.get('watermark', True),
-                    encryption_enabled=protection_config.get('encryption', True)
-                )
-                
-                protection_enabled = await self.protection_manager.enable_content_protection(
-                    content_id, config
-                )
-                results['components']['protection'] = {
-                    'status': 'enabled' if protection_enabled else 'failed',
-                    'config': config.__dict__
-                }
-            
-            # 3. Configure violation detection
-            if protection_config.get('enable_detection', True):
-                detection_config = DetectionConfig(
-                    content_id=content_id,
-                    detection_methods=[
-                        DetectionMethod.AUDIO_FINGERPRINT,
-                        DetectionMethod.VIDEO_FINGERPRINT,
-                        DetectionMethod.IMAGE_FINGERPRINT,
-                        DetectionMethod.TEXT_SIMILARITY
-                    ],
-                    similarity_threshold=protection_config.get('detection_threshold', 0.75),
-                    scan_frequency=protection_config.get('scan_frequency', 24),
-                    platforms_to_scan=protection_config.get('platforms', ['youtube', 'instagram']),
-                    enable_realtime=protection_config.get('realtime', True),
-                    alert_threshold=protection_config.get('alert_threshold', 0.80),
-                    auto_evidence_collection=True
-                )
-                
-                detection_configured = await self.violation_detector.configure_detection(detection_config)
-                results['components']['detection'] = {
-                    'status': 'configured' if detection_configured else 'failed',
-                    'config': detection_config.__dict__
-                }
-            
-            # 4. Schedule initial protection scan
-            if results['components'].get('detection', {}).get('status') == 'configured':
-                initial_scan = await self.violation_detector.scan_for_violations(content_id)
-                results['components']['initial_scan'] = {
-                    'status': 'completed',
-                    'violations_found': len(initial_scan),
-                    'violations': [v.__dict__ for v in initial_scan[:5]]  # First 5 violations
-                }
-            
-            results['setup_completed'] = datetime.utcnow().isoformat()
-            results['overall_status'] = 'success'
-            
-            self.logger.info(f"Complete protection setup successful for content {content_id}")
-            return results
-            
-        except Exception as e:
-            self.logger.error(f"Error in complete protection setup: {str(e)}")
-            results['setup_completed'] = datetime.utcnow().isoformat()
-            results['overall_status'] = 'failed'
-            results['error'] = str(e)
-            return results
-    
-    async def get_protection_dashboard(self, user_id: str) -> Dict[str, Any]:
-        """
-        Get comprehensive protection dashboard for user.
-        
-        Args:
-            user_id: User identifier
-            
-        Returns:
-            Complete protection dashboard data
-        """
-        try:
-            dashboard = {
-                'user_id': user_id,
-                'generated_at': datetime.utcnow().isoformat(),
-                'real_time_metrics': {},
-                'recent_activity': {},
-                'protection_summary': {},
-                'alerts': {}
-            }
-            
-            # Get real-time metrics
-            dashboard['real_time_metrics'] = await self.analytics.get_real_time_metrics(user_id)
-            
-            # Get recent violation alerts
-            recent_alerts = await self.protection_manager.get_violation_alerts(user_id, limit=10)
-            dashboard['alerts']['recent_violations'] = [alert.__dict__ for alert in recent_alerts]
-            
-            # Get protection status for user's content
-            # This would require querying user's content first
-            dashboard['protection_summary'] = {
-                'total_protected_content': 0,  # Would be calculated
-                'active_monitoring': 0,        # Would be calculated
-                'protection_effectiveness': 0.0  # Would be calculated
-            }
-            
-            # Get recent takedown activity
-            takedown_report = await self.takedown_manager.generate_takedown_report(user_id, 7)
-            dashboard['recent_activity']['takedowns'] = takedown_report
-            
-            return dashboard
-            
-        except Exception as e:
-            self.logger.error(f"Error generating protection dashboard: {str(e)}")
-            return {'error': str(e), 'user_id': user_id}
-    
-    async def handle_violation_workflow(self, violation_data: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Handle complete violation detection and response workflow.
-        
-        Args:
-            violation_data: Violation detection data
-            
-        Returns:
-            Workflow execution results
-        """
-        try:
-            workflow_results = {
-                'violation_id': violation_data.get('violation_id'),
-                'content_id': violation_data.get('content_id'),
-                'workflow_started': datetime.utcnow().isoformat(),
-                'steps': {}
-            }
-            
-            # Step 1: Verify rights
-            rights_verification = await self.rights_manager.verify_rights(
-                violation_data['content_id'],
-                violation_data['requester_id'],
-                'usage'
-            )
-            
-            workflow_results['steps']['rights_verification'] = {
-                'result': rights_verification.result,
-                'confidence': rights_verification.confidence_score,
-                'verification_id': rights_verification.verification_id
-            }
-            
-            # Step 2: Collect evidence if rights verified
-            if rights_verification.result:
-                # Create violation alert object for evidence collection
-                violation_alert = ViolationAlert(
-                    alert_id=violation_data['violation_id'],
-                    content_id=violation_data['content_id'],
-                    detected_url=violation_data['detected_url'],
-                    platform=violation_data['platform'],
-                    violation_type=ViolationType(violation_data.get('violation_type', 'unauthorized_use')),
-                    severity=ViolationSeverity(violation_data.get('severity', 'medium')),
-                    similarity_score=violation_data.get('similarity_score', 0.0),
-                    confidence_score=violation_data.get('confidence_score', 0.0),
-                    evidence=[],
-                    detected_at=datetime.utcnow(),
-                    status='processing',
-                    location_data=violation_data.get('location_data', {})
-                )
-                
-                evidence = await self.violation_detector.collect_violation_evidence(violation_alert)
-                workflow_results['steps']['evidence_collection'] = {
-                    'evidence_count': len(evidence),
-                    'evidence_types': [e.evidence_type for e in evidence]
-                }
-                
-                # Step 3: Submit takedown if evidence sufficient
-                if len(evidence) > 0 and violation_data.get('auto_takedown', True):
-                    takedown_data = {
-                        'content_id': violation_data['content_id'],
-                        'violation_id': violation_data['violation_id'],
-                        'requester_id': violation_data['requester_id'],
-                        'platform': violation_data['platform'],
-                        'infringing_url': violation_data['detected_url'],
-                        'original_content_url': violation_data.get('original_url', ''),
-                        'description': f"Unauthorized use detected with {violation_data.get('similarity_score', 0):.1%} similarity",
-                        'evidence_urls': [e.url for e in evidence if e.url],
-                        'auto_generated': True
-                    }
-                    
-                    takedown_id = await self.takedown_manager.submit_takedown_request(takedown_data)
-                    workflow_results['steps']['takedown_submission'] = {
-                        'submitted': True,
-                        'takedown_id': takedown_id
-                    }
-            
-            workflow_results['workflow_completed'] = datetime.utcnow().isoformat()
-            workflow_results['overall_status'] = 'completed'
-            
-            return workflow_results
-            
-        except Exception as e:
-            self.logger.error(f"Error in violation workflow: {str(e)}")
-            workflow_results['workflow_completed'] = datetime.utcnow().isoformat()
-            workflow_results['overall_status'] = 'failed'
-            workflow_results['error'] = str(e)
-            return workflow_results
-    
-    async def generate_comprehensive_report(self, user_id: str, 
-                                          report_type: str = "monthly") -> Dict[str, Any]:
-        """
-        Generate comprehensive protection report across all components.
-        
-        Args:
-            user_id: User identifier
-            report_type: Type of report (daily, weekly, monthly, quarterly)
-            
-        Returns:
-            Comprehensive protection report
-        """
-        try:
-            period_days = {
-                'daily': 1,
-                'weekly': 7,
-                'monthly': 30,
-                'quarterly': 90
-            }.get(report_type, 30)
-            
-            # Generate analytics report
-            analytics_report = await self.analytics.generate_comprehensive_report(
-                user_id=user_id,
-                report_type=ReportType.EXECUTIVE_SUMMARY,
-                period_days=period_days
-            )
-            
-            # Generate takedown report
-            takedown_report = await self.takedown_manager.generate_takedown_report(
-                user_id=user_id,
-                period_days=period_days
-            )
-            
-            # Calculate ROI metrics
-            roi_metrics = await self.analytics.calculate_roi_metrics(
-                user_id=user_id,
-                period_days=period_days
-            )
-            
-            # Compile comprehensive report
-            comprehensive_report = {
-                'report_id': analytics_report.report_id,
-                'user_id': user_id,
-                'report_type': report_type,
-                'period_days': period_days,
-                'generated_at': datetime.utcnow().isoformat(),
-                'analytics': analytics_report.__dict__,
-                'takedowns': takedown_report,
-                'roi_metrics': roi_metrics,
-                'summary': {
-                    'total_violations_detected': analytics_report.executive_summary.get('violations_detected', 0),
-                    'total_takedowns_submitted': takedown_report.get('statistics', {}).get('total_requests', 0),
-                    'protection_effectiveness': analytics_report.executive_summary.get('effectiveness', 0.0),
-                    'roi_percentage': roi_metrics.get('roi_percentage', 0.0)
-                }
-            }
-            
-            return comprehensive_report
-            
-        except Exception as e:
-            self.logger.error(f"Error generating comprehensive report: {str(e)}")
-            return {'error': str(e), 'user_id': user_id}
-
-
-# Convenience functions for easy access
-
-async def initialize_protection_service(db_session: AsyncSession, 
-                                       redis_client: Redis) -> ContentProtectionService:
-    """
-    Initialize and return a ContentProtectionService instance.
-    
-    Args:
-        db_session: Async database session
-        redis_client: Redis client
-        
-    Returns:
-        Initialized ContentProtectionService
-    """
-    return ContentProtectionService(db_session, redis_client)
-
-
-async def quick_protection_setup(service: ContentProtectionService,
-                                content_id: str, user_id: str,
-                                protection_level: str = "premium") -> Dict[str, Any]:
-    """
-    Quick setup for standard content protection.
-    
-    Args:
-        service: ContentProtectionService instance
-        content_id: Content identifier
-        user_id: User identifier
-        protection_level: Protection level (basic, standard, premium, enterprise)
-        
-    Returns:
-        Setup results
-    """
-    config = {
-        'protection_level': protection_level,
-        'enable_protection': True,
-        'enable_detection': True,
-        'automated_takedown': True,
-        'platforms': ['youtube', 'instagram', 'tiktok', 'twitter'],
-        'similarity_threshold': 0.80,
-        'detection_threshold': 0.75,
-        'realtime': True
-    }
-    
-    return await service.setup_complete_protection(content_id, user_id, config)
-
-
-# Export all components for external use
-__all__ = [
-    # Main service
-    'ContentProtectionService',
-    'initialize_protection_service',
-    'quick_protection_setup',
-    
-    # Core managers
-    'ContentProtectionManager',
-    'RightsManager', 
-    'ViolationDetector',
-    'TakedownManager',
-    'ProtectionAnalytics',
-    
-    # Configuration classes
-    'ProtectionConfig',
-    'DetectionConfig',
-    
-    # Enums
-    'ProtectionLevel',
-    'ViolationType',
-    'ProtectionStatus',
-    'RightsType',
-    'LicenseStatus',
-    'DetectionMethod',
-    'ViolationSeverity',
-    'TakedownType',
-    'TakedownStatus',
-    'AnalyticsMetric',
-    'TimeGranularity',
-    'ReportType',
-    
-    # Data classes
-    'ViolationAlert',
-    'ProtectionReport',
-    'RightsOwnership',
-    'LicenseAgreement',
-    'ViolationEvidence',
-    'TakedownRequest',
-    'DMCANotice',
-    'ProtectionMetrics',
-    'AnalyticsReport'
-]
