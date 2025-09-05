@@ -5,9 +5,13 @@ for the IA Influencer Agent Platform.
 
 This module provides advanced avatar functionality including:
 - MetaHuman-style realistic 3D avatars
+- AI-driven personality and behavior systems
+- High-performance rendering engine
 - Animation and movement systems  
 - Dynamic clothing and accessories
 - Facial expressions and emotions
+- Monetization and social features
+- Multi-platform distribution
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -16,12 +20,19 @@ STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
 
+# Core avatar generation and management
 from .metahuman import MetaHumanGenerator, MetaHumanConfig
 from .animation_system import AvatarAnimationSystem, AnimationConfig
 from .clothing_system import AvatarClothingSystem, ClothingConfig
 from .facial_expressions import FacialExpressionSystem, ExpressionConfig
 
+# Advanced avatar systems
+from .avatar_factory import AvatarFactory, AvatarBuilder, AvatarTemplate, AvatarSpec, avatar_factory
+from .avatar_intelligence import AvatarPersonality, EmotionalIntelligence, BehaviorEngine, InteractionManager
+from .avatar_rendering import RenderingEngine, MaterialManager, LightingSystem, PerformanceOptimizer
+
 __all__ = [
+    # Core systems
     'MetaHumanGenerator',
     'MetaHumanConfig',
     'AvatarAnimationSystem', 
@@ -29,9 +40,41 @@ __all__ = [
     'AvatarClothingSystem',
     'ClothingConfig',
     'FacialExpressionSystem',
-    'ExpressionConfig'
+    'ExpressionConfig',
+    # Advanced systems
+    'AvatarFactory',
+    'AvatarBuilder',
+    'AvatarTemplate',
+    'AvatarSpec',
+    'avatar_factory',
+    'AvatarPersonality',
+    'EmotionalIntelligence',
+    'BehaviorEngine',
+    'InteractionManager',
+    'RenderingEngine',
+    'MaterialManager',
+    'LightingSystem',
+    'PerformanceOptimizer'
 ]
 
-__version__ = "1.0.0"
+__version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
+
+# Global configuration for avatar module
+AVATAR_CONFIG = {
+    'quality_presets': {
+        'preview': {'quality': 'low', 'fps_target': 30},
+        'standard': {'quality': 'medium', 'fps_target': 60},
+        'premium': {'quality': 'high', 'fps_target': 60},
+        'enterprise': {'quality': 'ultra', 'fps_target': 60}
+    },
+    'default_templates': [
+        'influencer', 'musician', 'photographer', 'fashion_model',
+        'fitness_coach', 'chef', 'artist', 'business_professional'
+    ],
+    'supported_formats': ['fbx', 'gltf', 'vrm', 'obj', 'dae'],
+    'max_concurrent_avatars': 10,
+    'cache_enabled': True,
+    'performance_monitoring': True
+}
