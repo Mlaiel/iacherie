@@ -1,0 +1,315 @@
+/* Light Mode Corporate Theme - Ainflue Studio */
+/* © 2025 Fahed Mlaiel - Professional Corporate Design */
+
+:root {
+  /* Primary Brand Colors */
+  --ainflue-primary: #00ff88;
+  --ainflue-primary-light: #33ff99;
+  --ainflue-primary-dark: #00cc6a;
+  --ainflue-secondary: #0066ff;
+  --ainflue-secondary-light: #3388ff;
+  --ainflue-secondary-dark: #0044cc;
+  --ainflue-accent: #ff6b00;
+  --ainflue-accent-light: #ff8533;
+  --ainflue-accent-dark: #cc5500;
+
+  /* Light Mode Colors */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #f1f5f9;
+  --bg-quaternary: #e2e8f0;
+
+  /* Text Colors */
+  --text-primary: #1a202c;
+  --text-secondary: #2d3748;
+  --text-tertiary: #4a5568;
+  --text-quaternary: #718096;
+
+  /* Border Colors */
+  --border-primary: #e2e8f0;
+  --border-secondary: #cbd5e0;
+  --border-tertiary: #a0aec0;
+
+  /* Shadow Definitions */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+
+  /* Border Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+
+  /* Typography */
+  --font-family-primary: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-family-secondary: 'Roboto Mono', 'SF Mono', Monaco, monospace;
+
+  /* Transitions */
+  --transition-fast: 0.15s ease-in-out;
+  --transition-normal: 0.3s ease-in-out;
+  --transition-slow: 0.5s ease-in-out;
+}
+
+/* Global Styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family-primary);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  transition: all var(--transition-normal);
+}
+
+/* Corporate Container */
+.ainflue-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+}
+
+/* Professional Header */
+.ainflue-header {
+  background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
+  border-bottom: 2px solid var(--border-primary);
+  padding: var(--spacing-md) 0;
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Corporate Buttons */
+.ainflue-btn {
+  background: linear-gradient(135deg, var(--ainflue-primary), var(--ainflue-primary-dark));
+  color: var(--text-primary);
+  border: none;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  font-family: var(--font-family-primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.ainflue-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left var(--transition-slow);
+}
+
+.ainflue-btn:hover::before {
+  left: 100%;
+}
+
+.ainflue-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.ainflue-btn:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+.ainflue-btn-secondary {
+  background: linear-gradient(135deg, var(--ainflue-secondary), var(--ainflue-secondary-dark));
+  color: white;
+}
+
+.ainflue-btn-accent {
+  background: linear-gradient(135deg, var(--ainflue-accent), var(--ainflue-accent-dark));
+  color: white;
+}
+
+/* Professional Form Elements */
+.ainflue-input {
+  background-color: var(--bg-primary);
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-family: var(--font-family-primary);
+  font-size: 0.9rem;
+  transition: all var(--transition-normal);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.ainflue-input:focus {
+  outline: none;
+  border-color: var(--ainflue-primary);
+  box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+  background-color: var(--bg-secondary);
+}
+
+.ainflue-input::placeholder {
+  color: var(--text-quaternary);
+}
+
+/* Professional Cards */
+.ainflue-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.ainflue-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--ainflue-primary), var(--ainflue-secondary));
+}
+
+.ainflue-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--ainflue-primary);
+}
+
+/* Navigation */
+.ainflue-nav {
+  display: flex;
+  gap: var(--spacing-lg);
+  align-items: center;
+}
+
+.ainflue-nav-link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-normal);
+  position: relative;
+}
+
+.ainflue-nav-link:hover {
+  color: var(--ainflue-primary);
+  background-color: var(--bg-tertiary);
+}
+
+.ainflue-nav-link.active {
+  color: var(--ainflue-primary);
+  background-color: var(--bg-tertiary);
+}
+
+/* Professional Animations */
+@keyframes ainflue-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes ainflue-glow {
+  0%, 100% { box-shadow: 0 0 5px rgba(0, 255, 136, 0.3); }
+  50% { box-shadow: 0 0 20px rgba(0, 255, 136, 0.6); }
+}
+
+.ainflue-animate-pulse {
+  animation: ainflue-pulse 2s ease-in-out infinite;
+}
+
+.ainflue-animate-glow {
+  animation: ainflue-glow 2s ease-in-out infinite;
+}
+
+/* Professional Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--ainflue-primary);
+  border-radius: var(--radius-sm);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ainflue-primary-light);
+}
+
+/* Corporate Tables */
+.ainflue-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.ainflue-table th {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  font-weight: 600;
+  padding: var(--spacing-md);
+  text-align: left;
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.ainflue-table td {
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--border-primary);
+  color: var(--text-secondary);
+}
+
+.ainflue-table tr:hover {
+  background-color: var(--bg-secondary);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .ainflue-container {
+    padding: var(--spacing-md);
+  }
+  
+  .ainflue-nav {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+  
+  .ainflue-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

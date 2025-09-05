@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Professional Button Collection -->
+<!-- © 2025 Fahed Mlaiel - Ainflue Studio -->
+<svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="primaryGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00ff88;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00cc6a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="secondaryGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0066ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0044cc;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ff6b00;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#cc5500;stop-opacity:1" />
+    </linearGradient>
+    <filter id="buttonShadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000000" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="600" height="400" fill="#f8fafc"/>
+  
+  <!-- Title -->
+  <text x="50" y="40" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#1a202c">Professional Button Collection</text>
+  
+  <!-- Primary Buttons -->
+  <g id="primary-buttons">
+    <text x="50" y="80" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2d3748">Primary Actions</text>
+    
+    <!-- Primary Default -->
+    <rect x="50" y="90" width="120" height="40" rx="8" fill="url(#primaryGradient)" filter="url(#buttonShadow)"/>
+    <text x="110" y="115" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#1a202c" text-anchor="middle">Primary</text>
+    
+    <!-- Primary Large -->
+    <rect x="190" y="85" width="140" height="50" rx="10" fill="url(#primaryGradient)" filter="url(#buttonShadow)"/>
+    <text x="260" y="115" font-family="Arial, sans-serif" font-size="14" font-weight="600" fill="#1a202c" text-anchor="middle">Large Primary</text>
+    
+    <!-- Primary Small -->
+    <rect x="350" y="95" width="100" height="30" rx="6" fill="url(#primaryGradient)" filter="url(#buttonShadow)"/>
+    <text x="400" y="113" font-family="Arial, sans-serif" font-size="10" font-weight="600" fill="#1a202c" text-anchor="middle">Small</text>
+  </g>
+  
+  <!-- Secondary Buttons -->
+  <g id="secondary-buttons">
+    <text x="50" y="180" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2d3748">Secondary Actions</text>
+    
+    <!-- Secondary Default -->
+    <rect x="50" y="190" width="120" height="40" rx="8" fill="url(#secondaryGradient)" filter="url(#buttonShadow)"/>
+    <text x="110" y="215" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#ffffff" text-anchor="middle">Secondary</text>
+    
+    <!-- Secondary Outline -->
+    <rect x="190" y="190" width="120" height="40" rx="8" fill="none" stroke="url(#secondaryGradient)" stroke-width="2"/>
+    <text x="250" y="215" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#0066ff" text-anchor="middle">Outline</text>
+    
+    <!-- Secondary Ghost -->
+    <rect x="330" y="190" width="120" height="40" rx="8" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+    <text x="390" y="215" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#4a5568" text-anchor="middle">Ghost</text>
+  </g>
+  
+  <!-- Accent Buttons -->
+  <g id="accent-buttons">
+    <text x="50" y="280" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2d3748">Accent & Special</text>
+    
+    <!-- Accent Button -->
+    <rect x="50" y="290" width="120" height="40" rx="8" fill="url(#accentGradient)" filter="url(#buttonShadow)"/>
+    <text x="110" y="315" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#ffffff" text-anchor="middle">Accent</text>
+    
+    <!-- Success Button -->
+    <rect x="190" y="290" width="120" height="40" rx="8" fill="#10b981" filter="url(#buttonShadow)"/>
+    <text x="250" y="315" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#ffffff" text-anchor="middle">Success</text>
+    
+    <!-- Warning Button -->
+    <rect x="330" y="290" width="120" height="40" rx="8" fill="#f59e0b" filter="url(#buttonShadow)"/>
+    <text x="390" y="315" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#ffffff" text-anchor="middle">Warning</text>
+    
+    <!-- Danger Button -->
+    <rect x="470" y="290" width="120" height="40" rx="8" fill="#ef4444" filter="url(#buttonShadow)"/>
+    <text x="530" y="315" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#ffffff" text-anchor="middle">Danger</text>
+  </g>
+  
+  <!-- Interactive States -->
+  <g id="interactive-states">
+    <text x="50" y="380" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2d3748">Interactive States</text>
+    
+    <!-- Normal State -->
+    <rect x="50" y="390" width="100" height="35" rx="6" fill="url(#primaryGradient)" opacity="1"/>
+    <text x="100" y="410" font-family="Arial, sans-serif" font-size="10" font-weight="600" fill="#1a202c" text-anchor="middle">Normal</text>
+    
+    <!-- Hover State -->
+    <rect x="170" y="388" width="100" height="35" rx="6" fill="url(#primaryGradient)" opacity="1" transform="translate(0, -2)"/>
+    <text x="220" y="408" font-family="Arial, sans-serif" font-size="10" font-weight="600" fill="#1a202c" text-anchor="middle">Hover</text>
+    
+    <!-- Active State -->
+    <rect x="290" y="392" width="100" height="35" rx="6" fill="url(#primaryGradient)" opacity="0.8"/>
+    <text x="340" y="412" font-family="Arial, sans-serif" font-size="10" font-weight="600" fill="#1a202c" text-anchor="middle">Active</text>
+    
+    <!-- Disabled State -->
+    <rect x="410" y="390" width="100" height="35" rx="6" fill="#e2e8f0" opacity="0.6"/>
+    <text x="460" y="410" font-family="Arial, sans-serif" font-size="10" font-weight="600" fill="#a0aec0" text-anchor="middle">Disabled</text>
+  </g>
+</svg>
