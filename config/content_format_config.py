@@ -11,28 +11,6 @@ from typing import Dict, List, Optional, Any, Union, Set
 from enum import Enum
 from dataclasses import dataclass
 
-try:
-    from pydantic import BaseSettings, validator, Field
-except ImportError:
-    # Fallback for environments without pydantic
-    class BaseSettings:
-        def __init__(self, **kwargs):
-            for key, value in kwargs.items():
-                setattr(self, key, value)
-        
-        class Config:
-            env_prefix = ""
-            case_sensitive = False
-            extra = "allow"
-    
-    def validator(field_name):
-        def decorator(func):
-            return func
-        return decorator
-    
-    def Field(**kwargs):
-        return kwargs.get('default_factory', kwargs.get('default'))()
-
 
 class AudioFormat(str, Enum):
     """Professional audio format support"""
@@ -151,12 +129,12 @@ class ProcessingConfiguration:
     ai_analysis: bool
 
 
-class ContentFormatSettings(BaseSettings):
+class ContentFormatSettings:
     """Content format configuration settings"""
     
-    # Audio Format Specifications
-    audio_formats: Dict[str, FormatSpecification] = Field(
-        default_factory=lambda: {
+    def __init__(self):
+        # Audio Format Specifications
+        self.audio_formats = {
             "mp3": FormatSpecification(
                 extensions={"mp3"},
                 mime_types={"audio/mpeg", "audio/mp3"},
@@ -188,11 +166,9 @@ class ContentFormatSettings(BaseSettings):
                 copyright_detectable=True
             )
         }
-    )
-    
-    # Video Format Specifications
-    video_formats: Dict[str, FormatSpecification] = Field(
-        default_factory=lambda: {
+        
+        # Video Format Specifications
+        self.video_formats = {
             "mp4": FormatSpecification(
                 extensions={"mp4"},
                 mime_types={"video/mp4"},
@@ -224,11 +200,9 @@ class ContentFormatSettings(BaseSettings):
                 copyright_detectable=True
             )
         }
-    )
-    
-    # Image Format Specifications
-    image_formats: Dict[str, FormatSpecification] = Field(
-        default_factory=lambda: {
+        
+        # Image Format Specifications
+        self.image_formats = {
             "jpeg": FormatSpecification(
                 extensions={"jpeg", "jpg"},
                 mime_types={"image/jpeg"},
@@ -260,11 +234,9 @@ class ContentFormatSettings(BaseSettings):
                 copyright_detectable=True
             )
         }
-    )
-    
-    # Text Format Specifications
-    text_formats: Dict[str, FormatSpecification] = Field(
-        default_factory=lambda: {
+        
+        # Text Format Specifications
+        self.text_formats = {
             "markdown": FormatSpecification(
                 extensions={"md", "markdown"},
                 mime_types={"text/markdown"},
@@ -286,11 +258,9 @@ class ContentFormatSettings(BaseSettings):
                 copyright_detectable=True
             )
         }
-    )
-    
-    # Voice Format Specifications
-    voice_formats: Dict[str, FormatSpecification] = Field(
-        default_factory=lambda: {
+        
+        # Voice Format Specifications
+        self.voice_formats = {
             "voice_wav": FormatSpecification(
                 extensions={"wav"},
                 mime_types={"audio/wav"},
@@ -312,11 +282,9 @@ class ContentFormatSettings(BaseSettings):
                 copyright_detectable=False
             )
         }
-    )
-    
-    # Avatar Format Specifications
-    avatar_formats: Dict[str, FormatSpecification] = Field(
-        default_factory=lambda: {
+        
+        # Avatar Format Specifications
+        self.avatar_formats = {
             "3d_models": FormatSpecification(
                 extensions={"fbx", "obj", "gltf"},
                 mime_types={"model/fbx", "model/obj", "model/gltf+json"},
@@ -338,11 +306,9 @@ class ContentFormatSettings(BaseSettings):
                 copyright_detectable=True
             )
         }
-    )
-    
-    # Processing Configuration
-    processing_config: ProcessingConfiguration = Field(
-        default_factory=lambda: ProcessingConfiguration(
+        
+        # Processing Configuration
+        self.processing_config = ProcessingConfiguration(
             auto_conversion_enabled=True,
             quality_enhancement=True,
             compression_optimization=True,
@@ -350,11 +316,9 @@ class ContentFormatSettings(BaseSettings):
             copyright_detection=True,
             ai_analysis=True
         )
-    )
-    
-    # Quality Standards
-    quality_standards: Dict[str, Dict[str, Any]] = Field(
-        default_factory=lambda: {
+        
+        # Quality Standards
+        self.quality_standards = {
             "audio": {
                 "min_bitrate": "128kbps",
                 "preferred_bitrate": "320kbps",
@@ -378,11 +342,9 @@ class ContentFormatSettings(BaseSettings):
                 "dpi": "300"
             }
         }
-    )
-    
-    # Validation Rules
-    validation_rules: Dict[str, bool] = Field(
-        default_factory=lambda: {
+        
+        # Validation Rules
+        self.validation_rules = {
             "format_validation": True,
             "size_validation": True,
             "quality_validation": True,
@@ -392,20 +354,14 @@ class ContentFormatSettings(BaseSettings):
             "virus_scan": True,
             "content_moderation": True
         }
-    )
-    
-    # Performance Settings
-    conversion_timeout_seconds: int = 600
-    parallel_processing_enabled: bool = True
-    max_parallel_conversions: int = 5
-    cache_converted_files: bool = True
-    auto_cleanup_enabled: bool = True
-    cleanup_after_hours: int = 24
-    
-    class Config:
-        env_prefix = "CONTENT_FORMAT_"
-        case_sensitive = False
-        extra = "allow"
+        
+        # Performance Settings
+        self.conversion_timeout_seconds = 600
+        self.parallel_processing_enabled = True
+        self.max_parallel_conversions = 5
+        self.cache_converted_files = True
+        self.auto_cleanup_enabled = True
+        self.cleanup_after_hours = 24
     
     def get_format_specification(self, format_type: str, format_name: str) -> Optional[FormatSpecification]:
         """Get format specification by type and name"""
