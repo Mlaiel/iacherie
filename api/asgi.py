@@ -50,7 +50,7 @@ except ImportError:
     logging.warning("OpenTelemetry not available")
 
 # Import our API router and configuration
-from api.api.router import router as api_router
+from .api import api_router
 try:
     from simple_config import settings
 except ImportError:
@@ -344,44 +344,17 @@ async def global_exception_handler(request: Request, exc: Exception):
 # HTTP exception handler
 @app.exception_handler(HTTPException)
 async def http_exception_handler(request: Request, exc: HTTPException):
-        try:
-            logger.info(f"Executing http_exception_handler")
-            
-            # Implementation for http_exception_handler
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"http_exception_handler completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"http_exception_handler failed: {e}")
-        except HTTPException as exc:
-            return JSONResponse(
-                status_code=exc.status_code,
-                content={
-                    "error": {
-                        "code": exc.detail.get("code", "HTTP_ERROR") if isinstance(exc.detail, dict) else "HTTP_ERROR",
-                        "message": str(exc.detail) if isinstance(exc.detail, str) else exc.detail.get("message", "HTTP Error"),
-                        "timestamp": datetime.utcnow().isoformat(),
-                        "request_id": getattr(request.state, "request_id", "unknown")
-                    }
-                }
-            )
-        except Exception as exc:
-            logger.error(f"Unhandled exception: {exc}")
-            return JSONResponse(
-                status_code=500,
-                content={
-                    "error": {
-                        "code": "INTERNAL_SERVER_ERROR",
-                        "message": "Internal server error",
-                        "timestamp": datetime.utcnow().isoformat(),
-                        "request_id": getattr(request.state, "request_id", "unknown")
-                    }
-                }
-            )
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={
+            "error": {
+                "code": exc.detail.get("code", "HTTP_ERROR") if isinstance(exc.detail, dict) else "HTTP_ERROR",
+                "message": str(exc.detail) if isinstance(exc.detail, str) else exc.detail.get("message", "HTTP Error"),
+                "timestamp": datetime.utcnow().isoformat(),
+                "request_id": getattr(request.state, "request_id", "unknown")
+            }
+        }
+    )
 
 # Custom documentation endpoints
 @app.get("/docs", include_in_schema=False)
