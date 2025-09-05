@@ -185,18 +185,6 @@ class ComplianceChecker:
         except Exception as e:
             logger.error(f"check_compliance failed: {e}")
             raise
-                        if "requirements" in rule_result:
-                            compliance_result["requirements"].extend(rule_result["requirements"])
-                            
-                    except Exception as e:
-                        logger.error(f"Error checking compliance rule {rule_name}: {str(e)}")
-                        compliance_result["warnings"].append({
-                            "policy": policy.name,
-                            "rule": rule_name,
-                            "message": f"Error checking rule: {str(e)}"
-                        })
-        
-        return compliance_result
 
 
 class ModelGovernanceEngine:
@@ -509,21 +497,10 @@ class ModelGovernanceEngine:
         approvers = []
         
         for user_id, user in self.users.items():
-        try:
-            logger.info(f"Executing expire_old_requests")
-            
-            # Implementation for expire_old_requests
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"expire_old_requests completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"expire_old_requests failed: {e}")
-            raise
-        return user_id in request.required_approvers
+            if rule.required_role in user.roles:
+                approvers.append(user_id)
+        
+        return approvers
     
     def _is_fully_approved(self, request: ApprovalRequest) -> bool:
         """Check if request is fully approved"""

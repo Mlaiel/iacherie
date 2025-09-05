@@ -3,8 +3,7 @@ Model Performance Monitoring and Drift Detection
 Comprehensive monitoring for model performance and data drift
 """
 
-import numpy as np
-import pandas as pd
+import warnings
 from typing import Dict, List, Optional, Any, Callable, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -12,9 +11,79 @@ from abc import ABC, abstractmethod
 import json
 import logging
 from enum import Enum
-from scipy import stats
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score
-import warnings
+
+# Optional dependencies
+try:
+    import numpy as np
+    NUMPY_AVAILABLE = True
+except ImportError:
+    NUMPY_AVAILABLE = False
+    warnings.warn("numpy not available. Some monitoring features will be limited.")
+
+try:
+    import pandas as pd
+    PANDAS_AVAILABLE = True
+except ImportError:
+    PANDAS_AVAILABLE = False
+    warnings.warn("pandas not available. Some monitoring features will be limited.")
+
+try:
+    from scipy import stats
+    SCIPY_AVAILABLE = True
+except ImportError:
+    SCIPY_AVAILABLE = False
+    warnings.warn("scipy not available. Statistical analysis will be limited.")
+
+try:
+    from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score
+    SKLEARN_AVAILABLE = True
+except ImportError:
+    SKLEARN_AVAILABLE = False
+    warnings.warn("sklearn not available. Some metrics will be limited.")
+
+# Define conditional types and mock implementations based on availability
+if NUMPY_AVAILABLE:
+    NDArray = np.ndarray
+else:
+    from typing import Any
+    NDArray = Any  # Fallback when numpy not available
+    # Create mock numpy for basic compatibility
+    class MockNumpy:
+        @staticmethod
+        def histogram(*args, **kwargs):
+            return [], []
+        @staticmethod
+        def concatenate(*args, **kwargs):
+            return []
+        @staticmethod
+        def sum(*args, **kwargs):
+            return 0
+        @staticmethod
+        def where(*args, **kwargs):
+            return []
+        @staticmethod
+        def log(*args, **kwargs):
+            return 0
+        @staticmethod
+        def unique(*args, **kwargs):
+            return []
+        @staticmethod
+        def arange(*args, **kwargs):
+            return []
+    np = MockNumpy()
+
+if PANDAS_AVAILABLE:
+    DataFrame = DataFrame
+else:
+    from typing import Any
+    DataFrame = Any  # Fallback when pandas not available
+    # Create mock pandas for basic compatibility
+    class MockPandas:
+        DataFrame = Any
+        @staticmethod
+        def DataFrame(*args, **kwargs):
+            return {}
+    pd = MockPandas()
 
 logger = logging.getLogger(__name__)
 
@@ -64,7 +133,7 @@ class DriftDetector(ABC):
     """Abstract base class for drift detectors"""
     
     @abstractmethod
-    def detect_drift(self, baseline_data: np.ndarray, current_data: np.ndarray) -> Tuple[bool, float, Dict]:
+    def detect_drift(self, baseline_data: NDArray, current_data: NDArray) -> Tuple[bool, float, Dict]:
         try:
             logger.info(f"Executing detect_drift")
             
@@ -77,24 +146,11 @@ class DriftDetector(ABC):
             return result
             
         except Exception as e:
-        try:
-            logger.info(f"Executing __init__")
-            
-            # Implementation for __init__
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"__init__ completed successfully")
-            return result
+            logger.error(f"detect_drift failed: {e}")
+            raise
             
         except Exception as e:
             logger.error(f"__init__ failed: {e}")
-            raise
-            return result
-            
-        except Exception as e:
-            logger.error(f"detect_drift failed: {e}")
             raise
 class KolmogorovSmirnovDriftDetector(DriftDetector):
     """Kolmogorov-Smirnov test for drift detection"""
@@ -102,7 +158,7 @@ class KolmogorovSmirnovDriftDetector(DriftDetector):
     def __init__(self, significance_level: float = 0.05):
         self.significance_level = significance_level
     
-    def detect_drift(self, baseline_data: np.ndarray, current_data: np.ndarray) -> Tuple[bool, float, Dict]:
+    def detect_drift(self, baseline_data: NDArray, current_data: NDArray) -> Tuple[bool, float, Dict]:
         """Detect drift using KS test"""
         try:
             ks_statistic, p_value = stats.ks_2samp(baseline_data, current_data)
@@ -132,7 +188,7 @@ class PSIDriftDetector(DriftDetector):
         self.bins = bins
         self.threshold = threshold
     
-    def detect_drift(self, baseline_data: np.ndarray, current_data: np.ndarray) -> Tuple[bool, float, Dict]:
+    def detect_drift(self, baseline_data: NDArray, current_data: NDArray) -> Tuple[bool, float, Dict]:
         """Detect drift using PSI"""
         try:
             # Create bins based on baseline data
@@ -178,7 +234,7 @@ class JensenShannonDriftDetector(DriftDetector):
         self.bins = bins
         self.threshold = threshold
     
-    def detect_drift(self, baseline_data: np.ndarray, current_data: np.ndarray) -> Tuple[bool, float, Dict]:
+    def detect_drift(self, baseline_data: NDArray, current_data: NDArray) -> Tuple[bool, float, Dict]:
         """Detect drift using Jensen-Shannon divergence"""
         try:
             # Create bins
@@ -238,7 +294,7 @@ class ModelPerformanceMonitor:
         self.monitoring_metrics.append(metric)
         logger.info(f"Added monitoring metric: {metric.name}")
     
-    def record_performance(self, y_true: np.ndarray, y_pred: np.ndarray, y_pred_proba: Optional[np.ndarray] = None) -> Dict[str, float]:
+    def record_performance(self, y_true: NDArray, y_pred: NDArray, y_pred_proba: Optional[NDArray] = None) -> Dict[str, float]:
         """Record model performance metrics"""
         try:
             metrics = {}
@@ -382,7 +438,7 @@ class DataDriftMonitor:
     def __init__(self, model_name: str, feature_names: List[str]):
         self.model_name = model_name
         self.feature_names = feature_names
-        self.baseline_data: Optional[pd.DataFrame] = None
+        self.baseline_data: Optional[DataFrame] = None
         self.drift_detectors: Dict[str, DriftDetector] = {}
         self.drift_history: List[Dict] = []
         
@@ -391,7 +447,7 @@ class DataDriftMonitor:
         self.drift_detectors["psi"] = PSIDriftDetector()
         self.drift_detectors["js_divergence"] = JensenShannonDriftDetector()
     
-    def set_baseline_data(self, data: pd.DataFrame):
+    def set_baseline_data(self, data: DataFrame):
         """Set baseline data for drift detection"""
         self.baseline_data = data[self.feature_names].copy()
         logger.info(f"Set baseline data for {self.model_name}: {self.baseline_data.shape}")
@@ -401,7 +457,7 @@ class DataDriftMonitor:
         self.drift_detectors[name] = detector
         logger.info(f"Added drift detector: {name}")
     
-    def detect_drift(self, current_data: pd.DataFrame) -> Dict[str, Any]:
+    def detect_drift(self, current_data: DataFrame) -> Dict[str, Any]:
         """Detect drift in current data compared to baseline"""
         if self.baseline_data is None:
             raise ValueError("Baseline data not set. Call set_baseline_data() first.")
@@ -551,7 +607,7 @@ class ComprehensiveModelMonitor:
         
     def setup_monitoring(
         self,
-        baseline_data: pd.DataFrame,
+        baseline_data: DataFrame,
         baseline_metrics: Dict[str, float],
         monitoring_metrics: List[MonitoringMetric]
     ):
@@ -568,10 +624,10 @@ class ComprehensiveModelMonitor:
     
     def monitor_prediction_batch(
         self,
-        input_data: pd.DataFrame,
-        y_true: np.ndarray,
-        y_pred: np.ndarray,
-        y_pred_proba: Optional[np.ndarray] = None
+        input_data: DataFrame,
+        y_true: NDArray,
+        y_pred: NDArray,
+        y_pred_proba: Optional[NDArray] = None
     ) -> Dict[str, Any]:
         """Monitor a batch of predictions"""
         monitoring_results = {

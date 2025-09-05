@@ -3,8 +3,7 @@ Model Explainability for Compliance and Debugging
 Implements comprehensive model explainability features
 """
 
-import numpy as np
-import pandas as pd
+import warnings
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -12,7 +11,21 @@ import json
 import logging
 from abc import ABC, abstractmethod
 from enum import Enum
-import warnings
+
+# Optional dependencies
+try:
+    import numpy as np
+    NUMPY_AVAILABLE = True
+except ImportError:
+    NUMPY_AVAILABLE = False
+    warnings.warn("numpy not available. Some explainability features will be limited.")
+
+try:
+    import pandas as pd
+    PANDAS_AVAILABLE = True
+except ImportError:
+    PANDAS_AVAILABLE = False
+    warnings.warn("pandas not available. Some explainability features will be limited.")
 
 # Import explanation libraries
 try:
@@ -36,6 +49,27 @@ try:
     SKLEARN_AVAILABLE = True
 except ImportError:
     SKLEARN_AVAILABLE = False
+
+# Add mock implementations for missing dependencies
+if NUMPY_AVAILABLE:
+    NDArray = NDArray
+else:
+    from typing import Any
+    NDArray = Any  # Fallback when numpy not available
+    # Create mock numpy for basic compatibility
+    class MockNumpy:
+        ndarray = Any
+    np = MockNumpy()
+
+if PANDAS_AVAILABLE:
+    DataFrame = pd.DataFrame
+else:
+    from typing import Any
+    DataFrame = Any  # Fallback when pandas not available
+    # Create mock pandas for basic compatibility
+    class MockPandas:
+        DataFrame = Any
+    pd = MockPandas()
 
 logger = logging.getLogger(__name__)
 
@@ -79,18 +113,28 @@ class BaseExplainer(ABC):
         self.feature_names = feature_names
     
     @abstractmethod
-    def explain_global(self, X: np.ndarray) -> Dict[str, Any]:
+    def explain_global(self, X: NDArray) -> Dict[str, Any]:
         try:
             logger.info(f"Executing explain_global")
             
             # Implementation for explain_global
             # TODO: Add specific business logic here
+            result = None  # Replace with actual implementation
+            
+            logger.info(f"explain_global completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"explain_global failed: {e}")
+            raise
+    @abstractmethod
+    def explain_local(self, X: NDArray, instance_idx: int = 0) -> Dict[str, Any]:
+        """Generate local explanation for a specific instance"""
         try:
             logger.info(f"Executing explain_local")
             
             # Implementation for explain_local
             # TODO: Add specific business logic here
-            
             result = None  # Replace with actual implementation
             
             logger.info(f"explain_local completed successfully")
@@ -99,16 +143,6 @@ class BaseExplainer(ABC):
         except Exception as e:
             logger.error(f"explain_local failed: {e}")
             raise
-            logger.info(f"explain_global completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"explain_global failed: {e}")
-            raise
-    @abstractmethod
-    def explain_local(self, X: np.ndarray, instance_idx: int = 0) -> Dict[str, Any]:
-        """Generate local explanation for a specific instance"""
-        pass
 
 
 class SHAPExplainer(BaseExplainer):
@@ -139,7 +173,7 @@ class SHAPExplainer(BaseExplainer):
             logger.error(f"Error initializing SHAP explainer: {str(e)}")
             raise
     
-    def explain_global(self, X: np.ndarray) -> Dict[str, Any]:
+    def explain_global(self, X: NDArray) -> Dict[str, Any]:
         """Generate global SHAP explanation"""
         try:
             shap_values = self.explainer.shap_values(X)
@@ -172,7 +206,7 @@ class SHAPExplainer(BaseExplainer):
             logger.error(f"Error in global SHAP explanation: {str(e)}")
             raise
     
-    def explain_local(self, X: np.ndarray, instance_idx: int = 0) -> Dict[str, Any]:
+    def explain_local(self, X: NDArray, instance_idx: int = 0) -> Dict[str, Any]:
         """Generate local SHAP explanation"""
         try:
             if instance_idx >= len(X):
@@ -226,7 +260,7 @@ class SHAPExplainer(BaseExplainer):
 class LIMEExplainer(BaseExplainer):
     """LIME-based explainer"""
     
-    def __init__(self, model: Any, feature_names: List[str], training_data: np.ndarray):
+    def __init__(self, model: Any, feature_names: List[str], training_data: NDArray):
         super().__init__(model, feature_names)
         
         if not LIME_AVAILABLE:
@@ -239,7 +273,7 @@ class LIMEExplainer(BaseExplainer):
             mode='classification' if hasattr(model, 'predict_proba') else 'regression'
         )
     
-    def explain_global(self, X: np.ndarray) -> Dict[str, Any]:
+    def explain_global(self, X: NDArray) -> Dict[str, Any]:
         """Generate global explanation by aggregating local explanations"""
         try:
             # Sample instances for global explanation
@@ -277,7 +311,7 @@ class LIMEExplainer(BaseExplainer):
             logger.error(f"Error in global LIME explanation: {str(e)}")
             raise
     
-    def explain_local(self, X: np.ndarray, instance_idx: int = 0) -> Dict[str, Any]:
+    def explain_local(self, X: NDArray, instance_idx: int = 0) -> Dict[str, Any]:
         """Generate local LIME explanation"""
         try:
             if instance_idx >= len(X):
@@ -358,7 +392,7 @@ class PermutationExplainer(BaseExplainer):
         super().__init__(model, feature_names)
         self.scoring = scoring
     
-    def explain_global(self, X: np.ndarray, y: np.ndarray = None) -> Dict[str, Any]:
+    def explain_global(self, X: NDArray, y: NDArray = None) -> Dict[str, Any]:
         """Generate global explanation using permutation importance"""
         try:
             if not SKLEARN_AVAILABLE:
@@ -397,7 +431,7 @@ class PermutationExplainer(BaseExplainer):
             logger.error(f"Error in permutation importance: {str(e)}")
             raise
     
-    def explain_local(self, X: np.ndarray, instance_idx: int = 0) -> Dict[str, Any]:
+    def explain_local(self, X: NDArray, instance_idx: int = 0) -> Dict[str, Any]:
         """Local explanations not directly supported by permutation importance"""
         return {
             "error": "Local explanations not supported by permutation importance",
@@ -441,7 +475,7 @@ class ModelExplainabilityEngine:
         self.explainers[explainer_type] = explainer
         logger.info(f"Registered {explainer_type.value} explainer")
     
-    def setup_default_explainers(self, training_data: Optional[np.ndarray] = None):
+    def setup_default_explainers(self, training_data: Optional[NDArray] = None):
         """Setup default explainers"""
         
         # SHAP explainer
@@ -470,8 +504,8 @@ class ModelExplainabilityEngine:
     
     def explain_global(
         self,
-        X: np.ndarray,
-        y: Optional[np.ndarray] = None,
+        X: NDArray,
+        y: Optional[NDArray] = None,
         explainer_types: Optional[List[ExplainerType]] = None
     ) -> List[ExplanationResult]:
         """Generate global explanations"""
@@ -517,7 +551,7 @@ class ModelExplainabilityEngine:
     
     def explain_local(
         self,
-        X: np.ndarray,
+        X: NDArray,
         instance_idx: int = 0,
         explainer_types: Optional[List[ExplainerType]] = None
     ) -> List[ExplanationResult]:
@@ -560,7 +594,7 @@ class ModelExplainabilityEngine:
     
     def explain_batch(
         self,
-        X: np.ndarray,
+        X: NDArray,
         instance_indices: List[int],
         explainer_types: Optional[List[ExplainerType]] = None
     ) -> List[ExplanationResult]:
@@ -640,8 +674,8 @@ class ModelExplainabilityEngine:
     
     def generate_explanation_report(
         self,
-        X: np.ndarray,
-        y: Optional[np.ndarray] = None,
+        X: NDArray,
+        y: Optional[NDArray] = None,
         instance_indices: Optional[List[int]] = None,
         include_comparisons: bool = True
     ) -> Dict[str, Any]:
