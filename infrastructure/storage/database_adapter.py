@@ -74,6 +74,10 @@ class IStorageAdapter(ABC):
             return result
             
         except Exception as e:
+            logger.error(f"connect failed: {e}")
+            raise
+        
+    def health_check(self):
         try:
             logger.info(f"Executing health_check")
             
