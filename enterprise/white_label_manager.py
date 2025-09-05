@@ -263,20 +263,17 @@ Advanced asset processing and optimization"""
         try:
             logger.info(f"Executing __init__")
             
-            # Implementation for __init__
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
+            # Initialize supported file extensions
+            self.supported_extensions = {
+                'image': ['png', 'jpg', 'jpeg', 'svg', 'webp'],
+                'icon': ['ico', 'png', 'svg']
+            }
             
             logger.info(f"__init__ completed successfully")
-            return result
             
         except Exception as e:
             logger.error(f"__init__ failed: {e}")
             raise
-            'image': ['png', 'jpg', 'jpeg', 'svg', 'webp'],
-            'icon': ['ico', 'png', 'svg']
-        }
         
     async def process_logo(self, file_data: bytes, output_format: str = 'png') -> Dict[str, Any]:
         """
@@ -328,24 +325,6 @@ Process and optimize logo"""
                 
                 # Final fallback
                 output_buffer = io.BytesIO()
-                img.save(output_buffer, format='JPEG', quality=20, optimize=True)
-                return output_buffer.getvalue()
-                
-        except Exception as e:
-        try:
-            logger.info(f"Executing __init__")
-            
-            # Implementation for __init__
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"__init__ completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"__init__ failed: {e}")
-            raise
                 img.save(output_buffer, format='JPEG', quality=20, optimize=True)
                 return output_buffer.getvalue()
                 

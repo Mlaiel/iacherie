@@ -549,21 +549,18 @@ class NetworkConfigurator:
         try:
             logger.info(f"Executing __init__")
             
-            # Implementation for __init__
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
+            # Initialize network templates
+            self.network_templates = {
+                'production': self._get_production_network_template(),
+                'development': self._get_development_network_template(),
+                'high_security': self._get_high_security_network_template()
+            }
             
             logger.info(f"__init__ completed successfully")
-            return result
             
         except Exception as e:
             logger.error(f"__init__ failed: {e}")
             raise
-            'production': self._get_production_network_template(),
-            'development': self._get_development_network_template(),
-            'high_security': self._get_high_security_network_template()
-        }
     
     async def configure_network(
         self,
@@ -725,20 +722,8 @@ Configure load balancer"""
                     'certificate': cert_data,
                     'auto_renewal': True,
                     'ocsp_stapling': True
-        try:
-            logger.info(f"Executing __init__")
+                }
             
-            # Implementation for __init__
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"__init__ completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"__init__ failed: {e}")
-            raise
             return ssl_config
             
         except Exception as e:

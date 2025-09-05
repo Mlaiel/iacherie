@@ -283,67 +283,37 @@ Initialize data collector"""
             engine = create_async_engine(connection_config['connection_string'])
             
             async def collect_database_data():
-        try:
-                    # Collect metrics
-                    metrics = {
-                        "timestamp": datetime.utcnow(),
-                        "metric_name": "collect_database_data",
-                        "value": data if data else 0,
-                        "tags": self._get_metric_tags()
-                    }
-            
-                    # Store metrics
-                    await self._store_metric(metrics)
-            
-                    # Send to monitoring system
-                    if hasattr(self, 'metrics_client'):
-                        await self.metrics_client.send(metrics)
-            
-                    logger.info(f"Metric collect_database_data collected")
-                    return metrics
-            
+                try:
+                    # Setup async session
+                    async_session = sessionmaker(engine, class_=AsyncSession)
+                    async with async_session() as session:
+                        query = collection_config['query']
+                        result = await session.execute(text(query))
+                        data = result.fetchall()
+                        
+                        # Collect metrics
+                        metrics = {
+                            "timestamp": datetime.utcnow(),
+                            "metric_name": "collect_database_data",
+                            "value": len(data) if data else 0,
+                            "tags": self._get_metric_tags()
+                        }
+                        
+                        # Store metrics
+                        await self._store_metric(metrics)
+                        
+                        # Send to monitoring system
+                        if hasattr(self, 'metrics_client'):
+                            await self.metrics_client.send(metrics)
+                        
+                        logger.info(f"Metric collect_database_data collected")
+                        return metrics
+                        
                 except Exception as e:
-                    logger.error(f"Metric collection collect_database_data failed: {e}")
+                    logger.error(f"Database collection failed: {e}")
                     return None
-                    query = collection_config['query']
-                    result = await session.execute(text(query))
-                    data = result.fetchall()
-                    
-                    # Convert to metric data points
-                    metrics = []
-                    for row in data:
-        try:
-                    # Collect metrics
-                    metrics = {
-                        "timestamp": datetime.utcnow(),
-                        "metric_name": "collect_api_data",
-                        "value": data if data else 0,
-                        "tags": self._get_metric_tags()
-                    }
             
-                    # Store metrics
-                    await self._store_metric(metrics)
-            
-                    # Send to monitoring system
-                    if hasattr(self, 'metrics_client'):
-                        await self.metrics_client.send(metrics)
-            
-                    logger.info(f"Metric collect_api_data collected")
-                    return metrics
-            
-                except Exception as e:
-                    logger.error(f"Metric collection collect_api_data failed: {e}")
-                    return None
-                            metric_id=collection_config.get('metric_id', source_id),
-                            value=row[collection_config.get('value_column', 0)],
-                            timestamp=datetime.now(timezone.utc),
-                            dimensions=collection_config.get('dimensions', {}),
-                            metadata={'source': source_id}
-                        )
-                        metrics.append(metric)
-                    
-                    return metrics
-            
+            # Schedule regular collection
             self._collectors[source_id] = collect_database_data
             
         except Exception as e:
@@ -758,16 +728,8 @@ Create predictive analytics model"""
             return result
             
         except Exception as e:
-        try:
-            logger.info(f"Executing __init__")
-            
-            # Implementation for __init__
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"__init__ completed successfully")
-            return result
+            logger.error(f"Anomaly detection failed: {e}")
+            return []
             
         except Exception as e:
             logger.error(f"__init__ failed: {e}")

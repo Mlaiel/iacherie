@@ -242,40 +242,37 @@ Advanced data classification engine"""
         try:
             logger.info(f"Executing __init__")
             
-            # Implementation for __init__
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
+            # Initialize classification patterns
+            self._classification_patterns = {
+                DataCategory.PERSONAL_DATA: [
+                    r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b',  # Email
+                    r'\b\d{3}-?\d{2}-?\d{4}\b',  # SSN
+                    r'\b\d{3}-\d{3}-\d{4}\b',  # Phone
+                ],
+                DataCategory.FINANCIAL_DATA: [
+                    r'\b4[0-9]{12}(?:[0-9]{3})?\b',  # Visa
+                    r'\b5[1-5][0-9]{14}\b',  # MasterCard
+                    r'\b3[47][0-9]{13}\b',  # American Express
+                    r'\b\d{10,12}\b',  # Bank account
+                ],
+                DataCategory.HEALTH_DATA: [
+                    r'\bmrn\s*:?\s*\d+\b',  # Medical Record Number
+                    r'\bpatient\s*id\s*:?\s*\d+\b',
+                    r'\bdiagnosis\b',
+                    r'\bmedication\b',
+                ],
+                DataCategory.LOCATION_DATA: [
+                    r'\b-?\d{1,3}\.\d+,\s*-?\d{1,3}\.\d+\b',  # Coordinates
+                    r'\b\d{5}(-\d{4})?\b',  # ZIP codes
+                    r'\blatitude\b|\blongitude\b',
+                ]
+            }
             
             logger.info(f"__init__ completed successfully")
-            return result
             
         except Exception as e:
             logger.error(f"__init__ failed: {e}")
             raise
-            DataCategory.PERSONAL_DATA: [
-                r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b',  # Email
-                r'\b\d{3}-?\d{2}-?\d{4}\b',  # SSN
-                r'\b\d{3}-\d{3}-\d{4}\b',  # Phone
-            ],
-            DataCategory.FINANCIAL_DATA: [
-                r'\b4[0-9]{12}(?:[0-9]{3})?\b',  # Visa
-                r'\b5[1-5][0-9]{14}\b',  # MasterCard
-                r'\b3[47][0-9]{13}\b',  # American Express
-                r'\b\d{10,12}\b',  # Bank account
-            ],
-            DataCategory.HEALTH_DATA: [
-                r'\bmrn\s*:?\s*\d+\b',  # Medical Record Number
-                r'\bpatient\s*id\s*:?\s*\d+\b',
-                r'\bdiagnosis\b',
-                r'\bmedication\b',
-            ],
-            DataCategory.LOCATION_DATA: [
-                r'\b-?\d{1,3}\.\d+,\s*-?\d{1,3}\.\d+\b',  # Coordinates
-                r'\b\d{5}(-\d{4})?\b',  # ZIP codes
-                r'\blatitude\b|\blongitude\b',
-            ]
-        }
     
     async def classify_data(self, data: Union[str, Dict[str, Any], List[Any]]) -> Dict[DataCategory, List[str]]:
         """
