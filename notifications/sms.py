@@ -437,11 +437,15 @@ Send batch of messages with rate limiting."""
         semaphore = asyncio.Semaphore(min(rate_limit, self.max_concurrent_requests))
         
         async def send_single(message: SMSMessage):
-        try:
-            logger.info(f"Executing send_single")
-            
-            # Implementation for send_single
-            # TODO: Add specific business logic here
+            try:
+                logger.info(f"Executing send_single")
+                
+                # Implementation for send_single
+                # TODO: Add specific business logic here
+                return True
+            except Exception as e:
+                logger.error(f"Error in send_single: {e}")
+                return False
             
             result = None  # Replace with actual implementation
             

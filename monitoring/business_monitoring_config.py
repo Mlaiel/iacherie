@@ -297,7 +297,7 @@ class BusinessMonitoringConfig:
             AlertConfig(
                 alert_id="acquisition_cost_critical",
                 metric_type=BusinessMetricType.CUSTOMER_ACQUISITION_COST,
-                alert_type=BusinessAlertType.USER_ACQUISITION_DROP,
+                alert_type=BusinessAlertType.CONVERSION_DROP,  # Use available enum value
                 threshold_value=200.0,  # $200 CAC
                 comparison_operator=">",
                 severity="critical",

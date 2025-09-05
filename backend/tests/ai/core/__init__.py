@@ -146,13 +146,17 @@ Track test results across test runs"""
             logger.error(f"__init__ failed: {e}")
             raise
             
-        except Exception as e:
+    def process_request(self, data=None):
         try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
+            # Request validation
+            if not data:
+                raise ValueError("Invalid request")
             
-                    # Process request
+            # Process request
+            return True
+        except Exception as e:
+            logger.error(f"Request processing failed: {e}")
+            return False
                     result = await self._handle_get_summary_request(data)
             
                     # Return response
