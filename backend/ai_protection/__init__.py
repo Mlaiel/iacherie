@@ -13,6 +13,14 @@ from .blockchain_registry import BlockchainRightsRegistry, RightsType
 from .copyright_detector import CopyrightDetector, ViolationType
 from .nft_generator import NFTGenerator, NFTStandard
 from .rights_manager import DigitalRightsManager, ProtectionLevel
+from .ai_protection_orchestrator import (
+    AIProtectionOrchestrator, 
+    ProtectionRequest, 
+    ProtectionResult, 
+    OrchestrationStrategy,
+    ThreatLevel,
+    create_ai_protection_orchestrator
+)
 
 __all__ = [
     'WatermarkEngine',
@@ -26,7 +34,13 @@ __all__ = [
     'NFTGenerator',
     'NFTStandard',
     'DigitalRightsManager',
-    'ProtectionLevel'
+    'ProtectionLevel',
+    'AIProtectionOrchestrator',
+    'ProtectionRequest',
+    'ProtectionResult',
+    'OrchestrationStrategy',
+    'ThreatLevel',
+    'create_ai_protection_orchestrator'
 ]
 
 __version__ = "1.0.0"
