@@ -1,0 +1,538 @@
+# =============================================================================
+# AINFLUE MONETIZATION SERVICES - DOCKER COMPOSE
+# =============================================================================
+# Revenue tracking, payment processing, and monetization optimization cluster
+# with multi-currency support, automated billing, and analytics.
+#
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+# =============================================================================
+
+version: '3.8'
+
+x-monetization-common: &monetization-common
+  restart: unless-stopped
+  networks:
+    - monetization-network
+    - backend-network
+  environment:
+    - ENVIRONMENT=${ENVIRONMENT:-production}
+    - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    - REDIS_HOST=redis-master
+    - POSTGRES_HOST=postgres-master
+    - MONITORING_ENABLED=true
+  logging:
+    driver: "json-file"
+    options:
+      max-size: "200m"
+      max-file: "5"
+
+x-monetization-resources: &monetization-resources
+  deploy:
+    resources:
+      limits:
+        cpus: '2.0'
+        memory: 3G
+      reservations:
+        cpus: '0.5'
+        memory: 1G
+    restart_policy:
+      condition: on-failure
+      delay: 10s
+      max_attempts: 3
+
+services:
+  # =============================================================================
+  # REVENUE TRACKER
+  # =============================================================================
+  revenue-tracker:
+    build:
+      context: ../..
+      dockerfile: docker/monetization/revenue_tracker.dockerfile
+      target: production
+    container_name: ainflue-revenue-tracker
+    <<: *monetization-common
+    <<: *monetization-resources
+    ports:
+      - "8040:8040"
+    volumes:
+      - revenue_storage:/app/storage
+      - revenue_logs:/app/logs
+      - revenue_cache:/app/cache
+      - revenue_data:/app/data
+    environment:
+      <<: *monetization-common
+      SERVICE_NAME: revenue_tracker
+      TRACKING_INTERVAL: 3600
+      REAL_TIME_UPDATES: true
+      ANALYTICS_RETENTION_DAYS: 365
+    secrets:
+      - spotify_credentials
+      - youtube_api_key
+      - stripe_keys
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8040/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # =============================================================================
+  # PAYMENT PROCESSOR
+  # =============================================================================
+  payment-processor:
+    build:
+      context: ../..
+      dockerfile: docker/monetization/payment_processor.dockerfile
+      target: production
+    container_name: ainflue-payment-processor
+    <<: *monetization-common
+    <<: *monetization-resources
+    ports:
+      - "8041:8041"
+    volumes:
+      - payment_storage:/app/storage
+      - payment_logs:/app/logs
+      - payment_keys:/app/keys
+    environment:
+      <<: *monetization-common
+      SERVICE_NAME: payment_processor
+      SUPPORTED_CURRENCIES: USD,EUR,GBP,JPY,BTC,ETH
+      PCI_COMPLIANCE: true
+      FRAUD_DETECTION: true
+    secrets:
+      - stripe_keys
+      - paypal_credentials
+      - crypto_wallet_keys
+    deploy:
+      resources:
+        limits:
+          cpus: '3.0'
+          memory: 4G
+        reservations:
+          cpus: '1.0'
+          memory: 2G
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8041/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # =============================================================================
+  # SUBSCRIPTION MANAGER
+  # =============================================================================
+  subscription-manager:
+    build:
+      context: ../..
+      dockerfile: docker/monetization/subscription_manager.dockerfile
+      target: production
+    container_name: ainflue-subscription-manager
+    <<: *monetization-common
+    ports:
+      - "8042:8042"
+    volumes:
+      - subscription_storage:/app/storage
+      - subscription_logs:/app/logs
+    environment:
+      <<: *monetization-common
+      SERVICE_NAME: subscription_manager
+      BILLING_CYCLE_CHECK_HOUR: 6
+      TRIAL_PERIOD_DAYS: 14
+    deploy:
+      resources:
+        limits:
+          cpus: '1.5'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8042/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # =============================================================================
+  # ROYALTY CALCULATOR
+  # =============================================================================
+  royalty-calculator:
+    build:
+      context: ../..
+      dockerfile: docker/monetization/royalty_calculator.dockerfile
+      target: production
+    container_name: ainflue-royalty-calculator
+    <<: *monetization-common
+    ports:
+      - "8043:8043"
+    volumes:
+      - royalty_storage:/app/storage
+      - royalty_logs:/app/logs
+    environment:
+      <<: *monetization-common
+      SERVICE_NAME: royalty_calculator
+      CALCULATION_SCHEDULE: daily
+      DEFAULT_ROYALTY_RATE: 0.15
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8043/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # =============================================================================
+  # ADVERTISING OPTIMIZER
+  # =============================================================================
+  advertising-optimizer:
+    build:
+      context: ../..
+      dockerfile: docker/monetization/advertising_optimizer.dockerfile
+      target: production
+    container_name: ainflue-advertising-optimizer
+    <<: *monetization-common
+    ports:
+      - "8044:8044"
+    volumes:
+      - advertising_storage:/app/storage
+      - advertising_logs:/app/logs
+    environment:
+      <<: *monetization-common
+      SERVICE_NAME: advertising_optimizer
+      OPTIMIZATION_INTERVAL: 3600
+      MIN_BUDGET_THRESHOLD: 100
+    secrets:
+      - google_ads_credentials
+      - facebook_ads_credentials
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 3G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8044/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # =============================================================================
+  # LICENSING ENGINE
+  # =============================================================================
+  licensing-engine:
+    build:
+      context: ../..
+      dockerfile: docker/monetization/licensing_engine.dockerfile
+      target: production
+    container_name: ainflue-licensing-engine
+    <<: *monetization-common
+    ports:
+      - "8045:8045"
+    volumes:
+      - licensing_storage:/app/storage
+      - licensing_logs:/app/logs
+    environment:
+      <<: *monetization-common
+      SERVICE_NAME: licensing_engine
+      AUTO_APPROVE_THRESHOLD: 1000
+      LICENSE_TERM_YEARS: 5
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 2G
+        reservations:
+          cpus: '0.3'
+          memory: 512M
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8045/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # =============================================================================
+  # PAYOUT SCHEDULER
+  # =============================================================================
+  payout-scheduler:
+    build:
+      context: ../..
+      dockerfile: docker/monetization/payout_scheduler.dockerfile
+      target: production
+    container_name: ainflue-payout-scheduler
+    <<: *monetization-common
+    ports:
+      - "8046:8046"
+    volumes:
+      - payout_storage:/app/storage
+      - payout_logs:/app/logs
+    environment:
+      <<: *monetization-common
+      SERVICE_NAME: payout_scheduler
+      PAYOUT_SCHEDULE: weekly
+      MIN_PAYOUT_AMOUNT: 50
+    secrets:
+      - stripe_keys
+      - paypal_credentials
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.3'
+          memory: 512M
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8046/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # =============================================================================
+  # REVENUE ANALYTICS
+  # =============================================================================
+  revenue-analytics:
+    build:
+      context: ../..
+      dockerfile: docker/monetization/revenue_analytics.dockerfile
+      target: production
+    container_name: ainflue-revenue-analytics
+    <<: *monetization-common
+    ports:
+      - "8047:8047"
+    volumes:
+      - analytics_storage:/app/storage
+      - analytics_logs:/app/logs
+    environment:
+      <<: *monetization-common
+      SERVICE_NAME: revenue_analytics
+      REPORT_GENERATION_SCHEDULE: daily
+      DASHBOARD_REFRESH_INTERVAL: 3600
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 3G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8047/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # =============================================================================
+  # INVOICE GENERATOR
+  # =============================================================================
+  invoice-generator:
+    build:
+      context: ../..
+      dockerfile: docker/monetization/invoice_generator.dockerfile
+      target: production
+    container_name: ainflue-invoice-generator
+    <<: *monetization-common
+    ports:
+      - "8048:8048"
+    volumes:
+      - invoice_storage:/app/storage
+      - invoice_logs:/app/logs
+    environment:
+      <<: *monetization-common
+      SERVICE_NAME: invoice_generator
+      INVOICE_SEQUENCE_START: 10000
+      AUTO_SEND_INVOICES: false
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.3'
+          memory: 512M
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8048/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # =============================================================================
+  # COMMISSION TRACKER
+  # =============================================================================
+  commission-tracker:
+    build:
+      context: ../..
+      dockerfile: docker/monetization/commission_tracker.dockerfile
+      target: production
+    container_name: ainflue-commission-tracker
+    <<: *monetization-common
+    ports:
+      - "8049:8049"
+    volumes:
+      - commission_storage:/app/storage
+      - commission_logs:/app/logs
+    environment:
+      <<: *monetization-common
+      SERVICE_NAME: commission_tracker
+      DEFAULT_COMMISSION_RATE: 0.10
+      COMMISSION_CALCULATION_SCHEDULE: daily
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.3'
+          memory: 512M
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8049/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # =============================================================================
+  # MERCHANDISING HUB
+  # =============================================================================
+  merchandising-hub:
+    build:
+      context: ../..
+      dockerfile: docker/monetization/merchandising_hub.dockerfile
+      target: production
+    container_name: ainflue-merchandising-hub
+    <<: *monetization-common
+    ports:
+      - "8050:8050"
+    volumes:
+      - merchandising_storage:/app/storage
+      - merchandising_logs:/app/logs
+    environment:
+      <<: *monetization-common
+      SERVICE_NAME: merchandising_hub
+      PRODUCT_IMAGE_MAX_SIZE: 5MB
+      ORDER_FULFILLMENT_TIMEOUT: 72
+    deploy:
+      resources:
+        limits:
+          cpus: '1.5'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8050/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+# =============================================================================
+# SECRETS
+# =============================================================================
+secrets:
+  spotify_credentials:
+    external: true
+  youtube_api_key:
+    external: true
+  stripe_keys:
+    external: true
+  paypal_credentials:
+    external: true
+  crypto_wallet_keys:
+    external: true
+  google_ads_credentials:
+    external: true
+  facebook_ads_credentials:
+    external: true
+
+# =============================================================================
+# PERSISTENT VOLUMES
+# =============================================================================
+volumes:
+  # Revenue tracking
+  revenue_storage:
+    driver: local
+  revenue_logs:
+    driver: local
+  revenue_cache:
+    driver: local
+  revenue_data:
+    driver: local
+  
+  # Payment processing
+  payment_storage:
+    driver: local
+  payment_logs:
+    driver: local
+  payment_keys:
+    driver: local
+  
+  # Subscriptions
+  subscription_storage:
+    driver: local
+  subscription_logs:
+    driver: local
+  
+  # Royalties
+  royalty_storage:
+    driver: local
+  royalty_logs:
+    driver: local
+  
+  # Advertising
+  advertising_storage:
+    driver: local
+  advertising_logs:
+    driver: local
+  
+  # Licensing
+  licensing_storage:
+    driver: local
+  licensing_logs:
+    driver: local
+  
+  # Payouts
+  payout_storage:
+    driver: local
+  payout_logs:
+    driver: local
+  
+  # Analytics
+  analytics_storage:
+    driver: local
+  analytics_logs:
+    driver: local
+  
+  # Invoices
+  invoice_storage:
+    driver: local
+  invoice_logs:
+    driver: local
+  
+  # Commissions
+  commission_storage:
+    driver: local
+  commission_logs:
+    driver: local
+  
+  # Merchandising
+  merchandising_storage:
+    driver: local
+  merchandising_logs:
+    driver: local
+
+# =============================================================================
+# NETWORKS
+# =============================================================================
+networks:
+  monetization-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.32.0.0/24
+  backend-network:
+    external: true
