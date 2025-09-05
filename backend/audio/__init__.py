@@ -56,7 +56,10 @@ from .enhancement import (
     BassEnhancer,
     VocalEnhancer,
     AudioRestorer,
-    QualityEnhancer
+    QualityEnhancer,
+    ProfessionalMasteringSuite,
+    LoudnessLimiter,
+    BroadcastStandardsValidator
 )
 
 # Speech recognition
@@ -88,7 +91,11 @@ from .fingerprinting import (
     SimilarityEngine,
     DuplicateDetector,
     PerceptualHashGenerator,
-    FingerprintMatchingEngine
+    FingerprintMatchingEngine,
+    EnterpriseContentIdentificationSystem,
+    BlockchainRightsManager,
+    RealTimeContentMonitor,
+    RightsManagementDatabase
 )
 
 # Audio compression/codecs
@@ -185,6 +192,9 @@ __all__ = [
     'VocalEnhancer',
     'AudioRestorer',
     'QualityEnhancer',
+    'ProfessionalMasteringSuite',
+    'LoudnessLimiter',
+    'BroadcastStandardsValidator',
     
     # Recognition
     'SpeechRecognizer',
@@ -211,6 +221,10 @@ __all__ = [
     'DuplicateDetector',
     'PerceptualHashGenerator',
     'FingerprintMatchingEngine',
+    'EnterpriseContentIdentificationSystem',
+    'BlockchainRightsManager',
+    'RealTimeContentMonitor',
+    'RightsManagementDatabase',
     
     # Compression
     'AudioCompressor',
