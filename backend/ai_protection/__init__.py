@@ -21,8 +21,54 @@ from .ai_protection_orchestrator import (
     ThreatLevel,
     create_ai_protection_orchestrator
 )
+from .multimedia_protection_engine import (
+    MultimediaProtectionEngine,
+    ProtectionProfile,
+    MultimediaAnalysis,
+    ProtectionAlgorithm,
+    OptimizationTarget,
+    create_multimedia_protection_engine,
+    create_protection_profile
+)
+from .violation_monitoring_system import (
+    ViolationMonitoringSystem,
+    MonitoringTarget,
+    ViolationDetection,
+    MonitoringScope,
+    ViolationSeverity,
+    EscalationAction,
+    create_violation_monitoring_system
+)
+from .legal_automation_engine import (
+    LegalAutomationEngine,
+    LegalCase,
+    LegalDocument,
+    DMCANotice,
+    LegalActionType,
+    LegalActionStatus,
+    EnforcementStrategy,
+    create_legal_automation_engine
+)
+from .global_protection_network import (
+    GlobalProtectionNetwork,
+    GlobalViolation,
+    CountryCode,
+    Region,
+    ComplianceFramework,
+    create_global_protection_network
+)
+from .protection_analytics_engine import (
+    ProtectionAnalyticsEngine,
+    AnalyticsMetric,
+    ReportType,
+    TimeRange,
+    ROIAnalysis,
+    PerformanceMetrics,
+    create_protection_analytics_engine
+)
 
 __all__ = [
+    # Core existing modules
     'WatermarkEngine',
     'WatermarkConfig', 
     'WatermarkType',
@@ -35,12 +81,59 @@ __all__ = [
     'NFTStandard',
     'DigitalRightsManager',
     'ProtectionLevel',
+    
+    # AI Protection Orchestrator
     'AIProtectionOrchestrator',
     'ProtectionRequest',
     'ProtectionResult',
     'OrchestrationStrategy',
     'ThreatLevel',
-    'create_ai_protection_orchestrator'
+    'create_ai_protection_orchestrator',
+    
+    # Multimedia Protection Engine
+    'MultimediaProtectionEngine',
+    'ProtectionProfile',
+    'MultimediaAnalysis', 
+    'ProtectionAlgorithm',
+    'OptimizationTarget',
+    'create_multimedia_protection_engine',
+    'create_protection_profile',
+    
+    # Violation Monitoring System
+    'ViolationMonitoringSystem',
+    'MonitoringTarget',
+    'ViolationDetection',
+    'MonitoringScope',
+    'ViolationSeverity',
+    'EscalationAction',
+    'create_violation_monitoring_system',
+    
+    # Legal Automation Engine
+    'LegalAutomationEngine',
+    'LegalCase',
+    'LegalDocument', 
+    'DMCANotice',
+    'LegalActionType',
+    'LegalActionStatus',
+    'EnforcementStrategy',
+    'create_legal_automation_engine',
+    
+    # Global Protection Network
+    'GlobalProtectionNetwork',
+    'GlobalViolation',
+    'CountryCode',
+    'Region',
+    'ComplianceFramework',
+    'create_global_protection_network',
+    
+    # Protection Analytics Engine
+    'ProtectionAnalyticsEngine',
+    'AnalyticsMetric',
+    'ReportType',
+    'TimeRange',
+    'ROIAnalysis',
+    'PerformanceMetrics',
+    'create_protection_analytics_engine'
 ]
 
 __version__ = "1.0.0"
