@@ -13,7 +13,25 @@ from .licensing import LicensingManager, LicenseAgreement, LicenseValidation
 from .revenue_sharing import RevenueShareManager, RevenueDistribution, ShareCalculator
 from .influencer_trading import InfluencerTradingEngine, TradingTransaction, MarketMaker
 
-# Enterprise compliance and security modules
+# Performance & scaling modules
+from .marketplace_cache import (
+    MarketplaceCacheManager, MarketplaceCacheHelpers, CacheLayer, CacheStrategy,
+    InvalidationStrategy, CacheKey, CacheEntry, CacheStats, CacheConfig
+)
+from .database_optimizer import (
+    DatabaseOptimizer, QueryType, PerformanceLevel, OptimizationType,
+    QueryMetrics, OptimizationRecommendation, IndexRecommendation,
+    TableStatistics, ConnectionPoolStats
+)
+from .load_balancer import (
+    LoadBalancer, LoadBalancingAlgorithm, ServerStatus, CircuitBreakerState,
+    ServerInstance, HealthCheckConfig, CircuitBreaker, LoadBalancerStats, TrafficRule
+)
+from .cdn_integration import (
+    CDNIntegrationManager, CDNProvider, ContentType, CacheStrategy as CDNCacheStrategy,
+    OptimizationLevel, CDNEndpoint, ContentItem, CacheInvalidationRequest,
+    CDNPerformanceMetrics, ContentOptimizationResult
+)
 from .marketplace_compliance import (
     MarketplaceComplianceManager, ComplianceStatus, GDPRRights, 
     ComplianceRegion, ComplianceRecord, GDPRRequest, LegalFramework
@@ -47,6 +65,45 @@ __all__ = [
     "InfluencerTradingEngine",
     "TradingTransaction",
     "MarketMaker",
+    
+    # Performance & scaling
+    "MarketplaceCacheManager",
+    "MarketplaceCacheHelpers",
+    "CacheLayer",
+    "CacheStrategy",
+    "InvalidationStrategy",
+    "CacheKey",
+    "CacheEntry",
+    "CacheStats",
+    "CacheConfig",
+    "DatabaseOptimizer",
+    "QueryType",
+    "PerformanceLevel",
+    "OptimizationType",
+    "QueryMetrics",
+    "OptimizationRecommendation",
+    "IndexRecommendation",
+    "TableStatistics",
+    "ConnectionPoolStats",
+    "LoadBalancer",
+    "LoadBalancingAlgorithm",
+    "ServerStatus",
+    "CircuitBreakerState",
+    "ServerInstance",
+    "HealthCheckConfig",
+    "CircuitBreaker",
+    "LoadBalancerStats",
+    "TrafficRule",
+    "CDNIntegrationManager",
+    "CDNProvider",
+    "ContentType",
+    "CDNCacheStrategy",
+    "OptimizationLevel",
+    "CDNEndpoint",
+    "ContentItem",
+    "CacheInvalidationRequest",
+    "CDNPerformanceMetrics",
+    "ContentOptimizationResult",
     
     # Enterprise compliance
     "MarketplaceComplianceManager",
@@ -94,5 +151,5 @@ __all__ = [
     "LegalDispute"
 ]
 
-__version__ = "2.0.0"
+__version__ = "3.0.0"
 __author__ = "Fahed Mlaiel"
