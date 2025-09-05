@@ -56,7 +56,7 @@ from .swarm_intelligence import (
     SwarmBehavior
 )
 
-# Business Logic Orchestration Components (NEW - Phase 1 Implementation)
+# Business Logic Orchestration Components (NEW - Phase 1 & 2 Implementation)
 from .creator_business_orchestrator import (
     CreatorBusinessOrchestrator,
     CreatorType,
@@ -102,6 +102,19 @@ from .content_lifecycle_orchestrator import (
     get_content_lifecycle_orchestrator
 )
 
+# IA Processing Business Orchestration (NEW - Phase 2)
+from .ia_business_processing_orchestrator import (
+    IABusinessProcessingOrchestrator,
+    AIProcessingStage,
+    AIModelType,
+    ProcessingPriority,
+    BusinessImpactLevel,
+    AIModel,
+    IAProcessingRequest,
+    IAProcessingExecution,
+    get_ia_business_processing_orchestrator
+)
+
 __all__ = [
     # AI Orchestration (Existing)
     # Model Ensemble
@@ -140,7 +153,7 @@ __all__ = [
     "SwarmConfig",
     "SwarmBehavior",
     
-    # Business Logic Orchestration (NEW - Phase 1)
+    # Business Logic Orchestration (NEW - Phase 1 & 2)
     # Creator Business Orchestration
     "CreatorBusinessOrchestrator",
     "CreatorType",
@@ -180,5 +193,16 @@ __all__ = [
     "ContentLifecycleProfile",
     "LifecycleStageExecution", 
     "ContentLifecycleExecution",
-    "get_content_lifecycle_orchestrator"
+    "get_content_lifecycle_orchestrator",
+    
+    # IA Processing Business Orchestration (NEW - Phase 2)
+    "IABusinessProcessingOrchestrator",
+    "AIProcessingStage",
+    "AIModelType",
+    "ProcessingPriority",
+    "BusinessImpactLevel",
+    "AIModel",
+    "IAProcessingRequest",
+    "IAProcessingExecution",
+    "get_ia_business_processing_orchestrator"
 ]
