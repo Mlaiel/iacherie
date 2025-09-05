@@ -347,34 +347,29 @@ class BusinessMonitoringOrchestrator:
             
             # Implementation for _setup_ab_testing_integration
             # TODO: Add specific business logic here
-        try:
-                    # Collect metrics
-                    metrics = {
-                        "timestamp": datetime.utcnow(),
-                        "metric_name": "_setup_automated_reporting",
-                        "value": data if data else 0,
-                        "tags": self._get_metric_tags()
-                    }
             
-                    # Store metrics
-                    await self._store_metric(metrics)
+            # Collect metrics
+            metrics = {
+                "timestamp": datetime.utcnow(),
+                "metric_name": "_setup_ab_testing_integration",
+                "value": 1,
+                "tags": self._get_metric_tags()
+            }
             
-                    # Send to monitoring system
-                    if hasattr(self, 'metrics_client'):
-                        await self.metrics_client.send(metrics)
+            # Store metrics
+            await self._store_metric(metrics)
             
-                    logger.info(f"Metric _setup_automated_reporting collected")
-                    return metrics
+            # Send to monitoring system
+            if hasattr(self, 'metrics_client'):
+                await self.metrics_client.send(metrics)
             
-                except Exception as e:
-                    logger.error(f"Metric collection _setup_automated_reporting failed: {e}")
-                    return None
-            logger.info(f"_setup_ab_testing_integration completed successfully")
-            return result
+            logger.info(f"Metric _setup_ab_testing_integration collected")
+            return metrics
             
         except Exception as e:
             logger.error(f"_setup_ab_testing_integration failed: {e}")
-            raise
+            return None
+
     async def _setup_automated_reporting(self):
         """Setup automated reporting schedules"""
         # Configure automated reporting from config

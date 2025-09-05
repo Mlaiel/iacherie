@@ -41,7 +41,8 @@ from .exceptions import (
     EventValidationError,
     EventSourcingError,
     HandlerNotFoundError,
-    ProcessingTimeoutError
+    ProcessingTimeoutError,
+    EventStreamingError
 )
 
 # Export main classes and enums
@@ -55,6 +56,7 @@ __all__ = [
     'EventSourcingError',
     'HandlerNotFoundError',
     'ProcessingTimeoutError',
+    'EventStreamingError',
     'logger'
 ]
 

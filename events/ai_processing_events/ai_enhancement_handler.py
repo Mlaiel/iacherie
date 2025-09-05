@@ -885,13 +885,8 @@ Apply comprehensive AI enhancement pipeline"""
             return result
             
         except Exception as e:
-        try:
-            logger.info(f"Executing _apply_image_enhancement")
-            
-            # Implementation for _apply_image_enhancement
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
+            logger.error(f"Enhancement processing failed: {e}")
+            raise
             
             logger.info(f"_apply_image_enhancement completed successfully")
             return result

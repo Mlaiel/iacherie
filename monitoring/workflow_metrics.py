@@ -12,8 +12,7 @@ logger = logging.getLogger(__name__)
 
 
 class WorkflowMetrics:
-    """
-Workflow metrics collection"""
+    """Workflow metrics collection"""
     
     def __init__(self):
         try:
@@ -31,7 +30,6 @@ Workflow metrics collection"""
             logger.error(f"__init__ failed: {e}")
             raise
     async def setup_content_tracking(self, config: Dict[str, Any]):
-        """
         """Setup content tracking configuration"""
         workflow_id = config.get("workflow_id")
         content_id = config.get("content_id")
@@ -44,16 +42,6 @@ Workflow metrics collection"""
         }
         
         return tracking_config
-            return result
-            
-        except Exception as e:
-            logger.error(f"__init__ failed: {e}")
-            raise
-            "setup_time": datetime.utcnow().isoformat()
-        }
-        
-        self.metrics[workflow_id] = tracking_config
-        logger.info(f"Tracking setup for workflow {workflow_id}")
 
 
 class NotificationService:
@@ -63,8 +51,7 @@ class NotificationService:
         self.notifications = []
     
     async def send_notification(self, notification_data: Dict[str, Any]):
-        """
-Send notification to user"""
+        """Send notification to user"""
         workflow_id = notification_data.get("workflow_id")
         creator_id = notification_data.get("creator_id")
         title = notification_data.get("title")

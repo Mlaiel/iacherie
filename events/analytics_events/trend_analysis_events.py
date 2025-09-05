@@ -564,10 +564,8 @@ Create comprehensive trend visualizations"""
             'timeline': timeline_viz,
             'growth_curve': growth_viz,
             'geographic_heatmap': geo_viz,
-        try:
-            logger.info(f"Executing __init__")
-            
-            # Implementation for __init__
+            'prediction': prediction_viz
+        }
             # TODO: Add specific business logic here
             
             result = None  # Replace with actual implementation
