@@ -23,16 +23,21 @@ import uuid
 import asyncio
 import logging
 
-# Import our enterprise monetization modules
-from business.monetization.enterprise_crypto_processor import (
-    EnterpriseCryptoProcessor, CryptoCurrency, CryptoNetwork
-)
-from business.monetization.ai_revenue_tracking import (
-    AIRevenueTrackingEngine, RevenueDataPoint, RevenueStream, Platform, AttributionModel
-)
-from business.monetization.intelligent_payment_router import (
-    IntelligentPaymentRouter, PaymentRequest, RoutingStrategy, PaymentProvider
-)
+# Import our enterprise monetization modules with error handling
+try:
+    from business.monetization.enterprise_crypto_processor import (
+        EnterpriseCryptoProcessor, CryptoCurrency, CryptoNetwork
+    )
+    from business.monetization.ai_revenue_tracking import (
+        AIRevenueTrackingEngine, RevenueDataPoint, RevenueStream, Platform, AttributionModel
+    )
+    from business.monetization.intelligent_payment_router import (
+        IntelligentPaymentRouter, PaymentRequest, RoutingStrategy, PaymentProvider
+    )
+    MONETIZATION_MODULES_AVAILABLE = True
+except ImportError as e:
+    print(f"Warning: Could not import monetization modules: {e}")
+    MONETIZATION_MODULES_AVAILABLE = False
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)

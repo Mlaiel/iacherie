@@ -14,19 +14,36 @@ from typing import Dict, List, Any, Optional
 from datetime import datetime
 from pydantic import BaseModel
 
-# Import the intelligent alert system
-from ..monitoring.alerts import (
-    alert_coordinator,
-    BusinessMetrics,
-    TechnicalMetrics,
-    ModelMetrics,
-    SecurityEvent,
-    AlertCategory,
-    AlertSeverity,
-    SystemHealthStatus,
-    AIModelType,
-    SecurityThreatLevel
-)
+# Import the intelligent alert system with error handling
+try:
+    from monitoring.alerts import (
+        alert_coordinator,
+        BusinessMetrics,
+        TechnicalMetrics,
+        ModelMetrics,
+        SecurityEvent,
+        AlertCategory,
+        AlertSeverity,
+        SystemHealthStatus,
+        AIModelType,
+        SecurityThreatLevel
+    )
+    ALERTS_AVAILABLE = True
+except (ImportError, SyntaxError) as e:
+    print(f"Warning: Could not import alert system: {e}")
+    ALERTS_AVAILABLE = False
+    
+    # Define fallback classes
+    class AlertCategory:
+        BUSINESS = "business"
+        TECHNICAL = "technical"
+        SECURITY = "security"
+    
+    class AlertSeverity:
+        LOW = "low"
+        MEDIUM = "medium"
+        HIGH = "high"
+        CRITICAL = "critical"
 
 # Create API router
 router = APIRouter(prefix="/api/v1/alerts", tags=["Intelligent Alerts"])
