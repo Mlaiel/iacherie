@@ -28,7 +28,7 @@ from enum import Enum
 import weakref
 import inspect
 
-import aioredis
+import redis.asyncio as aioredis
 
 # Configuration
 logger = logging.getLogger(__name__)
