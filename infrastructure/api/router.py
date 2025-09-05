@@ -8561,8 +8561,8 @@ async def get_models(user: dict = Depends(check_rate_limit)):
 
 @app.post("/api/v1/ml/models/{model_name}/train")
 async def train_model(
-    model_name: str = Path(...),
     background_tasks: BackgroundTasks,
+    model_name: str = Path(...),
     user: dict = Depends(check_rate_limit)
 ):
     """Entraîner un modèle ML."""
@@ -12924,7 +12924,7 @@ class StyleTransfer:
         """
         result_audio = dummy_style_transfer(audio, source_style, target_style)
         result = {
-            "id": str(uuid.uuid4(),
+            "id": str(uuid.uuid4()),
             "created_at": datetime.utcnow().isoformat(),
             "source_style": source_style,
             "target_style": target_style,
@@ -13033,7 +13033,7 @@ class ArrangementSuggester:
         self.history = []  # Versionierung aller Vorschläge
         self.logger = logging.getLogger("ArrangementSuggester")
 
-    def suggest_arrangement(self, track_features: Dict[str, Any], user_profile: Dict[str, Any],)
+    def suggest_arrangement(self, track_features: Dict[str, Any], user_profile: Dict[str, Any],
                             n_sections: int = 4) -> Dict[str, Any]:
         """
         Generiert ein Arrangement auf Basis von Track-Features und User-Profil.
@@ -13049,10 +13049,10 @@ class ArrangementSuggester:
         kmeans = KMeans(n_clusters=n_sections, random_state=42).fit(X)
         sections = [f"Section_{i+1}" for i in range(n_sections)]
         arrangement = {
-            "id": str(uuid.uuid4(),
+            "id": str(uuid.uuid4()),
             "created_at": datetime.utcnow().isoformat(),
             "sections": [
-                {"name": sec, "start": int(i*20), "end": int(i+1)*20)}
+                {"name": sec, "start": int(i*20), "end": int((i+1)*20)}
                 for i, sec in enumerate(sections)
             ],
             "user_profile": user_profile,
@@ -13165,7 +13165,7 @@ import uuid
 # Beispiel: Dummy-Melodie-Generator (ersetzbar durch MusicGen, LSTM, etc.)
 def dummy_melody(seed_notes: List[int], length: int = 16) -> List[int]:
     import random
-    return seed_notes + [random.randint(60, 72) for _ in range(length - len(seed_notes)]
+    return seed_notes + [random.randint(60, 72) for _ in range(length - len(seed_notes))]
 
 class MelodyComposer:
     """
@@ -13187,7 +13187,7 @@ class MelodyComposer:
         """
         melody = dummy_melody(seed_notes, length)
         result = {
-            "id": str(uuid.uuid4(),
+            "id": str(uuid.uuid4()),
             "created_at": datetime.utcnow().isoformat(),
             "melody": melody,
             "user_profile": user_profile,
@@ -13307,7 +13307,7 @@ class GenreClassifier:
         """
         genre = dummy_genre_classification(audio_features, lyrics)
         result = {
-            "id": str(uuid.uuid4(),
+            "id": str(uuid.uuid4()),
             "created_at": datetime.utcnow().isoformat(),
             "genre": genre,
             "score": 0.95,  # Dummy-Score
@@ -13430,7 +13430,7 @@ class LyricsGenerator:
         """
         lyrics = dummy_lyrics(theme, language)
         result = {
-            "id": str(uuid.uuid4(),
+            "id": str(uuid.uuid4()),
             "created_at": datetime.utcnow().isoformat(),
             "lyrics": lyrics,
             "theme": theme,
