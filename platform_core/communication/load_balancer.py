@@ -158,7 +158,9 @@ Définition d'un serveur backend"""
         except Exception as e:
             logger.error(f"stop failed: {e}")
             raise
-Démarre le health checker"""
+
+    async def start(self):
+        """Démarre le health checker"""
         if self._own_session:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=10)

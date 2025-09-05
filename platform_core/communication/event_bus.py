@@ -233,20 +233,16 @@ class EventBus:
         if self._processor_task:
             self._processor_task.cancel()
             try:
-        try:
-            logger.info(f"Executing stop")
-            
-            # Implementation for stop
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"stop completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"stop failed: {e}")
-            raise
+                await self._processor_task
+            except asyncio.CancelledError:
+                pass
+        
+        logger.info("Bus d'événements arrêté")
+
+    async def publish(self,
+                     event_type: str,
+                     source: str,
+                     data: Any,
                      priority: EventPriority = EventPriority.NORMAL,
                      metadata: Optional[Dict[str, Any]] = None,
                      correlation_id: Optional[str] = None,
