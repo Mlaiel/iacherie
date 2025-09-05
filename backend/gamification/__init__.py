@@ -148,6 +148,89 @@ except ImportError as e:
     logger.warning(f"❌ Badge Generator not available: {e}")
     badge_generator_available = False
 
+# Competition Manager imports
+try:
+    from .competition_manager import (
+        CompetitionManager,
+        CompetitionEngine,
+        TournamentBracket,
+        CompetitionAnalytics,
+        Competition,
+        CompetitionParticipant,
+        CompetitionMatch,
+        SeasonalCompetition,
+        PrizePool,
+        CompetitionType,
+        CompetitionStatus,
+        BracketType,
+        MatchmakingCriteria,
+        get_competition_manager,
+        create_tournament,
+        join_competition,
+        get_competition_leaderboard
+    )
+    competition_manager_available = True
+    logger.info("✅ Competition Manager loaded successfully")
+except ImportError as e:
+    logger.warning(f"❌ Competition Manager not available: {e}")
+    competition_manager_available = False
+
+# Virtual Economy imports
+try:
+    from .virtual_economy import (
+        VirtualEconomyEngine,
+        CurrencyManager,
+        MarketplaceEngine,
+        TradingSystem,
+        EconomyBalancer,
+        CurrencyType,
+        ItemType,
+        ItemRarity,
+        TransactionType,
+        TransactionStatus,
+        CurrencyBalance,
+        MarketplaceItem,
+        UserInventory,
+        Transaction,
+        TradeOffer,
+        get_virtual_economy_engine,
+        add_user_currency,
+        purchase_marketplace_item,
+        create_trade_offer
+    )
+    virtual_economy_available = True
+    logger.info("✅ Virtual Economy loaded successfully")
+except ImportError as e:
+    logger.warning(f"❌ Virtual Economy not available: {e}")
+    virtual_economy_available = False
+
+# Engagement Analytics imports
+try:
+    from .engagement_analytics import (
+        EngagementAnalytics,
+        MetricsCollector,
+        BehavioralTracker,
+        PredictiveEngine,
+        GamificationOptimizer,
+        EngagementEventType,
+        UserSegment,
+        FeatureTestStatus,
+        EngagementEvent,
+        UserSession,
+        BehavioralPattern,
+        EngagementPrediction,
+        ABTestExperiment,
+        get_engagement_analytics,
+        track_user_event,
+        start_user_session,
+        get_user_analytics
+    )
+    engagement_analytics_available = True
+    logger.info("✅ Engagement Analytics loaded successfully")
+except ImportError as e:
+    logger.warning(f"❌ Engagement Analytics not available: {e}")
+    engagement_analytics_available = False
+
 
 class GamificationOrchestrator:
     """
@@ -168,6 +251,9 @@ class GamificationOrchestrator:
         self.rewards_manager = None
         self.challenge_system = None
         self.badge_generator = None
+        self.competition_manager = None
+        self.virtual_economy = None
+        self.engagement_analytics = None
         
         self.logger.info("GamificationOrchestrator initialized")
     
@@ -190,6 +276,15 @@ class GamificationOrchestrator:
             if badge_generator_available:
                 self.badge_generator = await get_badge_generator()
             
+            if competition_manager_available:
+                self.competition_manager = await get_competition_manager()
+            
+            if virtual_economy_available:
+                self.virtual_economy = await get_virtual_economy_engine()
+            
+            if engagement_analytics_available:
+                self.engagement_analytics = await get_engagement_analytics()
+            
             self.initialized = True
             
             available_modules = sum([
@@ -197,10 +292,13 @@ class GamificationOrchestrator:
                 ranking_engine_available,
                 rewards_manager_available,
                 challenge_system_available,
-                badge_generator_available
+                badge_generator_available,
+                competition_manager_available,
+                virtual_economy_available,
+                engagement_analytics_available
             ])
             
-            self.logger.info(f"✅ Gamification orchestrator initialized with {available_modules}/5 modules")
+            self.logger.info(f"✅ Gamification orchestrator initialized with {available_modules}/8 modules")
             return True
             
         except Exception as e:
@@ -555,12 +653,74 @@ __all__ = [
     "get_badge_generator",
     "award_badge_to_user",
     
+    # Competition Manager
+    "CompetitionManager",
+    "CompetitionEngine",
+    "TournamentBracket",
+    "CompetitionAnalytics",
+    "Competition",
+    "CompetitionParticipant",
+    "CompetitionMatch",
+    "SeasonalCompetition",
+    "PrizePool",
+    "CompetitionType",
+    "CompetitionStatus",
+    "BracketType",
+    "MatchmakingCriteria",
+    "get_competition_manager",
+    "create_tournament",
+    "join_competition",
+    "get_competition_leaderboard",
+    
+    # Virtual Economy
+    "VirtualEconomyEngine",
+    "CurrencyManager",
+    "MarketplaceEngine",
+    "TradingSystem",
+    "EconomyBalancer",
+    "CurrencyType",
+    "ItemType",
+    "ItemRarity",
+    "TransactionType",
+    "TransactionStatus",
+    "CurrencyBalance",
+    "MarketplaceItem",
+    "UserInventory",
+    "Transaction",
+    "TradeOffer",
+    "get_virtual_economy_engine",
+    "add_user_currency",
+    "purchase_marketplace_item",
+    "create_trade_offer",
+    
+    # Engagement Analytics
+    "EngagementAnalytics",
+    "MetricsCollector",
+    "BehavioralTracker",
+    "PredictiveEngine",
+    "GamificationOptimizer",
+    "EngagementEventType",
+    "UserSegment",
+    "FeatureTestStatus",
+    "EngagementEvent",
+    "UserSession",
+    "BehavioralPattern",
+    "EngagementPrediction",
+    "ABTestExperiment",
+    "get_engagement_analytics",
+    "track_user_event",
+    "start_user_session",
+    "get_user_analytics",
+    
     # Module availability flags
     "achievement_system_available",
     "ranking_engine_available",
     "rewards_manager_available",
     "challenge_system_available",
-    "badge_generator_available"
+    "badge_generator_available",
+    "competition_manager_available",
+    "virtual_economy_available",
+    "engagement_analytics_available"
 ]
 
 # Module initialization
@@ -574,7 +734,10 @@ available_count = sum([
     ranking_engine_available,
     rewards_manager_available,
     challenge_system_available,
-    badge_generator_available
+    badge_generator_available,
+    competition_manager_available,
+    virtual_economy_available,
+    engagement_analytics_available
 ])
 
-logger.info(f"🎮 Gamification modules loaded: {available_count}/5 systems available")
+logger.info(f"🎮 Gamification modules loaded: {available_count}/8 systems available")
