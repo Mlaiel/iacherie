@@ -215,8 +215,17 @@ def create_migration(
         alembic_config = get_enterprise_alembic_config()
         
         # Create migration using Alembic command
-        from alembic import command
-        migration_result = command.revision(
+        try:
+            import alembic.command as alembic_command
+        except ImportError:
+            # Fallback if there are import issues
+            import sys
+            original_path = sys.path[:]
+            sys.path = [p for p in sys.path if 'alembic' not in p or p.endswith('site-packages')]
+            import alembic.command as alembic_command
+            sys.path = original_path
+            
+        migration_result = alembic_command.revision(
             alembic_config,
             message=message,
             autogenerate=True,
@@ -296,13 +305,27 @@ def run_migration(
         # Execute migration
         if dry_run:
             # Perform dry run
-            from alembic import command
-            command.show(alembic_config, target_revision)
+            try:
+                import alembic.command as alembic_command
+            except ImportError:
+                import sys
+                original_path = sys.path[:]
+                sys.path = [p for p in sys.path if 'alembic' not in p or p.endswith('site-packages')]
+                import alembic.command as alembic_command
+                sys.path = original_path
+            alembic_command.show(alembic_config, target_revision)
             result_status = "dry_run_completed"
         else:
             # Execute actual migration
-            from alembic import command
-            command.upgrade(alembic_config, target_revision)
+            try:
+                import alembic.command as alembic_command
+            except ImportError:
+                import sys
+                original_path = sys.path[:]
+                sys.path = [p for p in sys.path if 'alembic' not in p or p.endswith('site-packages')]
+                import alembic.command as alembic_command
+                sys.path = original_path
+            alembic_command.upgrade(alembic_config, target_revision)
             result_status = "completed"
         
         # Audit migration completion
@@ -395,8 +418,15 @@ def rollback_migration(
         )
         
         # Execute rollback
-        from alembic import command
-        command.downgrade(alembic_config, target_revision)
+        try:
+            import alembic.command as alembic_command
+        except ImportError:
+            import sys
+            original_path = sys.path[:]
+            sys.path = [p for p in sys.path if 'alembic' not in p or p.endswith('site-packages')]
+            import alembic.command as alembic_command
+            sys.path = original_path
+        alembic_command.downgrade(alembic_config, target_revision)
         
         # Audit rollback completion
         audit_migration_execution(

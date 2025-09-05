@@ -36,7 +36,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import QueuePool
 
 # Enterprise Configuration
-from enterprise_configuration import (
+from .enterprise_configuration import (
     EnterpriseConfigurationManager,
     EnvironmentType,
     SecurityLevel,

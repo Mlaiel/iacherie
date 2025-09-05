@@ -44,7 +44,7 @@ import base64
 import os
 
 # Enterprise Configuration
-from enterprise_configuration import (
+from .enterprise_configuration import (
     EnterpriseConfigurationManager,
     EnvironmentType,
     SecurityLevel,

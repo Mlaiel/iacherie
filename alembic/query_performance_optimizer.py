@@ -40,7 +40,7 @@ from sqlalchemy.sql import visitors
 import sqlparse
 
 # Enterprise Configuration
-from enterprise_configuration import (
+from .enterprise_configuration import (
     EnterpriseConfigurationManager,
     EnvironmentType,
     SecurityLevel

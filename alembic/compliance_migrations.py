@@ -37,7 +37,7 @@ from sqlalchemy import create_engine, text, MetaData, Table, Column, String
 from sqlalchemy.orm import sessionmaker
 
 # Enterprise Configuration
-from enterprise_configuration import (
+from .enterprise_configuration import (
     EnterpriseConfigurationManager,
     EnvironmentType,
     SecurityLevel,
