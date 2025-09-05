@@ -238,28 +238,38 @@ Charge les règles d'alerte par défaut"""
         logger.info("Monitoring des alertes de facturation démarré")
         
     async def stop_monitoring(self):
+        """Arrête le monitoring automatique"""
         try:
-                    # Collect metrics
-                    metrics = {
-                        "timestamp": datetime.utcnow(),
-                        "metric_name": "stop_monitoring",
-                        "value": data if data else 0,
-                        "tags": self._get_metric_tags()
-                    }
+            self._running = False
+            if hasattr(self, '_monitoring_task') and self._monitoring_task:
+                self._monitoring_task.cancel()
+                try:
+                    await self._monitoring_task
+                except asyncio.CancelledError:
+                    pass
             
-                    # Store metrics
-                    await self._store_metric(metrics)
+            # Collect metrics
+            metrics = {
+                "timestamp": datetime.utcnow(),
+                "metric_name": "stop_monitoring", 
+                "value": 1,
+                "tags": self._get_metric_tags()
+            }
             
-                    # Send to monitoring system
-                    if hasattr(self, 'metrics_client'):
-                        await self.metrics_client.send(metrics)
+            # Store metrics
+            await self._store_metric(metrics)
             
-                    logger.info(f"Metric stop_monitoring collected")
-                    return metrics
+            # Send to monitoring system
+            if hasattr(self, 'metrics_client'):
+                await self.metrics_client.send(metrics)
             
-                except Exception as e:
-                    logger.error(f"Metric collection stop_monitoring failed: {e}")
-                    return None
+            logger.info("Monitoring des alertes de facturation arrêté")
+            return metrics
+            
+        except Exception as e:
+            logger.error(f"Erreur lors de l'arrêt du monitoring: {e}")
+            return None
+        
     def add_rule(self, rule: AlertRule):
         """Ajoute une règle d'alerte"""
         self.rules[rule.rule_id] = rule
@@ -628,20 +638,7 @@ Envoie les notifications pour une alerte"""
             
         return {
             "total_alerts": total_alerts,
-        try:
-            logger.info(f"Executing __init__")
-            
-            # Implementation for __init__
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"__init__ completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"__init__ failed: {e}")
-            raise
+            "active_alerts": active_alerts,
             "total_rules": len(self.rules),
             "active_rules": len([r for r in self.rules.values() if r.is_active]),
             "alerts_by_type": alerts_by_type,

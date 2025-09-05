@@ -28,7 +28,7 @@ from enum import Enum
 import pickle
 import hashlib
 
-import aioredis
+import redis.asyncio as aioredis
 from pydantic import BaseModel, Field
 
 # Configuration

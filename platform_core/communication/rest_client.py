@@ -29,7 +29,7 @@ import weakref
 import urllib.parse
 
 import aiohttp
-import aioredis
+import redis.asyncio as aioredis
 from pydantic import BaseModel, Field, validator
 import jwt
 from cryptography.fernet import Fernet

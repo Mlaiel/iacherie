@@ -5,15 +5,15 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ========================================================================
 
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-(c) 2025 Fahed Mlaiel. Tous droits réservés.
+(c) 2025 Fahed Mlaiel. Tous droits reserves.
 Contact: mlaiel@live.de
 
 🎯 LOAD BALANCER INTELLIGENT
-Répartition de charge avancée avec détection de pannes
+Repartition de charge avancee avec detection de pannes
 - Algorithmes multiples (Round Robin, Weighted, Least Connections)
-- Health checking proactif et réactif
-- Circuit breaker pattern intégré
-- Métriques temps réel et auto-scaling
+- Health checking proactif et reactif
+- Circuit breaker pattern integre
+- Metriques temps reel et auto-scaling
 """
 
 import asyncio
@@ -55,7 +55,7 @@ class ServerStatus(Enum):
 
 @dataclass
 class ServerMetrics:
-    """Métriques d'un serveur"""
+    """Metriques d'un serveur"""
     active_connections: int = 0
     total_requests: int = 0
     successful_requests: int = 0
@@ -76,7 +76,7 @@ class ServerMetrics:
     def average_response_time(self) -> float:
         if not self.response_times:
             return 0.0
-        return statistics.mean(self.response_times[-100:])  # Dernières 100 requêtes
+        return statistics.mean(self.response_times[-100:])  # Dernieres 100 requetes
         
     @property
     def p95_response_time(self) -> float:
@@ -87,7 +87,7 @@ class ServerMetrics:
 @dataclass
 class Server:
     """
-Définition d'un serveur backend"""
+Definition d'un serveur backend"""
     server_id: str
     host: str
     port: int
@@ -104,7 +104,7 @@ Définition d'un serveur backend"""
     last_health_check: Optional[datetime] = None
     consecutive_failures: int = 0
     
-    # Métriques
+    # Metriques
     metrics: ServerMetrics = field(default_factory=ServerMetrics)
     
     @property
@@ -142,8 +142,8 @@ Définition d'un serveur backend"""
         
     @property
     def load_score(self) -> float:
-        """Calcule un score de charge (plus bas = moins chargé)"""
-        # Facteurs: connexions actives, temps de réponse, taux d'erreur
+        """Calcule un score de charge (plus bas = moins charge)"""
+        # Facteurs: connexions actives, temps de reponse, taux d'erreur
         try:
             logger.info(f"Executing stop")
             
@@ -158,16 +158,16 @@ Définition d'un serveur backend"""
         except Exception as e:
             logger.error(f"stop failed: {e}")
             raise
-Démarre le health checker"""
+Demarre le health checker"""
         if self._own_session:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=10)
             )
-        logger.info("HealthChecker démarré")
+        logger.info("HealthChecker demarre")
         
     async def stop(self):
-        """Arrête le health checker"""
-        # Arrêter toutes les tâches de health check
+        """Arrete le health checker"""
+        # Arreter toutes les taches de health check
         for task in self._health_tasks.values():
             task.cancel()
             
@@ -182,7 +182,7 @@ Démarre le health checker"""
         if self._own_session and self.session:
             await self.session.close()
             
-        logger.info("HealthChecker arrêté")
+        logger.info("HealthChecker arrete")
         
     async def add_server(self, server: Server):
         """Ajoute un serveur au monitoring"""
@@ -191,7 +191,7 @@ Démarre le health checker"""
             
         task = asyncio.create_task(self._health_check_loop(server))
         self._health_tasks[server.server_id] = task
-        logger.info(f"Health checking activé pour {server.server_id}")
+        logger.info(f"Health checking active pour {server.server_id}")
         
     async def remove_server(self, server_id: str):
         """Retire un serveur du monitoring"""
@@ -204,8 +204,7 @@ Démarre le health checker"""
             del self._health_tasks[server_id]
             
     async def _health_check_loop(self, server: Server):
-        """
-Boucle de health check pour un serveur"""
+        """Boucle de health check pour un serveur"""
         while True:
             try:
                 await asyncio.sleep(server.health_check_interval)
@@ -216,7 +215,7 @@ Boucle de health check pour un serveur"""
                 logger.error(f"Erreur dans health check de {server.server_id}: {e}")
                 
     async def _check_server_health(self, server: Server):
-        """Vérifie la santé d'un serveur"""
+        """Verifie la sante du serveur"""
         if not self.session:
             return
             
@@ -233,14 +232,14 @@ Boucle de health check pour un serveur"""
                 server.last_health_check = datetime.utcnow()
                 
                 if response.status == 200:
-                    # Serveur en bonne santé
+                    # Serveur en bonne sante
                     if server.status == ServerStatus.UNHEALTHY:
-                        logger.info(f"Serveur {server.server_id} de nouveau en bonne santé")
+                        logger.info(f"Serveur {server.server_id} de nouveau en bonne sante")
                         
                     server.status = ServerStatus.HEALTHY
                     server.consecutive_failures = 0
                     
-                    # Traiter les métriques de santé si disponibles
+                    # Traiter les metriques de sante si disponibles
                     try:
                         health_data = await response.json()
                         if isinstance(health_data, dict):
@@ -248,7 +247,7 @@ Boucle de health check pour un serveur"""
                             server.metrics.memory_usage = health_data.get("memory_usage", 0.0)
                             server.metrics.disk_usage = health_data.get("disk_usage", 0.0)
                     except Exception:
-                        pass  # Pas de données JSON valides
+                        pass  # Pas de donnees JSON valides
                         
                 elif response.status == 503:
                     # Serveur en maintenance
@@ -257,7 +256,7 @@ Boucle de health check pour un serveur"""
                     # Erreur serveur
                     self._handle_server_failure(server)
                 else:
-                    # Réponse dégradée mais pas d'erreur critique
+                    # Reponse degradee mais pas d'erreur critique
                     if server.status == ServerStatus.HEALTHY:
                         server.status = ServerStatus.DEGRADED
                         
@@ -269,13 +268,13 @@ Boucle de health check pour un serveur"""
             self._handle_server_failure(server)
             
     def _handle_server_failure(self, server: Server):
-        """Gère l'échec d'un serveur"""
+        """Gere l'echec d'un serveur"""
         server.consecutive_failures += 1
         server.last_health_check = datetime.utcnow()
         
         if server.consecutive_failures >= 3:
             if server.status != ServerStatus.UNHEALTHY:
-                logger.warning(f"Serveur {server.server_id} marqué comme non disponible")
+                logger.warning(f"Serveur {server.server_id} marque comme non disponible")
             server.status = ServerStatus.UNHEALTHY
         elif server.consecutive_failures >= 1:
             server.status = ServerStatus.DEGRADED
@@ -294,28 +293,28 @@ class LoadBalancer:
         self._round_robin_index = 0
         self._connections_count: Dict[str, int] = {}
         
-        # Métriques globales
+        # Metriques globales
         self.total_requests = 0
         self.total_errors = 0
         self.start_time = datetime.utcnow()
         
     async def start(self):
         """
-Démarre le load balancer"""
+Demarre le load balancer"""
         await self.health_checker.start()
-        logger.info(f"LoadBalancer démarré avec algorithme {self.algorithm.value}")
+        logger.info(f"LoadBalancer demarre avec algorithme {self.algorithm.value}")
         
     async def stop(self):
-        """Arrête le load balancer"""
+        """Arrete le load balancer"""
         await self.health_checker.stop()
-        logger.info("LoadBalancer arrêté")
+        logger.info("LoadBalancer arrete")
         
     async def add_server(self, server: Server):
         """Ajoute un serveur au pool"""
         self.servers[server.server_id] = server
         self._connections_count[server.server_id] = 0
         await self.health_checker.add_server(server)
-        logger.info(f"Serveur ajouté: {server.server_id} ({server.url})")
+        logger.info(f"Serveur ajoute: {server.server_id} ({server.url})")
         
     async def remove_server(self, server_id: str):
         """Retire un serveur du pool"""
@@ -334,10 +333,10 @@ Démarre le load balancer"""
                 del self._connections_count[server_id]
                 
             await self.health_checker.remove_server(server_id)
-            logger.info(f"Serveur retiré: {server_id}")
+            logger.info(f"Serveur retire: {server_id}")
             
     async def get_server(self, client_ip: Optional[str] = None) -> Optional[Server]:
-        """Sélectionne un serveur selon l'algorithme configuré"""
+        """Selectionne un serveur selon l'algorithme configure"""
         available_servers = [
             server for server in self.servers.values()
             if server.is_available
@@ -377,11 +376,11 @@ Démarre le load balancer"""
         
     def _weighted_round_robin(self, servers: List[Server]) -> Server:
         """
-Algorithme Round Robin pondéré"""
+Algorithme Round Robin pondere"""
         if not servers:
             return None
             
-        # Créer une liste pondérée des serveurs
+        # Creer une liste ponderee des serveurs
         weighted_servers = []
         for server in servers:
             # Ajuster le poids selon la charge actuelle
@@ -402,33 +401,33 @@ Algorithme Least Connections"""
         
     def _least_response_time(self, servers: List[Server]) -> Server:
         """
-Algorithme basé sur le temps de réponse"""
+Algorithme base sur le temps de reponse"""
         return min(servers, key=lambda s: s.metrics.average_response_time)
         
     def _ip_hash(self, servers: List[Server], client_ip: Optional[str]) -> Server:
         """
-Algorithme basé sur le hash de l'IP client"""
+Algorithme base sur le hash de l'IP client"""
         if not client_ip:
             return self._round_robin(servers)
             
-        # Hash de l'IP pour déterminer le serveur
+        # Hash de l'IP pour determiner le serveur
         hash_value = int(hashlib.md5(client_ip.encode()).hexdigest(), 16)
         return servers[hash_value % len(servers)]
         
     def _random(self, servers: List[Server]) -> Server:
         """
-Sélection aléatoire"""
+Selection aleatoire"""
         return random.choice(servers)
         
     def _weighted_random(self, servers: List[Server]) -> Server:
         """
-Sélection aléatoire pondérée"""
+Selection aleatoire ponderee"""
         weights = [max(0.1, server.weight * (1 - server.load_score)) for server in servers]
         return random.choices(servers, weights=weights)[0]
         
     async def record_request(self, server: Server, response_time: float, success: bool):
         """
-Enregistre les métriques d'une requête"""
+Enregistre les metriques d'une requete"""
         server.metrics.total_requests += 1
         server.metrics.last_request_time = datetime.utcnow()
         
@@ -436,7 +435,7 @@ Enregistre les métriques d'une requête"""
             server.metrics.successful_requests += 1
             server.metrics.response_times.append(response_time)
             
-            # Garder seulement les 1000 derniers temps de réponse
+            # Garder seulement les 1000 derniers temps de reponse
             if len(server.metrics.response_times) > 1000:
                 server.metrics.response_times = server.metrics.response_times[-1000:]
         else:
@@ -451,7 +450,7 @@ Acquiert une connexion vers un serveur"""
         
     async def release_connection(self, server: Server):
         """
-Libère une connexion vers un serveur"""
+Libere une connexion vers un serveur"""
         server.metrics.active_connections = max(0, server.metrics.active_connections - 1)
         self._connections_count[server.server_id] = max(0, self._connections_count[server.server_id] - 1)
         
@@ -489,10 +488,10 @@ Retourne les statistiques du load balancer"""
         """Modifie le poids d'un serveur"""
         if server_id in self.servers:
             self.servers[server_id].weight = max(0.1, weight)
-            logger.info(f"Poids du serveur {server_id} modifié: {weight}")
+            logger.info(f"Poids du serveur {server_id} modifie: {weight}")
             
     async def drain_server(self, server_id: str):
-        """Met un serveur en mode drain (arrêt progressif)"""
+        """Met un serveur en mode drain (arret progressif)"""
         if server_id in self.servers:
             self.servers[server_id].status = ServerStatus.DRAINING
             logger.info(f"Serveur {server_id} mis en mode drain")

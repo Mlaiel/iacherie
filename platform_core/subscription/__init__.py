@@ -21,7 +21,7 @@ from .subscription_manager import SubscriptionManager, Subscription, Subscriptio
 from .quota_manager import QuotaManager, ResourceQuota, UsageTracker
 from .upgrade_manager import UpgradeManager, UpgradeStrategy, UpgradeRecommendation
 from .usage_analytics import UsageAnalytics, UsageReport, PredictiveAnalytics
-from .plan_optimizer import PlanOptimizer, OptimizationStrategy, PlanRecommendation
+# from .plan_optimizer import PlanOptimizer, OptimizationStrategy, PlanRecommendation
 
 __all__ = [
     "PlanManager",
@@ -39,9 +39,9 @@ __all__ = [
     "UsageAnalytics",
     "UsageReport", 
     "PredictiveAnalytics",
-    "PlanOptimizer",
-    "OptimizationStrategy",
-    "PlanRecommendation"
+    # "PlanOptimizer",
+    # "OptimizationStrategy",
+    # "PlanRecommendation"
 ]
 
 __version__ = "1.0.0"

@@ -28,7 +28,7 @@ from enum import Enum
 import hashlib
 import base64
 
-import aioredis
+import redis.asyncio as aioredis
 import aiohttp
 from cryptography import x509
 from cryptography.x509.oid import NameOID
