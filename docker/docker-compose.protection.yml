@@ -1,0 +1,234 @@
+version: '3.8'
+services:
+  protection_service:
+    build:
+      context: .
+      dockerfile: protection_service.dockerfile
+    container_name: ainflue_protection_service
+    restart: unless-stopped
+    networks:
+    - ainflue_protection_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: &id001
+          memory: 512m
+          cpus: '0.5'
+          swap: 1g
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=protection_service
+    - SERVICE_CATEGORY=protection
+    - ENCRYPTION_ENABLED=true
+    - AUDIT_LOGGING=true
+    volumes:
+    - ainflue_protection_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  fingerprinting_engine:
+    build:
+      context: .
+      dockerfile: fingerprinting_engine.dockerfile
+    container_name: ainflue_fingerprinting_engine
+    restart: unless-stopped
+    networks:
+    - ainflue_protection_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=fingerprinting_engine
+    - SERVICE_CATEGORY=protection
+    - ENCRYPTION_ENABLED=true
+    - AUDIT_LOGGING=true
+    volumes:
+    - ainflue_protection_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  watermarking_service:
+    build:
+      context: .
+      dockerfile: watermarking_service.dockerfile
+    container_name: ainflue_watermarking_service
+    restart: unless-stopped
+    networks:
+    - ainflue_protection_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=watermarking_service
+    - SERVICE_CATEGORY=protection
+    - ENCRYPTION_ENABLED=true
+    - AUDIT_LOGGING=true
+    volumes:
+    - ainflue_protection_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  copyright_monitor:
+    build:
+      context: .
+      dockerfile: copyright_monitor.dockerfile
+    container_name: ainflue_copyright_monitor
+    restart: unless-stopped
+    networks:
+    - ainflue_protection_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=copyright_monitor
+    - SERVICE_CATEGORY=protection
+    - ENCRYPTION_ENABLED=true
+    - AUDIT_LOGGING=true
+    volumes:
+    - ainflue_protection_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  violation_detector:
+    build:
+      context: .
+      dockerfile: violation_detector.dockerfile
+    container_name: ainflue_violation_detector
+    restart: unless-stopped
+    networks:
+    - ainflue_protection_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=violation_detector
+    - SERVICE_CATEGORY=protection
+    - ENCRYPTION_ENABLED=true
+    - AUDIT_LOGGING=true
+    volumes:
+    - ainflue_protection_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  rights_manager:
+    build:
+      context: .
+      dockerfile: rights_manager.dockerfile
+    container_name: ainflue_rights_manager
+    restart: unless-stopped
+    networks:
+    - ainflue_protection_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=rights_manager
+    - SERVICE_CATEGORY=protection
+    - ENCRYPTION_ENABLED=true
+    - AUDIT_LOGGING=true
+    volumes:
+    - ainflue_protection_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+networks:
+  ainflue_protection_network:
+    driver: bridge
+    internal: false
+volumes:
+  ainflue_protection_data:
+    driver: local

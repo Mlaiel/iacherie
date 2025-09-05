@@ -1,0 +1,258 @@
+version: '3.8'
+services:
+  audio_processing:
+    build:
+      context: .
+      dockerfile: audio_processing.dockerfile
+    container_name: ainflue_audio_processing
+    restart: unless-stopped
+    networks:
+    - ainflue_audio_processing_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: &id001
+          memory: 512m
+          cpus: '0.5'
+          swap: 1g
+        reservations:
+          devices:
+          - driver: nvidia
+            count: 1
+            capabilities:
+            - gpu
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=audio_processing
+    - SERVICE_CATEGORY=audio_processing
+    volumes:
+    - ainflue_audio_processing_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  source_separation:
+    build:
+      context: .
+      dockerfile: source_separation.dockerfile
+    container_name: ainflue_source_separation
+    restart: unless-stopped
+    networks:
+    - ainflue_audio_processing_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+        reservations:
+          devices:
+          - driver: nvidia
+            count: 1
+            capabilities:
+            - gpu
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=source_separation
+    - SERVICE_CATEGORY=audio_processing
+    volumes:
+    - ainflue_audio_processing_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  broadcast_standards:
+    build:
+      context: .
+      dockerfile: broadcast_standards.dockerfile
+    container_name: ainflue_broadcast_standards
+    restart: unless-stopped
+    networks:
+    - ainflue_audio_processing_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+        reservations:
+          devices:
+          - driver: nvidia
+            count: 1
+            capabilities:
+            - gpu
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=broadcast_standards
+    - SERVICE_CATEGORY=audio_processing
+    volumes:
+    - ainflue_audio_processing_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  codec_optimization:
+    build:
+      context: .
+      dockerfile: codec_optimization.dockerfile
+    container_name: ainflue_codec_optimization
+    restart: unless-stopped
+    networks:
+    - ainflue_audio_processing_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+        reservations:
+          devices:
+          - driver: nvidia
+            count: 1
+            capabilities:
+            - gpu
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=codec_optimization
+    - SERVICE_CATEGORY=audio_processing
+    volumes:
+    - ainflue_audio_processing_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  audio_quality_analyzer:
+    build:
+      context: .
+      dockerfile: audio_quality_analyzer.dockerfile
+    container_name: ainflue_audio_quality_analyzer
+    restart: unless-stopped
+    networks:
+    - ainflue_audio_processing_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+        reservations:
+          devices:
+          - driver: nvidia
+            count: 1
+            capabilities:
+            - gpu
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=audio_quality_analyzer
+    - SERVICE_CATEGORY=audio_processing
+    volumes:
+    - ainflue_audio_processing_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  mastering_engine:
+    build:
+      context: .
+      dockerfile: mastering_engine.dockerfile
+    container_name: ainflue_mastering_engine
+    restart: unless-stopped
+    networks:
+    - ainflue_audio_processing_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+        reservations:
+          devices:
+          - driver: nvidia
+            count: 1
+            capabilities:
+            - gpu
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=mastering_engine
+    - SERVICE_CATEGORY=audio_processing
+    volumes:
+    - ainflue_audio_processing_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+networks:
+  ainflue_audio_processing_network:
+    driver: bridge
+    internal: false
+volumes:
+  ainflue_audio_processing_data:
+    driver: local

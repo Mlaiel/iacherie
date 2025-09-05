@@ -1,0 +1,222 @@
+version: '3.8'
+services:
+  ai_insights_engine:
+    build:
+      context: .
+      dockerfile: ai_insights_engine.dockerfile
+    container_name: ainflue_ai_insights_engine
+    restart: unless-stopped
+    networks:
+    - ainflue_analytics_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: &id001
+          memory: 512m
+          cpus: '0.5'
+          swap: 1g
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=ai_insights_engine
+    - SERVICE_CATEGORY=analytics
+    volumes:
+    - ainflue_analytics_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  performance_analyzer:
+    build:
+      context: .
+      dockerfile: performance_analyzer.dockerfile
+    container_name: ainflue_performance_analyzer
+    restart: unless-stopped
+    networks:
+    - ainflue_analytics_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=performance_analyzer
+    - SERVICE_CATEGORY=analytics
+    volumes:
+    - ainflue_analytics_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  audience_intelligence:
+    build:
+      context: .
+      dockerfile: audience_intelligence.dockerfile
+    container_name: ainflue_audience_intelligence
+    restart: unless-stopped
+    networks:
+    - ainflue_analytics_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=audience_intelligence
+    - SERVICE_CATEGORY=analytics
+    volumes:
+    - ainflue_analytics_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  trend_predictor:
+    build:
+      context: .
+      dockerfile: trend_predictor.dockerfile
+    container_name: ainflue_trend_predictor
+    restart: unless-stopped
+    networks:
+    - ainflue_analytics_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=trend_predictor
+    - SERVICE_CATEGORY=analytics
+    volumes:
+    - ainflue_analytics_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  revenue_forecaster:
+    build:
+      context: .
+      dockerfile: revenue_forecaster.dockerfile
+    container_name: ainflue_revenue_forecaster
+    restart: unless-stopped
+    networks:
+    - ainflue_analytics_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=revenue_forecaster
+    - SERVICE_CATEGORY=analytics
+    volumes:
+    - ainflue_analytics_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  business_intelligence:
+    build:
+      context: .
+      dockerfile: business_intelligence.dockerfile
+    container_name: ainflue_business_intelligence
+    restart: unless-stopped
+    networks:
+    - ainflue_analytics_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=business_intelligence
+    - SERVICE_CATEGORY=analytics
+    volumes:
+    - ainflue_analytics_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+networks:
+  ainflue_analytics_network:
+    driver: bridge
+    internal: false
+volumes:
+  ainflue_analytics_data:
+    driver: local

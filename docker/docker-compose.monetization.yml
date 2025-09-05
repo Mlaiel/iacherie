@@ -1,0 +1,234 @@
+version: '3.8'
+services:
+  revenue_tracker:
+    build:
+      context: .
+      dockerfile: revenue_tracker.dockerfile
+    container_name: ainflue_revenue_tracker
+    restart: unless-stopped
+    networks:
+    - ainflue_monetization_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: &id001
+          memory: 512m
+          cpus: '0.5'
+          swap: 1g
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=revenue_tracker
+    - SERVICE_CATEGORY=monetization
+    - ENCRYPTION_ENABLED=true
+    - AUDIT_LOGGING=true
+    volumes:
+    - ainflue_monetization_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  payment_processor:
+    build:
+      context: .
+      dockerfile: payment_processor.dockerfile
+    container_name: ainflue_payment_processor
+    restart: unless-stopped
+    networks:
+    - ainflue_monetization_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=payment_processor
+    - SERVICE_CATEGORY=monetization
+    - ENCRYPTION_ENABLED=true
+    - AUDIT_LOGGING=true
+    volumes:
+    - ainflue_monetization_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  subscription_manager:
+    build:
+      context: .
+      dockerfile: subscription_manager.dockerfile
+    container_name: ainflue_subscription_manager
+    restart: unless-stopped
+    networks:
+    - ainflue_monetization_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=subscription_manager
+    - SERVICE_CATEGORY=monetization
+    - ENCRYPTION_ENABLED=true
+    - AUDIT_LOGGING=true
+    volumes:
+    - ainflue_monetization_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  royalty_calculator:
+    build:
+      context: .
+      dockerfile: royalty_calculator.dockerfile
+    container_name: ainflue_royalty_calculator
+    restart: unless-stopped
+    networks:
+    - ainflue_monetization_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=royalty_calculator
+    - SERVICE_CATEGORY=monetization
+    - ENCRYPTION_ENABLED=true
+    - AUDIT_LOGGING=true
+    volumes:
+    - ainflue_monetization_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  advertising_optimizer:
+    build:
+      context: .
+      dockerfile: advertising_optimizer.dockerfile
+    container_name: ainflue_advertising_optimizer
+    restart: unless-stopped
+    networks:
+    - ainflue_monetization_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=advertising_optimizer
+    - SERVICE_CATEGORY=monetization
+    - ENCRYPTION_ENABLED=true
+    - AUDIT_LOGGING=true
+    volumes:
+    - ainflue_monetization_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  licensing_engine:
+    build:
+      context: .
+      dockerfile: licensing_engine.dockerfile
+    container_name: ainflue_licensing_engine
+    restart: unless-stopped
+    networks:
+    - ainflue_monetization_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=licensing_engine
+    - SERVICE_CATEGORY=monetization
+    - ENCRYPTION_ENABLED=true
+    - AUDIT_LOGGING=true
+    volumes:
+    - ainflue_monetization_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+networks:
+  ainflue_monetization_network:
+    driver: bridge
+    internal: false
+volumes:
+  ainflue_monetization_data:
+    driver: local

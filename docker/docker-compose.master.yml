@@ -1,0 +1,259 @@
+version: '3.8'
+services:
+  ai_service:
+    build:
+      context: .
+      dockerfile: ai_service.dockerfile
+    container_name: ainflue_ai_service
+    restart: unless-stopped
+    networks:
+    - ainflue_main_network
+    depends_on: []
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=ai_service
+    - SERVICE_CATEGORY=core
+    - LOG_LEVEL=INFO
+    volumes:
+    - ainflue_shared_data:/app/data
+    - ainflue_logs:/app/logs
+    - ainflue_config:/app/config
+  analytics_service:
+    build:
+      context: .
+      dockerfile: analytics_service.dockerfile
+    container_name: ainflue_analytics_service
+    restart: unless-stopped
+    networks:
+    - ainflue_main_network
+    depends_on: []
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=analytics_service
+    - SERVICE_CATEGORY=core
+    - LOG_LEVEL=INFO
+    volumes:
+    - ainflue_shared_data:/app/data
+    - ainflue_logs:/app/logs
+    - ainflue_config:/app/config
+  audio_processing:
+    build:
+      context: .
+      dockerfile: audio_processing.dockerfile
+    container_name: ainflue_audio_processing
+    restart: unless-stopped
+    networks:
+    - ainflue_main_network
+    depends_on: []
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=audio_processing
+    - SERVICE_CATEGORY=audio_processing
+    - LOG_LEVEL=INFO
+    volumes:
+    - ainflue_shared_data:/app/data
+    - ainflue_logs:/app/logs
+    - ainflue_config:/app/config
+  protection_service:
+    build:
+      context: .
+      dockerfile: protection_service.dockerfile
+    container_name: ainflue_protection_service
+    restart: unless-stopped
+    networks:
+    - ainflue_main_network
+    depends_on: []
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=protection_service
+    - SERVICE_CATEGORY=protection
+    - LOG_LEVEL=INFO
+    volumes:
+    - ainflue_shared_data:/app/data
+    - ainflue_logs:/app/logs
+    - ainflue_config:/app/config
+  revenue_tracker:
+    build:
+      context: .
+      dockerfile: revenue_tracker.dockerfile
+    container_name: ainflue_revenue_tracker
+    restart: unless-stopped
+    networks:
+    - ainflue_main_network
+    depends_on: []
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=revenue_tracker
+    - SERVICE_CATEGORY=monetization
+    - LOG_LEVEL=INFO
+    volumes:
+    - ainflue_shared_data:/app/data
+    - ainflue_logs:/app/logs
+    - ainflue_config:/app/config
+  collaboration_engine:
+    build:
+      context: .
+      dockerfile: collaboration_engine.dockerfile
+    container_name: ainflue_collaboration_engine
+    restart: unless-stopped
+    networks:
+    - ainflue_main_network
+    depends_on: []
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=collaboration_engine
+    - SERVICE_CATEGORY=collaboration
+    - LOG_LEVEL=INFO
+    volumes:
+    - ainflue_shared_data:/app/data
+    - ainflue_logs:/app/logs
+    - ainflue_config:/app/config
+  seo_optimizer:
+    build:
+      context: .
+      dockerfile: seo_optimizer.dockerfile
+    container_name: ainflue_seo_optimizer
+    restart: unless-stopped
+    networks:
+    - ainflue_main_network
+    depends_on: []
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=seo_optimizer
+    - SERVICE_CATEGORY=seo
+    - LOG_LEVEL=INFO
+    volumes:
+    - ainflue_shared_data:/app/data
+    - ainflue_logs:/app/logs
+    - ainflue_config:/app/config
+  distribution_hub:
+    build:
+      context: .
+      dockerfile: distribution_hub.dockerfile
+    container_name: ainflue_distribution_hub
+    restart: unless-stopped
+    networks:
+    - ainflue_main_network
+    depends_on: []
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=distribution_hub
+    - SERVICE_CATEGORY=distribution
+    - LOG_LEVEL=INFO
+    volumes:
+    - ainflue_shared_data:/app/data
+    - ainflue_logs:/app/logs
+    - ainflue_config:/app/config
+  ai_insights_engine:
+    build:
+      context: .
+      dockerfile: ai_insights_engine.dockerfile
+    container_name: ainflue_ai_insights_engine
+    restart: unless-stopped
+    networks:
+    - ainflue_main_network
+    depends_on: []
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=ai_insights_engine
+    - SERVICE_CATEGORY=analytics
+    - LOG_LEVEL=INFO
+    volumes:
+    - ainflue_shared_data:/app/data
+    - ainflue_logs:/app/logs
+    - ainflue_config:/app/config
+networks:
+  ainflue_main_network:
+    driver: bridge
+    external: false
+  ainflue_internal_network:
+    driver: bridge
+    internal: true
+volumes:
+  ainflue_shared_data:
+    driver: local
+  ainflue_logs:
+    driver: local
+  ainflue_config:
+    driver: local

@@ -1,0 +1,152 @@
+version: '3.8'
+services:
+  ai_service:
+    build:
+      context: .
+      dockerfile: ai_service.dockerfile
+    container_name: ainflue_ai_service
+    restart: unless-stopped
+    networks:
+    - ainflue_core_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: &id001
+          memory: 512m
+          cpus: '0.5'
+          swap: 1g
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=ai_service
+    - SERVICE_CATEGORY=core
+    volumes:
+    - ainflue_core_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  analytics_service:
+    build:
+      context: .
+      dockerfile: analytics_service.dockerfile
+    container_name: ainflue_analytics_service
+    restart: unless-stopped
+    networks:
+    - ainflue_core_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=analytics_service
+    - SERVICE_CATEGORY=core
+    volumes:
+    - ainflue_core_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  monetization_service:
+    build:
+      context: .
+      dockerfile: monetization_service.dockerfile
+    container_name: ainflue_monetization_service
+    restart: unless-stopped
+    networks:
+    - ainflue_core_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=monetization_service
+    - SERVICE_CATEGORY=core
+    volumes:
+    - ainflue_core_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  crawler_service:
+    build:
+      context: .
+      dockerfile: crawler_service.dockerfile
+    container_name: ainflue_crawler_service
+    restart: unless-stopped
+    networks:
+    - ainflue_core_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=crawler_service
+    - SERVICE_CATEGORY=core
+    volumes:
+    - ainflue_core_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+networks:
+  ainflue_core_network:
+    driver: bridge
+    internal: false
+volumes:
+  ainflue_core_data:
+    driver: local

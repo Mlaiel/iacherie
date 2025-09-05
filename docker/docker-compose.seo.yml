@@ -1,0 +1,222 @@
+version: '3.8'
+services:
+  seo_optimizer:
+    build:
+      context: .
+      dockerfile: seo_optimizer.dockerfile
+    container_name: ainflue_seo_optimizer
+    restart: unless-stopped
+    networks:
+    - ainflue_seo_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: &id001
+          memory: 512m
+          cpus: '0.5'
+          swap: 1g
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=seo_optimizer
+    - SERVICE_CATEGORY=seo
+    volumes:
+    - ainflue_seo_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  keyword_analyzer:
+    build:
+      context: .
+      dockerfile: keyword_analyzer.dockerfile
+    container_name: ainflue_keyword_analyzer
+    restart: unless-stopped
+    networks:
+    - ainflue_seo_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=keyword_analyzer
+    - SERVICE_CATEGORY=seo
+    volumes:
+    - ainflue_seo_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  metadata_enricher:
+    build:
+      context: .
+      dockerfile: metadata_enricher.dockerfile
+    container_name: ainflue_metadata_enricher
+    restart: unless-stopped
+    networks:
+    - ainflue_seo_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=metadata_enricher
+    - SERVICE_CATEGORY=seo
+    volumes:
+    - ainflue_seo_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  content_optimizer:
+    build:
+      context: .
+      dockerfile: content_optimizer.dockerfile
+    container_name: ainflue_content_optimizer
+    restart: unless-stopped
+    networks:
+    - ainflue_seo_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=content_optimizer
+    - SERVICE_CATEGORY=seo
+    volumes:
+    - ainflue_seo_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  trend_monitor:
+    build:
+      context: .
+      dockerfile: trend_monitor.dockerfile
+    container_name: ainflue_trend_monitor
+    restart: unless-stopped
+    networks:
+    - ainflue_seo_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=trend_monitor
+    - SERVICE_CATEGORY=seo
+    volumes:
+    - ainflue_seo_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  platform_optimizer:
+    build:
+      context: .
+      dockerfile: platform_optimizer.dockerfile
+    container_name: ainflue_platform_optimizer
+    restart: unless-stopped
+    networks:
+    - ainflue_seo_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=platform_optimizer
+    - SERVICE_CATEGORY=seo
+    volumes:
+    - ainflue_seo_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+networks:
+  ainflue_seo_network:
+    driver: bridge
+    internal: false
+volumes:
+  ainflue_seo_data:
+    driver: local

@@ -1,0 +1,222 @@
+version: '3.8'
+services:
+  collaboration_engine:
+    build:
+      context: .
+      dockerfile: collaboration_engine.dockerfile
+    container_name: ainflue_collaboration_engine
+    restart: unless-stopped
+    networks:
+    - ainflue_collaboration_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: &id001
+          memory: 512m
+          cpus: '0.5'
+          swap: 1g
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=collaboration_engine
+    - SERVICE_CATEGORY=collaboration
+    volumes:
+    - ainflue_collaboration_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  ai_matching_service:
+    build:
+      context: .
+      dockerfile: ai_matching_service.dockerfile
+    container_name: ainflue_ai_matching_service
+    restart: unless-stopped
+    networks:
+    - ainflue_collaboration_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=ai_matching_service
+    - SERVICE_CATEGORY=collaboration
+    volumes:
+    - ainflue_collaboration_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  project_workspace:
+    build:
+      context: .
+      dockerfile: project_workspace.dockerfile
+    container_name: ainflue_project_workspace
+    restart: unless-stopped
+    networks:
+    - ainflue_collaboration_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=project_workspace
+    - SERVICE_CATEGORY=collaboration
+    volumes:
+    - ainflue_collaboration_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  communication_hub:
+    build:
+      context: .
+      dockerfile: communication_hub.dockerfile
+    container_name: ainflue_communication_hub
+    restart: unless-stopped
+    networks:
+    - ainflue_collaboration_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=communication_hub
+    - SERVICE_CATEGORY=collaboration
+    volumes:
+    - ainflue_collaboration_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  workflow_manager:
+    build:
+      context: .
+      dockerfile: workflow_manager.dockerfile
+    container_name: ainflue_workflow_manager
+    restart: unless-stopped
+    networks:
+    - ainflue_collaboration_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=workflow_manager
+    - SERVICE_CATEGORY=collaboration
+    volumes:
+    - ainflue_collaboration_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  gamification_engine:
+    build:
+      context: .
+      dockerfile: gamification_engine.dockerfile
+    container_name: ainflue_gamification_engine
+    restart: unless-stopped
+    networks:
+    - ainflue_collaboration_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=gamification_engine
+    - SERVICE_CATEGORY=collaboration
+    volumes:
+    - ainflue_collaboration_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+networks:
+  ainflue_collaboration_network:
+    driver: bridge
+    internal: false
+volumes:
+  ainflue_collaboration_data:
+    driver: local

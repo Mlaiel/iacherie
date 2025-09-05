@@ -1,0 +1,222 @@
+version: '3.8'
+services:
+  distribution_hub:
+    build:
+      context: .
+      dockerfile: distribution_hub.dockerfile
+    container_name: ainflue_distribution_hub
+    restart: unless-stopped
+    networks:
+    - ainflue_distribution_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: &id001
+          memory: 512m
+          cpus: '0.5'
+          swap: 1g
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=distribution_hub
+    - SERVICE_CATEGORY=distribution
+    volumes:
+    - ainflue_distribution_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  platform_connector:
+    build:
+      context: .
+      dockerfile: platform_connector.dockerfile
+    container_name: ainflue_platform_connector
+    restart: unless-stopped
+    networks:
+    - ainflue_distribution_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=platform_connector
+    - SERVICE_CATEGORY=distribution
+    volumes:
+    - ainflue_distribution_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  upload_scheduler:
+    build:
+      context: .
+      dockerfile: upload_scheduler.dockerfile
+    container_name: ainflue_upload_scheduler
+    restart: unless-stopped
+    networks:
+    - ainflue_distribution_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=upload_scheduler
+    - SERVICE_CATEGORY=distribution
+    volumes:
+    - ainflue_distribution_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  format_optimizer:
+    build:
+      context: .
+      dockerfile: format_optimizer.dockerfile
+    container_name: ainflue_format_optimizer
+    restart: unless-stopped
+    networks:
+    - ainflue_distribution_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=format_optimizer
+    - SERVICE_CATEGORY=distribution
+    volumes:
+    - ainflue_distribution_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  content_scheduler:
+    build:
+      context: .
+      dockerfile: content_scheduler.dockerfile
+    container_name: ainflue_content_scheduler
+    restart: unless-stopped
+    networks:
+    - ainflue_distribution_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=content_scheduler
+    - SERVICE_CATEGORY=distribution
+    volumes:
+    - ainflue_distribution_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+  cross_platform_sync:
+    build:
+      context: .
+      dockerfile: cross_platform_sync.dockerfile
+    container_name: ainflue_cross_platform_sync
+    restart: unless-stopped
+    networks:
+    - ainflue_distribution_network
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    security_opt:
+    - no-new-privileges:true
+    read_only: true
+    user: 10001:10001
+    deploy:
+      resources:
+        limits: *id001
+    environment:
+    - PYTHONPATH=/app
+    - SERVICE_NAME=cross_platform_sync
+    - SERVICE_CATEGORY=distribution
+    volumes:
+    - ainflue_distribution_data:/app/data
+    - /tmp:/tmp:rw
+    tmpfs:
+    - /run:rw,size=100m
+    - /var/cache:rw,size=100m
+networks:
+  ainflue_distribution_network:
+    driver: bridge
+    internal: false
+volumes:
+  ainflue_distribution_data:
+    driver: local
