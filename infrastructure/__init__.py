@@ -61,13 +61,11 @@ from .networking import (
 )
 
 from .security import (
-    SecurityManager, CertificateManager, VaultManager, PolicyManager, ComplianceManager,
-    security_manager, certificate_manager, vault_manager, policy_manager, compliance_manager
+    SecurityManager, CertificateManager, SecretsManager
 )
 
 from .storage import (
-    StorageManager, PersistentVolumeManager, BackupManager, ObjectStorageManager,
-    storage_manager, pv_manager, backup_manager, object_storage_manager
+    StorageManager
 )
 
 from .autoscaling import (
@@ -143,15 +141,10 @@ __all__ = [
     # Security consolidation
     "SecurityManager",
     "CertificateManager",
-    "VaultManager",
-    "PolicyManager",
-    "ComplianceManager",
+    "SecretsManager",
     
     # Storage consolidation
     "StorageManager",
-    "PersistentVolumeManager",
-    "BackupManager",
-    "ObjectStorageManager",
     
     # Autoscaling consolidation
     "AutoscalingManager",

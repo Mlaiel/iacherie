@@ -18,6 +18,10 @@ from contextlib import asynccontextmanager
 import json
 
 # Imports storage
+import logging
+
+logger = logging.getLogger(__name__)
+
 try:
     import asyncpg
     import aioredis
@@ -26,8 +30,6 @@ try:
     from sqlalchemy.orm import sessionmaker
 except ImportError as e:
     logger.warning(f"Import storage manquant: {e}")
-
-logger = logging.getLogger(__name__)
 
 # =============== CONFIGURATION STORAGE ===============
 

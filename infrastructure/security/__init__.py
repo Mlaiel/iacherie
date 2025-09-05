@@ -7,17 +7,16 @@ Project: IA Influencer Agent + Content Protection Platform
 License: Proprietary - All rights reserved
 """
 
-from .auth import *
+from .auth import (
+    AuthenticationManager,
+    SecurityManager,
+    CertificateManager,
+    SecretsManager
+)
 
 __all__ = [
     'AuthenticationManager',
     'SecurityManager',
-    'CertificateManager',
-    'SecretsManager',
-    'PolicyManager',
-    'ComplianceManager',
-    'SecurityAuditor',
-    'ThreatDetector',
-    'IncidentResponse',
-    'AccessController',
+    'CertificateManager', 
+    'SecretsManager'
 ]
