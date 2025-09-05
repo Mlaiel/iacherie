@@ -1,5 +1,5 @@
 """Analytics Module
-Revenue tracking and performance analytics for the Ainflue platform.
+Advanced analytics and business intelligence for the Ainflue platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -13,12 +13,49 @@ from .business_intelligence import (
     PredictiveAnalyticsEngine,
     UserBehaviorAnalyzer
 )
+from .creator_performance_engine import (
+    CreatorPerformanceEngine,
+    CreatorMetrics,
+    CreatorType,
+    ContentFormat
+)
+from .ai_processing_metrics import (
+    AIProcessingMetricsEngine,
+    AIProcessingMetrics,
+    AITaskType,
+    ProcessingStatus
+)
+from .content_protection_analytics import (
+    ContentProtectionAnalytics,
+    ProtectionAnalytics,
+    ViolationEvent,
+    ProtectionType
+)
 
 __all__ = [
+    # Core Analytics
     "RevenueTracker",
     "PerformanceAnalyzer",
     "BusinessIntelligenceManager",
     "ContentPerformanceAnalyzer", 
     "PredictiveAnalyticsEngine",
-    "UserBehaviorAnalyzer"
+    "UserBehaviorAnalyzer",
+    
+    # Creator Performance
+    "CreatorPerformanceEngine",
+    "CreatorMetrics",
+    "CreatorType",
+    "ContentFormat",
+    
+    # AI Processing
+    "AIProcessingMetricsEngine",
+    "AIProcessingMetrics",
+    "AITaskType",
+    "ProcessingStatus",
+    
+    # Content Protection
+    "ContentProtectionAnalytics",
+    "ProtectionAnalytics",
+    "ViolationEvent",
+    "ProtectionType"
 ]
