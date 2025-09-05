@@ -68,6 +68,44 @@ from .fog_computing import (
     create_fog_computing_orchestrator
 )
 
+# Real-time optimization
+from .real_time_optimizer import (
+    RealTimeOptimizer,
+    OptimizationStrategy,
+    OptimizationScope,
+    MetricType,
+    PerformanceMetric,
+    OptimizationTarget,
+    OptimizationResult,
+    create_real_time_optimizer
+)
+
+# Resource management
+from .resource_manager import (
+    EdgeResourceManager,
+    ResourceType as ResourceManagerResourceType,
+    ResourceStatus,
+    AllocationStrategy,
+    ResourcePriority,
+    ResourceSpec,
+    ResourceAllocation,
+    ResourceUsage,
+    ResourceNode,
+    create_resource_manager
+)
+
+# Edge caching system
+from .edge_cache import (
+    EdgeCache,
+    CacheStrategy,
+    CacheType,
+    CacheLevel,
+    InvalidationStrategy,
+    CacheItem,
+    CacheStats,
+    create_edge_cache
+)
+
 __all__ = [
     # Core local inference
     "LocalInferenceEngine",
@@ -122,5 +160,46 @@ __all__ = [
     "ProcessingTask",
     "TaskExecution",
     "FogComputingConfig",
-    "create_fog_computing_orchestrator"
+    "create_fog_computing_orchestrator",
+    
+    # Real-time optimization
+    "RealTimeOptimizer",
+    "OptimizationStrategy",
+    "OptimizationScope",
+    "MetricType",
+    "PerformanceMetric",
+    "OptimizationTarget",
+    "OptimizationResult",
+    "create_real_time_optimizer",
+    
+    # Resource management
+    "EdgeResourceManager",
+    "ResourceManagerResourceType",
+    "ResourceStatus",
+    "AllocationStrategy",
+    "ResourcePriority",
+    "ResourceSpec",
+    "ResourceAllocation",
+    "ResourceUsage",
+    "ResourceNode",
+    "create_resource_manager",
+    
+    # Edge caching
+    "EdgeCache",
+    "CacheStrategy",
+    "CacheType",
+    "CacheLevel",
+    "InvalidationStrategy",
+    "CacheItem",
+    "CacheStats",
+    "create_edge_cache"
+    
+    # Monitoring module
+    # Note: Individual monitoring components available via backend.edge.monitoring
+    
+    # Network module  
+    # Note: Individual network components available via backend.edge.network
+    
+    # Security module
+    # Note: Individual security components available via backend.edge.security
 ]
