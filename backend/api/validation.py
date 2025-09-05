@@ -225,10 +225,10 @@ class FileUploadValidation(BaseValidatedModel):
 
 class MonetizationValidation(BaseValidatedModel):
     """Monetization data validation"""
-    price: Decimal = Field(..., ge=0, le=10000, decimal_places=2)
+    price: Decimal = Field(..., ge=0, le=10000)
     currency: str = Field(..., pattern="^[A-Z]{3}$", description="ISO 4217 currency code")
     license_type: str = Field(..., description="Type of license")
-    royalty_percentage: Optional[Decimal] = Field(None, ge=0, le=100, decimal_places=2)
+    royalty_percentage: Optional[Decimal] = Field(None, ge=0, le=100)
     
     @field_validator('currency')
     @classmethod
