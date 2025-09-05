@@ -298,15 +298,12 @@ class PoolConfigurationManager:
         
         # Update security configuration based on level
         if level == SecurityLevel.MINIMAL:
-            self.security_config.encryption_enabled = False
             self.security_config.access_control_enabled = False
             self.security_config.audit_logging_enabled = False
         elif level == SecurityLevel.STANDARD:
-            self.security_config.encryption_enabled = True
             self.security_config.access_control_enabled = True
             self.security_config.audit_logging_enabled = True
         elif level in [SecurityLevel.HARDENED, SecurityLevel.GOVERNMENT, SecurityLevel.FINANCIAL]:
-            self.security_config.encryption_enabled = True
             self.security_config.access_control_enabled = True
             self.security_config.audit_logging_enabled = True
             self.security_config.ssl_verification = True
@@ -420,10 +417,10 @@ class PoolConfigurationManager:
             'encrypted_credentials': len(self.credential_manager._credentials_cache),
             'config_history_size': len(self._config_history),
             'security_features': {
-                'encryption_enabled': self.security_config.encryption_enabled,
+                'credential_rotation_enabled': self.security_config.credential_rotation_enabled,
                 'access_control_enabled': self.security_config.access_control_enabled,
                 'audit_logging_enabled': self.security_config.audit_logging_enabled,
-                'credential_rotation_enabled': self.security_config.credential_rotation_enabled
+                'ssl_verification': self.security_config.ssl_verification
             }
         }
 
