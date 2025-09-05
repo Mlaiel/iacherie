@@ -273,53 +273,43 @@ Initialize a single enterprise service"""
     async def _start_service_monitoring(self, service_id: str):
         """Start monitoring for a specific service"""
         async def monitor_service():
-        try:
+            try:
+                service_info = self.registry.get_service(service_id)
+                if service_info and service_info.instance:
+                    health_score = await self._check_service_health(service_info.instance)
+                    service_info.health_score = health_score
+                    service_info.last_health_check = datetime.now(timezone.utc)
+                    
+                    # Update status based on health score
+                    if health_score >= 0.8:
+                        status = EnterpriseServiceStatus.ACTIVE
+                    elif health_score >= 0.5:
+                        status = EnterpriseServiceStatus.DEGRADED
+                    else:
+                        status = EnterpriseServiceStatus.ERROR
+                        
+                    await self._update_service_status(service_id, status)
+                    
                     # Collect metrics
                     metrics = {
                         "timestamp": datetime.utcnow(),
                         "metric_name": "monitor_service",
-                        "value": data if data else 0,
-                        "tags": self._get_metric_tags()
+                        "value": health_score,
+                        "tags": {"service_id": service_id}
                     }
-            
+                    
                     # Store metrics
                     await self._store_metric(metrics)
-            
-                    # Send to monitoring system
-                    if hasattr(self, 'metrics_client'):
-                        await self.metrics_client.send(metrics)
-            
-                    logger.info(f"Metric monitor_service collected")
+                    
+                    logger.info(f"Service {service_id} monitored successfully")
                     return metrics
-            
-                except Exception as e:
-                    logger.error(f"Metric collection monitor_service failed: {e}")
-                    return None
-                try:
-                    service_info = self.registry.get_service(service_id)
-                    if service_info and service_info.instance:
-                        health_score = await self._check_service_health(service_info.instance)
-                        service_info.health_score = health_score
-                        service_info.last_health_check = datetime.now(timezone.utc)
-                        
-                        # Update status based on health score
-                        if health_score >= 0.8:
-                            status = EnterpriseServiceStatus.ACTIVE
-                        elif health_score >= 0.5:
-                            status = EnterpriseServiceStatus.DEGRADED
-                        else:
-                            status = EnterpriseServiceStatus.FAILED
-                            
-                        self.registry.update_service_status(service_id, status)
-                        
-                except Exception as e:
-                    logger.error(f"Service monitoring failed for {service_id}: {e}")
-                
-                await asyncio.sleep(30)  # Health check every 30 seconds
+                    
+            except Exception as e:
+                logger.error(f"Service monitoring failed for {service_id}: {e}")
+                return None
         
-        task = asyncio.create_task(monitor_service())
-        self._monitoring_tasks.add(task)
-        task.add_done_callback(self._monitoring_tasks.discard)
+        # Schedule the monitoring task
+        self._monitoring_tasks[service_id] = monitor_service
     
     async def _check_service_health(self, service_instance: Any) -> float:
         """Check health of a service instance"""

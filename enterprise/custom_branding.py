@@ -140,29 +140,26 @@ AI-powered color analysis and optimization"""
         try:
             logger.info(f"Executing __init__")
             
-            # Implementation for __init__
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
+            # Initialize color psychology data
+            self.color_psychology = {
+                'red': ['passionate', 'energetic', 'urgent', 'bold'],
+                'blue': ['trustworthy', 'professional', 'calm', 'stable'],
+                'green': ['natural', 'growth', 'harmony', 'fresh'],
+                'yellow': ['optimistic', 'creative', 'attention', 'cheerful'],
+                'purple': ['luxury', 'creative', 'mysterious', 'sophisticated'],
+                'orange': ['enthusiastic', 'friendly', 'confident', 'vibrant'],
+                'pink': ['feminine', 'compassionate', 'nurturing', 'playful'],
+                'brown': ['reliable', 'earthly', 'stable', 'comfortable'],
+                'black': ['sophisticated', 'powerful', 'elegant', 'modern'],
+                'white': ['pure', 'clean', 'minimal', 'fresh'],
+                'gray': ['neutral', 'balanced', 'professional', 'timeless']
+            }
             
             logger.info(f"__init__ completed successfully")
-            return result
             
         except Exception as e:
             logger.error(f"__init__ failed: {e}")
             raise
-            'red': ['passionate', 'energetic', 'urgent', 'bold'],
-            'blue': ['trustworthy', 'professional', 'calm', 'stable'],
-            'green': ['natural', 'growth', 'harmony', 'fresh'],
-            'yellow': ['optimistic', 'creative', 'attention', 'cheerful'],
-            'purple': ['luxury', 'creative', 'mysterious', 'sophisticated'],
-            'orange': ['enthusiastic', 'friendly', 'confident', 'vibrant'],
-            'pink': ['feminine', 'compassionate', 'nurturing', 'playful'],
-            'brown': ['reliable', 'earthly', 'stable', 'comfortable'],
-            'black': ['sophisticated', 'powerful', 'elegant', 'modern'],
-            'white': ['pure', 'clean', 'minimal', 'fresh'],
-            'gray': ['neutral', 'balanced', 'professional', 'timeless']
-        }
     
     async def analyze_brand_colors(self, colors: List[str]) -> ColorAnalysis:
         """
@@ -403,21 +400,6 @@ Analyze color temperature"""
         avg_brightness = np.mean(brightnesses)
         
         if avg_brightness < 0.3:
-        try:
-            logger.info(f"Executing __init__")
-            
-            # Implementation for __init__
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"__init__ completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"__init__ failed: {e}")
-            raise
-        if avg_brightness < 0.3:
             return "dark"
         elif avg_brightness > 0.7:
             return "bright"
@@ -614,18 +596,7 @@ Process logo into multiple variants for different use cases"""
             return quality_score
             
         except Exception:
-        try:
-            logger.info(f"Executing __init__")
-            
-            # Implementation for __init__
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"__init__ completed successfully")
-            return result
-            
-        except Exception as e:
+            return 0.0  # Return minimum quality score on error
             logger.error(f"__init__ failed: {e}")
             raise
             quality_score = (sharpness_score * 0.7) + (size_score * 0.3)
