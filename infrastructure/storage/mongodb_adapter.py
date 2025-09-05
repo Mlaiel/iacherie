@@ -17,6 +17,8 @@ from dataclasses import dataclass
 from contextlib import asynccontextmanager
 import json
 
+logger = logging.getLogger(__name__)
+
 # Imports storage
 try:
     import asyncpg
@@ -26,8 +28,6 @@ try:
     from sqlalchemy.orm import sessionmaker
 except ImportError as e:
     logger.warning(f"Import storage manquant: {e}")
-
-logger = logging.getLogger(__name__)
 
 # =============== CONFIGURATION STORAGE ===============
 
@@ -74,6 +74,10 @@ class IStorageAdapter(ABC):
             return result
             
         except Exception as e:
+            logger.error(f"connect failed: {e}")
+            raise
+    
+    async def health_check(self):
         try:
             logger.info(f"Executing health_check")
             
