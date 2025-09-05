@@ -198,6 +198,11 @@ class BasePlatformIntegration(ABC):
             return result
             
         except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
+
+    def placeholder_method(self):
+        """Placeholder method"""  
         try:
             logger.info(f"Executing upload_content")
             
@@ -215,6 +220,11 @@ class BasePlatformIntegration(ABC):
                     return {"status": "success", "data": result}
             
                 except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
+
+    def placeholder_method(self):
+        """Placeholder method"""  
         try:
                     # Request validation
                     if not start_date:

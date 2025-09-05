@@ -430,27 +430,27 @@ Analyze basic video metrics"""
             ], capture_output=True, text=True, timeout=30)
             
             if result.returncode == 0:
-        try:
-                    # AI model processing
-                    if not hasattr(self, 'model') or self.model is None:
-                        raise RuntimeError("AI model not initialized")
+                import json
+                data = json.loads(result.stdout)
+                tracks = []
+                
+                for stream in data.get('streams', []):
+                    track_info = {
+                        'codec': stream.get('codec_name', 'unknown'),
+                        'channels': int(stream.get('channels', 0)),
+                        'sample_rate': int(stream.get('sample_rate', 0)),
+                        'bit_rate': int(stream.get('bit_rate', 0))
+                    }
+                    tracks.append(track_info)
+                
+                return tracks
             
-                    # Preprocess input
-                    processed_input = await self._preprocess__analyze_audio_tracks_input(video_path)
-            
-                    # Run inference
-                    result = await self.model.predict(processed_input)
-            
-                    # Postprocess result
-                    final_result = await self._postprocess__analyze_audio_tracks_result(result)
-            
-                    logger.info(f"AI processing _analyze_audio_tracks completed")
-                    return final_result
-            
-                except Exception as e:
-                    logger.error(f"AI processing _analyze_audio_tracks failed: {e}")
-                    raise
-Generate video fingerprint for copyright detection"""
+        except Exception as e:
+            logger.error(f"Error analyzing audio tracks: {e}")
+            return []
+    
+    async def _generate_fingerprint(self, video_path: Path) -> str:
+        """Generate video fingerprint for copyright detection"""
         try:
             cap = cv2.VideoCapture(str(video_path))
             frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))

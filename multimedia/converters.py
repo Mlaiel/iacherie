@@ -112,11 +112,8 @@ class BaseConverter(ABC):
             return result
             
         except Exception as e:
-        try:
-            logger.info(f"Executing supports_conversion")
-            
-            # Implementation for supports_conversion
-            # TODO: Add specific business logic here
+            logger.error(f"convert failed: {e}")
+            raise
             
             result = None  # Replace with actual implementation
             

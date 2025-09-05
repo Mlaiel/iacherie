@@ -803,28 +803,25 @@ Process image content with advanced analysis"""
             return result
             
         except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
+    
+    async def _extract_image_metadata(self, image: Image.Image) -> Dict[str, Any]:
+        """Extract metadata from an image"""
+        metadata = {}
+        
         try:
-                    # AI model processing
-                    if not hasattr(self, 'model') or self.model is None:
-                        raise RuntimeError("AI model not initialized")
+            # Basic metadata
+            metadata.update({
+                'format': image.format,
+                'mode': image.mode,
+                'size': image.size,
+                'width': image.width,
+                'height': image.height
+            })
             
-                    # Preprocess input
-                    processed_input = await self._preprocess__extract_image_metadata_input(image)
-            
-                    # Run inference
-                    result = await self.model.predict(processed_input)
-            
-                    # Postprocess result
-                    final_result = await self._postprocess__extract_image_metadata_result(result)
-            
-                    logger.info(f"AI processing _extract_image_metadata completed")
-                    return final_result
-            
-                except Exception as e:
-                    logger.error(f"AI processing _extract_image_metadata failed: {e}")
-                    raise
-        except:
-            pass
+        except Exception as e:
+            logger.error(f"Error extracting image metadata: {e}")
         
         # Image analysis
         analysis = await asyncio.get_event_loop().run_in_executor(

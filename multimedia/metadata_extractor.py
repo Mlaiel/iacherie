@@ -262,6 +262,11 @@ Abstract base class for metadata extractors"""
                     return final_result
             
                 except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
+
+    def placeholder_method(self):
+        """Placeholder method"""  
         try:
             logger.info(f"Executing supports_format")
             

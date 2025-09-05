@@ -117,49 +117,27 @@ class BaseAnalyzer(ABC):
         
     @abstractmethod
     async def analyze(self, content: Any, options: Dict[str, Any] = None) -> AnalysisResult:
+        """Analyze content and return results"""
         try:
-                    # AI model processing
-                    if not hasattr(self, 'model') or self.model is None:
-                        raise RuntimeError("AI model not initialized")
+            # AI model processing
+            if not hasattr(self, 'model') or self.model is None:
+                raise RuntimeError("AI model not initialized")
             
-                    # Preprocess input
-                    processed_input = await self._preprocess_analyze_input(content)
+            # Preprocess input
+            processed_input = await self._preprocess_analyze_input(content)
             
-                    # Run inference
-                    result = await self.model.predict(processed_input)
+            # Run inference
+            result = await self.model.predict(processed_input)
             
-                    # Postprocess result
-                    final_result = await self._postprocess_analyze_result(result)
+            # Postprocess result
+            final_result = await self._postprocess_analyze_result(result)
             
-                    logger.info(f"AI processing analyze completed")
-                    return final_result
-            
-                except Exception as e:
-        try:
-            logger.info(f"Executing load_models")
-            
-            # Implementation for load_models
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"load_models completed successfully")
-            return result
+            logger.info(f"AI processing analyze completed")
+            return final_result
             
         except Exception as e:
-            logger.error(f"load_models failed: {e}")
+            logger.error(f"AI processing analyze failed: {e}")
             raise
-                    result = await self.model.predict(processed_input)
-            
-                    # Postprocess result
-                    final_result = await self._postprocess_analyze_result(result)
-            
-                    logger.info(f"AI processing analyze completed")
-                    return final_result
-            
-                except Exception as e:
-                    logger.error(f"AI processing analyze failed: {e}")
-                    raise
     @abstractmethod
     def load_models(self) -> None:
         """

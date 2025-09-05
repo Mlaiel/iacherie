@@ -189,6 +189,11 @@ Base class for platform crawlers"""
             return result
             
         except Exception as e:
+            logger.error(f"Error: {e}")
+            raise
+
+    def placeholder_method(self):
+        """Placeholder method"""  
         try:
                     # AI model processing
                     if not hasattr(self, 'model') or self.model is None:
