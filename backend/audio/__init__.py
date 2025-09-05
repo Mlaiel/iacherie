@@ -23,7 +23,10 @@ from .processing import (
     VocalSeparator,
     InstrumentSeparator,
     StemExtractor,
-    BackgroundRemover
+    BackgroundRemover,
+    BatchProcessor,
+    RealTimeProcessor,
+    QualityPreservationEngine
 )
 
 # Audio analysis and features
@@ -39,7 +42,9 @@ from .analysis import (
     HarmonicAnalyzer,
     TempoDetector,
     KeyDetector,
-    MoodAnalyzer
+    MoodAnalyzer,
+    MusicIntelligenceEngine,
+    AudioSimilarityEngine
 )
 
 # Audio enhancement algorithms
@@ -151,6 +156,9 @@ __all__ = [
     'InstrumentSeparator',
     'StemExtractor',
     'BackgroundRemover',
+    'BatchProcessor',
+    'RealTimeProcessor',
+    'QualityPreservationEngine',
     
     # Analysis
     'SpectralAnalyzer',
@@ -165,6 +173,8 @@ __all__ = [
     'TempoDetector',
     'KeyDetector',
     'MoodAnalyzer',
+    'MusicIntelligenceEngine',
+    'AudioSimilarityEngine',
     
     # Enhancement
     'AudioUpsampler',
