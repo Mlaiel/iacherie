@@ -27,6 +27,10 @@ from .protection_workflow_manager import ProtectionWorkflowManager, get_protecti
 # New enterprise components - Phase 3: SEO & Distribution Pipeline
 from .seo_metadata_processor import SEOMetadataProcessor, get_seo_processor
 
+# New enterprise components - Phase 4: Collaboration & Workflow Integration
+from .collaboration_workflow_processor import CollaborationWorkflowProcessor, get_collaboration_processor
+from .content_distribution_orchestrator import ContentDistributionOrchestrator, get_distribution_orchestrator
+
 __all__ = [
     # Existing processors
     'AudioProcessor',
@@ -49,7 +53,13 @@ __all__ = [
     
     # SEO & Distribution Pipeline
     'SEOMetadataProcessor',
-    'get_seo_processor'
+    'get_seo_processor',
+    
+    # Collaboration & Workflow Integration
+    'CollaborationWorkflowProcessor',
+    'get_collaboration_processor',
+    'ContentDistributionOrchestrator',
+    'get_distribution_orchestrator'
 ]
 
 __version__ = "2.0.0"  # Enterprise Architecture Version
