@@ -16,6 +16,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 from typing import Dict, Any, List, Optional, Set, Callable, Union
 from datetime import datetime
 from enum import Enum
+from collections import defaultdict
 import json
 import asyncio
 import uuid
@@ -482,24 +483,553 @@ class ChannelNames:
     def content_channel(content_id: str) -> str:
         return f"content.{content_id}"
 
+
 # ========================================
-# GLOBAL WEBSOCKET MANAGER INSTANCE
+# REAL-TIME COLLABORATION FEATURES
 # ========================================
 
-# Global WebSocket handler instance
+class CollaborationType(str, Enum):
+    """Types of collaboration"""
+    CONTENT_CREATION = "content_creation"
+    LIVE_EDITING = "live_editing"
+    REVIEW_SESSION = "review_session"
+    BRAINSTORMING = "brainstorming"
+    PROJECT_PLANNING = "project_planning"
+    FEEDBACK_SESSION = "feedback_session"
+
+class CollaborationPermission(str, Enum):
+    """Collaboration permissions"""
+    VIEW_ONLY = "view_only"
+    COMMENT = "comment"
+    EDIT = "edit"
+    ADMIN = "admin"
+
+class RealTimeCollaborationManager:
+    """Real-time collaboration manager for creators"""
+    
+    def __init__(self, websocket_manager: WebSocketManager):
+        self.websocket_manager = websocket_manager
+        self.active_sessions = {}
+        self.collaboration_state = defaultdict(dict)
+        self.cursor_positions = defaultdict(dict)
+        self.version_control = {}
+        
+    async def create_collaboration_session(
+        self, 
+        session_id: str, 
+        creator_id: str, 
+        collaboration_type: CollaborationType,
+        content_id: str = None
+    ) -> Dict[str, Any]:
+        """Create new collaboration session"""
+        try:
+            session_data = {
+                "session_id": session_id,
+                "creator_id": creator_id,
+                "collaboration_type": collaboration_type,
+                "content_id": content_id,
+                "participants": [creator_id],
+                "permissions": {creator_id: CollaborationPermission.ADMIN},
+                "created_at": datetime.utcnow(),
+                "is_active": True,
+                "state": {},
+                "version": 1
+            }
+            
+            self.active_sessions[session_id] = session_data
+            self.collaboration_state[session_id] = {"content": "", "changes": []}
+            
+            # Notify all relevant channels
+            await self.websocket_manager.broadcast_to_channel(
+                f"creator.{creator_id}",
+                {
+                    "type": "collaboration_session_created",
+                    "session_id": session_id,
+                    "collaboration_type": collaboration_type.value,
+                    "content_id": content_id
+                }
+            )
+            
+            return session_data
+            
+        except Exception as e:
+            logger.error(f"Failed to create collaboration session: {str(e)}")
+            raise
+    
+    async def join_collaboration_session(
+        self, 
+        session_id: str, 
+        user_id: str, 
+        permission: CollaborationPermission = CollaborationPermission.EDIT
+    ) -> Dict[str, Any]:
+        """Join existing collaboration session"""
+        try:
+            if session_id not in self.active_sessions:
+                raise ValueError("Collaboration session not found")
+            
+            session = self.active_sessions[session_id]
+            
+            # Add participant
+            if user_id not in session["participants"]:
+                session["participants"].append(user_id)
+                session["permissions"][user_id] = permission
+            
+            # Initialize user state
+            self.cursor_positions[session_id][user_id] = {"line": 0, "column": 0}
+            
+            # Notify all participants
+            await self.websocket_manager.broadcast_to_channel(
+                f"collaboration.{session_id}",
+                {
+                    "type": "user_joined",
+                    "user_id": user_id,
+                    "permission": permission.value,
+                    "participants": session["participants"],
+                    "timestamp": datetime.utcnow().isoformat()
+                }
+            )
+            
+            # Send current state to new participant
+            await self.websocket_manager.send_to_user(
+                user_id,
+                {
+                    "type": "collaboration_state",
+                    "session_id": session_id,
+                    "state": self.collaboration_state[session_id],
+                    "version": session["version"],
+                    "participants": session["participants"]
+                }
+            )
+            
+            return session
+            
+        except Exception as e:
+            logger.error(f"Failed to join collaboration session: {str(e)}")
+            raise
+    
+    async def handle_live_edit(
+        self, 
+        session_id: str, 
+        user_id: str, 
+        edit_operation: Dict[str, Any]
+    ) -> None:
+        """Handle live editing operations"""
+        try:
+            if session_id not in self.active_sessions:
+                return
+            
+            session = self.active_sessions[session_id]
+            
+            # Check permissions
+            user_permission = session["permissions"].get(user_id)
+            if user_permission not in [CollaborationPermission.EDIT, CollaborationPermission.ADMIN]:
+                return
+            
+            # Apply edit operation
+            await self._apply_edit_operation(session_id, user_id, edit_operation)
+            
+            # Increment version
+            session["version"] += 1
+            
+            # Broadcast to all participants except sender
+            participants = [p for p in session["participants"] if p != user_id]
+            for participant in participants:
+                await self.websocket_manager.send_to_user(
+                    participant,
+                    {
+                        "type": "live_edit",
+                        "session_id": session_id,
+                        "user_id": user_id,
+                        "operation": edit_operation,
+                        "version": session["version"],
+                        "timestamp": datetime.utcnow().isoformat()
+                    }
+                )
+            
+        except Exception as e:
+            logger.error(f"Failed to handle live edit: {str(e)}")
+    
+    async def handle_cursor_movement(
+        self, 
+        session_id: str, 
+        user_id: str, 
+        cursor_position: Dict[str, int]
+    ) -> None:
+        """Handle cursor position updates"""
+        try:
+            if session_id not in self.cursor_positions:
+                return
+            
+            # Update cursor position
+            self.cursor_positions[session_id][user_id] = cursor_position
+            
+            # Broadcast to all other participants
+            session = self.active_sessions.get(session_id, {})
+            participants = [p for p in session.get("participants", []) if p != user_id]
+            
+            for participant in participants:
+                await self.websocket_manager.send_to_user(
+                    participant,
+                    {
+                        "type": "cursor_movement",
+                        "session_id": session_id,
+                        "user_id": user_id,
+                        "position": cursor_position,
+                        "timestamp": datetime.utcnow().isoformat()
+                    }
+                )
+            
+        except Exception as e:
+            logger.error(f"Failed to handle cursor movement: {str(e)}")
+    
+    async def add_comment(
+        self, 
+        session_id: str, 
+        user_id: str, 
+        comment_data: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Add comment to collaboration session"""
+        try:
+            comment_id = str(uuid.uuid4())
+            comment = {
+                "comment_id": comment_id,
+                "user_id": user_id,
+                "content": comment_data["content"],
+                "position": comment_data.get("position"),
+                "timestamp": datetime.utcnow().isoformat(),
+                "resolved": False
+            }
+            
+            # Store comment
+            if session_id not in self.collaboration_state:
+                self.collaboration_state[session_id] = {"comments": []}
+            
+            if "comments" not in self.collaboration_state[session_id]:
+                self.collaboration_state[session_id]["comments"] = []
+            
+            self.collaboration_state[session_id]["comments"].append(comment)
+            
+            # Broadcast to all participants
+            session = self.active_sessions.get(session_id, {})
+            for participant in session.get("participants", []):
+                await self.websocket_manager.send_to_user(
+                    participant,
+                    {
+                        "type": "comment_added",
+                        "session_id": session_id,
+                        "comment": comment
+                    }
+                )
+            
+            return comment
+            
+        except Exception as e:
+            logger.error(f"Failed to add comment: {str(e)}")
+            raise
+    
+    async def save_collaboration_state(self, session_id: str) -> Dict[str, Any]:
+        """Save current collaboration state"""
+        try:
+            if session_id not in self.active_sessions:
+                raise ValueError("Session not found")
+            
+            session = self.active_sessions[session_id]
+            state = self.collaboration_state[session_id]
+            
+            # Create save checkpoint
+            checkpoint = {
+                "checkpoint_id": str(uuid.uuid4()),
+                "session_id": session_id,
+                "state": state.copy(),
+                "version": session["version"],
+                "saved_by": session["creator_id"],
+                "saved_at": datetime.utcnow().isoformat()
+            }
+            
+            # Store checkpoint (in production, save to database)
+            if session_id not in self.version_control:
+                self.version_control[session_id] = []
+            
+            self.version_control[session_id].append(checkpoint)
+            
+            # Notify participants
+            for participant in session["participants"]:
+                await self.websocket_manager.send_to_user(
+                    participant,
+                    {
+                        "type": "state_saved",
+                        "session_id": session_id,
+                        "checkpoint_id": checkpoint["checkpoint_id"],
+                        "timestamp": checkpoint["saved_at"]
+                    }
+                )
+            
+            return checkpoint
+            
+        except Exception as e:
+            logger.error(f"Failed to save collaboration state: {str(e)}")
+            raise
+    
+    async def _apply_edit_operation(
+        self, 
+        session_id: str, 
+        user_id: str, 
+        operation: Dict[str, Any]
+    ) -> None:
+        """Apply edit operation to collaboration state"""
+        try:
+            state = self.collaboration_state[session_id]
+            
+            operation_type = operation.get("type")
+            
+            if operation_type == "insert":
+                # Insert text at position
+                position = operation.get("position", 0)
+                text = operation.get("text", "")
+                current_content = state.get("content", "")
+                
+                new_content = current_content[:position] + text + current_content[position:]
+                state["content"] = new_content
+                
+            elif operation_type == "delete":
+                # Delete text range
+                start = operation.get("start", 0)
+                end = operation.get("end", 0)
+                current_content = state.get("content", "")
+                
+                new_content = current_content[:start] + current_content[end:]
+                state["content"] = new_content
+                
+            elif operation_type == "replace":
+                # Replace text range
+                start = operation.get("start", 0)
+                end = operation.get("end", 0)
+                text = operation.get("text", "")
+                current_content = state.get("content", "")
+                
+                new_content = current_content[:start] + text + current_content[end:]
+                state["content"] = new_content
+            
+            # Record change
+            if "changes" not in state:
+                state["changes"] = []
+            
+            change_record = {
+                "change_id": str(uuid.uuid4()),
+                "user_id": user_id,
+                "operation": operation,
+                "timestamp": datetime.utcnow().isoformat()
+            }
+            
+            state["changes"].append(change_record)
+            
+        except Exception as e:
+            logger.error(f"Failed to apply edit operation: {str(e)}")
+
+class LiveStreamManager:
+    """Manager for live streaming and real-time content"""
+    
+    def __init__(self, websocket_manager: WebSocketManager):
+        self.websocket_manager = websocket_manager
+        self.active_streams = {}
+        self.stream_viewers = defaultdict(set)
+        
+    async def start_live_stream(
+        self, 
+        stream_id: str, 
+        creator_id: str, 
+        stream_config: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Start live streaming session"""
+        try:
+            stream_data = {
+                "stream_id": stream_id,
+                "creator_id": creator_id,
+                "title": stream_config.get("title", "Live Stream"),
+                "description": stream_config.get("description", ""),
+                "category": stream_config.get("category", "general"),
+                "started_at": datetime.utcnow(),
+                "is_live": True,
+                "viewer_count": 0,
+                "chat_enabled": stream_config.get("chat_enabled", True),
+                "quality": stream_config.get("quality", "720p")
+            }
+            
+            self.active_streams[stream_id] = stream_data
+            
+            # Notify followers
+            await self.websocket_manager.broadcast_to_channel(
+                f"creator.{creator_id}.followers",
+                {
+                    "type": "stream_started",
+                    "stream_id": stream_id,
+                    "creator_id": creator_id,
+                    "title": stream_data["title"],
+                    "started_at": stream_data["started_at"].isoformat()
+                }
+            )
+            
+            return stream_data
+            
+        except Exception as e:
+            logger.error(f"Failed to start live stream: {str(e)}")
+            raise
+    
+    async def join_stream(self, stream_id: str, viewer_id: str) -> Dict[str, Any]:
+        """Join live stream as viewer"""
+        try:
+            if stream_id not in self.active_streams:
+                raise ValueError("Stream not found")
+            
+            stream = self.active_streams[stream_id]
+            
+            # Add viewer
+            self.stream_viewers[stream_id].add(viewer_id)
+            stream["viewer_count"] = len(self.stream_viewers[stream_id])
+            
+            # Notify stream
+            await self.websocket_manager.broadcast_to_channel(
+                f"stream.{stream_id}",
+                {
+                    "type": "viewer_joined",
+                    "viewer_id": viewer_id,
+                    "viewer_count": stream["viewer_count"]
+                }
+            )
+            
+            return stream
+            
+        except Exception as e:
+            logger.error(f"Failed to join stream: {str(e)}")
+            raise
+    
+    async def send_chat_message(
+        self, 
+        stream_id: str, 
+        user_id: str, 
+        message: str
+    ) -> None:
+        """Send chat message to live stream"""
+        try:
+            if stream_id not in self.active_streams:
+                return
+            
+            stream = self.active_streams[stream_id]
+            if not stream.get("chat_enabled", True):
+                return
+            
+            chat_message = {
+                "type": "chat_message",
+                "stream_id": stream_id,
+                "user_id": user_id,
+                "message": message,
+                "timestamp": datetime.utcnow().isoformat()
+            }
+            
+            # Broadcast to all stream viewers
+            await self.websocket_manager.broadcast_to_channel(
+                f"stream.{stream_id}",
+                chat_message
+            )
+            
+        except Exception as e:
+            logger.error(f"Failed to send chat message: {str(e)}")
+
+
+# Initialize real-time collaboration
+collaboration_manager = RealTimeCollaborationManager(WebSocketManager())
+live_stream_manager = LiveStreamManager(WebSocketManager())
+
+
+# ========================================
+# ENHANCED WEBSOCKET HANDLER
+# ========================================
+
+class EnhancedWebSocketHandler(WebSocketHandler):
+    """Enhanced WebSocket handler with collaboration features"""
+    
+    def __init__(self):
+        super().__init__()
+        self.collaboration_manager = collaboration_manager
+        self.live_stream_manager = live_stream_manager
+    
+    async def handle_collaboration_message(self, websocket, message: Dict[str, Any]):
+        """Handle collaboration-specific messages"""
+        try:
+            message_type = message.get("type")
+            
+            if message_type == "join_collaboration":
+                session_id = message.get("session_id")
+                user_id = message.get("user_id")
+                permission = CollaborationPermission(message.get("permission", "edit"))
+                
+                await self.collaboration_manager.join_collaboration_session(
+                    session_id, user_id, permission
+                )
+                
+            elif message_type == "live_edit":
+                session_id = message.get("session_id")
+                user_id = message.get("user_id")
+                operation = message.get("operation")
+                
+                await self.collaboration_manager.handle_live_edit(
+                    session_id, user_id, operation
+                )
+                
+            elif message_type == "cursor_movement":
+                session_id = message.get("session_id")
+                user_id = message.get("user_id")
+                position = message.get("position")
+                
+                await self.collaboration_manager.handle_cursor_movement(
+                    session_id, user_id, position
+                )
+                
+            elif message_type == "add_comment":
+                session_id = message.get("session_id")
+                user_id = message.get("user_id")
+                comment_data = message.get("comment_data")
+                
+                await self.collaboration_manager.add_comment(
+                    session_id, user_id, comment_data
+                )
+                
+        except Exception as e:
+            logger.error(f"Failed to handle collaboration message: {str(e)}")
+            await websocket.send_json({
+                "type": "error",
+                "message": "Failed to process collaboration message"
+            })
+
+
+# ========================================
+# UPDATED GLOBAL INSTANCE
+# ========================================
+
+# Enhanced WebSocket handler instance
+enhanced_websocket_handler = EnhancedWebSocketHandler()
+
+def get_enhanced_websocket_handler() -> EnhancedWebSocketHandler:
+    """Get enhanced WebSocket handler instance"""
+    return enhanced_websocket_handler
+
+# Keep backward compatibility
 websocket_handler = WebSocketHandler()
 
 def get_websocket_handler() -> WebSocketHandler:
-    """Get global WebSocket handler instance"""
+    """Get WebSocket handler instance (backward compatibility)"""
     return websocket_handler
 
+
 # ========================================
-# EXPORTS
+# UPDATED EXPORTS
 # ========================================
 
 __all__ = [
     "EventType",
     "ConnectionStatus", 
+    "CollaborationType",
+    "CollaborationPermission",
     "WebSocketMessage",
     "ConnectionInfo",
     "WebSocketManager",
@@ -507,7 +1037,13 @@ __all__ = [
     "CollaborationEventHandler", 
     "AnalyticsEventHandler",
     "WebSocketHandler",
+    "EnhancedWebSocketHandler",
+    "RealTimeCollaborationManager",
+    "LiveStreamManager",
     "ChannelNames",
     "get_websocket_handler",
-    "get_websocket_user"
+    "get_enhanced_websocket_handler",
+    "get_websocket_user",
+    "collaboration_manager",
+    "live_stream_manager"
 ]
