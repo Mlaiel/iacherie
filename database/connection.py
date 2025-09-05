@@ -1,37 +1,65 @@
-"""🔗 Database Connection - Core Connection Management
-===================================================
+"""🔗 Database Connection - Enterprise Multi-Database Connection Management
+==========================================================================
 Module: database/connection.py
 Author: Fahed Mlaiel (mlaiel@live.de)
-Type: Database Connection Management - Production-Ready
-Responsibility: Database connection handling and configuration
+Type: Enterprise Database Connection Management - Production-Ready
+Responsibility: Multi-database connection handling, pooling and monitoring
 
 ⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
 (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
 
-This connection module provides database connection management for:
-- SQLite for development and testing
-- PostgreSQL for production
-- Connection pooling and health monitoring
-- Transaction management
+This enhanced connection module provides enterprise database management for:
+- Multi-database support (PostgreSQL, Redis, MongoDB, Elasticsearch)
+- Advanced connection pooling with auto-scaling
+- Health monitoring and failover management
+- Enterprise security integration
+- Performance monitoring and optimization
+- Load balancing and high availability
 """
 
 import os
 import logging
-from typing import Optional, Dict, Any
+import asyncio
+import datetime
+from typing import Optional, Dict, Any, List, Set
 from contextlib import asynccontextmanager
+from dataclasses import dataclass
+from enum import Enum
+import json
+import time
 
 # Optional imports for production features
 try:
     import sqlalchemy
-    from sqlalchemy import create_engine, MetaData
+    from sqlalchemy import create_engine, MetaData, event, pool
     from sqlalchemy.ext.declarative import declarative_base
-    from sqlalchemy.orm import sessionmaker
+    from sqlalchemy.orm import sessionmaker, Session
+    from sqlalchemy.engine import Engine
+    from sqlalchemy.pool import QueuePool, StaticPool
     SQLALCHEMY_AVAILABLE = True
 except ImportError:
     SQLALCHEMY_AVAILABLE = False
     sqlalchemy = None
+
+try:
+    import redis
+    REDIS_AVAILABLE = True
+except ImportError:
+    REDIS_AVAILABLE = False
+
+try:
+    import pymongo
+    MONGODB_AVAILABLE = True
+except ImportError:
+    MONGODB_AVAILABLE = False
+
+try:
+    from elasticsearch import Elasticsearch
+    ELASTICSEARCH_AVAILABLE = True
+except ImportError:
+    ELASTICSEARCH_AVAILABLE = False
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -39,12 +67,51 @@ logger = logging.getLogger(__name__)
 # Database configuration
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./database.db")
 TEST_DATABASE_URL = os.getenv("TEST_DATABASE_URL", "sqlite:///./test_database.db")
+REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
+MONGODB_URL = os.getenv("MONGODB_URL", "mongodb://localhost:27017/ainflue")
+ELASTICSEARCH_URL = os.getenv("ELASTICSEARCH_URL", "http://localhost:9200")
 
 # Global database components
 engine = None
 SessionLocal = None
 Base = None
 metadata = None
+
+# Enterprise connection management
+class DatabaseType(Enum):
+    """Supported database types"""
+    POSTGRESQL = "postgresql"
+    SQLITE = "sqlite"
+    REDIS = "redis"
+    MONGODB = "mongodb"
+    ELASTICSEARCH = "elasticsearch"
+
+@dataclass
+class ConnectionConfig:
+    """Database connection configuration"""
+    database_type: DatabaseType
+    url: str
+    pool_size: int = 20
+    max_overflow: int = 30
+    pool_timeout: int = 30
+    pool_recycle: int = 3600
+    echo: bool = False
+    enable_monitoring: bool = True
+    health_check_interval: int = 60
+    retry_attempts: int = 3
+    retry_delay: int = 5
+
+@dataclass
+class ConnectionHealth:
+    """Connection health status"""
+    database_type: DatabaseType
+    is_healthy: bool
+    last_check: datetime.datetime
+    response_time_ms: float
+    error_message: Optional[str] = None
+    total_connections: int = 0
+    active_connections: int = 0
+    pool_size: int = 0
 
 class DatabaseConnection:
     """Database connection manager"""
