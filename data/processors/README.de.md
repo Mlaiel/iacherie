@@ -172,32 +172,27 @@ Das Datenverarbeitungsmodul bietet unternehmenstaugliche Content-Verarbeitungsf�
 - Formatübergreifende Metadaten-Standardisierung
 - Intelligente Content-Kategorisierung
 
-#### 6. **QualityProcessor** ⭐
-- Mehrdimensionale Qualitätsbewertung
-- Industriebenchmark-Compliance
-- Performance-Optimierungsempfehlungen
-- Qualitätsbewertungsalgorithmen
-- Content-Verbesserungsvorschläge
-
-#### 7. **FormatProcessor** 🔄
-- Universelle Formatkonvertierung
-- Plattformspezifische Optimierung
-- Batch-Verarbeitungsfähigkeiten
-- Verlustbehaftete/verlustfreie Konvertierungsoptionen
-- Kompressionseffizienz-Analyse
-
-#### 8. **CompressionProcessor** 🗜️
-- Intelligente Content-Kompression
-- Mehrere Algorithmus-Unterstützung (LZMA, Gzip, Bzip2)
+#### 6. **UnifiedConverter** 🔄
+- Universelle Formatkonvertierung für alle Content-Typen
+- Intelligente Content-Kompression mit Qualitätserhaltung
+- Plattformspezifische Optimierung (Instagram, TikTok, YouTube, etc.)
+- Multi-Algorithmus-Kompressionsunterstützung (LZMA, Gzip, Bzip2)
+- Batch-Verarbeitung mit Fortschrittsverfolgung
 - Qualitätserhaltende Optimierung
+- Plattformübergreifende Formatstandardisierung
 - Adaptive Kompressionsstrategien
 - Performance-Analytics
 
-#### 9. **OrchestrationProcessor** 🎯
-- Komplexe Workflow-Orchestrierung
-- Mehrstufige Verarbeitungspipelines
-- Ressourcenzuteilung und Load Balancing
-- Fehlerbehandlung und Retry-Mechanismen
+#### 7. **WorkflowOrchestrator** 🎯
+- Professionelle Workflow-Orchestrierung für komplexe Verarbeitungspipelines
+- Mehrdimensionale Qualitätsbewertung und -optimierung
+- Intelligente Prozessor-Auswahl und -optimierung
+- Echtzeit-Monitoring und Performance-Analytics
+- Adaptive Ressourcenzuteilung und Load-Balancing
+- Content-bewusste Verarbeitungsstrategien mit Qualitätsoptimierung
+- Industriebenchmark-Compliance und Qualitätsbewertung
+- Performance-Optimierungsempfehlungen
+- Pipeline-Versionierung und Rollback-Fähigkeiten
 - Performance-Monitoring und Optimierung
 
 ---
