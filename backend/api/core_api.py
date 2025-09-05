@@ -8,7 +8,9 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 from typing import Dict, Any, List, Optional
 from datetime import datetime, timedelta
+from enum import Enum
 import uuid
+import json
 
 from fastapi import APIRouter, Depends, HTTPException, status, Body, UploadFile, File, Form, BackgroundTasks
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
@@ -852,3 +854,633 @@ async def _process_data_export(export_id: str, user_id: str, data_types: List[st
                 "UPDATE data_export_requests SET status = %s, error_message = %s WHERE id = %s",
                 ("failed", str(e), export_id)
             )
+
+
+# ========================================
+# MULTI-FORMAT CONTENT MANAGEMENT
+# ========================================
+
+class ContentFormat(str, Enum):
+    """Supported content formats"""
+    # Audio formats
+    MP3 = "mp3"
+    WAV = "wav"
+    FLAC = "flac"
+    AAC = "aac"
+    OGG = "ogg"
+    M4A = "m4a"
+    
+    # Video formats
+    MP4 = "mp4"
+    AVI = "avi"
+    MOV = "mov"
+    WEBM = "webm"
+    MKV = "mkv"
+    FLV = "flv"
+    
+    # Image formats
+    JPEG = "jpeg"
+    PNG = "png"
+    WEBP = "webp"
+    AVIF = "avif"
+    SVG = "svg"
+    GIF = "gif"
+    
+    # Text formats
+    MARKDOWN = "markdown"
+    HTML = "html"
+    PLAIN_TEXT = "txt"
+    PDF = "pdf"
+    DOCX = "docx"
+
+class ProcessingQuality(str, Enum):
+    """Content processing quality levels"""
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+    ULTRA = "ultra"
+    LOSSLESS = "lossless"
+
+class AIEnhancement(str, Enum):
+    """AI enhancement options"""
+    NOISE_REDUCTION = "noise_reduction"
+    UPSCALING = "upscaling"
+    COLOR_CORRECTION = "color_correction"
+    AUDIO_MASTERING = "audio_mastering"
+    VOICE_ENHANCEMENT = "voice_enhancement"
+    AUTO_SUBTITLE = "auto_subtitle"
+    SMART_CROP = "smart_crop"
+    CONTENT_ANALYSIS = "content_analysis"
+
+class ContentProcessingRequest(BaseModel):
+    """Content processing request model"""
+    content_id: str
+    target_format: ContentFormat
+    quality: ProcessingQuality = ProcessingQuality.HIGH
+    ai_enhancements: List[AIEnhancement] = []
+    custom_settings: Optional[Dict[str, Any]] = None
+    priority: int = Field(default=1, ge=1, le=5)
+    notify_on_completion: bool = True
+
+class MultiFormatUpload(BaseModel):
+    """Multi-format content upload"""
+    title: str = Field(..., min_length=1, max_length=200)
+    description: Optional[str] = Field(None, max_length=2000)
+    formats: List[ContentFormat]
+    auto_generate_variants: bool = True
+    ai_optimization: bool = True
+    tags: List[str] = Field(default_factory=list, max_items=20)
+    category: str
+    visibility: str = Field(default="private", pattern="^(public|private|unlisted)$")
+
+class ContentAnalysisResult(BaseModel):
+    """AI content analysis result"""
+    content_id: str
+    format_detected: ContentFormat
+    quality_score: float = Field(..., ge=0.0, le=1.0)
+    metadata: Dict[str, Any]
+    ai_tags: List[str] = []
+    content_safety: Dict[str, Any]
+    optimization_suggestions: List[str] = []
+    fingerprint: str
+    processing_time: float
+
+# Multi-format Content Endpoints
+
+@core_router.post("/content/multi-format-upload", response_model=Dict[str, Any])
+async def upload_multi_format_content(
+    upload_request: MultiFormatUpload,
+    files: List[UploadFile] = File(...),
+    current_user: dict = Depends(get_current_user)
+):
+    """Upload and process multi-format content with AI optimization"""
+    try:
+        upload_id = str(uuid.uuid4())
+        processed_files = []
+        
+        # Validate file formats
+        for file in files:
+            file_extension = file.filename.split('.')[-1].lower() if file.filename else ""
+            if file_extension not in [fmt.value for fmt in ContentFormat]:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail=f"Unsupported file format: {file_extension}"
+                )
+        
+        # Process each file
+        for file in files:
+            file_id = str(uuid.uuid4())
+            file_content = await file.read()
+            
+            # Detect content format and quality
+            analysis = await _analyze_content_format(file_content, file.filename)
+            
+            # Apply AI enhancements if requested
+            if upload_request.ai_optimization:
+                enhanced_content = await _apply_ai_enhancements(
+                    file_content, analysis["format"], upload_request.category
+                )
+                file_content = enhanced_content["data"]
+                analysis.update(enhanced_content["metadata"])
+            
+            # Generate variants if requested
+            variants = []
+            if upload_request.auto_generate_variants:
+                variants = await _generate_format_variants(
+                    file_content, analysis["format"], upload_request.formats
+                )
+            
+            # Store content and metadata
+            content_data = {
+                "file_id": file_id,
+                "original_name": file.filename,
+                "format": analysis["format"],
+                "size": len(file_content),
+                "quality_score": analysis["quality_score"],
+                "ai_tags": analysis.get("ai_tags", []),
+                "variants": variants,
+                "fingerprint": analysis["fingerprint"]
+            }
+            
+            await _store_content_data(file_id, file_content, content_data, current_user["id"])
+            processed_files.append(content_data)
+        
+        # Create content collection
+        collection_data = {
+            "upload_id": upload_id,
+            "title": upload_request.title,
+            "description": upload_request.description,
+            "files": processed_files,
+            "tags": upload_request.tags,
+            "category": upload_request.category,
+            "visibility": upload_request.visibility,
+            "user_id": current_user["id"],
+            "created_at": datetime.utcnow()
+        }
+        
+        await _store_content_collection(collection_data)
+        
+        return {
+            "upload_id": upload_id,
+            "files_processed": len(processed_files),
+            "total_variants": sum(len(f["variants"]) for f in processed_files),
+            "ai_optimization_applied": upload_request.ai_optimization,
+            "status": "completed",
+            "files": processed_files
+        }
+        
+    except Exception as e:
+        logger.error(f"Multi-format upload failed: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Multi-format upload failed"
+        )
+
+@core_router.post("/content/process-format", response_model=Dict[str, Any])
+async def process_content_format(
+    processing_request: ContentProcessingRequest,
+    current_user: dict = Depends(get_current_user)
+):
+    """Process content to different format with AI enhancements"""
+    try:
+        job_id = str(uuid.uuid4())
+        
+        # Get original content
+        original_content = await _get_content_data(processing_request.content_id)
+        if not original_content:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Content not found"
+            )
+        
+        # Validate user ownership
+        if original_content["user_id"] != current_user["id"]:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Access denied"
+            )
+        
+        # Start background processing
+        processing_task = {
+            "job_id": job_id,
+            "content_id": processing_request.content_id,
+            "target_format": processing_request.target_format,
+            "quality": processing_request.quality,
+            "ai_enhancements": processing_request.ai_enhancements,
+            "custom_settings": processing_request.custom_settings or {},
+            "priority": processing_request.priority,
+            "user_id": current_user["id"],
+            "status": "queued",
+            "created_at": datetime.utcnow()
+        }
+        
+        await _queue_processing_job(processing_task)
+        
+        # Estimate processing time
+        estimated_time = await _estimate_processing_time(
+            original_content, processing_request.target_format, processing_request.quality
+        )
+        
+        return {
+            "job_id": job_id,
+            "status": "queued",
+            "estimated_completion": (datetime.utcnow() + timedelta(seconds=estimated_time)).isoformat(),
+            "priority": processing_request.priority,
+            "target_format": processing_request.target_format.value,
+            "ai_enhancements": [e.value for e in processing_request.ai_enhancements]
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Content processing failed: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Content processing failed"
+        )
+
+@core_router.get("/content/{content_id}/analysis", response_model=ContentAnalysisResult)
+async def get_content_analysis(
+    content_id: str,
+    current_user: dict = Depends(get_current_user)
+):
+    """Get AI-powered content analysis"""
+    try:
+        # Get content data
+        content_data = await _get_content_data(content_id)
+        if not content_data:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Content not found"
+            )
+        
+        # Validate user access
+        if content_data["user_id"] != current_user["id"]:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Access denied"
+            )
+        
+        # Perform comprehensive AI analysis
+        analysis_start = datetime.utcnow()
+        
+        # Content format detection
+        format_detected = ContentFormat(content_data["format"])
+        
+        # Quality assessment
+        quality_score = await _assess_content_quality(content_data)
+        
+        # Metadata extraction
+        metadata = await _extract_content_metadata(content_data)
+        
+        # AI tagging
+        ai_tags = await _generate_ai_tags(content_data)
+        
+        # Content safety analysis
+        safety_analysis = await _analyze_content_safety(content_data)
+        
+        # Optimization suggestions
+        optimization_suggestions = await _generate_optimization_suggestions(content_data)
+        
+        # Content fingerprinting
+        fingerprint = await _generate_content_fingerprint(content_data)
+        
+        processing_time = (datetime.utcnow() - analysis_start).total_seconds()
+        
+        return ContentAnalysisResult(
+            content_id=content_id,
+            format_detected=format_detected,
+            quality_score=quality_score,
+            metadata=metadata,
+            ai_tags=ai_tags,
+            content_safety=safety_analysis,
+            optimization_suggestions=optimization_suggestions,
+            fingerprint=fingerprint,
+            processing_time=processing_time
+        )
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Content analysis failed: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Content analysis failed"
+        )
+
+@core_router.get("/content/formats/supported", response_model=Dict[str, List[str]])
+async def get_supported_formats():
+    """Get list of all supported content formats"""
+    formats_by_type = {
+        "audio": [fmt.value for fmt in ContentFormat if fmt.value in ["mp3", "wav", "flac", "aac", "ogg", "m4a"]],
+        "video": [fmt.value for fmt in ContentFormat if fmt.value in ["mp4", "avi", "mov", "webm", "mkv", "flv"]],
+        "image": [fmt.value for fmt in ContentFormat if fmt.value in ["jpeg", "png", "webp", "avif", "svg", "gif"]],
+        "text": [fmt.value for fmt in ContentFormat if fmt.value in ["markdown", "html", "txt", "pdf", "docx"]]
+    }
+    
+    return {
+        "formats_by_type": formats_by_type,
+        "total_formats": len(ContentFormat),
+        "ai_enhancements": [e.value for e in AIEnhancement],
+        "quality_levels": [q.value for q in ProcessingQuality]
+    }
+
+# Content Processing Helper Functions
+
+async def _analyze_content_format(content: bytes, filename: str) -> Dict[str, Any]:
+    """Analyze content format and extract metadata"""
+    try:
+        file_extension = filename.split('.')[-1].lower() if filename else ""
+        
+        # Mock analysis - would use specialized libraries in production
+        format_detected = file_extension
+        if format_detected in ["jpg", "jpeg"]:
+            format_detected = "jpeg"
+        
+        # Basic quality assessment based on file size and format
+        quality_score = min(0.9, len(content) / (1024 * 1024) * 0.1)  # Rough estimate
+        
+        # Generate basic fingerprint
+        import hashlib
+        fingerprint = hashlib.sha256(content).hexdigest()
+        
+        return {
+            "format": format_detected,
+            "quality_score": quality_score,
+            "size": len(content),
+            "fingerprint": fingerprint,
+            "ai_tags": ["auto-detected"],
+            "metadata": {
+                "original_filename": filename,
+                "detection_confidence": 0.95
+            }
+        }
+        
+    except Exception:
+        return {
+            "format": "unknown",
+            "quality_score": 0.5,
+            "size": len(content),
+            "fingerprint": "unknown",
+            "ai_tags": [],
+            "metadata": {}
+        }
+
+async def _apply_ai_enhancements(content: bytes, format_type: str, category: str) -> Dict[str, Any]:
+    """Apply AI enhancements to content"""
+    try:
+        # Mock AI enhancement - would use ML models in production
+        enhanced_content = content  # In production, this would be the enhanced version
+        
+        enhancement_metadata = {
+            "enhancements_applied": ["noise_reduction", "quality_boost"],
+            "improvement_score": 0.15,
+            "processing_time": 2.5
+        }
+        
+        return {
+            "data": enhanced_content,
+            "metadata": enhancement_metadata
+        }
+        
+    except Exception:
+        return {"data": content, "metadata": {}}
+
+async def _generate_format_variants(content: bytes, original_format: str, target_formats: List[ContentFormat]) -> List[Dict]:
+    """Generate different format variants of content"""
+    try:
+        variants = []
+        
+        for target_format in target_formats:
+            if target_format.value != original_format:
+                # Mock variant generation - would use conversion libraries in production
+                variant_id = str(uuid.uuid4())
+                variants.append({
+                    "variant_id": variant_id,
+                    "format": target_format.value,
+                    "size": len(content),  # Would be different after conversion
+                    "quality": "high",
+                    "conversion_time": 1.5
+                })
+        
+        return variants
+        
+    except Exception:
+        return []
+
+async def _store_content_data(file_id: str, content: bytes, metadata: Dict, user_id: str):
+    """Store content data and metadata"""
+    try:
+        # Mock storage - would use cloud storage in production
+        storage_path = f"content/{user_id}/{file_id}"
+        
+        # Store in database
+        async with database_manager.get_postgres_session() as session:
+            await session.execute(
+                """
+                INSERT INTO content_files 
+                (id, user_id, storage_path, metadata, created_at)
+                VALUES (%s, %s, %s, %s, %s)
+                """,
+                (file_id, user_id, storage_path, json.dumps(metadata), datetime.utcnow())
+            )
+        
+    except Exception as e:
+        logger.error(f"Content storage failed: {str(e)}")
+
+async def _store_content_collection(collection_data: Dict):
+    """Store content collection"""
+    try:
+        async with database_manager.get_postgres_session() as session:
+            await session.execute(
+                """
+                INSERT INTO content_collections 
+                (id, user_id, title, description, files_data, tags, category, 
+                 visibility, created_at)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                """,
+                (collection_data["upload_id"], collection_data["user_id"],
+                 collection_data["title"], collection_data["description"],
+                 json.dumps(collection_data["files"]), json.dumps(collection_data["tags"]),
+                 collection_data["category"], collection_data["visibility"],
+                 collection_data["created_at"])
+            )
+        
+    except Exception as e:
+        logger.error(f"Collection storage failed: {str(e)}")
+
+async def _get_content_data(content_id: str) -> Optional[Dict]:
+    """Get content data by ID"""
+    try:
+        async with database_manager.get_postgres_session() as session:
+            result = await session.execute(
+                "SELECT * FROM content_files WHERE id = %s",
+                (content_id,)
+            )
+            row = result.fetchone()
+            return dict(row) if row else None
+    except Exception:
+        return None
+
+async def _queue_processing_job(job_data: Dict):
+    """Queue content processing job"""
+    try:
+        async with database_manager.get_postgres_session() as session:
+            await session.execute(
+                """
+                INSERT INTO processing_jobs 
+                (id, content_id, job_data, status, created_at)
+                VALUES (%s, %s, %s, %s, %s)
+                """,
+                (job_data["job_id"], job_data["content_id"],
+                 json.dumps(job_data), "queued", datetime.utcnow())
+            )
+    except Exception as e:
+        logger.error(f"Job queueing failed: {str(e)}")
+
+async def _estimate_processing_time(content_data: Dict, target_format: ContentFormat, quality: ProcessingQuality) -> int:
+    """Estimate processing time in seconds"""
+    base_time = 30  # 30 seconds base
+    
+    # Adjust based on file size
+    size_factor = content_data.get("size", 1024) / (1024 * 1024)  # MB
+    time_adjustment = size_factor * 10
+    
+    # Adjust based on quality
+    quality_multipliers = {
+        ProcessingQuality.LOW: 0.5,
+        ProcessingQuality.MEDIUM: 1.0,
+        ProcessingQuality.HIGH: 1.5,
+        ProcessingQuality.ULTRA: 2.0,
+        ProcessingQuality.LOSSLESS: 3.0
+    }
+    
+    quality_factor = quality_multipliers.get(quality, 1.0)
+    
+    return int(base_time + time_adjustment * quality_factor)
+
+async def _assess_content_quality(content_data: Dict) -> float:
+    """Assess content quality using AI"""
+    try:
+        # Mock quality assessment - would use ML models in production
+        base_quality = 0.7
+        
+        # Adjust based on file size (larger usually better quality)
+        size_mb = content_data.get("size", 0) / (1024 * 1024)
+        size_factor = min(0.3, size_mb / 10)  # Cap at 0.3 boost for 10MB+
+        
+        return min(1.0, base_quality + size_factor)
+        
+    except Exception:
+        return 0.5
+
+async def _extract_content_metadata(content_data: Dict) -> Dict[str, Any]:
+    """Extract detailed metadata from content"""
+    try:
+        # Mock metadata extraction - would use specialized libraries
+        metadata = {
+            "duration": "0:03:45" if content_data.get("format") in ["mp3", "wav", "mp4"] else None,
+            "resolution": "1920x1080" if content_data.get("format") in ["mp4", "avi", "jpeg", "png"] else None,
+            "bitrate": "320kbps" if content_data.get("format") in ["mp3", "aac"] else None,
+            "color_profile": "sRGB" if content_data.get("format") in ["jpeg", "png"] else None,
+            "creation_date": datetime.utcnow().isoformat(),
+            "file_size_mb": round(content_data.get("size", 0) / (1024 * 1024), 2)
+        }
+        
+        # Remove None values
+        return {k: v for k, v in metadata.items() if v is not None}
+        
+    except Exception:
+        return {}
+
+async def _generate_ai_tags(content_data: Dict) -> List[str]:
+    """Generate AI-powered content tags"""
+    try:
+        # Mock AI tagging - would use ML models in production
+        format_type = content_data.get("format", "")
+        
+        base_tags = []
+        if format_type in ["mp3", "wav", "flac", "aac"]:
+            base_tags = ["audio", "music", "sound"]
+        elif format_type in ["mp4", "avi", "mov", "webm"]:
+            base_tags = ["video", "visual", "multimedia"]
+        elif format_type in ["jpeg", "png", "webp", "gif"]:
+            base_tags = ["image", "visual", "graphic"]
+        elif format_type in ["txt", "markdown", "html", "pdf"]:
+            base_tags = ["text", "document", "content"]
+        
+        # Add quality-based tags
+        quality = content_data.get("quality_score", 0.5)
+        if quality > 0.8:
+            base_tags.append("high-quality")
+        elif quality > 0.6:
+            base_tags.append("good-quality")
+        
+        return base_tags
+        
+    except Exception:
+        return []
+
+async def _analyze_content_safety(content_data: Dict) -> Dict[str, Any]:
+    """Analyze content for safety and compliance"""
+    try:
+        # Mock safety analysis - would use content moderation APIs
+        return {
+            "overall_safety_score": 0.95,
+            "content_warnings": [],
+            "adult_content": False,
+            "violence": False,
+            "copyright_risk": "low",
+            "compliance_status": "approved"
+        }
+        
+    except Exception:
+        return {"overall_safety_score": 0.5, "compliance_status": "unknown"}
+
+async def _generate_optimization_suggestions(content_data: Dict) -> List[str]:
+    """Generate AI-powered optimization suggestions"""
+    try:
+        suggestions = []
+        
+        quality = content_data.get("quality_score", 0.5)
+        format_type = content_data.get("format", "")
+        
+        if quality < 0.7:
+            suggestions.append("Consider re-uploading in higher quality")
+        
+        if format_type in ["wav", "flac"] and content_data.get("size", 0) > 50 * 1024 * 1024:
+            suggestions.append("Convert to compressed format (MP3/AAC) for faster streaming")
+        
+        if format_type in ["avi", "mkv"]:
+            suggestions.append("Convert to MP4 for better compatibility")
+        
+        if not suggestions:
+            suggestions.append("Content is well-optimized")
+        
+        return suggestions
+        
+    except Exception:
+        return ["Contact support for optimization advice"]
+
+async def _generate_content_fingerprint(content_data: Dict) -> str:
+    """Generate unique content fingerprint"""
+    try:
+        # Use existing fingerprint or generate new one
+        return content_data.get("fingerprint", f"fp_{uuid.uuid4().hex[:16]}")
+    except Exception:
+        return f"fp_{uuid.uuid4().hex[:16]}"
+
+
+# ========================================
+# EXPORTS UPDATE
+# ========================================
+
+# Add to existing router exports
+core_router_exports = [
+    "ContentFormat",
+    "ProcessingQuality", 
+    "AIEnhancement",
+    "ContentProcessingRequest",
+    "MultiFormatUpload",
+    "ContentAnalysisResult"
+]

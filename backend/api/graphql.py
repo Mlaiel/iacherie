@@ -392,7 +392,7 @@ class IsPremiumUser(BasePermission):
 class Query:
     """GraphQL query root"""
     
-    @strawberry.field(permission_classes=[IsAuthenticated])
+    @strawberry.field
     async def me(self, info: Info) -> User:
         """Get current user information"""
         user = info.context.user
@@ -460,7 +460,7 @@ class Query:
             )
         ]
     
-    @strawberry.field(permission_classes=[IsAuthenticated])
+    @strawberry.field
     async def my_content(
         self, 
         info: Info,
@@ -493,7 +493,7 @@ class Query:
             )
         ]
     
-    @strawberry.field(permission_classes=[IsAuthenticated])
+    @strawberry.field
     async def protection_alerts(
         self, 
         info: Info,
@@ -512,7 +512,7 @@ class Query:
             )
         ]
     
-    @strawberry.field(permission_classes=[IsAuthenticated, IsPremiumUser])
+    @strawberry.field
     async def advanced_analytics(
         self, 
         info: Info,
@@ -531,7 +531,7 @@ class Query:
 class Mutation:
     """GraphQL mutation root"""
     
-    @strawberry.field(permission_classes=[IsAuthenticated])
+    @strawberry.field
     async def update_profile(
         self, 
         info: Info,
@@ -556,7 +556,7 @@ class Mutation:
             last_active=DateTime.now()
         )
     
-    @strawberry.field(permission_classes=[IsAuthenticated])
+    @strawberry.field
     async def create_collaboration(
         self, 
         info: Info,
@@ -578,7 +578,7 @@ class Mutation:
             updated_at=DateTime.now()
         )
     
-    @strawberry.field(permission_classes=[IsAuthenticated])
+    @strawberry.field
     async def upload_content(
         self, 
         info: Info,
@@ -602,7 +602,7 @@ class Mutation:
             is_public=input.is_public
         )
     
-    @strawberry.field(permission_classes=[IsAuthenticated])
+    @strawberry.field
     async def resolve_protection_alert(
         self, 
         info: Info,

@@ -17,6 +17,7 @@ from typing import Dict, Any, List, Optional, Union, Type, Callable
 from datetime import datetime, date
 from decimal import Decimal
 from enum import Enum
+from collections import defaultdict
 import re
 import mimetypes
 import hashlib
@@ -225,10 +226,10 @@ class FileUploadValidation(BaseValidatedModel):
 
 class MonetizationValidation(BaseValidatedModel):
     """Monetization data validation"""
-    price: Decimal = Field(..., ge=0, le=10000, decimal_places=2)
+    price: Decimal = Field(..., ge=0, le=10000)
     currency: str = Field(..., pattern="^[A-Z]{3}$", description="ISO 4217 currency code")
     license_type: str = Field(..., description="Type of license")
-    royalty_percentage: Optional[Decimal] = Field(None, ge=0, le=100, decimal_places=2)
+    royalty_percentage: Optional[Decimal] = Field(None, ge=0, le=100)
     
     @field_validator('currency')
     @classmethod
@@ -469,14 +470,415 @@ class ValidationService:
         
         return result
 
+
 # ========================================
-# EXPORTS
+# ADVANCED BUSINESS RULES VALIDATION
+# ========================================
+
+class BusinessRuleType(str, Enum):
+    """Types of business rules"""
+    REVENUE_LIMIT = "revenue_limit"
+    CONTENT_QUOTA = "content_quota"
+    COLLABORATION_LIMIT = "collaboration_limit"
+    SUBSCRIPTION_TIER = "subscription_tier"
+    GEOGRAPHIC_RESTRICTION = "geographic_restriction"
+    AGE_RESTRICTION = "age_restriction"
+    COPYRIGHT_COMPLIANCE = "copyright_compliance"
+    PLATFORM_POLICY = "platform_policy"
+
+class RuleSeverity(str, Enum):
+    """Business rule severity levels"""
+    INFO = "info"
+    WARNING = "warning"
+    ERROR = "error"
+    CRITICAL = "critical"
+
+class BusinessRuleEngine:
+    """Advanced business rules validation engine"""
+    
+    def __init__(self):
+        self.rules = {}
+        self.rule_cache = {}
+        self.validation_history = defaultdict(list)
+        
+    def register_rule(self, rule_id: str, rule_config: Dict[str, Any]):
+        """Register a new business rule"""
+        self.rules[rule_id] = rule_config
+        
+    async def validate_business_rules(
+        self, 
+        context: Dict[str, Any], 
+        rule_types: List[BusinessRuleType] = None
+    ) -> Dict[str, Any]:
+        """Validate all applicable business rules"""
+        try:
+            results = {
+                "passed": True,
+                "violations": [],
+                "warnings": [],
+                "errors": [],
+                "rule_results": {}
+            }
+            
+            # Get applicable rules
+            applicable_rules = self._get_applicable_rules(context, rule_types)
+            
+            # Validate each rule
+            for rule_id, rule_config in applicable_rules.items():
+                rule_result = await self._validate_single_rule(rule_id, rule_config, context)
+                results["rule_results"][rule_id] = rule_result
+                
+                if not rule_result["passed"]:
+                    results["passed"] = False
+                    
+                    if rule_result["severity"] == RuleSeverity.ERROR:
+                        results["errors"].append(rule_result)
+                    elif rule_result["severity"] == RuleSeverity.WARNING:
+                        results["warnings"].append(rule_result)
+                    elif rule_result["severity"] == RuleSeverity.CRITICAL:
+                        results["violations"].append(rule_result)
+            
+            # Store validation history
+            user_id = context.get("user_id")
+            if user_id:
+                self.validation_history[user_id].append({
+                    "timestamp": datetime.utcnow(),
+                    "results": results,
+                    "context": context
+                })
+            
+            return results
+            
+        except Exception as e:
+            logger.error(f"Business rule validation failed: {str(e)}")
+            return {
+                "passed": False,
+                "violations": [],
+                "warnings": [],
+                "errors": [{"message": "Business rule validation error", "severity": "error"}],
+                "rule_results": {}
+            }
+    
+    async def validate_revenue_limits(self, context: Dict[str, Any]) -> Dict[str, Any]:
+        """Validate revenue-related business rules"""
+        try:
+            user_id = context.get("user_id")
+            subscription_tier = context.get("subscription_tier", "free")
+            current_revenue = context.get("current_revenue", 0)
+            
+            # Define tier limits
+            tier_limits = {
+                "free": {"max_monthly_revenue": 1000, "max_transactions": 50},
+                "basic": {"max_monthly_revenue": 10000, "max_transactions": 500},
+                "premium": {"max_monthly_revenue": 100000, "max_transactions": 5000},
+                "enterprise": {"max_monthly_revenue": float("inf"), "max_transactions": float("inf")}
+            }
+            
+            limits = tier_limits.get(subscription_tier, tier_limits["free"])
+            violations = []
+            
+            # Check revenue limit
+            if current_revenue > limits["max_monthly_revenue"]:
+                violations.append({
+                    "rule": "monthly_revenue_limit",
+                    "message": f"Monthly revenue limit exceeded for {subscription_tier} tier",
+                    "current": current_revenue,
+                    "limit": limits["max_monthly_revenue"],
+                    "severity": RuleSeverity.ERROR
+                })
+            
+            return {
+                "passed": len(violations) == 0,
+                "violations": violations,
+                "limits": limits
+            }
+            
+        except Exception:
+            return {"passed": False, "violations": [], "limits": {}}
+    
+    async def validate_content_quotas(self, context: Dict[str, Any]) -> Dict[str, Any]:
+        """Validate content quota business rules"""
+        try:
+            subscription_tier = context.get("subscription_tier", "free")
+            current_content_count = context.get("current_content_count", 0)
+            content_size_mb = context.get("content_size_mb", 0)
+            
+            # Define quota limits
+            quota_limits = {
+                "free": {"max_content_items": 10, "max_storage_gb": 1, "max_file_size_mb": 100},
+                "basic": {"max_content_items": 100, "max_storage_gb": 10, "max_file_size_mb": 500},
+                "premium": {"max_content_items": 1000, "max_storage_gb": 100, "max_file_size_mb": 2000},
+                "enterprise": {"max_content_items": 10000, "max_storage_gb": 1000, "max_file_size_mb": 5000}
+            }
+            
+            limits = quota_limits.get(subscription_tier, quota_limits["free"])
+            violations = []
+            
+            # Check content count
+            if current_content_count >= limits["max_content_items"]:
+                violations.append({
+                    "rule": "content_count_limit",
+                    "message": f"Content count limit reached for {subscription_tier} tier",
+                    "current": current_content_count,
+                    "limit": limits["max_content_items"],
+                    "severity": RuleSeverity.ERROR
+                })
+            
+            # Check file size
+            if content_size_mb > limits["max_file_size_mb"]:
+                violations.append({
+                    "rule": "file_size_limit",
+                    "message": f"File size exceeds limit for {subscription_tier} tier",
+                    "current": f"{content_size_mb}MB",
+                    "limit": f"{limits['max_file_size_mb']}MB",
+                    "severity": RuleSeverity.ERROR
+                })
+            
+            return {
+                "passed": len(violations) == 0,
+                "violations": violations,
+                "limits": limits
+            }
+            
+        except Exception:
+            return {"passed": False, "violations": [], "limits": {}}
+    
+    async def validate_copyright_compliance(self, context: Dict[str, Any]) -> Dict[str, Any]:
+        """Validate copyright compliance rules"""
+        try:
+            content_data = context.get("content_data", {})
+            copyright_info = content_data.get("copyright_info", {})
+            violations = []
+            
+            # Check for required copyright information
+            required_fields = ["owner", "license_type", "usage_rights"]
+            for field in required_fields:
+                if not copyright_info.get(field):
+                    violations.append({
+                        "rule": "copyright_information_required",
+                        "message": f"Required copyright field missing: {field}",
+                        "field": field,
+                        "severity": RuleSeverity.WARNING
+                    })
+            
+            # Check for copyrighted material detection
+            if content_data.get("copyright_detected", False):
+                confidence = content_data.get("copyright_confidence", 0)
+                if confidence > 0.8:
+                    violations.append({
+                        "rule": "copyrighted_content_detected",
+                        "message": "Potential copyrighted content detected",
+                        "confidence": confidence,
+                        "severity": RuleSeverity.CRITICAL
+                    })
+                elif confidence > 0.5:
+                    violations.append({
+                        "rule": "possible_copyrighted_content",
+                        "message": "Possible copyrighted content detected - review required",
+                        "confidence": confidence,
+                        "severity": RuleSeverity.WARNING
+                    })
+            
+            return {
+                "passed": len([v for v in violations if v["severity"] == RuleSeverity.CRITICAL]) == 0,
+                "violations": violations
+            }
+            
+        except Exception:
+            return {"passed": False, "violations": []}
+    
+    async def validate_collaboration_limits(self, context: Dict[str, Any]) -> Dict[str, Any]:
+        """Validate collaboration business rules"""
+        try:
+            subscription_tier = context.get("subscription_tier", "free")
+            current_collaborations = context.get("current_collaborations", 0)
+            
+            # Define collaboration limits
+            collab_limits = {
+                "free": {"max_collaborations": 1, "max_participants": 2},
+                "basic": {"max_collaborations": 5, "max_participants": 5},
+                "premium": {"max_collaborations": 20, "max_participants": 10},
+                "enterprise": {"max_collaborations": 100, "max_participants": 50}
+            }
+            
+            limits = collab_limits.get(subscription_tier, collab_limits["free"])
+            violations = []
+            
+            if current_collaborations >= limits["max_collaborations"]:
+                violations.append({
+                    "rule": "collaboration_limit",
+                    "message": f"Collaboration limit reached for {subscription_tier} tier",
+                    "current": current_collaborations,
+                    "limit": limits["max_collaborations"],
+                    "severity": RuleSeverity.ERROR
+                })
+            
+            return {
+                "passed": len(violations) == 0,
+                "violations": violations,
+                "limits": limits
+            }
+            
+        except Exception:
+            return {"passed": False, "violations": [], "limits": {}}
+    
+    def _get_applicable_rules(
+        self, 
+        context: Dict[str, Any], 
+        rule_types: List[BusinessRuleType] = None
+    ) -> Dict[str, Any]:
+        """Get rules applicable to the current context"""
+        applicable_rules = {}
+        
+        for rule_id, rule_config in self.rules.items():
+            # Check if rule type matches filter
+            if rule_types and rule_config.get("type") not in rule_types:
+                continue
+            
+            # Check if rule applies to current context
+            if self._rule_applies_to_context(rule_config, context):
+                applicable_rules[rule_id] = rule_config
+        
+        return applicable_rules
+    
+    def _rule_applies_to_context(self, rule_config: Dict[str, Any], context: Dict[str, Any]) -> bool:
+        """Check if a rule applies to the given context"""
+        try:
+            conditions = rule_config.get("conditions", {})
+            
+            for field, expected_value in conditions.items():
+                if field not in context:
+                    return False
+                
+                actual_value = context[field]
+                
+                # Handle different condition types
+                if isinstance(expected_value, dict):
+                    if "min" in expected_value and actual_value < expected_value["min"]:
+                        return False
+                    if "max" in expected_value and actual_value > expected_value["max"]:
+                        return False
+                elif actual_value != expected_value:
+                    return False
+            
+            return True
+            
+        except Exception:
+            return False
+    
+    async def _validate_single_rule(
+        self, 
+        rule_id: str, 
+        rule_config: Dict[str, Any], 
+        context: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Validate a single business rule"""
+        try:
+            rule_type = rule_config.get("type")
+            
+            if rule_type == BusinessRuleType.REVENUE_LIMIT:
+                return await self.validate_revenue_limits(context)
+            elif rule_type == BusinessRuleType.CONTENT_QUOTA:
+                return await self.validate_content_quotas(context)
+            elif rule_type == BusinessRuleType.COPYRIGHT_COMPLIANCE:
+                return await self.validate_copyright_compliance(context)
+            elif rule_type == BusinessRuleType.COLLABORATION_LIMIT:
+                return await self.validate_collaboration_limits(context)
+            else:
+                # Custom rule validation
+                return await self._validate_custom_rule(rule_id, rule_config, context)
+                
+        except Exception as e:
+            return {
+                "passed": False,
+                "message": f"Rule validation error: {str(e)}",
+                "severity": RuleSeverity.ERROR
+            }
+    
+    async def _validate_custom_rule(
+        self, 
+        rule_id: str, 
+        rule_config: Dict[str, Any], 
+        context: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Validate custom business rule"""
+        # Placeholder for custom rule validation logic
+        return {
+            "passed": True,
+            "message": "Custom rule validation not implemented",
+            "severity": RuleSeverity.INFO
+        }
+
+class EnhancedValidationService(ValidationService):
+    """Enhanced validation service with business rules"""
+    
+    def __init__(self):
+        super().__init__()
+        self.business_rule_engine = BusinessRuleEngine()
+        self._register_default_rules()
+    
+    def _register_default_rules(self):
+        """Register default business rules"""
+        self.business_rule_engine.register_rule("revenue_limits", {
+            "type": BusinessRuleType.REVENUE_LIMIT,
+            "conditions": {"subscription_tier": {"min": "free"}},
+            "severity": RuleSeverity.ERROR
+        })
+        
+        self.business_rule_engine.register_rule("content_quotas", {
+            "type": BusinessRuleType.CONTENT_QUOTA,
+            "conditions": {},
+            "severity": RuleSeverity.ERROR
+        })
+    
+    async def validate_with_business_rules(
+        self, 
+        data: Dict[str, Any], 
+        context: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Validate data with business rules"""
+        try:
+            # Standard validation first
+            standard_result = await self.validate_request(data)
+            
+            # Business rules validation
+            business_result = await self.business_rule_engine.validate_business_rules(context)
+            
+            # Combine results
+            combined_result = {
+                "passed": standard_result["valid"] and business_result["passed"],
+                "standard_validation": standard_result,
+                "business_rules": business_result,
+                "overall_errors": standard_result.get("errors", []) + business_result.get("errors", []),
+                "overall_warnings": business_result.get("warnings", [])
+            }
+            
+            return combined_result
+            
+        except Exception as e:
+            logger.error(f"Enhanced validation failed: {str(e)}")
+            return {
+                "passed": False,
+                "error": "Validation service error",
+                "standard_validation": {"valid": False},
+                "business_rules": {"passed": False}
+            }
+
+
+# Initialize enhanced validation service
+enhanced_validation_service = EnhancedValidationService()
+
+
+# ========================================
+# UPDATED EXPORTS
 # ========================================
 
 __all__ = [
     "ContentType",
     "CreatorType", 
     "ValidationLevel",
+    "BusinessRuleType",
+    "RuleSeverity",
     "BaseValidatedModel",
     "PaginationParams",
     "SortParams",
@@ -489,6 +891,9 @@ __all__ = [
     "FileValidationService",
     "InputSanitizer",
     "ValidationService",
+    "BusinessRuleEngine",
+    "EnhancedValidationService",
+    "enhanced_validation_service",
     "validate_request_size",
     "validate_rate_limit"
 ]

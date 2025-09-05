@@ -559,3 +559,219 @@ async def rate_limit_middleware(request, call_next):
     response.headers["X-RateLimit-Reset"] = str(int((datetime.utcnow() + timedelta(minutes=1)).timestamp()))
     
     return response
+
+
+# ========================================
+# SEO OPTIMIZATION & CREATOR DISCOVERY
+# ========================================
+
+class SEOMetadata(BaseModel):
+    """SEO metadata for creator profiles"""
+    title: str = Field(..., max_length=60)
+    description: str = Field(..., max_length=160)
+    keywords: List[str] = Field(default_factory=list, max_items=20)
+    canonical_url: Optional[str] = None
+    og_image: Optional[str] = None
+    schema_markup: Optional[Dict[str, Any]] = None
+
+class CreatorProfile(BaseModel):
+    """Public creator profile"""
+    creator_id: str
+    username: str
+    display_name: str
+    bio: Optional[str] = None
+    avatar_url: Optional[str] = None
+    cover_image_url: Optional[str] = None
+    categories: List[str] = []
+    follower_count: int = 0
+    content_count: int = 0
+    verified: bool = False
+    location: Optional[str] = None
+    website_url: Optional[str] = None
+    social_links: Dict[str, str] = {}
+    seo_metadata: Optional[SEOMetadata] = None
+
+@public_router.get("/discover/creators", response_model=List[CreatorProfile])
+async def discover_creators(
+    category: Optional[str] = Query(None, description="Creator category filter"),
+    location: Optional[str] = Query(None, description="Location filter"),
+    verified_only: bool = Query(False, description="Show only verified creators"),
+    min_followers: int = Query(0, description="Minimum follower count"),
+    limit: int = Query(20, le=100, description="Number of results"),
+    offset: int = Query(0, description="Pagination offset")
+):
+    """Discover creators with SEO-optimized profiles"""
+    try:
+        # Mock creator discovery - would query actual database
+        creators = []
+        for i in range(min(limit, 20)):
+            creator = CreatorProfile(
+                creator_id=f"creator_{i + offset}",
+                username=f"creator{i + offset}",
+                display_name=f"Creator {i + offset}",
+                bio=f"Talented creator specializing in {category or 'content creation'}",
+                avatar_url=f"https://example.com/avatars/creator_{i}.jpg",
+                categories=[category] if category else ["music", "art"],
+                follower_count=1000 + (i * 500),
+                content_count=50 + (i * 10),
+                verified=verified_only or (i % 3 == 0),
+                location=location or "Global",
+                seo_metadata=SEOMetadata(
+                    title=f"Creator {i + offset} - Professional Content Creator",
+                    description=f"Discover amazing content from Creator {i + offset}. Specializing in {category or 'diverse content'} with {1000 + (i * 500)} followers.",
+                    keywords=[category or "content", "creator", "artist", "professional"],
+                    canonical_url=f"https://ainflue.com/creators/creator{i + offset}"
+                )
+            )
+            creators.append(creator)
+        
+        return creators
+        
+    except Exception as e:
+        logger.error(f"Creator discovery failed: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Creator discovery failed"
+        )
+
+@public_router.get("/creators/{creator_id}/profile", response_model=CreatorProfile)
+async def get_creator_profile(creator_id: str):
+    """Get SEO-optimized creator profile"""
+    try:
+        # Mock profile data - would fetch from database
+        profile = CreatorProfile(
+            creator_id=creator_id,
+            username=creator_id,
+            display_name=f"Creator {creator_id}",
+            bio="Professional content creator passionate about innovative digital experiences",
+            avatar_url=f"https://example.com/avatars/{creator_id}.jpg",
+            cover_image_url=f"https://example.com/covers/{creator_id}.jpg",
+            categories=["music", "video", "art"],
+            follower_count=15000,
+            content_count=150,
+            verified=True,
+            location="Global",
+            website_url=f"https://{creator_id}.com",
+            social_links={
+                "instagram": f"@{creator_id}",
+                "twitter": f"@{creator_id}",
+                "youtube": f"/{creator_id}"
+            },
+            seo_metadata=SEOMetadata(
+                title=f"{creator_id} - Professional Content Creator | Ainflue",
+                description=f"Discover {creator_id}'s amazing content on Ainflue. Professional creator with 15K followers specializing in music, video, and art.",
+                keywords=["content creator", "artist", "music", "video", "professional", creator_id],
+                canonical_url=f"https://ainflue.com/creators/{creator_id}",
+                og_image=f"https://example.com/og/{creator_id}.jpg",
+                schema_markup={
+                    "@context": "https://schema.org",
+                    "@type": "Person",
+                    "name": f"Creator {creator_id}",
+                    "url": f"https://ainflue.com/creators/{creator_id}",
+                    "image": f"https://example.com/avatars/{creator_id}.jpg",
+                    "sameAs": [
+                        f"https://instagram.com/{creator_id}",
+                        f"https://twitter.com/{creator_id}"
+                    ]
+                }
+            )
+        )
+        
+        return profile
+        
+    except Exception as e:
+        logger.error(f"Profile retrieval failed: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Creator profile not found"
+        )
+
+@public_router.get("/seo/sitemap.xml", response_class=HTMLResponse)
+async def generate_sitemap():
+    """Generate SEO sitemap"""
+    try:
+        # Mock sitemap generation
+        sitemap_content = """<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://ainflue.com/</loc>
+        <lastmod>{}</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>https://ainflue.com/discover</loc>
+        <lastmod>{}</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://ainflue.com/creators</loc>
+        <lastmod>{}</lastmod>
+        <changefreq>hourly</changefreq>
+        <priority>0.9</priority>
+    </url>
+</urlset>""".format(
+            datetime.utcnow().strftime("%Y-%m-%d"),
+            datetime.utcnow().strftime("%Y-%m-%d"),
+            datetime.utcnow().strftime("%Y-%m-%d")
+        )
+        
+        return HTMLResponse(content=sitemap_content, media_type="application/xml")
+        
+    except Exception as e:
+        logger.error(f"Sitemap generation failed: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Sitemap generation failed"
+        )
+
+@public_router.get("/search/creators")
+async def search_creators(
+    q: str = Query(..., min_length=1, description="Search query"),
+    category: Optional[str] = Query(None, description="Category filter"),
+    limit: int = Query(10, le=50, description="Number of results")
+):
+    """Search creators with SEO optimization"""
+    try:
+        # Mock search results - would use Elasticsearch in production
+        results = []
+        for i in range(min(limit, 10)):
+            results.append({
+                "creator_id": f"search_{i}",
+                "username": f"creator_{q}_{i}",
+                "display_name": f"Creator {q} {i}",
+                "bio": f"Professional creator matching '{q}' in {category or 'all categories'}",
+                "relevance_score": 0.9 - (i * 0.1),
+                "follower_count": 5000 + (i * 1000),
+                "verified": i < 3
+            })
+        
+        return {
+            "query": q,
+            "results": results,
+            "total_count": len(results),
+            "search_time": 0.05,
+            "suggestions": [f"{q} music", f"{q} art", f"{q} video"] if len(q) > 2 else []
+        }
+        
+    except Exception as e:
+        logger.error(f"Creator search failed: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Search failed"
+        )
+
+
+# ========================================
+# EXPORTS UPDATE
+# ========================================
+
+__all__ = [
+    "public_router",
+    "ApiKeyRequest",
+    "ApiKeyResponse", 
+    "SEOMetadata",
+    "CreatorProfile",
+    "RateLimitMiddleware"
+]

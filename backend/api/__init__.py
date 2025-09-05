@@ -18,19 +18,18 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
 
-# Legacy routers for backward compatibility
+# Core API routers for backward compatibility
 from .core_api import core_router
 from .business_api import business_router
 from .public import public_router
 
-# New consolidated modules
-from .endpoints import endpoints_router
+# Consolidated modules - importing from existing files only
 from .middleware import (
-    authentication_middleware,
     setup_middleware,
     RateLimitMiddleware,
     RequestLoggingMiddleware,
-    SecurityHeadersMiddleware
+    SecurityHeadersMiddleware,
+    authentication_middleware
 )
 from .authentication import (
     AuthenticationService,
@@ -38,6 +37,7 @@ from .authentication import (
     OAuth2Manager,
     SessionManager,
     MFAManager,
+    BiometricAuthManager,
     get_auth_service
 )
 from .validation import (
@@ -61,17 +61,11 @@ from .websockets import (
     get_websocket_handler,
     ChannelNames
 )
-from .graphql import schema as graphql_schema
-from .documentation import (
-    DocumentationService,
-    DocumentationConfig,
-    OpenAPIGenerator
-)
-from .testing import (
-    APITestClient,
-    TestDataGenerator,
-    APITestSuite,
-    PerformanceTestRunner
+from .graphql import (
+    schema as graphql_schema,
+    Query,
+    Mutation,
+    Subscription
 )
 from .versioning import (
     VersioningService,
@@ -87,20 +81,17 @@ from .monitoring import (
 )
 
 __all__ = [
-    # Legacy routers (backward compatibility)
+    # Core routers (backward compatibility)
     "core_router", 
     "business_router",
     "public_router",
     
-    # Consolidated endpoints
-    "endpoints_router",
-    
     # Middleware
-    "authentication_middleware",
     "setup_middleware",
     "RateLimitMiddleware",
     "RequestLoggingMiddleware", 
     "SecurityHeadersMiddleware",
+    "authentication_middleware",
     
     # Authentication
     "AuthenticationService",
@@ -108,6 +99,7 @@ __all__ = [
     "OAuth2Manager", 
     "SessionManager",
     "MFAManager",
+    "BiometricAuthManager",
     "get_auth_service",
     
     # Validation
@@ -133,17 +125,9 @@ __all__ = [
     
     # GraphQL
     "graphql_schema",
-    
-    # Documentation
-    "DocumentationService",
-    "DocumentationConfig", 
-    "OpenAPIGenerator",
-    
-    # Testing
-    "APITestClient",
-    "TestDataGenerator",
-    "APITestSuite",
-    "PerformanceTestRunner",
+    "Query",
+    "Mutation",
+    "Subscription",
     
     # Versioning
     "VersioningService",
