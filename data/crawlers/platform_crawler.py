@@ -158,7 +158,8 @@ Cleanup HTTP session"""
             self.session = None
     
     @abstractmethod
-    async def search_content(self, search_terms: List[str], 
+    async def search_content(self, search_terms: List[str]) -> Dict[str, Any]:
+        """Search for content on the platform"""
         try:
             logger.info(f"Executing search_content")
             
@@ -192,7 +193,12 @@ Cleanup HTTP session"""
                     logger.info(f"AI processing extract_content_metadata completed")
                     return final_result
             
-                except Exception as e:
+        except Exception as e:
+            logger.error(f"AI processing extract_content_metadata failed: {e}")
+            raise
+            
+    async def download_content_sample(self):
+        """Download content sample"""
         try:
             logger.info(f"Executing download_content_sample")
             
@@ -363,6 +369,11 @@ Cleanup HTTP session"""
             return similar_content
             
         except Exception as e:
+            logger.error(f"Error in get_similar_content: {e}")
+            raise
+            
+    def _collect_metrics(self, data=None):
+        """Collect metrics for monitoring"""
         try:
                     # Collect metrics
                     metrics = {

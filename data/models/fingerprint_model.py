@@ -201,7 +201,7 @@ class FingerprintModel(Base):
     dmca_eligible = Column(Boolean, default=True)
     
     # Metadata and tags
-    metadata = Column(JSON)  # Flexible metadata storage
+    meta_data = Column(JSON)  # Flexible metadata storage
     tags = Column(ARRAY(String))  # Fingerprint tags
     categories = Column(ARRAY(String))  # Content categories
     keywords = Column(ARRAY(String))  # Searchable keywords

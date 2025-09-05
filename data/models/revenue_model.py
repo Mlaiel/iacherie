@@ -204,7 +204,7 @@ class RevenueModel(Base):
     audit_trail = Column(JSON)  # Audit log for changes
     
     # Metadata and tags
-    metadata = Column(JSON)  # Flexible metadata storage
+    meta_data = Column(JSON)  # Flexible metadata storage
     tags = Column(ARRAY(String))  # Revenue tags
     notes = Column(Text)  # Additional notes
     categories = Column(ARRAY(String))  # Revenue categories

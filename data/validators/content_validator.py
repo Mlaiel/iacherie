@@ -37,6 +37,9 @@ from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
 import tempfile
 import shutil
 
+# Set up logger early
+logger = logging.getLogger(__name__)
+
 # Advanced content analysis dependencies
 try:
     import cv2
@@ -55,7 +58,7 @@ except ImportError as e:
     logger.warning(f"Advanced content analysis features unavailable: {e}")
     ADVANCED_FEATURES = False
 
-logger = logging.getLogger(__name__)
+# Logger already defined above
 
 
 class ContentType(Enum):

@@ -469,9 +469,11 @@ class MultiModalFingerprintEngine:
             self.logger.error(f"❌ Erreur recherche violations: {str(e)}")
             return []
     
-    def _get_optimized_methods(
+    async def _get_optimized_methods(
         self,
         creator_type: str,
+    ) -> List[str]:
+        """Get optimized methods for creator type"""
         try:
                     # Request validation
                     if not creator_type:
@@ -483,12 +485,13 @@ class MultiModalFingerprintEngine:
                     # Return response
                     return {"status": "success", "data": result}
             
-                except Exception as e:
-                    logger.error(f"API handler _get_optimized_methods failed: {e}")
-                    return {"status": "error", "message": str(e)}
+        except Exception as e:
+            logger.error(f"API handler _get_optimized_methods failed: {e}")
+            return {"status": "error", "message": str(e)}
+            
     def _get_default_methods(self, content_format: ContentFormat) -> List[FingerprintMethod]:
         """
-Méthodes par défaut selon format."""
+        Méthodes par défaut selon format."""
         defaults = {
             ContentFormat.AUDIO: [FingerprintMethod.CHROMAPRINT, FingerprintMethod.MFCC],
             ContentFormat.VIDEO: [FingerprintMethod.PERCEPTUAL_HASH, FingerprintMethod.FRAME_DIFFERENCE],

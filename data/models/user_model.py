@@ -243,7 +243,7 @@ class UserModel(Base):
     referral_earnings = Column(DECIMAL(10, 4), default=0)
     
     # Metadata and tracking
-    metadata = Column(JSON)  # Flexible metadata storage
+    meta_data = Column(JSON)  # Flexible metadata storage
     tags = Column(ARRAY(String))  # User tags for categorization
     notes = Column(Text)  # Internal notes (admin only)
     source = Column(String(50))  # Registration source
@@ -567,7 +567,8 @@ Upgrade user subscription"""
     
     def soft_delete(self):
         """
-Soft delete user account"""
+        Soft delete user account
+        """
         self.is_deleted = True
         self.deleted_at = datetime.utcnow()
         self.status = UserStatus.INACTIVE.value
@@ -575,7 +576,8 @@ Soft delete user account"""
     
     def restore(self):
         """
-Restore soft-deleted user account"""
+        Restore soft-deleted user account
+        """
         self.is_deleted = False
         self.deleted_at = None
         self.status = UserStatus.ACTIVE.value
@@ -583,21 +585,24 @@ Restore soft-deleted user account"""
     
     def verify_email(self):
         """
-Mark email as verified"""
+        Mark email as verified
+        """
         self.email_verified = True
         self.email_verified_at = datetime.utcnow()
         self.updated_at = datetime.utcnow()
     
     def verify_phone(self):
         """
-Mark phone as verified"""
+        Mark phone as verified
+        """
         self.phone_verified = True
         self.phone_verified_at = datetime.utcnow()
         self.updated_at = datetime.utcnow()
     
     def generate_referral_code(self) -> str:
         """
-Generate unique referral code"""
+        Generate unique referral code
+        """
         import secrets
         import string
         
