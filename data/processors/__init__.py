@@ -20,10 +20,8 @@ Components:
 - ImageProcessor: High-performance image processing and enhancement
 - TextProcessor: NLP and content analysis for creators
 - MetadataProcessor: Content metadata extraction and enhancement
-- QualityProcessor: Content quality assessment and optimization
-- FormatProcessor: Multi-format conversion and standardization
-- CompressionProcessor: Intelligent content compression
-- OrchestrationProcessor: Professional workflow orchestration
+- UnifiedConverter: Universal format conversion and intelligent compression
+- WorkflowOrchestrator: Professional workflow orchestration with quality management
 """
 
 from typing import Dict, Any, List, Optional, Union
@@ -36,10 +34,8 @@ from .video_processor import VideoProcessor
 from .image_processor import ImageProcessor
 from .text_processor import TextProcessor
 from .metadata_processor import MetadataProcessor
-from .quality_processor import QualityProcessor
-from .format_processor import FormatProcessor
-from .compression_processor import CompressionProcessor
-from .orchestration_processor import OrchestrationProcessor
+from .unified_converter import UnifiedConverter
+from .workflow_orchestrator import WorkflowOrchestrator
 
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
@@ -100,10 +96,8 @@ Initialize all processor instances"""
             'image': ImageProcessor(),
             'text': TextProcessor(),
             'metadata': MetadataProcessor(),
-            'quality': QualityProcessor(),
-            'format': FormatProcessor(),
-            'compression': CompressionProcessor(),
-            'orchestration': OrchestrationProcessor()
+            'unified_converter': UnifiedConverter(),
+            'workflow_orchestrator': WorkflowOrchestrator()
         }
         
         logger.info(f"Initialized {len(self._processors)} processors")
@@ -179,10 +173,8 @@ __all__ = [
     'ImageProcessor',
     'TextProcessor',
     'MetadataProcessor',
-    'QualityProcessor',
-    'FormatProcessor',
-    'CompressionProcessor',
-    'OrchestrationProcessor',
+    'UnifiedConverter',
+    'WorkflowOrchestrator',
     
     # Registry and functions
     'ProcessorRegistry',
