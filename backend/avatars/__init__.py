@@ -33,6 +33,7 @@ from .avatar_rendering import RenderingEngine, MaterialManager, LightingSystem, 
 from .avatar_monetization import AvatarCommerce, DigitalAssetManager, NFTIntegration, RevenueTracker
 from .avatar_social import AvatarSocialNetwork, CollaborationEngine, AvatarMatching, CommunityManager
 from .avatar_performance import PerformanceAnalytics, EngagementTracker, ViralPredictor, OptimizationSuggester
+from .avatar_multiplatform import PlatformAdapter, FormatConverter, QualityScaler, PlatformOptimizer
 
 __all__ = [
     # Core systems
@@ -72,10 +73,15 @@ __all__ = [
     'PerformanceAnalytics',
     'EngagementTracker',
     'ViralPredictor',
-    'OptimizationSuggester'
+    'OptimizationSuggester',
+    # Multi-platform distribution
+    'PlatformAdapter',
+    'FormatConverter',
+    'QualityScaler',
+    'PlatformOptimizer'
 ]
 
-__version__ = "2.1.0"
+__version__ = "2.2.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 
