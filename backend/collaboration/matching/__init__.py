@@ -112,6 +112,62 @@ from .temporal_analyzer import (
     AvailabilityMatch
 )
 
+from .niche_compatibility import (
+    NicheCompatibilityEngine,
+    NicheProfile,
+    NicheCompatibilityResult,
+    NicheInsights,
+    NicheCategory,
+    CompatibilityType
+)
+
+from .performance_analyzer import (
+    PerformanceAnalyzer,
+    CreatorPerformanceProfile,
+    PerformanceAnalysisResult,
+    CollaborationImpactAssessment,
+    PerformanceMetric,
+    CollaborationPerformance,
+    PerformanceMetricType,
+    CollaborationType,
+    PerformanceTrend
+)
+
+from .success_predictor import (
+    SuccessPredictor,
+    SuccessPrediction,
+    ROIPrediction,
+    SuccessFactors,
+    HistoricalSuccessData,
+    SuccessMetric,
+    PredictionConfidence,
+    RiskLevel
+)
+
+from .skill_matcher import (
+    SkillMatcher,
+    SkillProfile,
+    SkillCompatibility,
+    SkillGap,
+    ComplementarySkills,
+    Skill,
+    SkillCategory,
+    SkillLevel,
+    ComplementarityType
+)
+
+from .geographic_matcher import (
+    GeographicMatcher,
+    GeographicLocation,
+    GeographicProfile,
+    LocationCompatibility,
+    TimezoneAnalysis,
+    ProximityScore,
+    ProximityLevel,
+    TimezoneCompatibility,
+    CulturalAlignment
+)
+
 # Module metadata
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
@@ -195,7 +251,58 @@ __all__ = [
     "TemporalPatterns",
     "ScheduleCompatibility",
     "TimeAnalysis",
-    "AvailabilityMatch"
+    "AvailabilityMatch",
+    
+    # Niche Compatibility
+    "NicheCompatibilityEngine",
+    "NicheProfile",
+    "NicheCompatibilityResult",
+    "NicheInsights",
+    "NicheCategory",
+    "CompatibilityType",
+    
+    # Performance Analysis
+    "PerformanceAnalyzer",
+    "CreatorPerformanceProfile",
+    "PerformanceAnalysisResult",
+    "CollaborationImpactAssessment",
+    "PerformanceMetric",
+    "CollaborationPerformance",
+    "PerformanceMetricType",
+    "CollaborationType",
+    "PerformanceTrend",
+    
+    # Success Prediction
+    "SuccessPredictor",
+    "SuccessPrediction",
+    "ROIPrediction",
+    "SuccessFactors",
+    "HistoricalSuccessData",
+    "SuccessMetric",
+    "PredictionConfidence",
+    "RiskLevel",
+    
+    # Skill Matching
+    "SkillMatcher",
+    "SkillProfile",
+    "SkillCompatibility",
+    "SkillGap",
+    "ComplementarySkills",
+    "Skill",
+    "SkillCategory",
+    "SkillLevel",
+    "ComplementarityType",
+    
+    # Geographic Matching
+    "GeographicMatcher",
+    "GeographicLocation",
+    "GeographicProfile",
+    "LocationCompatibility",
+    "TimezoneAnalysis",
+    "ProximityScore",
+    "ProximityLevel",
+    "TimezoneCompatibility",
+    "CulturalAlignment"
 ]
 
 # Module initialization
