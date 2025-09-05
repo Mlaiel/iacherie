@@ -5,13 +5,39 @@ Centralized configuration for the entire application
 
 import os
 from typing import Optional, List
-from pydantic_settings import BaseSettings
 
 # Import specialized configuration modules
 from .settings import ApplicationSettings, app_settings
 from .database import DatabaseSettings, db_settings, get_database_url, get_database_config
 from .redis import RedisSettings, redis_settings, get_redis_url, get_redis_config
 from .celery import CelerySettings, celery_settings, get_celery_config, create_celery_app
+
+# Import business logic configuration modules
+from .creator_multi_format_config import (
+    CreatorMultiFormatSettings, creator_multi_format_settings,
+    ContentFormat, CreatorType, MonetizationStream, DistributionPlatform
+)
+from .content_format_config import (
+    ContentFormatSettings, content_format_settings,
+    AudioFormat, VideoFormat, ImageFormat, TextFormat, VoiceFormat, AvatarFormat
+)
+from .ia_processing_config import (
+    IAProcessingSettings, ia_processing_settings,
+    AIModel, ProcessingMode, OptimizationType, AccuracyLevel
+)
+from .ai_model_config import (
+    AIModelSettings, ai_model_settings,
+    ModelType, ModelProvider, ModelStatus, ModelTier
+)
+
+try:
+    from pydantic_settings import BaseSettings
+except ImportError:
+    # Fallback for environments without pydantic_settings
+    class BaseSettings:
+        def __init__(self, **kwargs):
+            for key, value in kwargs.items():
+                setattr(self, key, value)
 
 class Settings(BaseSettings):
     # Application Settings
@@ -105,6 +131,16 @@ __all__ = [
     "DatabaseSettings", "db_settings", "get_database_url", "get_database_config",
     "RedisSettings", "redis_settings", "get_redis_url", "get_redis_config", 
     "CelerySettings", "celery_settings", "get_celery_config", "create_celery_app",
+    
+    # Business logic configuration classes and instances
+    "CreatorMultiFormatSettings", "creator_multi_format_settings",
+    "ContentFormat", "CreatorType", "MonetizationStream", "DistributionPlatform",
+    "ContentFormatSettings", "content_format_settings",
+    "AudioFormat", "VideoFormat", "ImageFormat", "TextFormat", "VoiceFormat", "AvatarFormat",
+    "IAProcessingSettings", "ia_processing_settings",
+    "AIModel", "ProcessingMode", "OptimizationType", "AccuracyLevel",
+    "AIModelSettings", "ai_model_settings",
+    "ModelType", "ModelProvider", "ModelStatus", "ModelTier",
     
     # Backwards compatibility exports
     "DATABASE_URL",
