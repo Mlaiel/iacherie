@@ -949,3 +949,28 @@ logger.info(f"Vector DB Module v{__version__} initialized successfully")
 logger.info(f"Available backends: FAISS={faiss is not None}, ChromaDB={chromadb is not None}")
 logger.info(f"PyTorch available: {torch is not None}")
 logger.info(f"SentenceTransformers available: {SentenceTransformer is not None}")
+
+# Import enterprise functionality for enhanced capabilities
+try:
+    from .vector_config import *
+    from .vector_backends import VectorStreamingEngine, CrossPlatformSynchronizer
+    from .search_operations import EnterpriseSearchEngine, BlockchainVectorStorage, RevenueOptimizer, CollaborationMatcher, SEOVectorOptimizer
+    from .vector_index import IndexManager, IndexConfiguration, IndexHealth, IndexOptimizationResult
+    from .vector_utils import VectorAnalytics, AIVectorOptimizer, global_vector_analytics, global_ai_optimizer
+    from .vector_examples import VectorDatabaseExamples, run_vector_database_demo
+    logger.info("✅ Enterprise vector database features loaded successfully")
+    logger.info("✅ Real-time streaming, blockchain storage, and AI optimization available")
+    logger.info("✅ Revenue optimization and collaboration matching enabled")
+    logger.info("✅ SEO vector optimization and advanced analytics active")
+except ImportError as e:
+    logger.warning(f"Some enterprise modules not available: {e}")
+
+# Add enterprise classes to __all__ exports
+__all__.extend([
+    'VectorStreamingEngine', 'CrossPlatformSynchronizer', 'EnterpriseSearchEngine',
+    'BlockchainVectorStorage', 'RevenueOptimizer', 'CollaborationMatcher', 
+    'SEOVectorOptimizer', 'IndexManager', 'IndexConfiguration', 'IndexHealth',
+    'IndexOptimizationResult', 'VectorAnalytics', 'AIVectorOptimizer',
+    'VectorDatabaseExamples', 'run_vector_database_demo', 'global_vector_analytics',
+    'global_ai_optimizer'
+])
