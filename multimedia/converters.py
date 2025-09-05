@@ -765,24 +765,10 @@ Resize image based on settings"""
         
         # Calculate new dimensions
         if settings.max_width and settings.max_height:
-        try:
-            logger.info(f"Executing _optimize_for_web")
-            
-            # Implementation for _optimize_for_web
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"_optimize_for_web completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"_optimize_for_web failed: {e}")
-            raise
-            return image.resize(
-                (new_width, new_height), 
-                Image.Resampling.LANCZOS
-            )
+            new_width = min(settings.max_width, original_width)
+            new_height = min(settings.max_height, original_height)
+        
+        return None  # Placeholder implementation
         
         return image
     

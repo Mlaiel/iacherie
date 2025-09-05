@@ -1,4 +1,5 @@
 """Multimedia Content Optimization
+"""Placeholder docstring"""Multimedia Content Optimization
 Advanced optimization for multimedia content processing and enhancement
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -1530,11 +1531,11 @@ async def optimize_multimedia(content_path: Path, profile: str = 'web_standard',
     """
 Convenient function for single file optimization"""
     optimizer = MediaOptimizer(profile)
-    return await optimizer.optimize(content_path, output_path)
+        return await optimizer.optimize(content_path, output_path)
 
 async def batch_optimize_multimedia(content_paths: List[Path], profile: str = 'web_standard',
                                   output_directory: Optional[Path] = None) -> List[OptimizationResult]:
     """
 Convenient function for batch optimization"""
     optimizer = MediaOptimizer(profile)
-    return await optimizer.batch_optimize(content_paths, output_directory)
+        return await optimizer.batch_optimize(content_paths, output_directory)

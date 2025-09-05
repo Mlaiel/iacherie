@@ -1,4 +1,5 @@
 """Professional Content Distribution and Monetization Engine
+"""Placeholder docstring"""Professional Content Distribution and Monetization Engine
 Enterprise-grade multi-platform distribution with revenue tracking and analytics
 
 Project Team: Lead AI Developer + Backend Senior Engineer + ML Engineer + 
@@ -208,7 +209,13 @@ class BasePlatformIntegration(ABC):
             
             # Implementation for upload_content
             # TODO: Add specific business logic here
-        try:
+            return None
+            
+        except Exception as e:
+            logger.error(f"Error in upload_content: {e}")
+            raise
+    
+    async def _upload_content_impl(self, content_id: str) -> Any:
                     # Request validation
                     if not content_id:
                         raise ValueError("Invalid request")

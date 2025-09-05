@@ -1,4 +1,5 @@
 """Professional Multimedia Content Protection and AI Fingerprinting System
+"""Placeholder docstring"""Professional Multimedia Content Protection and AI Fingerprinting System
 Enterprise-grade content protection with AI-powered fingerprinting and monitoring
 
 Project Team: Lead AI Developer + Backend Senior Engineer + ML Engineer + 
@@ -1187,13 +1188,13 @@ async def watermark_multimedia(content_path: Path, watermark_config: WatermarkCo
     """
 Convenient function for watermarking multimedia content"""
     protector = MediaProtector()
-    return await protector.apply_watermark(content_path, watermark_config, output_path)
+        return await protector.apply_watermark(content_path, watermark_config, output_path)
 
 async def fingerprint_multimedia(content_path: Path, fingerprint_config: FingerprintConfig) -> str:
     """
 Convenient function for generating multimedia fingerprints"""
     protector = MediaProtector()
-    return await protector.generate_fingerprint(content_path, fingerprint_config)
+        return await protector.generate_fingerprint(content_path, fingerprint_config)
 
 # Predefined configurations
 STANDARD_WATERMARK_CONFIG = WatermarkConfig(

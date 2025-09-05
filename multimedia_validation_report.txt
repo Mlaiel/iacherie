@@ -27,7 +27,7 @@ DÉTAILS PAR FICHIER:
    📦 Importable: NON
    🔧 Fonctions: 0
    🏗️  Classes: 0
-   ⚠️  Erreur: Erreur de syntaxe: unterminated triple-quoted string literal (detected at line 1518) (<unknown>, line 1508)
+   ⚠️  Erreur: Erreur de syntaxe: expected an indented block after 'except' statement on line 109 (<unknown>, line 110)
 
 ❌ ai_analysis.py
    📁 Existe: OUI
@@ -37,42 +37,23 @@ DÉTAILS PAR FICHIER:
    🏗️  Classes: 12
    📦 Import Error: Import error: Traceback (most recent call last):
   File "<string>", line 1, in <module>
-  File "/home/runner/work/Ainflue/Ainflue/multimedia/__init__.py", line 19, in <module>
-    from .processors import (
-  File "/home/runner/work/Ainflue/Ainflue/multimedia/processors.py", line 828
-    except Exception as e:
-                          ^
-IndentationError: unindent does not match any outer indentation level
+  File "/home/runner/work/Ainflue/Ainflue/multimedia/ai_analysis.py", line 21, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
 
-❌ formats.py
+✅ formats.py
    📁 Existe: OUI
    🔍 Syntaxe valide: OUI
-   📦 Importable: NON
+   📦 Importable: OUI
    🔧 Fonctions: 8
    🏗️  Classes: 11
-   📦 Import Error: Import error: Traceback (most recent call last):
-  File "<string>", line 1, in <module>
-  File "/home/runner/work/Ainflue/Ainflue/multimedia/__init__.py", line 19, in <module>
-    from .processors import (
-  File "/home/runner/work/Ainflue/Ainflue/multimedia/processors.py", line 828
-    except Exception as e:
-                          ^
-IndentationError: unindent does not match any outer indentation level
 
 ❌ __init__.py
    📁 Existe: OUI
    🔍 Syntaxe valide: OUI
-   📦 Importable: NON
+   📦 Importable: OUI
    🔧 Fonctions: 0
    🏗️  Classes: 0
-   📦 Import Error: Import error: Traceback (most recent call last):
-  File "<string>", line 1, in <module>
-  File "/home/runner/work/Ainflue/Ainflue/multimedia/__init__.py", line 19, in <module>
-    from .processors import (
-  File "/home/runner/work/Ainflue/Ainflue/multimedia/processors.py", line 828
-    except Exception as e:
-                          ^
-IndentationError: unindent does not match any outer indentation level
 
 ❌ monitoring.py
    📁 Existe: OUI
@@ -90,12 +71,9 @@ IndentationError: unindent does not match any outer indentation level
    🏗️  Classes: 10
    📦 Import Error: Import error: Traceback (most recent call last):
   File "<string>", line 1, in <module>
-  File "/home/runner/work/Ainflue/Ainflue/multimedia/__init__.py", line 19, in <module>
-    from .processors import (
-  File "/home/runner/work/Ainflue/Ainflue/multimedia/processors.py", line 828
-    except Exception as e:
-                          ^
-IndentationError: unindent does not match any outer indentation level
+  File "/home/runner/work/Ainflue/Ainflue/multimedia/collaboration.py", line 22, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
 
 ❌ video.py
    📁 Existe: OUI
@@ -131,11 +109,15 @@ IndentationError: unindent does not match any outer indentation level
 
 ❌ processors.py
    📁 Existe: OUI
-   🔍 Syntaxe valide: NON
+   🔍 Syntaxe valide: OUI
    📦 Importable: NON
-   🔧 Fonctions: 0
-   🏗️  Classes: 0
-   ⚠️  Erreur: Erreur de syntaxe: unindent does not match any outer indentation level (<unknown>, line 828)
+   🔧 Fonctions: 55
+   🏗️  Classes: 8
+   📦 Import Error: Import error: Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/runner/work/Ainflue/Ainflue/multimedia/processors.py", line 25, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
 
 ❌ distribution.py
    📁 Existe: OUI
@@ -153,62 +135,43 @@ IndentationError: unindent does not match any outer indentation level
    🏗️  Classes: 1
    📦 Import Error: Import error: Traceback (most recent call last):
   File "<string>", line 1, in <module>
-  File "/home/runner/work/Ainflue/Ainflue/multimedia/__init__.py", line 19, in <module>
-    from .processors import (
-  File "/home/runner/work/Ainflue/Ainflue/multimedia/processors.py", line 828
-    except Exception as e:
-                          ^
-IndentationError: unindent does not match any outer indentation level
+  File "/home/runner/work/Ainflue/Ainflue/multimedia/index.py", line 25, in <module>
+    from .processors import MultimediaProcessor, AudioProcessor, VideoProcessor, ImageProcessor
+  File "/home/runner/work/Ainflue/Ainflue/multimedia/processors.py", line 25, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
 
 RECOMMANDATIONS:
 --------------------
 Fichiers à corriger:
   • optimization.py: Erreur de syntaxe: expected an indented block after function definition on line 1381 (<unknown>, line 1382)
-  • validators.py: Erreur de syntaxe: unterminated triple-quoted string literal (detected at line 1518) (<unknown>, line 1508)
+  • validators.py: Erreur de syntaxe: expected an indented block after 'except' statement on line 109 (<unknown>, line 110)
   • ai_analysis.py: Import error: Traceback (most recent call last):
   File "<string>", line 1, in <module>
-  File "/home/runner/work/Ainflue/Ainflue/multimedia/__init__.py", line 19, in <module>
-    from .processors import (
-  File "/home/runner/work/Ainflue/Ainflue/multimedia/processors.py", line 828
-    except Exception as e:
-                          ^
-IndentationError: unindent does not match any outer indentation level
-  • formats.py: Import error: Traceback (most recent call last):
-  File "<string>", line 1, in <module>
-  File "/home/runner/work/Ainflue/Ainflue/multimedia/__init__.py", line 19, in <module>
-    from .processors import (
-  File "/home/runner/work/Ainflue/Ainflue/multimedia/processors.py", line 828
-    except Exception as e:
-                          ^
-IndentationError: unindent does not match any outer indentation level
-  • __init__.py: Import error: Traceback (most recent call last):
-  File "<string>", line 1, in <module>
-  File "/home/runner/work/Ainflue/Ainflue/multimedia/__init__.py", line 19, in <module>
-    from .processors import (
-  File "/home/runner/work/Ainflue/Ainflue/multimedia/processors.py", line 828
-    except Exception as e:
-                          ^
-IndentationError: unindent does not match any outer indentation level
+  File "/home/runner/work/Ainflue/Ainflue/multimedia/ai_analysis.py", line 21, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+  • __init__.py: None
   • monitoring.py: Erreur de syntaxe: '(' was never closed (<unknown>, line 177)
   • collaboration.py: Import error: Traceback (most recent call last):
   File "<string>", line 1, in <module>
-  File "/home/runner/work/Ainflue/Ainflue/multimedia/__init__.py", line 19, in <module>
-    from .processors import (
-  File "/home/runner/work/Ainflue/Ainflue/multimedia/processors.py", line 828
-    except Exception as e:
-                          ^
-IndentationError: unindent does not match any outer indentation level
+  File "/home/runner/work/Ainflue/Ainflue/multimedia/collaboration.py", line 22, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
   • video.py: Erreur de syntaxe: unterminated triple-quoted string literal (detected at line 1313) (<unknown>, line 1292)
   • metadata_extractor.py: Erreur de syntaxe: unindent does not match any outer indentation level (<unknown>, line 264)
   • protection.py: Erreur de syntaxe: '(' was never closed (<unknown>, line 132)
   • converters.py: Erreur de syntaxe: expected an indented block after 'if' statement on line 767 (<unknown>, line 768)
-  • processors.py: Erreur de syntaxe: unindent does not match any outer indentation level (<unknown>, line 828)
+  • processors.py: Import error: Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/runner/work/Ainflue/Ainflue/multimedia/processors.py", line 25, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
   • distribution.py: Erreur de syntaxe: expected 'except' or 'finally' block (<unknown>, line 211)
   • index.py: Import error: Traceback (most recent call last):
   File "<string>", line 1, in <module>
-  File "/home/runner/work/Ainflue/Ainflue/multimedia/__init__.py", line 19, in <module>
-    from .processors import (
-  File "/home/runner/work/Ainflue/Ainflue/multimedia/processors.py", line 828
-    except Exception as e:
-                          ^
-IndentationError: unindent does not match any outer indentation level
+  File "/home/runner/work/Ainflue/Ainflue/multimedia/index.py", line 25, in <module>
+    from .processors import MultimediaProcessor, AudioProcessor, VideoProcessor, ImageProcessor
+  File "/home/runner/work/Ainflue/Ainflue/multimedia/processors.py", line 25, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
