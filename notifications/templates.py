@@ -597,36 +597,8 @@ class ABTestVariant:
         try:
             logger.info(f"Executing open_rate")
             
-            # Implementation for open_rate
-            # TODO: Add specific business logic here
-        try:
-            logger.info(f"Executing click_rate")
-            
-            # Implementation for click_rate
-            # TODO: Add specific business logic here
-        try:
-            logger.info(f"Executing conversion_rate")
-            
-            # Implementation for conversion_rate
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"conversion_rate completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"conversion_rate failed: {e}")
-            raise
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"click_rate completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"click_rate failed: {e}")
-            raise
-            result = None  # Replace with actual implementation
+            # Calculate open rate
+            result = self.opened_count / self.sent_count if self.sent_count > 0 else 0.0
             
             logger.info(f"open_rate completed successfully")
             return result
@@ -649,20 +621,6 @@ class NotificationTemplate:
 Enterprise notification template with AI-powered features."""
     id: str
     name: str
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle___post_init___request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler __post_init__ failed: {e}")
-                    return {"status": "error", "message": str(e)}
     subject: Optional[str] = None  # For email templates
     content: str = ""
     variables: List[TemplateVariable] = field(default_factory=list)
@@ -1368,20 +1326,8 @@ def get_embedded_template(template_type: str, template_name: str) -> Optional[st
         "push": PUSH_TEMPLATES,
         "in_app": IN_APP_TEMPLATES,
         "webhook": WEBHOOK_TEMPLATES
-        try:
-            logger.info(f"Executing __init__")
-            
-            # Implementation for __init__
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"__init__ completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"__init__ failed: {e}")
-            raise
+    }
+    
     template_map = template_maps.get(template_type)
     if template_map:
         return template_map.get(template_name)
@@ -1733,107 +1679,17 @@ Prepare rendering context with all variables and functions."""
                 "user_id": personalization_context.user_id,
                 "creator_type": personalization_context.creator_type,
                 "language": personalization_context.language_preference,
-        try:
-                    # Request validation
-                    if not template_id:
-        try:
-                    # Request validation
-                    if not template_id:
-        try:
-                    # Request validation
-                    if not template_id:
-        try:
-                    # Request validation
-                    if not template_id:
-        try:
-                    # Request validation
-                    if not template_id:
-        try:
-                    # AI model processing
-                    if not hasattr(self, 'model') or self.model is None:
-        try:
-                    # AI model processing
-                    if not hasattr(self, 'model') or self.model is None:
-                        raise RuntimeError("AI model not initialized")
-            
-                    # Preprocess input
-                    processed_input = await self._preprocess__analyze_template_content_input(template)
-            
-                    # Run inference
-                    result = await self.model.predict(processed_input)
-            
-                    # Postprocess result
-                    final_result = await self._postprocess__analyze_template_content_result(result)
-            
-                    logger.info(f"AI processing _analyze_template_content completed")
-                    return final_result
-            
-                except Exception as e:
-                    logger.error(f"AI processing _analyze_template_content failed: {e}")
-                    raise
-                    processed_input = await self._preprocess__analyze_content_performance_input(template)
-            
-                    # Run inference
-                    result = await self.model.predict(processed_input)
-            
-                    # Postprocess result
-                    final_result = await self._postprocess__analyze_content_performance_result(result)
-            
-                    logger.info(f"AI processing _analyze_content_performance completed")
-                    return final_result
-            
-                except Exception as e:
-                    logger.error(f"AI processing _analyze_content_performance failed: {e}")
-                    raise
-                    result = await self._handle__get_optimal_send_times_request(template_id)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler _get_optimal_send_times failed: {e}")
-                    return {"status": "error", "message": str(e)}
-                    result = await self._handle__get_language_performance_request(template_id)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler _get_language_performance failed: {e}")
-                    return {"status": "error", "message": str(e)}
-                    result = await self._handle__get_personalization_effectiveness_request(template_id)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler _get_personalization_effectiveness failed: {e}")
-                    return {"status": "error", "message": str(e)}
-                    result = await self._handle__get_performance_by_platform_request(template_id)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler _get_performance_by_platform failed: {e}")
-                    return {"status": "error", "message": str(e)}
-                    result = await self._handle__get_performance_by_creator_type_request(template_id)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler _get_performance_by_creator_type failed: {e}")
-                    return {"status": "error", "message": str(e)}
             })
         
-        # Add formatting functions
-        render_context.update(self.formatting_functions)
-        
-        # Add current datetime
-        render_context["now"] = datetime.utcnow()
+        # Add template helper functions
+        render_context.update({
+            "format_date": lambda date: date.strftime("%Y-%m-%d") if date else "",
+            "format_currency": lambda amount: f"${amount:.2f}",
+            "capitalize_first": lambda text: text.capitalize() if text else "",
+        })
         
         return render_context
+
 
     # Formatting functions
     def _format_currency(self, amount: float, currency: str = "USD") -> str:
