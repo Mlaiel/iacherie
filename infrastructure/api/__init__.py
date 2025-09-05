@@ -12,11 +12,11 @@ This module provides API routing and management:
 - API middleware and authentication
 """
 
-# Import router module
-try:
-    from .router import *
-except ImportError:
-    pass
+# Import router module (commented out due to syntax issues)
+# try:
+#     from .router import *
+# except ImportError:
+#     pass
 
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
@@ -26,9 +26,10 @@ __status__ = "Production"
 # Collect all exports from router submodule
 __all__ = []
 
-try:
-    from . import router
-    if hasattr(router, '__all__'):
-        __all__.extend(router.__all__)
-except ImportError:
-    pass
+# Router module temporarily disabled due to syntax issues
+# try:
+#     from . import router
+#     if hasattr(router, '__all__'):
+#         __all__.extend(router.__all__)
+# except ImportError:
+#     pass

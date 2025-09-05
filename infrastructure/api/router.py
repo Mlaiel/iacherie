@@ -16,7 +16,7 @@
 # LIGNES: 1
 # ==========================================================================================
 
-"""api_docs_generator.py – Spotify AI Agent
+"""api_docs_generator.py - Spotify AI Agent
 ---------------------------------------
 Generiert automatisch API-Dokumentation (OpenAPI, Markdown, mehrsprachig) aus FastAPI/Django-Code.
 Rollen: Lead Dev, Architecte IA, Backend Senior, Security Specialist
@@ -12590,8 +12590,8 @@ __all__ = [
 # ==========================================================================================
 
 """API v2 du backend Spotify AI Agent.
-Expose les modules avancés : graphql, grpc.
-"""__all__ = ["graphql", "grpc"]
+Expose les modules avancés : graphql, grpc.
+# __all__ = ["graphql", "grpc"]
 
 
 
@@ -12637,9 +12637,8 @@ Expose les modules avancés : graphql, grpc.
 # LIGNES: 1
 # ==========================================================================================
 
-"""Module GraphQL industriel pour l’agent IA Spotify.
-Expose : schéma, resolvers, mutations, subscriptions, scalaires custom.
-"""
+# Module GraphQL industriel pour l agent IA Spotify
+# Expose : schema, resolvers, mutations, subscriptions, scalaires custom
 from .schema import schema
 from .resolvers import query, mutation, subscription
 from .mutations import mutation as advanced_mutation
@@ -12675,7 +12674,7 @@ __all__ = [
 # ==========================================================================================
 
 """API v1 du backend Spotify AI Agent.
-Expose tous les modules : auth, spotify, ai_agent, content_generation, music_generation, search, analytics, collaboration.
+Expose tous les modules : auth, spotify, ai_agent, content_generation, music_generation, search, analytics, collaboration.
 """# Import public API de chaque sous-module
 # (Les routers FastAPI sont à importer dans main.py)
 
@@ -12726,7 +12725,7 @@ class SecurityMiddleware:
         response.headers["Strict-Transport-Security"] = "max-age=63072000; includeSubDomains"
         return response
 
-# Exemple d’utilisation (FastAPI) :
+# Exemple d'utilisation (FastAPI) :
 # from fastapi import FastAPI
 # app = FastAPI()
 # app.add_middleware(SecurityMiddleware, rate_limit=100)
@@ -12752,7 +12751,7 @@ import requests
 
 class NotificationSystem:
     """
-    Gère l’envoi de notifications, rappels et webhooks pour la collaboration.
+    Gère l'envoi de notifications, rappels et webhooks pour la collaboration.
     """
     def __init__(self):
         self.notifications = []  # À remplacer par Redis/DB en prod
@@ -12783,7 +12782,7 @@ class NotificationSystem:
     def get_notifications(self, user_id: str) -> List[Dict[str, Any]]:
         return [n for n in self.notifications if n["user_id"] == user_id]
 
-# Exemple d’utilisation :
+# Exemple d'utilisation :
 # ns = NotificationSystem()
 # ns.send_notification("user123", "Invitation à rejoindre la room", "slack")
 # print(ns.get_notifications("user123")
@@ -12823,7 +12822,7 @@ def get_collab_score(ws_id: str = Query(...), nb_members: int = Query(2), nb_act
         "explanation": "Score basé sur nb membres et nb actions (mock ML)"
     }
 
-# Exemple d’intégration FastAPI :
+# Exemple d'intégration FastAPI :
 # from .api_scoring import router as collab_scoring_router
 # app.include_router(collab_scoring_router)
 
@@ -12845,7 +12844,7 @@ def get_collab_score(ws_id: str = Query(...), nb_members: int = Query(2), nb_act
 # ==========================================================================================
 
 """Module d'intégration avancée Spotify pour artistes.
-Expose : stats, playlists, webhooks, synchronisation, analytics, analyse tracks.
+Expose : stats, playlists, webhooks, synchronisation, analytics, analyse tracks.
 """
 from .spotify_client import SpotifyClient
 from .artist_insights import ArtistInsights
