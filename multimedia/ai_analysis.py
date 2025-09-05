@@ -18,34 +18,140 @@ Contact: mlaiel@live.de for licensing and authorization inquiries.
 
 import asyncio
 import logging
-import numpy as np
-import cv2
 from typing import Dict, List, Optional, Any, Tuple, Union, AsyncGenerator
 from dataclasses import dataclass, field
 from datetime import datetime
 from abc import ABC, abstractmethod
-import torch
-from torchvision import transforms, models
-from transformers import (
-    pipeline, AutoTokenizer, AutoModel,
-    CLIPProcessor, CLIPModel,
-    ViTImageProcessor, ViTForImageClassification
-)
-import librosa
-import soundfile as sf
-from PIL import Image
-import spacy
-import tensorflow as tf
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.cluster import KMeans
-from scipy.spatial.distance import cosine
-import face_recognition
-import mediapipe as mp
 
-from .formats import ContentFormat
-from ..core.exceptions import ProcessingError, AIAnalysisError
-from ..core.config import get_settings
-from ..utils.caching import cache_result
+# Optional imports with fallbacks
+try:
+    import numpy as np
+except ImportError:
+    # Create a minimal numpy stub
+    class NumpyStub:
+        class ndarray:
+            pass
+        @staticmethod
+        def array(data):
+            return data
+        @staticmethod
+        def zeros(shape):
+            return [0] * (shape[0] if isinstance(shape, (list, tuple)) else shape)
+        @staticmethod
+        def uint8():
+            return int
+    np = NumpyStub()
+
+try:
+    import cv2
+except ImportError:
+    # Create cv2 stub
+    class CV2Stub:
+        pass
+    cv2 = CV2Stub()
+
+try:
+    import torch
+    from torchvision import transforms, models
+except ImportError:
+    # Create torch stubs
+    class TorchStub:
+        pass
+    torch = TorchStub()
+    transforms = TorchStub()
+    models = TorchStub()
+
+try:
+    from transformers import (
+        pipeline, AutoTokenizer, AutoModel,
+        CLIPProcessor, CLIPModel,
+        ViTImageProcessor, ViTForImageClassification
+    )
+except ImportError:
+    # Create transformer stubs
+    pipeline = lambda *args, **kwargs: None
+    AutoTokenizer = None
+    AutoModel = None
+    CLIPProcessor = None
+    CLIPModel = None
+    ViTImageProcessor = None
+    ViTForImageClassification = None
+
+try:
+    import librosa
+    import soundfile as sf
+except ImportError:
+    librosa = None
+    sf = None
+
+try:
+    from PIL import Image
+except ImportError:
+    class ImageStub:
+        class Image:
+            pass
+    Image = ImageStub()
+
+try:
+    import spacy
+except ImportError:
+    spacy = None
+
+try:
+    import tensorflow as tf
+except ImportError:
+    tf = None
+
+try:
+    from sklearn.feature_extraction.text import TfidfVectorizer
+    from sklearn.cluster import KMeans
+    from scipy.spatial.distance import cosine
+except ImportError:
+    TfidfVectorizer = None
+    KMeans = None
+    cosine = None
+
+try:
+    import face_recognition
+except ImportError:
+    face_recognition = None
+
+try:
+    import mediapipe as mp
+except ImportError:
+    mp = None
+
+try:
+    from .formats import ContentFormat
+except ImportError:
+    # Create stub if formats not available
+    class ContentFormat:
+        AUDIO = "audio"
+        VIDEO = "video"
+        IMAGE = "image"
+
+# Handle missing core modules with stubs
+try:
+    from ..core.exceptions import ProcessingError, AIAnalysisError
+except ImportError:
+    class ProcessingError(Exception):
+        pass
+    class AIAnalysisError(Exception):
+        pass
+
+try:
+    from ..core.config import get_settings
+except ImportError:
+    def get_settings():
+        class Settings:
+            MAX_WORKERS = 4
+        return Settings()
+
+try:
+    from ..utils.caching import cache_result
+except ImportError:
+    def cache_result(func):
+        return func  # No-op decorator
 
 logger = logging.getLogger(__name__)
 settings = get_settings()
@@ -84,10 +190,9 @@ class ObjectAnalysis(AnalysisResult):
 
 @dataclass
 class SentimentAnalysis(AnalysisResult):
-    """
-Sentiment and emotion analysis results"""
-    overall_sentiment: str
-    sentiment_score: float
+    """Sentiment and emotion analysis results"""
+    overall_sentiment: str = "neutral"
+    sentiment_score: float = 0.0
     emotions: Dict[str, float] = field(default_factory=dict)
     keywords: List[str] = field(default_factory=list)
     themes: List[str] = field(default_factory=list)

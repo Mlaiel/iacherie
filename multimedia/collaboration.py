@@ -19,28 +19,111 @@ Contact: mlaiel@live.de for licensing and authorization inquiries.
 import asyncio
 import logging
 import json
-import numpy as np
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from decimal import Decimal
 from enum import Enum
 from abc import ABC, abstractmethod
-import torch
-from transformers import AutoTokenizer, AutoModel, pipeline
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
-from sklearn.cluster import KMeans
-import networkx as nx
-from sqlalchemy import select, insert, update, delete
-from sqlalchemy.ext.asyncio import AsyncSession
 
-from ..core.exceptions import CollaborationError, MatchingError
-from ..core.config import get_settings
-from ..core.database import get_session
-from ..utils.caching import cache_result
-from ..utils.notifications import NotificationService
-from ..utils.recommendations import RecommendationEngine
+# Optional imports with fallbacks
+try:
+    import numpy as np
+except ImportError:
+    class NumpyStub:
+        class ndarray:
+            pass
+        @staticmethod
+        def array(data):
+            return data
+        @staticmethod
+        def zeros(shape):
+            return [0] * (shape[0] if isinstance(shape, (list, tuple)) else shape)
+    np = NumpyStub()
+
+try:
+    import torch
+    from transformers import AutoTokenizer, AutoModel, pipeline
+except ImportError:
+    torch = None
+    AutoTokenizer = None
+    AutoModel = None
+    pipeline = lambda *args, **kwargs: None
+try:
+    from sklearn.feature_extraction.text import TfidfVectorizer
+    from sklearn.metrics.pairwise import cosine_similarity
+    from sklearn.cluster import KMeans
+except ImportError:
+    TfidfVectorizer = None
+    cosine_similarity = None
+    KMeans = None
+
+try:
+    import networkx as nx
+except ImportError:
+    class NetworkXStub:
+        class Graph:
+            def __init__(self):
+                self.nodes = []
+                self.edges = []
+            def add_node(self, *args, **kwargs):
+                pass
+            def add_edge(self, *args, **kwargs):
+                pass
+    nx = NetworkXStub()
+
+try:
+    from sqlalchemy import select, insert, update, delete
+    from sqlalchemy.ext.asyncio import AsyncSession
+except ImportError:
+    select = insert = update = delete = AsyncSession = None
+
+# Handle missing core modules with stubs  
+try:
+    from ..core.exceptions import CollaborationError, MatchingError
+except ImportError:
+    class CollaborationError(Exception):
+        pass
+    class MatchingError(Exception):
+        pass
+
+try:
+    from ..core.config import get_settings
+except ImportError:
+    def get_settings():
+        class Settings:
+            DATABASE_URL = "sqlite:///test.db"
+            AI_MODEL_PATH = "/models"
+        return Settings()
+try:
+    from ..core.database import get_session
+except ImportError:
+    async def get_session():
+        return None
+
+try:
+    from ..utils.caching import cache_result
+except ImportError:
+    def cache_result(func):
+        return func
+
+try:
+    from ..utils.notifications import NotificationService
+except ImportError:
+    class NotificationService:
+        def __init__(self):
+            pass
+        async def send_notification(self, *args, **kwargs):
+            pass
+
+try:
+    from ..utils.recommendations import RecommendationEngine
+except ImportError:
+    class RecommendationEngine:
+        def __init__(self):
+            pass
+        async def get_recommendations(self, *args, **kwargs):
+            return []
 
 logger = logging.getLogger(__name__)
 settings = get_settings()

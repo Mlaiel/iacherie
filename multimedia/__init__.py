@@ -16,13 +16,73 @@ extent of the law. All rights reserved.
 Contact: mlaiel@live.de for licensing and authorization inquiries.
 """
 
-# Only import working modules for now
+# Import working modules
 from .formats import (
     SupportedFormats,
     AudioFormat,
     VideoFormat,
     ImageFormat,
     ContentFormat
+)
+
+from .validators import (
+    ContentValidator,
+    MediaValidator,
+    QualityValidator,
+    ValidationResult,
+    ValidationRule
+)
+
+from .distribution import (
+    ContentDistributor,
+    MonetizationEngine,
+    YouTubeIntegration,
+    InstagramIntegration,
+    PlatformType,
+    ContentType,
+    MonetizationModel,
+    DistributionConfig,
+    MonetizationConfig,
+    DistributionResult,
+    RevenueData
+)
+
+from .monitoring import (
+    ContentMonitor,
+    YouTubeCrawler,
+    InstagramCrawler,
+    TikTokCrawler,
+    ViolationType,
+    MonitoringConfig,
+    ViolationAlert,
+    SearchResult
+)
+
+from .optimization import (
+    ContentOptimizer,
+    CompressionEngine,
+    QualityEnhancer
+)
+
+from .protection import (
+    ContentProtector,
+    WatermarkEngine,
+    FingerprintGenerator,
+    WatermarkConfig
+)
+
+from .video import (
+    VideoProcessor,
+    VideoAnalyzer,
+    VideoProcessingResult
+)
+
+from .metadata_extractor import (
+    MetadataExtractor,
+    AudioMetadata,
+    VideoMetadata,
+    ImageMetadata,
+    MultimediaMetadata
 )
 
 # Version info
@@ -36,5 +96,58 @@ __all__ = [
     "AudioFormat", 
     "VideoFormat",
     "ImageFormat",
-    "ContentFormat"
+    "ContentFormat",
+    
+    # Validation
+    "ContentValidator",
+    "MediaValidator",
+    "QualityValidator",
+    "ValidationResult",
+    "ValidationRule",
+    
+    # Distribution and Monetization
+    "ContentDistributor",
+    "MonetizationEngine",
+    "YouTubeIntegration",
+    "InstagramIntegration",
+    "PlatformType",
+    "ContentType",
+    "MonetizationModel",
+    "DistributionConfig",
+    "MonetizationConfig",
+    "DistributionResult",
+    "RevenueData",
+    
+    # Content Monitoring
+    "ContentMonitor",
+    "YouTubeCrawler",
+    "InstagramCrawler",
+    "TikTokCrawler",
+    "ViolationType",
+    "MonitoringConfig",
+    "ViolationAlert",
+    "SearchResult",
+    
+    # Optimization
+    "ContentOptimizer",
+    "CompressionEngine",
+    "QualityEnhancer",
+    
+    # Protection
+    "ContentProtector",
+    "WatermarkEngine",
+    "FingerprintGenerator",
+    "WatermarkConfig",
+    
+    # Video Processing
+    "VideoProcessor",
+    "VideoAnalyzer",
+    "VideoProcessingResult",
+    
+    # Metadata Extraction
+    "MetadataExtractor",
+    "AudioMetadata",
+    "VideoMetadata",
+    "ImageMetadata",
+    "MultimediaMetadata"
 ]
