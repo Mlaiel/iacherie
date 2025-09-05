@@ -67,6 +67,44 @@ from .locale_manager import (
     NumberFormat
 )
 
+from .language_models import (
+    LanguageModelEngine,
+    ModelRequest,
+    ModelResult,
+    SimilarityRequest,
+    SimilarityResult,
+    ModelType,
+    TaskType,
+    ModelLanguageSupport
+)
+
+from .translation_quality import (
+    TranslationQualityEngine,
+    QualityRequest,
+    QualityResult,
+    HumanFeedback,
+    QualityImprovement,
+    QualityMetric,
+    QualityLevel,
+    ErrorType,
+    ErrorAnalysis,
+    ImprovementArea
+)
+
+from .content_localizer import (
+    ContentLocalizer,
+    ContentLocalizationRequest,
+    LocalizationResult,
+    MediaElement,
+    SEOOptimization,
+    ContentAdaptation,
+    ContentType,
+    LocalizationLevel,
+    MediaType,
+    SEOStrategy,
+    AdaptationAspect
+)
+
 # Export all public classes and functions
 __all__ = [
     # Translation Engine
@@ -109,7 +147,42 @@ __all__ = [
     "LocaleCategory",
     "DateFormat",
     "TimeFormat",
-    "NumberFormat"
+    "NumberFormat",
+    
+    # Language Models Engine
+    "LanguageModelEngine",
+    "ModelRequest",
+    "ModelResult", 
+    "SimilarityRequest",
+    "SimilarityResult",
+    "ModelType",
+    "TaskType",
+    "ModelLanguageSupport",
+    
+    # Translation Quality Engine
+    "TranslationQualityEngine",
+    "QualityRequest",
+    "QualityResult",
+    "HumanFeedback",
+    "QualityImprovement",
+    "QualityMetric",
+    "QualityLevel",
+    "ErrorType",
+    "ErrorAnalysis",
+    "ImprovementArea",
+    
+    # Content Localizer
+    "ContentLocalizer",
+    "ContentLocalizationRequest",
+    "LocalizationResult",
+    "MediaElement",
+    "SEOOptimization", 
+    "ContentAdaptation",
+    "ContentType",
+    "LocalizationLevel",
+    "MediaType",
+    "SEOStrategy",
+    "AdaptationAspect"
 ]
 
 # Module metadata
@@ -166,6 +239,11 @@ class LanguageServiceManager:
         self.cultural_adapter = CulturalAdapter(self.config.get("cultural_adaptation"))
         self.rtl_processor = RTLProcessor(self.config.get("rtl_support"))
         self.locale_manager = LocaleManager(self.config.get("locale_management"))
+        
+        # Initialize new Tier 1 critical modules
+        self.language_model_engine = LanguageModelEngine(self.config.get("language_models"))
+        self.translation_quality_engine = TranslationQualityEngine(self.config.get("translation_quality"))
+        self.content_localizer = ContentLocalizer(self.config.get("content_localization"))
         
     async def process_multilingual_content(self, content: str, target_language: str, 
                                          source_language: str = None, 
