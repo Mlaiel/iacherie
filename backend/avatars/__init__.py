@@ -30,6 +30,9 @@ from .facial_expressions import FacialExpressionSystem, ExpressionConfig
 from .avatar_factory import AvatarFactory, AvatarBuilder, AvatarTemplate, AvatarSpec, avatar_factory
 from .avatar_intelligence import AvatarPersonality, EmotionalIntelligence, BehaviorEngine, InteractionManager
 from .avatar_rendering import RenderingEngine, MaterialManager, LightingSystem, PerformanceOptimizer
+from .avatar_monetization import AvatarCommerce, DigitalAssetManager, NFTIntegration, RevenueTracker
+from .avatar_social import AvatarSocialNetwork, CollaborationEngine, AvatarMatching, CommunityManager
+from .avatar_performance import PerformanceAnalytics, EngagementTracker, ViralPredictor, OptimizationSuggester
 
 __all__ = [
     # Core systems
@@ -54,10 +57,25 @@ __all__ = [
     'RenderingEngine',
     'MaterialManager',
     'LightingSystem',
-    'PerformanceOptimizer'
+    'PerformanceOptimizer',
+    # Monetization and business
+    'AvatarCommerce',
+    'DigitalAssetManager',
+    'NFTIntegration',
+    'RevenueTracker',
+    # Social and collaboration
+    'AvatarSocialNetwork',
+    'CollaborationEngine',
+    'AvatarMatching',
+    'CommunityManager',
+    # Performance and analytics
+    'PerformanceAnalytics',
+    'EngagementTracker',
+    'ViralPredictor',
+    'OptimizationSuggester'
 ]
 
-__version__ = "2.0.0"
+__version__ = "2.1.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 
