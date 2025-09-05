@@ -5,15 +5,35 @@ Implements sophisticated A/B testing with business metrics tracking
 
 import uuid
 import asyncio
+import warnings
 from typing import Dict, List, Optional, Any, Callable, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
-import pandas as pd
-import numpy as np
-from scipy import stats
 import json
 import logging
 from enum import Enum
+
+# Optional dependencies with graceful degradation
+try:
+    import pandas as pd
+    PANDAS_AVAILABLE = True
+except ImportError:
+    PANDAS_AVAILABLE = False
+    warnings.warn("pandas not available. Some A/B testing features will be limited.")
+
+try:
+    import numpy as np
+    NUMPY_AVAILABLE = True
+except ImportError:
+    NUMPY_AVAILABLE = False
+    warnings.warn("numpy not available. Some A/B testing features will be limited.")
+
+try:
+    from scipy import stats
+    SCIPY_AVAILABLE = True
+except ImportError:
+    SCIPY_AVAILABLE = False
+    warnings.warn("scipy not available. Statistical analysis will be limited.")
 
 logger = logging.getLogger(__name__)
 

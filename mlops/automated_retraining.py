@@ -4,20 +4,66 @@ Implements intelligent retraining system based on performance and drift detectio
 """
 
 import asyncio
-import schedule
 import time
+import warnings
 from typing import Dict, List, Optional, Any, Callable, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum
 import json
 import logging
-import pandas as pd
-import numpy as np
 from pathlib import Path
 
-from mlops.model_versioning.model_registry import ModelRegistry
-from mlops.model_monitoring.performance_monitor import ComprehensiveModelMonitor, AlertSeverity, DriftType
+# Optional dependencies
+try:
+    import schedule
+    SCHEDULE_AVAILABLE = True
+except ImportError:
+    SCHEDULE_AVAILABLE = False
+    warnings.warn("schedule not available. Install with: pip install schedule")
+
+try:
+    import pandas as pd
+    PANDAS_AVAILABLE = True
+except ImportError:
+    PANDAS_AVAILABLE = False
+    warnings.warn("pandas not available. Some features will be limited.")
+
+try:
+    import numpy as np
+    NUMPY_AVAILABLE = True
+except ImportError:
+    NUMPY_AVAILABLE = False
+    warnings.warn("numpy not available. Some features will be limited.")
+
+# Optional local imports
+try:
+    from mlops.model_versioning.model_registry import ModelRegistry
+    MODEL_REGISTRY_AVAILABLE = True
+except ImportError:
+    MODEL_REGISTRY_AVAILABLE = False
+    warnings.warn("ModelRegistry not available")
+
+try:
+    from mlops.model_monitoring.performance_monitor import ComprehensiveModelMonitor, AlertSeverity, DriftType
+    MONITORING_AVAILABLE = True
+except ImportError:
+    MONITORING_AVAILABLE = False
+    warnings.warn("ModelMonitoring not available")
+
+# Add mock implementations for missing dependencies
+if PANDAS_AVAILABLE:
+    DataFrame = DataFrame
+else:
+    from typing import Any
+    DataFrame = Any  # Fallback when pandas not available
+    # Create mock pandas for basic compatibility
+    class MockPandas:
+        DataFrame = Any
+        @staticmethod
+        def DataFrame(*args, **kwargs):
+            return {}
+    pd = MockPandas()
 
 logger = logging.getLogger(__name__)
 
@@ -111,7 +157,7 @@ class IntelligentRetrainingSystem:
         self.monitoring_system = monitoring_system
         self.config = config
         self.retraining_jobs: Dict[str, RetrainingJob] = {}
-        self.training_data_cache: Dict[str, pd.DataFrame] = {}
+        self.training_data_cache: Dict[str, DataFrame] = {}
         self.running_jobs: Dict[str, asyncio.Task] = {}
         self.scheduler_running = False
         
@@ -355,7 +401,7 @@ class IntelligentRetrainingSystem:
             logger.error(f"Error checking data volume: {str(e)}")
             return False
     
-    async def _load_training_data(self, job: RetrainingJob) -> Optional[pd.DataFrame]:
+    async def _load_training_data(self, job: RetrainingJob) -> Optional[DataFrame]:
         """Load training data for retraining"""
         try:
             if self.data_loader_callback:
@@ -372,7 +418,7 @@ class IntelligentRetrainingSystem:
             logger.error(f"Error loading training data: {str(e)}")
             return None
     
-    async def _train_model(self, job: RetrainingJob, training_data: pd.DataFrame) -> tuple:
+    async def _train_model(self, job: RetrainingJob, training_data: DataFrame) -> tuple:
         """Train a new model"""
         try:
             if self.training_pipeline_callback:

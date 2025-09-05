@@ -3,17 +3,38 @@ MLOps Model Versioning and Registry
 Implements complete model versioning with MLflow integration
 """
 
-import mlflow
-import mlflow.sklearn
-import mlflow.tracking
+import warnings
 from typing import Dict, List, Optional, Any, Tuple
-import pandas as pd
-import numpy as np
 from pathlib import Path
 import json
 import hashlib
 from datetime import datetime
 import logging
+
+# Optional dependencies with graceful degradation
+try:
+    import pandas as pd
+    PANDAS_AVAILABLE = True
+except ImportError:
+    PANDAS_AVAILABLE = False
+    warnings.warn("pandas not available. Some features will be limited.")
+
+try:
+    import numpy as np
+    NUMPY_AVAILABLE = True
+except ImportError:
+    NUMPY_AVAILABLE = False
+    warnings.warn("numpy not available. Some features will be limited.")
+
+# Optional MLflow import
+try:
+    import mlflow
+    import mlflow.sklearn
+    import mlflow.tracking
+    MLFLOW_AVAILABLE = True
+except ImportError:
+    MLFLOW_AVAILABLE = False
+    warnings.warn("MLflow not available. Install with: pip install mlflow")
 
 logger = logging.getLogger(__name__)
 
@@ -28,6 +49,11 @@ class ModelRegistry:
             tracking_uri: MLflow tracking URI
             experiment_name: Name of the MLflow experiment
         """
+        if not MLFLOW_AVAILABLE:
+            logger.warning("MLflow not available. Model registry will operate in mock mode.")
+            self.experiment_id = "mock_experiment"
+            return
+            
         self.tracking_uri = tracking_uri or "file://./mlflow_runs"
         self.experiment_name = experiment_name
         
