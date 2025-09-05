@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- AI Tag Suggestion Interface -->
+<!-- © 2025 Fahed Mlaiel - Ainflue Studio -->
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="aiGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00ff88;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00cc6a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="tagGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#2d3748;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4a5568;stop-opacity:1" />
+    </linearGradient>
+    <filter id="tagShadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000000" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="300" fill="#1a202c" rx="12"/>
+  
+  <!-- Header -->
+  <rect x="20" y="20" width="360" height="40" fill="#2d3748" stroke="#4a5568" stroke-width="1" rx="6"/>
+  <text x="40" y="42" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff">AI-Powered Tag Suggestions</text>
+  
+  <!-- AI Brain Icon -->
+  <g transform="translate(320, 25)">
+    <circle cx="15" cy="15" r="12" fill="url(#aiGradient)"/>
+    <text x="15" y="20" font-family="Arial, sans-serif" font-size="12" fill="#1a202c" text-anchor="middle">🧠</text>
+  </g>
+  
+  <!-- Content Analysis -->
+  <rect x="20" y="80" width="360" height="50" fill="#2d3748" stroke="#4a5568" stroke-width="1" rx="6"/>
+  <text x="30" y="100" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff">Analyzing Content...</text>
+  <text x="30" y="115" font-family="Arial, sans-serif" font-size="10" fill="#cbd5e0">Audio: Electronic music, synthesizer, atmospheric</text>
+  <text x="30" y="125" font-family="Arial, sans-serif" font-size="10" fill="#cbd5e0">Detected: BPM 128, Key C minor, Genre Electronic/Ambient</text>
+  
+  <!-- AI Suggestions -->
+  <text x="30" y="160" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff">Recommended Tags</text>
+  
+  <!-- High Confidence Tags -->
+  <g id="high-confidence">
+    <text x="30" y="180" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#00ff88">High Confidence (95%+)</text>
+    
+    <!-- Electronic -->
+    <rect x="30" y="185" width="60" height="20" fill="url(#tagGradient)" stroke="#00ff88" stroke-width="1" rx="10" filter="url(#tagShadow)"/>
+    <text x="60" y="198" font-family="Arial, sans-serif" font-size="8" font-weight="600" fill="#ffffff" text-anchor="middle">electronic</text>
+    
+    <!-- Synthesizer -->
+    <rect x="100" y="185" width="70" height="20" fill="url(#tagGradient)" stroke="#00ff88" stroke-width="1" rx="10" filter="url(#tagShadow)"/>
+    <text x="135" y="198" font-family="Arial, sans-serif" font-size="8" font-weight="600" fill="#ffffff" text-anchor="middle">synthesizer</text>
+    
+    <!-- Ambient -->
+    <rect x="180" y="185" width="50" height="20" fill="url(#tagGradient)" stroke="#00ff88" stroke-width="1" rx="10" filter="url(#tagShadow)"/>
+    <text x="205" y="198" font-family="Arial, sans-serif" font-size="8" font-weight="600" fill="#ffffff" text-anchor="middle">ambient</text>
+    
+    <!-- Atmospheric -->
+    <rect x="240" y="185" width="75" height="20" fill="url(#tagGradient)" stroke="#00ff88" stroke-width="1" rx="10" filter="url(#tagShadow)"/>
+    <text x="277" y="198" font-family="Arial, sans-serif" font-size="8" font-weight="600" fill="#ffffff" text-anchor="middle">atmospheric</text>
+  </g>
+  
+  <!-- Medium Confidence Tags -->
+  <g id="medium-confidence">
+    <text x="30" y="225" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#f59e0b">Medium Confidence (75-94%)</text>
+    
+    <!-- Chill -->
+    <rect x="30" y="230" width="40" height="20" fill="url(#tagGradient)" stroke="#f59e0b" stroke-width="1" rx="10" filter="url(#tagShadow)"/>
+    <text x="50" y="243" font-family="Arial, sans-serif" font-size="8" font-weight="600" fill="#ffffff" text-anchor="middle">chill</text>
+    
+    <!-- Downtempo -->
+    <rect x="80" y="230" width="70" height="20" fill="url(#tagGradient)" stroke="#f59e0b" stroke-width="1" rx="10" filter="url(#tagShadow)"/>
+    <text x="115" y="243" font-family="Arial, sans-serif" font-size="8" font-weight="600" fill="#ffffff" text-anchor="middle">downtempo</text>
+    
+    <!-- Meditation -->
+    <rect x="160" y="230" width="65" height="20" fill="url(#tagGradient)" stroke="#f59e0b" stroke-width="1" rx="10" filter="url(#tagShadow)"/>
+    <text x="192" y="243" font-family="Arial, sans-serif" font-size="8" font-weight="600" fill="#ffffff" text-anchor="middle">meditation</text>
+    
+    <!-- Study -->
+    <rect x="235" y="230" width="40" height="20" fill="url(#tagGradient)" stroke="#f59e0b" stroke-width="1" rx="10" filter="url(#tagShadow)"/>
+    <text x="255" y="243" font-family="Arial, sans-serif" font-size="8" font-weight="600" fill="#ffffff" text-anchor="middle">study</text>
+  </g>
+  
+  <!-- Control Buttons -->
+  <rect x="320" y="185" width="50" height="20" fill="#00ff88" rx="10" filter="url(#tagShadow)"/>
+  <text x="345" y="198" font-family="Arial, sans-serif" font-size="8" font-weight="600" fill="#1a202c" text-anchor="middle">Add All</text>
+  
+  <rect x="320" y="210" width="50" height="20" fill="#4a5568" stroke="#6b7280" stroke-width="1" rx="10" filter="url(#tagShadow)"/>
+  <text x="345" y="223" font-family="Arial, sans-serif" font-size="8" font-weight="600" fill="#ffffff" text-anchor="middle">Custom</text>
+  
+  <!-- Status Bar -->
+  <rect x="20" y="270" width="360" height="20" fill="#2d3748" stroke="#4a5568" stroke-width="1" rx="6"/>
+  <text x="30" y="283" font-family="Arial, sans-serif" font-size="9" fill="#cbd5e0">AI Analysis Complete • 8 tags suggested • Estimated 23% SEO improvement</text>
+  
+  <!-- Processing indicator -->
+  <circle cx="350" cy="280" r="5" fill="#00ff88" opacity="0.8">
+    <animate attributeName="opacity" values="0.8;0.3;0.8" dur="2s" repeatCount="indefinite"/>
+  </circle>
+</svg>

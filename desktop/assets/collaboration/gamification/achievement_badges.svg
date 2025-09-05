@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Achievement Badges Collection -->
+<!-- © 2025 Fahed Mlaiel - Ainflue Studio -->
+<svg width="500" height="300" viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffd700;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ffb700;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="silverGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#c0c0c0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a0a0a0;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="bronzeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#cd7f32;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#b86f28;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="platinumGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e5e4e2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#bfc0c0;stop-opacity:1" />
+    </linearGradient>
+    <filter id="badgeShadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="500" height="300" fill="#1a202c"/>
+  
+  <!-- Header -->
+  <text x="50" y="35" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#ffffff">Achievement Badges</text>
+  <text x="50" y="55" font-family="Arial, sans-serif" font-size="12" fill="#cbd5e0">Unlock badges through collaboration and content creation</text>
+  
+  <!-- First Collaboration Badge -->
+  <g id="first-collab" transform="translate(50, 80)">
+    <circle cx="30" cy="30" r="25" fill="url(#bronzeGradient)" filter="url(#badgeShadow)"/>
+    <circle cx="30" cy="30" r="20" fill="none" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
+    <text x="30" y="37" font-family="Arial, sans-serif" font-size="16" fill="#ffffff" text-anchor="middle">🤝</text>
+    <text x="30" y="75" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#ffffff" text-anchor="middle">First Collaboration</text>
+    <text x="30" y="88" font-family="Arial, sans-serif" font-size="8" fill="#cbd5e0" text-anchor="middle">Complete first project</text>
+  </g>
+  
+  <!-- Content Creator Badge -->
+  <g id="content-creator" transform="translate(150, 80)">
+    <circle cx="30" cy="30" r="25" fill="url(#silverGradient)" filter="url(#badgeShadow)"/>
+    <circle cx="30" cy="30" r="20" fill="none" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
+    <text x="30" y="37" font-family="Arial, sans-serif" font-size="16" fill="#ffffff" text-anchor="middle">🎨</text>
+    <text x="30" y="75" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#ffffff" text-anchor="middle">Content Creator</text>
+    <text x="30" y="88" font-family="Arial, sans-serif" font-size="8" fill="#cbd5e0" text-anchor="middle">100 uploads</text>
+  </g>
+  
+  <!-- Viral Hit Badge -->
+  <g id="viral-hit" transform="translate(250, 80)">
+    <circle cx="30" cy="30" r="25" fill="url(#goldGradient)" filter="url(#badgeShadow)"/>
+    <circle cx="30" cy="30" r="20" fill="none" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
+    <text x="30" y="37" font-family="Arial, sans-serif" font-size="16" fill="#ffffff" text-anchor="middle">🚀</text>
+    <text x="30" y="75" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#ffffff" text-anchor="middle">Viral Hit</text>
+    <text x="30" y="88" font-family="Arial, sans-serif" font-size="8" fill="#cbd5e0" text-anchor="middle">1M+ views</text>
+  </g>
+  
+  <!-- Collaboration Master Badge -->
+  <g id="collab-master" transform="translate(350, 80)">
+    <circle cx="30" cy="30" r="25" fill="url(#platinumGradient)" filter="url(#badgeShadow)"/>
+    <circle cx="30" cy="30" r="20" fill="none" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
+    <text x="30" y="37" font-family="Arial, sans-serif" font-size="16" fill="#1a202c" text-anchor="middle">👑</text>
+    <text x="30" y="75" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#ffffff" text-anchor="middle">Collaboration Master</text>
+    <text x="30" y="88" font-family="Arial, sans-serif" font-size="8" fill="#cbd5e0" text-anchor="middle">50 collaborations</text>
+  </g>
+  
+  <!-- Revenue Milestones -->
+  <g id="revenue-badges">
+    <text x="50" y="150" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff">Revenue Milestones</text>
+    
+    <!-- $1K Badge -->
+    <g transform="translate(50, 170)">
+      <circle cx="20" cy="20" r="18" fill="url(#bronzeGradient)" filter="url(#badgeShadow)"/>
+      <text x="20" y="26" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#ffffff" text-anchor="middle">$1K</text>
+      <text x="20" y="50" font-family="Arial, sans-serif" font-size="8" fill="#cbd5e0" text-anchor="middle">First $1,000</text>
+    </g>
+    
+    <!-- $10K Badge -->
+    <g transform="translate(120, 170)">
+      <circle cx="20" cy="20" r="18" fill="url(#silverGradient)" filter="url(#badgeShadow)"/>
+      <text x="20" y="26" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="#ffffff" text-anchor="middle">$10K</text>
+      <text x="20" y="50" font-family="Arial, sans-serif" font-size="8" fill="#cbd5e0" text-anchor="middle">$10,000 earned</text>
+    </g>
+    
+    <!-- $100K Badge -->
+    <g transform="translate(190, 170)">
+      <circle cx="20" cy="20" r="18" fill="url(#goldGradient)" filter="url(#badgeShadow)"/>
+      <text x="20" y="26" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#ffffff" text-anchor="middle">$100K</text>
+      <text x="20" y="50" font-family="Arial, sans-serif" font-size="8" fill="#cbd5e0" text-anchor="middle">$100,000 earned</text>
+    </g>
+    
+    <!-- $1M Badge -->
+    <g transform="translate(260, 170)">
+      <circle cx="20" cy="20" r="18" fill="url(#platinumGradient)" filter="url(#badgeShadow)"/>
+      <text x="20" y="26" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="#1a202c" text-anchor="middle">$1M</text>
+      <text x="20" y="50" font-family="Arial, sans-serif" font-size="8" fill="#cbd5e0" text-anchor="middle">Millionaire</text>
+    </g>
+  </g>
+  
+  <!-- Special Achievements -->
+  <g id="special-badges">
+    <text x="350" y="150" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff">Special Achievements</text>
+    
+    <!-- AI Pioneer -->
+    <g transform="translate(350, 170)">
+      <circle cx="20" cy="20" r="18" fill="#00ff88" filter="url(#badgeShadow)"/>
+      <text x="20" y="26" font-family="Arial, sans-serif" font-size="12" fill="#1a202c" text-anchor="middle">🤖</text>
+      <text x="20" y="50" font-family="Arial, sans-serif" font-size="8" fill="#cbd5e0" text-anchor="middle">AI Pioneer</text>
+    </g>
+    
+    <!-- Early Adopter -->
+    <g transform="translate(420, 170)">
+      <circle cx="20" cy="20" r="18" fill="#9f40ff" filter="url(#badgeShadow)"/>
+      <text x="20" y="26" font-family="Arial, sans-serif" font-size="12" fill="#ffffff" text-anchor="middle">⭐</text>
+      <text x="20" y="50" font-family="Arial, sans-serif" font-size="8" fill="#cbd5e0" text-anchor="middle">Early Adopter</text>
+    </g>
+  </g>
+  
+  <!-- Progress Bar -->
+  <rect x="50" y="240" width="400" height="20" fill="#2d3748" stroke="#4a5568" stroke-width="1" rx="10"/>
+  <rect x="50" y="240" width="280" height="20" fill="url(#goldGradient)" rx="10"/>
+  <text x="250" y="253" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#1a202c" text-anchor="middle">Level 12 - 2,800 / 4,000 XP</text>
+  
+  <!-- Next Badge Preview -->
+  <text x="50" y="280" font-family="Arial, sans-serif" font-size="10" fill="#cbd5e0">Next: Collaboration Legend (5 more collaborations needed)</text>
+</svg>

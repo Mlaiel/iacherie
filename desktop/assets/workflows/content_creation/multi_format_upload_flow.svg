@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Multi-format Content Upload Flow -->
+<!-- © 2025 Fahed Mlaiel - Ainflue Studio -->
+<svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="flowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a202c;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2d3748;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="processGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00ff88;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00cc6a;stop-opacity:1" />
+    </linearGradient>
+    <filter id="flowShadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000000" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="600" height="400" fill="url(#flowGradient)" rx="12"/>
+  
+  <!-- Header -->
+  <text x="50" y="35" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#ffffff">Multi-Format Content Upload Workflow</text>
+  <text x="50" y="55" font-family="Arial, sans-serif" font-size="12" fill="#cbd5e0">Seamless processing for audio, video, image, and text content</text>
+  
+  <!-- Step 1: Upload -->
+  <g id="step1" transform="translate(50, 80)">
+    <rect x="0" y="0" width="120" height="80" fill="#2d3748" stroke="#4a5568" stroke-width="2" rx="8" filter="url(#flowShadow)"/>
+    <text x="60" y="20" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">1. Upload</text>
+    
+    <!-- File icons -->
+    <g transform="translate(20, 30)">
+      <!-- Audio file -->
+      <rect x="0" y="0" width="15" height="12" fill="#9f40ff" rx="2"/>
+      <text x="7" y="9" font-family="Arial, sans-serif" font-size="6" fill="#ffffff" text-anchor="middle">♪</text>
+      
+      <!-- Video file -->
+      <rect x="20" y="0" width="15" height="12" fill="#ff6b00" rx="2"/>
+      <text x="27" y="9" font-family="Arial, sans-serif" font-size="6" fill="#ffffff" text-anchor="middle">▶</text>
+      
+      <!-- Image file -->
+      <rect x="40" y="0" width="15" height="12" fill="#0066ff" rx="2"/>
+      <text x="47" y="9" font-family="Arial, sans-serif" font-size="6" fill="#ffffff" text-anchor="middle">🖼</text>
+      
+      <!-- Text file -->
+      <rect x="60" y="0" width="15" height="12" fill="#10b981" rx="2"/>
+      <text x="67" y="9" font-family="Arial, sans-serif" font-size="6" fill="#ffffff" text-anchor="middle">T</text>
+    </g>
+    
+    <text x="60" y="55" font-family="Arial, sans-serif" font-size="8" fill="#cbd5e0" text-anchor="middle">Drag & Drop</text>
+    <text x="60" y="67" font-family="Arial, sans-serif" font-size="8" fill="#cbd5e0" text-anchor="middle">Multiple formats</text>
+  </g>
+  
+  <!-- Arrow 1 -->
+  <path d="M 180 120 L 210 120" stroke="#00ff88" stroke-width="3" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 2: AI Analysis -->
+  <g id="step2" transform="translate(220, 80)">
+    <rect x="0" y="0" width="120" height="80" fill="#2d3748" stroke="#4a5568" stroke-width="2" rx="8" filter="url(#flowShadow)"/>
+    <text x="60" y="20" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">2. AI Analysis</text>
+    
+    <!-- AI Brain -->
+    <circle cx="60" cy="45" r="15" fill="#9f40ff"/>
+    <text x="60" y="51" font-family="Arial, sans-serif" font-size="12" fill="#ffffff" text-anchor="middle">🧠</text>
+    
+    <text x="60" y="67" font-family="Arial, sans-serif" font-size="8" fill="#cbd5e0" text-anchor="middle">Content recognition</text>
+  </g>
+  
+  <!-- Arrow 2 -->
+  <path d="M 350 120 L 380 120" stroke="#00ff88" stroke-width="3" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 3: Processing -->
+  <g id="step3" transform="translate(390, 80)">
+    <rect x="0" y="0" width="120" height="80" fill="#2d3748" stroke="#4a5568" stroke-width="2" rx="8" filter="url(#flowShadow)"/>
+    <text x="60" y="20" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">3. Processing</text>
+    
+    <!-- Processing bars -->
+    <g transform="translate(30, 35)">
+      <rect x="0" y="0" width="60" height="4" fill="#4a5568" rx="2"/>
+      <rect x="0" y="0" width="45" height="4" fill="url(#processGradient)" rx="2"/>
+      <text x="30" y="15" font-family="Arial, sans-serif" font-size="8" fill="#00ff88" text-anchor="middle">75%</text>
+    </g>
+    
+    <text x="60" y="67" font-family="Arial, sans-serif" font-size="8" fill="#cbd5e0" text-anchor="middle">Quality control</text>
+  </g>
+  
+  <!-- Step 4: Protection -->
+  <g id="step4" transform="translate(50, 200)">
+    <rect x="0" y="0" width="120" height="80" fill="#2d3748" stroke="#4a5568" stroke-width="2" rx="8" filter="url(#flowShadow)"/>
+    <text x="60" y="20" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">4. Protection</text>
+    
+    <!-- Shield icon -->
+    <g transform="translate(50, 30)">
+      <path d="M 10,0 L 20,0 L 20,15 L 15,20 L 5,20 L 0,15 L 0,0 L 10,0" fill="#00ff88"/>
+      <text x="10" y="13" font-family="Arial, sans-serif" font-size="10" fill="#1a202c" text-anchor="middle">✓</text>
+    </g>
+    
+    <text x="60" y="67" font-family="Arial, sans-serif" font-size="8" fill="#cbd5e0" text-anchor="middle">Watermarking</text>
+  </g>
+  
+  <!-- Arrow 3 -->
+  <path d="M 180 240 L 210 240" stroke="#00ff88" stroke-width="3" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 5: SEO Enhancement -->
+  <g id="step5" transform="translate(220, 200)">
+    <rect x="0" y="0" width="120" height="80" fill="#2d3748" stroke="#4a5568" stroke-width="2" rx="8" filter="url(#flowShadow)"/>
+    <text x="60" y="20" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">5. SEO</text>
+    
+    <!-- SEO tags -->
+    <g transform="translate(15, 30)">
+      <rect x="0" y="0" width="25" height="12" fill="#f59e0b" rx="6"/>
+      <text x="12" y="8" font-family="Arial, sans-serif" font-size="6" fill="#ffffff" text-anchor="middle">TAG1</text>
+      
+      <rect x="30" y="0" width="25" height="12" fill="#10b981" rx="6"/>
+      <text x="42" y="8" font-family="Arial, sans-serif" font-size="6" fill="#ffffff" text-anchor="middle">TAG2</text>
+      
+      <rect x="60" y="0" width="25" height="12" fill="#0066ff" rx="6"/>
+      <text x="72" y="8" font-family="Arial, sans-serif" font-size="6" fill="#ffffff" text-anchor="middle">TAG3</text>
+    </g>
+    
+    <text x="60" y="67" font-family="Arial, sans-serif" font-size="8" fill="#cbd5e0" text-anchor="middle">Auto-tagging</text>
+  </g>
+  
+  <!-- Arrow 4 -->
+  <path d="M 350 240 L 380 240" stroke="#00ff88" stroke-width="3" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 6: Distribution -->
+  <g id="step6" transform="translate(390, 200)">
+    <rect x="0" y="0" width="120" height="80" fill="#2d3748" stroke="#4a5568" stroke-width="2" rx="8" filter="url(#flowShadow)"/>
+    <text x="60" y="20" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">6. Distribution</text>
+    
+    <!-- Platform icons -->
+    <g transform="translate(20, 30)">
+      <circle cx="15" cy="10" r="8" fill="#ff0000"/>
+      <text x="15" y="14" font-family="Arial, sans-serif" font-size="6" fill="#ffffff" text-anchor="middle">YT</text>
+      
+      <circle cx="45" cy="10" r="8" fill="#1db954"/>
+      <text x="45" y="14" font-family="Arial, sans-serif" font-size="6" fill="#ffffff" text-anchor="middle">SP</text>
+      
+      <circle cx="75" cy="10" r="8" fill="#ff0050"/>
+      <text x="75" y="14" font-family="Arial, sans-serif" font-size="6" fill="#ffffff" text-anchor="middle">TT</text>
+    </g>
+    
+    <text x="60" y="67" font-family="Arial, sans-serif" font-size="8" fill="#cbd5e0" text-anchor="middle">Multi-platform</text>
+  </g>
+  
+  <!-- Vertical arrows -->
+  <path d="M 110 170 L 110 190" stroke="#00ff88" stroke-width="3" marker-end="url(#arrowhead)"/>
+  
+  <!-- Progress indicator -->
+  <rect x="50" y="320" width="460" height="20" fill="#2d3748" stroke="#4a5568" stroke-width="1" rx="10"/>
+  <rect x="50" y="320" width="368" height="20" fill="url(#processGradient)" rx="10"/>
+  <text x="234" y="333" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#1a202c" text-anchor="middle">Upload Complete - 6/6 Steps</text>
+  
+  <!-- Status -->
+  <text x="50" y="360" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#00ff88">✓ Content successfully processed and distributed</text>
+  <text x="50" y="380" font-family="Arial, sans-serif" font-size="10" fill="#cbd5e0">Ready for monetization and analytics tracking</text>
+  
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" 
+            refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#00ff88"/>
+    </marker>
+  </defs>
+</svg>
