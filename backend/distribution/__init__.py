@@ -144,6 +144,72 @@ except ImportError as e:
     logger.warning(f"❌ API Manager not available: {e}")
     api_manager_available = False
 
+# Social Platform Connectors imports
+try:
+    from .platform_connectors_social import (
+        SocialPlatformType,
+        ContentFormat,
+        EngagementType,
+        SocialContentMetadata,
+        SocialPlatformResponse,
+        SocialAnalytics,
+        BaseSocialConnector,
+        YouTubeConnector,
+        InstagramConnector,
+        TikTokConnector,
+        SocialPlatformManager,
+        get_social_platform_manager
+    )
+    social_connectors_available = True
+    logger.info("✅ Social Platform Connectors loaded successfully")
+except ImportError as e:
+    logger.warning(f"❌ Social Platform Connectors not available: {e}")
+    social_connectors_available = False
+
+# Music Platform Connectors imports
+try:
+    from .platform_connectors_music import (
+        MusicPlatformType,
+        AudioFormat,
+        MusicGenre,
+        StreamingMetricType,
+        MusicTrackMetadata,
+        MusicPlatformResponse,
+        MusicStreamingAnalytics,
+        BaseMusicConnector,
+        SpotifyConnector,
+        SoundCloudConnector,
+        AppleMusicConnector,
+        MusicPlatformManager,
+        get_music_platform_manager
+    )
+    music_connectors_available = True
+    logger.info("✅ Music Platform Connectors loaded successfully")
+except ImportError as e:
+    logger.warning(f"❌ Music Platform Connectors not available: {e}")
+    music_connectors_available = False
+
+# Security Protection imports
+try:
+    from .security_protection import (
+        SecurityLevel,
+        ProtectionType,
+        ThreatType,
+        ComplianceStandard,
+        SecurityConfig,
+        SecurityThreat,
+        ProtectionStatus,
+        ComplianceReport,
+        ContentProtectionEngine,
+        SecurityProtectionManager,
+        get_security_protection_manager
+    )
+    security_protection_available = True
+    logger.info("✅ Security Protection loaded successfully")
+except ImportError as e:
+    logger.warning(f"❌ Security Protection not available: {e}")
+    security_protection_available = False
+
 
 class DistributionOrchestrator:
     """
@@ -165,12 +231,17 @@ class DistributionOrchestrator:
         self.revenue_tracker = None
         self.api_manager = None
         
+        # New module instances
+        self.social_platform_manager = None
+        self.music_platform_manager = None
+        self.security_protection_manager = None
+        
         self.logger.info("DistributionOrchestrator initialized")
     
     async def initialize(self) -> bool:
         """Initialize all distribution modules."""
         try:
-            # Initialize modules that are available
+            # Initialize existing modules
             if platform_connector_available:
                 self.platform_manager = await get_platform_manager()
             
@@ -186,6 +257,16 @@ class DistributionOrchestrator:
             if api_manager_available:
                 self.api_manager = await get_api_manager()
             
+            # Initialize new modules
+            if social_connectors_available:
+                self.social_platform_manager = await get_social_platform_manager()
+            
+            if music_connectors_available:
+                self.music_platform_manager = await get_music_platform_manager()
+            
+            if security_protection_available:
+                self.security_protection_manager = await get_security_protection_manager()
+            
             self.initialized = True
             
             available_modules = sum([
@@ -193,10 +274,13 @@ class DistributionOrchestrator:
                 schedule_manager_available,
                 analytics_aggregator_available,
                 revenue_tracker_available,
-                api_manager_available
+                api_manager_available,
+                social_connectors_available,
+                music_connectors_available,
+                security_protection_available
             ])
             
-            self.logger.info(f"✅ Distribution orchestrator initialized with {available_modules}/5 modules")
+            self.logger.info(f"✅ Distribution orchestrator initialized with {available_modules}/8 modules")
             return True
             
         except Exception as e:
@@ -507,6 +591,200 @@ class DistributionOrchestrator:
             dashboard["error"] = str(e)
             return dashboard
     
+    async def distribute_to_social_platforms(
+        self,
+        content_id: str,
+        metadata: Dict[str, Any],
+        platforms: List[str],
+        file_data: Optional[bytes] = None
+    ) -> Dict[str, Any]:
+        """Distribute content to social media platforms."""
+        if not self.initialized:
+            await self.initialize()
+        
+        results = {
+            "content_id": content_id,
+            "target_platforms": platforms,
+            "successful_uploads": [],
+            "failed_uploads": [],
+            "protection_applied": False
+        }
+        
+        try:
+            # Apply security protection first
+            if security_protection_available and self.security_protection_manager:
+                if file_data:
+                    protection_status = await self.security_protection_manager.protect_content_globally(
+                        content_id, file_data, metadata
+                    )
+                    results["protection_applied"] = True
+                    results["protection_status"] = {
+                        "level": protection_status.protection_level.value,
+                        "protections": [p.value for p in protection_status.active_protections],
+                        "compliance": {k.value: v for k, v in protection_status.compliance_status.items()}
+                    }
+            
+            # Upload to social platforms
+            if social_connectors_available and self.social_platform_manager:
+                from .platform_connectors_social import SocialContentMetadata, SocialPlatformType
+                
+                social_metadata = SocialContentMetadata(
+                    title=metadata.get("title", ""),
+                    description=metadata.get("description"),
+                    tags=metadata.get("tags", []),
+                    hashtags=metadata.get("hashtags", []),
+                    category=metadata.get("category"),
+                    privacy=metadata.get("privacy", "public")
+                )
+                
+                social_platforms = [SocialPlatformType(p) for p in platforms if p in [e.value for e in SocialPlatformType]]
+                
+                upload_results = await self.social_platform_manager.upload_to_multiple_platforms(
+                    social_platforms, social_metadata, file_data
+                )
+                
+                for platform, response in upload_results.items():
+                    if response.success:
+                        results["successful_uploads"].append({
+                            "platform": platform.value,
+                            "url": response.url,
+                            "post_id": response.post_id
+                        })
+                    else:
+                        results["failed_uploads"].append({
+                            "platform": platform.value,
+                            "error": response.error_message
+                        })
+            
+            return results
+            
+        except Exception as e:
+            self.logger.error(f"Error distributing to social platforms: {e}")
+            results["error"] = str(e)
+            return results
+    
+    async def distribute_to_music_platforms(
+        self,
+        content_id: str,
+        metadata: Dict[str, Any],
+        platforms: List[str],
+        audio_data: bytes
+    ) -> Dict[str, Any]:
+        """Distribute music content to music streaming platforms."""
+        if not self.initialized:
+            await self.initialize()
+        
+        results = {
+            "content_id": content_id,
+            "target_platforms": platforms,
+            "successful_uploads": [],
+            "failed_uploads": [],
+            "protection_applied": False
+        }
+        
+        try:
+            # Apply security protection first
+            if security_protection_available and self.security_protection_manager:
+                protection_status = await self.security_protection_manager.protect_content_globally(
+                    content_id, audio_data, metadata
+                )
+                results["protection_applied"] = True
+                results["protection_status"] = {
+                    "level": protection_status.protection_level.value,
+                    "protections": [p.value for p in protection_status.active_protections]
+                }
+            
+            # Upload to music platforms
+            if music_connectors_available and self.music_platform_manager:
+                from .platform_connectors_music import MusicTrackMetadata, MusicPlatformType, MusicGenre
+                
+                music_metadata = MusicTrackMetadata(
+                    title=metadata.get("title", ""),
+                    artist=metadata.get("artist", ""),
+                    album=metadata.get("album"),
+                    genre=MusicGenre(metadata["genre"]) if metadata.get("genre") else None,
+                    duration=metadata.get("duration"),
+                    lyrics=metadata.get("lyrics"),
+                    description=metadata.get("description"),
+                    tags=metadata.get("tags", []),
+                    privacy=metadata.get("privacy", "public")
+                )
+                
+                music_platforms = [MusicPlatformType(p) for p in platforms if p in [e.value for e in MusicPlatformType]]
+                
+                upload_results = await self.music_platform_manager.upload_to_multiple_platforms(
+                    music_platforms, music_metadata, audio_data
+                )
+                
+                for platform, response in upload_results.items():
+                    if response.success:
+                        results["successful_uploads"].append({
+                            "platform": platform.value,
+                            "url": response.url,
+                            "track_id": response.track_id
+                        })
+                    else:
+                        results["failed_uploads"].append({
+                            "platform": platform.value,
+                            "error": response.error_message
+                        })
+            
+            return results
+            
+        except Exception as e:
+            self.logger.error(f"Error distributing to music platforms: {e}")
+            results["error"] = str(e)
+            return results
+    
+    async def scan_content_security(self, content_id: str) -> Dict[str, Any]:
+        """Scan content for security threats."""
+        if not self.initialized:
+            await self.initialize()
+        
+        results = {
+            "content_id": content_id,
+            "threats_detected": [],
+            "security_score": 1.0,
+            "recommendations": []
+        }
+        
+        try:
+            if security_protection_available and self.security_protection_manager:
+                # Get default protection engine
+                engine = await self.security_protection_manager.get_protection_engine("default")
+                if engine:
+                    threats = await engine.scan_for_threats(content_id)
+                    
+                    results["threats_detected"] = [
+                        {
+                            "threat_id": threat.threat_id,
+                            "type": threat.threat_type.value,
+                            "severity": threat.severity.value,
+                            "description": threat.description,
+                            "confidence": threat.confidence_score
+                        }
+                        for threat in threats
+                    ]
+                    
+                    # Calculate security score based on threats
+                    if threats:
+                        high_severity_count = sum(1 for t in threats if t.severity in [SecurityLevel.HIGH, SecurityLevel.MAXIMUM])
+                        results["security_score"] = max(0.0, 1.0 - (len(threats) * 0.1) - (high_severity_count * 0.2))
+                        
+                        results["recommendations"] = [
+                            "Review detected threats and take appropriate action",
+                            "Consider increasing security protection level",
+                            "Enable additional monitoring"
+                        ]
+            
+            return results
+            
+        except Exception as e:
+            self.logger.error(f"Error scanning content security: {e}")
+            results["error"] = str(e)
+            return results
+
+
     async def cleanup(self):
         """Cleanup all distribution modules."""
         try:
@@ -515,6 +793,15 @@ class DistributionOrchestrator:
             
             if self.api_manager:
                 await self.api_manager.cleanup()
+            
+            if self.social_platform_manager:
+                await self.social_platform_manager.cleanup()
+            
+            if self.music_platform_manager:
+                await self.music_platform_manager.cleanup()
+            
+            if self.security_protection_manager:
+                await self.security_protection_manager.cleanup()
             
             self.logger.info("✅ Distribution orchestrator cleaned up")
             
@@ -607,12 +894,54 @@ __all__ = [
     "RequestStatus",
     "get_api_manager",
     
+    # Social Platform Connectors
+    "SocialPlatformType",
+    "ContentFormat",
+    "EngagementType",
+    "SocialContentMetadata",
+    "SocialPlatformResponse",
+    "SocialAnalytics",
+    "BaseSocialConnector",
+    "SocialPlatformManager",
+    "get_social_platform_manager",
+    
+    # Music Platform Connectors
+    "MusicPlatformType",
+    "AudioFormat",
+    "MusicGenre",
+    "StreamingMetricType",
+    "MusicTrackMetadata",
+    "MusicPlatformResponse",
+    "MusicStreamingAnalytics",
+    "BaseMusicConnector",
+    "SpotifyConnector",
+    "SoundCloudConnector",
+    "AppleMusicConnector",
+    "MusicPlatformManager",
+    "get_music_platform_manager",
+    
+    # Security Protection
+    "SecurityLevel",
+    "ProtectionType",
+    "ThreatType",
+    "ComplianceStandard",
+    "SecurityConfig",
+    "SecurityThreat",
+    "ProtectionStatus",
+    "ComplianceReport",
+    "ContentProtectionEngine",
+    "SecurityProtectionManager",
+    "get_security_protection_manager",
+    
     # Module availability flags
     "platform_connector_available",
     "schedule_manager_available",
     "analytics_aggregator_available",
     "revenue_tracker_available",
-    "api_manager_available"
+    "api_manager_available",
+    "social_connectors_available",
+    "music_connectors_available",
+    "security_protection_available"
 ]
 
 # Module initialization
@@ -626,7 +955,10 @@ available_count = sum([
     schedule_manager_available,
     analytics_aggregator_available,
     revenue_tracker_available,
-    api_manager_available
+    api_manager_available,
+    social_connectors_available,
+    music_connectors_available,
+    security_protection_available
 ])
 
-logger.info(f"🚀 Distribution modules loaded: {available_count}/5 systems available")
+logger.info(f"🚀 Distribution modules loaded: {available_count}/8 systems available")
