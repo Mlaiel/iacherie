@@ -158,6 +158,53 @@ from .accessibility_languages import (
     AccessibilityFeature
 )
 
+from .language_cache import (
+    LanguageCacheEngine,
+    CacheKey,
+    CacheEntry,
+    CacheRequest,
+    CacheResult,
+    CacheStats,
+    CacheConfig,
+    CacheLevel,
+    CacheStrategy,
+    CacheOperation,
+    CacheContentType
+)
+
+from .translation_workflows import (
+    TranslationWorkflowEngine,
+    TranslationJob,
+    TranslatorProfile,
+    WorkflowStep,
+    TranslationVersion,
+    ReviewFeedback,
+    WorkflowTemplate,
+    CollaborationSession,
+    WorkflowStatus,
+    WorkflowType,
+    TranslatorTier,
+    ReviewType,
+    PriorityLevel
+)
+
+from .language_apis import (
+    LanguageAPIManager,
+    APICredentials,
+    APIQuota,
+    RateLimit,
+    APIRequest,
+    APIResponse,
+    ProviderConfig,
+    APIStats,
+    CostOptimization,
+    APIProvider,
+    APIServiceType,
+    RateLimitStrategy,
+    APIStatus,
+    CostOptimizationStrategy
+)
+
 # Export all public classes and functions
 __all__ = [
     # Translation Engine
@@ -285,7 +332,51 @@ __all__ = [
     "ScreenReaderType",
     "SignLanguage",
     "CognitiveSupport",
-    "AccessibilityFeature"
+    "AccessibilityFeature",
+    
+    # Language Cache Engine
+    "LanguageCacheEngine",
+    "CacheKey",
+    "CacheEntry", 
+    "CacheRequest",
+    "CacheResult",
+    "CacheStats",
+    "CacheConfig",
+    "CacheLevel",
+    "CacheStrategy",
+    "CacheOperation",
+    "CacheContentType",
+    
+    # Translation Workflows Engine
+    "TranslationWorkflowEngine",
+    "TranslationJob",
+    "TranslatorProfile",
+    "WorkflowStep",
+    "TranslationVersion",
+    "ReviewFeedback",
+    "WorkflowTemplate",
+    "CollaborationSession",
+    "WorkflowStatus",
+    "WorkflowType",
+    "TranslatorTier",
+    "ReviewType",
+    "PriorityLevel",
+    
+    # Language APIs Manager
+    "LanguageAPIManager",
+    "APICredentials",
+    "APIQuota",
+    "RateLimit",
+    "APIRequest",
+    "APIResponse",
+    "ProviderConfig",
+    "APIStats",
+    "CostOptimization",
+    "APIProvider",
+    "APIServiceType",
+    "RateLimitStrategy",
+    "APIStatus",
+    "CostOptimizationStrategy"
 ]
 
 # Module metadata
@@ -352,6 +443,11 @@ class LanguageServiceManager:
         self.language_analytics_engine = LanguageAnalyticsEngine(self.config.get("language_analytics"))
         self.voice_localization_engine = VoiceLocalizationEngine(self.config.get("voice_localization"))
         self.accessibility_language_engine = AccessibilityLanguageEngine(self.config.get("accessibility_languages"))
+        
+        # Initialize new Tier 3 optimization modules
+        self.language_cache_engine = LanguageCacheEngine(self.config.get("language_cache"))
+        self.translation_workflow_engine = TranslationWorkflowEngine(self.config.get("translation_workflows"))
+        self.language_api_manager = LanguageAPIManager(self.config.get("language_apis"))
         
     async def process_multilingual_content(self, content: str, target_language: str, 
                                          source_language: str = None, 
