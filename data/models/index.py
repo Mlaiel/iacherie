@@ -19,11 +19,16 @@ from datetime import datetime
 import importlib
 import inspect
 
-# Import all models and enums
+# Import all models and enums from consolidated modules
 from . import (
-    # Models
-    ContentModel, UserModel, FingerprintModel, RevenueModel, 
-    AnalyticsModel, ProtectionModel, LicensingModel,
+    # Models from enterprise_content_models
+    ContentModel, UserModel, AnalyticsModel,
+    
+    # Models from ai_fingerprinting_protection_models  
+    FingerprintModel, ProtectionModel,
+    
+    # Models from monetization_licensing_models
+    RevenueModel, LicensingModel,
     
     # Enums
     ContentType, ContentStatus, ContentVisibility,
@@ -229,8 +234,8 @@ Setup database connection and session"""
         if not self._engine:
             raise RuntimeError("Database engine not configured. Call setup_database first.")
         
-        # Import declarative base from models
-        from .content_model import Base
+        # Import declarative base from consolidated models
+        from .enterprise_content_models import Base
         Base.metadata.create_all(self._engine)
     
     def get_session(self) -> Optional[Session]:

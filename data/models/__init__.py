@@ -22,24 +22,30 @@ Contact: mlaiel@live.de for licensing inquiries.
 • Security Specialist: Multi-Layer Protection Systems
 • Microservices Architect: Scalable Service Architecture
 • IA Prompt Engineer: Advanced AI Integration
-"""# Import all data models
-from .content_model import ContentModel, ContentType, ContentStatus, ContentVisibility
-from .user_model import UserModel, UserType, UserStatus, SubscriptionTier
-from .fingerprint_model import FingerprintModel, FingerprintType, FingerprintAlgorithm, FingerprintStatus, MatchConfidenceLevel
-from .revenue_model import RevenueModel, RevenueSource, RevenueStatus, PaymentMethod, RevenuePeriod
-from .analytics_model import AnalyticsModel, AnalyticsType, MetricType, TimeGranularity
-from .protection_model import ProtectionModel, ProtectionType, ViolationType, SeverityLevel, ProtectionStatus, EnforcementAction
-from .licensing_model import LicensingModel, LicenseType, LicenseCategory, UsageType, LicenseStatus, PaymentStructure
+"""# Import all data models from consolidated modules
+from .enterprise_content_models import (
+    ContentModel, ContentType, ContentStatus, ContentVisibility,
+    UserModel, UserType, UserStatus, SubscriptionTier,
+    AnalyticsModel, AnalyticsType, MetricType, TimeGranularity
+)
+from .ai_fingerprinting_protection_models import (
+    FingerprintModel, FingerprintType, FingerprintAlgorithm, FingerprintStatus, MatchConfidenceLevel,
+    ProtectionModel, ProtectionType, ViolationType, SeverityLevel, ProtectionStatus, EnforcementAction
+)
+from .monetization_licensing_models import (
+    RevenueModel, RevenueSource, RevenueStatus, PaymentMethod, RevenuePeriod,
+    LicensingModel, LicenseType, LicenseCategory, UsageType, LicenseStatus, PaymentStructure
+)
 
 # Export all models and enums
-# Import additional utilities
+# Import additional utilities from consolidated infrastructure
 try:
     from .index import ModelManager, ModelQueryBuilder, model_manager
-    from .validators import (
+    from .data_infrastructure_utilities import (
         ValidationError, ValidationResult, ModelDataValidator,
-        validate_user, validate_content, validate_revenue, validate_analytics
+        validate_user, validate_content, validate_revenue, validate_analytics,
+        MigrationManager, SchemaValidator, ExampleDataGenerator
     )
-    from .migrations import MigrationManager, SchemaValidator
     UTILITIES_AVAILABLE = True
 except ImportError as e:
     UTILITIES_AVAILABLE = False
@@ -75,8 +81,8 @@ if UTILITIES_AVAILABLE:
         'ValidationError', 'ValidationResult', 'ModelDataValidator',
         'validate_user', 'validate_content', 'validate_revenue', 'validate_analytics',
         
-        # Migration Tools
-        'MigrationManager', 'SchemaValidator'
+        # Migration and Infrastructure Tools
+        'MigrationManager', 'SchemaValidator', 'ExampleDataGenerator'
     ])
 
 # Version information
