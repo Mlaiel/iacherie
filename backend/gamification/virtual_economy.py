@@ -543,6 +543,7 @@ class MarketplaceEngine:
                 rarity=item_data["rarity"],
                 base_price=item_data["base_price"],
                 duration_hours=item_data.get("duration_hours"),
+                max_quantity=item_data.get("max_quantity"),
                 effects=item_data["effects"]
             )
             self.item_catalog[item_id] = item
