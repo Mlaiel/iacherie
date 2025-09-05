@@ -35,6 +35,13 @@ try:
     from .viral_predictor import ViralPredictor
     from .roi_calculator import ROICalculator
     from .competitor_intel import CompetitorIntelligence
+    from .creator_performance_intelligence import CreatorPerformanceIntelligence
+    from .ai_processing_intelligence import AIProcessingIntelligence
+    from .protection_performance_engine import ProtectionPerformanceEngine
+    from .collaboration_analytics_engine import CollaborationAnalyticsEngine
+    from .gamification_intelligence_engine import GamificationIntelligenceEngine
+    from .seo_performance_intelligence import SEOPerformanceIntelligence
+    from .distribution_intelligence_engine import DistributionIntelligenceEngine
     
     logger.info("✅ All analytics modules imported successfully")
     
@@ -45,6 +52,13 @@ except ImportError as e:
     ViralPredictor = None
     ROICalculator = None
     CompetitorIntelligence = None
+    CreatorPerformanceIntelligence = None
+    AIProcessingIntelligence = None
+    ProtectionPerformanceEngine = None
+    CollaborationAnalyticsEngine = None
+    GamificationIntelligenceEngine = None
+    SEOPerformanceIntelligence = None
+    DistributionIntelligenceEngine = None
 
 # Export all classes
 __all__ = [
@@ -52,6 +66,13 @@ __all__ = [
     "ViralPredictor", 
     "ROICalculator",
     "CompetitorIntelligence",
+    "CreatorPerformanceIntelligence",
+    "AIProcessingIntelligence", 
+    "ProtectionPerformanceEngine",
+    "CollaborationAnalyticsEngine",
+    "GamificationIntelligenceEngine",
+    "SEOPerformanceIntelligence",
+    "DistributionIntelligenceEngine",
 ]
 
 # Module initialization
