@@ -125,7 +125,7 @@ class SyncConfiguration:
     sync_interval_seconds: int = 300  # 5 minutes
     batch_size: int = 100
     max_retries: int = 3
-    conflict_resolution: ConflictResolution = ConflictResolution.TIMESTAMP_BASED
+    conflict_resolution: ConflictResolution = ConflictResolution.REMOTE_WINS
     sync_strategy: SyncStrategy = SyncStrategy.LAST_WRITE_WINS
     auto_resolve_conflicts: bool = True
     compress_data: bool = True
