@@ -31,6 +31,18 @@ from .content_protection_analytics import (
     ViolationEvent,
     ProtectionType
 )
+from .collaboration_intelligence import (
+    CollaborationIntelligence,
+    CollaborationAnalytics,
+    MatchingScore,
+    CollaborationType
+)
+from .gamification_metrics import (
+    GamificationAnalytics,
+    GamificationMetrics,
+    GamificationElement,
+    EngagementAction
+)
 
 __all__ = [
     # Core Analytics
@@ -57,5 +69,17 @@ __all__ = [
     "ContentProtectionAnalytics",
     "ProtectionAnalytics",
     "ViolationEvent",
-    "ProtectionType"
+    "ProtectionType",
+    
+    # Collaboration Intelligence
+    "CollaborationIntelligence",
+    "CollaborationAnalytics",
+    "MatchingScore",
+    "CollaborationType",
+    
+    # Gamification
+    "GamificationAnalytics",
+    "GamificationMetrics",
+    "GamificationElement",
+    "EngagementAction"
 ]
