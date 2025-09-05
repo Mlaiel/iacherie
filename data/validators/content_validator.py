@@ -247,8 +247,6 @@ class ContentOptimization:
 
 @dataclass
 class ValidationResult:
-    """Comprehensive validation result."""@dataclass
-class ValidationResult:
     """Comprehensive validation result with enhanced features."""
     is_valid: bool
     status: ValidationStatus
@@ -1150,7 +1148,7 @@ class ContentValidator:
         except Exception as e:
             logger.warning(f"Text metadata extraction failed: {e}")
     
-    def _detect_audio_subtype(self, audio_data: np.ndarray, sample_rate: int) -> ContentSubType:
+    def _detect_audio_subtype(self, audio_data: Union['np.ndarray', Any], sample_rate: int) -> ContentSubType:
         """Detect audio content subtype."""
         try:
             # Simple heuristics for audio subtype detection

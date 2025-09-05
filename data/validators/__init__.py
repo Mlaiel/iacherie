@@ -10,15 +10,14 @@ Warning: Unauthorized use strictly prohibited
 
 Validation Capabilities:
 - Multi-format content validation (audio, video, image, text)
-- Schema and data structure validation
-- Security and safety validation
-- Business rule enforcement
-- Quality assessment and scoring
-- Platform compliance checking
-- Performance validation
-- Metadata validation
+- Integrated schema and metadata validation
+- Combined security and compliance validation
+- Business logic and quality assessment
+- File integrity and performance monitoring
+- Orchestrated validation chains
 """
 
+# Import from original content validator (unchanged)
 from .content_validator import (
     ContentValidator,
     ContentType,
@@ -29,75 +28,80 @@ from .content_validator import (
     ValidationIssue
 )
 
-from .schema_validator import (
-    SchemaValidator,
-    SchemaType,
-    SchemaValidationResult,
-    PydanticValidator,
-    JSONSchemaValidator
-)
-
-from .security_validator import (
-    SecurityValidator,
-    SecurityThreat,
+# Import from consolidated security & compliance validator
+from .security_compliance_validator import (
+    SecurityComplianceValidator,
     SecurityLevel,
+    ThreatType,
+    ComplianceFramework,
+    PlatformPolicy,
+    ComplianceStatus,
+    SecurityThreat,
     SecurityValidationResult,
-    ThreatDetector,
-    InputSanitizer
+    ComplianceViolation,
+    ComplianceValidationResult,
+    validate_security,
+    validate_compliance
 )
 
-from .business_validator import (
-    BusinessValidator,
+# Import from consolidated business & quality validator
+from .business_quality_validator import (
+    BusinessQualityValidator,
+    BusinessRuleType,
+    RuleSeverity,
+    ValidationContext,
+    QualityDimension,
+    QualityMetric,
+    QualityLevel,
     BusinessRule,
-    BusinessRuleResult,
-    CreatorProfileValidator,
-    ContentLicensingValidator,
-    MonetizationValidator
+    BusinessValidationResult,
+    QualityScore,
+    QualityValidationResult,
+    validate_business_rules,
+    assess_content_quality
 )
 
-from .file_validator import (
-    FileValidator,
-    FileIntegrityResult,
-    FileSignatureValidator,
-    ChecksumValidator,
-    CompressionValidator
-)
-
-from .metadata_validator import (
-    MetadataValidator,
-    MetadataStandard,
+# Import from consolidated schema & metadata validator
+from .schema_metadata_validator import (
+    SchemaMetadataValidator,
+    ValidationLevel as SchemaValidationLevel,
+    SchemaType,
+    ValidationStatus as SchemaValidationStatus,
+    MetadataFormat,
+    MetadataQuality,
+    MetadataValidationType,
+    SchemaValidationError,
+    SchemaValidationResult,
+    MetadataField,
+    MetadataValidationIssue,
     MetadataValidationResult,
-    ID3Validator,
-    EXIFValidator,
-    XMPValidator
+    CreatorProfile,
+    ContentMetadata as SchemaContentMetadata,
+    PlatformConfiguration,
+    validate_schema,
+    extract_metadata
 )
 
-from .quality_validator import (
-    QualityValidator,
-    QualityMetrics,
-    QualityAssessmentResult,
-    AudioQualityAnalyzer,
-    VideoQualityAnalyzer,
-    ImageQualityAnalyzer
+# Import from consolidated file & performance validator
+from .file_performance_validator import (
+    FilePerformanceValidator,
+    FileValidationType,
+    ValidationSeverity,
+    FileStatus,
+    PerformanceMetricType,
+    PerformanceLevel,
+    OptimizationType,
+    FileValidationIssue,
+    FileValidationResult,
+    PerformanceMetric,
+    PerformanceIssue,
+    PerformanceValidationResult,
+    validate_file,
+    assess_performance
 )
 
-from .compliance_validator import (
-    ComplianceValidator,
-    ComplianceStandard,
-    ComplianceResult,
-    PlatformComplianceChecker,
-    LegalComplianceValidator
-)
-
-from .performance_validator import (
-    PerformanceValidator,
-    PerformanceMetrics,
-    PerformanceResult,
-    BenchmarkValidator,
-    OptimizationValidator
-)
-
-from .chain_validator import (
+# Import from renamed validation chain
+from .validation_chain import (
     ChainValidator,
     ValidationChain,
     ChainResult,
@@ -105,7 +109,8 @@ from .chain_validator import (
     ValidationPipeline
 )
 
-from .index import (
+# Import from renamed validation index
+from .validation_index import (
     ValidationEngine,
     ValidatorRegistry,
     ValidationManager,
@@ -113,25 +118,21 @@ from .index import (
 )
 
 # Version information
-__version__ = "1.0.0"
+__version__ = "2.0.0"  # Updated for consolidated architecture
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 
 # Main validation engine instance
 validation_engine = ValidationEngine()
 
-# Public API exports
+# Public API exports - Updated for consolidated architecture
 __all__ = [
-    # Core validators
+    # Core consolidated validators
     "ContentValidator",
-    "SchemaValidator", 
-    "SecurityValidator",
-    "BusinessValidator",
-    "FileValidator",
-    "MetadataValidator",
-    "QualityValidator",
-    "ComplianceValidator",
-    "PerformanceValidator",
+    "SecurityComplianceValidator", 
+    "BusinessQualityValidator",
+    "SchemaMetadataValidator",
+    "FilePerformanceValidator",
     "ChainValidator",
     
     # Validation engine
@@ -141,57 +142,88 @@ __all__ = [
     "ValidationConfig",
     "validation_engine",
     
-    # Types and enums
+    # Types and enums - Core
     "ContentType",
     "ValidationLevel",
     "ValidationStatus",
-    "SchemaType", 
-    "SecurityThreat",
-    "SecurityLevel",
-    "BusinessRule",
-    "MetadataStandard",
-    "ComplianceStandard",
     
-    # Result classes
+    # Types and enums - Security & Compliance
+    "SecurityLevel",
+    "ThreatType",
+    "ComplianceFramework",
+    "PlatformPolicy",
+    "ComplianceStatus",
+    
+    # Types and enums - Business & Quality
+    "BusinessRuleType",
+    "RuleSeverity",
+    "ValidationContext",
+    "QualityDimension",
+    "QualityMetric",
+    "QualityLevel",
+    
+    # Types and enums - Schema & Metadata
+    "SchemaType",
+    "MetadataFormat",
+    "MetadataQuality",
+    "MetadataValidationType",
+    
+    # Types and enums - File & Performance
+    "FileValidationType",
+    "ValidationSeverity",
+    "FileStatus",
+    "PerformanceMetricType",
+    "PerformanceLevel",
+    "OptimizationType",
+    
+    # Result classes - Core
     "ValidationResult",
     "ValidationIssue",
-    "SchemaValidationResult",
-    "SecurityValidationResult",
-    "BusinessRuleResult",
-    "FileIntegrityResult",
-    "MetadataValidationResult",
-    "QualityAssessmentResult",
-    "ComplianceResult",
-    "PerformanceResult",
-    "ChainResult",
-    
-    # Specialized components
     "ContentMetadata",
-    "QualityMetrics",
-    "PerformanceMetrics",
+    
+    # Result classes - Security & Compliance
+    "SecurityThreat",
+    "SecurityValidationResult",
+    "ComplianceViolation",
+    "ComplianceValidationResult",
+    
+    # Result classes - Business & Quality
+    "BusinessRule",
+    "BusinessValidationResult",
+    "QualityScore",
+    "QualityValidationResult",
+    
+    # Result classes - Schema & Metadata
+    "SchemaValidationError",
+    "SchemaValidationResult",
+    "MetadataField",
+    "MetadataValidationIssue",
+    "MetadataValidationResult",
+    "CreatorProfile",
+    "PlatformConfiguration",
+    
+    # Result classes - File & Performance
+    "FileValidationIssue",
+    "FileValidationResult",
+    "PerformanceMetric",
+    "PerformanceIssue",
+    "PerformanceValidationResult",
+    
+    # Chain components
     "ValidationChain",
+    "ChainResult",
     "ValidationStep",
     "ValidationPipeline",
-    "ThreatDetector",
-    "InputSanitizer",
-    "PydanticValidator",
-    "JSONSchemaValidator",
-    "CreatorProfileValidator",
-    "ContentLicensingValidator",
-    "MonetizationValidator",
-    "FileSignatureValidator",
-    "ChecksumValidator",
-    "CompressionValidator",
-    "ID3Validator",
-    "EXIFValidator",
-    "XMPValidator",
-    "AudioQualityAnalyzer",
-    "VideoQualityAnalyzer",
-    "ImageQualityAnalyzer",
-    "PlatformComplianceChecker",
-    "LegalComplianceValidator",
-    "BenchmarkValidator",
-    "OptimizationValidator",
+    
+    # Convenience functions
+    "validate_security",
+    "validate_compliance",
+    "validate_business_rules",
+    "assess_content_quality",
+    "validate_schema",
+    "extract_metadata",
+    "validate_file",
+    "assess_performance",
     
     # Version info
     "__version__",
@@ -199,19 +231,22 @@ __all__ = [
     "__email__"
 ]
 
-# Module-level configuration
+# Module-level configuration - Updated for consolidated architecture
 DEFAULT_CONFIG = {
     "strict_mode": True,
     "cache_enabled": True,
     "parallel_processing": True,
     "max_workers": 4,
     "timeout": 30,
-    "log_level": "INFO"
+    "log_level": "INFO",
+    "consolidated_architecture": True,
+    "ai_enhancement": True,
+    "auto_optimization": True
 }
 
 def configure_validators(config: dict = None) -> None:
     """
-    Configure global validator settings.
+    Configure global validator settings for consolidated architecture.
     
     Args:
         config: Configuration dictionary
@@ -222,7 +257,7 @@ def configure_validators(config: dict = None) -> None:
 
 def get_validator_info() -> dict:
     """
-    Get information about available validators.
+    Get information about available consolidated validators.
     
     Returns:
         Dictionary with validator information
@@ -230,6 +265,20 @@ def get_validator_info() -> dict:
     return {
         "version": __version__,
         "author": __author__,
-        "validators": list(validation_engine.registry.get_available_validators()),
-        "config": validation_engine.config.dict()
+        "architecture": "consolidated",
+        "total_files": 12,  # After consolidation
+        "consolidated_validators": [
+            "SecurityComplianceValidator",
+            "BusinessQualityValidator", 
+            "SchemaMetadataValidator",
+            "FilePerformanceValidator"
+        ],
+        "unchanged_validators": [
+            "ContentValidator"
+        ],
+        "renamed_components": [
+            "validation_chain (formerly chain_validator)",
+            "validation_index (formerly index)"
+        ],
+        "config": validation_engine.config.dict() if hasattr(validation_engine, 'config') else DEFAULT_CONFIG
     }
