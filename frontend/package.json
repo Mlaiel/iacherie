@@ -1,7 +1,7 @@
 {
-  "name": "ainflue-frontend",
-  "version": "1.0.0",
-  "description": "Ainflue AI-powered Content Protection & Monetization Platform - Frontend",
+  "name": "@ainflue/frontend-platform",
+  "version": "2.0.0",
+  "description": "Ainflue Professional Frontend Platform - Multi-Format Content Creation & AI-Powered Distribution",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -59,7 +59,7 @@
       "<rootDir>/jest.setup.js"
     ],
     "moduleNameMapper": {
-      "^@/(.*)$": "<rootDir>/src/$1"
+      "^@/(.*)$": "<rootDir>/$1"
     },
     "transform": {
       "^.+\\.(js|jsx|ts|tsx)$": [

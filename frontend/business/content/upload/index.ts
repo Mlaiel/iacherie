@@ -1,0 +1,6 @@
+/**
+ * @fileoverview Content upload module exports
+ * @author Fahed Mlaiel <mlaiel@live.de>
+ */
+
+export * from './UploadManager';

@@ -50,7 +50,7 @@ export interface CopyrightInfo {
 export interface RevenueStream {
   id: string;
   contentId: string;
-  type: 'subscription' | 'purchase' | 'licensing' | 'advertising';
+  type: 'subscription' | 'one_time_purchase' | 'licensing' | 'advertising' | 'commission' | 'royalty';
   amount: number;
   currency: string;
   frequency?: 'one-time' | 'monthly' | 'yearly';
