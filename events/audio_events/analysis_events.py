@@ -1,128 +1,87 @@
-"""Audio Analysis Events - Industrial Grade AI Analysis & Music Intelligence
-========================================================================
+"""Audio Analysis Events - Industrial Grade Analysis Event Management
+=====================================================================
 
-This module handles all events related to advanced audio analysis including
-genre detection, mood analysis, BPM detection, and AI-powered music intelligence.
+This module handles all events related to audio analysis including sentiment analysis,
+emotion detection, instrument recognition, and comprehensive audio analytics.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
+Unauthorized use, modification, or distribution of this code is strictly prohibited.
+Contact: mlaiel@live.de for licensing and collaboration inquiries.
 """
 
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Dict, List, Optional, Any, Tuple
+from typing import Dict, List, Optional, Any
 from uuid import UUID
 from enum import Enum
 
-from ...core.events.base_event import BaseEvent, EventPriority, EventCategory
+from ..core.base_event import BaseEvent
 
 
 class AnalysisType(Enum):
-    """
-Types of audio analysis"""
-
-    GENRE_DETECTION = "genre_detection"
-    MOOD_ANALYSIS = "mood_analysis"
-    BPM_DETECTION = "bpm_detection"
-    KEY_DETECTION = "key_detection"
-    INSTRUMENT_RECOGNITION = "instrument_recognition"
-    VOCAL_ANALYSIS = "vocal_analysis"
-    STRUCTURE_ANALYSIS = "structure_analysis"
-    EMOTION_DETECTION = "emotion_detection"
-    ENERGY_ANALYSIS = "energy_analysis"
-    DANCEABILITY = "danceability"
+    """Audio analysis types"""
+    SENTIMENT = "sentiment"
+    EMOTION = "emotion"
+    GENRE = "genre"
+    MOOD = "mood"
+    INSTRUMENT = "instrument"
+    VOCAL = "vocal"
+    TECHNICAL = "technical"
 
 
 class MusicalKey(Enum):
-    """Musical keys"""
-
-    C_MAJOR = "C major"
-    C_SHARP_MAJOR = "C# major"
-    D_MAJOR = "D major"
-    D_SHARP_MAJOR = "D# major"
-    E_MAJOR = "E major"
-    F_MAJOR = "F major"
-    F_SHARP_MAJOR = "F# major"
-    G_MAJOR = "G major"
-    G_SHARP_MAJOR = "G# major"
-    A_MAJOR = "A major"
-    A_SHARP_MAJOR = "A# major"
-    B_MAJOR = "B major"
-    C_MINOR = "C minor"
-    C_SHARP_MINOR = "C# minor"
-    D_MINOR = "D minor"
-    D_SHARP_MINOR = "D# minor"
-    E_MINOR = "E minor"
-    F_MINOR = "F minor"
-    F_SHARP_MINOR = "F# minor"
-    G_MINOR = "G minor"
-    G_SHARP_MINOR = "G# minor"
-    A_MINOR = "A minor"
-    A_SHARP_MINOR = "A# minor"
-    B_MINOR = "B minor"
+    """Musical key enumeration"""
+    C_MAJOR = "C_major"
+    C_MINOR = "C_minor"
+    D_MAJOR = "D_major"
+    D_MINOR = "D_minor"
+    E_MAJOR = "E_major"
+    E_MINOR = "E_minor"
+    F_MAJOR = "F_major"
+    F_MINOR = "F_minor"
+    G_MAJOR = "G_major"
+    G_MINOR = "G_minor"
+    A_MAJOR = "A_major"
+    A_MINOR = "A_minor"
+    B_MAJOR = "B_major"
+    B_MINOR = "B_minor"
 
 
 class TimeSignature(Enum):
-    """Common time signatures"""
-
+    """Time signature enumeration"""
     FOUR_FOUR = "4/4"
     THREE_FOUR = "3/4"
     TWO_FOUR = "2/4"
     SIX_EIGHT = "6/8"
-    NINE_EIGHT = "9/8"
     TWELVE_EIGHT = "12/8"
-    FIVE_FOUR = "5/4"
-    SEVEN_EIGHT = "7/8"
 
 
 @dataclass
 class AudioAnalysisStartedEvent(BaseEvent):
     """
-    Event triggered when comprehensive audio analysis begins.
+    Event triggered when audio analysis process begins.
     
-    Initializes AI-powered music intelligence analysis pipeline.
+    Initializes comprehensive audio analysis workflows.
     """
     user_id: UUID
     file_id: UUID
     analysis_id: UUID
     filename: str
-    analysis_types: List[AnalysisType]
-    ai_models_enabled: List[str]
-    analysis_depth: str  # quick, standard, deep, comprehensive
-    priority_level: int
+    analysis_types: List[str]
+    analysis_profile: str
     estimated_duration: float
-    segment_analysis: bool
-    real_time_processing: bool
-    gpu_acceleration: bool
-    model_versions: Dict[str, str]
-    analysis_parameters: Dict[str, Any]
+    analysis_metadata: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle___post_init___request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler __post_init__ failed: {e}")
-                    return {"status": "error", "message": str(e)}
+        super().__init__(
             event_type="audio.analysis.started",
-            event_category=EventCategory.ANALYSIS,
-            priority=EventPriority.HIGH,
-            user_id=self.user_id,
-            metadata={
+            data={
                 "file_id": str(self.file_id),
                 "analysis_id": str(self.analysis_id),
-                "analysis_types_count": len(self.analysis_types),
-                "analysis_depth": self.analysis_depth,
-                "estimated_duration": self.estimated_duration,
-                "gpu_acceleration": self.gpu_acceleration
+                "analysis_types": self.analysis_types,
+                "analysis_profile": self.analysis_profile,
+                "estimated_duration": self.estimated_duration
             }
         )
 
@@ -130,61 +89,28 @@ class AudioAnalysisStartedEvent(BaseEvent):
 @dataclass
 class AudioAnalysisProgressEvent(BaseEvent):
     """
-    Event triggered during audio analysis progress updates.
+    Event triggered during analysis progress updates.
     
-    Provides real-time feedback about AI analysis pipeline progress.
+    Provides real-time progress for analysis operations.
     """
     user_id: UUID
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle___post_init___request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler __post_init__ failed: {e}")
-                    return {"status": "error", "message": str(e)}
+    file_id: UUID
     analysis_id: UUID
-    current_analysis_type: AnalysisType
-    analysis_progress: float  # 0.0 to 1.0
-    overall_progress: float  # 0.0 to 1.0
-    elapsed_time: float
-    estimated_remaining: float
-    current_model: str
-    segments_analyzed: int
-    total_segments: int
-    intermediate_results: Dict[str, Any]
+    current_analysis: str
+    progress_percentage: float
+    analyses_completed: List[str]
+    analyses_remaining: List[str]
+    estimated_time_remaining: float
     
     def __post_init__(self):
         super().__init__(
             event_type="audio.analysis.progress",
-            event_category=EventCategory.ANALYSIS,
-            priority=EventPriority.MEDIUM,
-            user_id=self.user_id,
-            metadata={
+            data={
                 "file_id": str(self.file_id),
                 "analysis_id": str(self.analysis_id),
-                "current_analysis": self.current_analysis_type.value,
-                "overall_progress": self.overall_progress,
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle___post_init___request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler __post_init__ failed: {e}")
-                    return {"status": "error", "message": str(e)}
+                "current_analysis": self.current_analysis,
+                "progress_percentage": self.progress_percentage,
+                "completed_count": len(self.analyses_completed)
             }
         )
 
@@ -192,49 +118,29 @@ class AudioAnalysisProgressEvent(BaseEvent):
 @dataclass
 class AudioAnalysisCompletedEvent(BaseEvent):
     """
-    Event triggered when comprehensive audio analysis is completed.
+    Event triggered when analysis process completes.
     
-    Contains all analysis results and AI-generated insights.
+    Contains comprehensive analysis results and insights.
     """
     user_id: UUID
     file_id: UUID
     analysis_id: UUID
-    analysis_duration: float
+    filename: str
     analysis_results: Dict[str, Any]
+    analysis_duration: float
     confidence_scores: Dict[str, float]
-    ai_insights: List[str]
-    recommendations: List[str]
-    comparable_tracks: List[Dict[str, Any]]
-    analysis_quality: float
-    models_used: List[str]
-    processing_statistics: Dict[str, Any]
+    insights_generated: List[str]
+    analysis_metadata: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle___post_init___request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler __post_init__ failed: {e}")
-                    return {"status": "error", "message": str(e)}
+        super().__init__(
             event_type="audio.analysis.completed",
-            event_category=EventCategory.ANALYSIS,
-            priority=EventPriority.HIGH,
-            user_id=self.user_id,
-            metadata={
+            data={
                 "file_id": str(self.file_id),
                 "analysis_id": str(self.analysis_id),
                 "analysis_duration": self.analysis_duration,
-                "insights_count": len(self.ai_insights),
-                "recommendations_count": len(self.recommendations),
-                "analysis_quality": self.analysis_quality
+                "insights_count": len(self.insights_generated),
+                "results_keys": list(self.analysis_results.keys())
             }
         )
 
@@ -242,122 +148,60 @@ class AudioAnalysisCompletedEvent(BaseEvent):
 @dataclass
 class AudioAnalysisFailedEvent(BaseEvent):
     """
-    Event triggered when audio analysis fails.
+    Event triggered when analysis process fails.
     
-    Contains detailed error information and recovery options.
+    Contains error information for debugging and recovery.
     """
     user_id: UUID
     file_id: UUID
     analysis_id: UUID
-    failed_analysis_type: AnalysisType
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle___post_init___request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler __post_init__ failed: {e}")
-                    return {"status": "error", "message": str(e)}
+    filename: str
+    error_code: str
     error_message: str
-    error_details: Dict[str, Any]
-    partial_results: Dict[str, Any]
-    analysis_duration: float
-    retry_count: int
-    max_retries: int
-    is_retryable: bool
-    fallback_models_available: List[str]
-    suggested_action: str
+    failure_stage: str
+    partial_results: Dict[str, Any] = field(default_factory=dict)
+    retry_suggested: bool = True
     
     def __post_init__(self):
         super().__init__(
             event_type="audio.analysis.failed",
-            event_category=EventCategory.ERROR,
-            priority=EventPriority.HIGH,
-            user_id=self.user_id,
-            metadata={
+            data={
                 "file_id": str(self.file_id),
                 "analysis_id": str(self.analysis_id),
-                "failed_analysis": self.failed_analysis_type.value,
                 "error_code": self.error_code,
-                "retry_count": self.retry_count,
-                "has_partial_results": len(self.partial_results) > 0
+                "failure_stage": self.failure_stage,
+                "retry_suggested": self.retry_suggested
             }
         )
 
 
 @dataclass
 class AudioGenreDetectionEvent(BaseEvent):
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle___post_init___request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler __post_init__ failed: {e}")
-                    return {"status": "error", "message": str(e)}
-class AudioGenreDetectionEvent(BaseEvent):
     """
-    Event triggered when genre detection analysis is completed.
+    Event triggered when genre detection is completed.
     
-    Contains detailed genre classification and confidence scores.
+    Identifies musical genres and subgenres of audio content.
     """
     user_id: UUID
     file_id: UUID
     detection_id: UUID
+    filename: str
     primary_genre: str
-    secondary_genres: List[Tuple[str, float]]  # (genre, confidence)
     genre_confidence: float
-    subgenre_detected: Optional[str] = None
-    genre_fusion: List[str] = field(default_factory=list)
-    genre_evolution_timeline: List[Tuple[float, str]] = field(default_factory=list)
-    cultural_influence: List[str] = field(default_factory=list)
-    tempo_genre_correlation: float
-    harmonic_genre_markers: List[str]
-    rhythmic_genre_markers: List[str]
-    instrumental_genre_markers: List[str]
-    vocal_genre_markers: List[str]
+    secondary_genres: List[Dict[str, float]]
+    subgenres: List[Dict[str, float]]
+    genre_characteristics: Dict[str, Any]
+    detection_metadata: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
         super().__init__(
             event_type="audio.analysis.genre_detection",
-            event_category=EventCategory.CLASSIFICATION,
-            priority=EventPriority.MEDIUM,
-            user_id=self.user_id,
-            metadata={
-                "file_id": str(self.file_id),
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle___post_init___request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler __post_init__ failed: {e}")
-                    return {"status": "error", "message": str(e)}
-            metadata={
+            data={
                 "file_id": str(self.file_id),
                 "detection_id": str(self.detection_id),
                 "primary_genre": self.primary_genre,
                 "genre_confidence": self.genre_confidence,
-                "secondary_genres_count": len(self.secondary_genres),
-                "subgenre_detected": self.subgenre_detected
+                "secondary_genres_count": len(self.secondary_genres)
             }
         )
 
@@ -367,130 +211,59 @@ class AudioMoodAnalysisEvent(BaseEvent):
     """
     Event triggered when mood analysis is completed.
     
-    Contains emotional and atmospheric analysis results.
+    Analyzes emotional mood and atmosphere of audio content.
     """
     user_id: UUID
     file_id: UUID
     analysis_id: UUID
+    filename: str
     primary_mood: str
     mood_confidence: float
-    emotional_valence: float  # -1.0 (negative) to 1.0 (positive)
-    emotional_arousal: float  # 0.0 (calm) to 1.0 (energetic)
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle___post_init___request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler __post_init__ failed: {e}")
-                    return {"status": "error", "message": str(e)}
-    emotional_intensity: float
-    mood_stability: float
-    atmospheric_qualities: List[str]
-    listener_emotions: List[str]
-    contextual_mood: Dict[str, float]  # situational appropriateness
-    mood_keywords: List[str]
-    color_associations: List[str]
-    weather_associations: List[str]
+    mood_dimensions: Dict[str, float]  # valence, arousal, dominance
+    emotional_trajectory: List[Dict[str, Any]]
+    mood_tags: List[str]
+    analysis_metadata: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
         super().__init__(
             event_type="audio.analysis.mood_analysis",
-            event_category=EventCategory.CLASSIFICATION,
-            priority=EventPriority.MEDIUM,
-            user_id=self.user_id,
-            metadata={
+            data={
                 "file_id": str(self.file_id),
                 "analysis_id": str(self.analysis_id),
                 "primary_mood": self.primary_mood,
                 "mood_confidence": self.mood_confidence,
-                "emotional_valence": self.emotional_valence,
-                "emotional_arousal": self.emotional_arousal,
-                "mood_stability": self.mood_stability
+                "mood_tags_count": len(self.mood_tags)
             }
         )
 
 
 @dataclass
 class AudioBPMDetectionEvent(BaseEvent):
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle___post_init___request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler __post_init__ failed: {e}")
-                    return {"status": "error", "message": str(e)}
-@dataclass
-class AudioBPMDetectionEvent(BaseEvent):
     """
-    Event triggered when BPM (tempo) detection is completed.
+    Event triggered when BPM detection is completed.
     
-    Contains detailed tempo analysis and rhythmic information.
+    Analyzes tempo and rhythm characteristics.
     """
     user_id: UUID
     file_id: UUID
     detection_id: UUID
+    filename: str
     bpm: float
     bpm_confidence: float
     tempo_stability: float
-    time_signature: TimeSignature
-    time_signature_confidence: float
-    tempo_variations: List[Tuple[float, float]]  # (time, bpm)
-    rhythmic_complexity: float
-    beat_strength: List[float]  # per beat strength
-    downbeat_positions: List[float]
-    measure_positions: List[float]
-    rhythm_pattern: str
-    swing_factor: float
-    groove_feel: str
-    percussion_prominence: float
+    rhythm_patterns: List[Dict[str, Any]]
+    time_signature: Optional[str] = None
+    detection_metadata: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
         super().__init__(
             event_type="audio.analysis.bpm_detection",
-            event_category=EventCategory.RHYTHM,
-            priority=EventPriority.MEDIUM,
-            user_id=self.user_id,
-            metadata={
-                "file_id": str(self.file_id),
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle___post_init___request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler __post_init__ failed: {e}")
-                    return {"status": "error", "message": str(e)}
-            event_category=EventCategory.RHYTHM,
-            priority=EventPriority.MEDIUM,
-            user_id=self.user_id,
-            metadata={
+            data={
                 "file_id": str(self.file_id),
                 "detection_id": str(self.detection_id),
                 "bpm": self.bpm,
                 "bpm_confidence": self.bpm_confidence,
-                "time_signature": self.time_signature.value,
-                "tempo_stability": self.tempo_stability,
-                "rhythmic_complexity": self.rhythmic_complexity
+                "tempo_stability": self.tempo_stability
             }
         )
 
@@ -500,39 +273,94 @@ class AudioKeyDetectionEvent(BaseEvent):
     """
     Event triggered when musical key detection is completed.
     
-    Contains harmonic analysis and key progression information.
+    Identifies musical key and tonal characteristics.
     """
     user_id: UUID
     file_id: UUID
     detection_id: UUID
-    musical_key: MusicalKey
+    filename: str
+    musical_key: str
     key_confidence: float
-    mode: str  # major, minor, dorian, etc.
-    key_stability: float
-    key_changes: List[Tuple[float, MusicalKey, float]]  # (time, key, confidence)
-    harmonic_complexity: float
-    chord_progression: List[Tuple[float, str]]  # (time, chord)
-    scale_degrees: List[float]
-    tonal_center_strength: float
-    modulation_points: List[float]
-    relative_keys: List[Tuple[MusicalKey, float]]
-    harmonic_rhythm: float
-    consonance_level: float
+    mode: str  # major, minor
+    tonal_stability: float
+    key_changes: List[Dict[str, Any]]
+    detection_metadata: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
         super().__init__(
             event_type="audio.analysis.key_detection",
-            event_category=EventCategory.HARMONY,
-            priority=EventPriority.MEDIUM,
-            user_id=self.user_id,
-            metadata={
+            data={
                 "file_id": str(self.file_id),
                 "detection_id": str(self.detection_id),
-                "musical_key": self.musical_key.value,
+                "musical_key": self.musical_key,
                 "key_confidence": self.key_confidence,
                 "mode": self.mode,
-                "key_stability": self.key_stability,
-                "harmonic_complexity": self.harmonic_complexity
+                "key_changes_count": len(self.key_changes)
+            }
+        )
+
+
+@dataclass
+class AudioSentimentAnalysisEvent(BaseEvent):
+    """
+    Event triggered when sentiment analysis is completed.
+    
+    Analyzes emotional sentiment and polarity of audio content.
+    """
+    user_id: UUID
+    file_id: UUID
+    analysis_id: UUID
+    filename: str
+    sentiment_score: float  # -1 to 1
+    sentiment_label: str  # positive, negative, neutral
+    confidence: float
+    emotional_intensity: float
+    sentiment_timeline: List[Dict[str, Any]]
+    analysis_metadata: Dict[str, Any] = field(default_factory=dict)
+    
+    def __post_init__(self):
+        super().__init__(
+            event_type="audio.analysis.sentiment_analysis",
+            data={
+                "file_id": str(self.file_id),
+                "analysis_id": str(self.analysis_id),
+                "sentiment_score": self.sentiment_score,
+                "sentiment_label": self.sentiment_label,
+                "confidence": self.confidence,
+                "emotional_intensity": self.emotional_intensity
+            }
+        )
+
+
+@dataclass
+class AudioEmotionDetectionEvent(BaseEvent):
+    """
+    Event triggered when emotion detection is completed.
+    
+    Detects and analyzes emotional characteristics in audio.
+    """
+    user_id: UUID
+    file_id: UUID
+    detection_id: UUID
+    filename: str
+    primary_emotion: str
+    emotion_confidence: float
+    emotion_probabilities: Dict[str, float]
+    emotional_arousal: float
+    emotional_valence: float
+    emotion_timeline: List[Dict[str, Any]]
+    detection_metadata: Dict[str, Any] = field(default_factory=dict)
+    
+    def __post_init__(self):
+        super().__init__(
+            event_type="audio.analysis.emotion_detection",
+            data={
+                "file_id": str(self.file_id),
+                "detection_id": str(self.detection_id),
+                "primary_emotion": self.primary_emotion,
+                "emotion_confidence": self.emotion_confidence,
+                "emotional_arousal": self.emotional_arousal,
+                "emotional_valence": self.emotional_valence
             }
         )
 
@@ -542,79 +370,94 @@ class AudioInstrumentRecognitionEvent(BaseEvent):
     """
     Event triggered when instrument recognition is completed.
     
-    Contains detailed information about detected instruments.
+    Identifies musical instruments present in audio content.
     """
     user_id: UUID
     file_id: UUID
     recognition_id: UUID
-    detected_instruments: List[Tuple[str, float, float, float]]  # (instrument, confidence, start, end)
-    instrument_families: List[str]
-    lead_instrument: Optional[str] = None
-    rhythm_section: List[str] = field(default_factory=list)
-    orchestral_arrangement: bool = False
-    acoustic_vs_electric: Dict[str, str]
-    instrument_quality: Dict[str, float]
-    playing_techniques: Dict[str, List[str]]
-    ensemble_size: str  # solo, duo, trio, quartet, band, orchestra
-    arrangement_density: float
-    instrument_interactions: List[Tuple[str, str, str]]  # (inst1, inst2, interaction_type)
+    filename: str
+    instruments_detected: List[Dict[str, Any]]
+    primary_instrument: str
+    instrument_confidence: float
+    instrumental_complexity: float
+    temporal_presence: Dict[str, List[Dict[str, Any]]]
+    recognition_metadata: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
         super().__init__(
             event_type="audio.analysis.instrument_recognition",
-            event_category=EventCategory.CLASSIFICATION,
-            priority=EventPriority.MEDIUM,
-            user_id=self.user_id,
-            metadata={
+            data={
                 "file_id": str(self.file_id),
                 "recognition_id": str(self.recognition_id),
-                "instruments_count": len(self.detected_instruments),
-                "lead_instrument": self.lead_instrument,
-                "ensemble_size": self.ensemble_size,
-                "orchestral": self.orchestral_arrangement
+                "primary_instrument": self.primary_instrument,
+                "instrument_confidence": self.instrument_confidence,
+                "instruments_count": len(self.instruments_detected)
             }
         )
 
 
 @dataclass
-class AudioVocalAnalysisEvent(BaseEvent):
+class AudioLoudnessAnalysisEvent(BaseEvent):
     """
-    Event triggered when vocal analysis is completed.
+    Event triggered when loudness analysis is completed.
     
-    Contains detailed vocal performance and characteristics analysis.
+    Analyzes loudness characteristics and dynamic range.
     """
     user_id: UUID
     file_id: UUID
     analysis_id: UUID
-    vocals_detected: bool
-    vocal_segments: List[Tuple[float, float]]  # (start, end)
-    vocal_quality: float
-    vocal_range: Tuple[float, float]  # (lowest_hz, highest_hz)
-    vocal_style: str
-    vocal_technique: List[str]
-    gender_prediction: str
-    age_estimation: Tuple[int, int]  # (min_age, max_age)
-    vocal_emotion: str
-    vocal_energy: float
-    vibrato_detected: bool
-    vocal_effects: List[str]
-    harmony_vocals: bool
-    background_vocals: bool
-    vocal_clarity: float
-    pronunciation_quality: float
+    filename: str
+    integrated_loudness: float  # LUFS
+    loudness_range: float
+    peak_level: float
+    dynamic_range: float
+    loudness_distribution: Dict[str, Any]
+    compliance_standards: Dict[str, bool]
+    analysis_metadata: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
         super().__init__(
-            event_type="audio.analysis.vocal_analysis",
-            event_category=EventCategory.CLASSIFICATION,
-            priority=EventPriority.MEDIUM,
-            user_id=self.user_id,
-            metadata={
+            event_type="audio.analysis.loudness_analysis",
+            data={
                 "file_id": str(self.file_id),
                 "analysis_id": str(self.analysis_id),
-                "vocals_detected": self.vocals_detected,
-                "vocal_quality": self.vocal_quality,
-                "vocal_style": self.vocal_style,
-                "vocal_segments_count": len(self.vocal_segments)
+                "integrated_loudness": self.integrated_loudness,
+                "loudness_range": self.loudness_range,
+                "peak_level": self.peak_level,
+                "dynamic_range": self.dynamic_range
+            }
+        )
+
+
+@dataclass
+class AudioSpectralAnalysisEvent(BaseEvent):
+    """
+    Event triggered when spectral analysis is completed.
+    
+    Analyzes frequency spectrum and spectral characteristics.
+    """
+    user_id: UUID
+    file_id: UUID
+    analysis_id: UUID
+    filename: str
+    frequency_spectrum: Dict[str, Any]
+    spectral_centroid: float
+    spectral_bandwidth: float
+    spectral_rolloff: float
+    spectral_flatness: float
+    harmonic_content: Dict[str, Any]
+    noise_characteristics: Dict[str, Any]
+    analysis_metadata: Dict[str, Any] = field(default_factory=dict)
+    
+    def __post_init__(self):
+        super().__init__(
+            event_type="audio.analysis.spectral_analysis",
+            data={
+                "file_id": str(self.file_id),
+                "analysis_id": str(self.analysis_id),
+                "spectral_centroid": self.spectral_centroid,
+                "spectral_bandwidth": self.spectral_bandwidth,
+                "spectral_rolloff": self.spectral_rolloff,
+                "spectral_flatness": self.spectral_flatness
             }
         )

@@ -6,6 +6,8 @@ format conversion, enhancement, and real-time processing pipelines.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
+Unauthorized use, modification, or distribution of this code is strictly prohibited.
+Contact: mlaiel@live.de for licensing and collaboration inquiries.
 """
 
 from dataclasses import dataclass, field
@@ -14,13 +16,11 @@ from typing import Dict, List, Optional, Any, Tuple
 from uuid import UUID
 from enum import Enum
 
-from ...core.events.base_event import BaseEvent, EventPriority, EventCategory
+from ..core.base_event import BaseEvent
 
 
 class ProcessingStage(Enum):
-    """
-Audio processing pipeline stages"""
-
+    """Audio processing pipeline stages"""
     INITIALIZATION = "initialization"
     FORMAT_CONVERSION = "format_conversion"
     QUALITY_ANALYSIS = "quality_analysis"
@@ -33,7 +33,6 @@ Audio processing pipeline stages"""
 
 class ProcessingQuality(Enum):
     """Audio processing quality levels"""
-
     LOSSLESS = "lossless"
     HIGH = "high"
     MEDIUM = "medium"
@@ -53,47 +52,26 @@ class AudioProcessingStartedEvent(BaseEvent):
     file_id: UUID
     processing_id: UUID
     filename: str
-    processing_type: str  # enhancement, conversion, analysis, optimization
+    processing_profile: str
+    input_format: str
+    target_format: str
+    quality_level: str
     processing_stages: List[str]
-    quality_target: ProcessingQuality
-    priority_level: int
     estimated_duration: float
-    processing_parameters: Dict[str, Any]
-    hardware_allocation: Dict[str, Any]
-    cpu_cores_allocated: int
-    memory_allocated: int  # MB
-    gpu_enabled: bool = False
-    parallel_processing: bool = True
+    processing_priority: str = "normal"
+    processing_metadata: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle___post_init___request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler __post_init__ failed: {e}")
-                    return {"status": "error", "message": str(e)}
+        super().__init__(
             event_type="audio.processing.started",
-            event_category=EventCategory.PROCESSING,
-            priority=EventPriority.HIGH,
-            user_id=self.user_id,
-            metadata={
+            data={
                 "file_id": str(self.file_id),
                 "processing_id": str(self.processing_id),
-                "processing_type": self.processing_type,
-                "stages_count": len(self.processing_stages),
-                "quality_target": self.quality_target.value,
-                "estimated_duration": self.estimated_duration,
-                "cpu_cores": self.cpu_cores_allocated,
-                "memory_mb": self.memory_allocated,
-                "gpu_enabled": self.gpu_enabled
+                "processing_profile": self.processing_profile,
+                "input_format": self.input_format,
+                "target_format": self.target_format,
+                "quality_level": self.quality_level,
+                "stages_count": len(self.processing_stages)
             }
         )
 
@@ -103,124 +81,63 @@ class AudioProcessingProgressEvent(BaseEvent):
     """
     Event triggered during audio processing progress updates.
     
-    Provides real-time feedback about processing pipeline progress.
+    Provides real-time progress information for long-running processing tasks.
     """
     user_id: UUID
     file_id: UUID
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle___post_init___request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler __post_init__ failed: {e}")
-                    return {"status": "error", "message": str(e)}
-    current_stage: ProcessingStage
-    stage_progress: float  # 0.0 to 1.0
-    overall_progress: float  # 0.0 to 1.0
-    elapsed_time: float
-    estimated_remaining: float
+    processing_id: UUID
+    current_stage: str
+    progress_percentage: float
+    time_elapsed: float
+    estimated_time_remaining: float
     current_operation: str
-    cpu_usage: float
-    memory_usage: float
-    gpu_usage: Optional[float] = None
-    throughput: float = 0.0  # samples per second
+    stages_completed: List[str]
+    stages_remaining: List[str]
+    processing_speed: float = 0.0
     
     def __post_init__(self):
         super().__init__(
             event_type="audio.processing.progress",
-            event_category=EventCategory.PROCESSING,
-            priority=EventPriority.MEDIUM,
-            user_id=self.user_id,
-            metadata={
+            data={
                 "file_id": str(self.file_id),
                 "processing_id": str(self.processing_id),
-                "current_stage": self.current_stage.value,
-                "overall_progress": self.overall_progress,
-                "estimated_remaining": self.estimated_remaining,
-                "cpu_usage": self.cpu_usage,
-                "memory_usage": self.memory_usage
+                "current_stage": self.current_stage,
+                "progress_percentage": self.progress_percentage,
+                "estimated_time_remaining": self.estimated_time_remaining
             }
         )
 
 
 @dataclass
 class AudioProcessingCompletedEvent(BaseEvent):
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle___post_init___request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler __post_init__ failed: {e}")
-                    return {"status": "error", "message": str(e)}
-    Event triggered when audio processing is successfully completed.
+    """
+    Event triggered when audio processing pipeline completes successfully.
     
-    Contains comprehensive results and metrics from the processing pipeline.
+    Contains comprehensive results and metrics from the processing workflow.
     """
     user_id: UUID
     file_id: UUID
     processing_id: UUID
-    processed_file_id: UUID
-    original_filename: str
-    processed_filename: str
+    output_file_id: UUID
+    filename: str
+    output_filename: str
     processing_duration: float
     processing_stages_completed: List[str]
-    processing_results: Dict[str, Any]
-    quality_metrics: Dict[str, float]
-    file_size_original: int
-    file_size_processed: int
-    compression_ratio: float
-    quality_improvement: Dict[str, float]
-    output_formats: List[str]
-    storage_locations: Dict[str, str]
-    checksum_original: str
-    checksum_processed: str
-    metadata_preserved: bool
+    quality_improvements: Dict[str, Any]
+    file_size_before: int
+    file_size_after: int
+    processing_metadata: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
         super().__init__(
             event_type="audio.processing.completed",
-            event_category=EventCategory.PROCESSING,
-            priority=EventPriority.HIGH,
-            user_id=self.user_id,
-            metadata={
-                "file_id": str(self.file_id),
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle___post_init___request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler __post_init__ failed: {e}")
-                    return {"status": "error", "message": str(e)}
-            user_id=self.user_id,
-            metadata={
+            data={
                 "file_id": str(self.file_id),
                 "processing_id": str(self.processing_id),
-                "processed_file_id": str(self.processed_file_id),
+                "output_file_id": str(self.output_file_id),
                 "processing_duration": self.processing_duration,
                 "stages_completed": len(self.processing_stages_completed),
-                "compression_ratio": self.compression_ratio,
-                "output_formats_count": len(self.output_formats)
+                "size_reduction": self.file_size_before - self.file_size_after
             }
         )
 
@@ -230,51 +147,30 @@ class AudioProcessingFailedEvent(BaseEvent):
     """
     Event triggered when audio processing fails.
     
-    Contains detailed error information and recovery options.
+    Contains detailed error information and recovery suggestions.
     """
     user_id: UUID
     file_id: UUID
     processing_id: UUID
-    failed_stage: ProcessingStage
+    filename: str
     error_code: str
     error_message: str
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle___post_init___request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler __post_init__ failed: {e}")
-                    return {"status": "error", "message": str(e)}
-    stack_trace: Optional[str] = None
+    failure_stage: str
     processing_duration: float
-    stages_completed: List[str]
-    stages_failed: List[str]
-    retry_count: int
-    max_retries: int
-    is_retryable: bool
-    suggested_action: str
-    hardware_usage: Dict[str, float]
+    error_details: Dict[str, Any]
+    retry_suggested: bool
+    alternative_profiles: List[str] = field(default_factory=list)
     
     def __post_init__(self):
         super().__init__(
             event_type="audio.processing.failed",
-            event_category=EventCategory.ERROR,
-            priority=EventPriority.HIGH,
-            user_id=self.user_id,
-            metadata={
+            data={
                 "file_id": str(self.file_id),
                 "processing_id": str(self.processing_id),
-                "failed_stage": self.failed_stage.value,
                 "error_code": self.error_code,
-                "retry_count": self.retry_count,
-                "is_retryable": self.is_retryable
+                "error_message": self.error_message,
+                "failure_stage": self.failure_stage,
+                "retry_suggested": self.retry_suggested
             }
         )
 
@@ -282,75 +178,31 @@ class AudioProcessingFailedEvent(BaseEvent):
 @dataclass
 class AudioQualityAnalysisEvent(BaseEvent):
     """
-    Event triggered when audio quality analysis is completed.
+    Event triggered when audio quality analysis is performed.
     
-    Contains comprehensive quality metrics and recommendations.
-    """
-    user_id: UUID
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle___post_init___request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler __post_init__ failed: {e}")
-                    return {"status": "error", "message": str(e)}
-    Contains comprehensive quality metrics and recommendations.
+    Provides comprehensive quality metrics and improvement recommendations.
     """
     user_id: UUID
     file_id: UUID
     analysis_id: UUID
-    quality_score: float  # 0.0 to 1.0
+    filename: str
+    overall_quality_score: float
+    technical_metrics: Dict[str, Any]
+    perceptual_metrics: Dict[str, Any]
+    noise_analysis: Dict[str, Any]
     dynamic_range: float
-    signal_to_noise_ratio: float
-    frequency_response: Dict[str, float]
-    harmonic_distortion: float
-    peak_level: float
-    rms_level: float
-    loudness_lufs: float
-    clipping_detected: bool
-    clipping_count: int
-    noise_floor: float
-    stereo_width: float
-    phase_correlation: float
-    quality_issues: List[Dict[str, Any]]
-    recommendations: List[str]
-    comparable_references: List[Dict[str, Any]] = field(default_factory=list)
+    frequency_response: Dict[str, Any]
+    distortion_metrics: Dict[str, Any]
+    recommendations: List[str] = field(default_factory=list)
     
     def __post_init__(self):
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle___post_init___request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler __post_init__ failed: {e}")
-                    return {"status": "error", "message": str(e)}
         super().__init__(
             event_type="audio.processing.quality_analysis",
-            event_category=EventCategory.ANALYSIS,
-            priority=EventPriority.MEDIUM,
-            user_id=self.user_id,
-            metadata={
+            data={
                 "file_id": str(self.file_id),
                 "analysis_id": str(self.analysis_id),
-                "quality_score": self.quality_score,
-                "snr": self.signal_to_noise_ratio,
+                "overall_quality_score": self.overall_quality_score,
                 "dynamic_range": self.dynamic_range,
-                "clipping_detected": self.clipping_detected,
-                "issues_count": len(self.quality_issues),
                 "recommendations_count": len(self.recommendations)
             }
         )
@@ -359,189 +211,232 @@ class AudioQualityAnalysisEvent(BaseEvent):
 @dataclass
 class AudioFormatConversionEvent(BaseEvent):
     """
-    Event triggered during audio format conversion process.
+    Event triggered when audio format conversion is performed.
     
-    Handles conversion between different audio formats and quality levels.
+    Handles conversion between different audio formats and codecs.
     """
     user_id: UUID
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle___post_init___request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler __post_init__ failed: {e}")
-                    return {"status": "error", "message": str(e)}
     file_id: UUID
     conversion_id: UUID
+    filename: str
     source_format: str
     target_format: str
-    source_sample_rate: int
-    target_sample_rate: int
-    source_bit_depth: int
-    target_bit_depth: int
-    source_channels: int
-    target_channels: int
-    conversion_method: str
-    quality_preset: str
-    conversion_parameters: Dict[str, Any]
-    estimated_quality_loss: float
-    file_size_change: float
+    source_codec: str
+    target_codec: str
+    compression_settings: Dict[str, Any]
     conversion_duration: float
+    quality_retention: float
+    file_size_change: int
+    conversion_metadata: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
         super().__init__(
             event_type="audio.processing.format_conversion",
-            event_category=EventCategory.CONVERSION,
-            priority=EventPriority.MEDIUM,
-            user_id=self.user_id,
-            metadata={
+            data={
                 "file_id": str(self.file_id),
                 "conversion_id": str(self.conversion_id),
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle___post_init___request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler __post_init__ failed: {e}")
-                    return {"status": "error", "message": str(e)}
+                "source_format": self.source_format,
                 "target_format": self.target_format,
-                "sample_rate_change": f"{self.source_sample_rate}->{self.target_sample_rate}",
-                "bit_depth_change": f"{self.source_bit_depth}->{self.target_bit_depth}",
-                "estimated_quality_loss": self.estimated_quality_loss
+                "quality_retention": self.quality_retention,
+                "conversion_duration": self.conversion_duration
             }
         )
 
 
 @dataclass
-class AudioNormalizationEvent(BaseEvent):
+class AudioAIProcessingEvent(BaseEvent):
     """
-    Event triggered during audio normalization process.
+    Event triggered when AI-powered audio processing is applied.
     
-    Handles loudness normalization and level optimization.
+    Handles machine learning based audio enhancement and analysis.
     """
     user_id: UUID
     file_id: UUID
-    normalization_id: UUID
-    normalization_type: str  # peak, rms, lufs, ebu_r128
-    target_level: float
-    original_peak: float
-    original_rms: float
-    original_lufs: float
-    normalized_peak: float
-    normalized_rms: float
-    normalized_lufs: float
-    gain_applied: float
-    dynamic_range_preserved: bool
-    limiting_applied: bool
-    normalization_quality: float
+    ai_processing_id: UUID
+    filename: str
+    ai_model_used: str
+    processing_type: str  # enhancement, restoration, analysis, classification
+    model_version: str
+    confidence_score: float
+    processing_results: Dict[str, Any]
+    ai_suggestions: List[str]
+    computational_cost: float
+    ai_metadata: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
         super().__init__(
-            event_type="audio.processing.normalization",
-            event_category=EventCategory.ENHANCEMENT,
-            priority=EventPriority.MEDIUM,
-            user_id=self.user_id,
-            metadata={
+            event_type="audio.processing.ai_processing",
+            data={
                 "file_id": str(self.file_id),
-                "normalization_id": str(self.normalization_id),
-                "normalization_type": self.normalization_type,
-                "gain_applied": self.gain_applied,
-                "target_level": self.target_level,
-                "quality": self.normalization_quality
+                "ai_processing_id": str(self.ai_processing_id),
+                "ai_model_used": self.ai_model_used,
+                "processing_type": self.processing_type,
+                "confidence_score": self.confidence_score,
+                "suggestions_count": len(self.ai_suggestions)
             }
         )
 
 
 @dataclass
-class AudioCompressionEvent(BaseEvent):
+class AudioMLClassificationEvent(BaseEvent):
     """
-    Event triggered during audio compression process.
+    Event triggered when machine learning classification is performed.
     
-    Handles dynamic range compression and limiting.
+    Classifies audio content using trained ML models.
     """
     user_id: UUID
     file_id: UUID
-    compression_id: UUID
-    compressor_type: str  # vca, optical, tube, digital
-    threshold: float
-    ratio: float
-    attack_time: float
-    release_time: float
-    knee_width: float
-    makeup_gain: float
-    compression_amount: float
-    original_dynamic_range: float
-    compressed_dynamic_range: float
-    perceived_loudness_change: float
-    transparency_score: float
+    classification_id: UUID
+    filename: str
+    classifier_model: str
+    classification_results: Dict[str, float]
+    top_prediction: str
+    confidence_score: float
+    feature_vector: List[float]
+    model_accuracy: float
+    classification_metadata: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
         super().__init__(
-            event_type="audio.processing.compression",
-            event_category=EventCategory.ENHANCEMENT,
-            priority=EventPriority.MEDIUM,
-            user_id=self.user_id,
-            metadata={
+            event_type="audio.processing.ml_classification",
+            data={
                 "file_id": str(self.file_id),
-                "compression_id": str(self.compression_id),
-                "compressor_type": self.compressor_type,
-                "ratio": self.ratio,
-                "compression_amount": self.compression_amount,
-                "transparency_score": self.transparency_score
+                "classification_id": str(self.classification_id),
+                "classifier_model": self.classifier_model,
+                "top_prediction": self.top_prediction,
+                "confidence_score": self.confidence_score,
+                "classes_count": len(self.classification_results)
             }
         )
 
 
 @dataclass
-class AudioSpectrumAnalysisEvent(BaseEvent):
+class AudioNoiseReductionEvent(BaseEvent):
     """
-    Event triggered when spectral analysis is completed.
+    Event triggered when noise reduction processing is applied.
     
-    Contains detailed frequency domain analysis results.
+    Removes unwanted noise and artifacts from audio content.
     """
     user_id: UUID
     file_id: UUID
-    analysis_id: UUID
-    spectrum_data: Dict[str, List[float]]
-    frequency_bins: List[float]
-    magnitude_spectrum: List[float]
-    phase_spectrum: List[float]
-    spectral_centroid: float
-    spectral_rolloff: float
-    spectral_bandwidth: float
-    spectral_flatness: float
-    zero_crossing_rate: float
-    fundamental_frequency: float
-    harmonics: List[Tuple[float, float]]  # (frequency, magnitude)
-    formants: List[float]
-    spectral_peaks: List[Tuple[float, float]]
+    noise_reduction_id: UUID
+    filename: str
+    noise_profile: Dict[str, Any]
+    reduction_strength: float
+    noise_types_detected: List[str]
+    noise_reduction_db: float
+    quality_preservation: float
+    processing_time: float
+    before_after_comparison: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
         super().__init__(
-            event_type="audio.processing.spectrum_analysis",
-            event_category=EventCategory.ANALYSIS,
-            priority=EventPriority.LOW,
-            user_id=self.user_id,
-            metadata={
+            event_type="audio.processing.noise_reduction",
+            data={
                 "file_id": str(self.file_id),
-                "analysis_id": str(self.analysis_id),
-                "spectral_centroid": self.spectral_centroid,
-                "fundamental_frequency": self.fundamental_frequency,
-                "harmonics_count": len(self.harmonics),
-                "formants_count": len(self.formants)
+                "noise_reduction_id": str(self.noise_reduction_id),
+                "reduction_strength": self.reduction_strength,
+                "noise_reduction_db": self.noise_reduction_db,
+                "quality_preservation": self.quality_preservation,
+                "noise_types_count": len(self.noise_types_detected)
+            }
+        )
+
+
+@dataclass
+class AudioBPMDetectionEvent(BaseEvent):
+    """
+    Event triggered when BPM (Beats Per Minute) detection is performed.
+    
+    Analyzes tempo and rhythm characteristics of audio content.
+    """
+    user_id: UUID
+    file_id: UUID
+    detection_id: UUID
+    filename: str
+    detected_bpm: float
+    confidence_score: float
+    tempo_stability: float
+    rhythm_patterns: List[Dict[str, Any]]
+    time_signature: Optional[str] = None
+    tempo_changes: List[Dict[str, Any]] = field(default_factory=list)
+    detection_metadata: Dict[str, Any] = field(default_factory=dict)
+    
+    def __post_init__(self):
+        super().__init__(
+            event_type="audio.processing.bpm_detection",
+            data={
+                "file_id": str(self.file_id),
+                "detection_id": str(self.detection_id),
+                "detected_bpm": self.detected_bpm,
+                "confidence_score": self.confidence_score,
+                "tempo_stability": self.tempo_stability,
+                "tempo_changes_count": len(self.tempo_changes)
+            }
+        )
+
+
+@dataclass
+class AudioKeyDetectionEvent(BaseEvent):
+    """
+    Event triggered when musical key detection is performed.
+    
+    Identifies the musical key and tonal characteristics of audio content.
+    """
+    user_id: UUID
+    file_id: UUID
+    detection_id: UUID
+    filename: str
+    detected_key: str
+    key_confidence: float
+    mode: str  # major, minor
+    tonal_stability: float
+    key_changes: List[Dict[str, Any]]
+    harmonic_analysis: Dict[str, Any]
+    detection_metadata: Dict[str, Any] = field(default_factory=dict)
+    
+    def __post_init__(self):
+        super().__init__(
+            event_type="audio.processing.key_detection",
+            data={
+                "file_id": str(self.file_id),
+                "detection_id": str(self.detection_id),
+                "detected_key": self.detected_key,
+                "key_confidence": self.key_confidence,
+                "mode": self.mode,
+                "tonal_stability": self.tonal_stability
+            }
+        )
+
+
+@dataclass
+class AudioGenreClassificationEvent(BaseEvent):
+    """
+    Event triggered when genre classification is performed.
+    
+    Classifies audio content into musical genres and subgenres.
+    """
+    user_id: UUID
+    file_id: UUID
+    classification_id: UUID
+    filename: str
+    primary_genre: str
+    genre_confidence: float
+    secondary_genres: List[Dict[str, float]]
+    subgenre_predictions: List[Dict[str, float]]
+    style_characteristics: Dict[str, Any]
+    cultural_context: Optional[Dict[str, Any]] = None
+    classification_metadata: Dict[str, Any] = field(default_factory=dict)
+    
+    def __post_init__(self):
+        super().__init__(
+            event_type="audio.processing.genre_classification",
+            data={
+                "file_id": str(self.file_id),
+                "classification_id": str(self.classification_id),
+                "primary_genre": self.primary_genre,
+                "genre_confidence": self.genre_confidence,
+                "secondary_genres_count": len(self.secondary_genres),
+                "subgenres_count": len(self.subgenre_predictions)
             }
         )

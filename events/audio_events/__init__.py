@@ -77,7 +77,38 @@ from .monetization_events import (
     AudioLicenseCreatedEvent,
     AudioRevenueGeneratedEvent,
     AudioRoyaltyDistributedEvent,
-    AudioSaleCompletedEvent
+    AudioSaleCompletedEvent,
+    AudioStreamingRevenueEvent,
+    AudioSyncLicenseRequestEvent,
+    AudioPerformanceRoyaltyEvent,
+    AudioMonetizationAnalyticsEvent,
+    AudioNFTMintingEvent
+)
+
+from .protection_events import (
+    AudioCopyrightProtectionEvent,
+    AudioRightsVerificationEvent,
+    AudioPiracyDetectionEvent,
+    AudioLicenseValidationEvent,
+    AudioWatermarkingEvent,
+    AudioCopyrightClaimEvent,
+    AudioDMCARequestEvent,
+    AudioRightsTransferEvent,
+    AudioUsageAuthorizationEvent,
+    AudioCopyrightViolationReportedEvent
+)
+
+from .gamification_seo_events import (
+    AudioSEOOptimizationEvent,
+    AudioMetadataEnrichmentEvent,
+    AudioTagGenerationEvent,
+    AudioGamificationPointsEvent,
+    AudioAchievementUnlockedEvent,
+    AudioLeaderboardUpdateEvent,
+    AudioBadgeEarnedEvent,
+    AudioChallengeCompletedEvent,
+    AudioSocialShareEvent,
+    AudioViralityAnalysisEvent
 )
 
 from .streaming_events import (
@@ -96,7 +127,9 @@ from .event_handlers import (
     AudioEnhancementEventHandler,
     AudioCollaborationEventHandler,
     AudioMonetizationEventHandler,
-    AudioStreamingEventHandler
+    AudioStreamingEventHandler,
+    AudioProtectionEventHandler,
+    AudioGamificationEventHandler
 )
 
 __all__ = [
@@ -149,6 +182,35 @@ __all__ = [
     "AudioRevenueGeneratedEvent",
     "AudioRoyaltyDistributedEvent",
     "AudioSaleCompletedEvent",
+    "AudioStreamingRevenueEvent",
+    "AudioSyncLicenseRequestEvent",
+    "AudioPerformanceRoyaltyEvent",
+    "AudioMonetizationAnalyticsEvent",
+    "AudioNFTMintingEvent",
+    
+    # Protection Events
+    "AudioCopyrightProtectionEvent",
+    "AudioRightsVerificationEvent",
+    "AudioPiracyDetectionEvent",
+    "AudioLicenseValidationEvent",
+    "AudioWatermarkingEvent",
+    "AudioCopyrightClaimEvent",
+    "AudioDMCARequestEvent",
+    "AudioRightsTransferEvent",
+    "AudioUsageAuthorizationEvent",
+    "AudioCopyrightViolationReportedEvent",
+    
+    # Gamification & SEO Events
+    "AudioSEOOptimizationEvent",
+    "AudioMetadataEnrichmentEvent",
+    "AudioTagGenerationEvent",
+    "AudioGamificationPointsEvent",
+    "AudioAchievementUnlockedEvent",
+    "AudioLeaderboardUpdateEvent",
+    "AudioBadgeEarnedEvent",
+    "AudioChallengeCompletedEvent",
+    "AudioSocialShareEvent",
+    "AudioViralityAnalysisEvent",
     
     # Streaming Events
     "AudioStreamStartedEvent",
@@ -165,7 +227,9 @@ __all__ = [
     "AudioEnhancementEventHandler",
     "AudioCollaborationEventHandler",
     "AudioMonetizationEventHandler",
-    "AudioStreamingEventHandler"
+    "AudioStreamingEventHandler",
+    "AudioProtectionEventHandler",
+    "AudioGamificationEventHandler"
 ]
 
 # Version and metadata
