@@ -531,7 +531,7 @@ async def feature_badge(
 @router.get("/leaderboards/{leaderboard_type}", response_model=List[LeaderboardEntry])
 async def get_leaderboard(
     leaderboard_type: LeaderboardType,
-    time_period: str = Query("all_time", regex="^(daily|weekly|monthly|all_time)$"),
+    time_period: str = Query("all_time", pattern="^(daily|weekly|monthly|all_time)$"),
     limit: int = Query(50, ge=1, le=100),
     current_user: Dict = Depends(get_current_user)
 ):
@@ -565,7 +565,7 @@ async def get_leaderboard(
 @router.get("/leaderboards/{leaderboard_type}/rank")
 async def get_user_rank(
     leaderboard_type: LeaderboardType,
-    time_period: str = Query("all_time", regex="^(daily|weekly|monthly|all_time)$"),
+    time_period: str = Query("all_time", pattern="^(daily|weekly|monthly|all_time)$"),
     current_user: Dict = Depends(get_current_user)
 ):
     """Get current user's rank in leaderboard"""
@@ -894,7 +894,7 @@ async def get_points_balance(
 @router.get("/points/transactions", response_model=List[PointsTransaction])
 async def get_points_transactions(
     limit: int = Query(50, ge=1, le=100),
-    transaction_type: Optional[str] = Query(None, regex="^(earned|spent)$"),
+    transaction_type: Optional[str] = Query(None, pattern="^(earned|spent)$"),
     current_user: Dict = Depends(get_current_user)
 ):
     """Get user's points transaction history"""

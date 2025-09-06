@@ -271,7 +271,7 @@ async def get_revenue_analytics(
 
 @router.get("/revenue/breakdown")
 async def get_revenue_breakdown(
-    breakdown_by: str = Query("source", regex="^(source|platform|content|collaboration)$"),
+    breakdown_by: str = Query("source", pattern="^(source|platform|content|collaboration)$"),
     time_range: TimeRange = Query(default=TimeRange.MONTH),
     current_user: Dict = Depends(get_current_user),
     has_access: bool = Depends(validate_analytics_access)

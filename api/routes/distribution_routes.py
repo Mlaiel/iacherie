@@ -233,7 +233,7 @@ class ContentFormatting(BaseModel):
     category: Optional[str] = None
     thumbnail_url: Optional[str] = None
     custom_fields: Dict[str, Any] = Field(default_factory=dict)
-    privacy_level: str = Field(default="public", regex="^(public|unlisted|private)$")
+    privacy_level: str = Field(default="public", pattern="^(public|unlisted|private)$")
     monetization_enabled: bool = Field(default=True)
     comments_enabled: bool = Field(default=True)
     age_restriction: Optional[str] = None
@@ -713,7 +713,7 @@ async def optimize_content_for_platforms(
 @router.get("/analytics/{content_id}", response_model=CrossPlatformAnalytics)
 async def get_cross_platform_analytics(
     content_id: str,
-    time_period: str = Query("7d", regex="^(24h|7d|30d|90d)$"),
+    time_period: str = Query("7d", pattern="^(24h|7d|30d|90d)$"),
     current_user: Dict = Depends(get_current_user),
     has_access: bool = Depends(validate_distribution_access)
 ):

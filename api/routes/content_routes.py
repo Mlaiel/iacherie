@@ -224,7 +224,7 @@ async def get_content(
     limit: int = Query(20, ge=1, le=100, description="Number of items to return"),
     offset: int = Query(0, ge=0, description="Number of items to skip"),
     sort_by: str = Query("created_at", description="Sort field"),
-    sort_order: str = Query("desc", regex="^(asc|desc)$", description="Sort order"),
+    sort_order: str = Query("desc", pattern="^(asc|desc)$", description="Sort order"),
     current_user: Dict = Depends(get_current_user)
 ):
     """Get content with advanced filtering and pagination"""
@@ -687,7 +687,7 @@ async def get_distribution_status(
 @router.get("/{content_id}/analytics", response_model=ContentAnalytics)
 async def get_content_analytics(
     content_id: str,
-    period: str = Query("30d", regex="^(7d|30d|90d|1y|all)$", description="Analytics period"),
+    period: str = Query("30d", pattern="^(7d|30d|90d|1y|all)$", description="Analytics period"),
     include_platforms: bool = Query(True, description="Include platform-specific analytics"),
     current_user: Dict = Depends(get_current_user),
     has_access: bool = Depends(validate_content_access)
