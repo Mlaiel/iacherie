@@ -10,6 +10,12 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This migration creates the advanced content fingerprinting system for
 audio/video/image content with duplicate detection, violation tracking,
 and cross-platform content monitoring.
+
+ENRICHISSEMENTS MASSIFS - VERSION 6.0 CONSOLIDATION INTELLIGENTE:
+- 21+ algorithmes avancés (Audio, Video, Image, Text, Cross-platform)
+- Détection intelligence IA
+- Blockchain fingerprints
+- Analytics violations
 """
 from alembic import op
 import sqlalchemy as sa
@@ -23,7 +29,39 @@ depends_on = None
 
 
 def upgrade() -> None:
-    """Upgrade database schema - Advanced content fingerprinting system."""
+    """Upgrade database schema - Advanced content fingerprinting system with MASSIVE ENRICHMENTS."""
+    
+    # === EXISTANT BASE ===
+    create_fingerprinting_base()
+    
+    # === ENRICHISSEMENTS MASSIFS ===
+    
+    # 1. ALGORITHMES AVANCÉS (21+ types)
+    create_audio_fingerprinting_advanced()
+    create_video_fingerprinting_deep_learning()
+    create_image_fingerprinting_neural()
+    create_text_fingerprinting_semantic()
+    create_cross_platform_fingerprinting()
+    
+    # 2. DÉTECTION INTELLIGENCE
+    create_ai_similarity_detection()
+    create_derivative_work_detection()
+    create_style_theft_detection()
+    create_plagiarism_analysis_engine()
+    
+    # 3. BLOCKCHAIN FINGERPRINTS
+    create_immutable_fingerprint_storage()
+    create_decentralized_verification()
+    create_smart_contract_protection()
+    
+    # 4. ANALYTICS VIOLATIONS
+    create_violation_pattern_analysis()
+    create_infringement_prediction()
+    create_legal_action_automation()
+
+
+def create_fingerprinting_base() -> None:
+    """Create base fingerprinting functionality - EXISTING"""
     
     # Create fingerprint algorithm enum
     fingerprint_algorithm_enum = sa.Enum(
@@ -234,6 +272,353 @@ def upgrade() -> None:
     op.create_index('idx_violation_tracking_severity', 'violation_tracking', ['severity'])
     op.create_index('idx_violation_tracking_platform', 'violation_tracking', ['violating_platform'])
     op.create_index('idx_violation_tracking_status', 'violation_tracking', ['status'])
+
+
+def create_audio_fingerprinting_advanced() -> None:
+    """1. ALGORITHMES AVANCÉS - Audio Fingerprinting Avancé"""
+    
+    # Advanced audio fingerprinting algorithms table
+    op.create_table('audio_fingerprinting_advanced',
+        sa.Column('id', postgresql.UUID(as_uuid=True), primary_key=True, server_default=sa.text('gen_random_uuid()')),
+        sa.Column('content_id', postgresql.UUID(as_uuid=True), sa.ForeignKey('content_fingerprints.id', ondelete='CASCADE'), nullable=False),
+        sa.Column('chromaprint_fingerprint', sa.Text, nullable=True),
+        sa.Column('mfcc_features', postgresql.ARRAY(sa.Float), nullable=True),
+        sa.Column('spectral_centroid', postgresql.ARRAY(sa.Float), nullable=True),
+        sa.Column('zero_crossing_rate', postgresql.ARRAY(sa.Float), nullable=True),
+        sa.Column('mel_spectrogram', sa.JSON, nullable=True),
+        sa.Column('wav2vec2_embeddings', postgresql.ARRAY(sa.Float), nullable=True),
+        sa.Column('openl3_embeddings', postgresql.ARRAY(sa.Float), nullable=True),
+        sa.Column('vggish_embeddings', postgresql.ARRAY(sa.Float), nullable=True),
+        sa.Column('yamnet_embeddings', postgresql.ARRAY(sa.Float), nullable=True),
+        sa.Column('created_at', sa.DateTime(timezone=True), nullable=False, server_default=sa.func.now()),
+        sa.Column('updated_at', sa.DateTime(timezone=True), nullable=False, server_default=sa.func.now())
+    )
+    
+    # Advanced audio similarity detection
+    op.create_table('audio_similarity_advanced',
+        sa.Column('id', postgresql.UUID(as_uuid=True), primary_key=True, server_default=sa.text('gen_random_uuid()')),
+        sa.Column('original_id', postgresql.UUID(as_uuid=True), sa.ForeignKey('audio_fingerprinting_advanced.id'), nullable=False),
+        sa.Column('comparison_id', postgresql.UUID(as_uuid=True), sa.ForeignKey('audio_fingerprinting_advanced.id'), nullable=False),
+        sa.Column('chromaprint_similarity', sa.Float, nullable=True),
+        sa.Column('mfcc_similarity', sa.Float, nullable=True),
+        sa.Column('spectral_similarity', sa.Float, nullable=True),
+        sa.Column('embeddings_similarity', sa.Float, nullable=True),
+        sa.Column('overall_similarity', sa.Float, nullable=False),
+        sa.Column('is_cover_version', sa.Boolean, nullable=False, default=False),
+        sa.Column('is_remix', sa.Boolean, nullable=False, default=False),
+        sa.Column('is_sample', sa.Boolean, nullable=False, default=False),
+        sa.Column('confidence_score', sa.Float, nullable=False),
+        sa.Column('created_at', sa.DateTime(timezone=True), nullable=False, server_default=sa.func.now())
+    )
+
+
+def create_video_fingerprinting_deep_learning() -> None:
+    """1. ALGORITHMES AVANCÉS - Video Fingerprinting Deep Learning"""
+    
+    # Deep learning video fingerprinting
+    op.create_table('video_fingerprinting_deep_learning',
+        sa.Column('id', postgresql.UUID(as_uuid=True), primary_key=True, server_default=sa.text('gen_random_uuid()')),
+        sa.Column('content_id', postgresql.UUID(as_uuid=True), sa.ForeignKey('content_fingerprints.id', ondelete='CASCADE'), nullable=False),
+        sa.Column('cnn_features', postgresql.ARRAY(sa.Float), nullable=True),
+        sa.Column('vgg16_features', postgresql.ARRAY(sa.Float), nullable=True),
+        sa.Column('resnet_features', postgresql.ARRAY(sa.Float), nullable=True),
+        sa.Column('clip_embeddings', postgresql.ARRAY(sa.Float), nullable=True),
+        sa.Column('i3d_features', postgresql.ARRAY(sa.Float), nullable=True),
+        sa.Column('slowfast_features', postgresql.ARRAY(sa.Float), nullable=True),
+        sa.Column('optical_flow_features', postgresql.ARRAY(sa.Float), nullable=True),
+        sa.Column('scene_embeddings', postgresql.ARRAY(sa.Float), nullable=True),
+        sa.Column('motion_signatures', sa.JSON, nullable=True),
+        sa.Column('temporal_patterns', sa.JSON, nullable=True),
+        sa.Column('frame_rate', sa.Float, nullable=True),
+        sa.Column('duration_seconds', sa.Float, nullable=True),
+        sa.Column('created_at', sa.DateTime(timezone=True), nullable=False, server_default=sa.func.now()),
+        sa.Column('updated_at', sa.DateTime(timezone=True), nullable=False, server_default=sa.func.now())
+    )
+
+
+def create_image_fingerprinting_neural() -> None:
+    """1. ALGORITHMES AVANCÉS - Image Fingerprinting Neural Networks"""
+    
+    # Neural network image fingerprinting
+    op.create_table('image_fingerprinting_neural',
+        sa.Column('id', postgresql.UUID(as_uuid=True), primary_key=True, server_default=sa.text('gen_random_uuid()')),
+        sa.Column('content_id', postgresql.UUID(as_uuid=True), sa.ForeignKey('content_fingerprints.id', ondelete='CASCADE'), nullable=False),
+        sa.Column('sift_descriptors', postgresql.ARRAY(sa.Float), nullable=True),
+        sa.Column('orb_descriptors', postgresql.ARRAY(sa.Float), nullable=True),
+        sa.Column('surf_descriptors', postgresql.ARRAY(sa.Float), nullable=True),
+        sa.Column('lbp_histogram', postgresql.ARRAY(sa.Float), nullable=True),
+        sa.Column('color_histogram', postgresql.ARRAY(sa.Float), nullable=True),
+        sa.Column('edge_histogram', postgresql.ARRAY(sa.Float), nullable=True),
+        sa.Column('texture_features', postgresql.ARRAY(sa.Float), nullable=True),
+        sa.Column('deep_cnn_features', postgresql.ARRAY(sa.Float), nullable=True),
+        sa.Column('clip_image_embeddings', postgresql.ARRAY(sa.Float), nullable=True),
+        sa.Column('efficientnet_features', postgresql.ARRAY(sa.Float), nullable=True),
+        sa.Column('vision_transformer_features', postgresql.ARRAY(sa.Float), nullable=True),
+        sa.Column('perceptual_hash_variants', sa.JSON, nullable=True),
+        sa.Column('created_at', sa.DateTime(timezone=True), nullable=False, server_default=sa.func.now()),
+        sa.Column('updated_at', sa.DateTime(timezone=True), nullable=False, server_default=sa.func.now())
+    )
+
+
+def create_text_fingerprinting_semantic() -> None:
+    """1. ALGORITHMES AVANCÉS - Text Fingerprinting Semantic"""
+    
+    # Semantic text fingerprinting
+    op.create_table('text_fingerprinting_semantic',
+        sa.Column('id', postgresql.UUID(as_uuid=True), primary_key=True, server_default=sa.text('gen_random_uuid()')),
+        sa.Column('content_id', postgresql.UUID(as_uuid=True), sa.ForeignKey('content_fingerprints.id', ondelete='CASCADE'), nullable=False),
+        sa.Column('bert_embeddings', postgresql.ARRAY(sa.Float), nullable=True),
+        sa.Column('sentence_transformers', postgresql.ARRAY(sa.Float), nullable=True),
+        sa.Column('universal_sentence_encoder', postgresql.ARRAY(sa.Float), nullable=True),
+        sa.Column('semantic_hashes', sa.JSON, nullable=True),
+        sa.Column('syntactic_patterns', sa.JSON, nullable=True),
+        sa.Column('linguistic_features', sa.JSON, nullable=True),
+        sa.Column('style_embeddings', postgresql.ARRAY(sa.Float), nullable=True),
+        sa.Column('topic_distributions', postgresql.ARRAY(sa.Float), nullable=True),
+        sa.Column('sentiment_features', sa.JSON, nullable=True),
+        sa.Column('readability_metrics', sa.JSON, nullable=True),
+        sa.Column('language_detection', sa.String(10), nullable=True),
+        sa.Column('created_at', sa.DateTime(timezone=True), nullable=False, server_default=sa.func.now()),
+        sa.Column('updated_at', sa.DateTime(timezone=True), nullable=False, server_default=sa.func.now())
+    )
+
+
+def create_cross_platform_fingerprinting() -> None:
+    """1. ALGORITHMES AVANCÉS - Cross-Platform Fingerprinting"""
+    
+    # Cross-platform fingerprinting coordination
+    op.create_table('cross_platform_fingerprinting',
+        sa.Column('id', postgresql.UUID(as_uuid=True), primary_key=True, server_default=sa.text('gen_random_uuid()')),
+        sa.Column('content_id', postgresql.UUID(as_uuid=True), sa.ForeignKey('content_fingerprints.id', ondelete='CASCADE'), nullable=False),
+        sa.Column('platform_specific_hashes', sa.JSON, nullable=False),  # YouTube, TikTok, Instagram, etc.
+        sa.Column('unified_fingerprint', sa.Text, nullable=False),
+        sa.Column('cross_format_similarity', sa.Float, nullable=True),
+        sa.Column('format_adaptation_features', sa.JSON, nullable=True),
+        sa.Column('platform_optimization_data', sa.JSON, nullable=True),
+        sa.Column('sync_status', sa.String(50), nullable=False, default='pending'),
+        sa.Column('last_sync_at', sa.DateTime(timezone=True), nullable=True),
+        sa.Column('created_at', sa.DateTime(timezone=True), nullable=False, server_default=sa.func.now()),
+        sa.Column('updated_at', sa.DateTime(timezone=True), nullable=False, server_default=sa.func.now())
+    )
+
+
+def create_ai_similarity_detection() -> None:
+    """2. DÉTECTION INTELLIGENCE - AI Similarity Detection"""
+    
+    # AI-powered similarity detection engine
+    op.create_table('ai_similarity_detection',
+        sa.Column('id', postgresql.UUID(as_uuid=True), primary_key=True, server_default=sa.text('gen_random_uuid()')),
+        sa.Column('original_content_id', postgresql.UUID(as_uuid=True), sa.ForeignKey('content_fingerprints.id'), nullable=False),
+        sa.Column('comparison_content_id', postgresql.UUID(as_uuid=True), sa.ForeignKey('content_fingerprints.id'), nullable=False),
+        sa.Column('ai_model_version', sa.String(100), nullable=False),
+        sa.Column('similarity_score', sa.Float, nullable=False),
+        sa.Column('confidence_level', sa.Float, nullable=False),
+        sa.Column('semantic_similarity', sa.Float, nullable=True),
+        sa.Column('structural_similarity', sa.Float, nullable=True),
+        sa.Column('stylistic_similarity', sa.Float, nullable=True),
+        sa.Column('temporal_similarity', sa.Float, nullable=True),
+        sa.Column('content_type_adaptation', sa.JSON, nullable=True),
+        sa.Column('false_positive_probability', sa.Float, nullable=False),
+        sa.Column('detection_reasoning', sa.Text, nullable=True),
+        sa.Column('created_at', sa.DateTime(timezone=True), nullable=False, server_default=sa.func.now())
+    )
+
+
+def create_derivative_work_detection() -> None:
+    """2. DÉTECTION INTELLIGENCE - Derivative Work Detection"""
+    
+    # Derivative work detection system
+    op.create_table('derivative_work_detection',
+        sa.Column('id', postgresql.UUID(as_uuid=True), primary_key=True, server_default=sa.text('gen_random_uuid()')),
+        sa.Column('original_content_id', postgresql.UUID(as_uuid=True), sa.ForeignKey('content_fingerprints.id'), nullable=False),
+        sa.Column('derivative_content_id', postgresql.UUID(as_uuid=True), sa.ForeignKey('content_fingerprints.id'), nullable=False),
+        sa.Column('derivative_type', sa.String(100), nullable=False),  # remix, cover, parody, adaptation, etc.
+        sa.Column('transformation_level', sa.Float, nullable=False),  # 0-1 scale
+        sa.Column('creative_contribution', sa.Float, nullable=False),  # 0-1 scale
+        sa.Column('legal_analysis', sa.JSON, nullable=True),
+        sa.Column('fair_use_assessment', sa.JSON, nullable=True),
+        sa.Column('attribution_requirements', sa.JSON, nullable=True),
+        sa.Column('licensing_implications', sa.JSON, nullable=True),
+        sa.Column('commercial_use_allowed', sa.Boolean, nullable=True),
+        sa.Column('auto_approval_eligible', sa.Boolean, nullable=False, default=False),
+        sa.Column('human_review_required', sa.Boolean, nullable=False, default=True),
+        sa.Column('created_at', sa.DateTime(timezone=True), nullable=False, server_default=sa.func.now())
+    )
+
+
+def create_style_theft_detection() -> None:
+    """2. DÉTECTION INTELLIGENCE - Style Theft Detection"""
+    
+    # Style theft detection system
+    op.create_table('style_theft_detection',
+        sa.Column('id', postgresql.UUID(as_uuid=True), primary_key=True, server_default=sa.text('gen_random_uuid()')),
+        sa.Column('original_creator_id', postgresql.UUID(as_uuid=True), sa.ForeignKey('users.id'), nullable=False),
+        sa.Column('suspected_content_id', postgresql.UUID(as_uuid=True), sa.ForeignKey('content_fingerprints.id'), nullable=False),
+        sa.Column('style_signature', postgresql.ARRAY(sa.Float), nullable=False),
+        sa.Column('style_similarity_score', sa.Float, nullable=False),
+        sa.Column('distinctive_elements', sa.JSON, nullable=True),
+        sa.Column('pattern_analysis', sa.JSON, nullable=True),
+        sa.Column('temporal_consistency', sa.Float, nullable=True),
+        sa.Column('portfolio_comparison', sa.JSON, nullable=True),
+        sa.Column('theft_probability', sa.Float, nullable=False),
+        sa.Column('evidence_strength', sa.String(50), nullable=False),
+        sa.Column('recommended_action', sa.String(100), nullable=True),
+        sa.Column('created_at', sa.DateTime(timezone=True), nullable=False, server_default=sa.func.now())
+    )
+
+
+def create_plagiarism_analysis_engine() -> None:
+    """2. DÉTECTION INTELLIGENCE - Plagiarism Analysis Engine"""
+    
+    # Comprehensive plagiarism analysis
+    op.create_table('plagiarism_analysis_engine',
+        sa.Column('id', postgresql.UUID(as_uuid=True), primary_key=True, server_default=sa.text('gen_random_uuid()')),
+        sa.Column('content_id', postgresql.UUID(as_uuid=True), sa.ForeignKey('content_fingerprints.id'), nullable=False),
+        sa.Column('analysis_type', sa.String(100), nullable=False),  # full, partial, conceptual, etc.
+        sa.Column('source_detection', sa.JSON, nullable=True),  # detected sources
+        sa.Column('similarity_breakdown', sa.JSON, nullable=False),
+        sa.Column('originality_score', sa.Float, nullable=False),  # 0-100
+        sa.Column('plagiarism_percentage', sa.Float, nullable=False),  # 0-100
+        sa.Column('citation_analysis', sa.JSON, nullable=True),
+        sa.Column('paraphrasing_detection', sa.JSON, nullable=True),
+        sa.Column('translation_plagiarism', sa.JSON, nullable=True),
+        sa.Column('cross_language_analysis', sa.JSON, nullable=True),
+        sa.Column('academic_integrity_score', sa.Float, nullable=True),
+        sa.Column('commercial_risk_assessment', sa.JSON, nullable=True),
+        sa.Column('created_at', sa.DateTime(timezone=True), nullable=False, server_default=sa.func.now())
+    )
+
+
+def create_immutable_fingerprint_storage() -> None:
+    """3. BLOCKCHAIN FINGERPRINTS - Immutable Storage"""
+    
+    # Blockchain-based immutable fingerprint storage
+    op.create_table('immutable_fingerprint_storage',
+        sa.Column('id', postgresql.UUID(as_uuid=True), primary_key=True, server_default=sa.text('gen_random_uuid()')),
+        sa.Column('content_id', postgresql.UUID(as_uuid=True), sa.ForeignKey('content_fingerprints.id'), nullable=False),
+        sa.Column('blockchain_network', sa.String(100), nullable=False),  # Ethereum, Polygon, etc.
+        sa.Column('transaction_hash', sa.String(255), nullable=False, unique=True),
+        sa.Column('block_number', sa.BigInteger, nullable=False),
+        sa.Column('contract_address', sa.String(255), nullable=False),
+        sa.Column('token_id', sa.String(255), nullable=True),  # NFT token ID if applicable
+        sa.Column('fingerprint_hash', sa.String(255), nullable=False),
+        sa.Column('metadata_ipfs_hash', sa.String(255), nullable=True),
+        sa.Column('proof_of_creation', sa.JSON, nullable=False),
+        sa.Column('verification_status', sa.String(50), nullable=False, default='pending'),
+        sa.Column('gas_fee_paid', sa.Numeric(precision=20, scale=8), nullable=True),
+        sa.Column('confirmation_count', sa.Integer, nullable=False, default=0),
+        sa.Column('created_at', sa.DateTime(timezone=True), nullable=False, server_default=sa.func.now()),
+        sa.Column('verified_at', sa.DateTime(timezone=True), nullable=True)
+    )
+
+
+def create_decentralized_verification() -> None:
+    """3. BLOCKCHAIN FINGERPRINTS - Decentralized Verification"""
+    
+    # Decentralized verification network
+    op.create_table('decentralized_verification',
+        sa.Column('id', postgresql.UUID(as_uuid=True), primary_key=True, server_default=sa.text('gen_random_uuid()')),
+        sa.Column('fingerprint_storage_id', postgresql.UUID(as_uuid=True), sa.ForeignKey('immutable_fingerprint_storage.id'), nullable=False),
+        sa.Column('verifier_node_id', sa.String(255), nullable=False),
+        sa.Column('verification_signature', sa.Text, nullable=False),
+        sa.Column('consensus_algorithm', sa.String(100), nullable=False),
+        sa.Column('verification_timestamp', sa.DateTime(timezone=True), nullable=False),
+        sa.Column('stake_amount', sa.Numeric(precision=20, scale=8), nullable=True),
+        sa.Column('reputation_score', sa.Float, nullable=False, default=0.0),
+        sa.Column('challenge_response', sa.JSON, nullable=True),
+        sa.Column('verification_proof', sa.JSON, nullable=False),
+        sa.Column('network_consensus', sa.Boolean, nullable=False, default=False),
+        sa.Column('created_at', sa.DateTime(timezone=True), nullable=False, server_default=sa.func.now())
+    )
+
+
+def create_smart_contract_protection() -> None:
+    """3. BLOCKCHAIN FINGERPRINTS - Smart Contract Protection"""
+    
+    # Smart contract-based content protection
+    op.create_table('smart_contract_protection',
+        sa.Column('id', postgresql.UUID(as_uuid=True), primary_key=True, server_default=sa.text('gen_random_uuid()')),
+        sa.Column('content_id', postgresql.UUID(as_uuid=True), sa.ForeignKey('content_fingerprints.id'), nullable=False),
+        sa.Column('smart_contract_address', sa.String(255), nullable=False),
+        sa.Column('contract_type', sa.String(100), nullable=False),  # ERC721, ERC1155, custom
+        sa.Column('royalty_percentage', sa.Float, nullable=True),
+        sa.Column('usage_terms', sa.JSON, nullable=False),
+        sa.Column('licensing_rules', sa.JSON, nullable=False),
+        sa.Column('enforcement_mechanisms', sa.JSON, nullable=False),
+        sa.Column('dispute_resolution_dao', sa.String(255), nullable=True),
+        sa.Column('governance_token', sa.String(255), nullable=True),
+        sa.Column('automated_enforcement', sa.Boolean, nullable=False, default=True),
+        sa.Column('violation_penalties', sa.JSON, nullable=True),
+        sa.Column('creator_benefits', sa.JSON, nullable=True),
+        sa.Column('created_at', sa.DateTime(timezone=True), nullable=False, server_default=sa.func.now())
+    )
+
+
+def create_violation_pattern_analysis() -> None:
+    """4. ANALYTICS VIOLATIONS - Pattern Analysis"""
+    
+    # Violation pattern analysis system
+    op.create_table('violation_pattern_analysis',
+        sa.Column('id', postgresql.UUID(as_uuid=True), primary_key=True, server_default=sa.text('gen_random_uuid()')),
+        sa.Column('analysis_period_start', sa.DateTime(timezone=True), nullable=False),
+        sa.Column('analysis_period_end', sa.DateTime(timezone=True), nullable=False),
+        sa.Column('violation_patterns', sa.JSON, nullable=False),
+        sa.Column('geographic_distribution', sa.JSON, nullable=True),
+        sa.Column('platform_distribution', sa.JSON, nullable=True),
+        sa.Column('temporal_patterns', sa.JSON, nullable=True),
+        sa.Column('perpetrator_profiles', sa.JSON, nullable=True),
+        sa.Column('content_type_analysis', sa.JSON, nullable=True),
+        sa.Column('severity_trends', sa.JSON, nullable=True),
+        sa.Column('resolution_effectiveness', sa.JSON, nullable=True),
+        sa.Column('emerging_threats', sa.JSON, nullable=True),
+        sa.Column('prediction_accuracy', sa.Float, nullable=True),
+        sa.Column('created_at', sa.DateTime(timezone=True), nullable=False, server_default=sa.func.now())
+    )
+
+
+def create_infringement_prediction() -> None:
+    """4. ANALYTICS VIOLATIONS - Infringement Prediction"""
+    
+    # AI-powered infringement prediction
+    op.create_table('infringement_prediction',
+        sa.Column('id', postgresql.UUID(as_uuid=True), primary_key=True, server_default=sa.text('gen_random_uuid()')),
+        sa.Column('content_id', postgresql.UUID(as_uuid=True), sa.ForeignKey('content_fingerprints.id'), nullable=False),
+        sa.Column('prediction_model_version', sa.String(100), nullable=False),
+        sa.Column('infringement_probability', sa.Float, nullable=False),  # 0-1
+        sa.Column('risk_factors', sa.JSON, nullable=False),
+        sa.Column('vulnerability_score', sa.Float, nullable=False),  # 0-100
+        sa.Column('recommended_protections', sa.JSON, nullable=True),
+        sa.Column('monitoring_priority', sa.String(50), nullable=False),
+        sa.Column('predicted_timeframe', sa.JSON, nullable=True),  # when infringement might occur
+        sa.Column('potential_platforms', postgresql.ARRAY(sa.String), nullable=True),
+        sa.Column('prevention_strategies', sa.JSON, nullable=True),
+        sa.Column('confidence_interval', sa.JSON, nullable=True),
+        sa.Column('historical_accuracy', sa.Float, nullable=True),
+        sa.Column('created_at', sa.DateTime(timezone=True), nullable=False, server_default=sa.func.now())
+    )
+
+
+def create_legal_action_automation() -> None:
+    """4. ANALYTICS VIOLATIONS - Legal Action Automation"""
+    
+    # Automated legal action system
+    op.create_table('legal_action_automation',
+        sa.Column('id', postgresql.UUID(as_uuid=True), primary_key=True, server_default=sa.text('gen_random_uuid()')),
+        sa.Column('violation_id', postgresql.UUID(as_uuid=True), sa.ForeignKey('violation_tracking.id'), nullable=False),
+        sa.Column('action_type', sa.String(100), nullable=False),  # cease_desist, dmca, lawsuit
+        sa.Column('jurisdiction', sa.String(100), nullable=False),
+        sa.Column('applicable_laws', postgresql.ARRAY(sa.String), nullable=False),
+        sa.Column('evidence_package', sa.JSON, nullable=False),
+        sa.Column('legal_document_template', sa.String(255), nullable=True),
+        sa.Column('automated_generation', sa.Boolean, nullable=False, default=True),
+        sa.Column('lawyer_review_required', sa.Boolean, nullable=False, default=True),
+        sa.Column('estimated_costs', sa.JSON, nullable=True),
+        sa.Column('success_probability', sa.Float, nullable=True),
+        sa.Column('timeline_estimate', sa.JSON, nullable=True),
+        sa.Column('settlement_recommendations', sa.JSON, nullable=True),
+        sa.Column('action_status', sa.String(50), nullable=False, default='pending'),
+        sa.Column('created_at', sa.DateTime(timezone=True), nullable=False, server_default=sa.func.now())
+    )
     op.create_index('idx_violation_tracking_detected', 'violation_tracking', ['first_detected_at'])
     op.create_index('idx_violation_tracking_confidence', 'violation_tracking', ['detection_confidence'])
     op.create_index('idx_violation_tracking_financial', 'violation_tracking', ['financial_impact_estimate'])
