@@ -474,19 +474,8 @@ Initialize the intelligent alert manager"""
         
         async def escalate_alert():
             try:
-            logger.info(f"Executing escalate_alert")
-            
-            # Implementation for escalate_alert
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"escalate_alert completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"escalate_alert failed: {e}")
-            raise
+                logger.info(f"Starting escalation for alert {alert.alert_id}")
+                
                 for level_config in rule.escalation_levels:
                     level = level_config["level"]
                     delay = self._parse_duration(level_config["delay"])
