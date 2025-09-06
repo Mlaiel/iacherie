@@ -181,7 +181,45 @@ __all__ = [
     'SEOOptimizationHandler',
     'CollaborationMatchingHandler',
     'DistributionPreparationHandler',
-    'EventProcessingPipeline'
+    'EventProcessingPipeline',
+    # Critical AI Processing Modules
+    'MLModelOrchestrator',
+    'MLModelType',
+    'ModelStatus',
+    'InferenceMode',
+    'NeuralNetworkEventProcessor',
+    'NeuralNetworkType',
+    'NetworkEventType',
+    'DeepLearningPipeline',
+    'PipelineStage',
+    'PipelineStatus',
+    'AIInferenceEngine',
+    'InferenceType',
+    'ModelFramework',
+    'MultimodalProcessor',
+    'ModalityType',
+    'FusionStrategy',
+    'TransformerModelHandler',
+    'TransformerType',
+    'TaskType',
+    'ComputerVisionProcessor',
+    'VisionTaskType',
+    'MediaType',
+    'NaturalLanguageProcessor',
+    'NLPTaskType',
+    'LanguageCode',
+    'AudioIntelligenceProcessor',
+    'AudioTaskType',
+    'AudioFormat',
+    'RecommendationEngineEvents',
+    'RecommendationType',
+    'RecommendationContext',
+    'QualityAssessmentAI',
+    'QualityDimension',
+    'QualityLevel',
+    'BiasDetectionEvents',
+    'BiasType',
+    'BiasSeverity'
 ]
 
 # Import handlers for easy access
@@ -199,6 +237,26 @@ try:
 except ImportError as e:
     logger.warning(f"Some event handlers could not be imported: {e}")
 
+# Import new critical AI processing modules
+try:
+    from .ml_model_orchestrator import MLModelOrchestrator, MLModelType, ModelStatus, InferenceMode
+    from .neural_network_events import NeuralNetworkEventProcessor, NeuralNetworkType, NetworkEventType
+    from .deep_learning_pipeline import DeepLearningPipeline, PipelineStage, PipelineStatus
+    from .ai_inference_engine import AIInferenceEngine, InferenceType, ModelFramework
+    from .multimodal_processor_events import MultimodalProcessor, ModalityType, FusionStrategy
+    from .transformer_model_handler import TransformerModelHandler, TransformerType, TaskType
+    from .computer_vision_events import ComputerVisionProcessor, VisionTaskType, MediaType
+    from .natural_language_events import NaturalLanguageProcessor, NLPTaskType, LanguageCode
+    from .audio_intelligence_events import AudioIntelligenceProcessor, AudioTaskType, AudioFormat
+    from .recommendation_engine_events import RecommendationEngineEvents, RecommendationType, RecommendationContext
+    from .quality_assessment_ai import QualityAssessmentAI, QualityDimension, QualityLevel
+    from .bias_detection_events import BiasDetectionEvents, BiasType, BiasSeverity
+    
+    logger.info("All critical AI processing modules loaded successfully")
+    
+except ImportError as e:
+    logger.warning(f"Some critical AI processing modules could not be imported: {e}")
+
 # Handler registry for dynamic loading
 HANDLER_REGISTRY = {
     'content_analysis': 'ContentAnalysisHandler',
@@ -207,7 +265,20 @@ HANDLER_REGISTRY = {
     'seo_optimization': 'SEOOptimizationHandler',
     'collaboration_matching': 'CollaborationMatchingHandler',
     'distribution_preparation': 'DistributionPreparationHandler',
-    'event_pipeline': 'EventProcessingPipeline'
+    'event_pipeline': 'EventProcessingPipeline',
+    # New critical AI processing modules
+    'ml_model_orchestrator': 'MLModelOrchestrator',
+    'neural_network_processor': 'NeuralNetworkEventProcessor',
+    'deep_learning_pipeline': 'DeepLearningPipeline',
+    'ai_inference_engine': 'AIInferenceEngine',
+    'multimodal_processor': 'MultimodalProcessor',
+    'transformer_model_handler': 'TransformerModelHandler',
+    'computer_vision_processor': 'ComputerVisionProcessor',
+    'natural_language_processor': 'NaturalLanguageProcessor',
+    'audio_intelligence_processor': 'AudioIntelligenceProcessor',
+    'recommendation_engine': 'RecommendationEngineEvents',
+    'quality_assessment_ai': 'QualityAssessmentAI',
+    'bias_detection_events': 'BiasDetectionEvents'
 }
 
 def get_handler_class(handler_name: str):
