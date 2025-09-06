@@ -11,7 +11,8 @@ from .business_intelligence import (
     BusinessIntelligenceManager,
     ContentPerformanceAnalyzer,
     PredictiveAnalyticsEngine,
-    UserBehaviorAnalyzer
+    UserBehaviorAnalyzer,
+    GlobalBusinessIntelligenceEcosystem
 )
 from .creator_performance_engine import (
     CreatorPerformanceEngine,
@@ -23,7 +24,8 @@ from .ai_processing_metrics import (
     AIProcessingMetricsEngine,
     AIProcessingMetrics,
     AITaskType,
-    ProcessingStatus
+    ProcessingStatus,
+    QuantumAIProcessingIntelligence
 )
 from .content_protection_analytics import (
     ContentProtectionAnalytics,
@@ -35,7 +37,8 @@ from .collaboration_intelligence import (
     CollaborationIntelligence,
     CollaborationAnalytics,
     MatchingScore,
-    CollaborationType
+    CollaborationType,
+    AdvancedCollaborationIntelligenceEcosystem
 )
 from .gamification_metrics import (
     GamificationAnalytics,
@@ -76,6 +79,7 @@ __all__ = [
     "ContentPerformanceAnalyzer", 
     "PredictiveAnalyticsEngine",
     "UserBehaviorAnalyzer",
+    "GlobalBusinessIntelligenceEcosystem",
     
     # Creator Performance
     "CreatorPerformanceEngine",
@@ -88,6 +92,7 @@ __all__ = [
     "AIProcessingMetrics",
     "AITaskType",
     "ProcessingStatus",
+    "QuantumAIProcessingIntelligence",
     
     # Content Protection
     "ContentProtectionAnalytics",
@@ -100,6 +105,7 @@ __all__ = [
     "CollaborationAnalytics",
     "MatchingScore",
     "CollaborationType",
+    "AdvancedCollaborationIntelligenceEcosystem",
     
     # Gamification
     "GamificationAnalytics",
