@@ -81,5 +81,29 @@ sentence-transformers>=2.5.0
 aiohttp>=3.9.0
 websockets>=12.0
 
+# Backend Integrations Dependencies (as per architecture specification)
+# Async HTTP clients
+httpx>=0.26.0
+
+# OAuth & Authentication
+authlib>=1.3.0
+
+# Rate limiting & caching
+aioredis>=2.0.1
+limits>=3.7.0
+
+# Data validation & serialization
+marshmallow>=3.20.0
+
+# Webhook processing
+celery[redis]>=5.3.0
+
+# Platform-specific SDKs
+google-api-python-client>=2.110.0  # YouTube
+facebook-sdk>=3.1.0                # Facebook/Instagram
+tweepy>=4.14.0                     # Twitter/X
+spotipy>=2.23.0                    # Spotify
+paypalrestsdk>=1.13.3             # PayPal
+
 # Extended functionality (optional - loads from config/requirements.txt if available)
 # For full AI features, install: pip install -r config/requirements.txt
