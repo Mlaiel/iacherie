@@ -84,6 +84,75 @@ from .compliance_manager import (
     DataGovernance
 )
 
+from .enterprise_orchestrator import (
+    EnterpriseOrchestrator,
+    CreatorType,
+    ContentType,
+    WorkflowStage,
+    WorkflowStatus,
+    ContentUpload,
+    WorkflowResult,
+    AIProcessingResult,
+    ProtectionResult,
+    SEOResult,
+    CollaborationResult,
+    MonetizationResult,
+    DistributionResult
+)
+
+from .enterprise_security import (
+    EnterpriseSecurity,
+    SecurityLevel,
+    ThreatLevel,
+    AuthenticationMethod,
+    EncryptionAlgorithm,
+    ComplianceFramework,
+    SecurityContext,
+    SecurityEvent,
+    EncryptionKey,
+    SecurityPolicy,
+    AdvancedEncryption,
+    MultiFactorAuthentication,
+    BlockchainAuditTrail,
+    ThreatDetection,
+    ComplianceManager as SecurityComplianceManager
+)
+
+from .enterprise_workflow import (
+    EnterpriseWorkflow,
+    WorkflowType,
+    TaskType,
+    Priority,
+    Industry,
+    WorkflowTask,
+    WorkflowInstance,
+    WorkflowTemplate,
+    SLAConfiguration,
+    ApprovalStep,
+    EnterpriseIntegration,
+    SLAManager,
+    ApprovalEngine,
+    WorkflowTemplateEngine
+)
+
+from .enterprise_intelligence import (
+    EnterpriseIntelligence,
+    MetricType,
+    TimeFrame,
+    PredictionType,
+    DashboardType,
+    RecommendationType,
+    BusinessMetric,
+    PredictionResult,
+    BusinessInsight,
+    DashboardWidget,
+    ExecutiveDashboard,
+    MLModelManager,
+    BehavioralAnalytics,
+    BusinessOptimization,
+    ExecutiveDashboardEngine
+)
+
 from .index import EnterpriseIndex
 
 # Export all enterprise modules for external access
@@ -131,7 +200,74 @@ __all__ = [
     "ComplianceManager",
     "RegulatoryFramework",
     "AuditTrail",
-    "DataGovernance"
+    "DataGovernance",
+    
+    # NEW CRITICAL MODULES
+    
+    # Enterprise Orchestrator - Complete Business Logic Workflows
+    "EnterpriseOrchestrator",
+    "CreatorType",
+    "ContentType", 
+    "WorkflowStage",
+    "WorkflowStatus",
+    "ContentUpload",
+    "WorkflowResult",
+    "AIProcessingResult",
+    "ProtectionResult",
+    "SEOResult",
+    "CollaborationResult",
+    "MonetizationResult",
+    "DistributionResult",
+    
+    # Enterprise Security - Industrial Multi-Tenant Security
+    "EnterpriseSecurity",
+    "SecurityLevel",
+    "ThreatLevel",
+    "AuthenticationMethod",
+    "EncryptionAlgorithm",
+    "ComplianceFramework",
+    "SecurityContext",
+    "SecurityEvent",
+    "EncryptionKey",
+    "SecurityPolicy",
+    "AdvancedEncryption",
+    "MultiFactorAuthentication",
+    "BlockchainAuditTrail",
+    "ThreatDetection",
+    "SecurityComplianceManager",
+    
+    # Enterprise Workflow - Automated Business Workflows
+    "EnterpriseWorkflow",
+    "WorkflowType",
+    "TaskType",
+    "Priority",
+    "Industry",
+    "WorkflowTask",
+    "WorkflowInstance",
+    "WorkflowTemplate",
+    "SLAConfiguration",
+    "ApprovalStep",
+    "EnterpriseIntegration",
+    "SLAManager",
+    "ApprovalEngine",
+    "WorkflowTemplateEngine",
+    
+    # Enterprise Intelligence - Advanced Business Intelligence
+    "EnterpriseIntelligence",
+    "MetricType",
+    "TimeFrame",
+    "PredictionType",
+    "DashboardType", 
+    "RecommendationType",
+    "BusinessMetric",
+    "PredictionResult",
+    "BusinessInsight",
+    "DashboardWidget",
+    "ExecutiveDashboard",
+    "MLModelManager",
+    "BehavioralAnalytics",
+    "BusinessOptimization",
+    "ExecutiveDashboardEngine"
 ]
 
 # Module metadata
