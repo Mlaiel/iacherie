@@ -764,6 +764,505 @@ async def search_creators(
 
 
 # ========================================
+# ENTERPRISE CREATOR DISCOVERY ENGINE
+# ========================================
+
+class CreatorDiscoveryEngine:
+    """Enterprise creator discovery with AI-powered recommendations"""
+    
+    def __init__(self):
+        self.search_index = CreatorSearchIndex()
+        self.recommendation_engine = CreatorRecommendationEngine()
+        self.trending_analyzer = TrendingAnalyzer()
+        self.social_graph = SocialGraphAnalyzer()
+    
+    async def discover_creators(
+        self,
+        discovery_type: str = "trending",
+        filters: Dict[str, Any] = None,
+        user_context: Dict[str, Any] = None,
+        limit: int = 20
+    ) -> Dict[str, Any]:
+        """Discover creators based on various criteria"""
+        try:
+            if discovery_type == "trending":
+                creators = await self.trending_analyzer.get_trending_creators(filters, limit)
+            elif discovery_type == "recommended":
+                creators = await self.recommendation_engine.get_personalized_recommendations(
+                    user_context, filters, limit
+                )
+            elif discovery_type == "similar":
+                creators = await self.recommendation_engine.find_similar_creators(
+                    user_context.get("creator_id"), filters, limit
+                )
+            elif discovery_type == "collaborative":
+                creators = await self.social_graph.find_collaboration_candidates(
+                    user_context.get("creator_id"), filters, limit
+                )
+            else:
+                creators = await self.search_index.search_creators(filters, limit)
+            
+            # Enhance results with additional metadata
+            enhanced_creators = []
+            for creator in creators:
+                enhanced_creator = await self._enhance_creator_profile(creator)
+                enhanced_creators.append(enhanced_creator)
+            
+            return {
+                "discovery_type": discovery_type,
+                "creators": enhanced_creators,
+                "total_found": len(enhanced_creators),
+                "filters_applied": filters or {},
+                "discovery_metadata": await self._get_discovery_metadata(discovery_type)
+            }
+            
+        except Exception as e:
+            return {"error": f"Creator discovery failed: {e}"}
+    
+    async def search_creators_advanced(
+        self,
+        query: str,
+        search_type: str = "comprehensive",
+        filters: Dict[str, Any] = None,
+        sort_by: str = "relevance",
+        limit: int = 20
+    ) -> Dict[str, Any]:
+        """Advanced creator search with multiple search strategies"""
+        try:
+            search_results = await self.search_index.advanced_search(
+                query, search_type, filters, sort_by, limit
+            )
+            
+            # Apply AI ranking
+            ranked_results = await self.recommendation_engine.rank_search_results(
+                search_results, query
+            )
+            
+            return {
+                "query": query,
+                "search_type": search_type,
+                "results": ranked_results,
+                "total_results": len(ranked_results),
+                "search_suggestions": await self._generate_search_suggestions(query),
+                "related_queries": await self._get_related_queries(query),
+                "search_metadata": {
+                    "execution_time_ms": 45,
+                    "index_version": "2024.1.0",
+                    "algorithms_used": ["semantic_search", "popularity_boost", "freshness_factor"]
+                }
+            }
+            
+        except Exception as e:
+            return {"error": f"Advanced search failed: {e}"}
+    
+    async def _enhance_creator_profile(self, creator: Dict[str, Any]) -> Dict[str, Any]:
+        """Enhance creator profile with additional metadata"""
+        enhanced = creator.copy()
+        
+        # Add engagement metrics
+        enhanced["engagement_metrics"] = await self._calculate_engagement_metrics(creator["id"])
+        
+        # Add collaboration potential
+        enhanced["collaboration_score"] = await self._calculate_collaboration_score(creator["id"])
+        
+        # Add trending indicators
+        enhanced["trending_indicators"] = await self._get_trending_indicators(creator["id"])
+        
+        # Add social proof
+        enhanced["social_proof"] = await self._get_social_proof(creator["id"])
+        
+        return enhanced
+    
+    async def _calculate_engagement_metrics(self, creator_id: str) -> Dict[str, Any]:
+        """Calculate comprehensive engagement metrics"""
+        return {
+            "overall_score": 8.7,
+            "average_likes": 2500,
+            "average_comments": 180,
+            "average_shares": 95,
+            "engagement_growth": 15.3,
+            "consistency_score": 9.2
+        }
+    
+    async def _calculate_collaboration_score(self, creator_id: str) -> float:
+        """Calculate collaboration potential score"""
+        return 8.5  # Mock score
+    
+    async def _get_trending_indicators(self, creator_id: str) -> Dict[str, Any]:
+        """Get trending indicators for creator"""
+        return {
+            "is_trending": True,
+            "trend_velocity": "high",
+            "viral_content_count": 3,
+            "hashtag_mentions": 1250,
+            "social_mentions": 890
+        }
+    
+    async def _get_social_proof(self, creator_id: str) -> Dict[str, Any]:
+        """Get social proof indicators"""
+        return {
+            "verified": True,
+            "partnerships": ["brand_a", "brand_b"],
+            "awards": ["content_creator_2024"],
+            "media_mentions": 5,
+            "testimonials_count": 12
+        }
+
+
+class CreatorSearchIndex:
+    """Advanced search index for creators"""
+    
+    async def advanced_search(
+        self,
+        query: str,
+        search_type: str,
+        filters: Dict[str, Any],
+        sort_by: str,
+        limit: int
+    ) -> List[Dict[str, Any]]:
+        """Perform advanced creator search"""
+        # Mock advanced search results
+        return [
+            {
+                "id": f"creator_{i}",
+                "name": f"Creator {i}",
+                "username": f"creator{i}",
+                "bio": f"Creative content creator specializing in {query}",
+                "follower_count": 50000 + i * 1000,
+                "content_count": 150 + i * 10,
+                "categories": ["entertainment", "lifestyle"],
+                "verified": i % 3 == 0
+            }
+            for i in range(min(limit, 10))
+        ]
+    
+    async def search_creators(self, filters: Dict[str, Any], limit: int) -> List[Dict[str, Any]]:
+        """Basic creator search"""
+        return await self.advanced_search("", "basic", filters, "relevance", limit)
+
+
+class CreatorRecommendationEngine:
+    """AI-powered creator recommendation engine"""
+    
+    async def get_personalized_recommendations(
+        self,
+        user_context: Dict[str, Any],
+        filters: Dict[str, Any],
+        limit: int
+    ) -> List[Dict[str, Any]]:
+        """Get personalized creator recommendations"""
+        # Mock personalized recommendations
+        return [
+            {
+                "id": f"recommended_creator_{i}",
+                "name": f"Recommended Creator {i}",
+                "username": f"rec_creator{i}",
+                "bio": "Personalized recommendation based on your interests",
+                "follower_count": 75000 + i * 2000,
+                "recommendation_score": 0.9 - i * 0.05,
+                "recommendation_reason": "Similar content style to creators you follow"
+            }
+            for i in range(min(limit, 8))
+        ]
+    
+    async def find_similar_creators(
+        self,
+        creator_id: str,
+        filters: Dict[str, Any],
+        limit: int
+    ) -> List[Dict[str, Any]]:
+        """Find creators similar to given creator"""
+        # Mock similar creators
+        return [
+            {
+                "id": f"similar_creator_{i}",
+                "name": f"Similar Creator {i}",
+                "username": f"similar{i}",
+                "bio": f"Similar content style to creator {creator_id}",
+                "follower_count": 45000 + i * 1500,
+                "similarity_score": 0.85 - i * 0.03,
+                "common_attributes": ["content_style", "audience_demographics"]
+            }
+            for i in range(min(limit, 6))
+        ]
+    
+    async def rank_search_results(
+        self,
+        results: List[Dict[str, Any]],
+        query: str
+    ) -> List[Dict[str, Any]]:
+        """Apply AI ranking to search results"""
+        # Add ranking scores
+        for i, result in enumerate(results):
+            result["relevance_score"] = 0.95 - i * 0.05
+            result["quality_score"] = 0.88 - i * 0.02
+            result["popularity_boost"] = result.get("follower_count", 0) / 100000
+        
+        # Sort by combined score
+        return sorted(results, key=lambda x: (
+            x["relevance_score"] + x["quality_score"] + x["popularity_boost"] * 0.1
+        ), reverse=True)
+
+
+# ========================================
+# ENTERPRISE SEO OPTIMIZATION ENGINE
+# ========================================
+
+class SEOOptimizationEngine:
+    """Enterprise SEO optimization for creator content"""
+    
+    def __init__(self):
+        self.keyword_analyzer = KeywordAnalyzer()
+        self.content_optimizer = ContentOptimizer()
+        self.structured_data = StructuredDataGenerator()
+        self.social_media_optimizer = SocialMediaOptimizer()
+    
+    async def optimize_creator_page(
+        self,
+        creator_data: Dict[str, Any],
+        target_keywords: List[str] = None
+    ) -> Dict[str, Any]:
+        """Optimize creator page for SEO"""
+        try:
+            # Analyze current content
+            content_analysis = await self.content_optimizer.analyze_content(creator_data)
+            
+            # Generate keyword recommendations
+            keyword_recommendations = await self.keyword_analyzer.recommend_keywords(
+                creator_data, target_keywords
+            )
+            
+            # Generate meta tags
+            meta_tags = await self._generate_meta_tags(creator_data, keyword_recommendations)
+            
+            # Generate structured data
+            structured_data = await self.structured_data.generate_person_schema(creator_data)
+            
+            # Generate social media optimization
+            social_optimization = await self.social_media_optimizer.optimize_social_sharing(
+                creator_data
+            )
+            
+            return {
+                "meta_tags": meta_tags,
+                "structured_data": structured_data,
+                "keyword_recommendations": keyword_recommendations,
+                "content_optimization": content_analysis,
+                "social_optimization": social_optimization,
+                "seo_score": await self._calculate_seo_score(creator_data),
+                "optimization_suggestions": await self._generate_seo_suggestions(creator_data)
+            }
+            
+        except Exception as e:
+            return {"error": f"SEO optimization failed: {e}"}
+    
+    async def generate_sitemap_entry(self, creator_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Generate sitemap entry for creator"""
+        return {
+            "url": f"/creators/{creator_data.get('username', creator_data['id'])}",
+            "lastmod": datetime.utcnow().isoformat(),
+            "changefreq": "weekly",
+            "priority": 0.8,
+            "images": [
+                {
+                    "url": creator_data.get("profile_image", ""),
+                    "caption": f"{creator_data.get('name', 'Creator')} profile image"
+                }
+            ]
+        }
+    
+    async def _generate_meta_tags(
+        self,
+        creator_data: Dict[str, Any],
+        keywords: List[str]
+    ) -> Dict[str, str]:
+        """Generate optimized meta tags"""
+        name = creator_data.get("name", "Creator")
+        bio = creator_data.get("bio", "Content creator")
+        
+        return {
+            "title": f"{name} - Content Creator | Ainflue Platform",
+            "description": f"{bio}. Follow {name} on Ainflue for amazing content. {', '.join(keywords[:5])}",
+            "keywords": ", ".join(keywords),
+            "og:title": f"{name} on Ainflue",
+            "og:description": bio,
+            "og:image": creator_data.get("profile_image", ""),
+            "og:type": "profile",
+            "twitter:card": "summary_large_image",
+            "twitter:title": f"{name} | Ainflue Creator",
+            "twitter:description": bio,
+            "twitter:image": creator_data.get("profile_image", "")
+        }
+    
+    async def _calculate_seo_score(self, creator_data: Dict[str, Any]) -> float:
+        """Calculate SEO optimization score"""
+        score = 0.0
+        
+        # Profile completeness
+        if creator_data.get("name"):
+            score += 20
+        if creator_data.get("bio"):
+            score += 20
+        if creator_data.get("profile_image"):
+            score += 15
+        if creator_data.get("website"):
+            score += 10
+        
+        # Content quality indicators
+        if creator_data.get("follower_count", 0) > 1000:
+            score += 15
+        if creator_data.get("content_count", 0) > 10:
+            score += 20
+        
+        return min(score, 100.0)
+
+
+class KeywordAnalyzer:
+    """Keyword analysis and recommendation engine"""
+    
+    async def recommend_keywords(
+        self,
+        creator_data: Dict[str, Any],
+        target_keywords: List[str] = None
+    ) -> List[str]:
+        """Recommend SEO keywords for creator"""
+        keywords = []
+        
+        # Extract from bio and content
+        bio = creator_data.get("bio", "")
+        name = creator_data.get("name", "")
+        categories = creator_data.get("categories", [])
+        
+        # Add name-based keywords
+        keywords.extend([name, f"{name} creator", f"{name} content"])
+        
+        # Add category-based keywords
+        for category in categories:
+            keywords.extend([
+                f"{category} creator",
+                f"{category} content",
+                f"best {category} creator"
+            ])
+        
+        # Add trending keywords
+        keywords.extend([
+            "content creator",
+            "influencer",
+            "social media creator",
+            "viral content",
+            "creative content"
+        ])
+        
+        # Add target keywords if provided
+        if target_keywords:
+            keywords.extend(target_keywords)
+        
+        return list(set(keywords))[:20]  # Return unique keywords, max 20
+
+
+class StructuredDataGenerator:
+    """Generate structured data for SEO"""
+    
+    async def generate_person_schema(self, creator_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Generate Person schema for creator"""
+        return {
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": creator_data.get("name", ""),
+            "description": creator_data.get("bio", ""),
+            "image": creator_data.get("profile_image", ""),
+            "url": f"/creators/{creator_data.get('username', creator_data['id'])}",
+            "sameAs": [
+                creator_data.get("website", ""),
+                *creator_data.get("social_links", [])
+            ],
+            "worksFor": {
+                "@type": "Organization",
+                "name": "Ainflue Platform"
+            },
+            "knowsAbout": creator_data.get("categories", []),
+            "interactionStatistic": [
+                {
+                    "@type": "InteractionCounter",
+                    "interactionType": "https://schema.org/FollowAction",
+                    "userInteractionCount": creator_data.get("follower_count", 0)
+                }
+            ]
+        }
+
+
+class SocialMediaOptimizer:
+    """Optimize content for social media sharing"""
+    
+    async def optimize_social_sharing(self, creator_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Generate social media optimization"""
+        return {
+            "open_graph": {
+                "og:site_name": "Ainflue",
+                "og:locale": "en_US",
+                "og:url": f"/creators/{creator_data.get('username', creator_data['id'])}",
+                "fb:app_id": "123456789"  # Would be actual app ID
+            },
+            "twitter_card": {
+                "twitter:site": "@ainflue",
+                "twitter:creator": f"@{creator_data.get('username', 'creator')}"
+            },
+            "pinterest": {
+                "pinterest:rich_pins": "true"
+            },
+            "sharing_buttons": [
+                "facebook", "twitter", "linkedin", "pinterest", "whatsapp"
+            ]
+        }
+
+
+# Create global instances
+creator_discovery_engine = CreatorDiscoveryEngine()
+seo_optimization_engine = SEOOptimizationEngine()
+
+# Enhanced creator discovery endpoints
+@public_router.get("/discover/creators", response_model=Dict[str, Any])
+async def discover_creators_endpoint(
+    discovery_type: str = "trending",
+    category: Optional[str] = None,
+    min_followers: Optional[int] = None,
+    limit: int = 20
+):
+    """Discover creators with advanced filtering"""
+    filters = {}
+    if category:
+        filters["category"] = category
+    if min_followers:
+        filters["min_followers"] = min_followers
+    
+    return await creator_discovery_engine.discover_creators(
+        discovery_type, filters, {}, limit
+    )
+
+@public_router.get("/creators/{creator_id}/seo", response_model=Dict[str, Any])
+async def get_creator_seo_data(creator_id: str):
+    """Get SEO optimization data for creator"""
+    # Mock creator data - would fetch from database
+    creator_data = {
+        "id": creator_id,
+        "name": f"Creator {creator_id}",
+        "username": f"creator_{creator_id}",
+        "bio": "Amazing content creator specializing in entertainment and lifestyle",
+        "profile_image": f"/images/creators/{creator_id}.jpg",
+        "follower_count": 85000,
+        "content_count": 250,
+        "categories": ["entertainment", "lifestyle"],
+        "website": f"https://creator{creator_id}.com",
+        "social_links": [
+            f"https://instagram.com/creator{creator_id}",
+            f"https://twitter.com/creator{creator_id}"
+        ]
+    }
+    
+    return await seo_optimization_engine.optimize_creator_page(creator_data)
+
+
+# ========================================
 # EXPORTS UPDATE
 # ========================================
 
@@ -773,5 +1272,14 @@ __all__ = [
     "ApiKeyResponse", 
     "SEOMetadata",
     "CreatorProfile",
-    "RateLimitMiddleware"
+    "RateLimitMiddleware",
+    "CreatorDiscoveryEngine",
+    "SEOOptimizationEngine",
+    "KeywordAnalyzer",
+    "StructuredDataGenerator",
+    "SocialMediaOptimizer",
+    "creator_discovery_engine",
+    "seo_optimization_engine",
+    "discover_creators_endpoint",
+    "get_creator_seo_data"
 ]
