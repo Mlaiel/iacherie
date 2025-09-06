@@ -158,6 +158,47 @@ from .predictive_analytics_events import (
     generate_business_forecast
 )
 
+from .subscription_analytics_events import (
+    SubscriptionAnalyticsEventHandler,
+    SubscriptionAnalyticsEngine,
+    SubscriptionEvent,
+    SubscriptionMetrics,
+    ChurnPrediction,
+    CohortAnalysis,
+    track_subscription_event,
+    get_subscription_metrics,
+    predict_subscriber_churn,
+    analyze_cohort
+)
+
+from .payment_flow_analytics import (
+    PaymentAnalyticsEventHandler,
+    PaymentAnalyticsEngine,
+    PaymentEvent,
+    PaymentFlowMetrics,
+    FraudAnalysis,
+    PaymentFlowInsight,
+    track_payment_event,
+    get_payment_metrics,
+    analyze_gateway_performance,
+    detect_payment_fraud,
+    get_payment_insights
+)
+
+from .pricing_optimization_events import (
+    PricingOptimizationEventHandler,
+    PricingOptimizationEngine,
+    PricingEvent,
+    PriceOptimizationResult,
+    CompetitiveAnalysis,
+    DynamicPricingRule,
+    track_pricing_event,
+    optimize_product_price,
+    analyze_competitive_pricing,
+    create_dynamic_pricing_rule,
+    execute_dynamic_pricing
+)
+
 # NEW ULTRA-ADVANCED MODULES
 from .protection_analytics_events import (
     ProtectionAnalyticsEventHandler,
@@ -371,6 +412,44 @@ __all__ = [
     "make_prediction",
     "evaluate_model",
     "generate_business_forecast",
+    
+    # ULTRA-ADVANCED SUBSCRIPTION ANALYTICS  
+    "SubscriptionAnalyticsEventHandler",
+    "SubscriptionAnalyticsEngine",
+    "SubscriptionEvent",
+    "SubscriptionMetrics",
+    "ChurnPrediction", 
+    "CohortAnalysis",
+    "track_subscription_event",
+    "get_subscription_metrics",
+    "predict_subscriber_churn",
+    "analyze_cohort",
+    
+    # ULTRA-ADVANCED PAYMENT FLOW ANALYTICS
+    "PaymentAnalyticsEventHandler",
+    "PaymentAnalyticsEngine", 
+    "PaymentEvent",
+    "PaymentFlowMetrics",
+    "FraudAnalysis",
+    "PaymentFlowInsight",
+    "track_payment_event",
+    "get_payment_metrics",
+    "analyze_gateway_performance", 
+    "detect_payment_fraud",
+    "get_payment_insights",
+    
+    # ULTRA-ADVANCED PRICING OPTIMIZATION
+    "PricingOptimizationEventHandler",
+    "PricingOptimizationEngine",
+    "PricingEvent", 
+    "PriceOptimizationResult",
+    "CompetitiveAnalysis",
+    "DynamicPricingRule",
+    "track_pricing_event",
+    "optimize_product_price",
+    "analyze_competitive_pricing",
+    "create_dynamic_pricing_rule",
+    "execute_dynamic_pricing",
     
     # ULTRA-ADVANCED PROTECTION ANALYTICS
     "ProtectionAnalyticsEventHandler",
