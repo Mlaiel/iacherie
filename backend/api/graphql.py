@@ -14,9 +14,12 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
 
 from typing import Dict, Any, List, Optional, Union, AsyncGenerator
-from datetime import datetime
+from datetime import datetime, timedelta
 from decimal import Decimal
 from enum import Enum
+import typing
+import time
+import asyncio
 
 try:
     import strawberry
@@ -704,6 +707,237 @@ class AuthenticationExtension(Extension):
             'last_name': 'User'
         })()
 
+
+# ========================================
+# ENTERPRISE GRAPHQL FEDERATION
+# ========================================
+
+@strawberry.federation.type(keys=["id"])
+class FederatedUser:
+    """Federated user entity for microservices"""
+    id: strawberry.ID
+    username: str
+    email: str = strawberry.field(description="User email address")
+    
+    @classmethod
+    def resolve_reference(cls, id: strawberry.ID):
+        # Would resolve from user service
+        return cls(id=id, username=f"user_{id}", email=f"user{id}@example.com")
+
+@strawberry.federation.type(keys=["id", "user_id"])
+class FederatedContent:
+    """Federated content entity for microservices"""
+    id: strawberry.ID
+    user_id: strawberry.ID
+    title: str
+    content_type: ContentType
+    
+    @classmethod
+    def resolve_reference(cls, id: strawberry.ID, user_id: strawberry.ID):
+        # Would resolve from content service
+        return cls(
+            id=id, 
+            user_id=user_id, 
+            title=f"Content {id}",
+            content_type=ContentType.VIDEO
+        )
+
+@strawberry.type
+class BusinessMetrics:
+    """Business intelligence metrics"""
+    revenue_current_month: DecimalType
+    revenue_previous_month: DecimalType
+    revenue_growth_rate: float
+    active_collaborations: int
+    content_performance_score: float
+    engagement_metrics: 'EngagementMetrics'
+
+@strawberry.type
+class EngagementMetrics:
+    """Detailed engagement metrics"""
+    total_views: int
+    total_likes: int
+    total_shares: int
+    total_comments: int
+    engagement_rate: float
+    reach: int
+    impressions: int
+
+@strawberry.type
+class RealtimeMetrics:
+    """Real-time performance metrics"""
+    timestamp: DateTime
+    active_users: int
+    requests_per_second: int
+    response_time_ms: float
+    error_rate: float
+    cpu_usage: float
+    memory_usage: float
+
+@strawberry.type
+class CollaborationRecommendation:
+    """AI-powered collaboration recommendation"""
+    recommended_creator: FederatedUser
+    compatibility_score: float
+    match_reasons: typing.List[str]
+    estimated_reach: int
+    estimated_engagement_boost: float
+    optimal_content_types: typing.List[ContentType]
+
+@strawberry.type
+class ContentOptimization:
+    """AI content optimization suggestions"""
+    content_id: strawberry.ID
+    current_performance: EngagementMetrics
+    optimization_suggestions: typing.List[str]
+    predicted_improvement: float
+    optimal_posting_time: DateTime
+    recommended_hashtags: typing.List[str]
+    target_audience_insights: str
+
+
+# ========================================
+# ENTERPRISE QUERY EXTENSIONS
+# ========================================
+
+@strawberry.type
+class EnterpriseQuery:
+    """Enterprise-grade GraphQL queries with advanced features"""
+    
+    @strawberry.field(description="Get business intelligence dashboard data")
+    async def business_dashboard(
+        self,
+        info: strawberry.Info,
+        date_range: typing.Optional[int] = 30
+    ) -> BusinessMetrics:
+        """Get comprehensive business metrics"""
+        # Would integrate with analytics service
+        return BusinessMetrics(
+            revenue_current_month=DecimalType("15750.00"),
+            revenue_previous_month=DecimalType("12300.00"),
+            revenue_growth_rate=28.0,
+            active_collaborations=15,
+            content_performance_score=8.7,
+            engagement_metrics=EngagementMetrics(
+                total_views=1250000,
+                total_likes=89000,
+                total_shares=12000,
+                total_comments=8500,
+                engagement_rate=8.9,
+                reach=950000,
+                impressions=2100000
+            )
+        )
+    
+    @strawberry.field(description="Get AI-powered collaboration recommendations")
+    async def collaboration_recommendations(
+        self,
+        info: strawberry.Info,
+        user_id: strawberry.ID,
+        limit: typing.Optional[int] = 10
+    ) -> typing.List[CollaborationRecommendation]:
+        """Get AI-powered collaboration matches"""
+        # Would integrate with collaboration AI service
+        recommendations = []
+        for i in range(min(limit, 5)):
+            recommendations.append(CollaborationRecommendation(
+                recommended_creator=FederatedUser(
+                    id=strawberry.ID(f"creator_{i}"),
+                    username=f"creator_{i}",
+                    email=f"creator{i}@platform.com"
+                ),
+                compatibility_score=0.85 + (i * 0.02),
+                match_reasons=[
+                    "Similar content style",
+                    "Complementary audience",
+                    "High engagement rates"
+                ],
+                estimated_reach=500000 + (i * 100000),
+                estimated_engagement_boost=15.5 + (i * 2.1),
+                optimal_content_types=[ContentType.VIDEO, ContentType.IMAGE]
+            ))
+        return recommendations
+
+
+# ========================================
+# ENTERPRISE SUBSCRIPTIONS WITH REAL-TIME UPDATES
+# ========================================
+
+@strawberry.type
+class EnterpriseSubscription:
+    """Enterprise real-time subscriptions for live updates"""
+    
+    @strawberry.subscription(description="Real-time performance metrics")
+    async def live_performance_metrics(
+        self,
+        info: strawberry.Info,
+        user_id: strawberry.ID
+    ) -> typing.AsyncGenerator[RealtimeMetrics, None]:
+        """Stream real-time performance metrics"""
+        while True:
+            # Would get real metrics from monitoring service
+            yield RealtimeMetrics(
+                timestamp=DateTime(datetime.now()),
+                active_users=1250 + int(time.time()) % 100,
+                requests_per_second=450 + int(time.time()) % 50,
+                response_time_ms=25.5 + (int(time.time()) % 10),
+                error_rate=0.02 + (int(time.time()) % 5) * 0.001,
+                cpu_usage=65.2 + (int(time.time()) % 20),
+                memory_usage=72.8 + (int(time.time()) % 15)
+            )
+            await asyncio.sleep(5)  # Update every 5 seconds
+
+
+# ========================================
+# INPUT TYPES FOR ENTERPRISE OPERATIONS
+# ========================================
+
+@strawberry.input
+class ContentInput:
+    """Input type for content creation"""
+    title: str
+    description: typing.Optional[str] = None
+    content_type: ContentType
+    url: typing.Optional[str] = None
+    is_public: bool = True
+
+@strawberry.input
+class CollaborationPreferences:
+    """Input type for collaboration preferences"""
+    preferred_content_types: typing.List[ContentType]
+    min_audience_size: typing.Optional[int] = None
+    max_audience_size: typing.Optional[int] = None
+    preferred_engagement_rate: typing.Optional[float] = None
+    geographic_preferences: typing.Optional[typing.List[str]] = None
+    brand_values: typing.Optional[typing.List[str]] = None
+
+
+# ========================================
+# FEDERATED SCHEMA DEFINITION
+# ========================================
+
+# Create federated schema with enterprise features
+try:
+    enterprise_schema = strawberry.federation.Schema(
+        query=strawberry.type(name="Query", 
+                             bases=(Query, EnterpriseQuery)),
+        mutation=Mutation,
+        subscription=strawberry.type(name="Subscription", 
+                                   bases=(Subscription, EnterpriseSubscription)),
+        extensions=[AuthenticationExtension],
+        enable_federation_2=True
+    )
+except AttributeError:
+    # Fallback if federation is not available
+    enterprise_schema = strawberry.Schema(
+        query=strawberry.type(name="Query", 
+                             bases=(Query, EnterpriseQuery)),
+        mutation=Mutation,
+        subscription=strawberry.type(name="Subscription", 
+                                   bases=(Subscription, EnterpriseSubscription)),
+        extensions=[AuthenticationExtension]
+    )
+
 # ========================================
 # SCHEMA DEFINITION
 # ========================================
@@ -721,14 +955,26 @@ schema = strawberry.Schema(
 
 __all__ = [
     "schema",
+    "enterprise_schema",
     "Query",
     "Mutation", 
     "Subscription",
+    "EnterpriseQuery",
+    "EnterpriseSubscription",
     "User",
     "Content",
     "ContentAnalytics",
     "Collaboration",
     "ProtectionAlert",
+    "FederatedUser",
+    "FederatedContent",
+    "BusinessMetrics",
+    "EngagementMetrics",
+    "RealtimeMetrics",
+    "CollaborationRecommendation",
+    "ContentOptimization",
+    "ContentInput",
+    "CollaborationPreferences",
     "ContentType",
     "CreatorType",
     "CollaborationStatus",
