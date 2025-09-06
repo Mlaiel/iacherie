@@ -210,6 +210,139 @@ except ImportError as e:
     logger.warning(f"❌ Security Protection not available: {e}")
     security_protection_available = False
 
+# Video Platform Connectors imports
+try:
+    from .platform_connectors_video import (
+        VideoPlatformType,
+        VideoFormat,
+        VideoQuality,
+        LiveStreamStatus,
+        VideoMetricType,
+        VideoContentMetadata,
+        LiveStreamSettings,
+        VideoPlatformResponse,
+        VideoStreamingAnalytics,
+        BaseVideoConnector,
+        VimeoConnector,
+        DailymotionConnector,
+        TwitchConnector,
+        LiveStreamingConnector,
+        VideoPlatformManager,
+        get_video_platform_manager
+    )
+    video_connectors_available = True
+    logger.info("✅ Video Platform Connectors loaded successfully")
+except ImportError as e:
+    logger.warning(f"❌ Video Platform Connectors not available: {e}")
+    video_connectors_available = False
+
+# Emerging Platform Connectors imports
+try:
+    from .platform_connectors_emerging import (
+        EmergingPlatformType,
+        CommunityType,
+        Web3PlatformType,
+        EngagementMetricType,
+        CommunityContentMetadata,
+        Web3ContentMetadata,
+        EmergingPlatformResponse,
+        CommunityAnalytics,
+        BaseEmergingConnector,
+        DiscordConnector,
+        TelegramConnector,
+        RedditConnector,
+        Web3Connector,
+        EmergingPlatformManager,
+        get_emerging_platform_manager
+    )
+    emerging_connectors_available = True
+    logger.info("✅ Emerging Platform Connectors loaded successfully")
+except ImportError as e:
+    logger.warning(f"❌ Emerging Platform Connectors not available: {e}")
+    emerging_connectors_available = False
+
+# Creator Economy Connectors imports
+try:
+    from .creator_economy_connectors import (
+        CreatorPlatformType,
+        SubscriptionTier,
+        MonetizationType,
+        ContentAccessLevel,
+        PaymentStatus,
+        CreatorContentMetadata,
+        SubscriptionPlan,
+        CreatorEconomyResponse,
+        CreatorAnalytics,
+        FanEngagementMetrics,
+        BaseCreatorConnector,
+        PatreonConnector,
+        KofiConnector,
+        GumroadConnector,
+        SubstackConnector,
+        CreatorEconomyManager,
+        get_creator_economy_manager
+    )
+    creator_economy_available = True
+    logger.info("✅ Creator Economy Connectors loaded successfully")
+except ImportError as e:
+    logger.warning(f"❌ Creator Economy Connectors not available: {e}")
+    creator_economy_available = False
+
+# Monetization Distribution imports
+try:
+    from .monetization_distribution import (
+        RevenueStreamType,
+        MonetizationStrategy,
+        SponsorshipType,
+        AudienceSegment,
+        OptimizationGoal,
+        RevenueStreamConfig,
+        SponsorshipOpportunity,
+        AffiliateProgram,
+        MonetizationMetrics,
+        MonetizationRecommendation,
+        BrandCollaborationMatch,
+        RevenueOptimizer,
+        SponsorshipMatcher,
+        AffiliateManager,
+        MonetizationDistributionManager,
+        get_monetization_distribution_manager
+    )
+    monetization_distribution_available = True
+    logger.info("✅ Monetization Distribution loaded successfully")
+except ImportError as e:
+    logger.warning(f"❌ Monetization Distribution not available: {e}")
+    monetization_distribution_available = False
+
+# Globalization Engine imports
+try:
+    from .globalization_engine import (
+        GeographicRegion,
+        CulturalContext,
+        ComplianceFramework,
+        ContentRating,
+        LanguageCode,
+        TimezoneRegion,
+        GeographicTarget,
+        CulturalAdaptation,
+        LanguageLocalization,
+        LegalCompliance,
+        RegionalMonetization,
+        GlobalizationResponse,
+        GlobalAnalytics,
+        GeoTargetingEngine,
+        CulturalAdaptationEngine,
+        ComplianceEngine,
+        LocalizationEngine,
+        GlobalizationManager,
+        get_globalization_manager
+    )
+    globalization_available = True
+    logger.info("✅ Globalization Engine loaded successfully")
+except ImportError as e:
+    logger.warning(f"❌ Globalization Engine not available: {e}")
+    globalization_available = False
+
 
 class DistributionOrchestrator:
     """
@@ -235,6 +368,11 @@ class DistributionOrchestrator:
         self.social_platform_manager = None
         self.music_platform_manager = None
         self.security_protection_manager = None
+        self.video_platform_manager = None
+        self.emerging_platform_manager = None
+        self.creator_economy_manager = None
+        self.monetization_distribution_manager = None
+        self.globalization_manager = None
         
         self.logger.info("DistributionOrchestrator initialized")
     
@@ -267,6 +405,21 @@ class DistributionOrchestrator:
             if security_protection_available:
                 self.security_protection_manager = await get_security_protection_manager()
             
+            if video_connectors_available:
+                self.video_platform_manager = await get_video_platform_manager()
+            
+            if emerging_connectors_available:
+                self.emerging_platform_manager = await get_emerging_platform_manager()
+            
+            if creator_economy_available:
+                self.creator_economy_manager = await get_creator_economy_manager()
+            
+            if monetization_distribution_available:
+                self.monetization_distribution_manager = await get_monetization_distribution_manager()
+            
+            if globalization_available:
+                self.globalization_manager = await get_globalization_manager()
+            
             self.initialized = True
             
             available_modules = sum([
@@ -277,10 +430,15 @@ class DistributionOrchestrator:
                 api_manager_available,
                 social_connectors_available,
                 music_connectors_available,
-                security_protection_available
+                security_protection_available,
+                video_connectors_available,
+                emerging_connectors_available,
+                creator_economy_available,
+                monetization_distribution_available,
+                globalization_available
             ])
             
-            self.logger.info(f"✅ Distribution orchestrator initialized with {available_modules}/8 modules")
+            self.logger.info(f"✅ Distribution orchestrator initialized with {available_modules}/13 modules")
             return True
             
         except Exception as e:
@@ -933,6 +1091,99 @@ __all__ = [
     "SecurityProtectionManager",
     "get_security_protection_manager",
     
+    # Video Platform Connectors
+    "VideoPlatformType",
+    "VideoFormat",
+    "VideoQuality",
+    "LiveStreamStatus",
+    "VideoMetricType",
+    "VideoContentMetadata",
+    "LiveStreamSettings",
+    "VideoPlatformResponse",
+    "VideoStreamingAnalytics",
+    "BaseVideoConnector",
+    "VimeoConnector",
+    "DailymotionConnector",
+    "TwitchConnector",
+    "LiveStreamingConnector",
+    "VideoPlatformManager",
+    "get_video_platform_manager",
+    
+    # Emerging Platform Connectors
+    "EmergingPlatformType",
+    "CommunityType",
+    "Web3PlatformType",
+    "EngagementMetricType",
+    "CommunityContentMetadata",
+    "Web3ContentMetadata",
+    "EmergingPlatformResponse",
+    "CommunityAnalytics",
+    "BaseEmergingConnector",
+    "DiscordConnector",
+    "TelegramConnector",
+    "RedditConnector",
+    "Web3Connector",
+    "EmergingPlatformManager",
+    "get_emerging_platform_manager",
+    
+    # Creator Economy Connectors
+    "CreatorPlatformType",
+    "SubscriptionTier",
+    "MonetizationType",
+    "ContentAccessLevel",
+    "PaymentStatus",
+    "CreatorContentMetadata",
+    "SubscriptionPlan",
+    "CreatorEconomyResponse",
+    "CreatorAnalytics",
+    "FanEngagementMetrics",
+    "BaseCreatorConnector",
+    "PatreonConnector",
+    "KofiConnector",
+    "GumroadConnector",
+    "SubstackConnector",
+    "CreatorEconomyManager",
+    "get_creator_economy_manager",
+    
+    # Monetization Distribution
+    "RevenueStreamType",
+    "MonetizationStrategy",
+    "SponsorshipType",
+    "AudienceSegment",
+    "OptimizationGoal",
+    "RevenueStreamConfig",
+    "SponsorshipOpportunity",
+    "AffiliateProgram",
+    "MonetizationMetrics",
+    "MonetizationRecommendation",
+    "BrandCollaborationMatch",
+    "RevenueOptimizer",
+    "SponsorshipMatcher",
+    "AffiliateManager",
+    "MonetizationDistributionManager",
+    "get_monetization_distribution_manager",
+    
+    # Globalization Engine
+    "GeographicRegion",
+    "CulturalContext",
+    "ComplianceFramework",
+    "ContentRating",
+    "LanguageCode",
+    "TimezoneRegion",
+    "GeographicTarget",
+    "CulturalAdaptation",
+    "LanguageLocalization",
+    "LegalCompliance",
+    "RegionalMonetization",
+    "GlobalizationResponse",
+    "GlobalAnalytics",
+    "GeoTargetingEngine",
+    "CulturalAdaptationEngine",
+    "ComplianceEngine",
+    "LocalizationEngine",
+    "GlobalizationManager",
+    "get_globalization_manager",
+    
     # Module availability flags
     "platform_connector_available",
     "schedule_manager_available",
@@ -941,7 +1192,12 @@ __all__ = [
     "api_manager_available",
     "social_connectors_available",
     "music_connectors_available",
-    "security_protection_available"
+    "security_protection_available",
+    "video_connectors_available",
+    "emerging_connectors_available",
+    "creator_economy_available",
+    "monetization_distribution_available",
+    "globalization_available"
 ]
 
 # Module initialization
@@ -958,7 +1214,12 @@ available_count = sum([
     api_manager_available,
     social_connectors_available,
     music_connectors_available,
-    security_protection_available
+    security_protection_available,
+    video_connectors_available,
+    emerging_connectors_available,
+    creator_economy_available,
+    monetization_distribution_available,
+    globalization_available
 ])
 
-logger.info(f"🚀 Distribution modules loaded: {available_count}/8 systems available")
+logger.info(f"🚀 Distribution modules loaded: {available_count}/13 systems available")
