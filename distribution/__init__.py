@@ -56,34 +56,147 @@ from .ab_testing_engine import (
     TestResult,
     PerformanceMetrics
 )
+from .distribution_intelligence import (
+    DistributionIntelligence,
+    OptimizationStrategy,
+    PlatformPriority,
+    AudienceInsight,
+    PlatformPerformance,
+    DistributionRecommendation,
+    EngagementPrediction
+)
+from .revenue_distribution import (
+    RevenueDistribution,
+    RevenueType,
+    PaymentStatus,
+    Currency,
+    RevenueStream,
+    PlatformRevenue,
+    ROIAnalysis,
+    BudgetOptimization,
+    RevenueAttribution
+)
+from .content_security import (
+    ContentSecurity,
+    SecurityLevel,
+    WatermarkType,
+    ViolationType,
+    GeographicRegion,
+    ContentFingerprint,
+    WatermarkConfig,
+    SecurityViolation,
+    ProtectionPolicy,
+    MonitoringAlert
+)
+from .automation_orchestrator import (
+    AutomationOrchestrator,
+    WorkflowStatus,
+    StepStatus,
+    ExecutionStrategy,
+    ErrorHandlingStrategy,
+    WorkflowStep,
+    StepExecution,
+    WorkflowDefinition,
+    WorkflowExecution,
+    DistributionPipeline
+)
+from .cross_platform_sync import (
+    CrossPlatformSync,
+    SyncStatus,
+    ConflictResolutionStrategy,
+    SyncDirection,
+    ChangeType,
+    ContentVersion,
+    SyncConflict,
+    SyncRule,
+    SyncSession,
+    PlatformState
+)
 
-__version__ = "1.0.0"
+__version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 
 __all__ = [
+    # Platform Connectors
     "PlatformConnectorManager",
     "SocialPlatform", 
     "ContentFormat",
     "PublicationResult",
+    # Publication Scheduler
     "PublicationScheduler",
     "ScheduledPublication",
     "ScheduleStrategy", 
     "PublicationStatus",
+    # Format Adapter
     "FormatAdapter",
     "PlatformSpecifications",
     "AdaptationRule",
     "ContentVariant",
+    # Analytics Aggregator
     "AnalyticsAggregator",
     "UnifiedMetrics",
     "PlatformAnalytics",
     "CrossPlatformInsights",
+    # Hashtag Optimizer
     "HashtagOptimizer",
     "HashtagStrategy",
     "TrendingHashtags",
     "OptimizedTags",
+    # A/B Testing Engine
     "ABTestingEngine",
     "TestVariant",
     "TestResult",
-    "PerformanceMetrics"
+    "PerformanceMetrics",
+    # Distribution Intelligence
+    "DistributionIntelligence",
+    "OptimizationStrategy",
+    "PlatformPriority",
+    "AudienceInsight",
+    "PlatformPerformance",
+    "DistributionRecommendation",
+    "EngagementPrediction",
+    # Revenue Distribution
+    "RevenueDistribution",
+    "RevenueType",
+    "PaymentStatus",
+    "Currency",
+    "RevenueStream",
+    "PlatformRevenue",
+    "ROIAnalysis",
+    "BudgetOptimization",
+    "RevenueAttribution",
+    # Content Security
+    "ContentSecurity",
+    "SecurityLevel",
+    "WatermarkType",
+    "ViolationType",
+    "GeographicRegion",
+    "ContentFingerprint",
+    "WatermarkConfig",
+    "SecurityViolation",
+    "ProtectionPolicy",
+    "MonitoringAlert",
+    # Automation Orchestrator
+    "AutomationOrchestrator",
+    "WorkflowStatus",
+    "StepStatus",
+    "ExecutionStrategy",
+    "ErrorHandlingStrategy",
+    "WorkflowStep",
+    "StepExecution",
+    "WorkflowDefinition",
+    "WorkflowExecution",
+    "DistributionPipeline",
+    # Cross Platform Sync
+    "CrossPlatformSync",
+    "SyncStatus",
+    "ConflictResolutionStrategy",
+    "SyncDirection",
+    "ChangeType",
+    "ContentVersion",
+    "SyncConflict",
+    "SyncRule",
+    "SyncSession",
+    "PlatformState"
 ]
