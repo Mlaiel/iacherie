@@ -14,20 +14,34 @@
 
 // 1. FORMS & INPUT - All form-related, input, and wizard components
 export const Forms = {
-  // Upload and input components will be dynamically loaded here
-  placeholder: 'Forms components consolidated here'
+  // Import from new architecture locations
+  MediaUploader: () => import('../presentation/components/forms/MediaUploader'),
+  UploadComponents: () => import('../presentation/components/forms/upload_components'),
+  UploadWizard: () => import('../presentation/components/forms/upload_wizard'),
+  FormBuilder: () => import('../presentation/components/forms/FormBuilder'),
+  ValidatedInput: () => import('../presentation/components/forms/ValidatedInput'),
+  FileUploader: () => import('../presentation/components/forms/FileUploader')
 };
 
 // 2. CHARTS & ANALYTICS - All visualization, analytics, and chart components  
 export const Charts = {
-  // Analytics components will be dynamically loaded here
-  placeholder: 'Charts and analytics components consolidated here'
+  // Import from new architecture locations
+  AnalyticsMain: () => import('../presentation/components/display/analytics_main'),
+  AnalyticsComponents: () => import('../presentation/components/display/analytics_components'),
+  DataTable: () => import('../presentation/components/display/DataTable'),
+  CardContainer: () => import('../presentation/components/display/CardContainer'),
+  MediaPlayer: () => import('../presentation/components/display/MediaPlayer')
 };
 
 // 3. NAVIGATION & LAYOUT - Navigation, layout, and structural components
 export const Layout = {
-  // Navigation components will be dynamically loaded here
-  placeholder: 'Layout and navigation components consolidated here'
+  // Import from new architecture locations
+  Navigation: () => import('../presentation/components/navigation/Navigation'),
+  LanguageSelector: () => import('../presentation/components/navigation/LanguageSelector'),
+  MainLayout: () => import('../presentation/layouts/main_layout'),
+  NavigationBar: () => import('../presentation/components/navigation/NavigationBar'),
+  SidebarMenu: () => import('../presentation/components/navigation/SidebarMenu'),
+  BreadcrumbTrail: () => import('../presentation/components/navigation/BreadcrumbTrail')
 };
 
 // 4. MEDIA & UPLOAD - Media handling, upload, and remix studio components
