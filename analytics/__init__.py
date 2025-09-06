@@ -18,7 +18,8 @@ from .creator_performance_engine import (
     CreatorPerformanceEngine,
     CreatorMetrics,
     CreatorType,
-    ContentFormat
+    ContentFormat,
+    GlobalCreatorPerformanceIntelligence
 )
 from .ai_processing_metrics import (
     AIProcessingMetricsEngine,
@@ -31,7 +32,8 @@ from .content_protection_analytics import (
     ContentProtectionAnalytics,
     ProtectionAnalytics,
     ViolationEvent,
-    ProtectionType
+    ProtectionType,
+    QuantumContentProtectionIntelligence
 )
 from .collaboration_intelligence import (
     CollaborationIntelligence,
@@ -86,6 +88,7 @@ __all__ = [
     "CreatorMetrics",
     "CreatorType",
     "ContentFormat",
+    "GlobalCreatorPerformanceIntelligence",
     
     # AI Processing
     "AIProcessingMetricsEngine",
@@ -99,6 +102,7 @@ __all__ = [
     "ProtectionAnalytics",
     "ViolationEvent",
     "ProtectionType",
+    "QuantumContentProtectionIntelligence",
     
     # Collaboration Intelligence
     "CollaborationIntelligence",
