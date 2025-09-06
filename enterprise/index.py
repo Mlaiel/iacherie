@@ -53,6 +53,11 @@ class EnterpriseServiceType(Enum):
     DEPLOYMENT = "deployment"
     ANALYTICS = "analytics"
     COMPLIANCE = "compliance"
+    # NEW CRITICAL SERVICES
+    ORCHESTRATOR = "orchestrator"
+    SECURITY = "security"
+    WORKFLOW = "workflow"
+    INTELLIGENCE = "intelligence"
 
 
 @dataclass
