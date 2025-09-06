@@ -1,0 +1,470 @@
+# Docker Compose - Monetization Infrastructure
+# Ainflue Platform - Revenue & Payment Processing Services
+#
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+#
+# Infrastructure for payment processing, licensing management,
+# and automated royalties calculation across multiple platforms
+
+version: '3.8'
+
+services:
+  # Payment Processing Service
+  payment-processor:
+    image: ainflue/payment-processor:latest
+    container_name: ainflue-payments
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 2G
+        reservations:
+          cpus: '0.3'
+          memory: 512M
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+    environment:
+      - STRIPE_ENABLED=true
+      - PAYPAL_ENABLED=true
+      - CRYPTO_ENABLED=true
+      - PCI_COMPLIANCE=true
+      - PAYMENT_CURRENCIES=USD,EUR,GBP,CAD,AUD,JPY,BTC,ETH
+      - SUBSCRIPTION_BILLING=true
+      - MARKETPLACE_FEES=true
+      - FRAUD_DETECTION=true
+      - WEBHOOK_NOTIFICATIONS=true
+      - PAYMENT_RETRY_ATTEMPTS=3
+      - TRANSACTION_TIMEOUT=300
+    secrets:
+      - stripe_secret_key
+      - paypal_client_secret
+      - crypto_wallet_key
+    volumes:
+      - payment_logs:/app/logs
+      - payment_receipts:/app/receipts
+    depends_on:
+      - postgres-monetization
+      - redis-payments
+    networks:
+      - ainflue-monetization-network
+    ports:
+      - "8087:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+
+  # Licensing Manager Service
+  licensing-service:
+    image: ainflue/licensing-manager:latest
+    container_name: ainflue-licensing
+    deploy:
+      resources:
+        limits:
+          cpus: '0.8'
+          memory: 1.5G
+        reservations:
+          cpus: '0.2'
+          memory: 256M
+    environment:
+      - CREATIVE_COMMONS=true
+      - COMMERCIAL_LICENSES=true
+      - AUTOMATED_GENERATION=true
+      - LICENSE_TYPES=CC0,CC_BY,CC_BY_SA,CC_BY_NC,CC_BY_NC_SA,COMMERCIAL,EXCLUSIVE,NON_EXCLUSIVE
+      - SMART_CONTRACTS=true
+      - BLOCKCHAIN_LICENSING=true
+      - ROYALTY_SPLITS=true
+      - TERRITORY_RESTRICTIONS=true
+      - DURATION_MANAGEMENT=true
+    volumes:
+      - licensing_templates:/app/templates
+      - licensing_contracts:/app/contracts
+      - license_logs:/app/logs
+    depends_on:
+      - postgres-monetization
+    networks:
+      - ainflue-monetization-network
+    ports:
+      - "8088:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+
+  # Royalties Calculator Service
+  royalties-service:
+    image: ainflue/royalties-calculator:latest
+    container_name: ainflue-royalties
+    deploy:
+      resources:
+        limits:
+          cpus: '1.2'
+          memory: 2.5G
+        reservations:
+          cpus: '0.3'
+          memory: 512M
+    environment:
+      - MULTI_PLATFORM=true
+      - REAL_TIME_CALCULATION=true
+      - AUTOMATED_DISTRIBUTION=true
+      - PLATFORM_APIS=spotify,apple_music,youtube,soundcloud,bandcamp,amazon_music
+      - CALCULATION_FREQUENCY=hourly
+      - MINIMUM_PAYOUT=10.00
+      - CURRENCY_CONVERSION=true
+      - TAX_CALCULATION=true
+      - PERFORMANCE_TRACKING=true
+      - STREAMING_ANALYTICS=true
+    volumes:
+      - royalties_data:/app/royalties
+      - royalties_reports:/app/reports
+      - royalty_logs:/app/logs
+    depends_on:
+      - postgres-monetization
+      - redis-payments
+    networks:
+      - ainflue-monetization-network
+      - ainflue-external-network
+    ports:
+      - "8089:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 45s
+      timeout: 15s
+      retries: 3
+      start_period: 60s
+    restart: unless-stopped
+
+  # Pricing Intelligence Service
+  pricing-intelligence:
+    image: ainflue/pricing-intelligence:latest
+    container_name: ainflue-pricing
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 2G
+        reservations:
+          cpus: '0.2'
+          memory: 256M
+    environment:
+      - DYNAMIC_PRICING=true
+      - MARKET_ANALYSIS=true
+      - COMPETITIVE_PRICING=true
+      - DEMAND_FORECASTING=true
+      - PRICE_OPTIMIZATION=true
+      - A_B_TESTING=true
+      - SEASONAL_ADJUSTMENTS=true
+      - GENRE_BASED_PRICING=true
+      - ARTIST_TIER_PRICING=true
+    volumes:
+      - pricing_models:/app/models
+      - pricing_analytics:/app/analytics
+      - pricing_logs:/app/logs
+    depends_on:
+      - postgres-monetization
+    networks:
+      - ainflue-monetization-network
+    ports:
+      - "8090:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 45s
+    restart: unless-stopped
+
+  # Revenue Analytics Service
+  revenue-analytics:
+    image: ainflue/revenue-analytics:latest
+    container_name: ainflue-revenue-analytics
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 2G
+        reservations:
+          cpus: '0.2'
+          memory: 256M
+    environment:
+      - REVENUE_FORECASTING=true
+      - CHURN_PREDICTION=true
+      - LTV_CALCULATION=true
+      - COHORT_ANALYSIS=true
+      - REVENUE_ATTRIBUTION=true
+      - DASHBOARD_GENERATION=true
+      - AUTOMATED_REPORTS=true
+      - REAL_TIME_METRICS=true
+    volumes:
+      - revenue_data:/app/revenue
+      - revenue_reports:/app/reports
+      - analytics_logs:/app/logs
+    depends_on:
+      - postgres-monetization
+      - royalties-service
+    networks:
+      - ainflue-monetization-network
+    ports:
+      - "8091:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 45s
+    restart: unless-stopped
+
+  # PostgreSQL Monetization Database
+  postgres-monetization:
+    image: postgres:15-alpine
+    container_name: ainflue-postgres-monetization
+    deploy:
+      resources:
+        limits:
+          cpus: '1.5'
+          memory: 3G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+    environment:
+      POSTGRES_DB: monetization_db
+      POSTGRES_USER: monetization_user
+      POSTGRES_PASSWORD: ${MONETIZATION_DB_PASSWORD:-ainflue_monetization_2025}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - monetization_data:/var/lib/postgresql/data
+      - ./monetization_sql:/docker-entrypoint-initdb.d
+    ports:
+      - "5434:5432"
+    networks:
+      - ainflue-monetization-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U monetization_user -d monetization_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+    command: >
+      postgres
+      -c shared_preload_libraries=pg_stat_statements
+      -c pg_stat_statements.max=10000
+      -c pg_stat_statements.track=all
+      -c max_connections=300
+      -c shared_buffers=512MB
+      -c effective_cache_size=2GB
+      -c work_mem=8MB
+      -c maintenance_work_mem=128MB
+      -c checkpoint_completion_target=0.9
+      -c wal_buffers=16MB
+
+  # Redis Cache for Payments
+  redis-payments:
+    image: redis:7-alpine
+    container_name: ainflue-redis-payments
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
+        reservations:
+          cpus: '0.1'
+          memory: 128M
+    command: >
+      redis-server
+      --appendonly yes
+      --appendfsync everysec
+      --maxmemory 800mb
+      --maxmemory-policy allkeys-lru
+      --save 900 1
+      --save 300 10
+      --save 60 10000
+      --tcp-keepalive 300
+      --timeout 300
+    volumes:
+      - redis_payments_data:/data
+      - ./redis_payments.conf:/usr/local/etc/redis/redis.conf
+    ports:
+      - "6382:6379"
+    networks:
+      - ainflue-monetization-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  # Monetization API Gateway
+  monetization-api-gateway:
+    image: ainflue/monetization-api-gateway:latest
+    container_name: ainflue-monetization-api
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1.5G
+        reservations:
+          cpus: '0.2'
+          memory: 256M
+    environment:
+      - API_VERSION=v1
+      - RATE_LIMIT_ENABLED=true
+      - RATE_LIMIT_REQUESTS=5000
+      - RATE_LIMIT_WINDOW=3600
+      - AUTH_REQUIRED=true
+      - JWT_SECRET=${JWT_SECRET_KEY}
+      - CORS_ENABLED=true
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
+      - PCI_COMPLIANCE_MODE=true
+      - AUDIT_LOGGING=true
+    ports:
+      - "8092:8080"
+    depends_on:
+      - payment-processor
+      - licensing-service
+      - royalties-service
+      - postgres-monetization
+    networks:
+      - ainflue-monetization-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+
+  # Financial Reporting Service
+  financial-reporting:
+    image: ainflue/financial-reporting:latest
+    container_name: ainflue-financial-reports
+    deploy:
+      resources:
+        limits:
+          cpus: '0.8'
+          memory: 1.5G
+        reservations:
+          cpus: '0.2'
+          memory: 256M
+    environment:
+      - AUTOMATED_REPORTS=true
+      - TAX_REPORTS=true
+      - REVENUE_STATEMENTS=true
+      - PAYOUT_SUMMARIES=true
+      - COMPLIANCE_REPORTS=true
+      - EXPORT_FORMATS=PDF,CSV,XLSX,JSON
+      - SCHEDULED_REPORTS=true
+      - EMAIL_DELIVERY=true
+    volumes:
+      - financial_reports:/app/reports
+      - report_templates:/app/templates
+      - financial_logs:/app/logs
+    depends_on:
+      - postgres-monetization
+      - revenue-analytics
+    networks:
+      - ainflue-monetization-network
+    ports:
+      - "8093:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 45s
+    restart: unless-stopped
+
+# Secrets for sensitive payment data
+secrets:
+  stripe_secret_key:
+    external: true
+  paypal_client_secret:
+    external: true
+  crypto_wallet_key:
+    external: true
+
+# Volumes for persistent monetization data
+volumes:
+  licensing_templates:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/ainflue/licensing_templates
+  licensing_contracts:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/ainflue/licensing_contracts
+  monetization_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/ainflue/postgres_monetization
+  redis_payments_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/ainflue/redis_payments
+  payment_logs:
+    driver: local
+  payment_receipts:
+    driver: local
+  license_logs:
+    driver: local
+  royalties_data:
+    driver: local
+  royalties_reports:
+    driver: local
+  royalty_logs:
+    driver: local
+  pricing_models:
+    driver: local
+  pricing_analytics:
+    driver: local
+  pricing_logs:
+    driver: local
+  revenue_data:
+    driver: local
+  revenue_reports:
+    driver: local
+  analytics_logs:
+    driver: local
+  financial_reports:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/ainflue/financial_reports
+  report_templates:
+    driver: local
+  financial_logs:
+    driver: local
+
+# Networks for monetization services
+networks:
+  ainflue-monetization-network:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br-ainflue-monetization
+    ipam:
+      config:
+        - subnet: 172.22.0.0/16
+          gateway: 172.22.0.1
+  ainflue-external-network:
+    external: true

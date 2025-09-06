@@ -13,7 +13,6 @@ services:
   # Fingerprinting Multi-Format Service
   fingerprinting-service:
     image: ainflue/fingerprinting-enterprise:latest
-    container_name: ainflue-fingerprinting
     deploy:
       replicas: 3
       resources:
