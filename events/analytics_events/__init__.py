@@ -109,6 +109,55 @@ from .user_behavior_events import (
     UserRetentionAnalyzer
 )
 
+# NEW ULTRA-ADVANCED BUSINESS INTELLIGENCE MODULES
+from .kpi_orchestrator_events import (
+    KPIOrchestratorEventHandler,
+    KPIOrchestrator,
+    KPIDefinition,
+    KPIEvent,
+    KPIDashboardMetrics,
+    register_kpi,
+    update_kpi,
+    get_dashboard_metrics,
+    get_kpi_insights
+)
+
+from .dashboard_aggregation_events import (
+    DashboardAggregationEventHandler,
+    DashboardManager,
+    DashboardDefinition,
+    DashboardWidget,
+    DashboardData,
+    create_dashboard,
+    get_dashboard_data,
+    update_widget,
+    optimize_dashboard
+)
+
+from .executive_reporting_events import (
+    ExecutiveReportingEventHandler,
+    ExecutiveReportGenerator,
+    ExecutiveReportDefinition,
+    ExecutiveReport,
+    ExecutiveMetric,
+    KeyInsight,
+    generate_executive_report,
+    schedule_executive_report,
+    deliver_executive_report
+)
+
+from .predictive_analytics_events import (
+    PredictiveAnalyticsEventHandler,
+    PredictiveAnalyticsEngine,
+    ModelConfiguration,
+    PredictionRequest,
+    PredictionResult,
+    train_prediction_model,
+    make_prediction,
+    evaluate_model,
+    generate_business_forecast
+)
+
 # NEW ULTRA-ADVANCED MODULES
 from .protection_analytics_events import (
     ProtectionAnalyticsEventHandler,
@@ -278,6 +327,50 @@ __all__ = [
     "UserJourneyAnalyzer",
     "UserPersonalizationEngine",
     "UserRetentionAnalyzer",
+    
+    # ULTRA-ADVANCED BUSINESS INTELLIGENCE
+    "KPIOrchestratorEventHandler",
+    "KPIOrchestrator", 
+    "KPIDefinition",
+    "KPIEvent",
+    "KPIDashboardMetrics",
+    "register_kpi",
+    "update_kpi",
+    "get_dashboard_metrics",
+    "get_kpi_insights",
+    
+    # ULTRA-ADVANCED DASHBOARD AGGREGATION
+    "DashboardAggregationEventHandler",
+    "DashboardManager",
+    "DashboardDefinition",
+    "DashboardWidget", 
+    "DashboardData",
+    "create_dashboard",
+    "get_dashboard_data",
+    "update_widget",
+    "optimize_dashboard",
+    
+    # ULTRA-ADVANCED EXECUTIVE REPORTING
+    "ExecutiveReportingEventHandler",
+    "ExecutiveReportGenerator",
+    "ExecutiveReportDefinition",
+    "ExecutiveReport",
+    "ExecutiveMetric",
+    "KeyInsight",
+    "generate_executive_report",
+    "schedule_executive_report", 
+    "deliver_executive_report",
+    
+    # ULTRA-ADVANCED PREDICTIVE ANALYTICS
+    "PredictiveAnalyticsEventHandler",
+    "PredictiveAnalyticsEngine",
+    "ModelConfiguration",
+    "PredictionRequest",
+    "PredictionResult",
+    "train_prediction_model",
+    "make_prediction",
+    "evaluate_model",
+    "generate_business_forecast",
     
     # ULTRA-ADVANCED PROTECTION ANALYTICS
     "ProtectionAnalyticsEventHandler",
