@@ -486,6 +486,56 @@ class NotificationSentEvent(BaseEvent):
         )
 
 
+@dataclass
+class MetadataExtractionEvent(BaseEvent):
+    """Metadata extraction event"""
+    
+    def __init__(self,
+                 content_id: str,
+                 extraction_type: str,
+                 metadata_extracted: Dict[str, Any],
+                 extraction_time: float,
+                 success: bool = True,
+                 metadata: Optional[Dict[str, Any]] = None):
+        super().__init__(
+            event_type="content.metadata.extraction",
+            data={
+                "content_id": content_id,
+                "extraction_type": extraction_type,
+                "metadata_extracted": metadata_extracted,
+                "extraction_time": extraction_time,
+                "success": success
+            },
+            metadata=metadata or {},
+            priority=EventPriority.MEDIUM
+        )
+
+
+@dataclass
+class StorageAllocationEvent(BaseEvent):
+    """Storage allocation event"""
+    
+    def __init__(self,
+                 content_id: str,
+                 storage_path: str,
+                 allocated_size: int,
+                 storage_tier: str,
+                 allocation_success: bool = True,
+                 metadata: Optional[Dict[str, Any]] = None):
+        super().__init__(
+            event_type="content.storage.allocation",
+            data={
+                "content_id": content_id,
+                "storage_path": storage_path,
+                "allocated_size": allocated_size,
+                "storage_tier": storage_tier,
+                "allocation_success": allocation_success
+            },
+            metadata=metadata or {},
+            priority=EventPriority.MEDIUM
+        )
+
+
 # Factory functions for common event creation patterns
 def create_user_event(event_type: str, user_id: str, **kwargs) -> BaseEvent:
     """Create a user-related event"""
@@ -627,7 +677,11 @@ DOMAIN_EVENT_TYPES = {
     # Notification events
     "notification.sent",
     "notification.delivered",
-    "notification.failed"
+    "notification.failed",
+    
+    # Content processing events
+    "content.metadata.extraction",
+    "content.storage.allocation"
 }
 
 
