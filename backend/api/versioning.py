@@ -552,6 +552,8 @@ class VersioningService:
         self.router = VersionedRouter(self.version_manager)
         self.transformer = ResponseTransformer(self.version_manager)
         self.endpoints = VersioningEndpoints(self.version_manager)
+        self.feature_flags = FeatureFlagManager()
+        self.semantic_versioning = SemanticVersionManager()
     
     def setup_versioning(self, app: FastAPI):
         """Setup versioning for FastAPI app"""
@@ -563,6 +565,397 @@ class VersioningService:
         app.add_api_route("/api/versions/{version}", self.endpoints.get_version_info, methods=["GET"])
         app.add_api_route("/api/changelog", self.endpoints.get_changelog, methods=["GET"])
         app.add_api_route("/api/compatibility/{requested_version}", self.endpoints.check_compatibility, methods=["GET"])
+        
+        # Add feature flag endpoints
+        app.add_api_route("/api/features", self.endpoints.get_feature_flags, methods=["GET"])
+        app.add_api_route("/api/features/{feature_name}", self.endpoints.get_feature_status, methods=["GET"])
+
+
+# ========================================
+# ENTERPRISE SEMANTIC VERSIONING
+# ========================================
+
+class SemanticVersionManager:
+    """Enterprise semantic versioning with automated version management"""
+    
+    def __init__(self):
+        self.version_pattern = re.compile(r'^(\d+)\.(\d+)\.(\d+)(?:-([a-zA-Z0-9\-\.]+))?(?:\+([a-zA-Z0-9\-\.]+))?$')
+        self.release_channels = {
+            "stable": {"prefix": "", "auto_promote": True},
+            "beta": {"prefix": "beta", "auto_promote": False},
+            "alpha": {"prefix": "alpha", "auto_promote": False},
+            "rc": {"prefix": "rc", "auto_promote": False}
+        }
+    
+    def parse_version(self, version_string: str) -> Dict[str, Any]:
+        """Parse semantic version string"""
+        match = self.version_pattern.match(version_string)
+        if not match:
+            raise ValueError(f"Invalid semantic version: {version_string}")
+        
+        major, minor, patch, prerelease, build = match.groups()
+        
+        return {
+            "major": int(major),
+            "minor": int(minor),
+            "patch": int(patch),
+            "prerelease": prerelease,
+            "build": build,
+            "raw": version_string,
+            "is_prerelease": prerelease is not None,
+            "release_channel": self._determine_release_channel(prerelease)
+        }
+    
+    def generate_next_version(
+        self,
+        current_version: str,
+        change_type: ChangeType,
+        release_channel: str = "stable"
+    ) -> str:
+        """Generate next semantic version based on change type"""
+        parsed = self.parse_version(current_version)
+        
+        # Remove prerelease/build metadata for base version calculation
+        major, minor, patch = parsed["major"], parsed["minor"], parsed["patch"]
+        
+        if change_type == ChangeType.BREAKING:
+            major += 1
+            minor = 0
+            patch = 0
+        elif change_type == ChangeType.FEATURE:
+            minor += 1
+            patch = 0
+        elif change_type == ChangeType.BUGFIX:
+            patch += 1
+        
+        # Build new version string
+        base_version = f"{major}.{minor}.{patch}"
+        
+        if release_channel != "stable":
+            channel_config = self.release_channels.get(release_channel, {})
+            prefix = channel_config.get("prefix", release_channel)
+            # Add prerelease identifier
+            base_version += f"-{prefix}.1"
+        
+        return base_version
+    
+    def compare_versions(self, version1: str, version2: str) -> int:
+        """Compare two semantic versions (-1, 0, 1)"""
+        try:
+            v1 = self.parse_version(version1)
+            v2 = self.parse_version(version2)
+            
+            # Compare major.minor.patch
+            for component in ["major", "minor", "patch"]:
+                if v1[component] < v2[component]:
+                    return -1
+                elif v1[component] > v2[component]:
+                    return 1
+            
+            # Handle prerelease versions
+            if not v1["is_prerelease"] and v2["is_prerelease"]:
+                return 1  # 1.0.0 > 1.0.0-alpha.1
+            elif v1["is_prerelease"] and not v2["is_prerelease"]:
+                return -1  # 1.0.0-alpha.1 < 1.0.0
+            elif v1["is_prerelease"] and v2["is_prerelease"]:
+                # Compare prerelease versions lexically
+                if v1["prerelease"] < v2["prerelease"]:
+                    return -1
+                elif v1["prerelease"] > v2["prerelease"]:
+                    return 1
+            
+            return 0
+            
+        except ValueError:
+            # Fallback to string comparison for non-semantic versions
+            if version1 < version2:
+                return -1
+            elif version1 > version2:
+                return 1
+            return 0
+    
+    def is_compatible(self, requested: str, available: str) -> bool:
+        """Check if requested version is compatible with available version"""
+        try:
+            req = self.parse_version(requested)
+            avail = self.parse_version(available)
+            
+            # Major version must match for compatibility
+            if req["major"] != avail["major"]:
+                return False
+            
+            # Available version must be >= requested version for minor/patch
+            if avail["minor"] < req["minor"]:
+                return False
+            
+            if avail["minor"] == req["minor"] and avail["patch"] < req["patch"]:
+                return False
+            
+            return True
+            
+        except ValueError:
+            return False
+    
+    def _determine_release_channel(self, prerelease: Optional[str]) -> str:
+        """Determine release channel from prerelease identifier"""
+        if not prerelease:
+            return "stable"
+        
+        for channel, config in self.release_channels.items():
+            prefix = config.get("prefix", "")
+            if prefix and prerelease.startswith(prefix):
+                return channel
+        
+        return "unknown"
+
+
+# ========================================
+# ENTERPRISE FEATURE FLAG MANAGER
+# ========================================
+
+class FeatureFlagManager:
+    """Enterprise feature flag management with gradual rollouts"""
+    
+    def __init__(self):
+        self.feature_flags = {}
+        self.rollout_strategies = {
+            "percentage": PercentageRolloutStrategy(),
+            "user_segments": UserSegmentRolloutStrategy(),
+            "geographic": GeographicRolloutStrategy(),
+            "time_based": TimeBasedRolloutStrategy(),
+            "canary": CanaryRolloutStrategy()
+        }
+        self.feature_analytics = FeatureFlagAnalytics()
+    
+    def register_feature(
+        self,
+        feature_name: str,
+        description: str,
+        default_enabled: bool = False,
+        rollout_strategy: str = "percentage",
+        rollout_config: Dict[str, Any] = None
+    ) -> None:
+        """Register a new feature flag"""
+        self.feature_flags[feature_name] = {
+            "name": feature_name,
+            "description": description,
+            "default_enabled": default_enabled,
+            "rollout_strategy": rollout_strategy,
+            "rollout_config": rollout_config or {},
+            "created_at": datetime.utcnow().isoformat(),
+            "last_modified": datetime.utcnow().isoformat(),
+            "usage_analytics": {
+                "total_checks": 0,
+                "enabled_count": 0,
+                "disabled_count": 0
+            }
+        }
+    
+    async def is_feature_enabled(
+        self,
+        feature_name: str,
+        user_context: Dict[str, Any] = None
+    ) -> bool:
+        """Check if feature is enabled for given context"""
+        feature = self.feature_flags.get(feature_name)
+        if not feature:
+            return False
+        
+        # Update analytics
+        feature["usage_analytics"]["total_checks"] += 1
+        
+        # Apply rollout strategy
+        strategy = self.rollout_strategies.get(feature["rollout_strategy"])
+        if strategy:
+            enabled = await strategy.is_enabled(feature, user_context or {})
+        else:
+            enabled = feature["default_enabled"]
+        
+        # Update analytics
+        if enabled:
+            feature["usage_analytics"]["enabled_count"] += 1
+        else:
+            feature["usage_analytics"]["disabled_count"] += 1
+        
+        # Record analytics
+        await self.feature_analytics.record_feature_check(feature_name, enabled, user_context)
+        
+        return enabled
+    
+    def update_feature_rollout(
+        self,
+        feature_name: str,
+        rollout_config: Dict[str, Any]
+    ) -> bool:
+        """Update feature rollout configuration"""
+        if feature_name not in self.feature_flags:
+            return False
+        
+        feature = self.feature_flags[feature_name]
+        feature["rollout_config"].update(rollout_config)
+        feature["last_modified"] = datetime.utcnow().isoformat()
+        
+        return True
+    
+    def get_feature_status(self, feature_name: str) -> Optional[Dict[str, Any]]:
+        """Get comprehensive feature status"""
+        feature = self.feature_flags.get(feature_name)
+        if not feature:
+            return None
+        
+        return {
+            **feature,
+            "rollout_percentage": self._calculate_rollout_percentage(feature),
+            "performance_impact": self.feature_analytics.get_performance_impact(feature_name),
+            "usage_trends": self.feature_analytics.get_usage_trends(feature_name)
+        }
+    
+    def list_all_features(self) -> List[Dict[str, Any]]:
+        """List all registered features with their status"""
+        return [self.get_feature_status(name) for name in self.feature_flags.keys()]
+    
+    def _calculate_rollout_percentage(self, feature: Dict[str, Any]) -> float:
+        """Calculate current rollout percentage"""
+        strategy = feature["rollout_strategy"]
+        config = feature["rollout_config"]
+        
+        if strategy == "percentage":
+            return config.get("percentage", 0.0)
+        elif strategy == "user_segments":
+            # Estimate based on segment sizes
+            return config.get("estimated_percentage", 0.0)
+        else:
+            # For other strategies, estimate based on usage
+            total = feature["usage_analytics"]["total_checks"]
+            enabled = feature["usage_analytics"]["enabled_count"]
+            return (enabled / total * 100) if total > 0 else 0.0
+
+
+# ========================================
+# ROLLOUT STRATEGIES
+# ========================================
+
+class PercentageRolloutStrategy:
+    """Percentage-based feature rollout"""
+    
+    async def is_enabled(self, feature: Dict[str, Any], user_context: Dict[str, Any]) -> bool:
+        percentage = feature["rollout_config"].get("percentage", 0.0)
+        
+        # Use user ID for consistent rollout
+        user_id = user_context.get("user_id", "anonymous")
+        hash_value = hash(f"{feature['name']}:{user_id}") % 100
+        
+        return hash_value < percentage
+
+
+class UserSegmentRolloutStrategy:
+    """User segment-based feature rollout"""
+    
+    async def is_enabled(self, feature: Dict[str, Any], user_context: Dict[str, Any]) -> bool:
+        enabled_segments = feature["rollout_config"].get("enabled_segments", [])
+        user_segment = user_context.get("segment", "default")
+        
+        return user_segment in enabled_segments
+
+
+class GeographicRolloutStrategy:
+    """Geographic-based feature rollout"""
+    
+    async def is_enabled(self, feature: Dict[str, Any], user_context: Dict[str, Any]) -> bool:
+        enabled_regions = feature["rollout_config"].get("enabled_regions", [])
+        user_region = user_context.get("region", "unknown")
+        
+        return user_region in enabled_regions
+
+
+class TimeBasedRolloutStrategy:
+    """Time-based feature rollout"""
+    
+    async def is_enabled(self, feature: Dict[str, Any], user_context: Dict[str, Any]) -> bool:
+        start_time = feature["rollout_config"].get("start_time")
+        end_time = feature["rollout_config"].get("end_time")
+        
+        if not start_time:
+            return feature.get("default_enabled", False)
+        
+        current_time = datetime.utcnow().isoformat()
+        
+        if start_time <= current_time:
+            if not end_time or current_time <= end_time:
+                return True
+        
+        return False
+
+
+class CanaryRolloutStrategy:
+    """Canary deployment-based feature rollout"""
+    
+    async def is_enabled(self, feature: Dict[str, Any], user_context: Dict[str, Any]) -> bool:
+        canary_users = feature["rollout_config"].get("canary_users", [])
+        user_id = user_context.get("user_id")
+        
+        return user_id in canary_users
+
+
+class FeatureFlagAnalytics:
+    """Analytics for feature flag usage and performance"""
+    
+    def __init__(self):
+        self.usage_data = defaultdict(list)
+        self.performance_data = defaultdict(list)
+    
+    async def record_feature_check(
+        self,
+        feature_name: str,
+        enabled: bool,
+        user_context: Dict[str, Any]
+    ) -> None:
+        """Record feature flag check for analytics"""
+        record = {
+            "timestamp": datetime.utcnow().isoformat(),
+            "enabled": enabled,
+            "user_id": user_context.get("user_id"),
+            "user_segment": user_context.get("segment"),
+            "region": user_context.get("region")
+        }
+        
+        self.usage_data[feature_name].append(record)
+    
+    def get_performance_impact(self, feature_name: str) -> Dict[str, Any]:
+        """Get performance impact analysis for feature"""
+        # Mock implementation - would analyze actual performance metrics
+        return {
+            "avg_response_time_ms": 45.2,
+            "error_rate_percent": 0.05,
+            "resource_usage_increase_percent": 2.1,
+            "user_satisfaction_score": 8.7
+        }
+    
+    def get_usage_trends(self, feature_name: str) -> Dict[str, Any]:
+        """Get usage trends for feature"""
+        usage_records = self.usage_data.get(feature_name, [])
+        
+        if not usage_records:
+            return {"total_checks": 0, "enabled_rate": 0.0}
+        
+        total_checks = len(usage_records)
+        enabled_checks = sum(1 for record in usage_records if record["enabled"])
+        
+        return {
+            "total_checks": total_checks,
+            "enabled_rate": enabled_checks / total_checks * 100,
+            "last_24h_checks": len([r for r in usage_records[-100:]]),  # Simplified
+            "trending": "stable"  # Would calculate actual trend
+        }
+
+
+# Add missing imports
+import re
+from collections import defaultdict
+
+# Create global instances
+semantic_version_manager = SemanticVersionManager()
+feature_flag_manager = FeatureFlagManager()
 
 # ========================================
 # DEPENDENCY FUNCTIONS
@@ -575,6 +968,18 @@ def get_api_version(request: Request) -> str:
 def get_compatibility_info(request: Request) -> VersionCompatibility:
     """Get compatibility information from request"""
     return getattr(request.state, "compatibility", None)
+
+async def is_feature_enabled(feature_name: str, request: Request = None) -> bool:
+    """Check if feature is enabled for current request context"""
+    user_context = {}
+    if request:
+        user_context = {
+            "user_id": getattr(request.state, "user_id", None),
+            "segment": getattr(request.state, "user_segment", "default"),
+            "region": getattr(request.state, "user_region", "unknown")
+        }
+    
+    return await feature_flag_manager.is_feature_enabled(feature_name, user_context)
 
 # ========================================
 # EXPORTS
@@ -593,6 +998,17 @@ __all__ = [
     "ResponseTransformer",
     "VersioningEndpoints",
     "VersioningService",
+    "SemanticVersionManager",
+    "FeatureFlagManager",
+    "PercentageRolloutStrategy",
+    "UserSegmentRolloutStrategy",
+    "GeographicRolloutStrategy",
+    "TimeBasedRolloutStrategy",
+    "CanaryRolloutStrategy",
+    "FeatureFlagAnalytics",
+    "semantic_version_manager",
+    "feature_flag_manager",
     "get_api_version",
-    "get_compatibility_info"
+    "get_compatibility_info",
+    "is_feature_enabled"
 ]

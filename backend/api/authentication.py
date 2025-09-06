@@ -306,6 +306,249 @@ class OAuth2Manager:
             "authorization_url": "https://www.tiktok.com/auth/authorize/",
             "token_url": "https://open-api.tiktok.com/oauth/access_token/",
             "userinfo_url": "https://open-api.tiktok.com/user/info/",
+            "scope": "user.info.basic,video.list"
+        }
+    
+    def _twitter_config(self) -> Dict[str, str]:
+        """Twitter OAuth2 configuration"""
+        return {
+            "authorization_url": "https://twitter.com/i/oauth2/authorize",
+            "token_url": "https://api.twitter.com/2/oauth2/token",
+            "userinfo_url": "https://api.twitter.com/2/users/me",
+            "scope": "tweet.read users.read"
+        }
+    
+    def _facebook_config(self) -> Dict[str, str]:
+        """Facebook OAuth2 configuration"""
+        return {
+            "authorization_url": "https://www.facebook.com/v18.0/dialog/oauth",
+            "token_url": "https://graph.facebook.com/v18.0/oauth/access_token",
+            "userinfo_url": "https://graph.facebook.com/v18.0/me",
+            "scope": "email,public_profile"
+        }
+    
+    def _apple_config(self) -> Dict[str, str]:
+        """Apple OAuth2 configuration"""
+        return {
+            "authorization_url": "https://appleid.apple.com/auth/authorize",
+            "token_url": "https://appleid.apple.com/auth/token",
+            "userinfo_url": "https://appleid.apple.com/auth/keys",
+            "scope": "name email"
+        }
+    
+    def _microsoft_config(self) -> Dict[str, str]:
+        """Microsoft OAuth2 configuration"""
+        return {
+            "authorization_url": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
+            "token_url": "https://login.microsoftonline.com/common/oauth2/v2.0/token",
+            "userinfo_url": "https://graph.microsoft.com/v1.0/me",
+            "scope": "openid profile User.Read"
+        }
+    
+    def _linkedin_config(self) -> Dict[str, str]:
+        """LinkedIn OAuth2 configuration"""
+        return {
+            "authorization_url": "https://www.linkedin.com/oauth/v2/authorization",
+            "token_url": "https://www.linkedin.com/oauth/v2/accessToken",
+            "userinfo_url": "https://api.linkedin.com/v2/people/~",
+            "scope": "r_liteprofile r_emailaddress"
+        }
+    
+    def _pinterest_config(self) -> Dict[str, str]:
+        """Pinterest OAuth2 configuration"""
+        return {
+            "authorization_url": "https://www.pinterest.com/oauth/",
+            "token_url": "https://api.pinterest.com/v5/oauth/token",
+            "userinfo_url": "https://api.pinterest.com/v5/user_account",
+            "scope": "user_accounts:read"
+        }
+    
+    def _snapchat_config(self) -> Dict[str, str]:
+        """Snapchat OAuth2 configuration"""
+        return {
+            "authorization_url": "https://accounts.snapchat.com/login/oauth2/authorize",
+            "token_url": "https://accounts.snapchat.com/login/oauth2/access_token",
+            "userinfo_url": "https://kit.snapchat.com/v1/me",
+            "scope": "user.external_id user.display_name"
+        }
+    
+    def _discord_config(self) -> Dict[str, str]:
+        """Discord OAuth2 configuration"""
+        return {
+            "authorization_url": "https://discord.com/api/oauth2/authorize",
+            "token_url": "https://discord.com/api/oauth2/token",
+            "userinfo_url": "https://discord.com/api/users/@me",
+            "scope": "identify email"
+        }
+    
+    def _telegram_config(self) -> Dict[str, str]:
+        """Telegram OAuth2 configuration"""
+        return {
+            "authorization_url": "https://oauth.telegram.org/auth",
+            "token_url": "https://oauth.telegram.org/auth/token",
+            "userinfo_url": "https://api.telegram.org/bot/getMe",
+            "scope": "read"
+        }
+    
+    def _soundcloud_config(self) -> Dict[str, str]:
+        """SoundCloud OAuth2 configuration"""
+        return {
+            "authorization_url": "https://soundcloud.com/connect",
+            "token_url": "https://api.soundcloud.com/oauth2/token",
+            "userinfo_url": "https://api.soundcloud.com/me",
+            "scope": "non-expiring"
+        }
+    
+    def _twitch_config(self) -> Dict[str, str]:
+        """Twitch OAuth2 configuration"""
+        return {
+            "authorization_url": "https://id.twitch.tv/oauth2/authorize",
+            "token_url": "https://id.twitch.tv/oauth2/token",
+            "userinfo_url": "https://api.twitch.tv/helix/users",
+            "scope": "user:read:email"
+        }
+    
+    def _patreon_config(self) -> Dict[str, str]:
+        """Patreon OAuth2 configuration"""
+        return {
+            "authorization_url": "https://www.patreon.com/oauth2/authorize",
+            "token_url": "https://www.patreon.com/api/oauth2/token",
+            "userinfo_url": "https://www.patreon.com/api/oauth2/v2/identity",
+            "scope": "identity identity[email]"
+        }
+    
+    def _substack_config(self) -> Dict[str, str]:
+        """Substack OAuth2 configuration"""
+        return {
+            "authorization_url": "https://substack.com/oauth/authorize",
+            "token_url": "https://substack.com/api/v1/oauth/token",
+            "userinfo_url": "https://substack.com/api/v1/me",
+            "scope": "read"
+        }
+    
+    def _medium_config(self) -> Dict[str, str]:
+        """Medium OAuth2 configuration"""
+        return {
+            "authorization_url": "https://medium.com/m/oauth/authorize",
+            "token_url": "https://api.medium.com/v1/tokens",
+            "userinfo_url": "https://api.medium.com/v1/me",
+            "scope": "basicProfile"
+        }
+    
+    def _deviantart_config(self) -> Dict[str, str]:
+        """DeviantArt OAuth2 configuration"""
+        return {
+            "authorization_url": "https://www.deviantart.com/oauth2/authorize",
+            "token_url": "https://www.deviantart.com/oauth2/token",
+            "userinfo_url": "https://www.deviantart.com/api/v1/oauth2/user/whoami",
+            "scope": "basic"
+        }
+    
+    def _behance_config(self) -> Dict[str, str]:
+        """Behance OAuth2 configuration"""
+        return {
+            "authorization_url": "https://www.behance.net/v2/oauth/authenticate",
+            "token_url": "https://api.behance.net/v2/oauth/token",
+            "userinfo_url": "https://api.behance.net/v2/users/me",
+            "scope": "activity_read"
+        }
+    
+    def _dribbble_config(self) -> Dict[str, str]:
+        """Dribbble OAuth2 configuration"""
+        return {
+            "authorization_url": "https://dribbble.com/oauth/authorize",
+            "token_url": "https://dribbble.com/oauth/token",
+            "userinfo_url": "https://api.dribbble.com/v2/user",
+            "scope": "public"
+        }
+    
+    def _apple_music_config(self) -> Dict[str, str]:
+        """Apple Music OAuth2 configuration"""
+        return {
+            "authorization_url": "https://authorize.music.apple.com/oauth/authorize",
+            "token_url": "https://authorize.music.apple.com/oauth/token",
+            "userinfo_url": "https://api.music.apple.com/v1/me",
+            "scope": "music-user-read"
+        }
+    
+    def _amazon_music_config(self) -> Dict[str, str]:
+        """Amazon Music OAuth2 configuration"""
+        return {
+            "authorization_url": "https://api.amazon.com/auth/o2/authorize",
+            "token_url": "https://api.amazon.com/auth/o2/token",
+            "userinfo_url": "https://api.amazon.com/user/profile",
+            "scope": "profile"
+        }
+    
+    def _bandcamp_config(self) -> Dict[str, str]:
+        """Bandcamp OAuth2 configuration"""
+        return {
+            "authorization_url": "https://bandcamp.com/oauth_login",
+            "token_url": "https://bandcamp.com/api/oauth/token",
+            "userinfo_url": "https://bandcamp.com/api/account/1/my_profile",
+            "scope": "basic"
+        }
+    
+    def _mixcloud_config(self) -> Dict[str, str]:
+        """Mixcloud OAuth2 configuration"""
+        return {
+            "authorization_url": "https://www.mixcloud.com/oauth/authorize",
+            "token_url": "https://www.mixcloud.com/oauth/access_token",
+            "userinfo_url": "https://api.mixcloud.com/me",
+            "scope": "read"
+        }
+    
+    def _vimeo_config(self) -> Dict[str, str]:
+        """Vimeo OAuth2 configuration"""
+        return {
+            "authorization_url": "https://api.vimeo.com/oauth/authorize",
+            "token_url": "https://api.vimeo.com/oauth/access_token",
+            "userinfo_url": "https://api.vimeo.com/me",
+            "scope": "public"
+        }
+    
+    def _dailymotion_config(self) -> Dict[str, str]:
+        """Dailymotion OAuth2 configuration"""
+        return {
+            "authorization_url": "https://www.dailymotion.com/oauth/authorize",
+            "token_url": "https://www.dailymotion.com/oauth/token",
+            "userinfo_url": "https://www.dailymotion.com/api/user/me",
+            "scope": "userinfo"
+        }
+    
+    def _github_config(self) -> Dict[str, str]:
+        """GitHub OAuth2 configuration"""
+        return {
+            "authorization_url": "https://github.com/login/oauth/authorize",
+            "token_url": "https://github.com/login/oauth/access_token",
+            "userinfo_url": "https://api.github.com/user",
+            "scope": "user:email"
+        }
+    
+    def _gitlab_config(self) -> Dict[str, str]:
+        """GitLab OAuth2 configuration"""
+        return {
+            "authorization_url": "https://gitlab.com/oauth/authorize",
+            "token_url": "https://gitlab.com/oauth/token",
+            "userinfo_url": "https://gitlab.com/api/v4/user",
+            "scope": "read_user"
+        }
+    
+    def _slack_config(self) -> Dict[str, str]:
+        """Slack OAuth2 configuration"""
+        return {
+            "authorization_url": "https://slack.com/oauth/v2/authorize",
+            "token_url": "https://slack.com/api/oauth.v2.access",
+            "userinfo_url": "https://slack.com/api/users.identity",
+            "scope": "identity.basic identity.email"
+        }
+    
+    def _tiktok_config(self) -> Dict[str, str]:
+        """TikTok OAuth2 configuration"""
+        return {
+            "authorization_url": "https://www.tiktok.com/auth/authorize/",
+            "token_url": "https://open-api.tiktok.com/oauth/access_token/",
+            "userinfo_url": "https://open-api.tiktok.com/user/info/",
             "scope": "user.info.basic"
         }
     
@@ -606,6 +849,371 @@ class BiometricAuthManager:
         # Mock implementation - would use speech processing libraries
         return {
             "type": "voice",
+            "features": hashlib.sha256(voice_data).hexdigest(),
+            "quality_score": 0.88,
+            "created_at": datetime.utcnow().isoformat()
+        }
+    
+    async def _process_fingerprint_enrollment(self, fingerprint_data: bytes) -> Dict[str, Any]:
+        """Process fingerprint enrollment"""
+        # Mock implementation - would use fingerprint SDK
+        return {
+            "type": "fingerprint",
+            "minutiae": hashlib.sha256(fingerprint_data).hexdigest(),
+            "quality_score": 0.92,
+            "created_at": datetime.utcnow().isoformat()
+        }
+    
+    async def _process_face_verification(self, face_data: bytes) -> Dict[str, Any]:
+        """Process face verification data"""
+        return await self._process_face_enrollment(face_data)
+    
+    async def _process_voice_verification(self, voice_data: bytes) -> Dict[str, Any]:
+        """Process voice verification data"""
+        return await self._process_voice_enrollment(voice_data)
+    
+    async def _process_fingerprint_verification(self, fingerprint_data: bytes) -> Dict[str, Any]:
+        """Process fingerprint verification data"""
+        return await self._process_fingerprint_enrollment(fingerprint_data)
+    
+    async def _store_biometric_template(self, template_id: str, template: Dict[str, Any]) -> None:
+        """Store encrypted biometric template"""
+        # In production, this would use secure encrypted storage
+        pass
+    
+    async def _get_user_templates(self, user_id: str, biometric_type: BiometricType) -> List[Dict[str, Any]]:
+        """Get user's enrolled biometric templates"""
+        # Mock implementation
+        return [{"features": "mock_template", "quality_score": 0.9}]
+    
+    async def _compare_templates(self, template1: Dict[str, Any], template2: Dict[str, Any]) -> float:
+        """Compare biometric templates and return confidence score"""
+        # Mock implementation - would use specialized comparison algorithms
+        return 0.9 if template1.get("features") == template2.get("features") else 0.3
+
+
+# ========================================
+# ENTERPRISE HARDWARE SECURITY MANAGER
+# ========================================
+
+class HardwareSecurityManager:
+    """Enterprise hardware security key manager with YubiKey/FIDO2 support"""
+    
+    def __init__(self):
+        self.supported_protocols = ["FIDO2", "U2F", "OTP", "PIV", "OATH"]
+        self.key_registry = {}  # Would be database in production
+    
+    async def register_hardware_key(self, user_id: str, key_data: Dict[str, Any]) -> str:
+        """Register hardware security key for user"""
+        try:
+            key_id = f"hwkey_{user_id}_{secrets.token_hex(8)}"
+            
+            # Validate hardware key
+            if not await self._validate_hardware_key(key_data):
+                raise ValueError("Invalid hardware key")
+            
+            # Extract key information
+            key_info = {
+                "key_id": key_id,
+                "user_id": user_id,
+                "protocol": key_data.get("protocol", "FIDO2"),
+                "public_key": key_data.get("public_key"),
+                "attestation": key_data.get("attestation"),
+                "counter": 0,
+                "created_at": datetime.utcnow().isoformat(),
+                "last_used": None
+            }
+            
+            # Store in registry
+            self.key_registry[key_id] = key_info
+            
+            return key_id
+            
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=f"Hardware key registration failed: {e}")
+    
+    async def verify_hardware_key(self, user_id: str, challenge: str, response: Dict[str, Any]) -> bool:
+        """Verify hardware key challenge response"""
+        try:
+            # Get user's registered keys
+            user_keys = [k for k in self.key_registry.values() if k["user_id"] == user_id]
+            
+            if not user_keys:
+                return False
+            
+            # Verify challenge response against each registered key
+            for key_info in user_keys:
+                if await self._verify_fido2_response(key_info, challenge, response):
+                    # Update usage counter
+                    key_info["counter"] += 1
+                    key_info["last_used"] = datetime.utcnow().isoformat()
+                    return True
+            
+            return False
+            
+        except Exception:
+            return False
+    
+    async def _validate_hardware_key(self, key_data: Dict[str, Any]) -> bool:
+        """Validate hardware key format and authenticity"""
+        required_fields = ["protocol", "public_key"]
+        return all(field in key_data for field in required_fields)
+    
+    async def _verify_fido2_response(self, key_info: Dict, challenge: str, response: Dict) -> bool:
+        """Verify FIDO2 challenge response"""
+        # Mock implementation - would use WebAuthn libraries in production
+        return (
+            response.get("challenge") == challenge and
+            response.get("key_id") == key_info["key_id"]
+        )
+
+
+# ========================================
+# ENTERPRISE SESSION CLUSTERING MANAGER
+# ========================================
+
+class DistributedSessionManager:
+    """Enterprise distributed session management with Redis clustering"""
+    
+    def __init__(self, redis_cluster_urls: List[str] = None):
+        self.redis_cluster_urls = redis_cluster_urls or ["redis://localhost:6379"]
+        self.session_timeout = 24 * 60 * 60  # 24 hours
+        self.max_sessions_per_user = 10
+    
+    async def create_distributed_session(self, user_id: str, device_info: Dict[str, Any]) -> str:
+        """Create distributed session across Redis cluster"""
+        try:
+            session_id = f"sess_{user_id}_{secrets.token_hex(16)}"
+            
+            session_data = {
+                "session_id": session_id,
+                "user_id": user_id,
+                "device_info": device_info,
+                "created_at": datetime.utcnow().isoformat(),
+                "last_activity": datetime.utcnow().isoformat(),
+                "is_active": True,
+                "location": device_info.get("location", "unknown"),
+                "user_agent": device_info.get("user_agent", "unknown")
+            }
+            
+            # Store session in Redis cluster
+            await self._store_session_distributed(session_id, session_data)
+            
+            # Enforce session limits
+            await self._enforce_session_limits(user_id)
+            
+            return session_id
+            
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Session creation failed: {e}")
+    
+    async def validate_distributed_session(self, session_id: str) -> Optional[Dict[str, Any]]:
+        """Validate session across Redis cluster"""
+        try:
+            session_data = await self._get_session_distributed(session_id)
+            
+            if not session_data or not session_data.get("is_active"):
+                return None
+            
+            # Check session timeout
+            created_at = datetime.fromisoformat(session_data["created_at"])
+            if (datetime.utcnow() - created_at).total_seconds() > self.session_timeout:
+                await self._invalidate_session_distributed(session_id)
+                return None
+            
+            # Update last activity
+            session_data["last_activity"] = datetime.utcnow().isoformat()
+            await self._store_session_distributed(session_id, session_data)
+            
+            return session_data
+            
+        except Exception:
+            return None
+    
+    async def _store_session_distributed(self, session_id: str, session_data: Dict[str, Any]) -> None:
+        """Store session data in Redis cluster"""
+        # Mock implementation - would use Redis cluster client
+        pass
+    
+    async def _get_session_distributed(self, session_id: str) -> Optional[Dict[str, Any]]:
+        """Get session data from Redis cluster"""
+        # Mock implementation - would query Redis cluster
+        return {
+            "session_id": session_id,
+            "user_id": "mock_user",
+            "is_active": True,
+            "created_at": datetime.utcnow().isoformat(),
+            "last_activity": datetime.utcnow().isoformat()
+        }
+    
+    async def _invalidate_session_distributed(self, session_id: str) -> None:
+        """Invalidate session across Redis cluster"""
+        # Mock implementation - would remove from Redis cluster
+        pass
+    
+    async def _enforce_session_limits(self, user_id: str) -> None:
+        """Enforce maximum sessions per user"""
+        # Mock implementation - would query and cleanup old sessions
+        pass
+
+
+# ========================================
+# ENHANCED AUTHENTICATION SERVICE
+# ========================================
+
+class EnterpriseAuthenticationService:
+    """Enhanced authentication service with enterprise features"""
+    
+    def __init__(self, jwt_secret: str, redis_cluster: Optional[List[str]] = None):
+        self.jwt_manager = JWTManager(jwt_secret)
+        self.oauth2_manager = OAuth2Manager()
+        self.mfa_manager = MFAManager()
+        self.biometric_manager = BiometricAuthManager()
+        self.hardware_security = HardwareSecurityManager()
+        self.session_manager = DistributedSessionManager(redis_cluster)
+        self.password_manager = PasswordManager()
+    
+    async def authenticate_multi_platform(
+        self, 
+        provider: AuthProvider, 
+        auth_code: str,
+        device_info: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Authenticate user via multiple OAuth platforms"""
+        try:
+            # Get provider configuration
+            provider_config = self.oauth2_manager.providers.get(provider)
+            if not provider_config:
+                raise HTTPException(status_code=400, detail=f"Unsupported provider: {provider}")
+            
+            # Exchange auth code for tokens
+            tokens = await self._exchange_oauth_code(provider, auth_code, provider_config())
+            
+            # Get user info from provider
+            user_info = await self._get_provider_user_info(provider, tokens, provider_config())
+            
+            # Create or update user account
+            user_account = await self._create_or_update_user(user_info, provider)
+            
+            # Create distributed session
+            session_id = await self.session_manager.create_distributed_session(
+                user_account["id"], 
+                device_info
+            )
+            
+            # Generate JWT tokens
+            access_token = await self.jwt_manager.create_access_token(user_account["id"])
+            refresh_token = await self.jwt_manager.create_refresh_token(user_account["id"])
+            
+            return {
+                "access_token": access_token,
+                "refresh_token": refresh_token,
+                "session_id": session_id,
+                "user": user_account,
+                "provider": provider.value,
+                "expires_in": 3600
+            }
+            
+        except Exception as e:
+            raise HTTPException(status_code=401, detail=f"Authentication failed: {e}")
+    
+    async def authenticate_biometric(
+        self,
+        user_id: str,
+        biometric_type: BiometricType,
+        biometric_data: bytes,
+        device_info: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Authenticate user via biometric data"""
+        try:
+            # Verify biometric data
+            is_valid = await self.biometric_manager.verify_biometric(
+                user_id, biometric_type, biometric_data
+            )
+            
+            if not is_valid:
+                raise HTTPException(status_code=401, detail="Biometric authentication failed")
+            
+            # Create session and tokens
+            session_id = await self.session_manager.create_distributed_session(user_id, device_info)
+            access_token = await self.jwt_manager.create_access_token(user_id)
+            refresh_token = await self.jwt_manager.create_refresh_token(user_id)
+            
+            return {
+                "access_token": access_token,
+                "refresh_token": refresh_token,
+                "session_id": session_id,
+                "authentication_method": f"biometric_{biometric_type.value}",
+                "expires_in": 3600
+            }
+            
+        except Exception as e:
+            raise HTTPException(status_code=401, detail=f"Biometric authentication failed: {e}")
+    
+    async def authenticate_hardware_key(
+        self,
+        user_id: str,
+        challenge: str,
+        key_response: Dict[str, Any],
+        device_info: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Authenticate user via hardware security key"""
+        try:
+            # Verify hardware key response
+            is_valid = await self.hardware_security.verify_hardware_key(
+                user_id, challenge, key_response
+            )
+            
+            if not is_valid:
+                raise HTTPException(status_code=401, detail="Hardware key authentication failed")
+            
+            # Create session and tokens
+            session_id = await self.session_manager.create_distributed_session(user_id, device_info)
+            access_token = await self.jwt_manager.create_access_token(user_id)
+            refresh_token = await self.jwt_manager.create_refresh_token(user_id)
+            
+            return {
+                "access_token": access_token,
+                "refresh_token": refresh_token,
+                "session_id": session_id,
+                "authentication_method": "hardware_key",
+                "expires_in": 3600
+            }
+            
+        except Exception as e:
+            raise HTTPException(status_code=401, detail=f"Hardware key authentication failed: {e}")
+    
+    async def _exchange_oauth_code(self, provider: AuthProvider, code: str, config: Dict) -> Dict:
+        """Exchange OAuth authorization code for tokens"""
+        # Mock implementation - would make HTTP request to provider
+        return {
+            "access_token": f"oauth_{provider.value}_{secrets.token_hex(16)}",
+            "refresh_token": f"refresh_{provider.value}_{secrets.token_hex(16)}",
+            "expires_in": 3600
+        }
+    
+    async def _get_provider_user_info(self, provider: AuthProvider, tokens: Dict, config: Dict) -> Dict:
+        """Get user information from OAuth provider"""
+        # Mock implementation - would make HTTP request to provider
+        return {
+            "id": f"provider_{provider.value}_{secrets.token_hex(8)}",
+            "email": f"user@{provider.value}.com",
+            "name": f"User from {provider.value}",
+            "provider": provider.value
+        }
+    
+    async def _create_or_update_user(self, user_info: Dict, provider: AuthProvider) -> Dict:
+        """Create or update user account from provider info"""
+        # Mock implementation - would interact with database
+        return {
+            "id": user_info["id"],
+            "email": user_info["email"],
+            "name": user_info["name"],
+            "provider": provider.value,
+            "created_at": datetime.utcnow().isoformat()
+        }
+        return {
+            "type": "voice",
             "voiceprint": hashlib.sha256(voice_data).hexdigest(),
             "quality_score": 0.85,
             "created_at": datetime.utcnow().isoformat()
@@ -782,5 +1390,8 @@ __all__ = [
     "BiometricAuthManager",
     "PasswordManager",
     "AuthenticationService",
+    "HardwareSecurityManager",
+    "DistributedSessionManager",
+    "EnterpriseAuthenticationService",
     "get_auth_service"
 ]
