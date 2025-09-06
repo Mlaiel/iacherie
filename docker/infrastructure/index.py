@@ -17,11 +17,22 @@ from datetime import datetime
 from typing import Dict, List, Optional, Union
 from pathlib import Path
 
-from . import (
-    INFRASTRUCTURE_SERVICES,
-    BUSINESS_LOGIC_STAGES,
-    CREATOR_INFRASTRUCTURE
-)
+try:
+    from . import (
+        INFRASTRUCTURE_SERVICES,
+        BUSINESS_LOGIC_STAGES,
+        CREATOR_INFRASTRUCTURE
+    )
+except ImportError:
+    # When running directly, import from __init__.py in the same directory
+    import sys
+    from pathlib import Path
+    sys.path.append(str(Path(__file__).parent))
+    from __init__ import (
+        INFRASTRUCTURE_SERVICES,
+        BUSINESS_LOGIC_STAGES,
+        CREATOR_INFRASTRUCTURE
+    )
 
 # Configure logging
 logging.basicConfig(
@@ -112,7 +123,7 @@ class DockerInfrastructureOrchestrator:
         """Deploy individual service using docker-compose."""
         try:
             cmd = [
-                "docker-compose",
+                "docker", "compose",
                 "-f", str(compose_file),
                 "up", "-d"
             ]
@@ -209,7 +220,7 @@ class DockerInfrastructureOrchestrator:
         """Check health of individual service."""
         try:
             # Check if containers are running
-            cmd = ["docker-compose", "ps", "-q"]
+            cmd = ["docker", "compose", "ps", "-q"]
             result = subprocess.run(cmd, cwd=str(self.infrastructure_path), capture_output=True, text=True)
             
             if result.returncode == 0 and result.stdout.strip():

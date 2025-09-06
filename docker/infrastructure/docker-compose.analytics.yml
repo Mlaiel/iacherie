@@ -1,0 +1,562 @@
+# Docker Compose - SEO & Analytics Infrastructure
+# Ainflue Platform - Advanced Analytics and SEO Services
+#
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+#
+# Infrastructure for SEO analysis, trending monitoring, performance analytics
+# with Elasticsearch for semantic search and InfluxDB for time series metrics
+
+version: '3.8'
+
+services:
+  # SEO Analyzer Service
+  seo-analyzer:
+    image: ainflue/seo-analyzer:latest
+    container_name: ainflue-seo
+    deploy:
+      resources:
+        limits:
+          cpus: '1.5'
+          memory: 3G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+    environment:
+      - KEYWORD_ANALYSIS=true
+      - METADATA_ENRICHMENT=true
+      - PLATFORM_OPTIMIZATION=true
+      - SEARCH_ENGINES=google,bing,duckduckgo,yandex
+      - SOCIAL_PLATFORMS=youtube,instagram,tiktok,twitter,facebook
+      - COMPETITOR_ANALYSIS=true
+      - TREND_PREDICTION=true
+      - CONTENT_SCORING=true
+      - HASHTAG_OPTIMIZATION=true
+      - TITLE_OPTIMIZATION=true
+      - DESCRIPTION_OPTIMIZATION=true
+      - TAG_SUGGESTIONS=true
+      - MULTILINGUAL_SEO=true
+      - LOCAL_SEO=true
+    volumes:
+      - seo_data:/app/seo
+      - seo_models:/app/models
+      - seo_reports:/app/reports
+      - seo_logs:/app/logs
+    depends_on:
+      - elasticsearch-analytics
+      - redis-analytics
+    networks:
+      - ainflue-analytics-network
+    ports:
+      - "8094:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 45s
+    restart: unless-stopped
+
+  # Trending Monitor Service
+  trending-monitor:
+    image: ainflue/trending-monitor:latest
+    container_name: ainflue-trending
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 2G
+        reservations:
+          cpus: '0.3'
+          memory: 512M
+    environment:
+      - REAL_TIME_MONITORING=true
+      - VIRAL_PREDICTION=true
+      - PLATFORM_COUNT=35
+      - MONITORING_PLATFORMS=youtube,tiktok,instagram,twitter,spotify,soundcloud,twitch,reddit
+      - TRENDING_ALGORITHMS=velocity,engagement,reach,sentiment
+      - ALERT_THRESHOLDS=viral:10000,trending:1000,rising:100
+      - HASHTAG_TRACKING=true
+      - INFLUENCER_TRACKING=true
+      - CONTENT_CATEGORIZATION=true
+      - GEOGRAPHIC_TRENDS=true
+      - DEMOGRAPHIC_ANALYSIS=true
+      - SENTIMENT_ANALYSIS=true
+      - ENGAGEMENT_PREDICTION=true
+    volumes:
+      - trending_data:/app/trending
+      - trending_models:/app/models
+      - trending_alerts:/app/alerts
+      - trending_logs:/app/logs
+    depends_on:
+      - elasticsearch-analytics
+      - influxdb-metrics
+    networks:
+      - ainflue-analytics-network
+      - ainflue-external-network
+    ports:
+      - "8095:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 45s
+      timeout: 15s
+      retries: 3
+      start_period: 60s
+    restart: unless-stopped
+
+  # Analytics Engine Service
+  analytics-engine:
+    image: ainflue/analytics-engine:latest
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+      update_config:
+        parallelism: 1
+        delay: 30s
+    environment:
+      - PERFORMANCE_ANALYTICS=true
+      - AUDIENCE_INTELLIGENCE=true
+      - REVENUE_FORECASTING=true
+      - CONTENT_ANALYTICS=true
+      - USER_BEHAVIOR_ANALYSIS=true
+      - CONVERSION_TRACKING=true
+      - ATTRIBUTION_MODELING=true
+      - COHORT_ANALYSIS=true
+      - FUNNEL_ANALYSIS=true
+      - RETENTION_ANALYSIS=true
+      - CHURN_PREDICTION=true
+      - RECOMMENDATION_ENGINE=true
+      - PERSONALIZATION=true
+      - A_B_TESTING=true
+      - MACHINE_LEARNING=true
+    volumes:
+      - analytics_data:/app/analytics
+      - analytics_models:/app/models
+      - analytics_reports:/app/reports
+      - analytics_cache:/app/cache
+      - analytics_logs:/app/logs
+    depends_on:
+      - elasticsearch-analytics
+      - influxdb-metrics
+      - postgres-analytics
+    networks:
+      - ainflue-analytics-network
+    ports:
+      - "8096:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    restart: unless-stopped
+
+  # Elasticsearch Analytics Cluster
+  elasticsearch-analytics:
+    image: elasticsearch:8.11.0
+    container_name: ainflue-elasticsearch
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+        reservations:
+          cpus: '1.0'
+          memory: 2G
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
+      - xpack.security.enabled=false
+      - xpack.monitoring.enabled=true
+      - cluster.name=ainflue-analytics
+      - node.name=ainflue-analytics-node-1
+      - bootstrap.memory_lock=true
+      - indices.query.bool.max_clause_count=10000
+      - search.max_buckets=100000
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+      - elasticsearch_config:/usr/share/elasticsearch/config
+      - ./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - ainflue-analytics-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
+    restart: unless-stopped
+
+  # InfluxDB Metrics Database
+  influxdb-metrics:
+    image: influxdb:2.7-alpine
+    container_name: ainflue-influxdb
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 2G
+        reservations:
+          cpus: '0.3'
+          memory: 512M
+    environment:
+      - INFLUXDB_DB=ainflue_metrics
+      - INFLUXDB_ADMIN_USER=admin
+      - INFLUXDB_ADMIN_PASSWORD=${INFLUXDB_PASSWORD:-ainflue_influx_2025}
+      - INFLUXDB_HTTP_AUTH_ENABLED=true
+      - INFLUXDB_REPORTING_DISABLED=true
+      - INFLUXDB_LOGGING_LEVEL=info
+      - INFLUXDB_DATA_MAX_SERIES_PER_DATABASE=0
+      - INFLUXDB_DATA_MAX_VALUES_PER_TAG=0
+    volumes:
+      - influxdb_data:/var/lib/influxdb2
+      - influxdb_config:/etc/influxdb2
+      - ./influxdb.conf:/etc/influxdb2/influxdb.conf
+    ports:
+      - "8086:8086"
+    networks:
+      - ainflue-analytics-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8086/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    restart: unless-stopped
+
+  # PostgreSQL Analytics Database
+  postgres-analytics:
+    image: postgres:15-alpine
+    container_name: ainflue-postgres-analytics
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 2G
+        reservations:
+          cpus: '0.3'
+          memory: 512M
+    environment:
+      POSTGRES_DB: analytics_db
+      POSTGRES_USER: analytics_user
+      POSTGRES_PASSWORD: ${ANALYTICS_DB_PASSWORD:-ainflue_analytics_2025}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - analytics_postgres_data:/var/lib/postgresql/data
+      - ./analytics_sql:/docker-entrypoint-initdb.d
+    ports:
+      - "5435:5432"
+    networks:
+      - ainflue-analytics-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U analytics_user -d analytics_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+    command: >
+      postgres
+      -c shared_preload_libraries=pg_stat_statements
+      -c pg_stat_statements.max=10000
+      -c pg_stat_statements.track=all
+      -c max_connections=200
+      -c shared_buffers=256MB
+      -c effective_cache_size=1GB
+      -c work_mem=4MB
+      -c maintenance_work_mem=64MB
+
+  # Redis Cache for Analytics
+  redis-analytics:
+    image: redis:7-alpine
+    container_name: ainflue-redis-analytics
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
+        reservations:
+          cpus: '0.1'
+          memory: 128M
+    command: >
+      redis-server
+      --appendonly yes
+      --appendfsync everysec
+      --maxmemory 800mb
+      --maxmemory-policy allkeys-lru
+      --save 900 1
+      --save 300 10
+      --save 60 10000
+      --tcp-keepalive 300
+    volumes:
+      - redis_analytics_data:/data
+      - ./redis_analytics.conf:/usr/local/etc/redis/redis.conf
+    ports:
+      - "6383:6379"
+    networks:
+      - ainflue-analytics-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  # Data Pipeline Processor
+  data-pipeline:
+    image: ainflue/data-pipeline:latest
+    container_name: ainflue-data-pipeline
+    deploy:
+      resources:
+        limits:
+          cpus: '1.5'
+          memory: 3G
+        reservations:
+          cpus: '0.3'
+          memory: 512M
+    environment:
+      - ETL_ENABLED=true
+      - REAL_TIME_PROCESSING=true
+      - BATCH_PROCESSING=true
+      - DATA_VALIDATION=true
+      - SCHEMA_VALIDATION=true
+      - DATA_QUALITY_CHECKS=true
+      - ANOMALY_DETECTION=true
+      - DATA_ENRICHMENT=true
+      - DUPLICATE_DETECTION=true
+      - PIPELINE_MONITORING=true
+      - ERROR_HANDLING=true
+      - RETRY_MECHANISM=true
+    volumes:
+      - pipeline_data:/app/pipeline
+      - pipeline_logs:/app/logs
+      - pipeline_config:/app/config
+    depends_on:
+      - elasticsearch-analytics
+      - influxdb-metrics
+      - postgres-analytics
+      - redis-analytics
+    networks:
+      - ainflue-analytics-network
+    ports:
+      - "8097:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 45s
+      timeout: 15s
+      retries: 3
+      start_period: 60s
+    restart: unless-stopped
+
+  # ML Model Server
+  ml-model-server:
+    image: ainflue/ml-model-server:latest
+    container_name: ainflue-ml-models
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+    environment:
+      - MODEL_SERVING=true
+      - TENSORFLOW_SERVING=true
+      - PYTORCH_SERVING=true
+      - ONNX_RUNTIME=true
+      - AUTO_SCALING=true
+      - MODEL_VERSIONING=true
+      - A_B_MODEL_TESTING=true
+      - PERFORMANCE_MONITORING=true
+      - BATCH_INFERENCE=true
+      - REAL_TIME_INFERENCE=true
+      - GPU_ACCELERATION=false
+    volumes:
+      - ml_models:/app/models
+      - ml_cache:/app/cache
+      - ml_logs:/app/logs
+    depends_on:
+      - redis-analytics
+    networks:
+      - ainflue-analytics-network
+    ports:
+      - "8098:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 60s
+      timeout: 15s
+      retries: 3
+      start_period: 90s
+    restart: unless-stopped
+
+  # Analytics API Gateway
+  analytics-api-gateway:
+    image: ainflue/analytics-api-gateway:latest
+    container_name: ainflue-analytics-api
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1.5G
+        reservations:
+          cpus: '0.2'
+          memory: 256M
+    environment:
+      - API_VERSION=v1
+      - RATE_LIMIT_ENABLED=true
+      - RATE_LIMIT_REQUESTS=10000
+      - RATE_LIMIT_WINDOW=3600
+      - AUTH_REQUIRED=true
+      - JWT_SECRET=${JWT_SECRET_KEY}
+      - CORS_ENABLED=true
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
+      - CACHING_ENABLED=true
+      - COMPRESSION_ENABLED=true
+      - REQUEST_LOGGING=true
+    ports:
+      - "8099:8080"
+    depends_on:
+      - seo-analyzer
+      - trending-monitor
+      - analytics-engine
+      - elasticsearch-analytics
+      - influxdb-metrics
+    networks:
+      - ainflue-analytics-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+
+# Volumes for persistent analytics data
+volumes:
+  seo_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/ainflue/seo_data
+  seo_models:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/ainflue/seo_models
+  seo_reports:
+    driver: local
+  seo_logs:
+    driver: local
+  trending_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/ainflue/trending_data
+  trending_models:
+    driver: local
+  trending_alerts:
+    driver: local
+  trending_logs:
+    driver: local
+  analytics_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/ainflue/analytics_data
+  analytics_models:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/ainflue/analytics_models
+  analytics_reports:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/ainflue/analytics_reports
+  analytics_cache:
+    driver: local
+  analytics_logs:
+    driver: local
+  elasticsearch_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/ainflue/elasticsearch_data
+  elasticsearch_config:
+    driver: local
+  influxdb_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/ainflue/influxdb_data
+  influxdb_config:
+    driver: local
+  analytics_postgres_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/ainflue/postgres_analytics
+  redis_analytics_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/ainflue/redis_analytics
+  pipeline_data:
+    driver: local
+  pipeline_logs:
+    driver: local
+  pipeline_config:
+    driver: local
+  ml_models:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/ainflue/ml_models
+  ml_cache:
+    driver: local
+  ml_logs:
+    driver: local
+
+# Networks for analytics services
+networks:
+  ainflue-analytics-network:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br-ainflue-analytics
+    ipam:
+      config:
+        - subnet: 172.23.0.0/16
+          gateway: 172.23.0.1
+  ainflue-external-network:
+    external: true
