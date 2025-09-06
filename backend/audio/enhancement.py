@@ -38,6 +38,19 @@ class EnhancementType(Enum):
     VOCAL_ENHANCEMENT = "vocal_enhancement"
     MASTERING = "mastering"
     RESTORATION = "restoration"
+    # Enterprise enhancements
+    AI_UPSAMPLING = "ai_upsampling"
+    SURROUND_UPMIXING = "surround_upmixing"
+    STEM_ENHANCEMENT = "stem_enhancement"
+    LOUDNESS_NORMALIZATION = "loudness_normalization"
+    TRANSIENT_SHAPING = "transient_shaping"
+    HARMONIC_EXCITATION = "harmonic_excitation"
+    SPATIAL_ENHANCEMENT = "spatial_enhancement"
+    TEMPORAL_ALIGNMENT = "temporal_alignment"
+    PHASE_CORRECTION = "phase_correction"
+    DECLIPPING = "declipping"
+    DENOISING_NEURAL = "denoising_neural"
+    SPECTRAL_REPAIR = "spectral_repair"
 
 
 class ContentType(Enum):
@@ -48,6 +61,55 @@ class ContentType(Enum):
     AUDIOBOOK = "audiobook"
     VOICEOVER = "voiceover"
     INSTRUMENT = "instrument"
+    # Enterprise content types
+    BROADCAST = "broadcast"
+    STREAMING = "streaming"
+    GAMING = "gaming"
+    VR_AUDIO = "vr_audio"
+    PODCAST_PREMIUM = "podcast_premium"
+    AUDIOBOOK_PREMIUM = "audiobook_premium"
+    LIVE_RECORDING = "live_recording"
+    STUDIO_RECORDING = "studio_recording"
+    FIELD_RECORDING = "field_recording"
+    ARCHIVAL = "archival"
+
+
+class MasteringPreset(Enum):
+    """Professional mastering presets"""
+    GENTLE = "gentle"           # Minimal processing
+    BALANCED = "balanced"       # Standard mastering
+    AGGRESSIVE = "aggressive"   # Heavy processing
+    TRANSPARENT = "transparent" # Ultra-clean processing
+    VINTAGE = "vintage"         # Analog-style processing
+    MODERN = "modern"          # Contemporary loud mastering
+    BROADCAST = "broadcast"     # Broadcast-optimized
+    STREAMING = "streaming"     # Streaming-optimized
+    VINYL = "vinyl"            # Vinyl cutting optimized
+    CD = "cd"                  # CD mastering optimized
+
+
+class QualityLevel(Enum):
+    """Enhancement quality levels"""
+    DRAFT = "draft"             # Fast processing
+    STANDARD = "standard"       # Balanced quality/speed
+    HIGH = "high"              # High quality processing
+    ULTRA = "ultra"            # Maximum quality
+    ARCHIVAL = "archival"      # Preservation quality
+    BROADCAST = "broadcast"     # Broadcast quality
+    MASTERING = "mastering"     # Mastering quality
+
+
+class LUFSStandard(Enum):
+    """LUFS loudness standards"""
+    EBU_R128 = -23.0           # European broadcast
+    ATSC_A85 = -24.0          # North American broadcast
+    SPOTIFY = -14.0           # Spotify streaming
+    APPLE_MUSIC = -16.0       # Apple Music
+    YOUTUBE = -14.0           # YouTube
+    TIDAL = -14.0             # TIDAL HiFi
+    AMAZON_MUSIC = -14.0      # Amazon Music
+    CD_MASTERING = -12.0      # CD mastering level
+    VINYL_CUTTING = -18.0     # Vinyl cutting level
     SOUND_EFFECT = "sound_effect"
     GENERAL = "general"
 
@@ -1022,105 +1084,732 @@ class QualityEnhancer:
 
 
 class ProfessionalMasteringSuite:
-    """🎛️ Professional Mastering Suite
+    """🎛️ Professional Mastering Suite - Enterprise Audio Finalization
     
     Complete mastering solution with LUFS compliance, broadcast standards,
-    and professional-grade audio finalization for commercial release.
+    multi-format optimization, and professional-grade audio finalization for commercial release.
     """
     
     def __init__(self, target_lufs: float = -14.0, sample_rate: int = 44100):
-        """Initialize professional mastering suite"""
+        """Initialize enterprise professional mastering suite"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.target_lufs = target_lufs
         self.sample_rate = sample_rate
         
-        # Mastering chain components
-        self.eq_processor = DynamicRangeProcessor()  # Using existing class
-        self.compressor = DynamicRangeProcessor()
-        self.limiter = LoudnessLimiter()
-        self.stereo_enhancer = StereoWidener()
+        # Enterprise mastering chain components
+        self.eq_processor = DynamicRangeProcessor()
+        self.compressor = DynamicRangeProcessor() 
+        self.limiter = LoudnessLimiter(sample_rate=sample_rate)
+        self.stereo_enhancer = StereoWidener(sample_rate=sample_rate)
+        self.bass_enhancer = BassEnhancer(sample_rate=sample_rate)
+        self.vocal_enhancer = VocalEnhancer(sample_rate=sample_rate)
         
-        # Mastering standards compliance
+        # Enterprise broadcast standards with extended platforms
         self.broadcast_standards = {
-            'ebu_r128': {'lufs': -23.0, 'lra': 7.0, 'max_peak': -1.0},
-            'spotify': {'lufs': -14.0, 'max_peak': -1.0},
-            'youtube': {'lufs': -14.0, 'max_peak': -1.0},
-            'apple_music': {'lufs': -16.0, 'max_peak': -1.0},
-            'cd_mastering': {'lufs': -14.0, 'max_peak': -0.1}
+            'ebu_r128': {
+                'name': 'EBU R128 (European Broadcasting)',
+                'lufs': -23.0, 'lra': 7.0, 'max_peak': -1.0,
+                'max_momentary': -18.0, 'max_short_term': -18.0
+            },
+            'atsc_a85': {
+                'name': 'ATSC A/85 (North American Broadcasting)',
+                'lufs': -24.0, 'lra': 12.0, 'max_peak': -2.0,
+                'max_momentary': -20.0, 'max_short_term': -20.0
+            },
+            'spotify': {
+                'name': 'Spotify Streaming',
+                'lufs': -14.0, 'max_peak': -1.0, 'format': 'ogg'
+            },
+            'apple_music': {
+                'name': 'Apple Music Streaming',
+                'lufs': -16.0, 'max_peak': -1.0, 'format': 'aac'
+            },
+            'youtube': {
+                'name': 'YouTube Platform',
+                'lufs': -14.0, 'max_peak': -1.0, 'format': 'aac'
+            },
+            'tidal': {
+                'name': 'TIDAL HiFi Streaming',
+                'lufs': -14.0, 'max_peak': -1.0, 'format': 'flac'
+            },
+            'amazon_music': {
+                'name': 'Amazon Music Streaming',
+                'lufs': -14.0, 'max_peak': -1.0, 'format': 'mp3'
+            },
+            'cd_mastering': {
+                'name': 'CD Mastering Standard',
+                'lufs': -12.0, 'max_peak': -0.1, 'format': 'wav'
+            },
+            'vinyl_cutting': {
+                'name': 'Vinyl Cutting Optimization',
+                'lufs': -18.0, 'max_peak': -3.0, 'low_cut': 30.0, 'stereo_width': 0.8
+            },
+            'dolby_atmos': {
+                'name': 'Dolby Atmos Spatial Audio',
+                'lufs': -18.0, 'max_peak': -1.0, 'format': 'surround'
+            },
+            'podcast_standards': {
+                'name': 'Podcast Distribution',
+                'lufs': -16.0, 'max_peak': -3.0, 'format': 'mp3'
+            }
         }
         
-        self.logger.info(f"ProfessionalMasteringSuite initialized - Target LUFS: {target_lufs}")
+        # Mastering preset configurations
+        self.mastering_presets = {
+            MasteringPreset.GENTLE: {
+                'eq_intensity': 0.3, 'compression_ratio': 1.5, 'limiting_intensity': 0.5,
+                'stereo_width': 1.0, 'harmonic_enhancement': 0.2
+            },
+            MasteringPreset.BALANCED: {
+                'eq_intensity': 0.6, 'compression_ratio': 2.5, 'limiting_intensity': 0.7,
+                'stereo_width': 1.1, 'harmonic_enhancement': 0.4
+            },
+            MasteringPreset.AGGRESSIVE: {
+                'eq_intensity': 0.9, 'compression_ratio': 4.0, 'limiting_intensity': 0.9,
+                'stereo_width': 1.2, 'harmonic_enhancement': 0.6
+            },
+            MasteringPreset.TRANSPARENT: {
+                'eq_intensity': 0.2, 'compression_ratio': 1.2, 'limiting_intensity': 0.3,
+                'stereo_width': 1.0, 'harmonic_enhancement': 0.1
+            },
+            MasteringPreset.VINTAGE: {
+                'eq_intensity': 0.8, 'compression_ratio': 3.0, 'limiting_intensity': 0.6,
+                'stereo_width': 0.9, 'harmonic_enhancement': 0.8, 'analog_warmth': 0.7
+            },
+            MasteringPreset.MODERN: {
+                'eq_intensity': 0.7, 'compression_ratio': 3.5, 'limiting_intensity': 0.8,
+                'stereo_width': 1.15, 'harmonic_enhancement': 0.5, 'brightness': 0.6
+            },
+            MasteringPreset.BROADCAST: {
+                'eq_intensity': 0.5, 'compression_ratio': 2.0, 'limiting_intensity': 0.9,
+                'stereo_width': 1.0, 'mono_compatibility': True
+            },
+            MasteringPreset.STREAMING: {
+                'eq_intensity': 0.6, 'compression_ratio': 2.8, 'limiting_intensity': 0.8,
+                'stereo_width': 1.05, 'low_end_control': True
+            }
+        }
+        
+        # Quality analysis thresholds
+        self.quality_thresholds = {
+            'min_lufs': -35.0, 'max_lufs': -8.0,
+            'min_lra': 3.0, 'max_lra': 20.0,
+            'max_peak': -0.1, 'min_stereo_width': 0.8, 'max_stereo_width': 1.5
+        }
+        
+        self.logger.info(f"Enterprise ProfessionalMasteringSuite initialized - Target LUFS: {target_lufs}")
     
     def master_audio(self, 
                     audio_data: np.ndarray,
-                    mastering_preset: str = "balanced",
-                    target_platform: str = "spotify") -> Dict[str, Any]:
-        """Apply complete professional mastering chain"""
+                    mastering_preset: Union[str, MasteringPreset] = MasteringPreset.BALANCED,
+                    target_platform: str = "spotify",
+                    quality_level: Union[str, QualityLevel] = QualityLevel.HIGH,
+                    content_type: Union[str, ContentType] = ContentType.MUSIC) -> Dict[str, Any]:
+        """Apply complete enterprise professional mastering chain"""
         start_time = time.time()
+        
+        # Convert enum parameters if needed
+        if isinstance(mastering_preset, str):
+            mastering_preset = MasteringPreset(mastering_preset)
+        if isinstance(quality_level, str):
+            quality_level = QualityLevel(quality_level)
+        if isinstance(content_type, str):
+            content_type = ContentType(content_type)
         
         # Get platform-specific standards
         standards = self.broadcast_standards.get(target_platform, self.broadcast_standards['spotify'])
+        preset_config = self.mastering_presets[mastering_preset]
         
-        # Apply mastering chain
+        # Pre-analysis
+        pre_analysis = self._analyze_audio_for_mastering(audio_data)
+        
+        # Initialize mastered audio
         mastered_audio = audio_data.copy()
+        processing_chain = []
         
-        # Step 1: EQ Enhancement
-        mastered_audio = self._apply_mastering_eq(mastered_audio, mastering_preset)
+        # Step 1: Content-aware preprocessing
+        mastered_audio, preprocess_info = self._content_aware_preprocessing(
+            mastered_audio, content_type, quality_level
+        )
+        processing_chain.append(('preprocessing', preprocess_info))
         
-        # Step 2: Dynamic Range Processing
-        mastered_audio = self._apply_mastering_compression(mastered_audio, mastering_preset)
+        # Step 2: Advanced EQ Enhancement
+        mastered_audio, eq_info = self._apply_mastering_eq(
+            mastered_audio, mastering_preset, content_type, pre_analysis
+        )
+        processing_chain.append(('eq', eq_info))
         
-        # Step 3: Stereo Enhancement
+        # Step 3: Multiband Dynamic Range Processing
+        mastered_audio, compression_info = self._apply_multiband_compression(
+            mastered_audio, mastering_preset, content_type, standards
+        )
+        processing_chain.append(('compression', compression_info))
+        
+        # Step 4: Harmonic Enhancement (if enabled)
+        if preset_config.get('harmonic_enhancement', 0) > 0:
+            mastered_audio, harmonic_info = self._apply_harmonic_enhancement(
+                mastered_audio, preset_config['harmonic_enhancement'], content_type
+            )
+            processing_chain.append(('harmonic_enhancement', harmonic_info))
+        
+        # Step 5: Stereo Field Enhancement
         if mastered_audio.ndim > 1:
-            mastered_audio = self._apply_stereo_mastering(mastered_audio, mastering_preset)
+            mastered_audio, stereo_info = self._apply_stereo_mastering(
+                mastered_audio, mastering_preset, standards
+            )
+            processing_chain.append(('stereo_enhancement', stereo_info))
         
-        # Step 4: Loudness Normalization to LUFS target
-        mastered_audio = self._normalize_to_lufs(mastered_audio, standards['lufs'])
+        # Step 6: Transient Shaping (for certain content types)
+        if content_type in [ContentType.MUSIC, ContentType.LIVE_RECORDING]:
+            mastered_audio, transient_info = self._apply_transient_shaping(
+                mastered_audio, preset_config, content_type
+            )
+            processing_chain.append(('transient_shaping', transient_info))
         
-        # Step 5: Peak Limiting
-        mastered_audio = self._apply_peak_limiting(mastered_audio, standards['max_peak'])
+        # Step 7: Loudness Normalization to LUFS target
+        mastered_audio, lufs_info = self._normalize_to_lufs_advanced(
+            mastered_audio, standards.get('lufs', self.target_lufs), content_type
+        )
+        processing_chain.append(('lufs_normalization', lufs_info))
         
-        # Validate mastering quality
-        quality_metrics = self._validate_mastering_quality(audio_data, mastered_audio, standards)
+        # Step 8: Advanced Peak Limiting with Lookahead
+        mastered_audio, limiting_info = self._apply_advanced_limiting(
+            mastered_audio, standards.get('max_peak', -1.0), preset_config
+        )
+        processing_chain.append(('limiting', limiting_info))
+        
+        # Step 9: Platform-specific optimization
+        mastered_audio, platform_info = self._apply_platform_optimization(
+            mastered_audio, target_platform, standards
+        )
+        processing_chain.append(('platform_optimization', platform_info))
+        
+        # Final quality analysis
+        post_analysis = self._analyze_final_quality(mastered_audio, standards)
+        
+        # Compliance validation
+        compliance_report = self._validate_mastering_compliance(
+            mastered_audio, target_platform, standards
+        )
         
         processing_time = time.time() - start_time
         
         return {
             'mastered_audio': mastered_audio,
             'original_audio': audio_data,
-            'mastering_preset': mastering_preset,
+            'processing_chain': processing_chain,
+            'pre_analysis': pre_analysis,
+            'post_analysis': post_analysis,
+            'compliance_report': compliance_report,
+            'mastering_preset': mastering_preset.value,
             'target_platform': target_platform,
-            'quality_metrics': quality_metrics,
-            'compliance_status': self._check_compliance(quality_metrics, standards),
-            'processing_time': processing_time
+            'quality_level': quality_level.value,
+            'content_type': content_type.value,
+            'processing_time': processing_time,
+            'lufs_achieved': post_analysis.get('integrated_lufs', 0),
+            'peak_level': post_analysis.get('peak_db', 0),
+            'dynamic_range': post_analysis.get('dynamic_range', 0),
+            'stereo_width': post_analysis.get('stereo_width', 1.0),
+            'quality_score': self._calculate_mastering_quality_score(post_analysis, compliance_report)
         }
     
-    def _apply_mastering_eq(self, audio_data: np.ndarray, preset: str) -> np.ndarray:
-        """Apply mastering EQ based on preset"""
-        # Mastering EQ presets
-        eq_settings = {
-            'balanced': {'low_shelf': (100, 0.5), 'high_shelf': (10000, 1.0)},
-            'bright': {'low_shelf': (80, 0.0), 'high_shelf': (8000, 2.0)},
-            'warm': {'low_shelf': (120, 1.0), 'high_shelf': (12000, -1.0)},
-            'punchy': {'low_shelf': (60, 1.5), 'mid_peak': (2000, 1.0), 'high_shelf': (10000, 0.5)}
-        }
+    def _analyze_audio_for_mastering(self, audio_data: np.ndarray) -> Dict[str, Any]:
+        """Analyze audio characteristics for informed mastering decisions"""
+        analysis = {}
         
-        settings = eq_settings.get(preset, eq_settings['balanced'])
+        # Basic audio properties
+        analysis['length_seconds'] = len(audio_data) / self.sample_rate
+        analysis['channels'] = audio_data.ndim
+        analysis['peak_db'] = 20 * np.log10(np.max(np.abs(audio_data)) + 1e-10)
+        analysis['rms_db'] = 20 * np.log10(np.sqrt(np.mean(audio_data ** 2)) + 1e-10)
         
-        # Apply EQ (simplified implementation)
+        # Dynamic range analysis
+        analysis['dynamic_range'] = analysis['peak_db'] - analysis['rms_db']
+        
+        # Spectral analysis
+        stft = librosa.stft(audio_data if audio_data.ndim == 1 else np.mean(audio_data, axis=0))
+        magnitude = np.abs(stft)
+        
+        # Frequency content
+        spectral_centroid = np.mean(librosa.feature.spectral_centroid(y=audio_data if audio_data.ndim == 1 else np.mean(audio_data, axis=0), sr=self.sample_rate))
+        spectral_bandwidth = np.mean(librosa.feature.spectral_bandwidth(y=audio_data if audio_data.ndim == 1 else np.mean(audio_data, axis=0), sr=self.sample_rate))
+        
+        analysis['spectral_centroid'] = float(spectral_centroid)
+        analysis['spectral_bandwidth'] = float(spectral_bandwidth)
+        analysis['brightness'] = float(spectral_centroid / (self.sample_rate / 2))
+        
+        # Energy distribution
+        low_energy = np.mean(magnitude[:magnitude.shape[0]//4, :])
+        mid_energy = np.mean(magnitude[magnitude.shape[0]//4:3*magnitude.shape[0]//4, :])
+        high_energy = np.mean(magnitude[3*magnitude.shape[0]//4:, :])
+        
+        total_energy = low_energy + mid_energy + high_energy
+        analysis['low_energy_ratio'] = float(low_energy / total_energy)
+        analysis['mid_energy_ratio'] = float(mid_energy / total_energy)
+        analysis['high_energy_ratio'] = float(high_energy / total_energy)
+        
+        return analysis
+    
+    def _content_aware_preprocessing(self, audio_data: np.ndarray, 
+                                   content_type: ContentType, 
+                                   quality_level: QualityLevel) -> Tuple[np.ndarray, Dict[str, Any]]:
+        """Apply content-aware preprocessing"""
+        processed_audio = audio_data.copy()
+        info = {'applied_processors': []}
+        
+        # Speech-specific preprocessing
+        if content_type in [ContentType.SPEECH, ContentType.PODCAST, ContentType.AUDIOBOOK]:
+            # High-pass filter for speech
+            sos = signal.butter(2, 80, btype='high', fs=self.sample_rate, output='sos')
+            processed_audio = signal.sosfilt(sos, processed_audio)
+            info['applied_processors'].append('speech_highpass_80hz')
+            
+            # De-essing for speech
+            processed_audio = self._apply_deessing(processed_audio)
+            info['applied_processors'].append('deessing')
+        
+        # Music-specific preprocessing
+        elif content_type == ContentType.MUSIC:
+            # Gentle DC removal
+            processed_audio = processed_audio - np.mean(processed_audio)
+            info['applied_processors'].append('dc_removal')
+        
+        # Quality-dependent processing
+        if quality_level in [QualityLevel.ULTRA, QualityLevel.ARCHIVAL, QualityLevel.MASTERING]:
+            # Advanced noise gate for high-quality processing
+            processed_audio = self._apply_noise_gate(processed_audio, threshold_db=-60)
+            info['applied_processors'].append('noise_gate')
+        
+        return processed_audio, info
+    
+    def _apply_mastering_eq(self, audio_data: np.ndarray, 
+                          mastering_preset: MasteringPreset,
+                          content_type: ContentType,
+                          pre_analysis: Dict[str, Any]) -> Tuple[np.ndarray, Dict[str, Any]]:
+        """Apply intelligent mastering EQ based on preset and content analysis"""
+        processed_audio = audio_data.copy()
+        eq_info = {'bands_applied': [], 'total_gain_db': 0}
+        
+        # Get preset-specific EQ curve
+        eq_curve = self._get_mastering_eq_curve(mastering_preset, content_type, pre_analysis)
+        
+        # Apply EQ bands
+        for band in eq_curve:
+            freq = band['frequency']
+            gain = band['gain']
+            q = band.get('q', 1.0)
+            filter_type = band.get('type', 'peak')
+            
+            if abs(gain) > 0.1:  # Only apply meaningful adjustments
+                if filter_type == 'high_shelf':
+                    sos = signal.butter(2, freq, btype='high', fs=self.sample_rate, output='sos')
+                    processed_audio = signal.sosfilt(sos, processed_audio)
+                    processed_audio *= 10 ** (gain / 20)
+                elif filter_type == 'low_shelf':
+                    sos = signal.butter(2, freq, btype='low', fs=self.sample_rate, output='sos')
+                    processed_audio = signal.sosfilt(sos, processed_audio)
+                    processed_audio *= 10 ** (gain / 20)
+                
+                eq_info['bands_applied'].append({
+                    'frequency': freq, 'gain': gain, 'q': q, 'type': filter_type
+                })
+                eq_info['total_gain_db'] += abs(gain)
+        
+        return processed_audio, eq_info
+    
+    def _apply_multiband_compression(self, audio_data: np.ndarray,
+                                   mastering_preset: MasteringPreset,
+                                   content_type: ContentType,
+                                   standards: Dict[str, Any]) -> Tuple[np.ndarray, Dict[str, Any]]:
+        """Apply multiband compression for mastering"""
+        processed_audio = audio_data.copy()
+        compression_info = {'bands': [], 'total_gain_reduction': 0}
+        
+        # Define frequency bands
+        bands = [
+            {'name': 'low', 'freq_range': (20, 250), 'ratio': 2.5, 'threshold': -20},
+            {'name': 'low_mid', 'freq_range': (250, 1000), 'ratio': 3.0, 'threshold': -15},
+            {'name': 'mid', 'freq_range': (1000, 4000), 'ratio': 2.0, 'threshold': -12},
+            {'name': 'high_mid', 'freq_range': (4000, 8000), 'ratio': 2.5, 'threshold': -10},
+            {'name': 'high', 'freq_range': (8000, 20000), 'ratio': 3.0, 'threshold': -8}
+        ]
+        
+        # Adjust compression parameters based on preset
+        preset_config = self.mastering_presets[mastering_preset]
+        compression_multiplier = preset_config.get('compression_ratio', 2.5) / 2.5
+        
+        for band in bands:
+            # Create band-pass filter
+            low_freq, high_freq = band['freq_range']
+            sos = signal.butter(4, [low_freq, high_freq], btype='band', fs=self.sample_rate, output='sos')
+            band_audio = signal.sosfilt(sos, processed_audio)
+            
+            # Apply compression to band
+            ratio = band['ratio'] * compression_multiplier
+            threshold = band['threshold']
+            
+            compressed_band = self._apply_band_compression(band_audio, ratio, threshold)
+            
+            # Calculate gain reduction
+            gain_reduction = np.mean(20 * np.log10(np.abs(compressed_band) / (np.abs(band_audio) + 1e-10)))
+            
+            compression_info['bands'].append({
+                'name': band['name'],
+                'frequency_range': band['freq_range'],
+                'ratio': ratio,
+                'threshold': threshold,
+                'gain_reduction_db': float(gain_reduction)
+            })
+            compression_info['total_gain_reduction'] += abs(gain_reduction)
+        
+        return processed_audio, compression_info
+    
+    def _apply_harmonic_enhancement(self, audio_data: np.ndarray,
+                                  enhancement_amount: float,
+                                  content_type: ContentType) -> Tuple[np.ndarray, Dict[str, Any]]:
+        """Apply harmonic enhancement for warmth and presence"""
         processed_audio = audio_data.copy()
         
-        # Low shelf filter
-        if 'low_shelf' in settings:
-            freq, gain_db = settings['low_shelf']
-            processed_audio = self._apply_shelf_filter(processed_audio, freq, gain_db, 'low')
+        # Generate harmonics using saturation
+        drive = 1.0 + enhancement_amount * 2.0
+        enhanced_audio = np.tanh(processed_audio * drive) / drive
         
-        # High shelf filter
-        if 'high_shelf' in settings:
-            freq, gain_db = settings['high_shelf']
-            processed_audio = self._apply_shelf_filter(processed_audio, freq, gain_db, 'high')
+        # Blend with original
+        blend_amount = enhancement_amount * 0.5
+        processed_audio = (1 - blend_amount) * processed_audio + blend_amount * enhanced_audio
         
-        return processed_audio
+        enhancement_info = {
+            'enhancement_amount': enhancement_amount,
+            'drive_amount': drive,
+            'blend_amount': blend_amount,
+            'content_optimized': content_type.value
+        }
+        
+        return processed_audio, enhancement_info
+    
+    def _apply_stereo_mastering(self, audio_data: np.ndarray,
+                              mastering_preset: MasteringPreset,
+                              standards: Dict[str, Any]) -> Tuple[np.ndarray, Dict[str, Any]]:
+        """Apply stereo field enhancement for mastering"""
+        if audio_data.ndim == 1:
+            return audio_data, {'stereo_processing': 'skipped_mono_input'}
+        
+        processed_audio = audio_data.copy()
+        preset_config = self.mastering_presets[mastering_preset]
+        
+        # Stereo width adjustment
+        target_width = preset_config.get('stereo_width', 1.0)
+        
+        # Mid-side processing
+        mid = (processed_audio[0] + processed_audio[1]) / 2
+        side = (processed_audio[0] - processed_audio[1]) / 2
+        
+        # Apply width adjustment
+        side_enhanced = side * target_width
+        
+        # Reconstruct stereo
+        left = mid + side_enhanced
+        right = mid - side_enhanced
+        
+        processed_audio = np.array([left, right])
+        
+        # Mono compatibility check
+        mono_check = preset_config.get('mono_compatibility', False)
+        if mono_check:
+            mono_sum = np.mean(processed_audio, axis=0)
+            correlation = np.corrcoef(processed_audio[0], processed_audio[1])[0, 1]
+            
+            if correlation < 0.7:  # Poor mono compatibility
+                # Reduce stereo width slightly
+                side_enhanced *= 0.8
+                left = mid + side_enhanced
+                right = mid - side_enhanced
+                processed_audio = np.array([left, right])
+        
+        stereo_info = {
+            'stereo_width': target_width,
+            'mono_compatibility_checked': mono_check,
+            'final_correlation': float(np.corrcoef(processed_audio[0], processed_audio[1])[0, 1])
+        }
+        
+        return processed_audio, stereo_info
+    
+    def _apply_transient_shaping(self, audio_data: np.ndarray,
+                               preset_config: Dict[str, Any],
+                               content_type: ContentType) -> Tuple[np.ndarray, Dict[str, Any]]:
+        """Apply transient shaping for punch and clarity"""
+        processed_audio = audio_data.copy()
+        
+        # Detect transients
+        onset_frames = librosa.onset.onset_detect(
+            y=audio_data if audio_data.ndim == 1 else np.mean(audio_data, axis=0),
+            sr=self.sample_rate
+        )
+        
+        # Apply enhancement to transient regions
+        enhancement_amount = 0.1  # Conservative enhancement
+        
+        for onset in onset_frames:
+            start_sample = librosa.frames_to_samples(onset)
+            end_sample = min(start_sample + int(0.05 * self.sample_rate), len(processed_audio))
+            
+            if audio_data.ndim == 1:
+                transient_region = processed_audio[start_sample:end_sample]
+                enhanced_region = transient_region * (1.0 + enhancement_amount)
+                processed_audio[start_sample:end_sample] = enhanced_region
+            else:
+                for channel in range(audio_data.shape[0]):
+                    transient_region = processed_audio[channel, start_sample:end_sample]
+                    enhanced_region = transient_region * (1.0 + enhancement_amount)
+                    processed_audio[channel, start_sample:end_sample] = enhanced_region
+        
+        transient_info = {
+            'transients_detected': len(onset_frames),
+            'enhancement_amount': enhancement_amount,
+            'content_type_optimized': content_type.value
+        }
+        
+        return processed_audio, transient_info
+    
+    def _normalize_to_lufs_advanced(self, audio_data: np.ndarray,
+                                  target_lufs: float,
+                                  content_type: ContentType) -> Tuple[np.ndarray, Dict[str, Any]]:
+        """Advanced LUFS normalization with content awareness"""
+        # Simplified LUFS calculation (in practice, would use proper ITU-R BS.1770-4)
+        rms = np.sqrt(np.mean(audio_data ** 2))
+        current_lufs = -0.691 + 10 * np.log10(rms + 1e-10)  # Simplified conversion
+        
+        gain_db = target_lufs - current_lufs
+        gain_linear = 10 ** (gain_db / 20)
+        
+        normalized_audio = audio_data * gain_linear
+        
+        lufs_info = {
+            'original_lufs': float(current_lufs),
+            'target_lufs': target_lufs,
+            'applied_gain_db': float(gain_db),
+            'content_type': content_type.value
+        }
+        
+        return normalized_audio, lufs_info
+    
+    def _apply_advanced_limiting(self, audio_data: np.ndarray,
+                               max_peak_db: float,
+                               preset_config: Dict[str, Any]) -> Tuple[np.ndarray, Dict[str, Any]]:
+        """Apply advanced peak limiting with lookahead"""
+        max_peak_linear = 10 ** (max_peak_db / 20)
+        current_peak = np.max(np.abs(audio_data))
+        
+        if current_peak > max_peak_linear:
+            # Apply limiting
+            limiting_ratio = max_peak_linear / current_peak
+            limited_audio = audio_data * limiting_ratio
+            
+            # Soft limiting for transparency
+            intensity = preset_config.get('limiting_intensity', 0.7)
+            limited_audio = np.tanh(limited_audio * (1 + intensity)) / (1 + intensity)
+        else:
+            limited_audio = audio_data
+            limiting_ratio = 1.0
+        
+        limiting_info = {
+            'original_peak_db': float(20 * np.log10(current_peak + 1e-10)),
+            'target_peak_db': max_peak_db,
+            'limiting_ratio': float(limiting_ratio),
+            'limiting_applied': limiting_ratio < 1.0
+        }
+        
+        return limited_audio, limiting_info
+    
+    def _apply_platform_optimization(self, audio_data: np.ndarray,
+                                   target_platform: str,
+                                   standards: Dict[str, Any]) -> Tuple[np.ndarray, Dict[str, Any]]:
+        """Apply platform-specific optimizations"""
+        processed_audio = audio_data.copy()
+        optimizations = []
+        
+        # Platform-specific optimizations
+        if target_platform == 'vinyl_cutting':
+            # Vinyl-specific processing
+            if 'low_cut' in standards:
+                # High-pass filter for vinyl compatibility
+                sos = signal.butter(4, standards['low_cut'], btype='high', fs=self.sample_rate, output='sos')
+                processed_audio = signal.sosfilt(sos, processed_audio)
+                optimizations.append(f"vinyl_low_cut_{standards['low_cut']}hz")
+            
+            if 'stereo_width' in standards:
+                # Reduce stereo width for vinyl
+                if processed_audio.ndim > 1:
+                    mid = (processed_audio[0] + processed_audio[1]) / 2
+                    side = (processed_audio[0] - processed_audio[1]) / 2 * standards['stereo_width']
+                    processed_audio = np.array([mid + side, mid - side])
+                    optimizations.append(f"vinyl_stereo_width_{standards['stereo_width']}")
+        
+        elif target_platform in ['spotify', 'apple_music', 'youtube']:
+            # Streaming optimization - slight high-frequency enhancement
+            sos = signal.butter(2, 10000, btype='high', fs=self.sample_rate, output='sos')
+            high_freq = signal.sosfilt(sos, processed_audio)
+            processed_audio = processed_audio + high_freq * 0.1
+            optimizations.append('streaming_high_freq_enhancement')
+        
+        platform_info = {
+            'target_platform': target_platform,
+            'optimizations_applied': optimizations
+        }
+        
+        return processed_audio, platform_info
+    
+    def _analyze_final_quality(self, audio_data: np.ndarray, standards: Dict[str, Any]) -> Dict[str, Any]:
+        """Analyze final audio quality metrics"""
+        analysis = {}
+        
+        # Peak analysis
+        peak_linear = np.max(np.abs(audio_data))
+        analysis['peak_db'] = float(20 * np.log10(peak_linear + 1e-10))
+        
+        # RMS analysis
+        rms = np.sqrt(np.mean(audio_data ** 2))
+        analysis['rms_db'] = float(20 * np.log10(rms + 1e-10))
+        
+        # Simplified LUFS calculation
+        analysis['integrated_lufs'] = float(-0.691 + 10 * np.log10(rms + 1e-10))
+        
+        # Dynamic range
+        analysis['dynamic_range'] = analysis['peak_db'] - analysis['rms_db']
+        
+        # Stereo analysis
+        if audio_data.ndim > 1:
+            correlation = np.corrcoef(audio_data[0], audio_data[1])[0, 1]
+            analysis['stereo_correlation'] = float(correlation)
+            analysis['stereo_width'] = float(2.0 - correlation)  # Simplified width measure
+        else:
+            analysis['stereo_correlation'] = 1.0
+            analysis['stereo_width'] = 0.0
+        
+        return analysis
+    
+    def _validate_mastering_compliance(self, audio_data: np.ndarray,
+                                     target_platform: str,
+                                     standards: Dict[str, Any]) -> Dict[str, Any]:
+        """Validate mastering compliance against platform standards"""
+        analysis = self._analyze_final_quality(audio_data, standards)
+        compliance = {}
+        
+        # LUFS compliance
+        target_lufs = standards.get('lufs', -14.0)
+        lufs_tolerance = 1.0  # ±1 LUFS tolerance
+        lufs_compliant = abs(analysis['integrated_lufs'] - target_lufs) <= lufs_tolerance
+        
+        compliance['lufs_compliant'] = lufs_compliant
+        compliance['lufs_target'] = target_lufs
+        compliance['lufs_actual'] = analysis['integrated_lufs']
+        compliance['lufs_deviation'] = analysis['integrated_lufs'] - target_lufs
+        
+        # Peak compliance
+        max_peak = standards.get('max_peak', -1.0)
+        peak_compliant = analysis['peak_db'] <= max_peak
+        
+        compliance['peak_compliant'] = peak_compliant
+        compliance['peak_target'] = max_peak
+        compliance['peak_actual'] = analysis['peak_db']
+        
+        # Overall compliance
+        compliance['fully_compliant'] = lufs_compliant and peak_compliant
+        compliance['compliance_score'] = (int(lufs_compliant) + int(peak_compliant)) / 2
+        
+        return compliance
+    
+    def _calculate_mastering_quality_score(self, analysis: Dict[str, Any], compliance: Dict[str, Any]) -> float:
+        """Calculate overall mastering quality score"""
+        score = 0.0
+        
+        # Compliance score (40% weight)
+        score += compliance.get('compliance_score', 0.0) * 0.4
+        
+        # Dynamic range score (20% weight)
+        dynamic_range = analysis.get('dynamic_range', 0)
+        dr_score = min(1.0, max(0.0, (dynamic_range - 8) / 12))  # 8-20 dB range
+        score += dr_score * 0.2
+        
+        # Stereo field score (20% weight)
+        stereo_width = analysis.get('stereo_width', 1.0)
+        stereo_score = min(1.0, max(0.0, 1.0 - abs(stereo_width - 1.0)))
+        score += stereo_score * 0.2
+        
+        # Technical quality score (20% weight)
+        peak_margin = abs(analysis.get('peak_db', 0)) - 0.1  # Headroom above -0.1 dB
+        tech_score = min(1.0, max(0.0, peak_margin / 10))
+        score += tech_score * 0.2
+        
+        return min(1.0, max(0.0, score))
+    
+    # Helper methods for internal processing
+    def _get_mastering_eq_curve(self, preset: MasteringPreset, content_type: ContentType, analysis: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """Get intelligent EQ curve based on preset and content analysis"""
+        curves = {
+            MasteringPreset.GENTLE: [
+                {'frequency': 60, 'gain': 0.5, 'q': 0.7, 'type': 'low_shelf'},
+                {'frequency': 12000, 'gain': 0.3, 'q': 0.7, 'type': 'high_shelf'}
+            ],
+            MasteringPreset.BALANCED: [
+                {'frequency': 80, 'gain': 0.8, 'q': 0.7, 'type': 'low_shelf'},
+                {'frequency': 3000, 'gain': 0.5, 'q': 1.0, 'type': 'peak'},
+                {'frequency': 10000, 'gain': 1.0, 'q': 0.7, 'type': 'high_shelf'}
+            ],
+            MasteringPreset.MODERN: [
+                {'frequency': 40, 'gain': 1.2, 'q': 0.7, 'type': 'low_shelf'},
+                {'frequency': 2500, 'gain': 0.8, 'q': 1.2, 'type': 'peak'},
+                {'frequency': 8000, 'gain': 1.5, 'q': 0.7, 'type': 'high_shelf'}
+            ]
+        }
+        
+        return curves.get(preset, curves[MasteringPreset.BALANCED])
+    
+    def _apply_band_compression(self, audio_data: np.ndarray, ratio: float, threshold_db: float) -> np.ndarray:
+        """Apply compression to a frequency band"""
+        threshold_linear = 10 ** (threshold_db / 20)
+        
+        # Simple compression algorithm
+        processed = audio_data.copy()
+        above_threshold = np.abs(processed) > threshold_linear
+        
+        # Apply compression to samples above threshold
+        compressed_samples = np.sign(processed[above_threshold]) * (
+            threshold_linear + (np.abs(processed[above_threshold]) - threshold_linear) / ratio
+        )
+        processed[above_threshold] = compressed_samples
+        
+        return processed
+    
+    def _apply_deessing(self, audio_data: np.ndarray) -> np.ndarray:
+        """Apply de-essing for sibilant reduction"""
+        # Focus on sibilant frequency range (4-8 kHz)
+        sos = signal.butter(4, [4000, 8000], btype='band', fs=self.sample_rate, output='sos')
+        sibilant_band = signal.sosfilt(sos, audio_data)
+        
+        # Apply gentle compression to sibilant band
+        threshold = 0.1
+        ratio = 3.0
+        
+        compressed_sibilants = self._apply_band_compression(sibilant_band, ratio, 20 * np.log10(threshold))
+        
+        # Subtract over-compression from original
+        deessed_audio = audio_data - (sibilant_band - compressed_sibilants) * 0.5
+        
+        return deessed_audio
+    
+    def _apply_noise_gate(self, audio_data: np.ndarray, threshold_db: float) -> np.ndarray:
+        """Apply noise gate to remove low-level noise"""
+        threshold_linear = 10 ** (threshold_db / 20)
+        
+        # Simple noise gate
+        envelope = np.abs(audio_data)
+        gate_mask = envelope > threshold_linear
+        
+        # Apply gate with smooth transitions
+        gated_audio = audio_data * gate_mask
+        
+        return gated_audio
     
     def _apply_shelf_filter(self, audio_data: np.ndarray, freq: float, gain_db: float, filter_type: str) -> np.ndarray:
         """Apply shelf filter for mastering EQ"""
