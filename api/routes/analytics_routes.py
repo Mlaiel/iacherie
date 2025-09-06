@@ -184,7 +184,7 @@ class CustomReport(BaseModel):
     filters: Dict[str, Any] = Field(default_factory=dict)
     schedule: Optional[str] = Field(None, description="Cron expression for scheduled reports")
     recipients: List[str] = Field(default_factory=list, description="Email recipients")
-    format: str = Field(default="json", regex="^(json|csv|pdf|excel)$")
+    format: str = Field(default="json", pattern="^(json|csv|pdf|excel)$")
 
 # ========================================
 # DEPENDENCY FUNCTIONS

@@ -17,6 +17,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 import logging
+import uuid
 from datetime import datetime
 from typing import Dict, Any
 
@@ -538,6 +539,8 @@ async def internal_server_error_handler(request, exc):
                 "message": "Please contact support with the request ID",
                 "contact": "mlaiel@live.de"
             }
+        }
+    )
 # ============ ENTERPRISE API INTEGRATION ============
 
 # Include enterprise API router

@@ -320,14 +320,14 @@ async def get_content(
 
 @router.post("/upload", response_model=ContentResponse)
 async def upload_content(
+    background_tasks: BackgroundTasks,
+    current_user: Dict = Depends(get_current_user),
     file: UploadFile = File(..., description="Content file to upload"),
     metadata: str = Form(..., description="JSON metadata for the content"),
     protection_level: ProtectionLevel = Form(default=ProtectionLevel.STANDARD),
     enable_watermarking: bool = Form(default=True),
     enable_fingerprinting: bool = Form(default=True),
-    auto_publish: bool = Form(default=False),
-    background_tasks: BackgroundTasks,
-    current_user: Dict = Depends(get_current_user)
+    auto_publish: bool = Form(default=False)
 ):
     """Upload new content with enterprise processing pipeline"""
     
@@ -380,11 +380,11 @@ async def upload_content(
 
 @router.post("/upload/multi", response_model=List[ContentResponse])
 async def upload_multiple_content(
+    background_tasks: BackgroundTasks,
+    current_user: Dict = Depends(get_current_user),
     files: List[UploadFile] = File(..., description="Multiple content files"),
     metadata: str = Form(..., description="JSON metadata array"),
-    protection_level: ProtectionLevel = Form(default=ProtectionLevel.STANDARD),
-    background_tasks: BackgroundTasks,
-    current_user: Dict = Depends(get_current_user)
+    protection_level: ProtectionLevel = Form(default=ProtectionLevel.STANDARD)
 ):
     """Upload multiple content files with batch processing"""
     

@@ -413,9 +413,9 @@ async def login_user(
 
 @router.post("/token", response_model=TokenResponse)
 async def login_for_access_token(
-    form_data: OAuth2PasswordRequestForm = Depends(),
     background_tasks: BackgroundTasks,
-    request: Request
+    request: Request,
+    form_data: OAuth2PasswordRequestForm = Depends()
 ):
     """OAuth2 compatible token endpoint"""
     
@@ -424,8 +424,8 @@ async def login_for_access_token(
 
 @router.post("/logout")
 async def logout_user(
-    current_user: dict = Depends(get_current_user),
-    background_tasks: BackgroundTasks
+    background_tasks: BackgroundTasks,
+    current_user: dict = Depends(get_current_user)
 ):
     """Logout user and invalidate session"""
     
@@ -506,8 +506,8 @@ async def get_user_profile(current_user: dict = Depends(get_current_user)):
 @router.put("/profile", response_model=UserProfile)
 async def update_user_profile(
     profile_updates: Dict[str, Any],
-    current_user: dict = Depends(get_current_user),
-    background_tasks: BackgroundTasks
+    background_tasks: BackgroundTasks,
+    current_user: dict = Depends(get_current_user)
 ):
     """Update user profile"""
     
