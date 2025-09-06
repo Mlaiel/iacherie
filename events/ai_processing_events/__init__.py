@@ -181,7 +181,24 @@ __all__ = [
     'SEOOptimizationHandler',
     'CollaborationMatchingHandler',
     'DistributionPreparationHandler',
-    'EventProcessingPipeline'
+    'EventProcessingPipeline',
+    # Critical AI Processing Modules
+    'MLModelOrchestrator',
+    'MLModelType',
+    'ModelStatus',
+    'InferenceMode',
+    'NeuralNetworkEventProcessor',
+    'NeuralNetworkType',
+    'NetworkEventType',
+    'DeepLearningPipeline',
+    'PipelineStage',
+    'PipelineStatus',
+    'AIInferenceEngine',
+    'InferenceType',
+    'ModelFramework',
+    'MultimodalProcessor',
+    'ModalityType',
+    'FusionStrategy'
 ]
 
 # Import handlers for easy access
@@ -199,6 +216,19 @@ try:
 except ImportError as e:
     logger.warning(f"Some event handlers could not be imported: {e}")
 
+# Import new critical AI processing modules
+try:
+    from .ml_model_orchestrator import MLModelOrchestrator, MLModelType, ModelStatus, InferenceMode
+    from .neural_network_events import NeuralNetworkEventProcessor, NeuralNetworkType, NetworkEventType
+    from .deep_learning_pipeline import DeepLearningPipeline, PipelineStage, PipelineStatus
+    from .ai_inference_engine import AIInferenceEngine, InferenceType, ModelFramework
+    from .multimodal_processor_events import MultimodalProcessor, ModalityType, FusionStrategy
+    
+    logger.info("All critical AI processing modules loaded successfully")
+    
+except ImportError as e:
+    logger.warning(f"Some critical AI processing modules could not be imported: {e}")
+
 # Handler registry for dynamic loading
 HANDLER_REGISTRY = {
     'content_analysis': 'ContentAnalysisHandler',
@@ -207,7 +237,13 @@ HANDLER_REGISTRY = {
     'seo_optimization': 'SEOOptimizationHandler',
     'collaboration_matching': 'CollaborationMatchingHandler',
     'distribution_preparation': 'DistributionPreparationHandler',
-    'event_pipeline': 'EventProcessingPipeline'
+    'event_pipeline': 'EventProcessingPipeline',
+    # New critical AI processing modules
+    'ml_model_orchestrator': 'MLModelOrchestrator',
+    'neural_network_processor': 'NeuralNetworkEventProcessor',
+    'deep_learning_pipeline': 'DeepLearningPipeline',
+    'ai_inference_engine': 'AIInferenceEngine',
+    'multimodal_processor': 'MultimodalProcessor'
 }
 
 def get_handler_class(handler_name: str):
