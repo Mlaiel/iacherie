@@ -193,6 +193,32 @@ class SagaManager:
         except Exception as e:
             logger.error(f"Failed to start saga: {e}")
             return None
+    
+    async def get_comprehensive_status(self, saga_id: str) -> Dict[str, Any]:
+        """Get comprehensive status from all saga components"""
+        status = {
+            "saga_id": saga_id,
+            "orchestration": None,
+            "choreography": None,
+            "monitoring": None
+        }
+        
+        try:
+            if self.orchestrator:
+                status["orchestration"] = await self.orchestrator.get_saga_status(saga_id)
+            
+            if self.choreography_manager:
+                # Try to find choreography by saga_id (approximation)
+                active_choreographies = await self.choreography_manager.list_active_choreographies()
+                for choreo in active_choreographies:
+                    if saga_id in choreo.get("correlation_id", ""):
+                        status["choreography"] = choreo
+                        break
+            
+        except Exception as e:
+            logger.error(f"Error getting comprehensive status: {e}")
+        
+        return status
 
 
 # Global saga manager instance
