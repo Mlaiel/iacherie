@@ -842,5 +842,70 @@ Get statistics for all queues"""
 # Export public API
 __all__ = [
     "QueueMessage", "MessagePriority", "MessageStatus",
-    "MessageQueue", "RedisMessageQueue", "QueueProcessor", "QueueManager"
+    "MessageQueue", "RedisMessageQueue", "QueueProcessor", "QueueManager",
+    # Redis Enterprise Queue
+    "RedisEnterpriseQueue", "AinflueBusiness",
+    # RabbitMQ Connector Orchestrator
+    "RabbitMQConnectorOrchestrator", "RabbitMQMessage", "RabbitMQExchange", "RabbitMQQueue",
+    # Celery Workflow Integrator
+    "CeleryWorkflowIntegrator", "WorkflowDefinition", "CeleryTask", "WorkflowStatus",
+    # Priority Queue Manager
+    "PriorityQueueManager", "PriorityMessage", "SchedulingAlgorithm", "SLALevel",
+    # Delayed Scheduling Coordinator
+    "DelayedSchedulingCoordinator", "ScheduledMessage", "ScheduleType", "RecurrencePattern",
+    # Retry Resilience Engine
+    "RetryResilienceEngine", "RetryPolicy", "BackoffStrategy", "ErrorCategory",
+    # Batch Processing Optimizer
+    "BatchProcessingOptimizer", "BatchConfiguration", "ProcessingBatch", "BatchStrategy",
+    # Rate Limiting Governor
+    "RateLimitingGovernor", "RateLimitRule", "RateLimitAlgorithm", "QuotaTimeframe",
+    # Message Routing Intelligence
+    "MessageRoutingIntelligence", "RoutingDestination", "RoutingRule", "RoutingStrategy",
+    # Circuit Breaker Protection
+    "CircuitBreakerProtection", "CircuitBreakerConfig", "CircuitState", "FailureType",
+    # Queue Monitoring Dashboard
+    "QueueMonitoringDashboard", "MetricDefinition", "Alert", "DashboardPanel", "AlertSeverity"
 ]
+
+# Import all modules for easier access
+from .redis_enterprise_queue import RedisEnterpriseQueue, QueueMessage as RedisQueueMessage, AinflueBusiness
+from .rabbitmq_connector_orchestrator import (
+    RabbitMQConnectorOrchestrator, RabbitMQMessage, RabbitMQExchange, RabbitMQQueue,
+    ExchangeType, MessageDeliveryMode
+)
+from .celery_workflow_integrator import (
+    CeleryWorkflowIntegrator, WorkflowDefinition, CeleryTask, WorkflowStatus,
+    TaskPriority, WorkflowPattern
+)
+from .priority_queue_manager import (
+    PriorityQueueManager, PriorityMessage, SchedulingAlgorithm, SLALevel,
+    QueueMetrics
+)
+from .delayed_scheduling_coordinator import (
+    DelayedSchedulingCoordinator, ScheduledMessage, ScheduleType, RecurrencePattern,
+    BusinessCalendarEvent
+)
+from .retry_resilience_engine import (
+    RetryResilienceEngine, RetryPolicy, BackoffStrategy, ErrorCategory,
+    CircuitBreakerState as RetryCircuitState
+)
+from .batch_processing_optimizer import (
+    BatchProcessingOptimizer, BatchConfiguration, ProcessingBatch, BatchStrategy,
+    ProcessingMode, BatchStatus
+)
+from .rate_limiting_governor import (
+    RateLimitingGovernor, RateLimitRule, RateLimitAlgorithm, QuotaTimeframe,
+    RateLimitAction
+)
+from .message_routing_intelligence import (
+    MessageRoutingIntelligence, RoutingDestination, RoutingRule, RoutingStrategy,
+    DestinationType, HealthStatus
+)
+from .circuit_breaker_protection import (
+    CircuitBreakerProtection, CircuitBreakerConfig, CircuitState, FailureType,
+    RecoveryStrategy
+)
+from .queue_monitoring_dashboard import (
+    QueueMonitoringDashboard, MetricDefinition, Alert, DashboardPanel,
+    AlertSeverity, MetricType, DashboardWidget
+)
