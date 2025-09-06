@@ -272,6 +272,7 @@ describe('Performance Tests', () => {
     expect(screen.getByText('Upload 10 Files')).toBeInTheDocument();
   });
 });
+*/
 
 // Accessibility tests
 describe('Accessibility Tests', () => {
