@@ -1,0 +1,347 @@
+# Docker Compose - Rights Protection Infrastructure
+# Ainflue Platform - Advanced Copyright Protection Services
+#
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+#
+# Infrastructure for fingerprinting, watermarking, and copyright monitoring
+# Supports multi-format content protection with blockchain verification
+
+version: '3.8'
+
+services:
+  # Fingerprinting Multi-Format Service
+  fingerprinting-service:
+    image: ainflue/fingerprinting-enterprise:latest
+    container_name: ainflue-fingerprinting
+    deploy:
+      replicas: 3
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+        reservations:
+          cpus: '1.0'
+          memory: 2G
+      update_config:
+        parallelism: 1
+        delay: 10s
+        failure_action: rollback
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+    environment:
+      - CHROMAPRINT_ENABLED=true
+      - ESSENTIA_ENABLED=true
+      - VIDEO_FINGERPRINT=true
+      - IMAGE_HASH=true
+      - AUDIO_FINGERPRINT=true
+      - BATCH_SIZE=100
+      - PARALLEL_PROCESSING=true
+      - GPU_ACCELERATION=false
+      - FINGERPRINT_ALGORITHM=robust
+      - SIMILARITY_THRESHOLD=0.85
+    volumes:
+      - content_fingerprints:/app/fingerprints
+      - fingerprint_cache:/app/cache
+      - ./protection_logs:/app/logs
+    depends_on:
+      - postgres-fingerprints
+      - redis-fingerprints
+    networks:
+      - ainflue-protection-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+
+  # Watermarking Service
+  watermarking-service:
+    image: ainflue/watermarking-professional:latest
+    container_name: ainflue-watermarking
+    deploy:
+      resources:
+        limits:
+          cpus: '1.5'
+          memory: 3G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+    environment:
+      - INVISIBLE_WATERMARK=true
+      - VISIBLE_WATERMARK=true
+      - BLOCKCHAIN_VERIFICATION=true
+      - WATERMARK_STRENGTH=medium
+      - ROBUSTNESS_LEVEL=high
+      - TRANSPARENCY_LEVEL=0.3
+      - EMBED_METADATA=true
+      - EXTRACT_CAPABILITY=true
+    volumes:
+      - content_watermarks:/app/watermarks
+      - watermark_templates:/app/templates
+      - ./protection_logs:/app/logs
+    depends_on:
+      - postgres-fingerprints
+    networks:
+      - ainflue-protection-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+
+  # Copyright Monitoring Service
+  copyright-monitor:
+    image: ainflue/copyright-monitor:latest
+    container_name: ainflue-copyright
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 2G
+        reservations:
+          cpus: '0.3'
+          memory: 512M
+    environment:
+      - REALTIME_MONITORING=true
+      - DMCA_AUTOMATION=true
+      - PLATFORM_COUNT=35
+      - SCAN_INTERVAL=300
+      - ALERT_THRESHOLD=0.9
+      - AUTO_TAKEDOWN=false
+      - NOTIFICATION_ENABLED=true
+      - WEBHOOK_NOTIFICATIONS=true
+      - EMAIL_ALERTS=true
+    volumes:
+      - monitoring_data:/app/monitoring
+      - ./protection_logs:/app/logs
+    depends_on:
+      - fingerprinting-service
+      - postgres-fingerprints
+      - redis-fingerprints
+    networks:
+      - ainflue-protection-network
+      - ainflue-external-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8082/health"]
+      interval: 60s
+      timeout: 15s
+      retries: 3
+      start_period: 60s
+    restart: unless-stopped
+
+  # Blockchain Rights Verification
+  blockchain-verifier:
+    image: ainflue/blockchain-verifier:latest
+    container_name: ainflue-blockchain
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
+        reservations:
+          cpus: '0.2'
+          memory: 256M
+    environment:
+      - ETHEREUM_ENABLED=true
+      - POLYGON_ENABLED=true
+      - IPFS_ENABLED=true
+      - SMART_CONTRACT_ADDR=${SMART_CONTRACT_ADDRESS}
+      - WEB3_PROVIDER_URL=${WEB3_PROVIDER_URL}
+      - IPFS_GATEWAY=${IPFS_GATEWAY_URL}
+      - GAS_LIMIT=200000
+      - VERIFICATION_INTERVAL=3600
+    secrets:
+      - blockchain_private_key
+      - ipfs_api_key
+    volumes:
+      - blockchain_data:/app/blockchain
+      - ./protection_logs:/app/logs
+    networks:
+      - ainflue-protection-network
+      - ainflue-external-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8083/health"]
+      interval: 120s
+      timeout: 20s
+      retries: 3
+      start_period: 120s
+    restart: unless-stopped
+
+  # PostgreSQL Fingerprints Database
+  postgres-fingerprints:
+    image: postgres:15-alpine
+    container_name: ainflue-postgres-fingerprints
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 2G
+        reservations:
+          cpus: '0.3'
+          memory: 512M
+    environment:
+      POSTGRES_DB: fingerprints_db
+      POSTGRES_USER: fingerprints_user
+      POSTGRES_PASSWORD: ${FINGERPRINTS_DB_PASSWORD:-ainflue_fp_2025}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - fingerprints_data:/var/lib/postgresql/data
+      - ./protection_sql:/docker-entrypoint-initdb.d
+    ports:
+      - "5433:5432"
+    networks:
+      - ainflue-protection-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fingerprints_user -d fingerprints_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+    command: >
+      postgres
+      -c shared_preload_libraries=pg_stat_statements
+      -c pg_stat_statements.max=10000
+      -c pg_stat_statements.track=all
+      -c max_connections=200
+      -c shared_buffers=256MB
+      -c effective_cache_size=1GB
+      -c work_mem=4MB
+      -c maintenance_work_mem=64MB
+
+  # Redis Cache for Fingerprints
+  redis-fingerprints:
+    image: redis:7-alpine
+    container_name: ainflue-redis-fingerprints
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
+        reservations:
+          cpus: '0.1'
+          memory: 128M
+    command: >
+      redis-server
+      --appendonly yes
+      --appendfsync everysec
+      --maxmemory 800mb
+      --maxmemory-policy allkeys-lru
+      --save 900 1
+      --save 300 10
+      --save 60 10000
+    volumes:
+      - redis_fingerprints_data:/data
+      - ./redis_fingerprints.conf:/usr/local/etc/redis/redis.conf
+    ports:
+      - "6380:6379"
+    networks:
+      - ainflue-protection-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  # Rights Management API Gateway
+  rights-api-gateway:
+    image: ainflue/rights-api-gateway:latest
+    container_name: ainflue-rights-api
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1.5G
+        reservations:
+          cpus: '0.2'
+          memory: 256M
+    environment:
+      - API_VERSION=v1
+      - RATE_LIMIT_ENABLED=true
+      - RATE_LIMIT_REQUESTS=1000
+      - RATE_LIMIT_WINDOW=3600
+      - AUTH_REQUIRED=true
+      - JWT_SECRET=${JWT_SECRET_KEY}
+      - CORS_ENABLED=true
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
+    ports:
+      - "8084:8080"
+    depends_on:
+      - fingerprinting-service
+      - watermarking-service
+      - copyright-monitor
+      - postgres-fingerprints
+    networks:
+      - ainflue-protection-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+
+# Secrets for sensitive data
+secrets:
+  blockchain_private_key:
+    external: true
+  ipfs_api_key:
+    external: true
+
+# Volumes for persistent data
+volumes:
+  content_fingerprints:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/ainflue/fingerprints
+  content_watermarks:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/ainflue/watermarks
+  fingerprints_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/ainflue/postgres_fingerprints
+  redis_fingerprints_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/ainflue/redis_fingerprints
+  fingerprint_cache:
+    driver: local
+  watermark_templates:
+    driver: local
+  monitoring_data:
+    driver: local
+  blockchain_data:
+    driver: local
+
+# Networks for service communication
+networks:
+  ainflue-protection-network:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br-ainflue-protection
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+          gateway: 172.20.0.1
+  ainflue-external-network:
+    external: true
