@@ -326,7 +326,7 @@ async def upload_content(
     enable_watermarking: bool = Form(default=True),
     enable_fingerprinting: bool = Form(default=True),
     auto_publish: bool = Form(default=False),
-    background_tasks: BackgroundTasks,
+    background_tasks: BackgroundTasks = Depends(),
     current_user: Dict = Depends(get_current_user)
 ):
     """Upload new content with enterprise processing pipeline"""
@@ -383,7 +383,7 @@ async def upload_multiple_content(
     files: List[UploadFile] = File(..., description="Multiple content files"),
     metadata: str = Form(..., description="JSON metadata array"),
     protection_level: ProtectionLevel = Form(default=ProtectionLevel.STANDARD),
-    background_tasks: BackgroundTasks,
+    background_tasks: BackgroundTasks = Depends(),
     current_user: Dict = Depends(get_current_user)
 ):
     """Upload multiple content files with batch processing"""
@@ -566,7 +566,7 @@ async def delete_content(
 async def protect_content(
     content_id: str,
     protection_request: ContentProtectionRequest,
-    background_tasks: BackgroundTasks,
+    background_tasks: BackgroundTasks = Depends(),
     current_user: Dict = Depends(get_current_user),
     has_access: bool = Depends(validate_content_access)
 ):
@@ -625,7 +625,7 @@ async def get_content_protection_status(
 async def distribute_content(
     content_id: str,
     distribution_request: ContentDistributionRequest,
-    background_tasks: BackgroundTasks,
+    background_tasks: BackgroundTasks = Depends(),
     current_user: Dict = Depends(get_current_user),
     has_access: bool = Depends(validate_content_access)
 ):
