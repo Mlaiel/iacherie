@@ -37,6 +37,11 @@ class EventStreamingError(Exception):
     pass
 
 
+class MessageQueueError(Exception):
+    """Raised when an error occurs in message queue operations"""
+    pass
+
+
 # Export for compatibility
 __all__ = [
     'EventProcessingError',
@@ -44,5 +49,6 @@ __all__ = [
     'EventSourcingError',
     'HandlerNotFoundError',
     'ProcessingTimeoutError',
-    'EventStreamingError'
+    'EventStreamingError',
+    'MessageQueueError'
 ]
