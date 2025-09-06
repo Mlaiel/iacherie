@@ -43,6 +43,41 @@ except ImportError as e:
     class EventStore: pass
     class EventRepository: pass
     class AggregateRoot: pass
+
+# Core event system - NEW ENTERPRISE COMPONENTS
+try:
+    from .event_bus import EventBus, get_global_event_bus, publish_event, subscribe_to_events
+    from .event_registry import EventRegistry, get_global_registry, register_event_type, validate_event
+    from .event_dispatcher import EventDispatcher, get_global_dispatcher, dispatch_event, register_handler
+    from .event_serializer import EventSerializer, get_global_serializer, serialize_event, deserialize_event
+    from .domain_events import (
+        UserCreatedEvent, ContentUploadedEvent, AIAnalysisCompletedEvent,
+        create_user_event, create_content_event, create_ai_event, DOMAIN_EVENT_TYPES
+    )
+    from .integration_events import (
+        ExternalAPICallStartedEvent, WebhookReceivedEvent, DataSyncCompletedEvent,
+        create_api_event, create_webhook_event, INTEGRATION_EVENT_TYPES
+    )
+    from .event_validator import EventValidator, get_global_validator, ValidationResult, ValidationRule
+    from .dead_letter_queue import DeadLetterQueue, get_global_dlq, add_failed_event, register_retry_handler
+    from .event_metadata import (
+        EventMetadataManager, get_global_metadata_manager, enrich_event_metadata,
+        TracingContext, create_tracing_context, propagate_context
+    )
+    from .event_metrics import (
+        EventMetricsCollector, get_global_metrics_collector, record_event_published, record_event_processed
+    )
+except ImportError as e:
+    logger.warning(f"Core event system components not fully available: {e}")
+    # Create placeholder classes for missing components
+    class EventBus: pass
+    class EventRegistry: pass
+    class EventDispatcher: pass
+    class EventSerializer: pass
+    class EventValidator: pass
+    class DeadLetterQueue: pass
+    class EventMetadataManager: pass
+    class EventMetricsCollector: pass
 # Wrap other imports in try/except for graceful handling
 try:
     from .event_streaming import EventStream, StreamProcessor, StreamingEngine
@@ -306,6 +341,25 @@ __all__ = [
     "EventStoreManager", "EventPersistence",
     "EventPublisher", "PublisherManager",
     "EventSubscriber", "SubscriberManager",
+    
+    # NEW ENTERPRISE EVENT SYSTEM COMPONENTS
+    "EventBus", "get_global_event_bus", "publish_event", "subscribe_to_events",
+    "EventRegistry", "get_global_registry", "register_event_type", "validate_event",
+    "EventDispatcher", "get_global_dispatcher", "dispatch_event", "register_handler",
+    "EventSerializer", "get_global_serializer", "serialize_event", "deserialize_event",
+    "EventValidator", "get_global_validator", "ValidationResult", "ValidationRule",
+    "DeadLetterQueue", "get_global_dlq", "add_failed_event", "register_retry_handler",
+    "EventMetadataManager", "get_global_metadata_manager", "enrich_event_metadata",
+    "EventMetricsCollector", "get_global_metrics_collector", "record_event_published", "record_event_processed",
+    "TracingContext", "create_tracing_context", "propagate_context",
+    
+    # Domain Events
+    "UserCreatedEvent", "ContentUploadedEvent", "AIAnalysisCompletedEvent",
+    "create_user_event", "create_content_event", "create_ai_event", "DOMAIN_EVENT_TYPES",
+    
+    # Integration Events
+    "ExternalAPICallStartedEvent", "WebhookReceivedEvent", "DataSyncCompletedEvent",
+    "create_api_event", "create_webhook_event", "INTEGRATION_EVENT_TYPES",
     
     # Ultra-Advanced Analytics Events
     "BaseAnalyticsEventHandler",
