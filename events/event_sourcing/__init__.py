@@ -143,11 +143,204 @@ class EventRepository:
         return aggregate
 
 
+# Import all enterprise classes
+try:
+    from .enterprise_event_store import (
+        EnterpriseEventStore, StorageBackend, BackendConfig, 
+        PostgreSQLAdapter, MongoDBAdapter, EventStoreMetrics
+    )
+except ImportError as e:
+    logger.warning(f"Failed to import enterprise_event_store: {e}")
+    EnterpriseEventStore = None
+
+try:
+    from .postgresql_event_repository import (
+        PostgreSQLEventRepository, PostgreSQLConfig, PartitionStrategy, 
+        IndexStrategy, QueryMetrics
+    )
+except ImportError as e:
+    logger.warning(f"Failed to import postgresql_event_repository: {e}")
+    PostgreSQLEventRepository = None
+
+try:
+    from .mongodb_event_collection import (
+        MongoDBEventCollection, MongoDBConfig, ShardingStrategy, 
+        CompressionLevel, MongoDBMetrics
+    )
+except ImportError as e:
+    logger.warning(f"Failed to import mongodb_event_collection: {e}")
+    MongoDBEventCollection = None
+
+try:
+    from .aggregate_snapshot_manager import (
+        AggregateSnapshotManager, SnapshotConfig, SnapshotStrategy,
+        SnapshotMetadata, SnapshotData, MemorySnapshotStorage,
+        FileSystemSnapshotStorage
+    )
+except ImportError as e:
+    logger.warning(f"Failed to import aggregate_snapshot_manager: {e}")
+    AggregateSnapshotManager = None
+
+try:
+    from .event_stream_processor import (
+        EventStreamProcessor, StreamConfig, StreamingBackend,
+        ProcessingMode, EventFilter, EventTransformer, EventBatch
+    )
+except ImportError as e:
+    logger.warning(f"Failed to import event_stream_processor: {e}")
+    EventStreamProcessor = None
+
+try:
+    from .event_versioning_engine import (
+        EventVersioningEngine, SemanticVersion, EventSchema,
+        VersionType, CompatibilityLevel, SchemaChange, MigrationRule
+    )
+except ImportError as e:
+    logger.warning(f"Failed to import event_versioning_engine: {e}")
+    EventVersioningEngine = None
+
+try:
+    from .event_migration_orchestrator import (
+        EventMigrationOrchestrator, MigrationConfig, MigrationStatus,
+        MigrationStrategy, MigrationProgress, ConflictResolution
+    )
+except ImportError as e:
+    logger.warning(f"Failed to import event_migration_orchestrator: {e}")
+    EventMigrationOrchestrator = None
+
+try:
+    from .consistency_validation_service import (
+        ConsistencyValidationService, ValidationRule, ValidationIssue,
+        ValidationReport, ValidationSeverity, ValidationCategory
+    )
+except ImportError as e:
+    logger.warning(f"Failed to import consistency_validation_service: {e}")
+    ConsistencyValidationService = None
+
+try:
+    from .optimistic_concurrency_manager import (
+        OptimisticConcurrencyManager, ConflictInfo, ConflictType,
+        ConflictResolutionStrategy, LockInfo, LockType, ConcurrencyMetrics
+    )
+except ImportError as e:
+    logger.warning(f"Failed to import optimistic_concurrency_manager: {e}")
+    OptimisticConcurrencyManager = None
+
+try:
+    from .event_compaction_optimizer import (
+        EventCompactionOptimizer, CompactionRule, CompactionStrategy,
+        CompactionJob, CompactionMetrics, ArchivalTier
+    )
+except ImportError as e:
+    logger.warning(f"Failed to import event_compaction_optimizer: {e}")
+    EventCompactionOptimizer = None
+
+try:
+    from .projection_rebuild_coordinator import (
+        ProjectionRebuildCoordinator, ProjectionDefinition, ProjectionType,
+        RebuildStrategy, RebuildJob, ProjectionHandler, ProjectionMetrics
+    )
+except ImportError as e:
+    logger.warning(f"Failed to import projection_rebuild_coordinator: {e}")
+    ProjectionRebuildCoordinator = None
+
 # Export classes for compatibility
 __all__ = [
+    # Core classes
     'DomainEvent',
     'EventStoreInterface', 
     'EventStore',
     'EventRepository',
-    'AggregateRoot'
+    'AggregateRoot',
+    
+    # Enterprise Event Store
+    'EnterpriseEventStore',
+    'StorageBackend',
+    'BackendConfig',
+    'PostgreSQLAdapter',
+    'MongoDBAdapter',
+    'EventStoreMetrics',
+    
+    # PostgreSQL Repository
+    'PostgreSQLEventRepository',
+    'PostgreSQLConfig',
+    'PartitionStrategy',
+    'IndexStrategy',
+    'QueryMetrics',
+    
+    # MongoDB Collection
+    'MongoDBEventCollection',
+    'MongoDBConfig',
+    'ShardingStrategy',
+    'CompressionLevel',
+    'MongoDBMetrics',
+    
+    # Snapshot Manager
+    'AggregateSnapshotManager',
+    'SnapshotConfig',
+    'SnapshotStrategy',
+    'SnapshotMetadata',
+    'SnapshotData',
+    'MemorySnapshotStorage',
+    'FileSystemSnapshotStorage',
+    
+    # Stream Processor
+    'EventStreamProcessor',
+    'StreamConfig',
+    'StreamingBackend',
+    'ProcessingMode',
+    'EventFilter',
+    'EventTransformer',
+    'EventBatch',
+    
+    # Versioning Engine
+    'EventVersioningEngine',
+    'SemanticVersion',
+    'EventSchema',
+    'VersionType',
+    'CompatibilityLevel',
+    'SchemaChange',
+    'MigrationRule',
+    
+    # Migration Orchestrator
+    'EventMigrationOrchestrator',
+    'MigrationConfig',
+    'MigrationStatus',
+    'MigrationStrategy',
+    'MigrationProgress',
+    'ConflictResolution',
+    
+    # Consistency Validation
+    'ConsistencyValidationService',
+    'ValidationRule',
+    'ValidationIssue',
+    'ValidationReport',
+    'ValidationSeverity',
+    'ValidationCategory',
+    
+    # Concurrency Manager
+    'OptimisticConcurrencyManager',
+    'ConflictInfo',
+    'ConflictType',
+    'ConflictResolutionStrategy',
+    'LockInfo',
+    'LockType',
+    'ConcurrencyMetrics',
+    
+    # Compaction Optimizer
+    'EventCompactionOptimizer',
+    'CompactionRule',
+    'CompactionStrategy',
+    'CompactionJob',
+    'CompactionMetrics',
+    'ArchivalTier',
+    
+    # Projection Coordinator
+    'ProjectionRebuildCoordinator',
+    'ProjectionDefinition',
+    'ProjectionType',
+    'RebuildStrategy',
+    'RebuildJob',
+    'ProjectionHandler',
+    'ProjectionMetrics'
 ]
