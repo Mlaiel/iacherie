@@ -1,0 +1,530 @@
+# =============================================================================
+# AINFLUE PROTECTION RIGHTS SERVICES - DOCKER COMPOSE
+# =============================================================================
+# Content protection and rights management cluster with fingerprinting,
+# watermarking, copyright monitoring, and blockchain verification.
+#
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+# =============================================================================
+
+version: '3.8'
+
+x-protection-common: &protection-common
+  restart: unless-stopped
+  networks:
+    - protection-network
+    - backend-network
+  environment:
+    - ENVIRONMENT=${ENVIRONMENT:-production}
+    - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    - REDIS_HOST=redis-master
+    - POSTGRES_HOST=postgres-master
+    - MONITORING_ENABLED=true
+  logging:
+    driver: "json-file"
+    options:
+      max-size: "200m"
+      max-file: "5"
+
+x-protection-resources: &protection-resources
+  deploy:
+    resources:
+      limits:
+        cpus: '2.0'
+        memory: 3G
+      reservations:
+        cpus: '0.5'
+        memory: 1G
+    restart_policy:
+      condition: on-failure
+      delay: 10s
+      max_attempts: 3
+
+services:
+  # =============================================================================
+  # MAIN PROTECTION SERVICE
+  # =============================================================================
+  protection-service:
+    build:
+      context: ../..
+      dockerfile: docker/protection/protection_service.dockerfile
+      target: production
+    container_name: ainflue-protection-service
+    <<: *protection-common
+    <<: *protection-resources
+    ports:
+      - "8020:8020"
+    volumes:
+      - protection_storage:/app/storage
+      - protection_logs:/app/logs
+      - protection_cache:/app/cache
+      - protection_models:/app/models
+      - protection_keys:/app/keys
+    environment:
+      <<: *protection-common
+      SERVICE_NAME: protection_service
+      FINGERPRINT_ALGORITHM: perceptual_hash
+      WATERMARK_STRENGTH: 0.1
+      ENCRYPTION_ALGORITHM: AES-256
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8020/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # =============================================================================
+  # FINGERPRINTING ENGINE
+  # =============================================================================
+  fingerprinting-engine:
+    build:
+      context: ../..
+      dockerfile: docker/protection/fingerprinting_engine.dockerfile
+      target: production
+    container_name: ainflue-fingerprinting-engine
+    <<: *protection-common
+    <<: *protection-resources
+    ports:
+      - "8021:8021"
+    volumes:
+      - fingerprint_storage:/app/storage
+      - fingerprint_logs:/app/logs
+      - fingerprint_cache:/app/cache
+      - fingerprint_models:/app/models
+    environment:
+      <<: *protection-common
+      SERVICE_NAME: fingerprinting_engine
+      AUDIO_SAMPLE_RATE: 22050
+      IMAGE_HASH_SIZE: 64
+      SIMILARITY_THRESHOLD: 0.85
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 6G
+        reservations:
+          cpus: '1.0'
+          memory: 2G
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8021/health"]
+      interval: 30s
+      timeout: 15s
+      retries: 3
+      start_period: 90s
+
+  # =============================================================================
+  # WATERMARKING SERVICE
+  # =============================================================================
+  watermarking-service:
+    build:
+      context: ../..
+      dockerfile: docker/protection/watermarking_service.dockerfile
+      target: production
+    container_name: ainflue-watermarking-service
+    <<: *protection-common
+    ports:
+      - "8022:8022"
+    volumes:
+      - watermark_storage:/app/storage
+      - watermark_logs:/app/logs
+      - watermark_keys:/app/keys
+    environment:
+      <<: *protection-common
+      SERVICE_NAME: watermarking_service
+      WATERMARK_STRENGTH: 0.1
+      WATERMARK_TYPE: invisible
+      SUPPORTED_FORMATS: audio,video,image
+    deploy:
+      resources:
+        limits:
+          cpus: '3.0'
+          memory: 4G
+        reservations:
+          cpus: '1.0'
+          memory: 1G
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8022/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # =============================================================================
+  # COPYRIGHT MONITOR
+  # =============================================================================
+  copyright-monitor:
+    build:
+      context: ../..
+      dockerfile: docker/protection/copyright_monitor.dockerfile
+      target: production
+    container_name: ainflue-copyright-monitor
+    <<: *protection-common
+    ports:
+      - "8023:8023"
+    volumes:
+      - monitor_storage:/app/storage
+      - monitor_logs:/app/logs
+      - monitor_cache:/app/cache
+    environment:
+      <<: *protection-common
+      SERVICE_NAME: copyright_monitor
+      SCAN_INTERVAL: 300
+      VIOLATION_THRESHOLD: 0.9
+      PLATFORMS: youtube,spotify,soundcloud,instagram
+      MAX_CONCURRENT_SCANS: 10
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 3G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8023/health"]
+      interval: 30s
+      timeout: 15s
+      retries: 3
+
+  # =============================================================================
+  # DMCA AUTOMATION
+  # =============================================================================
+  dmca-automation:
+    build:
+      context: ../..
+      dockerfile: docker/protection/dmca_automation.dockerfile
+      target: production
+    container_name: ainflue-dmca-automation
+    <<: *protection-common
+    ports:
+      - "8024:8024"
+    volumes:
+      - dmca_storage:/app/storage
+      - dmca_logs:/app/logs
+    environment:
+      <<: *protection-common
+      SERVICE_NAME: dmca_automation
+      NOTICE_TEMPLATE_PATH: /app/storage/dmca/templates
+      AUTO_SEND_NOTICES: false
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.3'
+          memory: 512M
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8024/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # =============================================================================
+  # BLOCKCHAIN VERIFIER
+  # =============================================================================
+  blockchain-verifier:
+    build:
+      context: ../..
+      dockerfile: docker/protection/blockchain_verifier.dockerfile
+      target: production
+    container_name: ainflue-blockchain-verifier
+    <<: *protection-common
+    ports:
+      - "8025:8025"
+    volumes:
+      - blockchain_storage:/app/storage
+      - blockchain_logs:/app/logs
+    environment:
+      <<: *protection-common
+      SERVICE_NAME: blockchain_verifier
+      BLOCKCHAIN_NETWORK: ethereum
+      GAS_LIMIT: 200000
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 2G
+        reservations:
+          cpus: '0.3'
+          memory: 512M
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8025/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # =============================================================================
+  # VIOLATION DETECTOR
+  # =============================================================================
+  violation-detector:
+    build:
+      context: ../..
+      dockerfile: docker/protection/violation_detector.dockerfile
+      target: production
+    container_name: ainflue-violation-detector
+    <<: *protection-common
+    ports:
+      - "8026:8026"
+    volumes:
+      - violation_storage:/app/storage
+      - violation_logs:/app/logs
+      - violation_models:/app/models
+    environment:
+      <<: *protection-common
+      SERVICE_NAME: violation_detector
+      AI_MODEL_PATH: /app/models
+      DETECTION_THRESHOLD: 0.8
+    deploy:
+      resources:
+        limits:
+          cpus: '3.0'
+          memory: 4G
+        reservations:
+          cpus: '1.0'
+          memory: 2G
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8026/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # =============================================================================
+  # RIGHTS MANAGER
+  # =============================================================================
+  rights-manager:
+    build:
+      context: ../..
+      dockerfile: docker/protection/rights_manager.dockerfile
+      target: production
+    container_name: ainflue-rights-manager
+    <<: *protection-common
+    ports:
+      - "8027:8027"
+    volumes:
+      - rights_storage:/app/storage
+      - rights_logs:/app/logs
+      - rights_keys:/app/keys
+    environment:
+      <<: *protection-common
+      SERVICE_NAME: rights_manager
+      LICENSE_VALIDITY_DAYS: 365
+      ENCRYPTION_ENABLED: true
+    deploy:
+      resources:
+        limits:
+          cpus: '1.5'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8027/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # =============================================================================
+  # ENFORCEMENT ENGINE
+  # =============================================================================
+  enforcement-engine:
+    build:
+      context: ../..
+      dockerfile: docker/protection/enforcement_engine.dockerfile
+      target: production
+    container_name: ainflue-enforcement-engine
+    <<: *protection-common
+    ports:
+      - "8028:8028"
+    volumes:
+      - enforcement_storage:/app/storage
+      - enforcement_logs:/app/logs
+    environment:
+      <<: *protection-common
+      SERVICE_NAME: enforcement_engine
+      AUTO_ENFORCEMENT: false
+      ESCALATION_ENABLED: true
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.3'
+          memory: 512M
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8028/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # =============================================================================
+  # DRM CONTROLLER
+  # =============================================================================
+  drm-controller:
+    build:
+      context: ../..
+      dockerfile: docker/protection/drm_controller.dockerfile
+      target: production
+    container_name: ainflue-drm-controller
+    <<: *protection-common
+    ports:
+      - "8029:8029"
+    volumes:
+      - drm_storage:/app/storage
+      - drm_logs:/app/logs
+      - drm_keys:/app/keys
+    environment:
+      <<: *protection-common
+      SERVICE_NAME: drm_controller
+      ENCRYPTION_ALGORITHM: AES-256
+      KEY_ROTATION_HOURS: 24
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.3'
+          memory: 512M
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8029/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # =============================================================================
+  # CONTENT SCANNER
+  # =============================================================================
+  content-scanner:
+    build:
+      context: ../..
+      dockerfile: docker/protection/content_scanner.dockerfile
+      target: production
+    container_name: ainflue-content-scanner
+    <<: *protection-common
+    ports:
+      - "8030:8030"
+    volumes:
+      - scanner_storage:/app/storage
+      - scanner_logs:/app/logs
+    environment:
+      <<: *protection-common
+      SERVICE_NAME: content_scanner
+      SCAN_BATCH_SIZE: 100
+      SCAN_INTERVAL: 600
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 3G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8030/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+# =============================================================================
+# PERSISTENT VOLUMES
+# =============================================================================
+volumes:
+  # Main protection service
+  protection_storage:
+    driver: local
+  protection_logs:
+    driver: local
+  protection_cache:
+    driver: local
+  protection_models:
+    driver: local
+  protection_keys:
+    driver: local
+  
+  # Fingerprinting
+  fingerprint_storage:
+    driver: local
+  fingerprint_logs:
+    driver: local
+  fingerprint_cache:
+    driver: local
+  fingerprint_models:
+    driver: local
+  
+  # Watermarking
+  watermark_storage:
+    driver: local
+  watermark_logs:
+    driver: local
+  watermark_keys:
+    driver: local
+  
+  # Copyright monitoring
+  monitor_storage:
+    driver: local
+  monitor_logs:
+    driver: local
+  monitor_cache:
+    driver: local
+  
+  # DMCA automation
+  dmca_storage:
+    driver: local
+  dmca_logs:
+    driver: local
+  
+  # Blockchain verification
+  blockchain_storage:
+    driver: local
+  blockchain_logs:
+    driver: local
+  
+  # Violation detection
+  violation_storage:
+    driver: local
+  violation_logs:
+    driver: local
+  violation_models:
+    driver: local
+  
+  # Rights management
+  rights_storage:
+    driver: local
+  rights_logs:
+    driver: local
+  rights_keys:
+    driver: local
+  
+  # Enforcement
+  enforcement_storage:
+    driver: local
+  enforcement_logs:
+    driver: local
+  
+  # DRM
+  drm_storage:
+    driver: local
+  drm_logs:
+    driver: local
+  drm_keys:
+    driver: local
+  
+  # Content scanning
+  scanner_storage:
+    driver: local
+  scanner_logs:
+    driver: local
+
+# =============================================================================
+# NETWORKS
+# =============================================================================
+networks:
+  protection-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.31.0.0/24
+  backend-network:
+    external: true

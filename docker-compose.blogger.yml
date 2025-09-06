@@ -1,0 +1,131 @@
+# =============================================================================
+# AINFLUE BLOGGER SERVICES - DOCKER COMPOSE
+# =============================================================================
+# Specialized Docker composition for bloggers with SEO, collaboration,
+# analytics, and monetization services.
+#
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+# =============================================================================
+
+version: '3.8'
+
+x-common-config: &common-config
+  environment:
+    - ENVIRONMENT=${ENVIRONMENT:-production}
+    - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    - USER_TYPE=blogger
+    - REDIS_HOST=redis-master
+    - POSTGRES_HOST=postgres-master
+  restart: unless-stopped
+  networks:
+    - blogger-network
+    - backend-network
+  logging:
+    driver: "json-file"
+    options:
+      max-size: "200m"
+      max-file: "5"
+
+services:
+  # =============================================================================
+  # SEO OPTIMIZATION FOR BLOGGERS
+  # =============================================================================
+  blogger-seo-optimizer:
+    image: ainflue/seo-optimizer:latest
+    <<: *common-config
+    ports:
+      - "8050:8050"
+    environment:
+      <<: *common-config
+      BLOG_SEO: true
+      CONTENT_OPTIMIZATION: enabled
+      KEYWORD_RESEARCH: automated
+      READABILITY_ANALYSIS: true
+    volumes:
+      - blogger_seo:/app/storage
+
+  blogger-content-optimizer:
+    image: ainflue/content-optimizer:latest
+    <<: *common-config
+    environment:
+      <<: *common-config
+      BLOG_CONTENT_FOCUS: true
+      AI_WRITING_ASSISTANCE: enabled
+      TOPIC_RESEARCH: automated
+      PLAGIARISM_CHECK: true
+
+  # =============================================================================
+  # COLLABORATION FOR BLOGGERS
+  # =============================================================================
+  blogger-collaboration-engine:
+    image: ainflue/collaboration-engine:latest
+    <<: *common-config
+    ports:
+      - "8040:8040"
+    environment:
+      <<: *common-config
+      BLOGGER_MATCHING: true
+      GUEST_POST_COORDINATION: enabled
+      CONTENT_COLLABORATION: true
+    volumes:
+      - blogger_collaboration:/app/storage
+
+  # =============================================================================
+  # ANALYTICS FOR BLOGGERS
+  # =============================================================================
+  blogger-analytics-intelligence:
+    image: ainflue/analytics-intelligence:latest
+    <<: *common-config
+    ports:
+      - "8070:8070"
+    environment:
+      <<: *common-config
+      BLOG_ANALYTICS: true
+      CONTENT_PERFORMANCE: tracked
+      AUDIENCE_INSIGHTS: detailed
+      ENGAGEMENT_METRICS: real_time
+    volumes:
+      - blogger_analytics:/app/storage
+
+  # =============================================================================
+  # MONETIZATION FOR BLOGGERS
+  # =============================================================================
+  blogger-advertising-optimizer:
+    extends:
+      file: docker/monetization/docker-compose.monetization.yml
+      service: advertising-optimizer
+    <<: *common-config
+    environment:
+      <<: *common-config
+      BLOG_MONETIZATION: true
+      AD_PLACEMENT_OPTIMIZATION: enabled
+      AFFILIATE_MARKETING: supported
+
+  blogger-revenue-tracker:
+    extends:
+      file: docker/monetization/docker-compose.monetization.yml
+      service: revenue-tracker
+    <<: *common-config
+    environment:
+      <<: *common-config
+      BLOG_REVENUE_FOCUS: true
+      AFFILIATE_TRACKING: enabled
+      SPONSORED_CONTENT_TRACKING: true
+
+volumes:
+  blogger_seo:
+    driver: local
+  blogger_collaboration:
+    driver: local
+  blogger_analytics:
+    driver: local
+
+networks:
+  blogger-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.42.0.0/24
+  backend-network:
+    external: true
