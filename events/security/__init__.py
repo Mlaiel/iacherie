@@ -8,8 +8,15 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
 
 # Core security modules (existing)
-from .encryption import EncryptionManager
-from .authentication import SecurityManager
+from .encryption import (
+    EncryptionManager, EncryptionAlgorithm, KeyDerivationFunction, EncryptionLevel,
+    EncryptionKey, EncryptionResult, DecryptionResult, KeyRotationPredictor, ThreatAwareEncryptor
+)
+from .authentication import (
+    SecurityManager, AuthenticationMethod, AuthenticationLevel, SessionStatus,
+    AuthenticationCredentials, UserSession, AuthenticationResult, AuthenticationAnomalyDetector,
+    ThreatScorer, BusinessContextAuthenticator, BusinessValidationResult
+)
 
 # Advanced security modules (new)
 from .threat_detection_engine import ThreatDetectionEngine, ThreatLevel, ThreatIndicator, ThreatAnalysisResult
@@ -23,9 +30,29 @@ from .vulnerability_scanner import VulnerabilityScanner, Vulnerability, ScanResu
 from .incident_response_handler import IncidentResponseHandler, SecurityIncident, IncidentReport, IncidentType, IncidentSeverity, IncidentStatus
 
 __all__ = [
-    # Core security
+    # Core security - Encryption
     'EncryptionManager', 
+    'EncryptionAlgorithm',
+    'KeyDerivationFunction', 
+    'EncryptionLevel',
+    'EncryptionKey',
+    'EncryptionResult',
+    'DecryptionResult',
+    'KeyRotationPredictor',
+    'ThreatAwareEncryptor',
+    
+    # Core security - Authentication
     'SecurityManager',
+    'AuthenticationMethod',
+    'AuthenticationLevel',
+    'SessionStatus',
+    'AuthenticationCredentials',
+    'UserSession',
+    'AuthenticationResult',
+    'AuthenticationAnomalyDetector',
+    'ThreatScorer',
+    'BusinessContextAuthenticator',
+    'BusinessValidationResult',
     
     # Threat detection
     'ThreatDetectionEngine', 
