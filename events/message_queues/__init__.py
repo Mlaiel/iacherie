@@ -23,7 +23,6 @@ import hashlib
 
 from ..core.exceptions import MessageQueueError
 from ..core.redis import RedisManager
-from ..core.database import DatabaseManager
 from ..utils.monitoring import MetricsCollector
 from ..security.encryption import EncryptionManager
 
