@@ -6,14 +6,34 @@ processing, storage, and notification events for the IA Influencer Agent platfor
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
+Unauthorized use, modification, or distribution of this code is strictly prohibited.
+Contact: mlaiel@live.de for licensing and collaboration inquiries.
 """
 
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, List, Optional, Any
 from uuid import UUID, uuid4
+from enum import Enum
 
-from ...core.events.base_event import BaseEvent, EventPriority, EventCategory
+from ..core.base_event import BaseEvent
+
+
+class UploadStatus(Enum):
+    """Upload status enumeration"""
+    PENDING = "pending"
+    IN_PROGRESS = "in_progress"
+    COMPLETED = "completed"
+    FAILED = "failed"
+    CANCELLED = "cancelled"
+
+
+class ValidationStatus(Enum):
+    """Validation status enumeration"""
+    PASSED = "passed"
+    FAILED = "failed"
+    WARNING = "warning"
+    PENDING = "pending"
 
 
 @dataclass
@@ -39,25 +59,9 @@ class AudioUploadStartedEvent(BaseEvent):
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle___post_init___request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler __post_init__ failed: {e}")
-                    return {"status": "error", "message": str(e)}
+        super().__init__(
             event_type="audio.upload.started",
-            event_category=EventCategory.UPLOAD,
-            priority=EventPriority.HIGH,
-            user_id=self.user_id,
-            metadata={
+            data={
                 "upload_id": str(self.upload_id),
                 "filename": self.filename,
                 "file_size": self.file_size,
@@ -77,21 +81,6 @@ class AudioUploadProgressEvent(BaseEvent):
     and monitoring systems.
     """
     user_id: UUID
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle___post_init___request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler __post_init__ failed: {e}")
-                    return {"status": "error", "message": str(e)}
-    user_id: UUID
     upload_id: UUID
     upload_session_id: str
     bytes_uploaded: int
@@ -105,10 +94,7 @@ class AudioUploadProgressEvent(BaseEvent):
     def __post_init__(self):
         super().__init__(
             event_type="audio.upload.progress",
-            event_category=EventCategory.UPLOAD,
-            priority=EventPriority.MEDIUM,
-            user_id=self.user_id,
-            metadata={
+            data={
                 "upload_id": str(self.upload_id),
                 "progress_percentage": self.progress_percentage,
                 "upload_speed": self.upload_speed,
@@ -119,20 +105,7 @@ class AudioUploadProgressEvent(BaseEvent):
 
 @dataclass
 class AudioUploadCompletedEvent(BaseEvent):
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle___post_init___request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler __post_init__ failed: {e}")
-                    return {"status": "error", "message": str(e)}
+    """
     Event triggered when an audio upload is successfully completed.
     
     Contains comprehensive information about the uploaded file and
@@ -162,29 +135,7 @@ class AudioUploadCompletedEvent(BaseEvent):
     def __post_init__(self):
         super().__init__(
             event_type="audio.upload.completed",
-            event_category=EventCategory.UPLOAD,
-            priority=EventPriority.HIGH,
-            user_id=self.user_id,
-            metadata={
-                "upload_id": str(self.upload_id),
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle___post_init___request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler __post_init__ failed: {e}")
-                    return {"status": "error", "message": str(e)}
-            event_category=EventCategory.UPLOAD,
-            priority=EventPriority.HIGH,
-            user_id=self.user_id,
-            metadata={
+            data={
                 "upload_id": str(self.upload_id),
                 "file_id": str(self.file_id),
                 "filename": self.filename,
@@ -201,20 +152,7 @@ class AudioUploadCompletedEvent(BaseEvent):
 
 @dataclass
 class AudioUploadFailedEvent(BaseEvent):
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle___post_init___request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler __post_init__ failed: {e}")
-                    return {"status": "error", "message": str(e)}
+    """
     Event triggered when an audio upload fails.
     
     Contains detailed error information for debugging and user notification.
@@ -236,27 +174,7 @@ class AudioUploadFailedEvent(BaseEvent):
     def __post_init__(self):
         super().__init__(
             event_type="audio.upload.failed",
-            event_category=EventCategory.ERROR,
-            priority=EventPriority.HIGH,
-            user_id=self.user_id,
-            metadata={
-                "upload_id": str(self.upload_id),
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle___post_init___request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler __post_init__ failed: {e}")
-                    return {"status": "error", "message": str(e)}
-            user_id=self.user_id,
-            metadata={
+            data={
                 "upload_id": str(self.upload_id),
                 "error_code": self.error_code,
                 "error_message": self.error_message,
@@ -276,20 +194,7 @@ class AudioUploadValidationEvent(BaseEvent):
     Contains validation results and any issues found with the uploaded file.
     """
     user_id: UUID
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle___post_init___request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler __post_init__ failed: {e}")
-                    return {"status": "error", "message": str(e)}
+    upload_id: UUID
     file_id: UUID
     filename: str
     validation_status: str  # passed, failed, warning
@@ -306,26 +211,10 @@ class AudioUploadValidationEvent(BaseEvent):
     def __post_init__(self):
         super().__init__(
             event_type="audio.upload.validation",
-            event_category=EventCategory.VALIDATION,
-            priority=EventPriority.HIGH,
-            user_id=self.user_id,
-            metadata={
+            data={
                 "upload_id": str(self.upload_id),
                 "file_id": str(self.file_id),
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle___post_init___request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler __post_init__ failed: {e}")
-                    return {"status": "error", "message": str(e)}
+                "validation_status": self.validation_status,
                 "warnings_count": len(self.warnings),
                 "errors_count": len(self.errors),
                 "recommendations_count": len(self.recommendations)
@@ -334,9 +223,9 @@ class AudioUploadValidationEvent(BaseEvent):
 
 
 @dataclass
-class AudioUploadVirusScanEvent(BaseEvent):
+class AudioUploadSecurityScanEvent(BaseEvent):
     """
-    Event triggered during virus/malware scanning of uploaded audio files.
+    Event triggered during security scanning of uploaded audio files.
     
     Ensures security compliance before file processing begins.
     """
@@ -347,31 +236,15 @@ class AudioUploadVirusScanEvent(BaseEvent):
     scan_status: str  # clean, infected, suspicious, failed
     scan_engine: str
     scan_version: str
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle___post_init___request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler __post_init__ failed: {e}")
-                    return {"status": "error", "message": str(e)}
-    scan_duration: float
+    threats_detected: List[Dict[str, Any]] = field(default_factory=list)
+    scan_duration: float = 0.0
     quarantine_required: bool = False
     scan_details: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
         super().__init__(
-            event_type="audio.upload.virus_scan",
-            event_category=EventCategory.SECURITY,
-            priority=EventPriority.CRITICAL if self.scan_status == "infected" else EventPriority.HIGH,
-            user_id=self.user_id,
-            metadata={
+            event_type="audio.upload.security_scan",
+            data={
                 "upload_id": str(self.upload_id),
                 "file_id": str(self.file_id),
                 "scan_status": self.scan_status,
@@ -383,7 +256,7 @@ class AudioUploadVirusScanEvent(BaseEvent):
 
 
 @dataclass
-class AudioUploadMetadataExtractedEvent(BaseEvent):
+class AudioUploadMetadataExtractionEvent(BaseEvent):
     """
     Event triggered when metadata extraction from audio file is completed.
     
@@ -407,10 +280,7 @@ class AudioUploadMetadataExtractedEvent(BaseEvent):
     def __post_init__(self):
         super().__init__(
             event_type="audio.upload.metadata_extracted",
-            event_category=EventCategory.PROCESSING,
-            priority=EventPriority.MEDIUM,
-            user_id=self.user_id,
-            metadata={
+            data={
                 "upload_id": str(self.upload_id),
                 "file_id": str(self.file_id),
                 "has_artwork": self.embedded_artwork is not None,
@@ -422,71 +292,36 @@ class AudioUploadMetadataExtractedEvent(BaseEvent):
 
 
 @dataclass
-class AudioUploadDuplicateDetectedEvent(BaseEvent):
+class AudioUploadThumbnailGenerationEvent(BaseEvent):
     """
-    Event triggered when a duplicate audio file is detected during upload.
+    Event triggered when thumbnail/waveform generation is completed.
     
-    Prevents unnecessary storage and processing of identical content.
-    """
-    user_id: UUID
-    upload_id: UUID
-    filename: str
-    duplicate_file_id: UUID
-    duplicate_filename: str
-    similarity_score: float
-    duplicate_detection_method: str  # checksum, fingerprint, metadata
-    original_upload_date: datetime
-    duplicate_user_id: UUID
-    action_taken: str  # reject, merge, allow_duplicate
-    user_notified: bool = False
-    
-    def __post_init__(self):
-        super().__init__(
-            event_type="audio.upload.duplicate_detected",
-            event_category=EventCategory.VALIDATION,
-            priority=EventPriority.MEDIUM,
-            user_id=self.user_id,
-            metadata={
-                "upload_id": str(self.upload_id),
-                "duplicate_file_id": str(self.duplicate_file_id),
-                "similarity_score": self.similarity_score,
-                "detection_method": self.duplicate_detection_method,
-                "action_taken": self.action_taken
-            }
-        )
-
-
-@dataclass
-class AudioUploadQuotaExceededEvent(BaseEvent):
-    """
-    Event triggered when user upload quota is exceeded.
-    
-    Handles quota enforcement and upgrade suggestions.
+    Contains information about generated visual representations of the audio.
     """
     user_id: UUID
     upload_id: UUID
+    file_id: UUID
     filename: str
-    file_size: int
-    current_usage: int
-    quota_limit: int
-    quota_type: str  # storage, monthly_uploads, file_count
-    quota_period: str
-    upgrade_required: bool
-    suggested_plan: Optional[str] = None
-    grace_period_remaining: Optional[int] = None
+    thumbnail_generated: bool
+    waveform_generated: bool
+    spectrogram_generated: bool
+    thumbnail_path: Optional[str] = None
+    waveform_path: Optional[str] = None
+    spectrogram_path: Optional[str] = None
+    generation_duration: float = 0.0
+    thumbnail_format: str = "png"
+    waveform_format: str = "svg"
+    error_message: Optional[str] = None
     
     def __post_init__(self):
         super().__init__(
-            event_type="audio.upload.quota_exceeded",
-            event_category=EventCategory.BUSINESS,
-            priority=EventPriority.HIGH,
-            user_id=self.user_id,
-            metadata={
+            event_type="audio.upload.thumbnail_generation",
+            data={
                 "upload_id": str(self.upload_id),
-                "file_size": self.file_size,
-                "current_usage": self.current_usage,
-                "quota_limit": self.quota_limit,
-                "quota_type": self.quota_type,
-                "upgrade_required": self.upgrade_required
+                "file_id": str(self.file_id),
+                "thumbnail_generated": self.thumbnail_generated,
+                "waveform_generated": self.waveform_generated,
+                "spectrogram_generated": self.spectrogram_generated,
+                "generation_duration": self.generation_duration
             }
         )
