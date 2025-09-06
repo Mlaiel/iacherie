@@ -184,7 +184,7 @@ class CustomReport(BaseModel):
     filters: Dict[str, Any] = Field(default_factory=dict)
     schedule: Optional[str] = Field(None, description="Cron expression for scheduled reports")
     recipients: List[str] = Field(default_factory=list, description="Email recipients")
-    format: str = Field(default="json", regex="^(json|csv|pdf|excel)$")
+    format: str = Field(default="json", pattern="^(json|csv|pdf|excel)$")
 
 # ========================================
 # DEPENDENCY FUNCTIONS
@@ -271,7 +271,7 @@ async def get_revenue_analytics(
 
 @router.get("/revenue/breakdown")
 async def get_revenue_breakdown(
-    breakdown_by: str = Query("source", regex="^(source|platform|content|collaboration)$"),
+    breakdown_by: str = Query("source", pattern="^(source|platform|content|collaboration)$"),
     time_range: TimeRange = Query(default=TimeRange.MONTH),
     current_user: Dict = Depends(get_current_user),
     has_access: bool = Depends(validate_analytics_access)

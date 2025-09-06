@@ -89,7 +89,7 @@ class UserRegistration(BaseModel):
     first_name: str = Field(..., min_length=1, max_length=50)
     last_name: str = Field(..., min_length=1, max_length=50)
     company: Optional[str] = Field(None, max_length=100)
-    phone: Optional[str] = Field(None, regex=r'^\+?[1-9]\d{1,14}$')
+    phone: Optional[str] = Field(None, pattern=r'^\+?[1-9]\d{1,14}$')
     country: str = Field(..., min_length=2, max_length=2, description="ISO country code")
     preferred_language: str = Field(default="en", min_length=2, max_length=5)
     marketing_consent: bool = Field(default=False)
@@ -321,8 +321,8 @@ async def require_role(required_role: UserRole):
 
 @router.post("/register", response_model=UserProfile)
 async def register_user(
-    user_data: UserRegistration,
     background_tasks: BackgroundTasks,
+    user_data: UserRegistration,
     request: Request
 ):
     """Register new user with comprehensive validation"""
@@ -360,8 +360,8 @@ async def register_user(
 
 @router.post("/login", response_model=TokenResponse)
 async def login_user(
-    login_data: UserLogin,
     background_tasks: BackgroundTasks,
+    login_data: UserLogin,
     request: Request
 ):
     """Authenticate user and create session"""
@@ -413,9 +413,9 @@ async def login_user(
 
 @router.post("/token", response_model=TokenResponse)
 async def login_for_access_token(
-    form_data: OAuth2PasswordRequestForm = Depends(),
     background_tasks: BackgroundTasks,
-    request: Request
+    request: Request,
+    form_data: OAuth2PasswordRequestForm = Depends()
 ):
     """OAuth2 compatible token endpoint"""
     
@@ -424,8 +424,8 @@ async def login_for_access_token(
 
 @router.post("/logout")
 async def logout_user(
-    current_user: dict = Depends(get_current_user),
-    background_tasks: BackgroundTasks
+    background_tasks: BackgroundTasks,
+    current_user: dict = Depends(get_current_user)
 ):
     """Logout user and invalidate session"""
     
@@ -440,8 +440,8 @@ async def logout_user(
 
 @router.post("/refresh", response_model=TokenResponse)
 async def refresh_access_token(
-    refresh_token: str,
-    background_tasks: BackgroundTasks
+    background_tasks: BackgroundTasks,
+    refresh_token: str
 ):
     """Refresh access token using refresh token"""
     
@@ -505,9 +505,9 @@ async def get_user_profile(current_user: dict = Depends(get_current_user)):
 
 @router.put("/profile", response_model=UserProfile)
 async def update_user_profile(
+    background_tasks: BackgroundTasks,
     profile_updates: Dict[str, Any],
-    current_user: dict = Depends(get_current_user),
-    background_tasks: BackgroundTasks
+    current_user: dict = Depends(get_current_user)
 ):
     """Update user profile"""
     
@@ -541,9 +541,9 @@ async def update_user_profile(
 
 @router.post("/password/change")
 async def change_password(
+    background_tasks: BackgroundTasks,
     password_change: PasswordChange,
-    current_user: dict = Depends(get_current_user),
-    background_tasks: BackgroundTasks
+    current_user: dict = Depends(get_current_user)
 ):
     """Change user password"""
     
@@ -561,8 +561,8 @@ async def change_password(
 
 @router.post("/password/reset")
 async def request_password_reset(
-    reset_request: PasswordReset,
-    background_tasks: BackgroundTasks
+    background_tasks: BackgroundTasks,
+    reset_request: PasswordReset
 ):
     """Request password reset"""
     
@@ -579,8 +579,8 @@ async def request_password_reset(
 
 @router.post("/password/reset/confirm")
 async def confirm_password_reset(
-    reset_confirm: PasswordResetConfirm,
-    background_tasks: BackgroundTasks
+    background_tasks: BackgroundTasks,
+    reset_confirm: PasswordResetConfirm
 ):
     """Confirm password reset with token"""
     
@@ -600,9 +600,9 @@ async def confirm_password_reset(
 
 @router.post("/2fa/setup")
 async def setup_two_factor(
+    background_tasks: BackgroundTasks,
     setup_data: TwoFactorSetup,
-    current_user: dict = Depends(get_current_user),
-    background_tasks: BackgroundTasks
+    current_user: dict = Depends(get_current_user)
 ):
     """Setup two-factor authentication"""
     
@@ -644,9 +644,9 @@ async def setup_two_factor(
 
 @router.post("/2fa/verify")
 async def verify_two_factor(
+    background_tasks: BackgroundTasks,
     verification: TwoFactorVerification,
-    current_user: dict = Depends(get_current_user),
-    background_tasks: BackgroundTasks
+    current_user: dict = Depends(get_current_user)
 ):
     """Verify two-factor authentication code"""
     
@@ -662,9 +662,9 @@ async def verify_two_factor(
 
 @router.post("/2fa/disable")
 async def disable_two_factor(
+    background_tasks: BackgroundTasks,
     current_password: str,
-    current_user: dict = Depends(get_current_user),
-    background_tasks: BackgroundTasks
+    current_user: dict = Depends(get_current_user)
 ):
     """Disable two-factor authentication"""
     
@@ -682,8 +682,8 @@ async def disable_two_factor(
 
 @router.post("/oauth2/authorize")
 async def oauth2_authorize(
-    auth_request: OAuth2AuthRequest,
-    background_tasks: BackgroundTasks
+    background_tasks: BackgroundTasks,
+    auth_request: OAuth2AuthRequest
 ):
     """Handle OAuth2 authorization"""
     
@@ -757,9 +757,9 @@ async def get_user_sessions(
 
 @router.delete("/sessions/{session_id}")
 async def revoke_session(
+    background_tasks: BackgroundTasks,
     session_id: str,
-    current_user: dict = Depends(get_current_user),
-    background_tasks: BackgroundTasks
+    current_user: dict = Depends(get_current_user)
 ):
     """Revoke specific session"""
     
@@ -773,8 +773,8 @@ async def revoke_session(
 
 @router.delete("/sessions/all")
 async def revoke_all_sessions(
-    current_user: dict = Depends(get_current_user),
-    background_tasks: BackgroundTasks
+    background_tasks: BackgroundTasks,
+    current_user: dict = Depends(get_current_user)
 ):
     """Revoke all user sessions except current"""
     
@@ -792,9 +792,9 @@ async def revoke_all_sessions(
 
 @router.post("/api-keys", response_model=APIKeyResponse)
 async def create_api_key(
+    background_tasks: BackgroundTasks,
     key_request: APIKeyRequest,
-    current_user: dict = Depends(get_current_user),
-    background_tasks: BackgroundTasks
+    current_user: dict = Depends(get_current_user)
 ):
     """Create new API key"""
     
@@ -840,9 +840,9 @@ async def list_api_keys(
 
 @router.delete("/api-keys/{key_id}")
 async def revoke_api_key(
+    background_tasks: BackgroundTasks,
     key_id: str,
-    current_user: dict = Depends(get_current_user),
-    background_tasks: BackgroundTasks
+    current_user: dict = Depends(get_current_user)
 ):
     """Revoke API key"""
     
@@ -859,8 +859,8 @@ async def revoke_api_key(
 
 @router.post("/verify-email")
 async def verify_email(
-    verification_token: str,
-    background_tasks: BackgroundTasks
+    background_tasks: BackgroundTasks,
+    verification_token: str
 ):
     """Verify email address"""
     
@@ -874,8 +874,8 @@ async def verify_email(
 
 @router.post("/resend-verification")
 async def resend_verification_email(
-    email: EmailStr,
-    background_tasks: BackgroundTasks
+    background_tasks: BackgroundTasks,
+    email: EmailStr
 ):
     """Resend email verification"""
     

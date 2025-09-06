@@ -224,7 +224,7 @@ async def get_content(
     limit: int = Query(20, ge=1, le=100, description="Number of items to return"),
     offset: int = Query(0, ge=0, description="Number of items to skip"),
     sort_by: str = Query("created_at", description="Sort field"),
-    sort_order: str = Query("desc", regex="^(asc|desc)$", description="Sort order"),
+    sort_order: str = Query("desc", pattern="^(asc|desc)$", description="Sort order"),
     current_user: Dict = Depends(get_current_user)
 ):
     """Get content with advanced filtering and pagination"""
@@ -320,14 +320,14 @@ async def get_content(
 
 @router.post("/upload", response_model=ContentResponse)
 async def upload_content(
+    background_tasks: BackgroundTasks,
+    current_user: Dict = Depends(get_current_user),
     file: UploadFile = File(..., description="Content file to upload"),
     metadata: str = Form(..., description="JSON metadata for the content"),
     protection_level: ProtectionLevel = Form(default=ProtectionLevel.STANDARD),
     enable_watermarking: bool = Form(default=True),
     enable_fingerprinting: bool = Form(default=True),
-    auto_publish: bool = Form(default=False),
-    background_tasks: BackgroundTasks,
-    current_user: Dict = Depends(get_current_user)
+    auto_publish: bool = Form(default=False)
 ):
     """Upload new content with enterprise processing pipeline"""
     
@@ -380,11 +380,11 @@ async def upload_content(
 
 @router.post("/upload/multi", response_model=List[ContentResponse])
 async def upload_multiple_content(
+    background_tasks: BackgroundTasks,
+    current_user: Dict = Depends(get_current_user),
     files: List[UploadFile] = File(..., description="Multiple content files"),
     metadata: str = Form(..., description="JSON metadata array"),
-    protection_level: ProtectionLevel = Form(default=ProtectionLevel.STANDARD),
-    background_tasks: BackgroundTasks,
-    current_user: Dict = Depends(get_current_user)
+    protection_level: ProtectionLevel = Form(default=ProtectionLevel.STANDARD)
 ):
     """Upload multiple content files with batch processing"""
     
@@ -687,7 +687,7 @@ async def get_distribution_status(
 @router.get("/{content_id}/analytics", response_model=ContentAnalytics)
 async def get_content_analytics(
     content_id: str,
-    period: str = Query("30d", regex="^(7d|30d|90d|1y|all)$", description="Analytics period"),
+    period: str = Query("30d", pattern="^(7d|30d|90d|1y|all)$", description="Analytics period"),
     include_platforms: bool = Query(True, description="Include platform-specific analytics"),
     current_user: Dict = Depends(get_current_user),
     has_access: bool = Depends(validate_content_access)

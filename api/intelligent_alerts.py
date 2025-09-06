@@ -1197,37 +1197,6 @@ async def get_alert_system_health():
 
 # Export router
 __all__ = ["router"]
-            weekly_revenue=metrics.weekly_revenue,
-            active_users=metrics.active_users,
-            new_users=metrics.new_users,
-            user_retention_rate=metrics.user_retention_rate,
-            avg_session_duration=metrics.avg_session_duration,
-            bounce_rate=metrics.bounce_rate,
-            conversion_rate=metrics.conversion_rate,
-            payment_success_rate=metrics.payment_success_rate,
-            content_uploads=metrics.content_uploads,
-            user_satisfaction_score=metrics.user_satisfaction_score,
-            support_tickets=metrics.support_tickets,
-            churn_rate=metrics.churn_rate
-        )
-        
-        # Evaluate through alert coordinator
-        result = await alert_coordinator.evaluate_all_metrics(business_metrics=business_metrics)
-        
-        return {
-            "status": "success",
-            "evaluation_timestamp": result.timestamp.isoformat(),
-            "system_health": result.system_health.value,
-            "alerts_triggered": result.total_active_alerts,
-            "alerts_by_category": result.alerts_by_category,
-            "business_health": result.business_health,
-            "trending_issues": result.trending_issues,
-            "recommendations": result.recommendations
-        }
-        
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error evaluating business metrics: {str(e)}")
-
 
 @router.post("/evaluate/technical")
 async def evaluate_technical_metrics(metrics: TechnicalMetricsRequest):

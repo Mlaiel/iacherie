@@ -132,11 +132,11 @@ class SEOAnalysis(BaseModel):
 
 class SEORecommendation(BaseModel):
     type: str = Field(..., description="Type of recommendation")
-    priority: str = Field(..., regex="^(high|medium|low)$")
+    priority: str = Field(..., pattern="^(high|medium|low)$")
     title: str = Field(..., min_length=1, max_length=100)
     description: str = Field(..., min_length=1, max_length=500)
     impact: str = Field(..., description="Expected impact")
-    effort: str = Field(..., regex="^(low|medium|high)$")
+    effort: str = Field(..., pattern="^(low|medium|high)$")
     implementation_guide: List[str] = Field(default_factory=list)
     expected_improvement: Dict[str, float] = Field(default_factory=dict)
 
@@ -361,7 +361,7 @@ async def get_keyword_suggestions(
 @router.get("/keywords/trending")
 async def get_trending_keywords(
     category: Optional[str] = Query(None),
-    timeframe: str = Query("7d", regex="^(24h|7d|30d)$"),
+    timeframe: str = Query("7d", pattern="^(24h|7d|30d)$"),
     location: str = Query("global"),
     limit: int = Query(20, ge=1, le=50),
     current_user: Dict = Depends(get_current_user),
@@ -930,7 +930,7 @@ async def get_seo_strategies(
 @router.get("/recommendations", response_model=List[SEORecommendation])
 async def get_seo_recommendations(
     content_id: Optional[str] = Query(None),
-    priority: Optional[str] = Query(None, regex="^(high|medium|low)$"),
+    priority: Optional[str] = Query(None, pattern="^(high|medium|low)$"),
     current_user: Dict = Depends(get_current_user),
     has_access: bool = Depends(validate_seo_access)
 ):
