@@ -653,12 +653,12 @@ async def get_rankings(
 
 @router.post("/rankings/track")
 async def add_keyword_tracking(
+    background_tasks: BackgroundTasks,
     keywords: List[str] = Query(..., min_items=1, max_items=50),
     search_engine: SearchEngine = Query(default=SearchEngine.GOOGLE),
     location: str = Query(default="US"),
     current_user: Dict = Depends(get_current_user),
-    has_access: bool = Depends(validate_seo_access),
-    background_tasks: BackgroundTasks
+    has_access: bool = Depends(validate_seo_access)
 ):
     """Add keywords to ranking tracking"""
     
@@ -735,12 +735,12 @@ async def get_ranking_history(
 
 @router.post("/competitors/analyze", response_model=CompetitorAnalysis)
 async def analyze_competitor(
+    background_tasks: BackgroundTasks,
     competitor_domain: str = Query(..., min_length=1),
     include_keywords: bool = Query(True),
     include_content_gaps: bool = Query(True),
     current_user: Dict = Depends(get_current_user),
-    has_access: bool = Depends(validate_seo_access),
-    background_tasks: BackgroundTasks
+    has_access: bool = Depends(validate_seo_access)
 ):
     """Analyze competitor's SEO strategy"""
     

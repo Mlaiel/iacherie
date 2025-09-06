@@ -667,8 +667,8 @@ async def get_challenges(
 @router.post("/challenges/{challenge_id}/join")
 async def join_challenge(
     challenge_id: str,
-    current_user: Dict = Depends(get_current_user),
-    background_tasks: BackgroundTasks
+    background_tasks: BackgroundTasks,
+    current_user: Dict = Depends(get_current_user)
 ):
     """Join a challenge"""
     
@@ -813,8 +813,8 @@ async def get_rewards_store(
 @router.post("/rewards/{reward_id}/claim")
 async def claim_reward(
     reward_id: str,
-    current_user: Dict = Depends(get_current_user),
-    background_tasks: BackgroundTasks
+    background_tasks: BackgroundTasks,
+    current_user: Dict = Depends(get_current_user)
 ):
     """Claim a reward from the store"""
     

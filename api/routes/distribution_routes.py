@@ -323,6 +323,11 @@ class AutoOptimization(BaseModel):
     ai_confidence_score: float = Field(default=0.0, ge=0.0, le=1.0)
     a_b_test_enabled: bool = Field(default=False)
 
+class ScheduleRequest(BaseModel):
+    content_id: str = Field(..., description="Content ID to schedule")
+    platforms: List[str] = Field(..., min_items=1)
+    schedule_times: Dict[str, datetime] = Field(..., description="Platform-specific schedule times")
+
 # ========================================
 # DEPENDENCY FUNCTIONS
 # ========================================
@@ -434,10 +439,10 @@ async def get_connected_platforms(
 @router.post("/platforms/{platform_id}/connect")
 async def connect_platform(
     platform_id: str,
+    background_tasks: BackgroundTasks,
     authorization_code: str = Query(..., description="OAuth authorization code"),
     redirect_uri: str = Query(..., description="OAuth redirect URI"),
-    current_user: Dict = Depends(get_current_user),
-    background_tasks: BackgroundTasks
+    current_user: Dict = Depends(get_current_user)
 ):
     """Connect to a new platform"""
     
@@ -461,8 +466,8 @@ async def connect_platform(
 @router.delete("/platforms/{platform_id}/disconnect")
 async def disconnect_platform(
     platform_id: str,
-    current_user: Dict = Depends(get_current_user),
-    background_tasks: BackgroundTasks
+    background_tasks: BackgroundTasks,
+    current_user: Dict = Depends(get_current_user)
 ):
     """Disconnect from a platform"""
     
@@ -636,8 +641,8 @@ async def get_distribution_jobs(
 @router.post("/jobs/{job_id}/retry")
 async def retry_distribution_job(
     job_id: str,
-    current_user: Dict = Depends(get_current_user),
-    background_tasks: BackgroundTasks
+    background_tasks: BackgroundTasks,
+    current_user: Dict = Depends(get_current_user)
 ):
     """Retry a failed distribution job"""
     
@@ -656,11 +661,11 @@ async def retry_distribution_job(
 
 @router.post("/optimize", response_model=List[AutoOptimization])
 async def optimize_content_for_platforms(
+    background_tasks: BackgroundTasks,
     content_id: str = Query(..., description="Content ID to optimize"),
     platforms: List[str] = Query(..., min_items=1, description="Target platforms"),
     current_user: Dict = Depends(get_current_user),
-    has_access: bool = Depends(validate_distribution_access),
-    background_tasks: BackgroundTasks
+    has_access: bool = Depends(validate_distribution_access)
 ):
     """AI-powered content optimization for multiple platforms"""
     
@@ -829,12 +834,10 @@ async def get_cross_platform_analytics(
 
 @router.post("/schedule")
 async def schedule_distribution(
-    content_id: str = Query(..., description="Content ID to schedule"),
-    platforms: List[str] = Query(..., min_items=1),
-    schedule_times: Dict[str, datetime] = Query(..., description="Platform-specific schedule times"),
+    schedule_request: ScheduleRequest,
+    background_tasks: BackgroundTasks,
     current_user: Dict = Depends(get_current_user),
-    has_access: bool = Depends(validate_distribution_access),
-    background_tasks: BackgroundTasks
+    has_access: bool = Depends(validate_distribution_access)
 ):
     """Schedule content distribution across platforms"""
     
@@ -846,7 +849,7 @@ async def schedule_distribution(
     
     # Validate platforms support scheduling
     non_scheduling_platforms = [
-        p for p in platforms 
+        p for p in schedule_request.platforms 
         if not SUPPORTED_PLATFORMS.get(p, {}).get("supports_scheduling", False)
     ]
     
@@ -857,13 +860,13 @@ async def schedule_distribution(
         )
     
     # Schedule background job
-    background_tasks.add_task(setup_scheduled_distribution, content_id, platforms, schedule_times, current_user["id"])
+    background_tasks.add_task(setup_scheduled_distribution, schedule_request.content_id, schedule_request.platforms, schedule_request.schedule_times, current_user["id"])
     
     return {
-        "message": f"Scheduled distribution for {len(platforms)} platforms",
-        "content_id": content_id,
-        "platforms": platforms,
-        "schedule_times": schedule_times,
+        "message": f"Scheduled distribution for {len(schedule_request.platforms)} platforms",
+        "content_id": schedule_request.content_id,
+        "platforms": schedule_request.platforms,
+        "schedule_times": schedule_request.schedule_times,
         "scheduled_at": datetime.utcnow()
     }
 
