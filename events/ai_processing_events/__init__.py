@@ -198,7 +198,28 @@ __all__ = [
     'ModelFramework',
     'MultimodalProcessor',
     'ModalityType',
-    'FusionStrategy'
+    'FusionStrategy',
+    'TransformerModelHandler',
+    'TransformerType',
+    'TaskType',
+    'ComputerVisionProcessor',
+    'VisionTaskType',
+    'MediaType',
+    'NaturalLanguageProcessor',
+    'NLPTaskType',
+    'LanguageCode',
+    'AudioIntelligenceProcessor',
+    'AudioTaskType',
+    'AudioFormat',
+    'RecommendationEngineEvents',
+    'RecommendationType',
+    'RecommendationContext',
+    'QualityAssessmentAI',
+    'QualityDimension',
+    'QualityLevel',
+    'BiasDetectionEvents',
+    'BiasType',
+    'BiasSeverity'
 ]
 
 # Import handlers for easy access
@@ -223,6 +244,13 @@ try:
     from .deep_learning_pipeline import DeepLearningPipeline, PipelineStage, PipelineStatus
     from .ai_inference_engine import AIInferenceEngine, InferenceType, ModelFramework
     from .multimodal_processor_events import MultimodalProcessor, ModalityType, FusionStrategy
+    from .transformer_model_handler import TransformerModelHandler, TransformerType, TaskType
+    from .computer_vision_events import ComputerVisionProcessor, VisionTaskType, MediaType
+    from .natural_language_events import NaturalLanguageProcessor, NLPTaskType, LanguageCode
+    from .audio_intelligence_events import AudioIntelligenceProcessor, AudioTaskType, AudioFormat
+    from .recommendation_engine_events import RecommendationEngineEvents, RecommendationType, RecommendationContext
+    from .quality_assessment_ai import QualityAssessmentAI, QualityDimension, QualityLevel
+    from .bias_detection_events import BiasDetectionEvents, BiasType, BiasSeverity
     
     logger.info("All critical AI processing modules loaded successfully")
     
@@ -243,7 +271,14 @@ HANDLER_REGISTRY = {
     'neural_network_processor': 'NeuralNetworkEventProcessor',
     'deep_learning_pipeline': 'DeepLearningPipeline',
     'ai_inference_engine': 'AIInferenceEngine',
-    'multimodal_processor': 'MultimodalProcessor'
+    'multimodal_processor': 'MultimodalProcessor',
+    'transformer_model_handler': 'TransformerModelHandler',
+    'computer_vision_processor': 'ComputerVisionProcessor',
+    'natural_language_processor': 'NaturalLanguageProcessor',
+    'audio_intelligence_processor': 'AudioIntelligenceProcessor',
+    'recommendation_engine': 'RecommendationEngineEvents',
+    'quality_assessment_ai': 'QualityAssessmentAI',
+    'bias_detection_events': 'BiasDetectionEvents'
 }
 
 def get_handler_class(handler_name: str):
