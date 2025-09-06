@@ -46,31 +46,44 @@ from .gamification_metrics import (
     GamificationAnalytics,
     GamificationMetrics,
     GamificationElement,
-    EngagementAction
+    EngagementAction,
+    AdvancedGamificationIntelligenceEcosystem
 )
 from .seo_intelligence_engine import (
     SEOIntelligenceEngine,
     SEOIntelligenceMetrics,
     SEOPlatform,
-    ContentType as SEOContentType
+    ContentType as SEOContentType,
+    GlobalSEOIntelligenceEcosystem
 )
 from .distribution_intelligence import (
     DistributionIntelligenceEngine,
     DistributionIntelligence,
     DistributionPlatform,
-    ContentFormat as DistributionContentFormat
+    ContentFormat as DistributionContentFormat,
+    GlobalDistributionIntelligenceEcosystem
 )
 from .security_intelligence import (
     SecurityIntelligenceEngine,
     SecurityMetrics,
     ThreatEvent,
-    SecurityEventType
+    SecurityEventType,
+    QuantumSecurityIntelligenceEcosystem
 )
 from .predictive_intelligence import (
     PredictiveIntelligenceEngine,
     PredictionResult,
     TrendAnalysis,
-    PredictionType
+    PredictionType,
+    QuantumPredictiveIntelligenceEcosystem
+)
+from .performance_analyzer import (
+    PerformanceAnalyzer,
+    QuantumPerformanceIntelligenceSystem
+)
+from .revenue_tracker import (
+    RevenueTracker,
+    GlobalRevenueIntelligenceEcosystem
 )
 
 __all__ = [
@@ -116,30 +129,43 @@ __all__ = [
     "GamificationMetrics",
     "GamificationElement",
     "EngagementAction",
+    "AdvancedGamificationIntelligenceEcosystem",
     
     # SEO Intelligence
     "SEOIntelligenceEngine",
     "SEOIntelligenceMetrics",
     "SEOPlatform",
     "SEOContentType",
+    "GlobalSEOIntelligenceEcosystem",
     
     # Distribution Intelligence
     "DistributionIntelligenceEngine",
     "DistributionIntelligence",
     "DistributionPlatform",
     "DistributionContentFormat",
+    "GlobalDistributionIntelligenceEcosystem",
     
     # Security Intelligence
     "SecurityIntelligenceEngine",
     "SecurityMetrics",
     "ThreatEvent",
     "SecurityEventType",
+    "QuantumSecurityIntelligenceEcosystem",
     
     # Predictive Intelligence
     "PredictiveIntelligenceEngine",
     "PredictionResult",
     "TrendAnalysis",
-    "PredictionType"
+    "PredictionType",
+    "QuantumPredictiveIntelligenceEcosystem",
+    
+    # Performance Analyzer
+    "PerformanceAnalyzer",
+    "QuantumPerformanceIntelligenceSystem",
+    
+    # Revenue Tracker
+    "RevenueTracker",
+    "GlobalRevenueIntelligenceEcosystem"
 ]
 
 
