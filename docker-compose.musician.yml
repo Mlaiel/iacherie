@@ -1,0 +1,173 @@
+# =============================================================================
+# AINFLUE MUSICIAN SERVICES - DOCKER COMPOSE
+# =============================================================================
+# Specialized Docker composition for musicians with audio processing,
+# protection, monetization, and distribution services.
+#
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+# =============================================================================
+
+version: '3.8'
+
+# Import common configurations
+x-common-config: &common-config
+  environment:
+    - ENVIRONMENT=${ENVIRONMENT:-production}
+    - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    - USER_TYPE=musician
+    - REDIS_HOST=redis-master
+    - POSTGRES_HOST=postgres-master
+  restart: unless-stopped
+  networks:
+    - musician-network
+    - backend-network
+  logging:
+    driver: "json-file"
+    options:
+      max-size: "200m"
+      max-file: "5"
+
+services:
+  # =============================================================================
+  # AUDIO PROCESSING CLUSTER FOR MUSICIANS
+  # =============================================================================
+  musician-audio-processing:
+    extends:
+      file: ../audio/docker-compose.audio.yml
+      service: audio-processing
+    <<: *common-config
+    environment:
+      <<: *common-config
+      MUSICIAN_MODE: true
+      PRIORITY_PROCESSING: true
+      REAL_TIME_MONITORING: true
+    volumes:
+      - musician_audio_storage:/app/storage
+      - musician_audio_logs:/app/logs
+
+  musician-source-separation:
+    extends:
+      file: ../audio/docker-compose.audio.yml
+      service: source-separation
+    <<: *common-config
+    environment:
+      <<: *common-config
+      MUSICIAN_STEMS: vocals,drums,bass,other,piano
+      HIGH_QUALITY_MODE: true
+
+  musician-mastering-engine:
+    extends:
+      file: ../audio/docker-compose.audio.yml
+      service: mastering-engine
+    <<: *common-config
+    environment:
+      <<: *common-config
+      MASTERING_PRESETS: rock,pop,jazz,classical,electronic
+      TARGET_LOUDNESS: -14.0
+
+  # =============================================================================
+  # PROTECTION SERVICES FOR MUSICIANS
+  # =============================================================================
+  musician-protection-service:
+    extends:
+      file: ../protection/docker-compose.protection.yml
+      service: protection-service
+    <<: *common-config
+    environment:
+      <<: *common-config
+      AUDIO_FINGERPRINTING: true
+      COPYRIGHT_MONITORING: enhanced
+      MUSIC_PLATFORMS: spotify,apple_music,youtube,soundcloud
+
+  musician-copyright-monitor:
+    extends:
+      file: ../protection/docker-compose.protection.yml
+      service: copyright-monitor
+    <<: *common-config
+    environment:
+      <<: *common-config
+      MUSIC_PLATFORM_FOCUS: true
+      SCAN_FREQUENCY: hourly
+
+  # =============================================================================
+  # MONETIZATION FOR MUSICIANS
+  # =============================================================================
+  musician-revenue-tracker:
+    extends:
+      file: ../monetization/docker-compose.monetization.yml
+      service: revenue-tracker
+    <<: *common-config
+    environment:
+      <<: *common-config
+      MUSIC_STREAMING_FOCUS: true
+      ROYALTY_TRACKING: enabled
+      PERFORMANCE_RIGHTS: ascap,bmi,sesac
+
+  musician-royalty-calculator:
+    extends:
+      file: ../monetization/docker-compose.monetization.yml
+      service: royalty-calculator
+    <<: *common-config
+    environment:
+      <<: *common-config
+      MUSIC_ROYALTY_TYPES: mechanical,performance,synchronization
+      SPLIT_CALCULATIONS: true
+
+  # =============================================================================
+  # DISTRIBUTION FOR MUSICIANS
+  # =============================================================================
+  musician-distribution-hub:
+    image: ainflue/distribution-hub:latest
+    <<: *common-config
+    ports:
+      - "8060:8060"
+    environment:
+      <<: *common-config
+      MUSIC_DISTRIBUTION: true
+      PLATFORMS: spotify,apple_music,youtube_music,amazon_music,tidal,deezer
+      METADATA_ENRICHMENT: true
+      ISRC_GENERATION: true
+    volumes:
+      - musician_distribution:/app/storage
+
+  # =============================================================================
+  # MUSICIAN-SPECIFIC ANALYTICS
+  # =============================================================================
+  musician-analytics:
+    image: ainflue/musician-analytics:latest
+    <<: *common-config
+    ports:
+      - "8070:8070"
+    environment:
+      <<: *common-config
+      MUSIC_ANALYTICS: true
+      STREAMING_METRICS: true
+      AUDIENCE_INSIGHTS: enabled
+    volumes:
+      - musician_analytics:/app/storage
+
+# =============================================================================
+# MUSICIAN-SPECIFIC VOLUMES
+# =============================================================================
+volumes:
+  musician_audio_storage:
+    driver: local
+  musician_audio_logs:
+    driver: local
+  musician_distribution:
+    driver: local
+  musician_analytics:
+    driver: local
+
+# =============================================================================
+# NETWORKS
+# =============================================================================
+networks:
+  musician-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.40.0.0/24
+  backend-network:
+    external: true
