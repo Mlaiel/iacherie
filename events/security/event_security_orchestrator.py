@@ -9,7 +9,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 import logging
 import asyncio
-from typing import Dict, List, Any, Optional, Callable
+from typing import Dict, List, Any, Optional, Callable, Tuple
 from datetime import datetime
 from dataclasses import dataclass
 from enum import Enum
@@ -323,7 +323,7 @@ class EventSecurityOrchestrator:
                                     threat_analysis: Any,
                                     access_control: Any,
                                     compliance_validation: Any,
-                                    security_context: SecurityContext) -> tuple[SecurityDecision, float]:
+                                    security_context: SecurityContext) -> Tuple[SecurityDecision, float]:
         """Make comprehensive security decision based on all assessments"""
         
         decision_factors = []

@@ -9,7 +9,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 import logging
 import asyncio
-from typing import Dict, List, Any, Optional, Set
+from typing import Dict, List, Any, Optional, Set, Tuple
 from datetime import datetime, timedelta
 from dataclasses import dataclass
 from enum import Enum
@@ -81,7 +81,7 @@ class ComplianceValidationResult:
     violations: List[ComplianceViolation]
     warnings: List[str]
     regulations_checked: List[ComplianceRegulation]
-    validation_timestamp: datetime
+    validation_timestamp: datetime = None
     
     def __post_init__(self):
         if self.validation_timestamp is None:
@@ -216,7 +216,7 @@ class ComplianceValidator:
                                          event_type: str,
                                          event_data: Dict[str, Any],
                                          user_id: str,
-                                         business_context: Dict[str, Any]) -> tuple[List[ComplianceViolation], List[str]]:
+                                         business_context: Dict[str, Any]) -> Tuple[List[ComplianceViolation], List[str]]:
         """Validate event against specific regulation"""
         
         violations = []
@@ -259,7 +259,7 @@ class ComplianceValidator:
                            event_type: str,
                            event_data: Dict[str, Any],
                            user_id: str,
-                           business_context: Dict[str, Any]) -> tuple[List[ComplianceViolation], List[str]]:
+                           business_context: Dict[str, Any]) -> Tuple[List[ComplianceViolation], List[str]]:
         """Validate GDPR compliance"""
         
         violations = []
@@ -323,7 +323,7 @@ class ComplianceValidator:
                            event_type: str,
                            event_data: Dict[str, Any],
                            user_id: str,
-                           business_context: Dict[str, Any]) -> tuple[List[ComplianceViolation], List[str]]:
+                           business_context: Dict[str, Any]) -> Tuple[List[ComplianceViolation], List[str]]:
         """Validate CCPA compliance"""
         
         violations = []
@@ -392,7 +392,7 @@ class ComplianceValidator:
                           event_type: str,
                           event_data: Dict[str, Any],
                           user_id: str,
-                          business_context: Dict[str, Any]) -> tuple[List[ComplianceViolation], List[str]]:
+                          business_context: Dict[str, Any]) -> Tuple[List[ComplianceViolation], List[str]]:
         """Validate SOX compliance for financial events"""
         
         violations = []
@@ -459,7 +459,7 @@ class ComplianceValidator:
                               event_type: str,
                               event_data: Dict[str, Any],
                               user_id: str,
-                              business_context: Dict[str, Any]) -> tuple[List[ComplianceViolation], List[str]]:
+                              business_context: Dict[str, Any]) -> Tuple[List[ComplianceViolation], List[str]]:
         """Validate PCI-DSS compliance for payment events"""
         
         violations = []
@@ -510,7 +510,7 @@ class ComplianceValidator:
                             event_type: str,
                             event_data: Dict[str, Any],
                             user_id: str,
-                            business_context: Dict[str, Any]) -> tuple[List[ComplianceViolation], List[str]]:
+                            business_context: Dict[str, Any]) -> Tuple[List[ComplianceViolation], List[str]]:
         """Validate HIPAA compliance for health data"""
         
         violations = []
@@ -547,7 +547,7 @@ class ComplianceValidator:
                             event_type: str,
                             event_data: Dict[str, Any],
                             user_id: str,
-                            business_context: Dict[str, Any]) -> tuple[List[ComplianceViolation], List[str]]:
+                            business_context: Dict[str, Any]) -> Tuple[List[ComplianceViolation], List[str]]:
         """Validate COPPA compliance for users under 13"""
         
         violations = []
