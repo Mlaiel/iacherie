@@ -252,3 +252,41 @@ def get_models_info() -> Dict[str, Any]:
         "models": list(MODELS.keys()),
         "base_class": Base.__name__ if Base else "BaseModel"
     }
+
+# Import monetization models
+try:
+    from .monetization_models import (
+        CreatorMonetizationProfile,
+        AIRevenueOptimization, 
+        CollaborationRevenueContract,
+        ProtectionRevenueRecovery,
+        GamificationMonetizationReward,
+        SEORevenueOptimization,
+        CreatorType,
+        PayoutSchedule,
+        OptimizationType,
+        ImplementationStatus,
+        ContractType,
+        ContractStatus,
+        TaxHandling,
+        RecoveryType,
+        RecoveryStatus,
+        RewardType,
+        RedemptionStatus,
+        OptimizationStatus
+    )
+    MONETIZATION_MODELS_AVAILABLE = True
+    
+    # Add monetization models to the MODELS registry
+    MODELS.update({
+        "CreatorMonetizationProfile": CreatorMonetizationProfile,
+        "AIRevenueOptimization": AIRevenueOptimization,
+        "CollaborationRevenueContract": CollaborationRevenueContract,
+        "ProtectionRevenueRecovery": ProtectionRevenueRecovery,
+        "GamificationMonetizationReward": GamificationMonetizationReward,
+        "SEORevenueOptimization": SEORevenueOptimization,
+    })
+    
+except ImportError as e:
+    print(f"Warning: Monetization models not available: {e}")
+    MONETIZATION_MODELS_AVAILABLE = False

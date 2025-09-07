@@ -641,6 +641,263 @@ async def system_status():
             "timestamp": datetime.utcnow().isoformat()
         }
 
+# ============ CREATOR MONETIZATION ENDPOINTS ============
+
+class CreatorProfileRequest(BaseModel):
+    creator_id: str = Field(..., description="Creator ID")
+    creator_type: str = Field(..., description="Creator type")
+    monetization_preferences: Optional[Dict[str, Any]] = Field(default=None, description="Monetization preferences")
+    revenue_goals: Optional[Dict[str, Any]] = Field(default=None, description="Revenue goals")
+    preferred_payment_methods: Optional[List[str]] = Field(default=None, description="Preferred payment methods")
+    tax_settings: Optional[Dict[str, Any]] = Field(default=None, description="Tax settings")
+
+class PayoutRequest(BaseModel):
+    creator_id: str = Field(..., description="Creator ID")
+    amount: Decimal = Field(..., description="Payout amount")
+    currency: str = Field(default="USD", description="Currency")
+    payment_method: str = Field(..., description="Payment method")
+
+@app.get("/api/v1/monetization/creator/profile/{creator_id}", tags=["Creator Monetization"])
+async def get_creator_profile(creator_id: str):
+    """Get creator monetization profile"""
+    try:
+        # Mock implementation - would fetch from database
+        return {
+            "success": True,
+            "data": {
+                "creator_id": creator_id,
+                "creator_type": "musician",
+                "monetization_preferences": {"auto_optimize": True},
+                "revenue_goals": {"monthly_target": 5000},
+                "payout_schedule": "monthly",
+                "minimum_payout_threshold": 10.00,
+                "auto_optimization_enabled": True
+            }
+        }
+    except Exception as e:
+        logger.error(f"Error getting creator profile: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/v1/monetization/creator/profile", tags=["Creator Monetization"])
+async def create_creator_profile(request: CreatorProfileRequest):
+    """Create or update creator monetization profile"""
+    try:
+        # Mock implementation - would save to database
+        return {
+            "success": True,
+            "data": {
+                "creator_id": request.creator_id,
+                "creator_type": request.creator_type,
+                "profile_created": True,
+                "timestamp": datetime.utcnow().isoformat()
+            }
+        }
+    except Exception as e:
+        logger.error(f"Error creating creator profile: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/v1/monetization/creator/revenue/{creator_id}", tags=["Creator Monetization"])
+async def get_creator_revenue(creator_id: str, start_date: Optional[str] = None, end_date: Optional[str] = None):
+    """Get creator revenue data"""
+    try:
+        # Mock implementation - would aggregate from database
+        return {
+            "success": True,
+            "data": {
+                "creator_id": creator_id,
+                "total_revenue": 15750.00,
+                "revenue_streams": {
+                    "streaming": 8500.00,
+                    "merchandise": 3250.00,
+                    "collaborations": 2500.00,
+                    "licensing": 1500.00
+                },
+                "period": {
+                    "start": start_date or "2025-01-01",
+                    "end": end_date or "2025-09-07"
+                }
+            }
+        }
+    except Exception as e:
+        logger.error(f"Error getting creator revenue: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/v1/monetization/creator/payout", tags=["Creator Monetization"])
+async def process_creator_payout(request: PayoutRequest):
+    """Process creator payout"""
+    try:
+        # Mock implementation - would process actual payout
+        payout_id = f"payout_{uuid.uuid4().hex[:12]}"
+        return {
+            "success": True,
+            "data": {
+                "payout_id": payout_id,
+                "creator_id": request.creator_id,
+                "amount": str(request.amount),
+                "currency": request.currency,
+                "payment_method": request.payment_method,
+                "status": "processing",
+                "estimated_completion": "2-3 business days"
+            }
+        }
+    except Exception as e:
+        logger.error(f"Error processing payout: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/v1/monetization/creator/dashboard/{creator_id}", tags=["Creator Monetization"])
+async def get_creator_dashboard(creator_id: str):
+    """Get creator revenue dashboard data"""
+    try:
+        # Mock implementation - would compile dashboard metrics
+        return {
+            "success": True,
+            "data": {
+                "creator_id": creator_id,
+                "current_month_revenue": 2850.00,
+                "revenue_growth": 15.3,
+                "top_performing_content": [
+                    {"content_id": "content_123", "revenue": 450.00, "title": "Latest Track"},
+                    {"content_id": "content_124", "revenue": 320.00, "title": "Music Video"}
+                ],
+                "upcoming_payouts": [
+                    {"amount": 1250.00, "date": "2025-10-01", "method": "bank_transfer"}
+                ],
+                "optimization_suggestions": [
+                    {"type": "pricing", "recommendation": "Increase track price by 15%", "potential_increase": "12%"}
+                ]
+            }
+        }
+    except Exception as e:
+        logger.error(f"Error getting creator dashboard: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+# ============ COLLABORATION REVENUE ENDPOINTS ============
+
+class CollaborationContractRequest(BaseModel):
+    project_id: str = Field(..., description="Project ID")
+    contract_type: str = Field(..., description="Contract type")
+    participants: Dict[str, Any] = Field(..., description="Participants and their roles")
+    revenue_split_rules: Dict[str, Any] = Field(..., description="Revenue split configuration")
+
+@app.get("/api/v1/monetization/collaboration/contracts/{project_id}", tags=["Collaboration Revenue"])
+async def get_collaboration_contracts(project_id: str):
+    """Get collaboration revenue contracts for a project"""
+    try:
+        # Mock implementation
+        return {
+            "success": True,
+            "data": {
+                "project_id": project_id,
+                "contract_type": "revenue_sharing",
+                "participants": {
+                    "creator_1": {"role": "lead_artist", "split_percentage": 60},
+                    "creator_2": {"role": "producer", "split_percentage": 25},
+                    "creator_3": {"role": "mixer", "split_percentage": 15}
+                },
+                "contract_status": "active",
+                "total_revenue_distributed": 5250.00
+            }
+        }
+    except Exception as e:
+        logger.error(f"Error getting collaboration contracts: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/v1/monetization/collaboration/contracts", tags=["Collaboration Revenue"])
+async def create_collaboration_contract(request: CollaborationContractRequest):
+    """Create new collaboration revenue contract"""
+    try:
+        # Mock implementation
+        contract_id = f"contract_{uuid.uuid4().hex[:12]}"
+        return {
+            "success": True,
+            "data": {
+                "contract_id": contract_id,
+                "project_id": request.project_id,
+                "contract_type": request.contract_type,
+                "status": "pending_signatures",
+                "created_at": datetime.utcnow().isoformat()
+            }
+        }
+    except Exception as e:
+        logger.error(f"Error creating collaboration contract: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/v1/monetization/collaboration/revenue-share", tags=["Collaboration Revenue"])
+async def distribute_collaboration_revenue(project_id: str, amount: Decimal, currency: str = "USD"):
+    """Distribute revenue according to collaboration contracts"""
+    try:
+        # Mock implementation
+        distribution_id = f"dist_{uuid.uuid4().hex[:12]}"
+        return {
+            "success": True,
+            "data": {
+                "distribution_id": distribution_id,
+                "project_id": project_id,
+                "total_amount": str(amount),
+                "currency": currency,
+                "distributions": [
+                    {"creator_id": "creator_1", "amount": str(amount * Decimal('0.6'))},
+                    {"creator_id": "creator_2", "amount": str(amount * Decimal('0.25'))},
+                    {"creator_id": "creator_3", "amount": str(amount * Decimal('0.15'))}
+                ],
+                "status": "processing"
+            }
+        }
+    except Exception as e:
+        logger.error(f"Error distributing collaboration revenue: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+# ============ AI RECOMMENDATIONS ENDPOINTS ============
+
+@app.get("/api/v1/monetization/ai/recommendations/{creator_id}", tags=["AI Optimization"])
+async def get_ai_recommendations(creator_id: str):
+    """Get AI-powered monetization recommendations"""
+    try:
+        # Mock implementation
+        return {
+            "success": True,
+            "data": {
+                "creator_id": creator_id,
+                "recommendations": [
+                    {
+                        "type": "pricing",
+                        "recommendation": "Increase track price from $0.99 to $1.29",
+                        "confidence_score": 0.87,
+                        "predicted_revenue_increase": 18.5
+                    },
+                    {
+                        "type": "platform_selection",
+                        "recommendation": "Focus on Spotify and Apple Music for next release",
+                        "confidence_score": 0.92,
+                        "predicted_revenue_increase": 25.3
+                    }
+                ],
+                "model_version": "v2.1.3",
+                "generated_at": datetime.utcnow().isoformat()
+            }
+        }
+    except Exception as e:
+        logger.error(f"Error getting AI recommendations: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/v1/monetization/ai/recommendations", tags=["AI Optimization"])
+async def implement_ai_recommendation(creator_id: str, recommendation_id: str, implementation_status: str):
+    """Mark AI recommendation as implemented or rejected"""
+    try:
+        # Mock implementation
+        return {
+            "success": True,
+            "data": {
+                "recommendation_id": recommendation_id,
+                "creator_id": creator_id,
+                "implementation_status": implementation_status,
+                "implementation_date": datetime.utcnow().isoformat()
+            }
+        }
+    except Exception as e:
+        logger.error(f"Error implementing AI recommendation: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
 # ============ BACKGROUND TASKS ============
 
 async def monitor_crypto_transaction(transaction_id: str):
