@@ -226,6 +226,104 @@ if ai_model_available:
         "ai_model_core"
     ])
 
+# Specialized Core Modules (PHASE 3 - ENTERPRISE SPECIALIZED)
+try:
+    from .content_ingestion_core import (
+        ContentIngestionCore,
+        IngestionRequest,
+        ValidationResult,
+        ContentMetadata,
+        ValidationStatus,
+        QualityScore,
+        SafetyLevel,
+        content_ingestion_core
+    )
+    content_ingestion_available = True
+    core_logger.info("✅ Content Ingestion Core loaded")
+except ImportError as e:
+    content_ingestion_available = False
+    core_logger.warning(f"❌ Content Ingestion Core not available: {e}")
+
+try:
+    from .ml_pipeline_core import (
+        MLPipelineCore,
+        PipelineConfiguration,
+        PipelineExecution,
+        DatasetMetadata,
+        ModelMetrics,
+        PipelineStatus,
+        TrainingStatus,
+        DataQuality,
+        PerformanceTier,
+        ml_pipeline_core
+    )
+    ml_pipeline_available = True
+    core_logger.info("✅ ML Pipeline Core loaded")
+except ImportError as e:
+    ml_pipeline_available = False
+    core_logger.warning(f"❌ ML Pipeline Core not available: {e}")
+
+try:
+    from .intelligent_analysis_core import (
+        IntelligentAnalysisCore,
+        AnalysisRequest,
+        IntelligentAnalysisResult,
+        SemanticAnalysis,
+        SentimentAnalysis,
+        TrendAnalysis,
+        QualityAssessment,
+        EngagementPrediction,
+        BusinessInsight,
+        AnalysisType,
+        IntelligenceLevel,
+        ConfidenceLevel,
+        InsightCategory,
+        intelligent_analysis_core
+    )
+    intelligent_analysis_available = True
+    core_logger.info("✅ Intelligent Analysis Core loaded")
+except ImportError as e:
+    intelligent_analysis_available = False
+    core_logger.warning(f"❌ Intelligent Analysis Core not available: {e}")
+
+try:
+    from .copyright_fingerprinting_core import (
+        CopyrightFingerprintingCore,
+        ContentFingerprint,
+        FingerprintMatch,
+        FingerprintingRequest,
+        MatchingRequest,
+        FingerprintType,
+        MatchType,
+        DetectionSensitivity,
+        copyright_fingerprinting_core
+    )
+    copyright_fingerprinting_available = True
+    core_logger.info("✅ Copyright Fingerprinting Core loaded")
+except ImportError as e:
+    copyright_fingerprinting_available = False
+    core_logger.warning(f"❌ Copyright Fingerprinting Core not available: {e}")
+
+try:
+    from .performance_monitoring_core import (
+        PerformanceMonitoringCore,
+        PerformanceMetric,
+        PerformanceAlert,
+        HealthCheckResult,
+        PerformanceThreshold,
+        PerformanceReport,
+        MetricType,
+        AlertLevel,
+        HealthStatus,
+        MonitoringCategory,
+        performance_monitoring_core
+    )
+    performance_monitoring_available = True
+    core_logger.info("✅ Performance Monitoring Core loaded")
+except ImportError as e:
+    performance_monitoring_available = False
+    core_logger.warning(f"❌ Performance Monitoring Core not available: {e}")
+
 # Add Phase 2 Business Logic Core exports if available
 if protection_business_available:
     __all__.extend([
@@ -252,7 +350,80 @@ if monetization_business_available:
         "monetization_business_core"
     ])
 
-__version__ = "2.1.0"
+# Add Phase 3 Specialized Core exports if available
+if content_ingestion_available:
+    __all__.extend([
+        "ContentIngestionCore",
+        "IngestionRequest",
+        "ValidationResult",
+        "ContentMetadata",
+        "ValidationStatus",
+        "QualityScore",
+        "SafetyLevel",
+        "content_ingestion_core"
+    ])
+
+if ml_pipeline_available:
+    __all__.extend([
+        "MLPipelineCore",
+        "PipelineConfiguration",
+        "PipelineExecution",
+        "DatasetMetadata",
+        "ModelMetrics",
+        "PipelineStatus",
+        "TrainingStatus",
+        "DataQuality",
+        "PerformanceTier",
+        "ml_pipeline_core"
+    ])
+
+if intelligent_analysis_available:
+    __all__.extend([
+        "IntelligentAnalysisCore",
+        "AnalysisRequest",
+        "IntelligentAnalysisResult",
+        "SemanticAnalysis",
+        "SentimentAnalysis",
+        "TrendAnalysis",
+        "QualityAssessment",
+        "EngagementPrediction",
+        "BusinessInsight",
+        "AnalysisType",
+        "IntelligenceLevel",
+        "ConfidenceLevel",
+        "InsightCategory",
+        "intelligent_analysis_core"
+    ])
+
+if copyright_fingerprinting_available:
+    __all__.extend([
+        "CopyrightFingerprintingCore",
+        "ContentFingerprint",
+        "FingerprintMatch",
+        "FingerprintingRequest",
+        "MatchingRequest",
+        "FingerprintType",
+        "MatchType",
+        "DetectionSensitivity",
+        "copyright_fingerprinting_core"
+    ])
+
+if performance_monitoring_available:
+    __all__.extend([
+        "PerformanceMonitoringCore",
+        "PerformanceMetric",
+        "PerformanceAlert",
+        "HealthCheckResult",
+        "PerformanceThreshold",
+        "PerformanceReport",
+        "MetricType",
+        "AlertLevel",
+        "HealthStatus",
+        "MonitoringCategory",
+        "performance_monitoring_core"
+    ])
+
+__version__ = "2.2.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 
@@ -260,7 +431,8 @@ __email__ = "mlaiel@live.de"
 total_core_components = 4  # Foundation components
 total_phase1_components = 4  # Phase 1 business logic cores
 total_phase2_components = 2  # Phase 2 business logic cores
-total_business_logic_components = total_phase1_components + total_phase2_components
+total_phase3_components = 5  # Phase 3 specialized cores
+total_business_logic_components = total_phase1_components + total_phase2_components + total_phase3_components
 
 available_phase1 = sum([
     creator_multi_format_available, content_format_available, 
@@ -271,12 +443,18 @@ available_phase2 = sum([
     protection_business_available, monetization_business_available
 ])
 
-available_business_logic = available_phase1 + available_phase2
+available_phase3 = sum([
+    content_ingestion_available, ml_pipeline_available, intelligent_analysis_available,
+    copyright_fingerprinting_available, performance_monitoring_available
+])
+
+available_business_logic = available_phase1 + available_phase2 + available_phase3
 
 core_logger.info(f"🏗️ Core Module v{__version__} loaded")
 core_logger.info(f"✅ Foundation components: 4/4 loaded")
 core_logger.info(f"📊 Phase 1 Business Logic cores: {available_phase1}/{total_phase1_components}")
 core_logger.info(f"📊 Phase 2 Business Logic cores: {available_phase2}/{total_phase2_components}")
+core_logger.info(f"📊 Phase 3 Specialized cores: {available_phase3}/{total_phase3_components}")
 core_logger.info(f"📊 Total Business Logic cores: {available_business_logic}/{total_business_logic_components}")
 
 if available_phase1 == total_phase1_components:
@@ -284,11 +462,19 @@ if available_phase1 == total_phase1_components:
 
 if available_phase2 == total_phase2_components:
     core_logger.info("🎉 PHASE 2 COMPLETE: Protection → Monetization Business Logic")
+
+if available_phase3 == total_phase3_components:
+    core_logger.info("🎉 PHASE 3 COMPLETE: Specialized Enterprise Core Modules")
     
 if available_business_logic == total_business_logic_components:
     core_logger.info("🚀 ALL CRITICAL BUSINESS LOGIC CORES LOADED SUCCESSFULLY!")
     core_logger.info("✅ Enterprise-grade core with >99.99% uptime guarantee")
+    core_logger.info("✅ Specialized core modules: Content Ingestion, ML Pipeline, Intelligent Analysis, Copyright Fingerprinting, Performance Monitoring")
 else:
-    core_logger.warning(f"⚠️ Some business logic cores unavailable: {total_business_logic_components - available_business_logic} missing")
+    missing_count = total_business_logic_components - available_business_logic
+    core_logger.warning(f"⚠️ Some business logic cores unavailable: {missing_count} missing")
+    
+    if available_phase3 < total_phase3_components:
+        core_logger.warning(f"⚠️ Phase 3 specialized cores incomplete: {available_phase3}/{total_phase3_components}")
 
 core_logger.info(f"✅ Core module initialization complete")
