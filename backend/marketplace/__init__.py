@@ -51,6 +51,51 @@ from .legal_framework import (
     ComplianceRule, LegalValidation, LegalDispute
 )
 
+# Tax integration & dispute resolution
+from .tax_integration import (
+    TaxIntegrationManager, TaxType, TaxJurisdiction, TaxStatus, TaxExemptionReason,
+    TaxRate, TaxCalculation, TaxReport
+)
+from .dispute_resolution import (
+    DisputeResolutionEngine, DisputeType, DisputeStatus, DisputeResolution,
+    DisputePriority, EvidenceType, Evidence, DisputeMessage, DisputeProposal,
+    Dispute, DisputeAnalytics
+)
+
+# Security & audit
+from .security_validator import (
+    SecurityValidator, SecurityLevel, ThreatType, ValidationStatus, SecurityAction,
+    SecurityRule, SecurityCheck, SecurityValidationResult, SecurityContext,
+    TransactionContext
+)
+from .marketplace_audit import (
+    MarketplaceAuditManager, AuditEventType, AuditSeverity, ComplianceFramework,
+    AuditEvent, AuditQuery, ComplianceReport, AuditAnalytics
+)
+
+# AI & Analytics
+from .price_optimizer import (
+    PriceOptimizer, PricingStrategy, MarketCondition, PriceOptimizationGoal,
+    PricingModel, MarketData, PriceOptimizationRequest, PriceRecommendation,
+    PriceTestResult
+)
+from .market_intelligence import (
+    MarketIntelligenceEngine, TrendDirection, MarketSegment, CompetitorTier,
+    MarketMaturity, MarketMetric, CompetitorProfile, MarketOpportunity,
+    MarketForecast, ConsumerInsight, MarketReport
+)
+from .recommendation_engine import (
+    RecommendationEngine, RecommendationType, RecommendationAlgorithm,
+    RecommendationContext, UserProfile, ContentItem, CreatorProfile,
+    Recommendation, RecommendationSet, InteractionEvent, RecommendationPerformance
+)
+from .sentiment_analyzer import (
+    SentimentAnalyzer, SentimentPolarity, EmotionType, ToxicityLevel,
+    BrandSafetyLevel, ContentType, SentimentScore, EmotionScore,
+    ToxicityScore, BrandSafetyScore, SentimentAnalysis, SentimentTrend,
+    ContentModerationResult
+)
+
 __all__ = [
     # Core marketplace
     "AuctionSystem",
@@ -148,7 +193,94 @@ __all__ = [
     "LegalContract",
     "ComplianceRule",
     "LegalValidation",
-    "LegalDispute"
+    "LegalDispute",
+    
+    # Tax integration & dispute resolution
+    "TaxIntegrationManager",
+    "TaxType",
+    "TaxJurisdiction",
+    "TaxStatus",
+    "TaxExemptionReason",
+    "TaxRate",
+    "TaxCalculation",
+    "TaxReport",
+    "DisputeResolutionEngine",
+    "DisputeType",
+    "DisputeStatus",
+    "DisputeResolution",
+    "DisputePriority",
+    "EvidenceType",
+    "Evidence",
+    "DisputeMessage",
+    "DisputeProposal",
+    "Dispute",
+    "DisputeAnalytics",
+    
+    # Security & audit
+    "SecurityValidator",
+    "SecurityLevel",
+    "ThreatType",
+    "ValidationStatus",
+    "SecurityAction",
+    "SecurityRule",
+    "SecurityCheck",
+    "SecurityValidationResult",
+    "SecurityContext",
+    "TransactionContext",
+    "MarketplaceAuditManager",
+    "AuditEventType",
+    "AuditSeverity",
+    "ComplianceFramework",
+    "AuditEvent",
+    "AuditQuery",
+    "ComplianceReport",
+    "AuditAnalytics",
+    
+    # AI & Analytics
+    "PriceOptimizer",
+    "PricingStrategy",
+    "MarketCondition",
+    "PriceOptimizationGoal",
+    "PricingModel",
+    "MarketData",
+    "PriceOptimizationRequest",
+    "PriceRecommendation",
+    "PriceTestResult",
+    "MarketIntelligenceEngine",
+    "TrendDirection",
+    "MarketSegment",
+    "CompetitorTier",
+    "MarketMaturity",
+    "MarketMetric",
+    "CompetitorProfile",
+    "MarketOpportunity",
+    "MarketForecast",
+    "ConsumerInsight",
+    "MarketReport",
+    "RecommendationEngine",
+    "RecommendationType",
+    "RecommendationAlgorithm",
+    "RecommendationContext",
+    "UserProfile",
+    "ContentItem",
+    "CreatorProfile",
+    "Recommendation",
+    "RecommendationSet",
+    "InteractionEvent",
+    "RecommendationPerformance",
+    "SentimentAnalyzer",
+    "SentimentPolarity",
+    "EmotionType",
+    "ToxicityLevel",
+    "BrandSafetyLevel",
+    "ContentType",
+    "SentimentScore",
+    "EmotionScore",
+    "ToxicityScore",
+    "BrandSafetyScore",
+    "SentimentAnalysis",
+    "SentimentTrend",
+    "ContentModerationResult"
 ]
 
 __version__ = "3.0.0"

@@ -20,7 +20,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 import logging
 import asyncio
-import numpy as np
+import random
 from typing import Dict, List, Optional, Union, Any, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -265,14 +265,14 @@ class PriceOptimizer:
             data_id=data_id,
             product_category=product_category,
             timestamp=datetime.utcnow(),
-            demand_score=np.random.uniform(0.3, 0.9),  # Random for demo
-            competition_level=np.random.uniform(0.2, 0.8),
-            market_condition=np.random.choice(list(MarketCondition)),
-            average_market_price=Decimal(str(np.random.uniform(50, 500))),
-            price_range_min=Decimal(str(np.random.uniform(20, 100))),
-            price_range_max=Decimal(str(np.random.uniform(200, 1000))),
-            volume_trend=np.random.uniform(-0.3, 0.5),
-            seasonality_factor=np.random.uniform(0.8, 1.3)
+            demand_score=random.uniform(0.3, 0.9),  # Random for demo
+            competition_level=random.uniform(0.2, 0.8),
+            market_condition=random.choice(list(MarketCondition)),
+            average_market_price=Decimal(str(random.uniform(50, 500))),
+            price_range_min=Decimal(str(random.uniform(20, 100))),
+            price_range_max=Decimal(str(random.uniform(200, 1000))),
+            volume_trend=random.uniform(-0.3, 0.5),
+            seasonality_factor=random.uniform(0.8, 1.3)
         )
         
         self.market_data[data_id] = market_data
@@ -720,10 +720,10 @@ class PriceOptimizer:
         """Analyze A/B test results"""
         try:
             # Mock test results - in production would fetch actual test data
-            control_revenue = Decimal(str(np.random.uniform(10000, 15000)))
-            test_revenue = Decimal(str(np.random.uniform(9000, 16000)))
-            control_volume = int(np.random.uniform(100, 200))
-            test_volume = int(np.random.uniform(90, 210))
+            control_revenue = Decimal(str(random.uniform(10000, 15000)))
+            test_revenue = Decimal(str(random.uniform(9000, 16000)))
+            control_volume = int(random.uniform(100, 200))
+            test_volume = int(random.uniform(90, 210))
             
             # Statistical significance (simplified)
             revenue_lift = float((test_revenue - control_revenue) / control_revenue * 100)
