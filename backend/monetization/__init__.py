@@ -239,6 +239,82 @@ except ImportError as e:
     logger.warning(f"❌ AI Revenue Optimization Engine not available: {e}")
     ai_revenue_optimization_available = False
 
+# Content Monetization Analyzer imports (CRITICAL - Phase 1)
+try:
+    from .content_monetization_analyzer import (
+        ContentMonetizationAnalyzer,
+        ContentType,
+        MonetizationPotential,
+        RevenueStream as AnalyzerRevenueStream,
+        ContentMetrics,
+        ContentAnalysis,
+        ContentOptimizationRecommendation,
+        get_content_monetization_analyzer
+    )
+    content_monetization_analyzer_available = True
+    logger.info("✅ Content Monetization Analyzer loaded successfully")
+except ImportError as e:
+    logger.warning(f"❌ Content Monetization Analyzer not available: {e}")
+    content_monetization_analyzer_available = False
+
+# Platform Revenue Synchronizer imports (CRITICAL - Phase 1)
+try:
+    from .platform_revenue_synchronizer import (
+        PlatformRevenueSynchronizer,
+        Platform,
+        RevenueType,
+        SyncStatus,
+        PlatformCredentials,
+        RevenueEntry,
+        PlatformSyncResult,
+        SynchronizationReport,
+        get_platform_revenue_synchronizer
+    )
+    platform_revenue_synchronizer_available = True
+    logger.info("✅ Platform Revenue Synchronizer loaded successfully")
+except ImportError as e:
+    logger.warning(f"❌ Platform Revenue Synchronizer not available: {e}")
+    platform_revenue_synchronizer_available = False
+
+# Protection Monetization Bridge imports (HIGH - Phase 3)
+try:
+    from .protection_monetization_bridge import (
+        ProtectionMonetizationBridge,
+        ViolationType,
+        RecoveryMethod,
+        RecoveryStatus,
+        ViolationDetection,
+        RecoveryCase,
+        CompensationPayout,
+        get_protection_monetization_bridge
+    )
+    protection_monetization_bridge_available = True
+    logger.info("✅ Protection Monetization Bridge loaded successfully")
+except ImportError as e:
+    logger.warning(f"❌ Protection Monetization Bridge not available: {e}")
+    protection_monetization_bridge_available = False
+
+# Collaboration Revenue Orchestrator imports (HIGH - Phase 4)
+try:
+    from .collaboration_revenue_orchestrator import (
+        CollaborationRevenueOrchestrator,
+        CollaborationType,
+        ContractStatus,
+        RevenueDistributionMethod,
+        ContractType,
+        Collaborator,
+        RevenueDistributionRule,
+        CollaborationContract,
+        RevenueDistribution,
+        ProjectRevenue,
+        get_collaboration_revenue_orchestrator
+    )
+    collaboration_revenue_orchestrator_available = True
+    logger.info("✅ Collaboration Revenue Orchestrator loaded successfully")
+except ImportError as e:
+    logger.warning(f"❌ Collaboration Revenue Orchestrator not available: {e}")
+    collaboration_revenue_orchestrator_available = False
+
 
 class MonetizationOrchestrator:
     """
@@ -267,6 +343,12 @@ class MonetizationOrchestrator:
         self.creator_type_monetization_manager = None
         self.creator_revenue_dashboard = None
         self.ai_revenue_optimization_engine = None
+        
+        # New enterprise components
+        self.content_monetization_analyzer = None
+        self.platform_revenue_synchronizer = None
+        self.protection_monetization_bridge = None
+        self.collaboration_revenue_orchestrator = None
         
         self.logger.info("MonetizationOrchestrator initialized")
     
@@ -309,6 +391,23 @@ class MonetizationOrchestrator:
             if ai_revenue_optimization_available:
                 self.ai_revenue_optimization_engine = await get_ai_revenue_optimization_engine()
                 self.logger.info("✅ AI Revenue Optimization Engine initialized")
+            
+            # Initialize new enterprise components
+            if content_monetization_analyzer_available:
+                self.content_monetization_analyzer = await get_content_monetization_analyzer()
+                self.logger.info("✅ Content Monetization Analyzer initialized")
+            
+            if platform_revenue_synchronizer_available:
+                self.platform_revenue_synchronizer = await get_platform_revenue_synchronizer()
+                self.logger.info("✅ Platform Revenue Synchronizer initialized")
+            
+            if protection_monetization_bridge_available:
+                self.protection_monetization_bridge = await get_protection_monetization_bridge()
+                self.logger.info("✅ Protection Monetization Bridge initialized")
+            
+            if collaboration_revenue_orchestrator_available:
+                self.collaboration_revenue_orchestrator = await get_collaboration_revenue_orchestrator()
+                self.logger.info("✅ Collaboration Revenue Orchestrator initialized")
             
             self.initialized = True
             
@@ -766,10 +865,14 @@ available_count = sum([
     multi_format_revenue_available,
     creator_type_monetization_available,
     creator_revenue_dashboard_available,
-    ai_revenue_optimization_available
+    ai_revenue_optimization_available,
+    content_monetization_analyzer_available,
+    platform_revenue_synchronizer_available,
+    protection_monetization_bridge_available,
+    collaboration_revenue_orchestrator_available
 ])
 
-logger.info(f"💰 Monetization modules loaded: {available_count}/10 systems available")
+logger.info(f"💰 Monetization modules loaded: {available_count}/14 systems available")
 
 # Critical creator monetization status
 creator_modules_count = sum([
@@ -777,10 +880,25 @@ creator_modules_count = sum([
     multi_format_revenue_available,
     creator_type_monetization_available,
     creator_revenue_dashboard_available,
-    ai_revenue_optimization_available
+    ai_revenue_optimization_available,
+    content_monetization_analyzer_available,
+    platform_revenue_synchronizer_available
 ])
 
-if creator_modules_count >= 4:
-    logger.info(f"🚀 CRITICAL Creator Monetization: {creator_modules_count}/5 components operational")
+if creator_modules_count >= 6:
+    logger.info(f"🚀 CRITICAL Creator Monetization: {creator_modules_count}/7 components operational")
 else:
-    logger.warning(f"⚠️ CRITICAL Creator Monetization: Only {creator_modules_count}/5 components available")
+    logger.warning(f"⚠️ CRITICAL Creator Monetization: Only {creator_modules_count}/7 components available")
+
+# Enterprise integration status
+enterprise_modules_count = sum([
+    protection_monetization_bridge_available,
+    collaboration_revenue_orchestrator_available,
+    content_monetization_analyzer_available,
+    platform_revenue_synchronizer_available
+])
+
+if enterprise_modules_count >= 3:
+    logger.info(f"🏢 ENTERPRISE Integration: {enterprise_modules_count}/4 components operational")
+else:
+    logger.warning(f"⚠️ ENTERPRISE Integration: Only {enterprise_modules_count}/4 components available")
