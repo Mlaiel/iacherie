@@ -16,8 +16,13 @@ from .image_optimizer import ImageOptimizer
 from .format_converter import FormatConverter
 from .quality_analyzer import QualityAnalyzer
 
-# New enterprise components - Phase 1: IA Processing Core
+# New enterprise components - Phase 1: IA Processing Core (5/8 ✅ COMPLETED)
 from .ai_content_orchestrator import AIContentOrchestrator, get_orchestrator
+from .content_intelligence_engine import ContentIntelligenceEngine, get_intelligence_engine
+from .ai_enhancement_pipeline import AIEnhancementPipeline, get_enhancement_pipeline
+from .smart_quality_optimizer import SmartQualityOptimizer, get_quality_optimizer
+from .content_classification_ai import ContentClassificationAI, get_content_classifier
+from .intelligent_metadata_extractor import IntelligentMetadataExtractor, get_metadata_extractor
 from .intelligent_content_analyzer import IntelligentContentAnalyzer, get_content_analyzer
 from .multimodal_ai_processor import MultimodalAIProcessor, get_multimodal_processor
 
