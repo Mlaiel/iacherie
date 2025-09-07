@@ -77,6 +77,7 @@ class PricingModel(str, Enum):
     FREEMIUM = "freemium"
     HYBRID = "hybrid"
     DYNAMIC = "dynamic"
+    CUSTOM = "custom"
 
 
 class RevenueModel(str, Enum):

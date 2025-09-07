@@ -72,6 +72,58 @@ from .distribution_business_config import (
     PlatformConfiguration, DistributionRule, GlobalDistributionSettings
 )
 
+# Import additional business logic configuration modules
+from .rights_management_config import (
+    RightsManagementSettings, rights_management_settings,
+    LicensingType, UsageRight, ComplianceFramework, ContractType, EnforcementAction,
+    LicenseConfiguration, ComplianceConfiguration, ContractConfiguration, EnforcementConfiguration
+)
+from .violation_detection_config import (
+    ViolationDetectionSettings, violation_detection_settings,
+    ViolationType, MonitoringPlatform, DetectionMethod, ResponseAction, ViolationSeverity, DetectionFrequency,
+    PlatformMonitoringConfig, DetectionAlgorithmConfig, ViolationResponse, DMCAConfiguration
+)
+from .payment_gateway_config import (
+    PaymentGatewaySettings, payment_gateway_settings,
+    PaymentGateway, PaymentMethod, Currency, TransactionType, TransactionStatus, SecurityLevel,
+    GatewayConfiguration, PaymentMethodConfiguration, SecurityConfiguration, FeeStructure
+)
+from .subscription_management_config import (
+    SubscriptionManagementSettings, subscription_management_settings,
+    SubscriptionTier, BillingCycle, SubscriptionStatus, PricingModel, RevenueModel, ChurnPredictionLevel,
+    SubscriptionTierConfig, BillingConfiguration, RevenueOptimization, ChurnPreventionConfig
+)
+from .crypto_payment_config import (
+    CryptoPaymentSettings, crypto_payment_settings,
+    CryptoCurrency, BlockchainNetwork, WalletType, TransactionType as CryptoTransactionType, SecurityLevel as CryptoSecurityLevel, ComplianceFramework as CryptoComplianceFramework,
+    CryptoCurrencyConfig, WalletConfiguration, ExchangeIntegration, SmartContractConfig
+)
+from .creator_matching_config import (
+    CreatorMatchingSettings, creator_matching_settings,
+    MatchingAlgorithm, CollaborationType as CreatorCollaborationType, CreatorTier as CreatorMatchingTier, MatchingCriteria as CreatorMatchingCriteria, CompatibilityLevel,
+    MatchingWeights, CreatorProfile, MatchingConfiguration as CreatorMatchingConfiguration, CollaborationTemplate as CreatorCollaborationTemplate
+)
+from .gamification_business_config import (
+    GamificationBusinessSettings, gamification_business_settings,
+    RewardType, ChallengeType, LeaderboardType,
+    RewardConfiguration, ChallengeConfiguration
+)
+from .achievement_engagement_config import (
+    AchievementEngagementSettings, achievement_engagement_settings,
+    AchievementCategory, AchievementType,
+    AchievementConfiguration
+)
+from .search_optimization_config import (
+    SearchOptimizationSettings, search_optimization_settings,
+    SearchEngine as SearchOptimizationSearchEngine, OptimizationStrategy,
+    SearchEngineConfiguration
+)
+from .multi_platform_distribution_config import (
+    MultiPlatformDistributionSettings, multi_platform_distribution_settings,
+    DistributionPlatform as MultiPlatformDistributionPlatform, ContentFormat as MultiPlatformContentFormat,
+    PlatformConfiguration as MultiPlatformConfiguration
+)
+
 try:
     from pydantic_settings import BaseSettings
 except ImportError:
@@ -209,6 +261,38 @@ __all__ = [
     "DistributionBusinessSettings", "distribution_business_settings",
     "DistPlatform", "DistributionStrategy", "DistContentFormat", "DistributionStatus",
     "PlatformConfiguration", "DistributionRule", "GlobalDistributionSettings",
+    
+    # Additional business logic configuration classes and instances
+    "RightsManagementSettings", "rights_management_settings",
+    "LicensingType", "UsageRight", "ComplianceFramework", "ContractType", "EnforcementAction",
+    "LicenseConfiguration", "ComplianceConfiguration", "ContractConfiguration", "EnforcementConfiguration",
+    "ViolationDetectionSettings", "violation_detection_settings",
+    "ViolationType", "MonitoringPlatform", "DetectionMethod", "ResponseAction", "ViolationSeverity", "DetectionFrequency",
+    "PlatformMonitoringConfig", "DetectionAlgorithmConfig", "ViolationResponse", "DMCAConfiguration",
+    "PaymentGatewaySettings", "payment_gateway_settings",
+    "PaymentGateway", "PaymentMethod", "Currency", "TransactionType", "TransactionStatus", "SecurityLevel",
+    "GatewayConfiguration", "PaymentMethodConfiguration", "SecurityConfiguration", "FeeStructure",
+    "SubscriptionManagementSettings", "subscription_management_settings",
+    "SubscriptionTier", "BillingCycle", "SubscriptionStatus", "PricingModel", "RevenueModel", "ChurnPredictionLevel",
+    "SubscriptionTierConfig", "BillingConfiguration", "RevenueOptimization", "ChurnPreventionConfig",
+    "CryptoPaymentSettings", "crypto_payment_settings",
+    "CryptoCurrency", "BlockchainNetwork", "WalletType", "CryptoTransactionType", "CryptoSecurityLevel", "CryptoComplianceFramework",
+    "CryptoCurrencyConfig", "WalletConfiguration", "ExchangeIntegration", "SmartContractConfig",
+    "CreatorMatchingSettings", "creator_matching_settings",
+    "MatchingAlgorithm", "CreatorCollaborationType", "CreatorMatchingTier", "CreatorMatchingCriteria", "CompatibilityLevel",
+    "MatchingWeights", "CreatorProfile", "CreatorMatchingConfiguration", "CreatorCollaborationTemplate",
+    "GamificationBusinessSettings", "gamification_business_settings",
+    "RewardType", "ChallengeType", "LeaderboardType",
+    "RewardConfiguration", "ChallengeConfiguration",
+    "AchievementEngagementSettings", "achievement_engagement_settings",
+    "AchievementCategory", "AchievementType",
+    "AchievementConfiguration",
+    "SearchOptimizationSettings", "search_optimization_settings",
+    "SearchOptimizationSearchEngine", "OptimizationStrategy",
+    "SearchEngineConfiguration",
+    "MultiPlatformDistributionSettings", "multi_platform_distribution_settings",
+    "MultiPlatformDistributionPlatform", "MultiPlatformContentFormat",
+    "MultiPlatformConfiguration",
     
     # Backwards compatibility exports
     "DATABASE_URL",
