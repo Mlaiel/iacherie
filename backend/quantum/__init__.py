@@ -131,6 +131,63 @@ from .quantum_algorithm_optimization_engine import (
     create_quantum_algorithm_optimization_engine,
     optimize_creator_quantum_algorithm
 )
+from .quantum_ai_model_enhancement import (
+    QuantumAIModelEnhancementEngine,
+    QuantumAIModelRequest,
+    QuantumAIModelResult,
+    AIModelType,
+    QuantumEnhancementType,
+    ModelDomain,
+    OptimizationStrategy as ModelOptimizationStrategy,
+    QuantumModelMetrics,
+    TransformerQuantumEnhancer,
+    create_quantum_ai_model_enhancement_engine,
+    enhance_creator_ai_model
+)
+from .quantum_intelligence_amplifier import (
+    QuantumIntelligenceAmplificationEngine,
+    QuantumIntelligenceRequest,
+    QuantumIntelligenceResult,
+    IntelligenceAmplificationType,
+    QuantumIntelligenceAlgorithm,
+    CreatorIntelligenceType,
+    AmplificationLevel,
+    QuantumIntelligenceMetrics,
+    QuantumCognitiveEnhancer,
+    create_quantum_intelligence_amplifier,
+    amplify_creator_quantum_intelligence
+)
+
+# Quantum Protection Enhancement Components (NEW CRITICAL MODULES)
+from .quantum_protection_enhancement_engine import (
+    QuantumProtectionEnhancementEngine,
+    QuantumProtectionRequest,
+    QuantumProtectionResult,
+    QuantumProtectionType,
+    QuantumSecurityAlgorithm,
+    ThreatLevel,
+    ContentType as ProtectionContentType,
+    QuantumProtectionMetrics,
+    QuantumContentProtectionEnhancer,
+    create_quantum_protection_engine,
+    protect_creator_content_quantum
+)
+
+# Quantum Monetization Enhancement Components (NEW CRITICAL MODULES)
+from .quantum_monetization_optimization_engine import (
+    QuantumMonetizationOptimizationEngine,
+    QuantumMonetizationRequest,
+    QuantumMonetizationResult,
+    MonetizationStrategy,
+    QuantumOptimizationType,
+    QuantumFinancialAlgorithm,
+    RevenueStream,
+    MarketSegment,
+    QuantumMonetizationMetrics,
+    QuantumRevenueOptimizer,
+    create_quantum_monetization_engine,
+    optimize_creator_quantum_monetization
+)
 
 # Creator Multi-Format Quantum Enhancement Components
 from .quantum_content_processing_accelerator import (
@@ -312,6 +369,59 @@ __all__ = [
     "GroverSearchOptimizer",
     "create_quantum_algorithm_optimization_engine",
     "optimize_creator_quantum_algorithm",
+    
+    # Quantum AI Model Enhancement
+    "QuantumAIModelEnhancementEngine",
+    "QuantumAIModelRequest",
+    "QuantumAIModelResult",
+    "AIModelType",
+    "QuantumEnhancementType",
+    "ModelDomain",
+    "ModelOptimizationStrategy",
+    "QuantumModelMetrics",
+    "TransformerQuantumEnhancer",
+    "create_quantum_ai_model_enhancement_engine",
+    "enhance_creator_ai_model",
+    
+    # Quantum Intelligence Amplifier
+    "QuantumIntelligenceAmplificationEngine",
+    "QuantumIntelligenceRequest",
+    "QuantumIntelligenceResult",
+    "IntelligenceAmplificationType",
+    "QuantumIntelligenceAlgorithm",
+    "CreatorIntelligenceType",
+    "AmplificationLevel",
+    "QuantumIntelligenceMetrics",
+    "QuantumCognitiveEnhancer",
+    "create_quantum_intelligence_amplifier",
+    "amplify_creator_quantum_intelligence",
+    
+    # Quantum Protection Enhancement
+    "QuantumProtectionEnhancementEngine",
+    "QuantumProtectionRequest",
+    "QuantumProtectionResult",
+    "QuantumProtectionType",
+    "QuantumSecurityAlgorithm",
+    "ThreatLevel",
+    "ProtectionContentType",
+    "QuantumProtectionMetrics",
+    "QuantumContentProtectionEnhancer",
+    "create_quantum_protection_engine",
+    "protect_creator_content_quantum",
+    
+    # Quantum Monetization Enhancement
+    "QuantumMonetizationOptimizationEngine",
+    "QuantumMonetizationRequest",
+    "QuantumMonetizationResult",
+    "MonetizationStrategy",
+    "QuantumOptimizationType",
+    "QuantumFinancialAlgorithm",
+    "RevenueStream",
+    "MarketSegment",
+    "QuantumMonetizationMetrics",
+    "QuantumRevenueOptimizer",
+    "create_quantum_monetization_engine",
+    "optimize_creator_quantum_monetization",
     
     # Creator Multi-Format Quantum Enhancement Components
     "QuantumContentProcessingAccelerator",
