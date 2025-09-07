@@ -101,6 +101,91 @@ except ImportError as e:
     OptimizationStrategy = None
     _media_quality_optimizer_available = False
 
+# Content Protection Components (NEW - Phase 1 Critical)
+try:
+    from .media_protection_engine import (
+        MediaProtectionEngine,
+        ProtectionRequest,
+        ProtectionResult,
+        ProtectionLevel,
+        ProtectionType,
+        WatermarkType
+    )
+    _media_protection_engine_available = True
+except ImportError as e:
+    print(f"Warning: Media Protection Engine not available: {e}")
+    MediaProtectionEngine = None
+    ProtectionRequest = None
+    ProtectionResult = None
+    ProtectionLevel = None
+    ProtectionType = None
+    WatermarkType = None
+    _media_protection_engine_available = False
+
+try:
+    from .content_fingerprinting import (
+        ContentFingerprintingEngine,
+        FingerprintRequest,
+        ContentFingerprint,
+        SimilarityMatch,
+        FingerprintType,
+        SimilarityAlgorithm
+    )
+    _content_fingerprinting_available = True
+except ImportError as e:
+    print(f"Warning: Content Fingerprinting not available: {e}")
+    ContentFingerprintingEngine = None
+    FingerprintRequest = None
+    ContentFingerprint = None
+    SimilarityMatch = None
+    FingerprintType = None
+    SimilarityAlgorithm = None
+    _content_fingerprinting_available = False
+
+try:
+    from .watermark_integration import (
+        WatermarkIntegrationEngine,
+        WatermarkRequest,
+        WatermarkResult,
+        WatermarkDetectionRequest,
+        WatermarkDetectionResult,
+        WatermarkData
+    )
+    _watermark_integration_available = True
+except ImportError as e:
+    print(f"Warning: Watermark Integration not available: {e}")
+    WatermarkIntegrationEngine = None
+    WatermarkRequest = None
+    WatermarkResult = None
+    WatermarkDetectionRequest = None
+    WatermarkDetectionResult = None
+    WatermarkData = None
+    _watermark_integration_available = False
+
+try:
+    from .rights_management_system import (
+        RightsManagementSystem,
+        RightsRecord,
+        RightsHolder,
+        LicenseTerms,
+        UsageEvent,
+        RevenueDistribution,
+        RightsType,
+        LicenseType
+    )
+    _rights_management_system_available = True
+except ImportError as e:
+    print(f"Warning: Rights Management System not available: {e}")
+    RightsManagementSystem = None
+    RightsRecord = None
+    RightsHolder = None
+    LicenseTerms = None
+    UsageEvent = None
+    RevenueDistribution = None
+    RightsType = None
+    LicenseType = None
+    _rights_management_system_available = False
+
 # Media Generation Components (existing - with graceful fallbacks)
 AvatarGenerator = None
 VoiceGenerator = None
@@ -203,6 +288,34 @@ __all__ = [
     "QualityLevel",
     "OptimizationStrategy",
     
+    # Content Protection (NEW - Phase 1 Critical)
+    "MediaProtectionEngine",
+    "ProtectionRequest",
+    "ProtectionResult",
+    "ProtectionLevel",
+    "ProtectionType",
+    "WatermarkType",
+    "ContentFingerprintingEngine",
+    "FingerprintRequest",
+    "ContentFingerprint",
+    "SimilarityMatch",
+    "FingerprintType",
+    "SimilarityAlgorithm",
+    "WatermarkIntegrationEngine",
+    "WatermarkRequest",
+    "WatermarkResult",
+    "WatermarkDetectionRequest",
+    "WatermarkDetectionResult",
+    "WatermarkData",
+    "RightsManagementSystem",
+    "RightsRecord",
+    "RightsHolder",
+    "LicenseTerms",
+    "UsageEvent",
+    "RevenueDistribution",
+    "RightsType",
+    "LicenseType",
+    
     # Media Generation (existing - if available)
     "AvatarGenerator",
     "VoiceGenerator", 
@@ -229,6 +342,12 @@ def get_module_status():
             'intelligent_media_analyzer': _intelligent_media_analyzer_available,
             'content_understanding_engine': _content_understanding_engine_available,
             'media_quality_optimizer': _media_quality_optimizer_available
+        },
+        'content_protection': {
+            'media_protection_engine': _media_protection_engine_available,
+            'content_fingerprinting': _content_fingerprinting_available,
+            'watermark_integration': _watermark_integration_available,
+            'rights_management_system': _rights_management_system_available
         },
         'media_generation': {
             'avatar_generator': AvatarGenerator is not None,
