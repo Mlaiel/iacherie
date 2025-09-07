@@ -5,7 +5,19 @@ Core application settings and environment configuration
 
 import os
 from typing import Optional, List
-from pydantic_settings import BaseSettings
+
+try:
+    from pydantic_settings import BaseSettings
+except ImportError:
+    # Fallback for environments without pydantic_settings
+    class BaseSettings:
+        def __init__(self, **kwargs):
+            for key, value in kwargs.items():
+                setattr(self, key, value)
+        
+        class Config:
+            env_file = ".env"
+            extra = "allow"
 
 
 class ApplicationSettings(BaseSettings):
