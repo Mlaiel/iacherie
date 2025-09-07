@@ -239,6 +239,76 @@ except ImportError as e:
     logger.warning(f"❌ AI Revenue Optimization Engine not available: {e}")
     ai_revenue_optimization_available = False
 
+# Content Monetization Analyzer imports (NEW - Phase 1)
+try:
+    from .content_monetization_analyzer import (
+        ContentMonetizationAnalyzer,
+        ContentType,
+        MonetizationPotential,
+        RevenueStream,
+        ContentMetrics,
+        MarketAnalysis,
+        MonetizationAssessment
+    )
+    content_monetization_analyzer_available = True
+    logger.info("✅ Content Monetization Analyzer loaded successfully")
+except ImportError as e:
+    logger.warning(f"❌ Content Monetization Analyzer not available: {e}")
+    content_monetization_analyzer_available = False
+
+# Platform Revenue Synchronizer imports (NEW - Phase 1)
+try:
+    from .platform_revenue_synchronizer import (
+        PlatformRevenueSynchronizer,
+        Platform,
+        RevenueType,
+        SyncStatus,
+        PlatformCredentials,
+        RevenueEntry,
+        RevenueSummary
+    )
+    platform_revenue_synchronizer_available = True
+    logger.info("✅ Platform Revenue Synchronizer loaded successfully")
+except ImportError as e:
+    logger.warning(f"❌ Platform Revenue Synchronizer not available: {e}")
+    platform_revenue_synchronizer_available = False
+
+# Monetization Workflow Manager imports (NEW - Phase 1)
+try:
+    from .monetization_workflow_manager import (
+        MonetizationWorkflowManager,
+        WorkflowType,
+        WorkflowStatus,
+        Priority,
+        WorkflowDefinition,
+        WorkflowExecution,
+        WorkflowStep
+    )
+    monetization_workflow_manager_available = True
+    logger.info("✅ Monetization Workflow Manager loaded successfully")
+except ImportError as e:
+    logger.warning(f"❌ Monetization Workflow Manager not available: {e}")
+    monetization_workflow_manager_available = False
+
+# Creator Payout Orchestrator imports (NEW - Phase 1)
+try:
+    from .creator_payout_orchestrator import (
+        CreatorPayoutOrchestrator,
+        PayoutMethod,
+        PayoutStatus,
+        PayoutFrequency,
+        Currency,
+        PayoutAccount,
+        PayoutRule,
+        PayoutRequest,
+        PayoutSummary
+    )
+    creator_payout_orchestrator_available = True
+    logger.info("✅ Creator Payout Orchestrator loaded successfully")
+except ImportError as e:
+    logger.warning(f"❌ Creator Payout Orchestrator not available: {e}")
+    creator_payout_orchestrator_available = False
+
 
 class MonetizationOrchestrator:
     """
@@ -737,6 +807,43 @@ __all__ = [
     "AudienceOptimization",
     "get_ai_revenue_optimization_engine",
     
+    # Content Monetization Analyzer (NEW - Phase 1)
+    "ContentMonetizationAnalyzer",
+    "ContentType",
+    "MonetizationPotential",
+    "ContentMetrics",
+    "MarketAnalysis",
+    "MonetizationAssessment",
+    
+    # Platform Revenue Synchronizer (NEW - Phase 1)
+    "PlatformRevenueSynchronizer",
+    "Platform",
+    "RevenueType", 
+    "SyncStatus",
+    "PlatformCredentials",
+    "RevenueEntry",
+    "RevenueSummary",
+    
+    # Monetization Workflow Manager (NEW - Phase 1)
+    "MonetizationWorkflowManager",
+    "WorkflowType",
+    "WorkflowStatus",
+    "Priority",
+    "WorkflowDefinition",
+    "WorkflowExecution",
+    "WorkflowStep",
+    
+    # Creator Payout Orchestrator (NEW - Phase 1)
+    "CreatorPayoutOrchestrator",
+    "PayoutMethod",
+    "PayoutStatus",
+    "PayoutFrequency",
+    "Currency",
+    "PayoutAccount",
+    "PayoutRule",
+    "PayoutRequest",
+    "PayoutSummary",
+    
     # Module availability flags
     "subscription_engine_available",
     "payment_processor_available",
@@ -747,7 +854,11 @@ __all__ = [
     "multi_format_revenue_available",
     "creator_type_monetization_available",
     "creator_revenue_dashboard_available",
-    "ai_revenue_optimization_available"
+    "ai_revenue_optimization_available",
+    "content_monetization_analyzer_available",
+    "platform_revenue_synchronizer_available",
+    "monetization_workflow_manager_available",
+    "creator_payout_orchestrator_available"
 ]
 
 # Module initialization
@@ -766,21 +877,39 @@ available_count = sum([
     multi_format_revenue_available,
     creator_type_monetization_available,
     creator_revenue_dashboard_available,
-    ai_revenue_optimization_available
+    ai_revenue_optimization_available,
+    content_monetization_analyzer_available,
+    platform_revenue_synchronizer_available,
+    monetization_workflow_manager_available,
+    creator_payout_orchestrator_available
 ])
 
-logger.info(f"💰 Monetization modules loaded: {available_count}/10 systems available")
+logger.info(f"💰 Monetization modules loaded: {available_count}/14 systems available")
 
-# Critical creator monetization status
-creator_modules_count = sum([
+# Critical creator monetization status (Phase 1 complete)
+phase1_modules_count = sum([
     creator_monetization_available,
     multi_format_revenue_available,
     creator_type_monetization_available,
     creator_revenue_dashboard_available,
-    ai_revenue_optimization_available
+    content_monetization_analyzer_available,
+    platform_revenue_synchronizer_available,
+    monetization_workflow_manager_available,
+    creator_payout_orchestrator_available
 ])
 
-if creator_modules_count >= 4:
-    logger.info(f"🚀 CRITICAL Creator Monetization: {creator_modules_count}/5 components operational")
+if phase1_modules_count >= 7:
+    logger.info(f"🚀 PHASE 1 Creator Monetization: {phase1_modules_count}/8 components operational - CRITICAL READY")
 else:
-    logger.warning(f"⚠️ CRITICAL Creator Monetization: Only {creator_modules_count}/5 components available")
+    logger.warning(f"⚠️ PHASE 1 Creator Monetization: {phase1_modules_count}/8 components available - NEEDS COMPLETION")
+
+# AI Revenue Optimization status (Phase 2)
+ai_modules_count = sum([
+    ai_revenue_optimization_available,
+    content_monetization_analyzer_available  # AI-powered analysis
+])
+
+if ai_modules_count >= 1:
+    logger.info(f"🤖 AI Revenue Optimization: {ai_modules_count}/2 components operational")
+else:
+    logger.warning(f"⚠️ AI Revenue Optimization: No AI components available")
