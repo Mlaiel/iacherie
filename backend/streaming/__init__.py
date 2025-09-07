@@ -223,6 +223,37 @@ from .streaming_gamification_engine import (
     create_streaming_gamification_engine
 )
 
+from .streaming_seo_optimizer import (
+    StreamingSEOOptimizer,
+    SEOOptimizationType,
+    ViralPotential,
+    SEOMetric,
+    ContentCategory,
+    SEOConfig,
+    KeywordAnalysis,
+    SEOOptimization,
+    ViralDetectionResult,
+    TrendAnalysis,
+    SEOPerformanceReport,
+    create_streaming_seo_optimizer
+)
+
+from .multi_platform_streaming_distributor import (
+    MultiPlatformStreamingDistributor,
+    StreamingPlatform,
+    DistributionStrategy,
+    ContentAdaptationType,
+    DistributionStatus,
+    GeographicRegion,
+    DistributionConfig,
+    PlatformConfiguration,
+    ContentAdaptation,
+    DistributionJob,
+    AudienceRoutingResult,
+    GlobalDistributionReport,
+    create_multi_platform_streaming_distributor
+)
+
 __all__ = [
     # Live Stream
     "LiveStreamManager",
@@ -409,7 +440,36 @@ __all__ = [
     "LeaderboardEntry",
     "Leaderboard",
     "GamificationAnalytics",
-    "create_streaming_gamification_engine"
+    "create_streaming_gamification_engine",
+    
+    # Streaming SEO Optimizer
+    "StreamingSEOOptimizer",
+    "SEOOptimizationType",
+    "ViralPotential",
+    "SEOMetric",
+    "ContentCategory",
+    "SEOConfig",
+    "KeywordAnalysis",
+    "SEOOptimization",
+    "ViralDetectionResult",
+    "TrendAnalysis",
+    "SEOPerformanceReport",
+    "create_streaming_seo_optimizer",
+    
+    # Multi-Platform Streaming Distributor
+    "MultiPlatformStreamingDistributor",
+    "StreamingPlatform",
+    "DistributionStrategy",
+    "ContentAdaptationType",
+    "DistributionStatus",
+    "GeographicRegion",
+    "DistributionConfig",
+    "PlatformConfiguration",
+    "ContentAdaptation",
+    "DistributionJob",
+    "AudienceRoutingResult",
+    "GlobalDistributionReport",
+    "create_multi_platform_streaming_distributor"
 ]
 
 __version__ = "1.0.0"
