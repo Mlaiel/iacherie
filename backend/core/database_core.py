@@ -562,6 +562,199 @@ class SchemaManager:
             description="Collaboration projects and partnerships"
         )
         self.schemas["collaborations"] = collaboration_schema
+        
+        # Quantum Computing Enhancement Core Tables
+        self._initialize_quantum_schemas()
+    
+    def _initialize_quantum_schemas(self):
+        """Initialize quantum computing related schemas"""
+        
+        # Quantum computing workflows table
+        quantum_workflows_schema = SchemaDefinition(
+            table_name="quantum_computing_workflows",
+            columns=[
+                {"name": "id", "type": "UUID PRIMARY KEY DEFAULT gen_random_uuid()"},
+                {"name": "creator_id", "type": "UUID", "not_null": True},
+                {"name": "creator_type", "type": "VARCHAR(50)", "not_null": True},
+                {"name": "quantum_workflow_type", "type": "VARCHAR(100)", "not_null": True},
+                {"name": "quantum_algorithm_used", "type": "VARCHAR(100)"},
+                {"name": "quantum_processor_type", "type": "VARCHAR(50)", "default": "'simulator'"},
+                {"name": "quantum_enhancement_config", "type": "JSONB", "not_null": True, "default": "'{}'"},
+                {"name": "classical_comparison_baseline", "type": "JSONB", "default": "'{}'"},
+                {"name": "quantum_speedup_achieved", "type": "DECIMAL(10,4)", "default": "1.0"},
+                {"name": "quantum_accuracy_improvement", "type": "DECIMAL(5,4)", "default": "0.0"},
+                {"name": "quantum_processing_time_ms", "type": "INTEGER"},
+                {"name": "classical_processing_time_ms", "type": "INTEGER"},
+                {"name": "quantum_advantage_score", "type": "DECIMAL(5,2)", "default": "0.0"},
+                {"name": "resource_usage", "type": "JSONB", "default": "'{}'"},
+                {"name": "quantum_error_rate", "type": "DECIMAL(8,6)", "default": "0.0"},
+                {"name": "quantum_fidelity", "type": "DECIMAL(5,4)", "default": "1.0"},
+                {"name": "business_impact_metrics", "type": "JSONB", "default": "'{}'"},
+                {"name": "created_at", "type": "TIMESTAMP WITH TIME ZONE", "default": "CURRENT_TIMESTAMP"},
+                {"name": "updated_at", "type": "TIMESTAMP WITH TIME ZONE", "default": "CURRENT_TIMESTAMP"}
+            ],
+            indexes=[
+                {"name": "idx_quantum_workflows_creator", "columns": ["creator_id", "quantum_workflow_type", "quantum_processor_type"]},
+                {"name": "idx_quantum_speedup", "columns": ["quantum_speedup_achieved DESC"]},
+                {"name": "idx_quantum_advantage", "columns": ["quantum_advantage_score DESC"]},
+                {"name": "idx_creator_type_quantum", "columns": ["creator_type", "quantum_algorithm_used"]}
+            ],
+            constraints=[
+                {"type": "foreign_key", "columns": ["creator_id"], "references": {"table": "users", "columns": ["id"]}}
+            ],
+            description="Quantum computing workflows and performance tracking"
+        )
+        self.schemas["quantum_computing_workflows"] = quantum_workflows_schema
+        
+        # Quantum algorithm performance metrics
+        quantum_performance_schema = SchemaDefinition(
+            table_name="quantum_algorithm_performance_metrics",
+            columns=[
+                {"name": "id", "type": "UUID PRIMARY KEY DEFAULT gen_random_uuid()"},
+                {"name": "workflow_id", "type": "UUID", "not_null": True},
+                {"name": "quantum_algorithm_name", "type": "VARCHAR(100)"},
+                {"name": "algorithm_category", "type": "VARCHAR(50)"},
+                {"name": "quantum_circuit_depth", "type": "INTEGER"},
+                {"name": "quantum_gate_count", "type": "INTEGER"},
+                {"name": "qubit_usage", "type": "INTEGER"},
+                {"name": "quantum_execution_time_ms", "type": "INTEGER"},
+                {"name": "quantum_error_correction_applied", "type": "BOOLEAN", "default": "FALSE"},
+                {"name": "decoherence_time_microseconds", "type": "DECIMAL(10,4)"},
+                {"name": "gate_fidelity", "type": "DECIMAL(5,4)", "default": "1.0"},
+                {"name": "measurement_fidelity", "type": "DECIMAL(5,4)", "default": "1.0"},
+                {"name": "quantum_volume", "type": "INTEGER"},
+                {"name": "classical_simulation_complexity_estimate", "type": "VARCHAR(50)"},
+                {"name": "quantum_supremacy_demonstrated", "type": "BOOLEAN", "default": "FALSE"},
+                {"name": "business_logic_improvement", "type": "DECIMAL(5,4)", "default": "0.0"},
+                {"name": "creator_satisfaction_improvement", "type": "DECIMAL(5,4)", "default": "0.0"},
+                {"name": "revenue_impact_percentage", "type": "DECIMAL(5,2)", "default": "0.0"},
+                {"name": "processing_efficiency_gain", "type": "DECIMAL(5,4)", "default": "0.0"},
+                {"name": "accuracy_improvement_percentage", "type": "DECIMAL(5,2)", "default": "0.0"},
+                {"name": "timestamp", "type": "TIMESTAMP WITH TIME ZONE", "default": "CURRENT_TIMESTAMP"}
+            ],
+            indexes=[
+                {"name": "idx_algorithm_performance", "columns": ["quantum_algorithm_name", "algorithm_category", "timestamp"]},
+                {"name": "idx_quantum_advantage_perf", "columns": ["quantum_supremacy_demonstrated", "quantum_volume DESC"]},
+                {"name": "idx_business_impact", "columns": ["business_logic_improvement DESC", "revenue_impact_percentage DESC"]},
+                {"name": "idx_efficiency", "columns": ["processing_efficiency_gain DESC", "accuracy_improvement_percentage DESC"]}
+            ],
+            constraints=[
+                {"type": "foreign_key", "columns": ["workflow_id"], "references": {"table": "quantum_computing_workflows", "columns": ["id"]}}
+            ],
+            description="Quantum algorithm performance metrics and business impact analysis"
+        )
+        self.schemas["quantum_algorithm_performance_metrics"] = quantum_performance_schema
+        
+        # Creator quantum enhancement profiles
+        creator_quantum_profiles_schema = SchemaDefinition(
+            table_name="creator_quantum_enhancement_profiles",
+            columns=[
+                {"name": "id", "type": "UUID PRIMARY KEY DEFAULT gen_random_uuid()"},
+                {"name": "creator_id", "type": "UUID", "not_null": True},
+                {"name": "creator_type", "type": "VARCHAR(50)", "not_null": True},
+                {"name": "quantum_enhancement_preferences", "type": "JSONB", "not_null": True, "default": "'{}'"},
+                {"name": "preferred_quantum_algorithms", "type": "JSONB", "default": "'[]'"},
+                {"name": "quantum_optimization_goals", "type": "JSONB", "default": "'{}'"},
+                {"name": "quantum_vs_classical_preference", "type": "DECIMAL(3,2)", "default": "0.5"},
+                {"name": "quantum_processing_budget_allocation", "type": "DECIMAL(10,2)", "default": "0.0"},
+                {"name": "quantum_accuracy_requirements", "type": "DECIMAL(5,4)", "default": "0.9"},
+                {"name": "quantum_speedup_requirements", "type": "DECIMAL(5,2)", "default": "1.5"},
+                {"name": "quantum_security_level", "type": "VARCHAR(50)", "default": "'standard'"},
+                {"name": "quantum_experimentation_consent", "type": "BOOLEAN", "default": "TRUE"},
+                {"name": "quantum_algorithm_complexity_tolerance", "type": "VARCHAR(50)", "default": "'medium'"},
+                {"name": "quantum_cost_sensitivity", "type": "DECIMAL(3,2)", "default": "0.5"},
+                {"name": "quantum_innovation_adoption_speed", "type": "VARCHAR(50)", "default": "'moderate'"},
+                {"name": "quantum_business_logic_priorities", "type": "JSONB", "default": "'{}'"},
+                {"name": "created_at", "type": "TIMESTAMP WITH TIME ZONE", "default": "CURRENT_TIMESTAMP"},
+                {"name": "updated_at", "type": "TIMESTAMP WITH TIME ZONE", "default": "CURRENT_TIMESTAMP"}
+            ],
+            indexes=[
+                {"name": "idx_creator_quantum_profile", "columns": ["creator_id", "creator_type"]},
+                {"name": "idx_quantum_preferences", "columns": ["creator_type", "quantum_vs_classical_preference"]},
+                {"name": "idx_quantum_security", "columns": ["quantum_security_level", "quantum_accuracy_requirements"]}
+            ],
+            constraints=[
+                {"type": "foreign_key", "columns": ["creator_id"], "references": {"table": "users", "columns": ["id"]}}
+            ],
+            description="Creator quantum enhancement preferences and configuration profiles"
+        )
+        self.schemas["creator_quantum_enhancement_profiles"] = creator_quantum_profiles_schema
+        
+        # Quantum business logic optimization
+        quantum_business_optimization_schema = SchemaDefinition(
+            table_name="quantum_business_logic_optimization",
+            columns=[
+                {"name": "id", "type": "UUID PRIMARY KEY DEFAULT gen_random_uuid()"},
+                {"name": "workflow_id", "type": "UUID", "not_null": True},
+                {"name": "business_stage", "type": "VARCHAR(50)", "not_null": True},
+                {"name": "optimization_type", "type": "VARCHAR(100)", "not_null": True},
+                {"name": "quantum_optimization_strategy", "type": "JSONB", "not_null": True, "default": "'{}'"},
+                {"name": "baseline_performance_metrics", "type": "JSONB", "default": "'{}'"},
+                {"name": "quantum_enhanced_performance_metrics", "type": "JSONB", "default": "'{}'"},
+                {"name": "optimization_improvement_factor", "type": "DECIMAL(8,4)", "default": "1.0"},
+                {"name": "business_value_generated", "type": "DECIMAL(15,2)", "default": "0.0"},
+                {"name": "cost_efficiency_improvement", "type": "DECIMAL(5,4)", "default": "0.0"},
+                {"name": "time_savings_percentage", "type": "DECIMAL(5,2)", "default": "0.0"},
+                {"name": "accuracy_improvement_factor", "type": "DECIMAL(5,4)", "default": "0.0"},
+                {"name": "security_enhancement_level", "type": "DECIMAL(5,2)", "default": "0.0"},
+                {"name": "user_experience_improvement", "type": "DECIMAL(5,2)", "default": "0.0"},
+                {"name": "competitive_advantage_score", "type": "DECIMAL(5,2)", "default": "0.0"},
+                {"name": "scalability_improvement_factor", "type": "DECIMAL(5,4)", "default": "1.0"},
+                {"name": "innovation_impact_score", "type": "DECIMAL(5,2)", "default": "0.0"},
+                {"name": "quantum_readiness_level", "type": "VARCHAR(50)", "default": "'experimental'"},
+                {"name": "roi_calculation", "type": "DECIMAL(10,4)", "default": "0.0"},
+                {"name": "timestamp", "type": "TIMESTAMP WITH TIME ZONE", "default": "CURRENT_TIMESTAMP"}
+            ],
+            indexes=[
+                {"name": "idx_business_optimization", "columns": ["business_stage", "optimization_type", "timestamp"]},
+                {"name": "idx_optimization_impact", "columns": ["optimization_improvement_factor DESC", "business_value_generated DESC"]},
+                {"name": "idx_competitive_advantage", "columns": ["competitive_advantage_score DESC", "innovation_impact_score DESC"]},
+                {"name": "idx_roi_analysis", "columns": ["roi_calculation DESC", "cost_efficiency_improvement DESC"]}
+            ],
+            constraints=[
+                {"type": "foreign_key", "columns": ["workflow_id"], "references": {"table": "quantum_computing_workflows", "columns": ["id"]}}
+            ],
+            description="Quantum business logic optimization tracking and ROI analysis"
+        )
+        self.schemas["quantum_business_logic_optimization"] = quantum_business_optimization_schema
+        
+        # Quantum collaboration enhancement analytics
+        quantum_collaboration_analytics_schema = SchemaDefinition(
+            table_name="quantum_collaboration_enhancement_analytics",
+            columns=[
+                {"name": "id", "type": "UUID PRIMARY KEY DEFAULT gen_random_uuid()"},
+                {"name": "creator_id", "type": "UUID", "not_null": True},
+                {"name": "collaboration_type", "type": "VARCHAR(100)", "not_null": True},
+                {"name": "quantum_matching_algorithm", "type": "VARCHAR(100)"},
+                {"name": "quantum_compatibility_score", "type": "DECIMAL(5,4)", "default": "0.0"},
+                {"name": "classical_compatibility_score", "type": "DECIMAL(5,4)", "default": "0.0"},
+                {"name": "quantum_enhancement_factor", "type": "DECIMAL(5,4)", "default": "1.0"},
+                {"name": "partnership_success_prediction", "type": "DECIMAL(5,4)", "default": "0.0"},
+                {"name": "revenue_synergy_prediction", "type": "DECIMAL(15,2)", "default": "0.0"},
+                {"name": "audience_overlap_optimization", "type": "DECIMAL(5,4)", "default": "0.0"},
+                {"name": "content_collaboration_optimization", "type": "DECIMAL(5,4)", "default": "0.0"},
+                {"name": "quantum_network_analysis_results", "type": "JSONB", "default": "'{}'"},
+                {"name": "quantum_social_graph_insights", "type": "JSONB", "default": "'{}'"},
+                {"name": "quantum_recommendation_confidence", "type": "DECIMAL(5,4)", "default": "0.0"},
+                {"name": "collaboration_outcome_prediction", "type": "JSONB", "default": "'{}'"},
+                {"name": "quantum_team_coordination_optimization", "type": "DECIMAL(5,4)", "default": "0.0"},
+                {"name": "project_success_probability", "type": "DECIMAL(5,4)", "default": "0.0"},
+                {"name": "quantum_communication_enhancement", "type": "DECIMAL(5,4)", "default": "0.0"},
+                {"name": "innovation_potential_score", "type": "DECIMAL(5,2)", "default": "0.0"},
+                {"name": "timestamp", "type": "TIMESTAMP WITH TIME ZONE", "default": "CURRENT_TIMESTAMP"}
+            ],
+            indexes=[
+                {"name": "idx_quantum_collaboration", "columns": ["creator_id", "collaboration_type", "quantum_matching_algorithm"]},
+                {"name": "idx_compatibility_enhancement", "columns": ["quantum_enhancement_factor DESC", "quantum_compatibility_score DESC"]},
+                {"name": "idx_success_prediction", "columns": ["partnership_success_prediction DESC", "project_success_probability DESC"]},
+                {"name": "idx_revenue_synergy", "columns": ["revenue_synergy_prediction DESC", "innovation_potential_score DESC"]}
+            ],
+            constraints=[
+                {"type": "foreign_key", "columns": ["creator_id"], "references": {"table": "users", "columns": ["id"]}}
+            ],
+            description="Quantum-enhanced collaboration analytics and partnership optimization"
+        )
+        self.schemas["quantum_collaboration_enhancement_analytics"] = quantum_collaboration_analytics_schema
     
     async def create_schema(self, schema_name: str) -> bool:
         """Create database schema"""
@@ -594,6 +787,29 @@ class SchemaManager:
                         
                         await conn.execute(index_ddl)
                         logger.info(f"Created index: {index['name']}")
+                    
+                    # Create foreign key constraints
+                    if hasattr(schema, 'constraints') and schema.constraints:
+                        for constraint in schema.constraints:
+                            if constraint.get('type') == 'foreign_key':
+                                ref_table = constraint['references']['table']
+                                ref_columns = ','.join(constraint['references']['columns'])
+                                fk_columns = ','.join(constraint['columns'])
+                                constraint_name = f"fk_{schema.table_name}_{ref_table}"
+                                
+                                fk_ddl = f"""
+                                ALTER TABLE {schema.table_name} 
+                                ADD CONSTRAINT {constraint_name} 
+                                FOREIGN KEY ({fk_columns}) 
+                                REFERENCES {ref_table} ({ref_columns})
+                                ON DELETE CASCADE
+                                """
+                                
+                                try:
+                                    await conn.execute(fk_ddl)
+                                    logger.info(f"Created foreign key constraint: {constraint_name}")
+                                except Exception as fk_error:
+                                    logger.warning(f"Failed to create foreign key {constraint_name}: {fk_error}")
                 
                 return True
             else:
