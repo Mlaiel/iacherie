@@ -315,6 +315,47 @@ except ImportError as e:
     logger.warning(f"❌ Collaboration Revenue Orchestrator not available: {e}")
     collaboration_revenue_orchestrator_available = False
 
+# Intelligent Pricing Orchestrator imports (CRITICAL - Phase 2)
+try:
+    from .intelligent_pricing_orchestrator import (
+        IntelligentPricingOrchestrator,
+        PricingStrategy,
+        MarketCondition,
+        PriceChangeReason,
+        MarketAnalysis,
+        CompetitorPrice,
+        PriceRecommendation,
+        PriceChangeEvent,
+        PricingExperiment,
+        get_intelligent_pricing_orchestrator
+    )
+    intelligent_pricing_orchestrator_available = True
+    logger.info("✅ Intelligent Pricing Orchestrator loaded successfully")
+except ImportError as e:
+    logger.warning(f"❌ Intelligent Pricing Orchestrator not available: {e}")
+    intelligent_pricing_orchestrator_available = False
+
+# Revenue Sharing Automation imports (HIGH - Phase 4)
+try:
+    from .revenue_sharing_automation import (
+        RevenueSharingAutomation,
+        AutomationTrigger,
+        DistributionStatus,
+        PaymentMethod as AutomationPaymentMethod,
+        TaxHandling,
+        AutomationRule,
+        PayoutInstruction,
+        AutomatedDistribution,
+        SmartContractIntegration,
+        DistributionMetrics,
+        get_revenue_sharing_automation
+    )
+    revenue_sharing_automation_available = True
+    logger.info("✅ Revenue Sharing Automation loaded successfully")
+except ImportError as e:
+    logger.warning(f"❌ Revenue Sharing Automation not available: {e}")
+    revenue_sharing_automation_available = False
+
 
 class MonetizationOrchestrator:
     """
@@ -349,6 +390,10 @@ class MonetizationOrchestrator:
         self.platform_revenue_synchronizer = None
         self.protection_monetization_bridge = None
         self.collaboration_revenue_orchestrator = None
+        
+        # Additional Phase 2-4 components
+        self.intelligent_pricing_orchestrator = None
+        self.revenue_sharing_automation = None
         
         self.logger.info("MonetizationOrchestrator initialized")
     
@@ -408,6 +453,15 @@ class MonetizationOrchestrator:
             if collaboration_revenue_orchestrator_available:
                 self.collaboration_revenue_orchestrator = await get_collaboration_revenue_orchestrator()
                 self.logger.info("✅ Collaboration Revenue Orchestrator initialized")
+            
+            # Initialize additional Phase 2-4 components
+            if intelligent_pricing_orchestrator_available:
+                self.intelligent_pricing_orchestrator = await get_intelligent_pricing_orchestrator()
+                self.logger.info("✅ Intelligent Pricing Orchestrator initialized")
+            
+            if revenue_sharing_automation_available:
+                self.revenue_sharing_automation = await get_revenue_sharing_automation()
+                self.logger.info("✅ Revenue Sharing Automation initialized")
             
             self.initialized = True
             
@@ -869,10 +923,12 @@ available_count = sum([
     content_monetization_analyzer_available,
     platform_revenue_synchronizer_available,
     protection_monetization_bridge_available,
-    collaboration_revenue_orchestrator_available
+    collaboration_revenue_orchestrator_available,
+    intelligent_pricing_orchestrator_available,
+    revenue_sharing_automation_available
 ])
 
-logger.info(f"💰 Monetization modules loaded: {available_count}/14 systems available")
+logger.info(f"💰 Monetization modules loaded: {available_count}/16 systems available")
 
 # Critical creator monetization status
 creator_modules_count = sum([
@@ -882,23 +938,26 @@ creator_modules_count = sum([
     creator_revenue_dashboard_available,
     ai_revenue_optimization_available,
     content_monetization_analyzer_available,
-    platform_revenue_synchronizer_available
+    platform_revenue_synchronizer_available,
+    intelligent_pricing_orchestrator_available
 ])
 
-if creator_modules_count >= 6:
-    logger.info(f"🚀 CRITICAL Creator Monetization: {creator_modules_count}/7 components operational")
+if creator_modules_count >= 7:
+    logger.info(f"🚀 CRITICAL Creator Monetization: {creator_modules_count}/8 components operational")
 else:
-    logger.warning(f"⚠️ CRITICAL Creator Monetization: Only {creator_modules_count}/7 components available")
+    logger.warning(f"⚠️ CRITICAL Creator Monetization: Only {creator_modules_count}/8 components available")
 
 # Enterprise integration status
 enterprise_modules_count = sum([
     protection_monetization_bridge_available,
     collaboration_revenue_orchestrator_available,
     content_monetization_analyzer_available,
-    platform_revenue_synchronizer_available
+    platform_revenue_synchronizer_available,
+    intelligent_pricing_orchestrator_available,
+    revenue_sharing_automation_available
 ])
 
-if enterprise_modules_count >= 3:
-    logger.info(f"🏢 ENTERPRISE Integration: {enterprise_modules_count}/4 components operational")
+if enterprise_modules_count >= 5:
+    logger.info(f"🏢 ENTERPRISE Integration: {enterprise_modules_count}/6 components operational")
 else:
-    logger.warning(f"⚠️ ENTERPRISE Integration: Only {enterprise_modules_count}/4 components available")
+    logger.warning(f"⚠️ ENTERPRISE Integration: Only {enterprise_modules_count}/6 components available")
