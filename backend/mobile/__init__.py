@@ -99,6 +99,48 @@ from .mobile_ai_cache_manager import (
     CachePriority
 )
 
+# Phase 3: Content Protection Mobile (CRITICAL)
+from .mobile_protection_orchestrator import (
+    MobileProtectionOrchestrator,
+    MobileProtectionRequest,
+    MobileProtectionResult,
+    MobileProtectionConfiguration,
+    MobileProtectionMode,
+    MobileDeviceType,
+    MobileNetworkType
+)
+
+from .fingerprint_mobile_engine import (
+    MobileFingerprintEngine,
+    MobileFingerprintRequest,
+    MobileFingerprintResult,
+    MobileFingerprintConfig,
+    MobileFingerprintType,
+    MobileContentType,
+    MobileFingerprintQuality
+)
+
+from .watermark_mobile_processor import (
+    MobileWatermarkProcessor,
+    MobileWatermarkRequest,
+    MobileWatermarkResult,
+    MobileWatermarkConfig,
+    MobileWatermarkType,
+    MobileWatermarkStrength,
+    MobileWatermarkPosition
+)
+
+from .violation_alert_mobile import (
+    MobileViolationAlertSystem,
+    MobileViolationEvent,
+    MobileAlertRequest,
+    MobileAlertResult,
+    MobileAlertConfiguration,
+    MobileViolationType,
+    MobileAlertSeverity,
+    MobileAlertChannel
+)
+
 __all__ = [
     # Original services
     "PushNotificationService",
@@ -173,5 +215,39 @@ __all__ = [
     "CachePerformanceMetrics",
     "CacheStrategy",
     "CacheLevel",
-    "CachePriority"
+    "CachePriority",
+    
+    # Phase 3: Content Protection Mobile
+    "MobileProtectionOrchestrator",
+    "MobileProtectionRequest",
+    "MobileProtectionResult",
+    "MobileProtectionConfiguration",
+    "MobileProtectionMode",
+    "MobileDeviceType",
+    "MobileNetworkType",
+    
+    "MobileFingerprintEngine",
+    "MobileFingerprintRequest",
+    "MobileFingerprintResult",
+    "MobileFingerprintConfig",
+    "MobileFingerprintType",
+    "MobileContentType",
+    "MobileFingerprintQuality",
+    
+    "MobileWatermarkProcessor",
+    "MobileWatermarkRequest",
+    "MobileWatermarkResult",
+    "MobileWatermarkConfig",
+    "MobileWatermarkType",
+    "MobileWatermarkStrength",
+    "MobileWatermarkPosition",
+    
+    "MobileViolationAlertSystem",
+    "MobileViolationEvent",
+    "MobileAlertRequest",
+    "MobileAlertResult",
+    "MobileAlertConfiguration",
+    "MobileViolationType",
+    "MobileAlertSeverity",
+    "MobileAlertChannel"
 ]
