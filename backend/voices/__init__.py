@@ -93,6 +93,66 @@ from .voice_rights_manager import (
     RightsViolation,
     RightsManagementResult
 )
+from .voice_fingerprinting_system import (
+    VoiceFingerprintingSystem,
+    FingerprintAlgorithm,
+    FingerprintQuality,
+    MatchConfidence,
+    FingerprintStatus,
+    VoiceFingerprint as SystemVoiceFingerprint,
+    FingerprintMatch,
+    FingerprintingResult
+)
+from .voice_piracy_detector import (
+    VoicePiracyDetector,
+    PiracyType,
+    DetectionMethod,
+    ViolationSeverity,
+    PiracyStatus,
+    PiracyAlert,
+    PiracyReport,
+    DetectionResult
+)
+
+# Enterprise Voice Business Logic modules - Phase 2.5: Content Classification & Metadata
+from .voice_metadata_generator import (
+    VoiceMetadataGenerator,
+    MetadataType,
+    VoiceFeature,
+    ContentCategory as MetadataContentCategory,
+    VoiceMetadata,
+    MetadataExtractionResult
+)
+from .voice_content_classifier import (
+    VoiceContentClassifier,
+    ClassificationMethod,
+    ContentGenre,
+    AudioQuality,
+    SpeechPattern,
+    VoiceContentClassification,
+    ClassificationConfidence,
+    ClassificationResult
+)
+from .voice_format_converter import (
+    VoiceFormatConverter,
+    AudioFormat,
+    ConversionQuality,
+    CompressionType,
+    PlatformFormat,
+    ConversionSettings,
+    FormatCapabilities,
+    ConversionResult
+)
+from .voice_subtitle_generator import (
+    VoiceSubtitleGenerator,
+    SubtitleFormat,
+    TimingAccuracy,
+    SubtitleStyle,
+    SubtitleSegment,
+    SubtitleTrack,
+    SubtitleSettings,
+    SubtitleGenerationResult
+)
 
 # Enterprise Voice Business Logic modules - Phase 4: SEO & Discovery
 from .voice_seo_optimizer import (
@@ -207,6 +267,38 @@ __all__ = [
     'WordSegment',
     'SentenceSegment',
     
+    # Enterprise voice business logic - Phase 2.5: Content Classification & Metadata
+    'VoiceMetadataGenerator',
+    'MetadataType',
+    'VoiceFeature',
+    'MetadataContentCategory',
+    'VoiceMetadata',
+    'MetadataExtractionResult',
+    'VoiceContentClassifier',
+    'ClassificationMethod',
+    'ContentGenre',
+    'AudioQuality',
+    'SpeechPattern',
+    'VoiceContentClassification',
+    'ClassificationConfidence',
+    'ClassificationResult',
+    'VoiceFormatConverter',
+    'AudioFormat',
+    'ConversionQuality',
+    'CompressionType',
+    'PlatformFormat',
+    'ConversionSettings',
+    'FormatCapabilities',
+    'ConversionResult',
+    'VoiceSubtitleGenerator',
+    'SubtitleFormat',
+    'TimingAccuracy',
+    'SubtitleStyle',
+    'SubtitleSegment',
+    'SubtitleTrack',
+    'SubtitleSettings',
+    'SubtitleGenerationResult',
+    
     # Enterprise voice business logic - Phase 3: Protection & Rights Management
     'VoiceProtectionEngine',
     'ProtectionLevel',
@@ -224,6 +316,22 @@ __all__ = [
     'VoiceLicense',
     'RightsViolation',
     'RightsManagementResult',
+    'VoiceFingerprintingSystem',
+    'FingerprintAlgorithm',
+    'FingerprintQuality',
+    'MatchConfidence',
+    'FingerprintStatus',
+    'SystemVoiceFingerprint',
+    'FingerprintMatch',
+    'FingerprintingResult',
+    'VoicePiracyDetector',
+    'PiracyType',
+    'DetectionMethod',
+    'ViolationSeverity',
+    'PiracyStatus',
+    'PiracyAlert',
+    'PiracyReport',
+    'DetectionResult',
     
     # Enterprise voice business logic - Phase 4: SEO & Discovery
     'VoiceSEOOptimizer',
