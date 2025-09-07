@@ -257,6 +257,64 @@ from .quantum_content_recommendation_engine import (
     generate_content_recommendations
 )
 
+# Quantum SEO Enhancement Components (NEW CRITICAL MODULES)
+from .quantum_seo_optimization_engine import (
+    QuantumSEOOptimizationEngine,
+    QuantumSEORequest,
+    QuantumSEOResult,
+    SEOOptimizationType,
+    SearchEngineType,
+    ContentType as SEOContentType,
+    get_quantum_seo_engine,
+    optimize_content_seo,
+    get_seo_optimization_status,
+    get_creator_seo_analytics
+)
+
+# Quantum Search Algorithm Accelerator (NEW CRITICAL MODULES)
+from .quantum_search_algorithm_accelerator import (
+    QuantumSearchAlgorithmAccelerator,
+    QuantumSearchRequest,
+    QuantumSearchResult,
+    SearchAlgorithmType,
+    SearchDomain,
+    AccelerationMode,
+    get_quantum_search_accelerator,
+    accelerate_search,
+    get_search_acceleration_status,
+    get_creator_search_analytics
+)
+
+# Quantum Keyword Optimization Processor (NEW CRITICAL MODULES)
+from .quantum_keyword_optimization_processor import (
+    QuantumKeywordOptimizationProcessor,
+    QuantumKeywordRequest,
+    QuantumKeywordResult,
+    KeywordType,
+    OptimizationStrategy,
+    SearchIntent,
+    KeywordData,
+    get_quantum_keyword_processor,
+    optimize_keywords,
+    get_keyword_optimization_status,
+    get_creator_keyword_analytics
+)
+
+# Quantum Gamification Optimization Engine (NEW CRITICAL MODULES)
+from .quantum_gamification_optimization_engine import (
+    QuantumGamificationOptimizationEngine,
+    GamificationRequest,
+    GamificationResult,
+    GamificationElement,
+    EngagementMetric,
+    OptimizationGoal,
+    UserPersonality,
+    get_quantum_gamification_engine,
+    optimize_gamification,
+    get_gamification_optimization_status,
+    get_creator_gamification_analytics
+)
+
 __all__ = [
     # Quantum Cryptography Components
     "PostQuantumCrypto",
@@ -475,7 +533,57 @@ __all__ = [
     "RecommendationStrategy",
     "ContentCategory",
     "create_recommendation_engine",
-    "generate_content_recommendations"
+    "generate_content_recommendations",
+    
+    # Quantum SEO Enhancement Components (NEW)
+    "QuantumSEOOptimizationEngine",
+    "QuantumSEORequest",
+    "QuantumSEOResult",
+    "SEOOptimizationType",
+    "SearchEngineType",
+    "SEOContentType",
+    "get_quantum_seo_engine",
+    "optimize_content_seo",
+    "get_seo_optimization_status",
+    "get_creator_seo_analytics",
+    
+    # Quantum Search Algorithm Accelerator (NEW)
+    "QuantumSearchAlgorithmAccelerator",
+    "QuantumSearchRequest",
+    "QuantumSearchResult",
+    "SearchAlgorithmType",
+    "SearchDomain",
+    "AccelerationMode",
+    "get_quantum_search_accelerator",
+    "accelerate_search",
+    "get_search_acceleration_status",
+    "get_creator_search_analytics",
+    
+    # Quantum Keyword Optimization Processor (NEW)
+    "QuantumKeywordOptimizationProcessor",
+    "QuantumKeywordRequest",
+    "QuantumKeywordResult",
+    "KeywordType",
+    "OptimizationStrategy",
+    "SearchIntent",
+    "KeywordData",
+    "get_quantum_keyword_processor",
+    "optimize_keywords",
+    "get_keyword_optimization_status",
+    "get_creator_keyword_analytics",
+    
+    # Quantum Gamification Optimization Engine (NEW)
+    "QuantumGamificationOptimizationEngine",
+    "GamificationRequest",
+    "GamificationResult",
+    "GamificationElement",
+    "EngagementMetric",
+    "OptimizationGoal",
+    "UserPersonality",
+    "get_quantum_gamification_engine",
+    "optimize_gamification",
+    "get_gamification_optimization_status",
+    "get_creator_gamification_analytics"
 ]
 
 __version__ = "1.0.0"
