@@ -19,6 +19,12 @@ written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
 
+import sys
+import os
+
+# Add schemas path for quantum database models
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(__file__)), '..', 'schemas'))
+
 from .post_quantum_crypto import PostQuantumCrypto, LatticeBasedEncryption, LatticeAlgorithm
 from .quantum_key_distribution import QuantumKeyDistribution, QKDProtocol
 from .quantum_random_generator import QuantumRandomGenerator, TrueRandomSource
@@ -403,6 +409,47 @@ from .quantum_audience_targeting_accelerator import (
     create_quantum_audience_targeting_accelerator
 )
 
+# Quantum Database Schema Models Integration
+try:
+    from quantum import (
+        # Enums
+        QuantumWorkflowType,
+        QuantumProcessorType,
+        AlgorithmCategory,
+        QuantumSecurityLevel,
+        BusinessStage,
+        OptimizationType,
+        CollaborationType,
+        
+        # SQLAlchemy Models
+        QuantumComputingWorkflow,
+        QuantumAlgorithmPerformanceMetrics,
+        CreatorQuantumEnhancementProfile,
+        
+        # Pydantic Models
+        QuantumWorkflowRequest,
+        QuantumWorkflowResponse,
+        QuantumAlgorithmPerformanceRequest,
+        QuantumAlgorithmPerformanceResponse,
+        CreatorQuantumProfileRequest,
+        CreatorQuantumProfileResponse,
+        QuantumBusinessOptimizationRequest,
+        QuantumBusinessOptimizationResponse,
+        QuantumCollaborationAnalyticsRequest,
+        QuantumCollaborationAnalyticsResponse,
+        
+        # Utility Functions
+        create_quantum_workflow_config,
+        validate_quantum_metrics
+    )
+except ImportError:
+    # Schema models not available, define placeholder functions
+    def create_quantum_workflow_config(*args, **kwargs):
+        return {"error": "Quantum schema models not available"}
+    
+    def validate_quantum_metrics(*args, **kwargs):
+        return False
+
 __all__ = [
     # Quantum Cryptography Components
     "PostQuantumCrypto",
@@ -568,6 +615,30 @@ __all__ = [
     "QuantumRevenueOptimizer",
     "create_quantum_monetization_engine",
     "optimize_creator_quantum_monetization",
+    
+    # Quantum Database Schema Integration (NEW)
+    "QuantumWorkflowType",
+    "QuantumProcessorType",
+    "AlgorithmCategory",
+    "QuantumSecurityLevel",
+    "BusinessStage",
+    "OptimizationType",
+    "CollaborationType",
+    "QuantumComputingWorkflow",
+    "QuantumAlgorithmPerformanceMetrics",
+    "CreatorQuantumEnhancementProfile",
+    "QuantumWorkflowRequest",
+    "QuantumWorkflowResponse",
+    "QuantumAlgorithmPerformanceRequest",
+    "QuantumAlgorithmPerformanceResponse",
+    "CreatorQuantumProfileRequest",
+    "CreatorQuantumProfileResponse",
+    "QuantumBusinessOptimizationRequest",
+    "QuantumBusinessOptimizationResponse",
+    "QuantumCollaborationAnalyticsRequest",
+    "QuantumCollaborationAnalyticsResponse",
+    "create_quantum_workflow_config",
+    "validate_quantum_metrics",
     
     # Creator Multi-Format Quantum Enhancement Components
     "QuantumContentProcessingAccelerator",
@@ -745,7 +816,31 @@ __all__ = [
     "TargetingObjective",
     "PlatformType",
     "AudienceQuality",
-    "create_quantum_audience_targeting_accelerator"
+    "create_quantum_audience_targeting_accelerator",
+    
+    # Quantum Database Schema Models (NEW)
+    "QuantumWorkflowType",
+    "QuantumProcessorType", 
+    "AlgorithmCategory",
+    "QuantumSecurityLevel",
+    "BusinessStage",
+    "OptimizationType",
+    "CollaborationType",
+    "QuantumComputingWorkflow",
+    "QuantumAlgorithmPerformanceMetrics",
+    "CreatorQuantumEnhancementProfile",
+    "QuantumWorkflowRequest",
+    "QuantumWorkflowResponse",
+    "QuantumAlgorithmPerformanceRequest",
+    "QuantumAlgorithmPerformanceResponse",
+    "CreatorQuantumProfileRequest",
+    "CreatorQuantumProfileResponse",
+    "QuantumBusinessOptimizationRequest",
+    "QuantumBusinessOptimizationResponse",
+    "QuantumCollaborationAnalyticsRequest",
+    "QuantumCollaborationAnalyticsResponse",
+    "create_quantum_workflow_config",
+    "validate_quantum_metrics"
 ]
 
 __version__ = "1.0.0"

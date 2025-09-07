@@ -62,6 +62,13 @@ from .image_migrations import ImageMigrations
 from .text_migrations import TextMigrations
 from .integration_migrations import IntegrationMigrations
 
+# Quantum Computing Migrations (NEW)
+from .quantum_computing_migrations import (
+    QuantumComputingMigrations,
+    create_quantum_computing_migrations,
+    execute_quantum_computing_migration_integration
+)
+
 __all__ = [
     # Core Migration Components
     "EnterpriseMigrationManager",
@@ -102,7 +109,12 @@ __all__ = [
     "VideoMigrations", 
     "ImageMigrations",
     "TextMigrations",
-    "IntegrationMigrations"
+    "IntegrationMigrations",
+    
+    # Quantum Computing Migrations
+    "QuantumComputingMigrations",
+    "create_quantum_computing_migrations",
+    "execute_quantum_computing_migration_integration"
 ]
 
 __version__ = "3.2.0"
