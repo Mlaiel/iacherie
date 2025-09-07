@@ -22,6 +22,12 @@ Phase 2 - Content Enhancement & Processing:
 - Voice Quality Optimization Engine
 - Voice Transcription Processing Engine
 
+Phase 3 - Voice Protection & Rights Management:
+- Voice Content Protection Engine
+- Voice Rights Management System
+- Voice Fingerprinting Protection System
+- Voice Piracy Detection Engine
+
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
@@ -99,6 +105,46 @@ from .voice_monetization_engine import (
     PricingOptimization
 )
 
+# Enterprise Voice Business Logic modules - Phase 3: Voice Protection & Rights Management
+from .voice_protection_engine import (
+    VoiceProtectionEngine,
+    ProtectionLevel,
+    ProtectionStatus,
+    ThreatType,
+    VoiceFingerprint,
+    ProtectionAlert,
+    ProtectionConfiguration
+)
+from .voice_rights_manager import (
+    VoiceRightsManager,
+    RightsType,
+    LicenseType,
+    UsageScope,
+    RightsStatus,
+    VoiceRights,
+    LicenseAgreement,
+    UsageReport
+)
+from .voice_fingerprinting_system import (
+    VoiceFingerprintingSystem,
+    FingerprintType,
+    FingerprintAlgorithm,
+    MatchConfidence,
+    VoiceFingerprint as VoiceFingerprintData,
+    FingerprintMatch,
+    FingerprintDatabase
+)
+from .voice_piracy_detector import (
+    VoicePiracyDetector,
+    PiracyType,
+    DetectionMethod,
+    SeverityLevel,
+    DetectionStatus,
+    PiracyDetection,
+    MonitoringTarget,
+    PiracyReport
+)
+
 __all__ = [
     # Core voice modules
     'VoiceBank',
@@ -158,7 +204,39 @@ __all__ = [
     'TranscriptionSettings',
     'TranscriptionResult',
     'WordSegment',
-    'SentenceSegment'
+    'SentenceSegment',
+    
+    # Enterprise voice business logic - Phase 3: Protection & Rights Management
+    'VoiceProtectionEngine',
+    'ProtectionLevel',
+    'ProtectionStatus',
+    'ThreatType',
+    'VoiceFingerprint',
+    'ProtectionAlert',
+    'ProtectionConfiguration',
+    'VoiceRightsManager',
+    'RightsType',
+    'LicenseType',
+    'UsageScope',
+    'RightsStatus',
+    'VoiceRights',
+    'LicenseAgreement',
+    'UsageReport',
+    'VoiceFingerprintingSystem',
+    'FingerprintType',
+    'FingerprintAlgorithm',
+    'MatchConfidence',
+    'VoiceFingerprintData',
+    'FingerprintMatch',
+    'FingerprintDatabase',
+    'VoicePiracyDetector',
+    'PiracyType',
+    'DetectionMethod',
+    'SeverityLevel',
+    'DetectionStatus',
+    'PiracyDetection',
+    'MonitoringTarget',
+    'PiracyReport'
 ]
 
 __version__ = "1.0.0"
