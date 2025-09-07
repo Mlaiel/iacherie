@@ -115,6 +115,45 @@ from .ia_business_processing_orchestrator import (
     get_ia_business_processing_orchestrator
 )
 
+from .intelligent_workflow_coordinator import (
+    IntelligentWorkflowCoordinator,
+    WorkflowCoordinationType,
+    CoordinationStrategy,
+    WorkflowIntelligence,
+    CoordinationMode,
+    WorkflowStage,
+    WorkflowCoordinationRequest,
+    CoordinationExecution,
+    get_intelligent_workflow_coordinator
+)
+
+from .ai_pipeline_business_orchestrator import (
+    AIPipelineBusinessOrchestrator,
+    PipelineStage,
+    PipelineType,
+    BusinessPriority,
+    PipelineOptimization,
+    AIModelComponent,
+    PipelineConfiguration,
+    PipelineBusinessRequest,
+    PipelineExecution,
+    get_ai_pipeline_business_orchestrator
+)
+
+from .content_intelligence_orchestrator import (
+    ContentIntelligenceOrchestrator,
+    IntelligenceType,
+    AnalysisDepth,
+    IntelligenceScope,
+    InsightPriority,
+    ContentMetadata,
+    AudienceData,
+    IntelligenceRequest,
+    ContentInsight,
+    IntelligenceExecution,
+    get_content_intelligence_orchestrator
+)
+
 __all__ = [
     # AI Orchestration (Existing)
     # Model Ensemble
@@ -204,5 +243,41 @@ __all__ = [
     "AIModel",
     "IAProcessingRequest",
     "IAProcessingExecution",
-    "get_ia_business_processing_orchestrator"
+    "get_ia_business_processing_orchestrator",
+    
+    # Intelligent Workflow Coordination
+    "IntelligentWorkflowCoordinator",
+    "WorkflowCoordinationType",
+    "CoordinationStrategy",
+    "WorkflowIntelligence",
+    "CoordinationMode",
+    "WorkflowStage",
+    "WorkflowCoordinationRequest",
+    "CoordinationExecution",
+    "get_intelligent_workflow_coordinator",
+    
+    # AI Pipeline Business Orchestration
+    "AIPipelineBusinessOrchestrator",
+    "PipelineStage",
+    "PipelineType",
+    "BusinessPriority",
+    "PipelineOptimization",
+    "AIModelComponent",
+    "PipelineConfiguration",
+    "PipelineBusinessRequest",
+    "PipelineExecution",
+    "get_ai_pipeline_business_orchestrator",
+    
+    # Content Intelligence Orchestration
+    "ContentIntelligenceOrchestrator",
+    "IntelligenceType",
+    "AnalysisDepth",
+    "IntelligenceScope",
+    "InsightPriority",
+    "ContentMetadata",
+    "AudienceData",
+    "IntelligenceRequest",
+    "ContentInsight",
+    "IntelligenceExecution",
+    "get_content_intelligence_orchestrator"
 ]
