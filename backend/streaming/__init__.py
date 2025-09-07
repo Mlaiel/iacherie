@@ -129,6 +129,65 @@ from .streaming_analytics_engine import (
     create_streaming_analytics_engine
 )
 
+from .ai_streaming_processor import (
+    AIStreamingProcessor,
+    AIProcessingType,
+    ProcessingPriority,
+    AIModel,
+    ProcessingStatus,
+    AIProcessingConfig,
+    ContentEnhancement,
+    AIProcessingResult,
+    StreamingOptimization,
+    create_ai_streaming_processor
+)
+
+from .intelligent_streaming_optimizer import (
+    IntelligentStreamingOptimizer,
+    OptimizationType,
+    OptimizationStrategy,
+    PerformanceMetric,
+    OptimizationMode,
+    OptimizationConfig,
+    PerformanceProfile,
+    OptimizationResult,
+    AdaptiveSettings,
+    PredictiveInsight,
+    create_intelligent_streaming_optimizer
+)
+
+from .streaming_content_protection import (
+    StreamingContentProtection,
+    ProtectionType,
+    ViolationType,
+    ThreatLevel,
+    ProtectionStatus,
+    ResponseAction,
+    ProtectionConfig,
+    ContentFingerprint,
+    WatermarkData,
+    ViolationIncident,
+    ProtectionReport,
+    create_streaming_content_protection
+)
+
+from .streaming_monetization_engine import (
+    StreamingMonetizationEngine,
+    RevenueType,
+    PaymentMethod,
+    CurrencyCode,
+    TransactionStatus,
+    SubscriptionTier,
+    AdType,
+    MonetizationConfig,
+    RevenueTransaction,
+    SubscriptionRecord,
+    DonationGoal,
+    AdRevenueRecord,
+    RevenueAnalytics,
+    create_streaming_monetization_engine
+)
+
 __all__ = [
     # Live Stream
     "LiveStreamManager",
@@ -229,7 +288,60 @@ __all__ = [
     "AudienceInsights",
     "PredictiveInsight",
     "StreamingAnalyticsRecord",
-    "create_streaming_analytics_engine"
+    "create_streaming_analytics_engine",
+    
+    # AI Streaming Processor
+    "AIStreamingProcessor",
+    "AIProcessingType",
+    "ProcessingPriority",
+    "AIModel",
+    "ProcessingStatus",
+    "AIProcessingConfig",
+    "ContentEnhancement",
+    "AIProcessingResult",
+    "StreamingOptimization",
+    "create_ai_streaming_processor",
+    
+    # Intelligent Streaming Optimizer
+    "IntelligentStreamingOptimizer",
+    "OptimizationType",
+    "OptimizationStrategy",
+    "PerformanceMetric",
+    "OptimizationMode",
+    "OptimizationConfig",
+    "PerformanceProfile",
+    "OptimizationResult",
+    "AdaptiveSettings",
+    "create_intelligent_streaming_optimizer",
+    
+    # Streaming Content Protection
+    "StreamingContentProtection",
+    "ProtectionType",
+    "ViolationType",
+    "ThreatLevel",
+    "ProtectionStatus",
+    "ResponseAction",
+    "ProtectionConfig",
+    "ContentFingerprint",
+    "WatermarkData",
+    "ViolationIncident",
+    "ProtectionReport",
+    "create_streaming_content_protection",
+    
+    # Streaming Monetization Engine
+    "StreamingMonetizationEngine",
+    "RevenueType",
+    "PaymentMethod",
+    "CurrencyCode",
+    "TransactionStatus",
+    "SubscriptionTier",
+    "AdType",
+    "MonetizationConfig",
+    "RevenueTransaction",
+    "DonationGoal",
+    "AdRevenueRecord",
+    "RevenueAnalytics",
+    "create_streaming_monetization_engine"
 ]
 
 __version__ = "1.0.0"
