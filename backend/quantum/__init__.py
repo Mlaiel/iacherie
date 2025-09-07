@@ -365,6 +365,44 @@ from .quantum_pricing_optimization_accelerator import (
     create_quantum_pricing_optimization_accelerator
 )
 
+# Additional Quantum Business Logic Components (NEW CRITICAL MODULES)
+from .quantum_engagement_prediction_accelerator import (
+    QuantumEngagementPredictionAccelerator,
+    QuantumEngagementPredictionRequest,
+    QuantumEngagementPredictionResult,
+    QuantumEngagementFeatureExtractor,
+    QuantumEngagementPredictor,
+    EngagementMetric,
+    PredictionHorizon,
+    ContentType,
+    AudienceSegment,
+    create_quantum_engagement_prediction_accelerator
+)
+from .quantum_content_ranking_predictor import (
+    QuantumContentRankingPredictor,
+    QuantumContentRankingRequest,
+    QuantumContentRankingResult,
+    QuantumKeywordAnalyzer,
+    QuantumRankingPredictor,
+    SearchEngine,
+    RankingFactorType,
+    PredictionConfidence,
+    CompetitiveAnalysisDepth,
+    create_quantum_content_ranking_predictor
+)
+from .quantum_audience_targeting_accelerator import (
+    QuantumAudienceTargetingAccelerator,
+    QuantumAudienceTargetingRequest,
+    QuantumAudienceTargetingResult,
+    QuantumAudienceSegmenter,
+    QuantumLookalikeModeler,
+    AudienceSegmentType,
+    TargetingObjective,
+    PlatformType,
+    AudienceQuality,
+    create_quantum_audience_targeting_accelerator
+)
+
 __all__ = [
     # Quantum Cryptography Components
     "PostQuantumCrypto",
@@ -675,7 +713,39 @@ __all__ = [
     "PricingOptimizationObjective",
     "ProductType",
     "MarketCondition",
-    "create_quantum_pricing_optimization_accelerator"
+    "create_quantum_pricing_optimization_accelerator",
+    
+    # Additional Quantum Business Logic Components (NEW CRITICAL MODULES)
+    "QuantumEngagementPredictionAccelerator",
+    "QuantumEngagementPredictionRequest",
+    "QuantumEngagementPredictionResult",
+    "QuantumEngagementFeatureExtractor",
+    "QuantumEngagementPredictor",
+    "EngagementMetric",
+    "PredictionHorizon",
+    "ContentType",
+    "AudienceSegment",
+    "create_quantum_engagement_prediction_accelerator",
+    "QuantumContentRankingPredictor",
+    "QuantumContentRankingRequest",
+    "QuantumContentRankingResult",
+    "QuantumKeywordAnalyzer",
+    "QuantumRankingPredictor",
+    "SearchEngine",
+    "RankingFactorType",
+    "PredictionConfidence",
+    "CompetitiveAnalysisDepth",
+    "create_quantum_content_ranking_predictor",
+    "QuantumAudienceTargetingAccelerator",
+    "QuantumAudienceTargetingRequest",
+    "QuantumAudienceTargetingResult",
+    "QuantumAudienceSegmenter",
+    "QuantumLookalikeModeler",
+    "AudienceSegmentType",
+    "TargetingObjective",
+    "PlatformType",
+    "AudienceQuality",
+    "create_quantum_audience_targeting_accelerator"
 ]
 
 __version__ = "1.0.0"
