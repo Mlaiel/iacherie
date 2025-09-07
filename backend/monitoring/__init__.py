@@ -148,6 +148,60 @@ from .creator_performance_intelligence import (
     get_creator_insights
 )
 
+# Phase 1 Critical Components - Multi-Format Content Intelligence
+from .multi_format_content_monitor import (
+    MultiFormatContentMonitor,
+    ContentPerformanceMetrics,
+    FormatSpecificAnalytics,
+    ContentFormat as MultiFormatContentFormat,
+    ContentQuality,
+    multi_format_content_monitor,
+    track_content_performance,
+    get_content_analytics,
+    get_format_performance_summary,
+    get_real_time_dashboard
+)
+
+from .creator_type_analytics_engine import (
+    CreatorTypeAnalyticsEngine,
+    CreatorTypeProfile,
+    TypeSpecificAnalytics,
+    CreatorType as CreatorTypeEnum,
+    CreatorTier,
+    CollaborationType,
+    creator_type_analytics_engine,
+    register_creator_profile,
+    get_creator_analytics as get_type_analytics,
+    get_type_performance_summary,
+    get_optimization_recommendations,
+    compare_creators
+)
+
+from .content_quality_monitoring import (
+    ContentQualityMonitor,
+    QualityMetrics,
+    QualityAnalysisResult,
+    QualityDimension,
+    QualityLevel,
+    QualityIssueType,
+    content_quality_monitor,
+    analyze_content_quality,
+    get_quality_metrics,
+    get_quality_dashboard
+)
+
+from .platform_performance_tracker import (
+    PlatformPerformanceTracker,
+    PlatformMetrics,
+    CrossPlatformAnalytics,
+    Platform,
+    platform_performance_tracker,
+    track_platform_performance,
+    analyze_cross_platform_performance,
+    get_platform_performance_summary,
+    get_cross_platform_dashboard
+)
+
 from .ai_processing_performance_monitor import (
     AIProcessingPerformanceMonitor,
     AIProcessingMetrics,
@@ -345,6 +399,55 @@ __all__ = [
     'get_creator_dashboard',
     'get_creator_metrics',
     'get_creator_insights',
+    
+    # Phase 1 Critical Components - Multi-Format Content Intelligence
+    'MultiFormatContentMonitor',
+    'ContentPerformanceMetrics',
+    'FormatSpecificAnalytics',
+    'MultiFormatContentFormat',
+    'ContentQuality',
+    'multi_format_content_monitor',
+    'track_content_performance',
+    'get_content_analytics',
+    'get_format_performance_summary',
+    'get_real_time_dashboard',
+    
+    # Creator Type Analytics Engine
+    'CreatorTypeAnalyticsEngine',
+    'CreatorTypeProfile',
+    'TypeSpecificAnalytics',
+    'CreatorTypeEnum',
+    'CreatorTier',
+    'CollaborationType',
+    'creator_type_analytics_engine',
+    'register_creator_profile',
+    'get_type_analytics',
+    'get_type_performance_summary',
+    'get_optimization_recommendations',
+    'compare_creators',
+    
+    # Content Quality Monitoring
+    'ContentQualityMonitor',
+    'QualityMetrics',
+    'QualityAnalysisResult',
+    'QualityDimension',
+    'QualityLevel',
+    'QualityIssueType',
+    'content_quality_monitor',
+    'analyze_content_quality',
+    'get_quality_metrics',
+    'get_quality_dashboard',
+    
+    # Platform Performance Tracker
+    'PlatformPerformanceTracker',
+    'PlatformMetrics',
+    'CrossPlatformAnalytics',
+    'Platform',
+    'platform_performance_tracker',
+    'track_platform_performance',
+    'analyze_cross_platform_performance',
+    'get_platform_performance_summary',
+    'get_cross_platform_dashboard',
     
     # AI Processing Performance Monitor (Phase 2 - Critical)
     'AIProcessingPerformanceMonitor',
