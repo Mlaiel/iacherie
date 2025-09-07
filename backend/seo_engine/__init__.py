@@ -189,6 +189,79 @@ from .seo_business_intelligence_engine import (
     PredictionConfidence
 )
 
+# IA Enhanced SEO Intelligence Components (Priority 1 - NEW)
+from .voice_search_optimization_engine import (
+    VoiceSearchOptimizationEngine,
+    VoiceQuery,
+    VoiceOptimizationStrategy,
+    VoiceContentOptimization,
+    VoiceSearchAnalytics,
+    VoiceSearchType,
+    VoiceAssistant,
+    QueryComplexity
+)
+
+from .intelligent_link_building_engine import (
+    IntelligentLinkBuildingEngine,
+    LinkOpportunity,
+    LinkBuildingCampaign,
+    OutreachResult,
+    LinkBuildingAnalytics,
+    LinkType,
+    LinkQuality,
+    OutreachStatus,
+    LinkAcquisitionStrategy
+)
+
+from .ai_local_seo_optimizer import (
+    AILocalSEOOptimizer,
+    LocalBusinessProfile,
+    LocalSEOAnalysis,
+    LocalOptimizationStrategy,
+    LocalSEOPerformance,
+    LocalBusinessType,
+    LocalSearchIntent,
+    LocalRankingFactor
+)
+
+from .ai_content_seo_enhancement import (
+    AIContentSEOEnhancer,
+    ContentAnalysisInput,
+    AIContentAnalysis,
+    AIContentEnhancement,
+    ContentPerformancePrediction,
+    ContentSEOStrategy,
+    ContentType,
+    SEOEnhancementLevel,
+    ContentQualityScore,
+    AIModelType
+)
+
+# Protection-Integrated SEO Engine Components (Priority 2 - NEW)
+from .content_authenticity_seo_booster import (
+    ContentAuthenticityBooster,
+    ContentAuthenticityProfile,
+    AuthenticityAnalysis,
+    TrustSEOStrategy,
+    AuthenticityPerformance,
+    AuthenticityLevel,
+    TrustSignalType,
+    ContentVerificationType,
+    AuthoritySignal
+)
+
+from .anti_piracy_seo_strategy import (
+    AntiPiracySEOEngine,
+    PiracyThreatAssessment,
+    AntiPiracySEOStrategy,
+    PiracyDetectionResult,
+    AntiPiracyPerformance,
+    PiracyThreatLevel,
+    PiracyType,
+    ProtectionMethod,
+    AntiPiracyStrategy
+)
+
 # Module version
 __version__ = "1.0.0"
 
@@ -354,7 +427,74 @@ __all__ = [
     'AnalyticsScope',
     'IntelligenceType',
     'SEOMetricCategory',
-    'PredictionConfidence'
+    'PredictionConfidence',
+    
+    # IA Enhanced SEO Intelligence Components (Priority 1 - NEW)
+    # Voice Search Optimization Engine
+    'VoiceSearchOptimizationEngine',
+    'VoiceQuery',
+    'VoiceOptimizationStrategy',
+    'VoiceContentOptimization',
+    'VoiceSearchAnalytics',
+    'VoiceSearchType',
+    'VoiceAssistant',
+    'QueryComplexity',
+    
+    # Intelligent Link Building Engine
+    'IntelligentLinkBuildingEngine',
+    'LinkOpportunity',
+    'LinkBuildingCampaign',
+    'OutreachResult',
+    'LinkBuildingAnalytics',
+    'LinkType',
+    'LinkQuality',
+    'OutreachStatus',
+    'LinkAcquisitionStrategy',
+    
+    # AI Local SEO Optimizer
+    'AILocalSEOOptimizer',
+    'LocalBusinessProfile',
+    'LocalSEOAnalysis',
+    'LocalOptimizationStrategy',
+    'LocalSEOPerformance',
+    'LocalBusinessType',
+    'LocalSearchIntent',
+    'LocalRankingFactor',
+    
+    # AI Content SEO Enhancement
+    'AIContentSEOEnhancer',
+    'ContentAnalysisInput',
+    'AIContentAnalysis',
+    'AIContentEnhancement',
+    'ContentPerformancePrediction',
+    'ContentSEOStrategy',
+    'ContentType',
+    'SEOEnhancementLevel',
+    'ContentQualityScore',
+    'AIModelType',
+    
+    # Protection-Integrated SEO Engine Components (Priority 2 - NEW)
+    # Content Authenticity SEO Booster
+    'ContentAuthenticityBooster',
+    'ContentAuthenticityProfile',
+    'AuthenticityAnalysis',
+    'TrustSEOStrategy',
+    'AuthenticityPerformance',
+    'AuthenticityLevel',
+    'TrustSignalType',
+    'ContentVerificationType',
+    'AuthoritySignal',
+    
+    # Anti-Piracy SEO Strategy
+    'AntiPiracySEOEngine',
+    'PiracyThreatAssessment',
+    'AntiPiracySEOStrategy',
+    'PiracyDetectionResult',
+    'AntiPiracyPerformance',
+    'PiracyThreatLevel',
+    'PiracyType',
+    'ProtectionMethod',
+    'AntiPiracyStrategy'
 ]
 
 
