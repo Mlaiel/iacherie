@@ -272,6 +272,104 @@ from .voice_keyword_extractor import (
     KeywordTrend
 )
 
+# Enterprise Voice Business Logic modules - Phase 7: New Critical Components
+from .voice_brand_manager import (
+    VoiceBrandManager,
+    BrandArchetype,
+    BrandMaturity,
+    BrandStrategy,
+    VoiceBrandIdentity,
+    BrandPerformanceMetrics,
+    BrandOptimizationRecommendation
+)
+from .voice_audience_targeting import (
+    VoiceAudienceTargeting,
+    AudienceSegment,
+    TargetingStrategy,
+    EngagementLevel,
+    AudienceProfile,
+    TargetingRecommendation,
+    AudienceInsight
+)
+from .voice_content_strategy_engine import (
+    VoiceContentStrategyEngine,
+    ContentStrategyType,
+    ContentGoal,
+    ContentFormat,
+    ContentPillar,
+    ContentTheme,
+    ContentCalendarEntry,
+    StrategyPerformanceMetrics,
+    ContentStrategy
+)
+from .voice_copyright_validator import (
+    VoiceCopyrightValidator,
+    CopyrightStatus,
+    CopyrightType,
+    ValidationMethod,
+    ComplianceLevel,
+    CopyrightRecord,
+    ValidationResult,
+    CopyrightClaim
+)
+from .voice_watermarking_engine import (
+    VoiceWatermarkingEngine,
+    WatermarkType,
+    WatermarkMethod,
+    WatermarkStrength,
+    DetectionResult,
+    WatermarkPayload,
+    WatermarkConfig,
+    WatermarkResult,
+    WatermarkAnalysis
+)
+from .voice_theft_prevention import (
+    VoiceTheftPrevention,
+    TheftType,
+    ThreatLevel,
+    PreventionMethod,
+    ResponseAction,
+    TheftAlert,
+    PreventionPolicy,
+    TheftResponse,
+    ProtectionMetrics
+)
+from .voice_search_indexer import (
+    VoiceSearchIndexer,
+    IndexingStatus,
+    SearchEngine,
+    ContentType as IndexingContentType,
+    IndexingPriority,
+    SearchMetadata,
+    IndexingRequest,
+    IndexingResult,
+    SearchPerformance
+)
+from .voice_partnership_matcher import (
+    VoicePartnershipMatcher,
+    PartnershipType,
+    CollaborationScope,
+    CompatibilityFactor,
+    MatchConfidence,
+    CreatorProfile as PartnershipCreatorProfile,
+    PartnershipMatch,
+    CollaborationOpportunity,
+    PartnershipAnalytics
+)
+from .voice_project_manager import (
+    VoiceProjectManager,
+    ProjectStatus,
+    TaskStatus,
+    TaskPriority,
+    ProjectType,
+    ResourceType,
+    ProjectResource,
+    ProjectTask,
+    ProjectMilestone,
+    VoiceProject,
+    ProjectAnalytics
+)
+
 __all__ = [
     # Core voice modules
     'VoiceBank',
@@ -474,7 +572,87 @@ __all__ = [
     'ExtractedKeyword',
     'VoiceContentAnalysis',
     'CompetitorKeywordData',
-    'KeywordTrend'
+    'KeywordTrend',
+    
+    # Enterprise Voice Business Logic - Phase 7: New Critical Components
+    'VoiceBrandManager',
+    'BrandArchetype',
+    'BrandMaturity',
+    'BrandStrategy',
+    'VoiceBrandIdentity',
+    'BrandPerformanceMetrics',
+    'BrandOptimizationRecommendation',
+    'VoiceAudienceTargeting',
+    'AudienceSegment',
+    'TargetingStrategy',
+    'EngagementLevel',
+    'AudienceProfile',
+    'TargetingRecommendation',
+    'AudienceInsight',
+    'VoiceContentStrategyEngine',
+    'ContentStrategyType',
+    'ContentGoal',
+    'ContentFormat',
+    'ContentPillar',
+    'ContentTheme',
+    'ContentCalendarEntry',
+    'StrategyPerformanceMetrics',
+    'ContentStrategy',
+    'VoiceCopyrightValidator',
+    'CopyrightStatus',
+    'CopyrightType',
+    'ValidationMethod',
+    'ComplianceLevel',
+    'CopyrightRecord',
+    'ValidationResult',
+    'CopyrightClaim',
+    'VoiceWatermarkingEngine',
+    'WatermarkType',
+    'WatermarkMethod',
+    'WatermarkStrength',
+    'DetectionResult',
+    'WatermarkPayload',
+    'WatermarkConfig',
+    'WatermarkResult',
+    'WatermarkAnalysis',
+    'VoiceTheftPrevention',
+    'TheftType',
+    'ThreatLevel',
+    'PreventionMethod',
+    'ResponseAction',
+    'TheftAlert',
+    'PreventionPolicy',
+    'TheftResponse',
+    'ProtectionMetrics',
+    'VoiceSearchIndexer',
+    'IndexingStatus',
+    'SearchEngine',
+    'IndexingContentType',
+    'IndexingPriority',
+    'SearchMetadata',
+    'IndexingRequest',
+    'IndexingResult',
+    'SearchPerformance',
+    'VoicePartnershipMatcher',
+    'PartnershipType',
+    'CollaborationScope',
+    'CompatibilityFactor',
+    'MatchConfidence',
+    'PartnershipCreatorProfile',
+    'PartnershipMatch',
+    'CollaborationOpportunity',
+    'PartnershipAnalytics',
+    'VoiceProjectManager',
+    'ProjectStatus',
+    'TaskStatus',
+    'TaskPriority',
+    'ProjectType',
+    'ResourceType',
+    'ProjectResource',
+    'ProjectTask',
+    'ProjectMilestone',
+    'VoiceProject',
+    'ProjectAnalytics'
 ]
 
 __version__ = "1.0.0"
