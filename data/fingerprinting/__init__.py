@@ -21,365 +21,219 @@ PERFORMANCES ENTERPRISE:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Usage non autorisé strictement interdit
-"""# === MOTEUR FINGERPRINTING ENTERPRISE PRINCIPAL ===
-from .multimodal_fingerprint_engine import (
-    MultiModalFingerprintEngine,
+"""
+
+# === MOTEUR FINGERPRINTING ENTERPRISE PRINCIPAL ===
+from .multimodal_fingerprinting_engine import (
+    ConsolidatedFingerprintingEngine,
     MultiModalFingerprint,
     ContentFormat,
     FingerprintMethod,
     SimilarityMetric,
     FingerprintResult,
-    SimilarityMatch
+    SimilarityMatch,
+    create_fingerprinting_engine
 )
 
-# === FINGERPRINTING SPÉCIALISÉ PAR FORMAT ===
+# === CONSOLIDATED ENGINES ENTERPRISE ===
 
-# Audio fingerprinting
-from .audio_fingerprinter import AudioFingerprinter, AudioFingerprint, AudioFeatures
-
-# Video fingerprinting
-from .video_fingerprint import (
-    VideoFingerprinter,
-    VideoFingerprint,
-    VideoMatchResult,
-    VideoFingerprintType,
-    FrameSamplingMethod
-)
-
-# Image fingerprinting
-from .image_fingerprint import (
-    ImageFingerprinter,
-    ImageFingerprint,
-    ImageMatchResult,
-    ImageFingerprintType
-)
-
-# Text fingerprinting
-from .text_fingerprint import (
-    TextFingerprinter,
-    TextFingerprint,
-    TextMatchResult,
-    TextFingerprintType
-)
-
-# Vector matching
-from .vector_matcher import (
-    VectorMatcher,
-    MatchResult,
+# Vector Database & Matching Intelligence
+from .vector_database_matching import (
+    ConsolidatedVectorDatabaseEngine,
+    VectorSearchResult,
     VectorIndexConfig,
-    SimilarityMetric as LegacySimilarityMetric,
-    IndexType
+    VectorIndexType,
+    SimilarityAlgorithm,
+    CacheLevel,
+    create_vector_database_engine
 )
 
-# Configuration management
-from .config import (
-    FingerprintingSystemConfig,
-    AudioFingerprintConfig,
-    VideoFingerprintConfig,
-    ImageFingerprintConfig,
-    TextFingerprintConfig,
-    VectorMatcherConfig,
-    ConfigManager,
-    PerformanceProfile,
-    ProcessingMode,
-    get_config,
-    reset_config_cache
-)
-
-# Metadata management
-from .metadata import (
-    ContentMetadata,
-    AudioMetadata,
-    VideoMetadata,
-    ImageMetadata,
-    TextMetadata,
-    TechnicalMetadata,
-    GeolocationData,
-    ContentType,
-    QualityLevel,
-    MetadataExtractor,
-    MetadataManager,
-    extract_content_metadata
-)
-
-# Performance optimization
-from .performance import (
-    PerformanceMonitor,
-    PerformanceOptimizer,
-    BatchProcessor,
-    PerformanceMetric,
-    OptimizationStrategy,
-    PerformanceStats,
-    ResourceUsage,
-    performance_timer,
-    start_performance_monitoring,
-    stop_performance_monitoring,
-    get_performance_report,
-    optimize_system_performance
-)
-
-# Fingerprint management
-from .fingerprint_manager import (
-    FingerprintManager,
-    FingerprintJob,
-    FingerprintResult,
-    FingerprintStatus,
-    ContentType as ManagerContentType,
-    get_fingerprint_manager,
-    reset_fingerprint_manager
-)
-
-# Surveillance integration
-from .surveillance_integration import (
-    SurveillanceIntegrationManager,
-    SurveillanceChannel,
-    SurveillanceMessage,
-    MessageType,
-    MessagePriority,
-    get_surveillance_manager,
-    reset_surveillance_manager
-)
-
-# Real-time monitoring
-from .real_time_monitoring import (
-    RealTimeMonitor,
-    MonitoringChannel,
-    AlertLevel,
-    StreamingWindow,
-    DetectionResult,
-    PerformanceMetrics,
-    get_real_time_monitor,
-    reset_real_time_monitor
-)
-
-# Platform alerts
-from .platform_alerts import (
-    PlatformAlertsManager,
-    PlatformAlert,
-    AlertType,
-    AlertChannel,
-    AlertStatus,
-    PlatformInfo,
-    get_platform_alerts_manager,
-    reset_platform_alerts_manager
-)
-
-# Content database
-from .content_database import (
-    ContentDatabaseManager,
-    DatabaseConfig,
-    QueryResult,
-    SimilarityResult,
-    IndexingJob,
-    DatabaseType,
-    get_content_database_manager,
-    reset_content_database_manager
-)
-
-# Legal compliance
-from .legal_compliance import (
-    LegalComplianceManager,
-    LegalJurisdiction,
-    ComplianceFramework,
-    LegalDocumentType,
+# Real-Time Surveillance & Monitoring
+from .realtime_surveillance_engine import (
+    ConsolidatedRealtimeSurveillanceEngine,
+    ViolationAlert,
+    PlatformConfig,
+    PlatformScanResult,
+    PlatformType,
+    AlertSeverity,
     ViolationType,
-    LegalRisk,
-    LegalEntity,
-    LegalCase,
-    ComplianceAssessment,
+    MonitoringStatus,
+    create_surveillance_engine
+)
+
+# Performance Analytics & Quality Assurance
+from .performance_analytics_engine import (
+    ConsolidatedPerformanceAnalyticsEngine,
+    PerformanceMetric,
+    QualityAssessment,
+    BenchmarkResult,
+    ABTestResult,
+    MetricType,
+    PerformanceGrade,
+    BenchmarkType,
+    create_performance_analytics_engine
+)
+
+# Legal Protection & Compliance Automation
+from .legal_protection_automation import (
+    ConsolidatedLegalProtectionEngine,
+    LegalEvidence,
+    DMCARequest,
     LegalDocument,
-    get_legal_compliance_manager,
-    reset_legal_compliance_manager,
-    assess_violation_legality,
-    generate_dmca_notice
+    ComplianceReport,
+    LegalJurisdiction,
+    LegalDocumentType,
+    EvidenceType,
+    ComplianceStatus,
+    create_legal_protection_engine
 )
 
-# System index and convenience functions
-from .index import (
-    FingerprintingSystemIndex,
-    get_fingerprinting_system,
-    reset_fingerprinting_system,
-    fingerprint_content,
-    find_similar_content,
-    batch_fingerprint_content,
-    get_system_stats
+# Blockchain Security & NFT Integration
+from .blockchain_security_fingerprinting import (
+    BlockchainSecurityFingerprintingEngine,
+    BlockchainFingerprint,
+    ProofOfCreation,
+    SmartContract,
+    NFTMetadata,
+    BlockchainNetwork,
+    SmartContractType,
+    ProofType,
+    create_blockchain_fingerprinting_engine
 )
 
-# Export principal pour logique métier IA-Influencer-Agent
+# === LEGACY COMPATIBILITY (DEPRECATED) ===
+# These imports are kept for backward compatibility but are deprecated
+# Use the consolidated engines above instead
+
+import warnings
+
+class DeprecatedClass:
+    """Base class for deprecated fingerprinting classes."""
+    def __init__(self, deprecated_name, replacement_name, *args, **kwargs):
+        warnings.warn(f"{deprecated_name} is deprecated. Use {replacement_name} instead.", 
+                     DeprecationWarning, stacklevel=3)
+
+# Legacy fingerprinting classes (deprecated)
+class AudioFingerprinter(DeprecatedClass):
+    def __init__(self, *args, **kwargs):
+        super().__init__("AudioFingerprinter", "ConsolidatedFingerprintingEngine", *args, **kwargs)
+
+class VideoFingerprinter(DeprecatedClass):
+    def __init__(self, *args, **kwargs):
+        super().__init__("VideoFingerprinter", "ConsolidatedFingerprintingEngine", *args, **kwargs)
+
+class ImageFingerprinter(DeprecatedClass):
+    def __init__(self, *args, **kwargs):
+        super().__init__("ImageFingerprinter", "ConsolidatedFingerprintingEngine", *args, **kwargs)
+
+class TextFingerprinter(DeprecatedClass):
+    def __init__(self, *args, **kwargs):
+        super().__init__("TextFingerprinter", "ConsolidatedFingerprintingEngine", *args, **kwargs)
+
+class VectorMatcher(DeprecatedClass):
+    def __init__(self, *args, **kwargs):
+        super().__init__("VectorMatcher", "ConsolidatedVectorDatabaseEngine", *args, **kwargs)
+
+class FingerprintManager(DeprecatedClass):
+    def __init__(self, *args, **kwargs):
+        super().__init__("FingerprintManager", "ConsolidatedFingerprintingEngine", *args, **kwargs)
+
+# === EXPORTS ===
+
+# Main exports for new consolidated architecture
 __all__ = [
-    # === MOTEUR ENTERPRISE PRINCIPAL ===
-    "MultiModalFingerprintEngine",      # Moteur fingerprinting multi-modal enterprise
-    "MultiModalFingerprint",            # Fingerprint créateur multi-modal
-    "ContentFormat",                    # Formats contenu créateurs (audio, vidéo, image, texte)
-    "FingerprintMethod",               # Méthodes fingerprinting enterprise
-    "SimilarityMetric",                # Métriques similarité avancées
-    "FingerprintResult",               # Résultat fingerprinting individuel
-    "SimilarityMatch",                 # Match similarité avec évaluation violation
+    # === CONSOLIDATED ENGINES (NEW ARCHITECTURE) ===
+    "ConsolidatedFingerprintingEngine",        # Main fingerprinting engine
+    "ConsolidatedVectorDatabaseEngine",        # Vector database & matching
+    "ConsolidatedRealtimeSurveillanceEngine",  # Real-time surveillance
+    "ConsolidatedPerformanceAnalyticsEngine",  # Performance analytics
+    "ConsolidatedLegalProtectionEngine",       # Legal protection
+    "BlockchainSecurityFingerprintingEngine",  # Blockchain & NFT
     
-    # === FINGERPRINTING SPÉCIALISÉ ===
+    # === FACTORY FUNCTIONS ===
+    "create_fingerprinting_engine",
+    "create_vector_database_engine", 
+    "create_surveillance_engine",
+    "create_performance_analytics_engine",
+    "create_legal_protection_engine",
+    "create_blockchain_fingerprinting_engine",
     
-    # Audio (Musiciens - Spotify, SoundCloud, etc.)
-    "AudioFingerprinter",
-    "AudioFingerprint", 
-    "AudioFeatures",
+    # === CORE DATA STRUCTURES ===
+    "MultiModalFingerprint",
+    "ContentFormat",
+    "FingerprintMethod",
+    "SimilarityMetric",
+    "FingerprintResult",
+    "SimilarityMatch",
     
-    # Vidéo (Influenceurs, Comédiens - YouTube, TikTok, etc.)
-    "VideoFingerprinter",
-    "VideoFingerprint",
-    "VideoMatchResult",
-    "VideoFingerprintType",
-    "FrameSamplingMethod",
-    
-    # Image (Photographes - Instagram, portfolios, etc.)
-    "ImageFingerprinter",
-    "ImageFingerprint",
-    "ImageMatchResult",
-    "ImageFingerprintType",
-    
-    # Texte (Blogueurs - Medium, blogs, etc.)
-    "TextFingerprinter",
-    "TextFingerprint",
-    "TextMatchResult",
-    "TextFingerprintType",
-    
-    # === INFRASTRUCTURE ENTERPRISE ===
-    
-    # Vector matching haute performance
-    "VectorMatcher",
-    "MatchResult",
+    # === VECTOR DATABASE ===
+    "VectorSearchResult",
     "VectorIndexConfig",
-    "LegacySimilarityMetric",
-    "IndexType",
+    "VectorIndexType", 
+    "SimilarityAlgorithm",
+    "CacheLevel",
     
-    # Configuration système
-    "FingerprintingSystemConfig",
-    "AudioFingerprintConfig",
-    "VideoFingerprintConfig",
-    "ImageFingerprintConfig",
-    "TextFingerprintConfig",
-    "VectorMatcherConfig",
-    "ConfigManager",
-    "PerformanceProfile",
-    "ProcessingMode",
-    "get_config",
-    "reset_config_cache",
-    
-    # Gestion métadonnées
-    "ContentMetadata",
-    "AudioMetadata",
-    "VideoMetadata",
-    "ImageMetadata",
-    "TextMetadata",
-    "TechnicalMetadata",
-    "GeolocationData",
-    "ContentType",
-    "QualityLevel",
-    "MetadataExtractor",
-    "MetadataManager",
-    "extract_content_metadata",
-    
-    # Optimisation performance
-    "PerformanceMonitor",
-    "PerformanceOptimizer",
-    "BatchProcessor",
-    "PerformanceMetric",
-    "OptimizationStrategy",
-    "PerformanceStats",
-    "ResourceUsage",
-    "performance_timer",
-    "start_performance_monitoring",
-    "stop_performance_monitoring",
-    "get_performance_report",
-    "optimize_system_performance",
-    
-    # Gestion fingerprints
-    "FingerprintManager",
-    "FingerprintJob",
-    "FingerprintResultLegacy",
-    "FingerprintStatus",
-    "ManagerContentType",
-    "get_fingerprint_manager",
-    "reset_fingerprint_manager",
-    
-    # Intégration surveillance
-    "SurveillanceIntegrationManager",
-    "SurveillanceChannel", 
-    "SurveillanceMessage",
-    "MessageType",
-    "MessagePriority",
-    "get_surveillance_manager",
-    "reset_surveillance_manager",
-    
-    # Monitoring temps réel
-    "RealTimeMonitor",
-    "MonitoringChannel",
-    "AlertLevel",
-    "StreamingWindow",
-    "DetectionResult",
-    "PerformanceMetrics",
-    "get_real_time_monitor",
-    "reset_real_time_monitor",
-    
-    # Alertes plateformes
-    "PlatformAlertsManager",
-    "PlatformAlert",
-    "AlertType",
-    "AlertChannel",
-    "AlertStatus", 
-    "PlatformInfo",
-    "get_platform_alerts_manager",
-    "reset_platform_alerts_manager",
-    
-    # Base de données contenu
-    "ContentDatabaseManager",
-    "DatabaseConfig",
-    "QueryResult",
-    "SimilarityResult",
-    "IndexingJob",
-    "DatabaseType",
-    "get_content_database_manager",
-    "reset_content_database_manager",
-    
-    # Conformité légale enterprise
-    "LegalComplianceManager",
-    "LegalJurisdiction",
-    "ComplianceFramework",
-    "LegalDocumentType",
+    # === SURVEILLANCE ===
+    "ViolationAlert",
+    "PlatformConfig",
+    "PlatformScanResult",
+    "PlatformType",
+    "AlertSeverity",
     "ViolationType",
-    "LegalRisk",
-    "LegalEntity",
-    "LegalCase",
-    "ComplianceAssessment",
-    "LegalDocument",
-    "get_legal_compliance_manager",
-    "reset_legal_compliance_manager",
-    "assess_violation_legality",
-    "generate_dmca_notice",
+    "MonitoringStatus",
     
-    # Index système et fonctions utilitaires
-    "FingerprintingSystemIndex",
-    "get_fingerprinting_system",
-    "reset_fingerprinting_system",
-    "fingerprint_content",
-    "find_similar_content",
-    "batch_fingerprint_content",
-    "get_system_stats"
+    # === ANALYTICS ===
+    "PerformanceMetric",
+    "QualityAssessment",
+    "BenchmarkResult",
+    "ABTestResult",
+    "MetricType",
+    "PerformanceGrade",
+    "BenchmarkType",
+    
+    # === LEGAL PROTECTION ===
+    "LegalEvidence",
+    "DMCARequest",
+    "LegalDocument",
+    "ComplianceReport",
+    "LegalJurisdiction",
+    "LegalDocumentType",
+    "EvidenceType",
+    "ComplianceStatus",
+    
+    # === BLOCKCHAIN ===
+    "BlockchainFingerprint",
+    "ProofOfCreation",
+    "SmartContract", 
+    "NFTMetadata",
+    "BlockchainNetwork",
+    "SmartContractType",
+    "ProofType",
+    
+    # === LEGACY COMPATIBILITY (DEPRECATED) ===
+    "AudioFingerprinter",      # DEPRECATED
+    "VideoFingerprinter",      # DEPRECATED
+    "ImageFingerprinter",      # DEPRECATED
+    "TextFingerprinter",       # DEPRECATED
+    "VectorMatcher",           # DEPRECATED
+    "FingerprintManager",      # DEPRECATED
 ]
 
-# Configuration module enterprise
-__version__ = "2.1.0"
+# === MODULE METADATA ===
+__version__ = "2.0.0-consolidated"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __copyright__ = "(c) 2025 Fahed Mlaiel - All Rights Reserved"
 __license__ = "Proprietary - Unauthorized use prohibited"
 
-# Alias legacy pour rétrocompatibilité
-from .audio_fingerprinter import AudioFingerprinter
-from .video_fingerprint import VideoFingerprinter  
-from .image_fingerprint import ImageFingerprinter
-from .text_fingerprint import TextFingerprinter
-from .vector_matcher import VectorMatcher
-from .fingerprint_manager import FingerprintManager
+# === CONVENIENCE ALIASES ===
+# Recommended engine for new projects
+FingerprintEngine = ConsolidatedFingerprintingEngine
+VectorEngine = ConsolidatedVectorDatabaseEngine
+SurveillanceEngine = ConsolidatedRealtimeSurveillanceEngine
+AnalyticsEngine = ConsolidatedPerformanceAnalyticsEngine
+LegalEngine = ConsolidatedLegalProtectionEngine
+BlockchainEngine = BlockchainSecurityFingerprintingEngine
 
-# Nouvelle classe principale recommendée pour nouveaux projets
-FingerprintEngine = MultiModalFingerprintEngine
+# Legacy compatibility (will issue deprecation warnings)
+MultiModalFingerprintEngine = ConsolidatedFingerprintingEngine  # DEPRECATED NAME

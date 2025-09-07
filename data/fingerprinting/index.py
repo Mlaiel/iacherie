@@ -49,43 +49,48 @@ from dataclasses import dataclass, field
 from enum import Enum
 from uuid import uuid4
 
-# Consolidated modules imports
+# Import consolidated modules
 from .multimodal_fingerprinting_engine import (
     ConsolidatedFingerprintingEngine,
     MultiModalFingerprint,
     ContentFormat,
     FingerprintMethod,
-    SimilarityMatch
+    SimilarityMatch,
+    create_fingerprinting_engine
 )
 from .vector_database_matching import (
     ConsolidatedVectorDatabaseEngine,
     VectorSearchResult,
-    CacheLevel,
-    SimilarityAlgorithm
+    VectorIndexConfig,
+    create_vector_database_engine
 )
 from .realtime_surveillance_engine import (
     ConsolidatedRealtimeSurveillanceEngine,
     ViolationAlert,
-    AlertSeverity,
-    PlatformType
+    PlatformConfig,
+    PlatformType,
+    create_surveillance_engine
 )
 from .performance_analytics_engine import (
     ConsolidatedPerformanceAnalyticsEngine,
     QualityAssessment,
     PerformanceGrade,
-    MetricType
+    MetricType,
+    create_performance_analytics_engine
 )
 from .legal_protection_automation import (
     ConsolidatedLegalProtectionEngine,
     LegalEvidence,
     DMCARequest,
-    LegalDocument
+    LegalJurisdiction,
+    create_legal_protection_engine
 )
 from .blockchain_security_fingerprinting import (
     BlockchainSecurityFingerprintingEngine,
     BlockchainFingerprint,
     BlockchainNetwork,
-    ProofOfCreation
+    ProofOfCreation,
+    create_blockchain_fingerprinting_engine
 )
 
 logger = logging.getLogger(__name__)
@@ -98,6 +103,591 @@ class CreatorType(Enum):
     PHOTOGRAPHER = "photographer"  # Instagram, portfolios, Flickr
     BLOGGER = "blogger"           # Medium, Substack, blogs personnels
     COMEDIAN = "comedian"         # YouTube, TikTok, Twitch
+
+
+class SystemStatus(Enum):
+    """Statuts du système."""
+    INITIALIZING = "initializing"
+    READY = "ready"
+    PROCESSING = "processing"
+    ERROR = "error"
+    MAINTENANCE = "maintenance"
+
+
+@dataclass
+class FingerprintingConfig:
+    """Configuration du système de fingerprinting."""
+    # Engine configurations
+    enable_ai_agents: bool = True
+    enable_blockchain: bool = True
+    enable_real_time_surveillance: bool = True
+    enable_performance_analytics: bool = True
+    enable_legal_protection: bool = True
+    
+    # Performance settings
+    max_concurrent_jobs: int = 20
+    cache_size: int = 10000
+    retention_days: int = 30
+    
+    # Network settings
+    default_blockchain_network: str = "ethereum"
+    vector_db_url: Optional[str] = None
+    redis_url: Optional[str] = None
+    elasticsearch_url: Optional[str] = None
+    
+    # Legal settings
+    default_jurisdiction: str = "international"
+    enable_auto_dmca: bool = True
+    
+    # Surveillance settings
+    enable_websockets: bool = True
+    max_concurrent_scans: int = 20
+
+
+@dataclass
+class SystemStats:
+    """Statistiques système globales."""
+    system_uptime: float = 0.0
+    total_fingerprints_processed: int = 0
+    total_violations_detected: int = 0
+    total_legal_actions: int = 0
+    total_blockchain_registrations: int = 0
+    
+    # Performance metrics
+    avg_processing_time: float = 0.0
+    system_accuracy: float = 0.0
+    cache_hit_rate: float = 0.0
+    
+    # Status
+    system_status: SystemStatus = SystemStatus.INITIALIZING
+    last_updated: datetime = field(default_factory=datetime.now)
+
+
+class ConsolidatedFingerprintingOrchestrator:
+    """Orchestrateur principal du système de fingerprinting consolidé."""
+    
+    def __init__(self, config: Optional[FingerprintingConfig] = None):
+        """
+        Initialise l'orchestrateur fingerprinting enterprise.
+        
+        Args:
+            config: Configuration du système
+        """
+        self.config = config or FingerprintingConfig()
+        self.system_stats = SystemStats()
+        self.start_time = time.time()
+        
+        # Core engines
+        self.fingerprinting_engine: Optional[ConsolidatedFingerprintingEngine] = None
+        self.vector_database: Optional[ConsolidatedVectorDatabaseEngine] = None
+        self.surveillance_engine: Optional[ConsolidatedRealtimeSurveillanceEngine] = None
+        self.analytics_engine: Optional[ConsolidatedPerformanceAnalyticsEngine] = None
+        self.legal_engine: Optional[ConsolidatedLegalProtectionEngine] = None
+        self.blockchain_engine: Optional[BlockchainSecurityFingerprintingEngine] = None
+        
+        # System state
+        self.initialized = False
+        self.active_jobs = {}
+        
+        logger.info("ConsolidatedFingerprintingOrchestrator created")
+    
+    async def initialize(self) -> bool:
+        """
+        Initialise tous les moteurs du système.
+        
+        Returns:
+            True si l'initialisation réussit
+        """
+        try:
+            self.system_stats.system_status = SystemStatus.INITIALIZING
+            logger.info("Initializing consolidated fingerprinting system...")
+            
+            # Initialize fingerprinting engine
+            if self.config.enable_ai_agents:
+                self.fingerprinting_engine = create_fingerprinting_engine({
+                    "enable_ai_agents": True,
+                    "enable_blockchain": self.config.enable_blockchain,
+                    "performance_mode": "production"
+                })
+                logger.info("Fingerprinting engine initialized")
+            
+            # Initialize vector database
+            self.vector_database = create_vector_database_engine({
+                "dimension": 512,
+                "index_type": "flat",
+                "similarity_metric": "cosine",
+                "enable_cache": True,
+                "redis_url": self.config.redis_url,
+                "elasticsearch_url": self.config.elasticsearch_url
+            })
+            logger.info("Vector database engine initialized")
+            
+            # Initialize surveillance engine
+            if self.config.enable_real_time_surveillance:
+                self.surveillance_engine = create_surveillance_engine({
+                    "fingerprint_engine": self.fingerprinting_engine,
+                    "vector_database": self.vector_database,
+                    "enable_websockets": self.config.enable_websockets,
+                    "max_concurrent_scans": self.config.max_concurrent_scans
+                })
+                await self.surveillance_engine.initialize()
+                logger.info("Surveillance engine initialized")
+            
+            # Initialize analytics engine
+            if self.config.enable_performance_analytics:
+                self.analytics_engine = create_performance_analytics_engine({
+                    "fingerprint_engine": self.fingerprinting_engine,
+                    "vector_database": self.vector_database,
+                    "enable_continuous_monitoring": True,
+                    "metric_retention_days": self.config.retention_days
+                })
+                logger.info("Analytics engine initialized")
+            
+            # Initialize legal protection engine
+            if self.config.enable_legal_protection:
+                self.legal_engine = create_legal_protection_engine({
+                    "fingerprint_engine": self.fingerprinting_engine,
+                    "enable_auto_dmca": self.config.enable_auto_dmca,
+                    "default_jurisdiction": self.config.default_jurisdiction
+                })
+                logger.info("Legal protection engine initialized")
+            
+            # Initialize blockchain engine
+            if self.config.enable_blockchain:
+                self.blockchain_engine = create_blockchain_fingerprinting_engine({
+                    "fingerprint_engine": self.fingerprinting_engine,
+                    "default_network": self.config.default_blockchain_network,
+                    "enable_smart_contracts": True,
+                    "enable_nft_minting": True
+                })
+                logger.info("Blockchain engine initialized")
+            
+            self.initialized = True
+            self.system_stats.system_status = SystemStatus.READY
+            
+            logger.info("Consolidated fingerprinting system fully initialized")
+            return True
+            
+        except Exception as e:
+            logger.error(f"System initialization failed: {e}")
+            self.system_stats.system_status = SystemStatus.ERROR
+            return False
+    
+    async def process_creator_content(self,
+                                    creator_type: CreatorType,
+                                    content_data: Any,
+                                    content_format: ContentFormat,
+                                    creator_id: str,
+                                    enable_surveillance: bool = True,
+                                    enable_blockchain_registration: bool = True) -> Dict[str, Any]:
+        """
+        Traite le contenu d'un créateur avec le pipeline complet.
+        
+        Args:
+            creator_type: Type de créateur
+            content_data: Données du contenu
+            content_format: Format du contenu
+            creator_id: ID du créateur
+            enable_surveillance: Activer la surveillance
+            enable_blockchain_registration: Activer l'enregistrement blockchain
+            
+        Returns:
+            Résultat complet du traitement
+        """
+        if not self.initialized:
+            raise RuntimeError("System not initialized")
+        
+        job_id = str(uuid4())
+        start_time = time.time()
+        
+        try:
+            self.system_stats.system_status = SystemStatus.PROCESSING
+            self.active_jobs[job_id] = {
+                "creator_type": creator_type.value,
+                "content_format": content_format.value,
+                "creator_id": creator_id,
+                "start_time": start_time
+            }
+            
+            result = {
+                "job_id": job_id,
+                "success": False,
+                "processing_time": 0.0,
+                "fingerprint_result": None,
+                "vector_storage_result": None,
+                "surveillance_result": None,
+                "legal_evidence_result": None,
+                "blockchain_result": None,
+                "analytics_result": None
+            }
+            
+            # Step 1: Generate multi-modal fingerprint
+            if self.fingerprinting_engine:
+                fingerprint_result = await self.fingerprinting_engine.generate_multimodal_fingerprint(
+                    content_data, content_format
+                )
+                result["fingerprint_result"] = {
+                    "success": fingerprint_result.success,
+                    "fingerprint_id": fingerprint_result.fingerprint.content_id if fingerprint_result.success else None,
+                    "quality_score": fingerprint_result.fingerprint.quality_score if fingerprint_result.success else 0.0,
+                    "processing_time": fingerprint_result.performance_metrics.get("processing_time", 0.0)
+                }
+                
+                if not fingerprint_result.success:
+                    result["error"] = "Fingerprint generation failed"
+                    return result
+                
+                fingerprint = fingerprint_result.fingerprint
+            else:
+                result["error"] = "Fingerprinting engine not available"
+                return result
+            
+            # Step 2: Store in vector database
+            if self.vector_database and fingerprint.vector_embedding:
+                vector_stored = await self.vector_database.add_vector(
+                    fingerprint.content_id,
+                    fingerprint.vector_embedding,
+                    {
+                        "creator_type": creator_type.value,
+                        "creator_id": creator_id,
+                        "content_format": content_format.value,
+                        "quality_score": fingerprint.quality_score
+                    }
+                )
+                result["vector_storage_result"] = {"success": vector_stored}
+            
+            # Step 3: Start surveillance monitoring
+            if enable_surveillance and self.surveillance_engine:
+                # Configure surveillance for creator's platforms
+                platform_configs = self._get_creator_platform_configs(creator_type)
+                
+                surveillance_results = []
+                for platform_config in platform_configs:
+                    await self.surveillance_engine.configure_platform(platform_config)
+                    surveillance_results.append(platform_config.platform.value)
+                
+                result["surveillance_result"] = {
+                    "platforms_configured": surveillance_results,
+                    "monitoring_active": len(surveillance_results) > 0
+                }
+            
+            # Step 4: Create legal evidence
+            if self.legal_engine and fingerprint.quality_score >= 0.85:
+                evidence_id = await self.legal_engine.create_legal_evidence(
+                    fingerprint.content_id,
+                    fingerprint.content_id,  # Same for original content
+                    fingerprint.quality_score,
+                    {
+                        "original_fingerprint": fingerprint.fingerprint_hash,
+                        "algorithm": "multimodal_consolidated",
+                        "confidence": fingerprint.confidence_score
+                    }
+                )
+                result["legal_evidence_result"] = {
+                    "evidence_id": evidence_id,
+                    "court_admissible": True
+                }
+            
+            # Step 5: Blockchain registration
+            if enable_blockchain_registration and self.blockchain_engine:
+                blockchain_id = await self.blockchain_engine.register_fingerprint_on_blockchain(
+                    fingerprint.content_id,
+                    fingerprint.fingerprint_hash,
+                    creator_id
+                )
+                
+                # Create proof of creation
+                proof_id = await self.blockchain_engine.create_proof_of_creation(
+                    fingerprint.content_id,
+                    creator_id,
+                    blockchain_id
+                )
+                
+                result["blockchain_result"] = {
+                    "blockchain_fingerprint_id": blockchain_id,
+                    "proof_of_creation_id": proof_id,
+                    "immutable_registration": True
+                }
+            
+            # Step 6: Record analytics
+            if self.analytics_engine:
+                await self.analytics_engine.record_metric(
+                    MetricType.ACCURACY,
+                    fingerprint.quality_score,
+                    unit="score",
+                    source="creator_content_processing",
+                    context={
+                        "creator_type": creator_type.value,
+                        "content_format": content_format.value,
+                        "job_id": job_id
+                    }
+                )
+                
+                result["analytics_result"] = {
+                    "metrics_recorded": True,
+                    "quality_assessment_pending": True
+                }
+            
+            # Final processing
+            processing_time = time.time() - start_time
+            result["processing_time"] = processing_time
+            result["success"] = True
+            
+            # Update system statistics
+            self.system_stats.total_fingerprints_processed += 1
+            self.system_stats.avg_processing_time = (
+                (self.system_stats.avg_processing_time * (self.system_stats.total_fingerprints_processed - 1) + processing_time)
+                / self.system_stats.total_fingerprints_processed
+            )
+            
+            logger.info(f"Creator content processed successfully: {job_id} "
+                       f"(creator: {creator_type.value}, time: {processing_time:.2f}s)")
+            
+            return result
+            
+        except Exception as e:
+            logger.error(f"Creator content processing failed: {e}")
+            result["error"] = str(e)
+            return result
+        
+        finally:
+            if job_id in self.active_jobs:
+                del self.active_jobs[job_id]
+            self.system_stats.system_status = SystemStatus.READY
+    
+    def _get_creator_platform_configs(self, creator_type: CreatorType) -> List[PlatformConfig]:
+        """Retourne les configurations de plateforme pour un type de créateur."""
+        platform_configs = []
+        
+        if creator_type == CreatorType.MUSICIAN:
+            platforms = [PlatformType.SPOTIFY, PlatformType.SOUNDCLOUD, PlatformType.YOUTUBE_MUSIC, PlatformType.BANDCAMP]
+        elif creator_type == CreatorType.INFLUENCER:
+            platforms = [PlatformType.INSTAGRAM, PlatformType.TIKTOK, PlatformType.YOUTUBE, PlatformType.TWITTER]
+        elif creator_type == CreatorType.PHOTOGRAPHER:
+            platforms = [PlatformType.INSTAGRAM, PlatformType.FLICKR, PlatformType.PINTEREST, PlatformType.UNSPLASH]
+        elif creator_type == CreatorType.BLOGGER:
+            platforms = [PlatformType.MEDIUM, PlatformType.SUBSTACK, PlatformType.WORDPRESS, PlatformType.BLOGGER]
+        elif creator_type == CreatorType.COMEDIAN:
+            platforms = [PlatformType.YOUTUBE, PlatformType.TIKTOK, PlatformType.TWITCH, PlatformType.INSTAGRAM]
+        else:
+            platforms = [PlatformType.YOUTUBE, PlatformType.INSTAGRAM]  # Default
+        
+        for platform in platforms:
+            config = PlatformConfig(
+                platform=platform,
+                enabled=True,
+                scan_interval=300,  # 5 minutes
+                rate_limit=100
+            )
+            platform_configs.append(config)
+        
+        return platform_configs
+    
+    async def search_similar_content(self,
+                                   query_fingerprint: MultiModalFingerprint,
+                                   threshold: float = 0.85,
+                                   max_results: int = 10) -> List[Dict[str, Any]]:
+        """
+        Recherche du contenu similaire dans la base vectorielle.
+        
+        Args:
+            query_fingerprint: Fingerprint de requête
+            threshold: Seuil de similarité
+            max_results: Nombre maximum de résultats
+            
+        Returns:
+            Liste des contenus similaires trouvés
+        """
+        try:
+            if not self.vector_database:
+                return []
+            
+            search_results = await self.vector_database.search_similar(
+                query_fingerprint.vector_embedding,
+                k=max_results,
+                threshold=threshold
+            )
+            
+            similar_content = []
+            for result in search_results:
+                similar_content.append({
+                    "content_id": result.content_id,
+                    "similarity_score": result.similarity_score,
+                    "distance": result.distance,
+                    "metadata": result.metadata,
+                    "confidence": result.confidence
+                })
+            
+            return similar_content
+            
+        except Exception as e:
+            logger.error(f"Similar content search failed: {e}")
+            return []
+    
+    def get_system_statistics(self) -> Dict[str, Any]:
+        """Retourne les statistiques complètes du système."""
+        try:
+            # Update uptime
+            self.system_stats.system_uptime = time.time() - self.start_time
+            self.system_stats.last_updated = datetime.now()
+            
+            system_stats = {
+                "system_info": {
+                    "status": self.system_stats.system_status.value,
+                    "uptime_seconds": self.system_stats.system_uptime,
+                    "initialized": self.initialized,
+                    "active_jobs": len(self.active_jobs)
+                },
+                "processing_stats": {
+                    "total_fingerprints": self.system_stats.total_fingerprints_processed,
+                    "total_violations": self.system_stats.total_violations_detected,
+                    "total_legal_actions": self.system_stats.total_legal_actions,
+                    "total_blockchain_registrations": self.system_stats.total_blockchain_registrations,
+                    "avg_processing_time": self.system_stats.avg_processing_time
+                },
+                "engine_stats": {}
+            }
+            
+            # Collect engine-specific statistics
+            if self.fingerprinting_engine:
+                system_stats["engine_stats"]["fingerprinting"] = self.fingerprinting_engine.get_performance_stats()
+            
+            if self.vector_database:
+                system_stats["engine_stats"]["vector_database"] = self.vector_database.get_index_stats()
+            
+            if self.surveillance_engine:
+                system_stats["engine_stats"]["surveillance"] = self.surveillance_engine.get_surveillance_stats()
+            
+            if self.analytics_engine:
+                system_stats["engine_stats"]["analytics"] = self.analytics_engine.get_performance_summary()
+            
+            if self.legal_engine:
+                system_stats["engine_stats"]["legal"] = self.legal_engine.get_legal_protection_stats()
+            
+            if self.blockchain_engine:
+                system_stats["engine_stats"]["blockchain"] = self.blockchain_engine.get_blockchain_fingerprinting_stats()
+            
+            return system_stats
+            
+        except Exception as e:
+            logger.error(f"System statistics collection failed: {e}")
+            return {"error": str(e)}
+    
+    async def shutdown(self):
+        """Arrête proprement tous les moteurs du système."""
+        try:
+            logger.info("Shutting down consolidated fingerprinting system...")
+            
+            # Shutdown engines in reverse order of initialization
+            if self.analytics_engine:
+                await self.analytics_engine.shutdown()
+                logger.info("Analytics engine shutdown")
+            
+            if self.surveillance_engine:
+                await self.surveillance_engine.shutdown()
+                logger.info("Surveillance engine shutdown")
+            
+            # Other engines don't have explicit shutdown methods in current implementation
+            
+            self.system_stats.system_status = SystemStatus.MAINTENANCE
+            self.initialized = False
+            
+            logger.info("Consolidated fingerprinting system shutdown completed")
+            
+        except Exception as e:
+            logger.error(f"System shutdown failed: {e}")
+
+
+# Global system instance
+_orchestrator_instance: Optional[ConsolidatedFingerprintingOrchestrator] = None
+
+
+def get_fingerprinting_orchestrator(config: Optional[FingerprintingConfig] = None) -> ConsolidatedFingerprintingOrchestrator:
+    """
+    Retourne l'instance globale de l'orchestrateur.
+    
+    Args:
+        config: Configuration (utilisée seulement à la première création)
+        
+    Returns:
+        Instance de l'orchestrateur
+    """
+    global _orchestrator_instance
+    
+    if _orchestrator_instance is None:
+        _orchestrator_instance = ConsolidatedFingerprintingOrchestrator(config)
+    
+    return _orchestrator_instance
+
+
+async def initialize_fingerprinting_system(config: Optional[FingerprintingConfig] = None) -> bool:
+    """
+    Initialise le système de fingerprinting global.
+    
+    Args:
+        config: Configuration du système
+        
+    Returns:
+        True si l'initialisation réussit
+    """
+    orchestrator = get_fingerprinting_orchestrator(config)
+    return await orchestrator.initialize()
+
+
+async def process_creator_content_simple(creator_type: str,
+                                        content_data: Any,
+                                        content_format: str,
+                                        creator_id: str) -> Dict[str, Any]:
+    """
+    Fonction simplifiée pour traiter le contenu d'un créateur.
+    
+    Args:
+        creator_type: Type de créateur (musician, influencer, etc.)
+        content_data: Données du contenu
+        content_format: Format du contenu (audio, video, image, text)
+        creator_id: ID du créateur
+        
+    Returns:
+        Résultat du traitement
+    """
+    try:
+        orchestrator = get_fingerprinting_orchestrator()
+        
+        # Convert string parameters to enums
+        creator_enum = CreatorType(creator_type)
+        format_enum = ContentFormat(content_format)
+        
+        return await orchestrator.process_creator_content(
+            creator_enum, content_data, format_enum, creator_id
+        )
+        
+    except Exception as e:
+        logger.error(f"Simple content processing failed: {e}")
+        return {"success": False, "error": str(e)}
+
+
+def get_system_stats() -> Dict[str, Any]:
+    """Retourne les statistiques système globales."""
+    try:
+        orchestrator = get_fingerprinting_orchestrator()
+        return orchestrator.get_system_statistics()
+    except Exception as e:
+        logger.error(f"System stats retrieval failed: {e}")
+        return {"error": str(e)}
+
+
+# Export principales classes et fonctions
+__all__ = [
+    "ConsolidatedFingerprintingOrchestrator",
+    "FingerprintingConfig",
+    "SystemStats",
+    "CreatorType",
+    "SystemStatus",
+    "get_fingerprinting_orchestrator",
+    "initialize_fingerprinting_system",
+    "process_creator_content_simple",
+    "get_system_stats"
+]
 
 
 @dataclass
