@@ -338,6 +338,165 @@ from .streaming_content_delivery_network import (
     create_streaming_content_delivery_network
 )
 
+# AI Processing Streaming Components
+from .machine_learning_streaming_analytics import (
+    MachineLearningStreamingAnalytics,
+    MLAnalyticsType,
+    ModelType,
+    PredictionConfidence,
+    AnalyticsStatus,
+    MLFeatureSet,
+    MLPrediction,
+    MLAnalyticsConfig,
+    AudienceBehaviorInsight,
+    ContentPerformanceInsight,
+    RevenueForecasting,
+    MLStreamingAnalyticsRecord,
+    create_machine_learning_streaming_analytics
+)
+
+from .ai_prediction_streaming_engine import (
+    AIPredictionStreamingEngine,
+    PredictionType,
+    AIModelType,
+    PredictionAccuracy,
+    PredictionStatus,
+    PredictionConfig,
+    AIPredictionResult,
+    TrendPrediction,
+    EngagementForecast,
+    RevenuePrediction,
+    AIPredictionStreamingRecord,
+    create_ai_prediction_streaming_engine
+)
+
+from .content_intelligence_streamer import (
+    ContentIntelligenceStreamer,
+    IntelligenceType,
+    ProcessingPriority,
+    IntelligenceStatus,
+    ContentIntelligenceConfig,
+    SemanticAnalysis,
+    SentimentAnalysis,
+    ContentClassification,
+    QualityAssessment,
+    ContentIntelligenceResult,
+    ContentIntelligenceStreamingRecord,
+    create_content_intelligence_streamer
+)
+
+from .ai_streaming_recommendation_engine import (
+    AIStreamingRecommendationEngine,
+    RecommendationType,
+    RecommendationPriority,
+    RecommendationConfig,
+    ContentRecommendation,
+    AudienceTargeting,
+    StreamingStrategy,
+    RecommendationResult,
+    AIStreamingRecommendationRecord,
+    create_ai_streaming_recommendation_engine
+)
+
+from .adaptive_streaming_ai_controller import (
+    AdaptiveStreamingAIController,
+    AdaptationMode,
+    NetworkCondition,
+    StreamingQuality,
+    ControllerStatus,
+    AdaptiveStreamingConfig,
+    NetworkMetrics,
+    StreamingMetrics,
+    AdaptationDecision,
+    PerformanceOptimization,
+    AdaptiveStreamingAIRecord,
+    create_adaptive_streaming_ai_controller
+)
+
+# Protection Streaming Components
+from .real_time_copyright_monitor import (
+    RealTimeCopyrightMonitor,
+    CopyrightDetectionType,
+    ViolationType as CopyrightViolationType,
+    ThreatLevel as CopyrightThreatLevel,
+    MonitoringStatus,
+    CopyrightMonitoringConfig,
+    ContentFingerprint,
+    CopyrightMatch,
+    CopyrightEnforcement,
+    RealTimeCopyrightMonitoringRecord,
+    create_real_time_copyright_monitor
+)
+
+from .streaming_watermark_injector import (
+    StreamingWatermarkInjector,
+    WatermarkType,
+    WatermarkStrength,
+    InjectionMode,
+    WatermarkStatus,
+    WatermarkConfig,
+    WatermarkData,
+    InjectionResult,
+    WatermarkVerification,
+    StreamingWatermarkInjectionRecord,
+    create_streaming_watermark_injector
+)
+
+from .live_piracy_detection_engine import (
+    LivePiracyDetectionEngine,
+    PiracyType,
+    DetectionMethod,
+    ThreatLevel as PiracyThreatLevel,
+    ResponseAction,
+    DetectionStatus,
+    PiracyDetectionConfig,
+    PiracyIncident,
+    TakedownAction,
+    PiracyAnalytics,
+    LivePiracyDetectionRecord,
+    create_live_piracy_detection_engine
+)
+
+from .streaming_rights_validator import (
+    StreamingRightsValidator,
+    RightsType,
+    ValidationStatus,
+    RightsValidationConfig,
+    RightsValidationResult,
+    StreamingRightsValidationRecord,
+    create_streaming_rights_validator
+)
+
+from .drm_streaming_controller import (
+    DRMStreamingController,
+    DRMType,
+    ProtectionLevel,
+    DRMConfig,
+    DRMLicense,
+    DRMStreamingControlRecord,
+    create_drm_streaming_controller
+)
+
+from .streaming_violation_detector import (
+    StreamingViolationDetector,
+    ViolationType as StreamingViolationType,
+    SeverityLevel,
+    ViolationDetectionConfig,
+    ViolationIncident,
+    StreamingViolationDetectionRecord,
+    create_streaming_violation_detector
+)
+
+from .secure_streaming_gateway import (
+    SecureStreamingGateway,
+    SecurityLevel,
+    AccessType,
+    GatewayConfig,
+    SecurityRequest,
+    SecureStreamingGatewayRecord,
+    create_secure_streaming_gateway
+)
+
 __all__ = [
     # Live Stream
     "LiveStreamManager",
@@ -631,7 +790,139 @@ __all__ = [
     "DeliveryRequest",
     "DeliveryMetrics",
     "StreamingCDNRecord",
-    "create_streaming_content_delivery_network"
+    "create_streaming_content_delivery_network",
+    
+    # AI Processing Streaming Components
+    "MachineLearningStreamingAnalytics",
+    "MLAnalyticsType",
+    "ModelType",
+    "PredictionConfidence",
+    "AnalyticsStatus",
+    "MLFeatureSet",
+    "MLPrediction",
+    "MLAnalyticsConfig",
+    "AudienceBehaviorInsight",
+    "ContentPerformanceInsight",
+    "RevenueForecasting",
+    "MLStreamingAnalyticsRecord",
+    "create_machine_learning_streaming_analytics",
+    
+    "AIPredictionStreamingEngine",
+    "PredictionType",
+    "PredictionAccuracy",
+    "PredictionStatus",
+    "PredictionConfig",
+    "AIPredictionResult",
+    "TrendPrediction",
+    "EngagementForecast",
+    "RevenuePrediction",
+    "AIPredictionStreamingRecord",
+    "create_ai_prediction_streaming_engine",
+    
+    "ContentIntelligenceStreamer",
+    "IntelligenceType",
+    "ProcessingPriority",
+    "IntelligenceStatus",
+    "ContentIntelligenceConfig",
+    "SemanticAnalysis",
+    "SentimentAnalysis",
+    "ContentClassification",
+    "QualityAssessment",
+    "ContentIntelligenceResult",
+    "ContentIntelligenceStreamingRecord",
+    "create_content_intelligence_streamer",
+    
+    "AIStreamingRecommendationEngine",
+    "RecommendationType",
+    "RecommendationPriority",
+    "RecommendationConfig",
+    "ContentRecommendation",
+    "AudienceTargeting",
+    "StreamingStrategy",
+    "RecommendationResult",
+    "AIStreamingRecommendationRecord",
+    "create_ai_streaming_recommendation_engine",
+    
+    "AdaptiveStreamingAIController",
+    "AdaptationMode",
+    "NetworkCondition",
+    "ControllerStatus",
+    "AdaptiveStreamingConfig",
+    "NetworkMetrics",
+    "AdaptationDecision",
+    "PerformanceOptimization",
+    "AdaptiveStreamingAIRecord",
+    "create_adaptive_streaming_ai_controller",
+    
+    # Protection Streaming Components
+    "RealTimeCopyrightMonitor",
+    "CopyrightDetectionType",
+    "CopyrightViolationType",
+    "CopyrightThreatLevel",
+    "MonitoringStatus",
+    "CopyrightMonitoringConfig",
+    "ContentFingerprint",
+    "CopyrightMatch",
+    "CopyrightEnforcement",
+    "RealTimeCopyrightMonitoringRecord",
+    "create_real_time_copyright_monitor",
+    
+    "StreamingWatermarkInjector",
+    "WatermarkType",
+    "WatermarkStrength",
+    "InjectionMode",
+    "WatermarkStatus",
+    "WatermarkConfig",
+    "WatermarkData",
+    "InjectionResult",
+    "WatermarkVerification",
+    "StreamingWatermarkInjectionRecord",
+    "create_streaming_watermark_injector",
+    
+    "LivePiracyDetectionEngine",
+    "PiracyType",
+    "DetectionMethod",
+    "PiracyThreatLevel",
+    "ResponseAction",
+    "DetectionStatus",
+    "PiracyDetectionConfig",
+    "PiracyIncident",
+    "TakedownAction",
+    "PiracyAnalytics",
+    "LivePiracyDetectionRecord",
+    "create_live_piracy_detection_engine",
+    
+    "StreamingRightsValidator",
+    "RightsType",
+    "ValidationStatus",
+    "RightsValidationConfig",
+    "RightsValidationResult",
+    "StreamingRightsValidationRecord",
+    "create_streaming_rights_validator",
+    
+    "DRMStreamingController",
+    "DRMType",
+    "ProtectionLevel",
+    "DRMConfig",
+    "DRMLicense",
+    "DRMStreamingControlRecord",
+    "create_drm_streaming_controller",
+    
+    "StreamingViolationDetector",
+    "StreamingViolationType",
+    "SeverityLevel",
+    "ViolationDetectionConfig",
+    "ViolationIncident",
+    "StreamingViolationDetectionRecord",
+    "create_streaming_violation_detector",
+    
+    "SecureStreamingGateway",
+    "SecurityLevel",
+    "AccessType",
+    "GatewayConfig",
+    "SecurityRequest",
+    "SecureStreamingGatewayRecord",
+    "create_secure_streaming_gateway"
 ]
 
 __version__ = "1.0.0"
