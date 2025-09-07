@@ -30,6 +30,48 @@ from .ai_model_config import (
     ModelType, ModelProvider, ModelStatus, ModelTier
 )
 
+# Import new business logic configuration modules
+from .creator_types_config import (
+    CreatorTypesSettings, creator_types_settings,
+    CreatorCategory, CreatorSpecialization, CreatorExperienceLevel, CreatorTier,
+    CreatorTypeRequirements, CreatorTypeCapabilities, CreatorTypeMetrics
+)
+from .content_ingestion_config import (
+    ContentIngestionSettings, content_ingestion_settings,
+    IngestionMethod, ValidationLevel, ProcessingPriority, ContentStatus,
+    FileSizeLimit, QualityStandard, ValidationRule, IngestionWorkflow
+)
+from .ml_pipeline_config import (
+    MLPipelineSettings, ml_pipeline_settings,
+    PipelineStage, ModelType as MLModelType, TrainingMode, DeploymentStrategy,
+    TrainingConfiguration, ModelConfiguration, PipelineConfiguration, InferenceConfiguration
+)
+from .intelligent_analysis_config import (
+    IntelligentAnalysisSettings, intelligent_analysis_settings,
+    AnalysisType, AnalysisEngine, AnalysisPriority, AccuracyLevel as AnalysisAccuracyLevel,
+    AnalysisModel, AnalysisWorkflow, QualityMetrics
+)
+from .copyright_fingerprinting_config import (
+    CopyrightFingerprintingSettings, copyright_fingerprinting_settings,
+    FingerprintAlgorithm, ContentType as FingerprintContentType, MatchingThreshold, FingerprintDatabase,
+    AlgorithmConfiguration, MatchingConfiguration, DatabaseConfiguration
+)
+from .collaboration_business_config import (
+    CollaborationBusinessSettings, collaboration_business_settings,
+    CollaborationType, CollaborationStatus, RevenueModel, MatchingCriteria,
+    CollaborationTemplate, RevenueDistribution, CollaborationWorkflow
+)
+from .seo_business_config import (
+    SEOBusinessSettings, seo_business_settings,
+    SEOStrategy, SearchEngine, ContentType as SEOContentType, OptimizationLevel,
+    KeywordStrategy, ContentOptimization, TechnicalSEO, SEOAnalytics
+)
+from .distribution_business_config import (
+    DistributionBusinessSettings, distribution_business_settings,
+    DistributionPlatform as DistPlatform, DistributionStrategy, ContentFormat as DistContentFormat, DistributionStatus,
+    PlatformConfiguration, DistributionRule, GlobalDistributionSettings
+)
+
 try:
     from pydantic_settings import BaseSettings
 except ImportError:
@@ -141,6 +183,32 @@ __all__ = [
     "AIModel", "ProcessingMode", "OptimizationType", "AccuracyLevel",
     "AIModelSettings", "ai_model_settings",
     "ModelType", "ModelProvider", "ModelStatus", "ModelTier",
+    
+    # New business logic configuration classes and instances
+    "CreatorTypesSettings", "creator_types_settings",
+    "CreatorCategory", "CreatorSpecialization", "CreatorExperienceLevel", "CreatorTier",
+    "CreatorTypeRequirements", "CreatorTypeCapabilities", "CreatorTypeMetrics",
+    "ContentIngestionSettings", "content_ingestion_settings",
+    "IngestionMethod", "ValidationLevel", "ProcessingPriority", "ContentStatus",
+    "FileSizeLimit", "QualityStandard", "ValidationRule", "IngestionWorkflow",
+    "MLPipelineSettings", "ml_pipeline_settings",
+    "PipelineStage", "MLModelType", "TrainingMode", "DeploymentStrategy",
+    "TrainingConfiguration", "ModelConfiguration", "PipelineConfiguration", "InferenceConfiguration",
+    "IntelligentAnalysisSettings", "intelligent_analysis_settings",
+    "AnalysisType", "AnalysisEngine", "AnalysisPriority", "AnalysisAccuracyLevel",
+    "AnalysisModel", "AnalysisWorkflow", "QualityMetrics",
+    "CopyrightFingerprintingSettings", "copyright_fingerprinting_settings",
+    "FingerprintAlgorithm", "FingerprintContentType", "MatchingThreshold", "FingerprintDatabase",
+    "AlgorithmConfiguration", "MatchingConfiguration", "DatabaseConfiguration",
+    "CollaborationBusinessSettings", "collaboration_business_settings",
+    "CollaborationType", "CollaborationStatus", "RevenueModel", "MatchingCriteria",
+    "CollaborationTemplate", "RevenueDistribution", "CollaborationWorkflow",
+    "SEOBusinessSettings", "seo_business_settings",
+    "SEOStrategy", "SearchEngine", "SEOContentType", "OptimizationLevel",
+    "KeywordStrategy", "ContentOptimization", "TechnicalSEO", "SEOAnalytics",
+    "DistributionBusinessSettings", "distribution_business_settings",
+    "DistPlatform", "DistributionStrategy", "DistContentFormat", "DistributionStatus",
+    "PlatformConfiguration", "DistributionRule", "GlobalDistributionSettings",
     
     # Backwards compatibility exports
     "DATABASE_URL",
