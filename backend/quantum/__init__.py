@@ -74,6 +74,64 @@ from .creator_quantum_enhancement_engine import (
     enhance_blogger_content
 )
 
+# IA Quantum Processing Enhancement Components (NEW CRITICAL MODULES)
+from .quantum_ai_processing_engine import (
+    QuantumAIProcessingEngine,
+    QuantumAIProcessingRequest,
+    QuantumAIProcessingResult,
+    QuantumAIProcessingType,
+    QuantumAlgorithmType as AIQuantumAlgorithmType,
+    ProcessingPriority,
+    QuantumProcessingMetrics,
+    QuantumNeuralNetworkProcessor as AIQuantumNeuralNetworkProcessor,
+    create_quantum_ai_processing_engine,
+    process_creator_ai_enhancement,
+    get_ai_processing_recommendations
+)
+from .quantum_machine_learning_accelerator import (
+    QuantumMachineLearningAccelerator,
+    QuantumMLRequest,
+    QuantumMLResult,
+    QuantumMLAlgorithmType,
+    MLTaskType,
+    DataType,
+    OptimizationObjective as MLOptimizationObjective,
+    QuantumMLMetrics,
+    QuantumSVMAccelerator,
+    QuantumClusteringAccelerator,
+    create_quantum_ml_accelerator,
+    train_creator_quantum_model
+)
+from .quantum_neural_network_processor import (
+    QuantumNeuralNetworkEngine,
+    QuantumNeuralNetworkRequest,
+    QuantumNeuralNetworkResult,
+    QuantumNeuralNetworkType,
+    NetworkArchitecture,
+    QuantumGateType,
+    TrainingObjective,
+    QuantumNeuralNetworkMetrics,
+    VariationalQuantumNeuralNetworkProcessor,
+    QuantumConvolutionalNeuralNetworkProcessor,
+    create_quantum_neural_network_engine,
+    train_creator_quantum_neural_network
+)
+from .quantum_algorithm_optimization_engine import (
+    QuantumAlgorithmOptimizationEngine,
+    QuantumAlgorithmOptimizationRequest,
+    QuantumAlgorithmOptimizationResult,
+    QuantumAlgorithmCategory,
+    QuantumOptimizationAlgorithm,
+    QuantumSearchAlgorithm,
+    OptimizationObjective as AlgoOptimizationObjective,
+    ProblemComplexity,
+    QuantumAlgorithmMetrics,
+    QAOAOptimizer,
+    GroverSearchOptimizer,
+    create_quantum_algorithm_optimization_engine,
+    optimize_creator_quantum_algorithm
+)
+
 # Creator Multi-Format Quantum Enhancement Components
 from .quantum_content_processing_accelerator import (
     QuantumContentProcessingAccelerator,
@@ -198,6 +256,62 @@ __all__ = [
     "get_creator_enhancement_engine",
     "enhance_musician_content",
     "enhance_blogger_content",
+    
+    # IA Quantum Processing Enhancement Components (NEW CRITICAL MODULES)
+    "QuantumAIProcessingEngine",
+    "QuantumAIProcessingRequest",
+    "QuantumAIProcessingResult",
+    "QuantumAIProcessingType",
+    "AIQuantumAlgorithmType",
+    "ProcessingPriority",
+    "QuantumProcessingMetrics",
+    "AIQuantumNeuralNetworkProcessor",
+    "create_quantum_ai_processing_engine",
+    "process_creator_ai_enhancement",
+    "get_ai_processing_recommendations",
+    
+    # Quantum Machine Learning Accelerator
+    "QuantumMachineLearningAccelerator",
+    "QuantumMLRequest",
+    "QuantumMLResult",
+    "QuantumMLAlgorithmType",
+    "MLTaskType",
+    "DataType",
+    "MLOptimizationObjective",
+    "QuantumMLMetrics",
+    "QuantumSVMAccelerator",
+    "QuantumClusteringAccelerator",
+    "create_quantum_ml_accelerator",
+    "train_creator_quantum_model",
+    
+    # Quantum Neural Network Processor
+    "QuantumNeuralNetworkEngine",
+    "QuantumNeuralNetworkRequest",
+    "QuantumNeuralNetworkResult",
+    "QuantumNeuralNetworkType",
+    "NetworkArchitecture",
+    "QuantumGateType",
+    "TrainingObjective",
+    "QuantumNeuralNetworkMetrics",
+    "VariationalQuantumNeuralNetworkProcessor",
+    "QuantumConvolutionalNeuralNetworkProcessor",
+    "create_quantum_neural_network_engine",
+    "train_creator_quantum_neural_network",
+    
+    # Quantum Algorithm Optimization Engine
+    "QuantumAlgorithmOptimizationEngine",
+    "QuantumAlgorithmOptimizationRequest",
+    "QuantumAlgorithmOptimizationResult",
+    "QuantumAlgorithmCategory",
+    "QuantumOptimizationAlgorithm",
+    "QuantumSearchAlgorithm",
+    "AlgoOptimizationObjective",
+    "ProblemComplexity",
+    "QuantumAlgorithmMetrics",
+    "QAOAOptimizer",
+    "GroverSearchOptimizer",
+    "create_quantum_algorithm_optimization_engine",
+    "optimize_creator_quantum_algorithm",
     
     # Creator Multi-Format Quantum Enhancement Components
     "QuantumContentProcessingAccelerator",
