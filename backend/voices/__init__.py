@@ -71,6 +71,53 @@ from .voice_transcription_engine import (
     WordSegment,
     SentenceSegment
 )
+
+# Enterprise Voice Business Logic modules - Phase 3: Protection & Rights Management
+from .voice_protection_engine import (
+    VoiceProtectionEngine,
+    ProtectionLevel,
+    ProtectionStatus,
+    ThreatLevel,
+    VoiceFingerprint,
+    ProtectionViolation,
+    ProtectionResult
+)
+from .voice_rights_manager import (
+    VoiceRightsManager,
+    RightsType,
+    LicenseType,
+    RightsStatus,
+    ComplianceLevel,
+    VoiceRights,
+    VoiceLicense,
+    RightsViolation,
+    RightsManagementResult
+)
+
+# Enterprise Voice Business Logic modules - Phase 4: SEO & Discovery
+from .voice_seo_optimizer import (
+    VoiceSEOOptimizer,
+    SEOStrategy,
+    ContentCategory,
+    Platform,
+    SEOKeywords,
+    SEOOptimization,
+    TrendingAnalysis,
+    CompetitorAnalysis
+)
+
+# Enterprise Voice Business Logic modules - Phase 5: Collaboration & Networking
+from .voice_collaboration_hub import (
+    VoiceCollaborationHub,
+    CollaborationType,
+    CollaborationStatus,
+    PartnershipLevel,
+    SkillLevel,
+    CreatorProfile,
+    CollaborationProject,
+    PartnershipMatch,
+    CollaborationAnalytics
+)
 from .creator_voice_intelligence import (
     CreatorVoiceIntelligenceEngine,
     CreatorType,
@@ -158,7 +205,46 @@ __all__ = [
     'TranscriptionSettings',
     'TranscriptionResult',
     'WordSegment',
-    'SentenceSegment'
+    'SentenceSegment',
+    
+    # Enterprise voice business logic - Phase 3: Protection & Rights Management
+    'VoiceProtectionEngine',
+    'ProtectionLevel',
+    'ProtectionStatus',
+    'ThreatLevel',
+    'VoiceFingerprint',
+    'ProtectionViolation',
+    'ProtectionResult',
+    'VoiceRightsManager',
+    'RightsType',
+    'LicenseType',
+    'RightsStatus',
+    'ComplianceLevel',
+    'VoiceRights',
+    'VoiceLicense',
+    'RightsViolation',
+    'RightsManagementResult',
+    
+    # Enterprise voice business logic - Phase 4: SEO & Discovery
+    'VoiceSEOOptimizer',
+    'SEOStrategy',
+    'ContentCategory',
+    'Platform',
+    'SEOKeywords',
+    'SEOOptimization',
+    'TrendingAnalysis',
+    'CompetitorAnalysis',
+    
+    # Enterprise voice business logic - Phase 5: Collaboration & Networking
+    'VoiceCollaborationHub',
+    'CollaborationType',
+    'CollaborationStatus',
+    'PartnershipLevel',
+    'SkillLevel',
+    'CreatorProfile',
+    'CollaborationProject',
+    'PartnershipMatch',
+    'CollaborationAnalytics'
 ]
 
 __version__ = "1.0.0"
