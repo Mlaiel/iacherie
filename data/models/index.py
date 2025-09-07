@@ -20,29 +20,87 @@ import importlib
 import inspect
 
 # Import all models and enums from consolidated modules
-from . import (
-    # Models from enterprise_content_models
-    ContentModel, UserModel, AnalyticsModel,
-    
-    # Models from ai_fingerprinting_protection_models  
-    FingerprintModel, ProtectionModel,
-    
-    # Models from monetization_licensing_models
-    RevenueModel, LicensingModel,
-    
-    # Enums
-    ContentType, ContentStatus, ContentVisibility,
-    UserType, UserStatus, SubscriptionTier,
-    FingerprintType, FingerprintAlgorithm, FingerprintStatus, MatchConfidenceLevel,
-    RevenueSource, RevenueStatus, PaymentMethod, RevenuePeriod,
-    AnalyticsType, MetricType, TimeGranularity,
-    ProtectionType, ViolationType, SeverityLevel, ProtectionStatus, EnforcementAction,
-    LicenseType, LicenseCategory, UsageType, LicenseStatus, PaymentStructure,
-    
-    # Utilities
-    MODEL_REGISTRY, RELATIONSHIP_MAPPINGS,
-    get_model_by_table_name, get_all_models, get_model_relationships
-)
+try:
+    from .enterprise_content_models import (
+        ContentModel, UserModel, AnalyticsModel,
+        ContentType, ContentStatus, ContentVisibility,
+        UserType, UserStatus, SubscriptionTier,
+        AnalyticsType, MetricType, TimeGranularity
+    )
+    CONTENT_MODELS_AVAILABLE = True
+except ImportError as e:
+    print(f"Content models not available: {e}")
+    CONTENT_MODELS_AVAILABLE = False
+
+try:
+    from .ai_fingerprinting_protection_models import (
+        FingerprintModel, ProtectionModel,
+        FingerprintType, FingerprintAlgorithm, FingerprintStatus, MatchConfidenceLevel,
+        ProtectionType, ViolationType, SeverityLevel, ProtectionStatus, EnforcementAction
+    )
+    FINGERPRINT_MODELS_AVAILABLE = True
+except ImportError as e:
+    print(f"Fingerprint models not available: {e}")
+    FINGERPRINT_MODELS_AVAILABLE = False
+
+try:
+    from .monetization_licensing_models import (
+        RevenueModel, LicensingModel,
+        RevenueSource, RevenueStatus, PaymentMethod, RevenuePeriod,
+        LicenseType, LicenseCategory, UsageType, LicenseStatus, PaymentStructure
+    )
+    MONETIZATION_MODELS_AVAILABLE = True
+except ImportError as e:
+    print(f"Monetization models not available: {e}")
+    MONETIZATION_MODELS_AVAILABLE = False
+
+# Build model registry from available models
+MODEL_REGISTRY = {}
+RELATIONSHIP_MAPPINGS = {
+    'user_content': 'One user can have many content items',
+    'content_fingerprints': 'One content item can have multiple fingerprints',
+    'content_analytics': 'One content item has many analytics records',
+    'content_revenue': 'One content item can generate multiple revenue streams',
+    'content_protection': 'One content item can have multiple protection records',
+    'content_licenses': 'One content item can have multiple licenses',
+    'user_analytics': 'One user has comprehensive analytics',
+    'user_revenue': 'One user has multiple revenue records',
+    'user_protection': 'One user has multiple protection cases',
+    'user_fingerprints': 'One user has multiple content fingerprints',
+    'user_licenses': 'One user can create multiple licenses',
+    'fingerprint_protection': 'One fingerprint can trigger multiple protection alerts'
+}
+
+if CONTENT_MODELS_AVAILABLE:
+    MODEL_REGISTRY.update({
+        'content': ContentModel,
+        'users': UserModel,
+        'analytics': AnalyticsModel
+    })
+
+if FINGERPRINT_MODELS_AVAILABLE:
+    MODEL_REGISTRY.update({
+        'fingerprints': FingerprintModel,
+        'protection': ProtectionModel
+    })
+
+if MONETIZATION_MODELS_AVAILABLE:
+    MODEL_REGISTRY.update({
+        'revenue': RevenueModel,
+        'licensing': LicensingModel
+    })
+
+def get_model_by_table_name(table_name: str):
+    """Get model class by table name"""
+    return MODEL_REGISTRY.get(table_name)
+
+def get_all_models():
+    """Get all registered models"""
+    return list(MODEL_REGISTRY.values())
+
+def get_model_relationships():
+    """Get model relationship information"""
+    return RELATIONSHIP_MAPPINGS
 
 # SQLAlchemy imports for database operations
 try:
