@@ -87,6 +87,42 @@ from .creator_audience_seo_matcher import (
     ContentAudienceAlignment
 )
 
+from .viral_content_seo_predictor import (
+    ViralContentSEOPredictor,
+    ViralPredictionResult,
+    ViralSEOStrategy,
+    ViralityPrediction,
+    ViralityType,
+    ViralContentSignal
+)
+
+from .creator_brand_seo_optimizer import (
+    CreatorBrandSEOOptimizer,
+    BrandSEOOptimizationResult,
+    BrandSEOStrategy,
+    CreatorBrandProfile,
+    BrandSEOObjective,
+    BrandingStage
+)
+
+from .multi_platform_creator_seo_coordinator import (
+    MultiPlatformCreatorSEOCoordinator,
+    CoordinationResult,
+    CrossPlatformSEOStrategy,
+    PlatformSEOConfig,
+    SEOCoordinationStrategy,
+    Platform
+)
+
+from .content_format_seo_analyzer import (
+    ContentFormatSEOAnalyzer,
+    FormatSEOAnalysisResult,
+    ContentFormatProfile,
+    FormatOptimizationRecommendation,
+    FormatSEOMetrics,
+    ContentFormat
+)
+
 # Module version
 __version__ = "1.0.0"
 
@@ -163,7 +199,38 @@ __all__ = [
     'AudienceProfile',
     'SEOMatchingStrategy',
     'AudienceSegment',
-    'ContentAudienceAlignment'
+    'ContentAudienceAlignment',
+    
+    # Viral Content SEO Predictor
+    'ViralContentSEOPredictor',
+    'ViralPredictionResult',
+    'ViralSEOStrategy',
+    'ViralityPrediction',
+    'ViralityType',
+    'ViralContentSignal',
+    
+    # Creator Brand SEO Optimizer
+    'CreatorBrandSEOOptimizer',
+    'BrandSEOOptimizationResult',
+    'BrandSEOStrategy',
+    'CreatorBrandProfile',
+    'BrandSEOObjective',
+    'BrandingStage',
+    
+    # Multi-Platform Creator SEO Coordinator
+    'MultiPlatformCreatorSEOCoordinator',
+    'CoordinationResult',
+    'CrossPlatformSEOStrategy',
+    'PlatformSEOConfig',
+    'SEOCoordinationStrategy',
+    'Platform',
+    
+    # Content Format SEO Analyzer
+    'ContentFormatSEOAnalyzer',
+    'FormatSEOAnalysisResult',
+    'ContentFormatProfile',
+    'FormatOptimizationRecommendation',
+    'FormatSEOMetrics'
 ]
 
 
@@ -188,6 +255,12 @@ class SEOEngine:
         self.multi_format_optimizer = MultiFormatContentSEOOptimizer(config)
         self.creator_type_engine = CreatorTypeSEOEngine(config)
         self.audience_matcher = CreatorAudienceSEOMatcher(config)
+        
+        # Initialize Priority 1: Creator SEO Intelligence Core components
+        self.viral_content_predictor = ViralContentSEOPredictor(config)
+        self.brand_seo_optimizer = CreatorBrandSEOOptimizer(config)
+        self.platform_coordinator = MultiPlatformCreatorSEOCoordinator(config)
+        self.format_analyzer = ContentFormatSEOAnalyzer(config)
     
     async def comprehensive_seo_analysis(
         self,
@@ -329,6 +402,98 @@ class SEOEngine:
         """
         return await self.audience_matcher.analyze_audience_seo_matching(
             creator_id, target_audience_segments, creator_content_analysis, current_performance
+        )
+    
+    async def viral_content_prediction(
+        self,
+        content_id: str,
+        content_data: dict,
+        creator_profile: dict,
+        platform_targets: list = None
+    ):
+        """
+        Predict viral potential and generate SEO optimization strategy
+        
+        Args:
+            content_id: Unique content identifier
+            content_data: Content analysis data
+            creator_profile: Creator profile information
+            platform_targets: Target platforms for viral optimization
+            
+        Returns:
+            Viral prediction analysis with SEO optimization strategy
+        """
+        return await self.viral_content_predictor.predict_viral_potential(
+            content_id, content_data, creator_profile, platform_targets
+        )
+    
+    async def brand_seo_optimization(
+        self,
+        creator_brand_profile: CreatorBrandProfile,
+        competitive_analysis: dict = None,
+        current_performance: dict = None
+    ):
+        """
+        Optimize creator brand SEO strategy comprehensively
+        
+        Args:
+            creator_brand_profile: Detailed creator brand profile
+            competitive_analysis: Competitive landscape analysis
+            current_performance: Current brand performance metrics
+            
+        Returns:
+            Comprehensive brand SEO optimization strategy
+        """
+        return await self.brand_seo_optimizer.optimize_creator_brand_seo(
+            creator_brand_profile, competitive_analysis, current_performance
+        )
+    
+    async def multi_platform_coordination(
+        self,
+        creator_id: str,
+        target_platforms: list,
+        creator_profile: dict,
+        coordination_objectives: list,
+        coordination_strategy: SEOCoordinationStrategy = None
+    ):
+        """
+        Coordinate SEO strategy across multiple platforms
+        
+        Args:
+            creator_id: Creator identifier
+            target_platforms: List of target platforms
+            creator_profile: Creator profile information
+            coordination_objectives: SEO coordination objectives
+            coordination_strategy: Coordination strategy type
+            
+        Returns:
+            Multi-platform SEO coordination strategy and implementation plan
+        """
+        return await self.platform_coordinator.coordinate_multi_platform_seo(
+            creator_id, target_platforms, creator_profile, coordination_objectives, coordination_strategy
+        )
+    
+    async def content_format_analysis(
+        self,
+        content_format_profiles: list,
+        creator_objectives: list,
+        resource_constraints: dict = None,
+        competitive_analysis: dict = None
+    ):
+        """
+        Analyze SEO performance and optimization opportunities for content formats
+        
+        Args:
+            content_format_profiles: List of content format profiles
+            creator_objectives: Creator's SEO objectives
+            resource_constraints: Resource availability constraints
+            competitive_analysis: Competitive landscape analysis
+            
+        Returns:
+            Content format SEO analysis and optimization recommendations
+        """
+        return await self.format_analyzer.analyze_content_format_seo(
+            content_format_profiles, creator_objectives, resource_constraints, competitive_analysis
         )
 
 
