@@ -93,6 +93,26 @@ from .voice_rights_manager import (
     RightsViolation,
     RightsManagementResult
 )
+from .voice_fingerprinting_system import (
+    VoiceFingerprintingSystem,
+    FingerprintAlgorithm,
+    FingerprintQuality,
+    MatchConfidence,
+    FingerprintStatus,
+    VoiceFingerprint as SystemVoiceFingerprint,
+    FingerprintMatch,
+    FingerprintingResult
+)
+from .voice_piracy_detector import (
+    VoicePiracyDetector,
+    PiracyType,
+    DetectionMethod,
+    ViolationSeverity,
+    PiracyStatus,
+    PiracyAlert,
+    PiracyReport,
+    DetectionResult
+)
 
 # Enterprise Voice Business Logic modules - Phase 2.5: Content Classification & Metadata
 from .voice_metadata_generator import (
@@ -296,6 +316,22 @@ __all__ = [
     'VoiceLicense',
     'RightsViolation',
     'RightsManagementResult',
+    'VoiceFingerprintingSystem',
+    'FingerprintAlgorithm',
+    'FingerprintQuality',
+    'MatchConfidence',
+    'FingerprintStatus',
+    'SystemVoiceFingerprint',
+    'FingerprintMatch',
+    'FingerprintingResult',
+    'VoicePiracyDetector',
+    'PiracyType',
+    'DetectionMethod',
+    'ViolationSeverity',
+    'PiracyStatus',
+    'PiracyAlert',
+    'PiracyReport',
+    'DetectionResult',
     
     # Enterprise voice business logic - Phase 4: SEO & Discovery
     'VoiceSEOOptimizer',
