@@ -74,6 +74,35 @@ from .creator_quantum_enhancement_engine import (
     enhance_blogger_content
 )
 
+# Creator Multi-Format Quantum Enhancement Components
+from .quantum_content_processing_accelerator import (
+    QuantumContentProcessingAccelerator,
+    ContentProcessingRequest,
+    ContentProcessingResult,
+    ProcessingAccelerationType,
+    ContentComplexity,
+    create_content_processing_accelerator,
+    accelerate_content_processing
+)
+from .multi_format_quantum_optimizer import (
+    MultiFormatQuantumOptimizer,
+    MultiFormatOptimizationRequest,
+    MultiFormatOptimizationResult,
+    OptimizationType,
+    OptimizationObjective,
+    create_multi_format_optimizer,
+    optimize_multi_format_content
+)
+from .creator_type_quantum_analyzer import (
+    CreatorTypeQuantumAnalyzer,
+    CreatorAnalysisRequest,
+    CreatorAnalysisResult,
+    AnalysisType,
+    AnalysisDepth,
+    create_creator_analyzer,
+    analyze_creator_performance
+)
+
 __all__ = [
     # Quantum Cryptography Components
     "PostQuantumCrypto",
@@ -129,7 +158,30 @@ __all__ = [
     "QuantumEnhancementLevel",
     "get_creator_enhancement_engine",
     "enhance_musician_content",
-    "enhance_blogger_content"
+    "enhance_blogger_content",
+    
+    # Creator Multi-Format Quantum Enhancement Components
+    "QuantumContentProcessingAccelerator",
+    "ContentProcessingRequest", 
+    "ContentProcessingResult",
+    "ProcessingAccelerationType",
+    "ContentComplexity",
+    "create_content_processing_accelerator",
+    "accelerate_content_processing",
+    "MultiFormatQuantumOptimizer",
+    "MultiFormatOptimizationRequest",
+    "MultiFormatOptimizationResult", 
+    "OptimizationType",
+    "OptimizationObjective",
+    "create_multi_format_optimizer",
+    "optimize_multi_format_content",
+    "CreatorTypeQuantumAnalyzer",
+    "CreatorAnalysisRequest",
+    "CreatorAnalysisResult",
+    "AnalysisType",
+    "AnalysisDepth", 
+    "create_creator_analyzer",
+    "analyze_creator_performance"
 ]
 
 __version__ = "1.0.0"
