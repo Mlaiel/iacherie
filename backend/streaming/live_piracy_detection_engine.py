@@ -223,7 +223,7 @@ class LivePiracyDetectionRecord(Base):
     priority_level = Column(String(50), nullable=False)
     escalation_level = Column(Integer, nullable=True, default=0)
     error_message = Column(Text, nullable=True)
-    metadata = Column(JSON, nullable=False, default=dict)
+    meta_data = Column(JSON, nullable=False, default=dict)
     
     first_detected_at = Column(DateTime(timezone=True), nullable=False)
     last_seen_at = Column(DateTime(timezone=True), nullable=True)

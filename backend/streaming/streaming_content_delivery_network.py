@@ -183,7 +183,7 @@ class StreamingCDNRecord(Base):
     total_bytes_delivered = Column(Integer, default=0)
     cache_hit_ratio = Column(Float, default=0.0)
     average_delivery_time = Column(Float, default=0.0)
-    metadata = Column(JSON, nullable=True)
+    meta_data = Column(JSON, nullable=True)
     created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
     updated_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
 
