@@ -315,6 +315,56 @@ from .quantum_gamification_optimization_engine import (
     get_creator_gamification_analytics
 )
 
+# New Quantum Monetization Components (CRITICAL BUSINESS LOGIC MODULES)
+from .quantum_revenue_prediction_accelerator import (
+    QuantumRevenuePredictionAccelerator,
+    QuantumRevenuePredictionRequest,
+    QuantumRevenuePredictionResult,
+    QuantumRevenuePredictor,
+    RevenuePredictionModel,
+    PredictionTimeframe,
+    RevenueMetricType,
+    create_quantum_revenue_prediction_accelerator
+)
+from .quantum_payment_processing_enhancement import (
+    QuantumPaymentProcessingEnhancement,
+    QuantumPaymentRequest,
+    QuantumPaymentResult,
+    QuantumPaymentProcessor,
+    QuantumCryptographicProcessor,
+    QuantumFraudDetector,
+    PaymentMethod,
+    PaymentStatus,
+    QuantumSecurityLevel,
+    TransactionType,
+    create_quantum_payment_processing_enhancement
+)
+from .quantum_financial_modeling_engine import (
+    QuantumFinancialModelingEngine,
+    QuantumFinancialModelRequest,
+    QuantumFinancialModelResult,
+    QuantumFinancialOptimizer,
+    QuantumRiskAnalyzer,
+    QuantumScenarioAnalyzer,
+    FinancialModelType,
+    QuantumAlgorithmType as FinancialQuantumAlgorithmType,
+    RiskMetric,
+    create_quantum_financial_modeling_engine
+)
+from .quantum_pricing_optimization_accelerator import (
+    QuantumPricingOptimizationAccelerator,
+    QuantumPricingRequest,
+    QuantumPricingResult,
+    QuantumDemandForecaster,
+    QuantumPricingOptimizer,
+    QuantumCompetitiveAnalyzer,
+    PricingStrategy,
+    OptimizationObjective as PricingOptimizationObjective,
+    ProductType,
+    MarketCondition,
+    create_quantum_pricing_optimization_accelerator
+)
+
 __all__ = [
     # Quantum Cryptography Components
     "PostQuantumCrypto",
@@ -583,7 +633,49 @@ __all__ = [
     "get_quantum_gamification_engine",
     "optimize_gamification",
     "get_gamification_optimization_status",
-    "get_creator_gamification_analytics"
+    "get_creator_gamification_analytics",
+    
+    # New Quantum Monetization Components
+    "QuantumRevenuePredictionAccelerator",
+    "QuantumRevenuePredictionRequest",
+    "QuantumRevenuePredictionResult",
+    "QuantumRevenuePredictor",
+    "RevenuePredictionModel",
+    "PredictionTimeframe",
+    "RevenueMetricType",
+    "create_quantum_revenue_prediction_accelerator",
+    "QuantumPaymentProcessingEnhancement",
+    "QuantumPaymentRequest",
+    "QuantumPaymentResult",
+    "QuantumPaymentProcessor",
+    "QuantumCryptographicProcessor",
+    "QuantumFraudDetector",
+    "PaymentMethod",
+    "PaymentStatus",
+    "QuantumSecurityLevel",
+    "TransactionType",
+    "create_quantum_payment_processing_enhancement",
+    "QuantumFinancialModelingEngine",
+    "QuantumFinancialModelRequest",
+    "QuantumFinancialModelResult",
+    "QuantumFinancialOptimizer",
+    "QuantumRiskAnalyzer",
+    "QuantumScenarioAnalyzer",
+    "FinancialModelType",
+    "FinancialQuantumAlgorithmType",
+    "RiskMetric",
+    "create_quantum_financial_modeling_engine",
+    "QuantumPricingOptimizationAccelerator",
+    "QuantumPricingRequest",
+    "QuantumPricingResult",
+    "QuantumDemandForecaster",
+    "QuantumPricingOptimizer",
+    "QuantumCompetitiveAnalyzer",
+    "PricingStrategy",
+    "PricingOptimizationObjective",
+    "ProductType",
+    "MarketCondition",
+    "create_quantum_pricing_optimization_accelerator"
 ]
 
 __version__ = "1.0.0"
