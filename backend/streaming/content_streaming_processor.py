@@ -126,7 +126,7 @@ class ProcessingResult:
     formats_generated: List[str]
     optimizations_applied: List[str]
     error_message: Optional[str] = None
-    metadata: Optional[Dict[str, Any]] = None
+    extra_metadata: Optional[Dict[str, Any]] = None
 
 
 class ContentStreamingProcessingRecord(Base):
@@ -148,7 +148,7 @@ class ContentStreamingProcessingRecord(Base):
     quality_metrics = Column(JSON, nullable=True)
     processing_time = Column(Float, nullable=True)
     error_details = Column(Text, nullable=True)
-    metadata = Column(JSON, nullable=True)
+    extra_metadata = Column(JSON, nullable=True)
     created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
     started_at = Column(DateTime(timezone=True), nullable=True)
     completed_at = Column(DateTime(timezone=True), nullable=True)
