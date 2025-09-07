@@ -206,6 +206,72 @@ from .voice_monetization_engine import (
     PricingOptimization
 )
 
+# Enterprise Voice Business Logic modules - Phase 6: Advanced Components
+from .voice_distribution_engine import (
+    VoiceDistributionEngine,
+    DistributionPlatform,
+    DistributionStatus,
+    ContentType as DistributionContentType,
+    DistributionQuality,
+    PlatformConfiguration,
+    DistributionMetadata,
+    DistributionJob,
+    DistributionResult
+)
+from .voice_analytics_dashboard import (
+    VoiceAnalyticsDashboard,
+    AnalyticsMetric as DashboardAnalyticsMetric,
+    TimeRange,
+    PlatformType,
+    AudienceSegment,
+    AnalyticsDataPoint,
+    AudienceInsight,
+    ContentPerformance,
+    RevenueAnalytics,
+    EngagementAnalytics,
+    DashboardWidget
+)
+from .voice_duet_coordinator import (
+    VoiceDuetCoordinator,
+    DuetType,
+    VoiceRole,
+    SynchronizationMode,
+    HarmonyType,
+    CollaborationStatus as DuetCollaborationStatus,
+    VoiceProfile,
+    DuetConfiguration,
+    VoiceRecording,
+    SynchronizationData,
+    DuetProject
+)
+from .voice_challenge_manager import (
+    VoiceChallengeManager,
+    ChallengeType,
+    ChallengeDifficulty,
+    ChallengeStatus,
+    ParticipationStatus,
+    JudgingMethod,
+    ChallengeRequirements,
+    ChallengeRewards,
+    ChallengeSubmission,
+    Challenge,
+    ChallengeParticipant,
+    ChallengeLeaderboard
+)
+from .voice_keyword_extractor import (
+    VoiceKeywordExtractor,
+    KeywordType,
+    ExtractionMethod,
+    SearchVolume,
+    CompetitionLevel,
+    TrendDirection,
+    KeywordMetrics,
+    ExtractedKeyword,
+    VoiceContentAnalysis,
+    CompetitorKeywordData,
+    KeywordTrend
+)
+
 __all__ = [
     # Core voice modules
     'VoiceBank',
@@ -352,7 +418,63 @@ __all__ = [
     'CreatorProfile',
     'CollaborationProject',
     'PartnershipMatch',
-    'CollaborationAnalytics'
+    'CollaborationAnalytics',
+    
+    # Enterprise voice business logic - Phase 6: Advanced Components
+    'VoiceDistributionEngine',
+    'DistributionPlatform',
+    'DistributionStatus',
+    'DistributionContentType',
+    'DistributionQuality',
+    'PlatformConfiguration',
+    'DistributionMetadata',
+    'DistributionJob',
+    'DistributionResult',
+    'VoiceAnalyticsDashboard',
+    'DashboardAnalyticsMetric',
+    'TimeRange',
+    'PlatformType',
+    'AudienceSegment',
+    'AnalyticsDataPoint',
+    'AudienceInsight',
+    'ContentPerformance',
+    'RevenueAnalytics',
+    'EngagementAnalytics',
+    'DashboardWidget',
+    'VoiceDuetCoordinator',
+    'DuetType',
+    'VoiceRole',
+    'SynchronizationMode',
+    'HarmonyType',
+    'DuetCollaborationStatus',
+    'VoiceProfile',
+    'DuetConfiguration',
+    'VoiceRecording',
+    'SynchronizationData',
+    'DuetProject',
+    'VoiceChallengeManager',
+    'ChallengeType',
+    'ChallengeDifficulty',
+    'ChallengeStatus',
+    'ParticipationStatus',
+    'JudgingMethod',
+    'ChallengeRequirements',
+    'ChallengeRewards',
+    'ChallengeSubmission',
+    'Challenge',
+    'ChallengeParticipant',
+    'ChallengeLeaderboard',
+    'VoiceKeywordExtractor',
+    'KeywordType',
+    'ExtractionMethod',
+    'SearchVolume',
+    'CompetitionLevel',
+    'TrendDirection',
+    'KeywordMetrics',
+    'ExtractedKeyword',
+    'VoiceContentAnalysis',
+    'CompetitorKeywordData',
+    'KeywordTrend'
 ]
 
 __version__ = "1.0.0"
