@@ -200,7 +200,7 @@ class StreamingWatermarkInjectionRecord(Base):
     injection_status = Column(String(50), nullable=False)
     success_rate = Column(Float, nullable=True)
     error_message = Column(Text, nullable=True)
-    metadata = Column(JSON, nullable=False, default=dict)
+    meta_data = Column(JSON, nullable=False, default=dict)
     
     created_at = Column(DateTime(timezone=True), nullable=False, default=lambda: datetime.now(timezone.utc))
     updated_at = Column(DateTime(timezone=True), nullable=False, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))

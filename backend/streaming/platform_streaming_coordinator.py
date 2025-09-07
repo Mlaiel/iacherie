@@ -153,7 +153,7 @@ class PlatformStreamingCoordinationRecord(Base):
     sync_metrics = Column(JSON, nullable=True)
     total_viewers = Column(Integer, default=0)
     error_log = Column(JSON, nullable=True)
-    metadata = Column(JSON, nullable=True)
+    meta_data = Column(JSON, nullable=True)
     created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
     started_at = Column(DateTime(timezone=True), nullable=True)
     ended_at = Column(DateTime(timezone=True), nullable=True)

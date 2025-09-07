@@ -276,7 +276,7 @@ class AchievementRecord(Base):
     is_active = Column(Boolean, default=True)
     unlock_conditions = Column(JSON)
     prerequisites = Column(JSON)
-    achievement_metadata = Column(JSON)
+    achievement_meta_data = Column(JSON)
     created_at = Column(DateTime(timezone=True), default=datetime.utcnow)
 
 

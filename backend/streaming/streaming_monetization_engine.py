@@ -241,7 +241,7 @@ class StreamingRevenueRecord(Base):
     platform_fee = Column(Numeric(15, 2), default=0)
     creator_earnings = Column(Numeric(15, 2), default=0)
     tax_amount = Column(Numeric(15, 2), default=0)
-    transaction_metadata = Column(JSON)
+    transaction_meta_data = Column(JSON)
     payment_processor_data = Column(JSON)
     created_at = Column(DateTime(timezone=True), default=datetime.utcnow)
     processed_at = Column(DateTime(timezone=True))
@@ -265,7 +265,7 @@ class SubscriptionRecord(Base):
     payment_method = Column(String(30))
     trial_period_days = Column(Integer, default=0)
     discount_applied = Column(Numeric(15, 2), default=0)
-    subscription_metadata = Column(JSON)
+    subscription_meta_data = Column(JSON)
     created_at = Column(DateTime(timezone=True), default=datetime.utcnow)
     updated_at = Column(DateTime(timezone=True), default=datetime.utcnow, onupdate=datetime.utcnow)
 
