@@ -188,6 +188,41 @@ from .streaming_monetization_engine import (
     create_streaming_monetization_engine
 )
 
+from .collaborative_streaming_engine import (
+    CollaborativeStreamingEngine,
+    CollaborationType,
+    SynchronizationMode,
+    CollaborationStatus,
+    RevenueShareModel,
+    ParticipantRole,
+    CollaborationConfig,
+    Participant,
+    CollaborationSession,
+    RevenueShareCalculation,
+    SynchronizationStatus,
+    CollaborationAnalytics,
+    create_collaborative_streaming_engine
+)
+
+from .streaming_gamification_engine import (
+    StreamingGamificationEngine,
+    EngagementType,
+    AchievementType,
+    ChallengeType,
+    RewardType,
+    BadgeRarity,
+    LeaderboardType,
+    GamificationConfig,
+    EngagementEvent,
+    Achievement,
+    UserAchievement,
+    Challenge,
+    LeaderboardEntry,
+    Leaderboard,
+    GamificationAnalytics,
+    create_streaming_gamification_engine
+)
+
 __all__ = [
     # Live Stream
     "LiveStreamManager",
@@ -341,7 +376,40 @@ __all__ = [
     "DonationGoal",
     "AdRevenueRecord",
     "RevenueAnalytics",
-    "create_streaming_monetization_engine"
+    "create_streaming_monetization_engine",
+    
+    # Collaborative Streaming Engine
+    "CollaborativeStreamingEngine",
+    "CollaborationType",
+    "SynchronizationMode",
+    "CollaborationStatus",
+    "RevenueShareModel",
+    "ParticipantRole",
+    "CollaborationConfig",
+    "Participant",
+    "CollaborationSession",
+    "RevenueShareCalculation",
+    "SynchronizationStatus",
+    "CollaborationAnalytics",
+    "create_collaborative_streaming_engine",
+    
+    # Streaming Gamification Engine
+    "StreamingGamificationEngine",
+    "EngagementType",
+    "AchievementType",
+    "ChallengeType",
+    "RewardType",
+    "BadgeRarity",
+    "LeaderboardType",
+    "GamificationConfig",
+    "EngagementEvent",
+    "Achievement",
+    "UserAchievement",
+    "Challenge",
+    "LeaderboardEntry",
+    "Leaderboard",
+    "GamificationAnalytics",
+    "create_streaming_gamification_engine"
 ]
 
 __version__ = "1.0.0"
