@@ -23,24 +23,47 @@ Contact: mlaiel@live.de for licensing inquiries.
 • Microservices Architect: Scalable Service Architecture
 • IA Prompt Engineer: Advanced AI Integration
 """# Import all data models from consolidated modules
-from .enterprise_content_models import (
-    ContentModel, ContentType, ContentStatus, ContentVisibility,
-    UserModel, UserType, UserStatus, SubscriptionTier,
-    AnalyticsModel, AnalyticsType, MetricType, TimeGranularity
-)
-from .ai_fingerprinting_protection_models import (
-    FingerprintModel, FingerprintType, FingerprintAlgorithm, FingerprintStatus, MatchConfidenceLevel,
-    ProtectionModel, ProtectionType, ViolationType, SeverityLevel, ProtectionStatus, EnforcementAction
-)
-from .monetization_licensing_models import (
-    RevenueModel, RevenueSource, RevenueStatus, PaymentMethod, RevenuePeriod,
-    LicensingModel, LicenseType, LicenseCategory, UsageType, LicenseStatus, PaymentStructure
-)
+try:
+    from .enterprise_content_models import (
+        ContentModel, ContentType, ContentStatus, ContentVisibility,
+        UserModel, UserType, UserStatus, SubscriptionTier,
+        AnalyticsModel, AnalyticsType, MetricType, TimeGranularity
+    )
+    CONTENT_MODELS_AVAILABLE = True
+except ImportError as e:
+    print(f"Content models import failed: {e}")
+    CONTENT_MODELS_AVAILABLE = False
+
+try:
+    from .ai_fingerprinting_protection_models import (
+        FingerprintModel, FingerprintType, FingerprintAlgorithm, FingerprintStatus, MatchConfidenceLevel,
+        ProtectionModel, ProtectionType, ViolationType, SeverityLevel, ProtectionStatus, EnforcementAction
+    )
+    FINGERPRINT_MODELS_AVAILABLE = True
+except ImportError as e:
+    print(f"Fingerprint models import failed: {e}")
+    FINGERPRINT_MODELS_AVAILABLE = False
+
+try:
+    from .monetization_licensing_models import (
+        RevenueModel, RevenueSource, RevenueStatus, PaymentMethod, RevenuePeriod,
+        LicensingModel, LicenseType, LicenseCategory, UsageType, LicenseStatus, PaymentStructure
+    )
+    MONETIZATION_MODELS_AVAILABLE = True
+except ImportError as e:
+    print(f"Monetization models import failed: {e}")
+    MONETIZATION_MODELS_AVAILABLE = False
 
 # Export all models and enums
 # Import additional utilities from consolidated infrastructure
 try:
     from .index import ModelManager, ModelQueryBuilder, model_manager
+    INDEX_AVAILABLE = True
+except ImportError as e:
+    print(f"Index import failed: {e}")
+    INDEX_AVAILABLE = False
+
+try:
     from .data_infrastructure_utilities import (
         ValidationError, ValidationResult, ModelDataValidator,
         validate_user, validate_content, validate_revenue, validate_analytics,
@@ -52,36 +75,47 @@ except ImportError as e:
     print(f"Some utilities not available: {e}")
 
 # Export all for easy access
-__all__ = [
-    # Models
-    'ContentModel', 'UserModel', 'FingerprintModel', 'RevenueModel',
-    'AnalyticsModel', 'ProtectionModel', 'LicensingModel',
-    
-    # Enums
-    'ContentType', 'ContentStatus', 'ContentVisibility',
-    'UserType', 'UserStatus', 'SubscriptionTier',
-    'FingerprintType', 'FingerprintAlgorithm', 'FingerprintStatus', 'MatchConfidenceLevel',
-    'RevenueSource', 'RevenueStatus', 'PaymentMethod', 'RevenuePeriod',
-    'AnalyticsType', 'MetricType', 'TimeGranularity',
-    'ProtectionType', 'ViolationType', 'SeverityLevel', 'ProtectionStatus', 'EnforcementAction',
-    'LicenseType', 'LicenseCategory', 'UsageType', 'LicenseStatus', 'PaymentStructure',
-    
-    # Core Utilities
+__all__ = []
+
+# Add models if available
+if CONTENT_MODELS_AVAILABLE:
+    __all__.extend([
+        'ContentModel', 'UserModel', 'AnalyticsModel',
+        'ContentType', 'ContentStatus', 'ContentVisibility',
+        'UserType', 'UserStatus', 'SubscriptionTier',
+        'AnalyticsType', 'MetricType', 'TimeGranularity'
+    ])
+
+if FINGERPRINT_MODELS_AVAILABLE:
+    __all__.extend([
+        'FingerprintModel', 'ProtectionModel',
+        'FingerprintType', 'FingerprintAlgorithm', 'FingerprintStatus', 'MatchConfidenceLevel',
+        'ProtectionType', 'ViolationType', 'SeverityLevel', 'ProtectionStatus', 'EnforcementAction'
+    ])
+
+if MONETIZATION_MODELS_AVAILABLE:
+    __all__.extend([
+        'RevenueModel', 'LicensingModel',
+        'RevenueSource', 'RevenueStatus', 'PaymentMethod', 'RevenuePeriod',
+        'LicenseType', 'LicenseCategory', 'UsageType', 'LicenseStatus', 'PaymentStructure'
+    ])
+
+# Core utilities always available
+__all__.extend([
     'MODEL_REGISTRY', 'RELATIONSHIP_MAPPINGS',
     'get_model_by_table_name', 'get_all_models', 'get_model_relationships'
-]
+])
 
-# Add utilities to exports if available
+# Add utilities if available
+if INDEX_AVAILABLE:
+    __all__.extend([
+        'ModelManager', 'ModelQueryBuilder', 'model_manager'
+    ])
+
 if UTILITIES_AVAILABLE:
     __all__.extend([
-        # Management & Query Tools
-        'ModelManager', 'ModelQueryBuilder', 'model_manager',
-        
-        # Validation Tools
         'ValidationError', 'ValidationResult', 'ModelDataValidator',
         'validate_user', 'validate_content', 'validate_revenue', 'validate_analytics',
-        
-        # Migration and Infrastructure Tools
         'MigrationManager', 'SchemaValidator', 'ExampleDataGenerator'
     ])
 
@@ -91,16 +125,26 @@ __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __copyright__ = "(c) 2025 Fahed Mlaiel - All Rights Reserved"
 
-# Model metadata for introspection
-MODEL_REGISTRY = {
-    'content': ContentModel,
-    'users': UserModel,
-    'fingerprints': FingerprintModel,
-    'revenue': RevenueModel,
-    'analytics': AnalyticsModel,
-    'protection': ProtectionModel,
-    'licensing': LicensingModel
-}
+# Model metadata for introspection (only add if models are available)
+MODEL_REGISTRY = {}
+if CONTENT_MODELS_AVAILABLE:
+    MODEL_REGISTRY.update({
+        'content': ContentModel,
+        'users': UserModel,
+        'analytics': AnalyticsModel
+    })
+
+if FINGERPRINT_MODELS_AVAILABLE:
+    MODEL_REGISTRY.update({
+        'fingerprints': FingerprintModel,
+        'protection': ProtectionModel
+    })
+
+if MONETIZATION_MODELS_AVAILABLE:
+    MODEL_REGISTRY.update({
+        'revenue': RevenueModel,
+        'licensing': LicensingModel
+    })
 
 # Relationship mappings for ORM
 RELATIONSHIP_MAPPINGS = {
