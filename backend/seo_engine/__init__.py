@@ -135,6 +135,37 @@ from .protection_seo_integration_engine import (
     ProtectionSEOMetrics
 )
 
+# NEW: Critical Revenue-Driven SEO Components
+from .revenue_driven_keyword_strategy import (
+    RevenueKeywordStrategyEngine,
+    RevenueKeywordStrategy,
+    RevenueKeywordMetrics,
+    KeywordRevenueImpact,
+    CommercialIntent,
+    RevenueKeywordType
+)
+
+from .conversion_seo_optimizer import (
+    ConversionSEOOptimizer,
+    ConversionSEOStrategy,
+    ConversionOptimizationRecommendation,
+    ConversionMetrics,
+    ConversionStage,
+    ConversionType,
+    OptimizationTactic
+)
+
+# NEW: Cross-Creator SEO Amplification Components
+from .cross_creator_seo_amplification import (
+    CrossCreatorSEOAmplificationEngine,
+    CrossCreatorSEOCampaign,
+    CollaborationOpportunity,
+    CreatorProfile as CrossCreatorProfile,
+    CollaborationType,
+    AmplificationStrategy,
+    CreatorTier
+)
+
 from .copyright_seo_protection import (
     CopyrightSEOProtection,
     CopyrightRecord,
