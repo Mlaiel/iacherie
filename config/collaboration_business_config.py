@@ -54,6 +54,7 @@ class RevenueModel(str, Enum):
     PERFORMANCE_BASED = "performance_based"
     FIXED_FEE = "fixed_fee"
     MILESTONE_BASED = "milestone_based"
+    SKILL_EXCHANGE = "skill_exchange"
 
 
 class MatchingCriteria(str, Enum):

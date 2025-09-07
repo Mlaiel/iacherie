@@ -60,6 +60,7 @@ class CreatorSpecialization(str, Enum):
     DANCER = "dancer"
     MAGICIAN = "magician"
     STREAMER = "streamer"
+    ENTERTAINER = "entertainer"
     
     # Educators
     TEACHER = "teacher"
@@ -67,6 +68,10 @@ class CreatorSpecialization(str, Enum):
     COACH = "coach"
     MENTOR = "mentor"
     ACADEMIC = "academic"
+    
+    # Influencers & Social Media
+    INFLUENCER = "influencer"
+    CONTENT_CREATOR = "content_creator"
 
 
 class CreatorExperienceLevel(str, Enum):
