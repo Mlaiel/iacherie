@@ -19,7 +19,7 @@ import logging
 from typing import Dict, List, Optional, AsyncGenerator, Any, Union
 from datetime import datetime, timedelta
 
-from .base_collector import BaseCollector, CollectorResult, CollectionConfig
+from base_collector import BaseCollector, CollectorResult, CollectionConfig
 
 logger = logging.getLogger(__name__)
 
