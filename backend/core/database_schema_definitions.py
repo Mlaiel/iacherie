@@ -601,7 +601,7 @@ class PartnershipModels:
                 'start_date': {'type': 'DateTime', 'nullable': False},
                 'end_date': {'type': 'DateTime', 'nullable': True},
                 'auto_renewal': {'type': 'Boolean', 'default': False, 'nullable': False},
-                'status': {'type': 'String', 'length': 50, 'nullable': False'},
+                'status': {'type': 'String', 'length': 50, 'nullable': False},
                 'created_at': {'type': 'DateTime', 'default': 'now()', 'nullable': False}
             }
         }
@@ -653,7 +653,7 @@ class MediaModels:
                 'input_file': {'type': 'String', 'length': 1000, 'nullable': False},
                 'output_file': {'type': 'String', 'length': 1000, 'nullable': True},
                 'processing_parameters': {'type': 'JSONB', 'nullable': False},
-                'status': {'type': 'String', 'length': 20, 'nullable': False'},
+                'status': {'type': 'String', 'length': 20, 'nullable': False},
                 'progress_percentage': {'type': 'Float', 'default': 0.0, 'nullable': False},
                 'started_at': {'type': 'DateTime', 'nullable': True},
                 'completed_at': {'type': 'DateTime', 'nullable': True},
