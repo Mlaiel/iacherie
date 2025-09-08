@@ -39,6 +39,19 @@ from .blockchain_security_suite import (
     AuditLogger, ThreatDetector, ComplianceChecker, EncryptionEngine
 )
 
+# Additional enterprise modules (NEW - Phase 2)
+from .cross_chain_bridge import (
+    BridgeManager, CrossChainValidator, LiquidityPoolManager
+)
+
+from .defi_integration_hub import (
+    DeFiIntegrator, YieldFarmManager, FlashLoanManager
+)
+
+from .layer2_scaling_manager import (
+    Layer2Manager, ScalingOptimizer, PolygonManager
+)
+
 __all__ = [
     # Legacy modules (enriched)
     "NFTFactory", "NFTFactoryManager", 
@@ -60,7 +73,12 @@ __all__ = [
     
     # Blockchain Security Suite
     "BlockchainSecuritySuiteManager", "KeyVault", "WalletManager",
-    "AuditLogger", "ThreatDetector", "ComplianceChecker", "EncryptionEngine"
+    "AuditLogger", "ThreatDetector", "ComplianceChecker", "EncryptionEngine",
+    
+    # Additional Enterprise Modules (Phase 2)
+    "BridgeManager", "CrossChainValidator", "LiquidityPoolManager",
+    "DeFiIntegrator", "YieldFarmManager", "FlashLoanManager",
+    "Layer2Manager", "ScalingOptimizer", "PolygonManager"
 ]
 
 __version__ = "1.0.0"
