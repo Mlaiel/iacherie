@@ -89,10 +89,52 @@ except ImportError:
     BUSINESS_AVAILABLE = False
 
 try:
-    from . import environments
-    ENVIRONMENTS_AVAILABLE = True
+    from . import environment_manager
+    ENVIRONMENT_MANAGER_AVAILABLE = True
 except ImportError:
-    ENVIRONMENTS_AVAILABLE = False
+    ENVIRONMENT_MANAGER_AVAILABLE = False
+
+try:
+    from . import configuration_orchestrator
+    CONFIGURATION_ORCHESTRATOR_AVAILABLE = True
+except ImportError:
+    CONFIGURATION_ORCHESTRATOR_AVAILABLE = False
+
+try:
+    from . import secrets_manager
+    SECRETS_MANAGER_AVAILABLE = True
+except ImportError:
+    SECRETS_MANAGER_AVAILABLE = False
+
+try:
+    from . import feature_flags
+    FEATURE_FLAGS_AVAILABLE = True
+except ImportError:
+    FEATURE_FLAGS_AVAILABLE = False
+
+try:
+    from . import performance_tuning
+    PERFORMANCE_TUNING_AVAILABLE = True
+except ImportError:
+    PERFORMANCE_TUNING_AVAILABLE = False
+
+try:
+    from . import compliance_config
+    COMPLIANCE_CONFIG_AVAILABLE = True
+except ImportError:
+    COMPLIANCE_CONFIG_AVAILABLE = False
+
+try:
+    from . import microservices_config
+    MICROSERVICES_CONFIG_AVAILABLE = True
+except ImportError:
+    MICROSERVICES_CONFIG_AVAILABLE = False
+
+try:
+    from . import ml_pipeline_config
+    ML_PIPELINE_CONFIG_AVAILABLE = True
+except ImportError:
+    ML_PIPELINE_CONFIG_AVAILABLE = False
 
 # Version information
 __version__ = "1.0.0"
@@ -124,7 +166,21 @@ if INTEGRATIONS_AVAILABLE:
     available_modules.append("integrations")
 if BUSINESS_AVAILABLE:
     available_modules.append("business")
-if ENVIRONMENTS_AVAILABLE:
-    available_modules.append("environments")
+if ENVIRONMENT_MANAGER_AVAILABLE:
+    available_modules.append("environment_manager")
+if CONFIGURATION_ORCHESTRATOR_AVAILABLE:
+    available_modules.append("configuration_orchestrator")
+if SECRETS_MANAGER_AVAILABLE:
+    available_modules.append("secrets_manager")
+if FEATURE_FLAGS_AVAILABLE:
+    available_modules.append("feature_flags")
+if PERFORMANCE_TUNING_AVAILABLE:
+    available_modules.append("performance_tuning")
+if COMPLIANCE_CONFIG_AVAILABLE:
+    available_modules.append("compliance_config")
+if MICROSERVICES_CONFIG_AVAILABLE:
+    available_modules.append("microservices_config")
+if ML_PIPELINE_CONFIG_AVAILABLE:
+    available_modules.append("ml_pipeline_config")
 
 __all__ = available_modules
