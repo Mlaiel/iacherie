@@ -4,10 +4,14 @@
 Consolidated mobile AI processing providing analysis, orchestration,
 and cache management for intelligent content processing on mobile devices.
 
-Consolidates:
-- AI analysis mobile with comprehensive pattern recognition
-- Mobile AI orchestrator for workflow coordination
-- Mobile AI cache manager for performance optimization
+CONSOLIDATES FROM:
+- ai_analysis_mobile.py (Comprehensive AI analysis with pattern recognition)
+- mobile_ai_orchestrator.py (AI workflow coordination and processing management)  
+- mobile_ai_cache_manager.py (Performance optimization through intelligent caching)
+
+Business Logic Integration:
+Mobile Content → AI Analysis → Pattern Recognition → Intelligent Enhancement →
+Performance Optimization → Cache Management → Result Delivery
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -28,7 +32,7 @@ from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
-class AnalysisType(Enum):
+class AnalysisType(str, Enum):
     """Types of AI analysis for mobile"""
     VISUAL_ANALYSIS = "visual_analysis"
     AUDIO_ANALYSIS = "audio_analysis"
@@ -44,29 +48,131 @@ class AnalysisType(Enum):
     QUALITY_ANALYSIS = "quality_analysis"
     CONTENT_CLASSIFICATION = "content_classification"
     EMOTIONAL_ANALYSIS = "emotional_analysis"
+    TREND_PREDICTION = "trend_prediction"
+    ENGAGEMENT_PREDICTION = "engagement_prediction"
 
-class AnalysisComplexity(Enum):
+class AnalysisComplexity(str, Enum):
     """Analysis complexity levels for mobile optimization"""
     BASIC = "basic"           # Lightweight analysis for real-time
-    STANDARD = "standard"     # Balanced analysis for quality
-    COMPREHENSIVE = "comprehensive"  # Deep analysis for best results
-    EXPERT = "expert"         # Full analysis with all features
+    STANDARD = "standard"     # Balanced analysis for mobile
+    ADVANCED = "advanced"     # Comprehensive analysis
+    PREMIUM = "premium"       # Maximum quality analysis
+    ADAPTIVE = "adaptive"     # Dynamically adjusted based on device
 
-class AIProcessingType(Enum):
-    """AI processing types"""
-    CONTENT_ANALYSIS = "content_analysis"
-    ENHANCEMENT = "enhancement"
-    GENERATION = "generation"
-    CLASSIFICATION = "classification"
-    OPTIMIZATION = "optimization"
-    TRANSLATION = "translation"
-    SUMMARIZATION = "summarization"
-    RECOMMENDATION = "recommendation"
-
-class AIModelSize(Enum):
+class AIModelSize(str, Enum):
     """AI model sizes for mobile optimization"""
-    MICRO = "micro"       # < 1MB, ultra-fast
-    SMALL = "small"       # < 10MB, fast
+    NANO = "nano"       # Ultra-lightweight for mobile inference  
+    MICRO = "micro"     # Lightweight mobile models
+    SMALL = "small"     # Standard mobile models
+    MEDIUM = "medium"   # High-quality mobile models
+    LARGE = "large"     # Cloud processing preferred
+    XLARGE = "xlarge"   # Cloud processing only
+
+class ProcessingPriority(str, Enum):
+    """Processing priority levels"""
+    LOW = "low"
+    NORMAL = "normal"
+    HIGH = "high"
+    REAL_TIME = "real_time"
+    BACKGROUND = "background"
+
+class CacheStrategy(str, Enum):
+    """AI cache strategies for mobile"""
+    NONE = "none"
+    BASIC = "basic"
+    INTELLIGENT = "intelligent"
+    AGGRESSIVE = "aggressive"
+    ADAPTIVE = "adaptive"
+
+class CacheLevel(str, Enum):
+    """Cache storage levels"""
+    MEMORY = "memory"
+    DEVICE_STORAGE = "device_storage"
+    CLOUD_CACHE = "cloud_cache"
+    HYBRID = "hybrid"
+
+@dataclass
+class MobileAnalysisRequest:
+    """Comprehensive AI analysis request for mobile"""
+    request_id: str
+    content_id: str
+    creator_id: str
+    creator_type: str
+    content_type: str  # audio, video, image, text
+    content_path: str
+    mobile_device_id: str
+    device_type: str = "mobile"
+    network_type: str = "wifi"
+    analysis_types: List[AnalysisType] = field(default_factory=list)
+    complexity: AnalysisComplexity = AnalysisComplexity.STANDARD
+    model_size_preference: AIModelSize = AIModelSize.SMALL
+    priority: ProcessingPriority = ProcessingPriority.NORMAL
+    cache_strategy: CacheStrategy = CacheStrategy.INTELLIGENT
+    real_time_processing: bool = False
+    battery_efficient: bool = True
+    metadata: Dict[str, Any] = field(default_factory=dict)
+    created_at: datetime = field(default_factory=datetime.utcnow)
+
+@dataclass
+class AIProcessingRequest:
+    """AI processing request for mobile orchestration"""
+    request_id: str
+    content_id: str
+    creator_id: str
+    creator_type: str
+    content_type: str
+    content_path: str
+    mobile_device_id: str
+    device_type: str
+    network_type: str
+    ai_settings: Dict[str, Any] = field(default_factory=dict)
+    priority: ProcessingPriority = ProcessingPriority.NORMAL
+    metadata: Dict[str, Any] = field(default_factory=dict)
+@dataclass
+class ComprehensiveAnalysisResult:
+    """Comprehensive AI analysis result"""
+    analysis_id: str
+    content_id: str
+    analysis_types: List[AnalysisType]
+    visual_analysis: Optional[Dict[str, Any]] = None
+    audio_analysis: Optional[Dict[str, Any]] = None
+    text_analysis: Optional[Dict[str, Any]] = None
+    pattern_analysis: Optional[Dict[str, Any]] = None
+    sentiment_score: Optional[float] = None
+    quality_metrics: Dict[str, float] = field(default_factory=dict)
+    mobile_optimized: bool = True
+    processing_time: float = 0.0
+    confidence_score: float = 0.0
+    recommendations: List[str] = field(default_factory=list)
+    cache_status: str = "none"
+    created_at: datetime = field(default_factory=datetime.utcnow)
+
+@dataclass
+class AIProcessingResult:
+    """AI processing result for mobile orchestration"""
+    processing_id: str
+    request_id: str
+    content_id: str
+    status: str = "completed"
+    results: Dict[str, Any] = field(default_factory=dict)
+    processing_time: float = 0.0
+    model_used: str = "mobile_optimized"
+    cache_hit: bool = False
+    mobile_optimized: bool = True
+    created_at: datetime = field(default_factory=datetime.utcnow)
+
+@dataclass
+class CacheEntry:
+    """AI cache entry for mobile optimization"""
+    cache_key: str
+    content_hash: str
+    analysis_result: Dict[str, Any]
+    cache_level: CacheLevel
+    creation_time: datetime
+    last_accessed: datetime
+    access_count: int = 1
+    expiry_time: Optional[datetime] = None
+    size_bytes: int = 0
     MEDIUM = "medium"     # < 100MB, balanced
     LARGE = "large"       # < 1GB, high quality
     CLOUD = "cloud"       # Cloud-based, best quality

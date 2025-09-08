@@ -4,11 +4,15 @@
 Consolidated mobile content management providing upload, processing,
 orchestration, and intelligence for all content types on mobile devices.
 
-Consolidates:
-- Creator upload management with mobile optimizations
-- Content orchestration and workflow coordination
-- Content intelligence and analysis
-- Mobile media processing pipeline
+CONSOLIDATES FROM:
+- creator_upload_manager.py (Multi-format creator upload management)
+- mobile_content_orchestrator.py (Central mobile content orchestration)
+- content_intelligence_mobile.py (Mobile content intelligence and analysis)
+- mobile_media_processor.py (Mobile media processing pipeline)
+
+Business Logic Flow:
+Creator (mobile) → Multi-format Upload → AI Processing → Protection →
+SEO Optimization → Collaboration Matching → Gamification → Distribution
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -27,10 +31,11 @@ import aiofiles
 import os
 from pathlib import Path
 import mimetypes
+import base64
 
 logger = logging.getLogger(__name__)
 
-class CreatorType(Enum):
+class CreatorType(str, Enum):
     """Creator type enumeration"""
     MUSICIAN = "musician"
     BLOGGER = "blogger" 
@@ -38,9 +43,9 @@ class CreatorType(Enum):
     INFLUENCER = "influencer"
     COMEDIAN = "comedian"
 
-class ContentFormat(Enum):
+class ContentFormat(str, Enum):
     """Supported content formats"""
-    # Audio formats
+    # Audio formats - Musicians
     AUDIO_MP3 = "mp3"
     AUDIO_WAV = "wav"
     AUDIO_FLAC = "flac"
@@ -48,27 +53,31 @@ class ContentFormat(Enum):
     AUDIO_M4A = "m4a"
     AUDIO_OGG = "ogg"
     
-    # Video formats
+    # Video formats - Influencers, Comedians
     VIDEO_MP4 = "mp4"
     VIDEO_MOV = "mov"
     VIDEO_AVI = "avi"
     VIDEO_MKV = "mkv"
     VIDEO_WEBM = "webm"
     
-    # Image formats
+    # Image formats - Photographers
     IMAGE_JPG = "jpg"
+    IMAGE_JPEG = "jpeg"
     IMAGE_PNG = "png"
     IMAGE_WEBP = "webp"
     IMAGE_HEIC = "heic"
     IMAGE_RAW = "raw"
     IMAGE_TIFF = "tiff"
     
-    # Text formats
+    # Text formats - Bloggers
     TEXT_TXT = "txt"
     TEXT_MD = "md"
     TEXT_HTML = "html"
     TEXT_PDF = "pdf"
     TEXT_DOCX = "docx"
+    
+    # Universal
+    UNKNOWN = "unknown"
 
 class UploadStatus(Enum):
     """Upload status enumeration"""
@@ -138,6 +147,9 @@ class ContentUploadRequest:
     metadata: Dict[str, Any] = field(default_factory=dict)
     processing_preferences: Dict[str, Any] = field(default_factory=dict)
     upload_method: UploadMethod = UploadMethod.CHUNKED
+    device_type: str = "mobile"
+    network_type: str = "wifi"
+    battery_level: Optional[int] = None
 
 @dataclass
 class UploadProgress:
@@ -150,6 +162,94 @@ class UploadProgress:
     estimated_completion: Optional[datetime] = None
     current_chunk: Optional[int] = None
     total_chunks: Optional[int] = None
+    upload_speed: Optional[float] = None
+    retry_count: int = 0
+
+@dataclass
+class UploadChunk:
+    """Upload chunk information"""
+    chunk_id: str
+    sequence_number: int
+    chunk_size: int
+    chunk_hash: str
+    upload_status: UploadStatus
+    upload_time: Optional[datetime] = None
+    retry_count: int = 0
+    error_message: Optional[str] = None
+
+@dataclass
+class CreatorUploadSettings:
+    """Creator-specific upload settings"""
+    creator_id: str
+    creator_type: CreatorType
+    max_file_size: int = 100 * 1024 * 1024  # 100MB
+    allowed_formats: List[ContentFormat] = field(default_factory=list)
+    chunk_size: int = 1024 * 1024  # 1MB
+    concurrent_uploads: int = 3
+    auto_retry: bool = True
+    compression_enabled: bool = True
+    mobile_optimizations: List[MobileOptimization] = field(default_factory=list)
+
+@dataclass
+class MobileContentRequest:
+    """Mobile content processing request"""
+    content_id: str
+    creator_id: str
+    creator_type: CreatorType
+    content_type: str
+    file_path: str
+    mobile_device_id: str
+    device_type: str = "mobile"
+    network_type: str = "wifi"
+    battery_level: Optional[int] = None
+    upload_settings: Dict[str, Any] = field(default_factory=dict)
+    workflow_preferences: Dict[str, Any] = field(default_factory=dict)
+    collaboration_settings: Dict[str, Any] = field(default_factory=dict)
+    mobile_optimizations: List[MobileOptimization] = field(default_factory=list)
+    metadata: Dict[str, Any] = field(default_factory=dict)
+    created_at: datetime = field(default_factory=datetime.utcnow)
+
+@dataclass
+class WorkflowStatus:
+    """Mobile workflow status tracking"""
+    content_id: str
+    current_stage: WorkflowStage
+    status: str  # processing, completed, failed, paused
+    progress_percentage: float
+    mobile_optimizations_applied: List[MobileOptimization]
+    processing_results: Dict[str, Any] = field(default_factory=dict)
+    collaboration_data: Dict[str, Any] = field(default_factory=dict)
+    gamification_rewards: Dict[str, Any] = field(default_factory=dict)
+    error_log: List[Dict[str, Any]] = field(default_factory=list)
+    started_at: datetime = field(default_factory=datetime.utcnow)
+    completed_at: Optional[datetime] = None
+
+@dataclass
+class ProcessingRequest:
+    """Mobile media processing request"""
+    content_id: str
+    creator_id: str
+    input_path: str
+    output_path: str
+    content_format: ContentFormat
+    quality_level: QualityLevel
+    mobile_optimizations: List[MobileOptimization]
+    device_constraints: Dict[str, Any] = field(default_factory=dict)
+    processing_settings: Dict[str, Any] = field(default_factory=dict)
+
+@dataclass
+class ProcessingResult:
+    """Mobile media processing result"""
+    processing_id: str
+    content_id: str
+    status: ProcessingStatus
+    output_paths: List[str]
+    applied_optimizations: List[MobileOptimization]
+    quality_metrics: Dict[str, float]
+    processing_time: float
+    file_size_reduction: float
+    mobile_compatibility_score: float
+    error_details: Optional[str] = None
     upload_speed: Optional[float] = None
 
 @dataclass

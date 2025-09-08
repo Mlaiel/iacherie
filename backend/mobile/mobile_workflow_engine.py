@@ -1,12 +1,16 @@
 """Mobile Workflow Engine - Unified Workflow and Automation System
 ================================================================
 
-Consolidated mobile workflow providing creator workflow management and 
-mobile workflow automation for comprehensive workflow orchestration.
+Consolidated mobile workflow providing creator workflow management and automation
+for streamlined mobile content creation and collaboration processes.
 
-Consolidates:
-- Creator workflow mobile with creator-specific workflow management
-- Mobile workflow automation with intelligent automation rules
+CONSOLIDATES FROM:
+- creator_workflow_mobile.py (Creator workflow management and state tracking)
+- mobile_workflow_automation.py (Workflow automation and rule-based processing)
+
+Business Logic Integration:
+Creator Action → Workflow State Analysis → Automation Rule Evaluation →
+Process Execution → State Updates → Performance Monitoring → Optimization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
