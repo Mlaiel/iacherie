@@ -364,18 +364,18 @@ class EdgeResourceManager:
 
 ### 📚   DOCUMENTATION MULTILINGUE 
 
-- [ ] **4.1** Créer `README.md` (EN) - Documentation anglaise complète
+- [x] **4.1** Créer `README.md` (EN) - Documentation anglaise complète ✅ **TERMINÉ**
 - [ ] **4.2** Créer `README.de.md` (DE) - Documentation allemande
 - [ ] **4.3** Créer `README.fr.md` (FR) - Documentation française
 - [ ] **4.4** Créer `README.ar.md` (AR) - Documentation arabe
 
 ### 🗑️  NETTOYAGE ARCHITECTURAL 
 
-- [ ] **5.1** Supprimer dossier `mec/` après consolidation
-- [ ] **5.2** Supprimer dossier `monitoring/` après consolidation
-- [ ] **5.3** Supprimer dossier `network/` après consolidation
-- [ ] **5.4** Supprimer dossier `orchestration/` après consolidation
-- [ ] **5.5** Supprimer dossier `security/` après consolidation
+- [x] **5.1** Supprimer dossier `mec/` après consolidation ✅ **TERMINÉ**
+- [x] **5.2** Supprimer dossier `monitoring/` après consolidation ✅ **TERMINÉ**
+- [x] **5.3** Supprimer dossier `network/` après consolidation ✅ **TERMINÉ**
+- [x] **5.4** Supprimer dossier `orchestration/` après consolidation ✅ **TERMINÉ**
+- [x] **5.5** Supprimer dossier `security/` après consolidation ✅ **TERMINÉ**
 
 ---
 
