@@ -89,10 +89,10 @@ except ImportError:
     BUSINESS_AVAILABLE = False
 
 try:
-    from . import environments
-    ENVIRONMENTS_AVAILABLE = True
+    from . import environment_manager
+    ENVIRONMENT_MANAGER_AVAILABLE = True
 except ImportError:
-    ENVIRONMENTS_AVAILABLE = False
+    ENVIRONMENT_MANAGER_AVAILABLE = False
 
 # Version information
 __version__ = "1.0.0"
@@ -124,7 +124,7 @@ if INTEGRATIONS_AVAILABLE:
     available_modules.append("integrations")
 if BUSINESS_AVAILABLE:
     available_modules.append("business")
-if ENVIRONMENTS_AVAILABLE:
-    available_modules.append("environments")
+if ENVIRONMENT_MANAGER_AVAILABLE:
+    available_modules.append("environment_manager")
 
 __all__ = available_modules
