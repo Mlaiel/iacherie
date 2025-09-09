@@ -46,39 +46,126 @@ NEW CONSOLIDATED MODULES (12 Enterprise Modules):
 - advanced_integrations.py: Vector DB, AI models, blockchain integrations
 """
 
-# Core database components
-from .connections import *
-from .models import *
-from .migrations import *
-from .pools import *
+import logging
 
-# Caching and performance
-from .cache import *
+logger = logging.getLogger(__name__)
 
-# Security and monitoring
-from .security import *
-from .monitoring import *
+# Core database components - with fallbacks
+try:
+    from .connections import *
+except ImportError as e:
+    logger.warning(f"❌ Database connections not available: {e}")
 
-# Analytics and optimization
-from .analytics import *
-from .optimization import *
+try:
+    from .models import *
+except ImportError as e:
+    logger.warning(f"❌ Database models not available: {e}")
 
-# Infrastructure
-from .backup import *
-from .replication import *
+try:
+    from .migrations import *
+except ImportError as e:
+    logger.warning(f"❌ Database migrations not available: {e}")
 
-# NEW CONSOLIDATED ENTERPRISE MODULES
-from .fingerprinting_protection import *
-from .monetization_enterprise import *
-from .collaboration_marketplace import *
-from .gamification_engagement import *
-from .seo_multiplatform import *
-from .analytics_intelligence import *
-from .distribution_platforms import *
-from .security_compliance import *
-from .multilingual_localization import *
-from .infrastructure_performance import *
-from .advanced_integrations import *
+try:
+    from .pools import *
+except ImportError as e:
+    logger.warning(f"❌ Database pools not available: {e}")
+
+# Caching and performance - with fallbacks
+try:
+    from .cache import *
+except ImportError as e:
+    logger.warning(f"❌ Database cache not available: {e}")
+
+# Security and monitoring - with fallbacks
+try:
+    from .security import *
+except ImportError as e:
+    logger.warning(f"❌ Database security not available: {e}")
+
+try:
+    from .monitoring import *
+except ImportError as e:
+    logger.warning(f"❌ Database monitoring not available: {e}")
+
+# Analytics and optimization - with fallbacks
+try:
+    from .analytics import *
+except ImportError as e:
+    logger.warning(f"❌ Database analytics not available: {e}")
+
+try:
+    from .optimization import *
+except ImportError as e:
+    logger.warning(f"❌ Database optimization not available: {e}")
+
+# Infrastructure - with fallbacks
+try:
+    from .backup import *
+except ImportError as e:
+    logger.warning(f"❌ Database backup not available: {e}")
+
+try:
+    from .replication import *
+except ImportError as e:
+    logger.warning(f"❌ Database replication not available: {e}")
+
+# NEW CONSOLIDATED ENTERPRISE MODULES - with fallbacks
+try:
+    from .fingerprinting_protection import *
+except ImportError as e:
+    logger.warning(f"❌ Fingerprinting protection not available: {e}")
+
+try:
+    from .monetization_enterprise import *
+except ImportError as e:
+    logger.warning(f"❌ Monetization enterprise not available: {e}")
+
+try:
+    from .collaboration_marketplace import *
+except ImportError as e:
+    logger.warning(f"❌ Collaboration marketplace not available: {e}")
+
+try:
+    from .gamification_engagement import *
+except ImportError as e:
+    logger.warning(f"❌ Gamification engagement not available: {e}")
+
+try:
+    from .seo_multiplatform import *
+except ImportError as e:
+    logger.warning(f"❌ SEO multiplatform not available: {e}")
+
+try:
+    from .analytics_intelligence import *
+except ImportError as e:
+    logger.warning(f"❌ Analytics intelligence not available: {e}")
+
+try:
+    from .distribution_platforms import *
+except ImportError as e:
+    logger.warning(f"❌ Distribution platforms not available: {e}")
+
+try:
+    from .security_compliance import *
+except ImportError as e:
+    logger.warning(f"❌ Security compliance not available: {e}")
+
+try:
+    from .multilingual_localization import *
+except ImportError as e:
+    logger.warning(f"❌ Multilingual localization not available: {e}")
+
+try:
+    from .infrastructure_performance import *
+except ImportError as e:
+    logger.warning(f"❌ Infrastructure performance not available: {e}")
+
+try:
+    from .advanced_integrations import *
+except ImportError as e:
+    logger.warning(f"❌ Advanced integrations not available: {e}")
+    # Define fallback classes if needed
 
 __all__ = [
     # Core Components
