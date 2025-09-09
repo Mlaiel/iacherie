@@ -28,14 +28,30 @@ from typing import Dict, Any, List, Optional, Union
 import asyncio
 import logging
 
-# Core processor imports
-from .audio_processor import AudioProcessor
-from .video_processor import VideoProcessor
-from .image_processor import ImageProcessor
-from .text_processor import TextProcessor
-from .metadata_processor import MetadataProcessor
-from .unified_converter import UnifiedConverter
-from .workflow_orchestrator import WorkflowOrchestrator
+# Core processor imports with graceful error handling
+_available_processors = {}
+
+def _safe_import_processor(module_name, class_name):
+    """Safely import a processor with error handling"""
+    try:
+        module = __import__(f".{module_name}", package=__name__, fromlist=[class_name])
+        processor_class = getattr(module, class_name)
+        globals()[class_name] = processor_class
+        _available_processors[class_name] = processor_class
+        logger.info(f"Successfully loaded {class_name}")
+        return processor_class
+    except Exception as e:
+        logger.warning(f"Failed to load {class_name}: {e}")
+        return None
+
+# Import processors safely
+AudioProcessor = _safe_import_processor("audio_processor", "AudioProcessor")
+VideoProcessor = _safe_import_processor("video_processor", "VideoProcessor")
+ImageProcessor = _safe_import_processor("image_processor", "ImageProcessor")
+TextProcessor = _safe_import_processor("text_processor", "TextProcessor")
+MetadataProcessor = _safe_import_processor("metadata_processor", "MetadataProcessor")
+UnifiedConverter = _safe_import_processor("unified_converter", "UnifiedConverter")
+WorkflowOrchestrator = _safe_import_processor("workflow_orchestrator", "WorkflowOrchestrator")
 
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
@@ -88,17 +104,51 @@ class ProcessorRegistry:
         self._initialize_processors()
     
     def _initialize_processors(self):
-        """
-Initialize all processor instances"""
-        self._processors = {
-            'audio': AudioProcessor(),
-            'video': VideoProcessor(),
-            'image': ImageProcessor(),
-            'text': TextProcessor(),
-            'metadata': MetadataProcessor(),
-            'unified_converter': UnifiedConverter(),
-            'workflow_orchestrator': WorkflowOrchestrator()
-        }
+        """Initialize all processor instances"""
+        self._processors = {}
+        
+        # Only initialize available processors
+        if AudioProcessor:
+            try:
+                self._processors['audio'] = AudioProcessor()
+            except Exception as e:
+                logger.warning(f"Failed to initialize AudioProcessor: {e}")
+        
+        if VideoProcessor:
+            try:
+                self._processors['video'] = VideoProcessor()
+            except Exception as e:
+                logger.warning(f"Failed to initialize VideoProcessor: {e}")
+        
+        if ImageProcessor:
+            try:
+                self._processors['image'] = ImageProcessor()
+            except Exception as e:
+                logger.warning(f"Failed to initialize ImageProcessor: {e}")
+        
+        if TextProcessor:
+            try:
+                self._processors['text'] = TextProcessor()
+            except Exception as e:
+                logger.warning(f"Failed to initialize TextProcessor: {e}")
+        
+        if MetadataProcessor:
+            try:
+                self._processors['metadata'] = MetadataProcessor()
+            except Exception as e:
+                logger.warning(f"Failed to initialize MetadataProcessor: {e}")
+        
+        if UnifiedConverter:
+            try:
+                self._processors['unified_converter'] = UnifiedConverter()
+            except Exception as e:
+                logger.warning(f"Failed to initialize UnifiedConverter: {e}")
+        
+        if WorkflowOrchestrator:
+            try:
+                self._processors['workflow_orchestrator'] = WorkflowOrchestrator()
+            except Exception as e:
+                logger.warning(f"Failed to initialize WorkflowOrchestrator: {e}")
         
         logger.info(f"Initialized {len(self._processors)} processors")
     
@@ -165,25 +215,23 @@ async def process_content(
         logger.error(f"Error processing {content_type} content: {str(e)}")
         raise
 
-# Export all public components
-__all__ = [
-    # Core processors
-    'AudioProcessor',
-    'VideoProcessor', 
-    'ImageProcessor',
-    'TextProcessor',
-    'MetadataProcessor',
-    'UnifiedConverter',
-    'WorkflowOrchestrator',
-    
-    # Registry and functions
+# Export all available components
+__all__ = []
+
+# Add available processors to exports
+for processor_name in ['AudioProcessor', 'VideoProcessor', 'ImageProcessor', 
+                      'TextProcessor', 'MetadataProcessor', 'UnifiedConverter', 
+                      'WorkflowOrchestrator']:
+    if globals().get(processor_name):
+        __all__.append(processor_name)
+
+# Always export these components
+__all__.extend([
     'ProcessorRegistry',
-    'processor_registry',
+    'processor_registry', 
     'get_processor',
     'list_processors',
     'process_content',
-    
-    # Constants
     'SUPPORTED_FORMATS',
     'DEFAULT_CONFIG'
-]
+])

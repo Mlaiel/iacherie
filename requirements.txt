@@ -25,6 +25,7 @@ pydantic-settings==2.1.0
 # Core Dependencies for Startup
 python-dotenv==1.0.0
 python-multipart==0.0.6
+aiofiles>=23.2.0
 
 # Database & Cache (Core)
 asyncpg==0.29.0
