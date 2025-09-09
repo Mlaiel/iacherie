@@ -540,3 +540,221 @@ Initialize calculator with dependencies"""
                 )
         
         return filtered_distribution
+
+
+# ==============================================================================
+# USAGE TRACKING FUNCTIONALITY 
+# ==============================================================================
+# Merged from usage_tracker.py to resolve architectural file count constraint
+# This provides real-time usage tracking that feeds into royalty calculations
+
+from enum import Enum
+import asyncio
+
+class TrackingEvent(Enum):
+    """Usage tracking event types"""
+    PLAY = "play"
+    STREAM = "stream"
+    DOWNLOAD = "download"
+    VIEW = "view"
+    IMPRESSION = "impression"
+    CLICK = "click"
+    SHARE = "share"
+    LIKE = "like"
+    COMMENT = "comment"
+    SUBSCRIBE = "subscribe"
+
+class TrackingSource(Enum):
+    """Tracking data sources"""
+    DIRECT_API = "direct_api"
+    PLATFORM_WEBHOOK = "platform_webhook"
+    BATCH_IMPORT = "batch_import"
+    CRAWLER = "crawler"
+    SDK = "sdk"
+    PIXEL_TRACKING = "pixel_tracking"
+
+class UsageTracker:
+    """
+    Industrial-grade usage tracking system with real-time monitoring,
+    analytics, and compliance validation capabilities.
+    Integrated with royalty calculations for seamless revenue tracking.
+    """
+    
+    def __init__(
+        self,
+        repository: LicensingRepository = None,
+        cache_manager: CacheManager = None
+    ):
+        """Initialize usage tracker with dependencies"""
+        self.repository = repository or LicensingRepository()
+        self.cache_manager = cache_manager or CacheManager()
+        self._logger = logger
+        
+        # Tracking configuration
+        self.batch_size = 1000
+        self.flush_interval = 60  # seconds
+        self.enable_real_time_compliance = True
+        
+        # Internal tracking buffer
+        self._usage_buffer = []
+        self._buffer_lock = asyncio.Lock()
+    
+    async def track_usage_event(
+        self,
+        license_agreement_id: UUID,
+        event_type: str,
+        metadata: Dict[str, Any] = None,
+        timestamp: datetime = None,
+        source: str = "direct_api"
+    ) -> bool:
+        """Track a usage event for licensed content"""
+        try:
+            usage_data = {
+                'license_agreement_id': license_agreement_id,
+                'event_type': event_type,
+                'metadata': metadata or {},
+                'timestamp': timestamp or datetime.utcnow(),
+                'source': source,
+                'tracked_at': datetime.utcnow()
+            }
+            
+            # Add to buffer for batch processing
+            async with self._buffer_lock:
+                self._usage_buffer.append(usage_data)
+                
+                # Flush if buffer is full
+                if len(self._usage_buffer) >= self.batch_size:
+                    await self._flush_usage_buffer()
+            
+            self._logger.info(f"Usage event tracked: {event_type} for license {license_agreement_id}")
+            return True
+            
+        except Exception as e:
+            self._logger.error(f"Failed to track usage event: {str(e)}")
+            return False
+    
+    async def get_usage_statistics(
+        self,
+        license_agreement_id: UUID,
+        start_date: date = None,
+        end_date: date = None,
+        event_types: List[str] = None
+    ) -> Dict[str, Any]:
+        """Get usage statistics for a license agreement"""
+        try:
+            # Query usage data from repository
+            usage_records = await self.repository.get_usage_tracking(
+                license_agreement_id=license_agreement_id,
+                start_date=start_date or (date.today() - timedelta(days=30)),
+                end_date=end_date or date.today(),
+                event_types=event_types
+            )
+            
+            # Calculate statistics
+            stats = {
+                'total_events': len(usage_records),
+                'event_breakdown': {},
+                'daily_usage': {},
+                'peak_usage_times': [],
+                'geographic_distribution': {},
+                'platform_breakdown': {}
+            }
+            
+            # Process usage records
+            for record in usage_records:
+                # Event type breakdown
+                event_type = record.event_type
+                stats['event_breakdown'][event_type] = stats['event_breakdown'].get(event_type, 0) + 1
+                
+                # Daily usage
+                usage_date = record.timestamp.date().isoformat()
+                stats['daily_usage'][usage_date] = stats['daily_usage'].get(usage_date, 0) + 1
+                
+                # Platform breakdown
+                platform = record.metadata.get('platform', 'unknown')
+                stats['platform_breakdown'][platform] = stats['platform_breakdown'].get(platform, 0) + 1
+            
+            return stats
+            
+        except Exception as e:
+            self._logger.error(f"Failed to get usage statistics: {str(e)}")
+            raise TrackingError(f"Failed to retrieve usage statistics: {str(e)}")
+    
+    async def _flush_usage_buffer(self):
+        """Flush usage buffer to persistent storage"""
+        try:
+            if not self._usage_buffer:
+                return
+            
+            # Create usage tracking records
+            tracking_records = []
+            for usage_data in self._usage_buffer:
+                tracking_record = LicenseUsageTracking(
+                    license_agreement_id=usage_data['license_agreement_id'],
+                    event_type=usage_data['event_type'],
+                    timestamp=usage_data['timestamp'],
+                    metadata=usage_data['metadata'],
+                    source=usage_data['source']
+                )
+                tracking_records.append(tracking_record)
+            
+            # Batch save to repository
+            await self.repository.save_usage_tracking_batch(tracking_records)
+            
+            # Clear buffer
+            self._usage_buffer.clear()
+            
+            self._logger.info(f"Flushed {len(tracking_records)} usage records to storage")
+            
+        except Exception as e:
+            self._logger.error(f"Failed to flush usage buffer: {str(e)}")
+    
+    async def calculate_usage_based_royalties(
+        self,
+        license_agreement: LicenseAgreement,
+        calculation_period: Tuple[date, date]
+    ) -> List[RoyaltyCalculation]:
+        """Calculate royalties based on tracked usage data"""
+        try:
+            start_date, end_date = calculation_period
+            
+            # Get usage statistics for the period
+            usage_stats = await self.get_usage_statistics(
+                license_agreement.id,
+                start_date=start_date,
+                end_date=end_date
+            )
+            
+            # Create royalty calculator instance
+            calculator = RoyaltyCalculator(repository=self.repository)
+            
+            # Calculate royalties based on usage
+            royalty_calculations = []
+            
+            for event_type, count in usage_stats['event_breakdown'].items():
+                # Calculate royalty amount based on usage count and license terms
+                usage_rate = license_agreement.usage_rates.get(event_type, Decimal('0.01'))
+                royalty_amount = Decimal(str(count)) * usage_rate
+                
+                if royalty_amount > 0:
+                    royalty_calc = await calculator.calculate_royalty(
+                        license_agreement=license_agreement,
+                        usage_data={
+                            'event_type': event_type,
+                            'usage_count': count,
+                            'rate': usage_rate
+                        },
+                        calculation_date=end_date
+                    )
+                    royalty_calculations.append(royalty_calc)
+            
+            return royalty_calculations
+            
+        except Exception as e:
+            self._logger.error(f"Failed to calculate usage-based royalties: {str(e)}")
+            raise CalculationError(f"Usage-based royalty calculation failed: {str(e)}")
+
+# Custom exceptions for usage tracking
+class TrackingError(Exception):
+    """Exception raised for tracking-related errors"""
+    pass

@@ -37,13 +37,11 @@ from .models import (
 
 from .repository import LicensingRepository
 
-from .calculator import RoyaltyCalculator
+from .calculator import RoyaltyCalculator, UsageTracker
 
 from .compliance import ComplianceEngine
 
 from .contract_generator import ContractGenerator
-
-from .usage_tracker import UsageTracker
 
 from .payment_processor import PaymentProcessor
 

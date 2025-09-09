@@ -23,7 +23,7 @@ from .models import (
     PaymentRecord, ComplianceReport, RightsOwnership,
     ContractTerms, RevenueDistribution, LicenseStatus, PaymentStatus
 )
-from ..models.content_model import Content
+from ..models.content_model import ContentModel as Content
 from ...core.database import get_db_session
 from ...core.exceptions import (
     DatabaseError, ValidationError, NotFoundError

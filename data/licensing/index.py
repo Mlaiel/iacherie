@@ -29,10 +29,9 @@ from .models import (
     LicenseStatus, PaymentStatus, ComplianceStatus, UsageType
 )
 from .repository import LicensingRepository
-from .calculator import RoyaltyCalculator
+from .calculator import RoyaltyCalculator, UsageTracker
 from .compliance import ComplianceManager
 from .contract_generator import ContractGenerator
-from .usage_tracker import UsageTracker
 from .payment_processor import PaymentProcessor, PaymentInstruction, PaymentResult
 
 from ...core.exceptions import (
