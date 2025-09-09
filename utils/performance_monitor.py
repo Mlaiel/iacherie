@@ -66,23 +66,25 @@ Set memory limit"""
         """
 Check current memory usage"""
         try:
-            import psutil
-            process = psutil.Process()
-            memory_info = process.memory_info()
-            current_usage = memory_info.rss  # Resident Set Size in bytes
-            
-            if self.memory_limit:
-                usage_percentage = (current_usage / self.memory_limit) * 100
-                if usage_percentage > 80:
-                    logger.warning(f"High memory usage: {usage_percentage:.1f}% ({current_usage / 1024 / 1024:.2f} MB)")
-                return usage_percentage
-            else:
-                logger.info(f"Current memory usage: {current_usage / 1024 / 1024:.2f} MB")
-                return float(current_usage)
-        except ImportError:
-            # Fallback if psutil is not available
-            logger.warning("psutil not available, using basic memory monitoring")
-            return 0.0
+            # Try to import psutil
+            try:
+                import psutil
+                process = psutil.Process()
+                memory_info = process.memory_info()
+                current_usage = memory_info.rss  # Resident Set Size in bytes
+                
+                if hasattr(self, 'memory_limit') and self.memory_limit:
+                    usage_percentage = (current_usage / self.memory_limit) * 100
+                    if usage_percentage > 80:
+                        logger.warning(f"High memory usage: {usage_percentage:.1f}% ({current_usage / 1024 / 1024:.2f} MB)")
+                    return usage_percentage
+                else:
+                    logger.info(f"Current memory usage: {current_usage / 1024 / 1024:.2f} MB")
+                    return float(current_usage)
+            except ImportError:
+                # Fallback if psutil is not available
+                logger.warning("psutil not available, using basic memory monitoring")
+                return 0.0
         except Exception as e:
             logger.error(f"Error checking memory usage: {e}")
             return 0.0
