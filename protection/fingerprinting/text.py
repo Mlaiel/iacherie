@@ -34,38 +34,76 @@ from collections import Counter
 try:
     import torch
     import torch.nn as nn
+    import numpy as np
     from transformers import (
         AutoTokenizer, AutoModel, 
         BertTokenizer, BertModel,
         RobertaTokenizer, RobertaModel,
         pipeline
     )
+    from sentence_transformers import SentenceTransformer
     from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
     from sklearn.metrics.pairwise import cosine_similarity
     from sklearn.decomposition import LatentDirichletAllocation
-    import nltk
-    from nltk.corpus import stopwords
-    from nltk.tokenize import word_tokenize, sent_tokenize
-    from nltk.stem import PorterStemmer, WordNetLemmatizer
-    from nltk.util import ngrams
-    import spacy
-    from langdetect import detect, LangDetectError
-    import textstat
-    from sentence_transformers import SentenceTransformer
+    from sklearn.cluster import KMeans
+    import faiss
+    
+    # NLP libraries
+    NLP_AVAILABLE = True
+    try:
+        import nltk
+        from nltk.corpus import stopwords
+        from nltk.tokenize import word_tokenize, sent_tokenize
+        from nltk.stem import PorterStemmer, WordNetLemmatizer
+        from nltk.util import ngrams
+        
+        # Download required NLTK data
+        try:
+            nltk.data.find('tokenizers/punkt')
+        except LookupError:
+            nltk.download('punkt', quiet=True)
+        
+        try:
+            nltk.data.find('corpora/stopwords')
+        except LookupError:
+            nltk.download('stopwords', quiet=True)
+            
+        try:
+            nltk.data.find('corpora/wordnet')
+        except LookupError:
+            nltk.download('wordnet', quiet=True)
+            
+    except ImportError:
+        NLP_AVAILABLE = False
+        logging.warning("NLTK not available - using basic text processing")
+    
+    # Language detection
+    LANG_DETECT_AVAILABLE = True
+    try:
+        from langdetect import detect, detect_langs
+        import polyglot
+        from polyglot.detect import Detector
+    except ImportError:
+        LANG_DETECT_AVAILABLE = False
+        logging.warning("Language detection libraries not available")
+    
+    # Fuzzy matching for paraphrase detection
+    FUZZY_AVAILABLE = True
+    try:
+        from fuzzywuzzy import fuzz, process
+        import textdistance
+    except ImportError:
+        FUZZY_AVAILABLE = False
+        logging.warning("Fuzzy matching libraries not available")
+        
 except ImportError as e:
-    logging.warning(f"Some text dependencies not available: {e}")
+    logging.error(f"Critical text processing dependencies missing: {e}")
+    logging.error("Please install: pip install torch transformers sentence-transformers sklearn nltk")
+    NLP_AVAILABLE = False
+    LANG_DETECT_AVAILABLE = False
+    FUZZY_AVAILABLE = False
 
 from ..models import FingerprintResult, SimilarityMatch
-
-# Import multilingual support
-try:
-    from ...conversational.multilingual_support.enhanced_644_language_support import (
-        Enhanced644LanguageSupport, LanguageProfile, LanguageDetectionResult
-    )
-    MULTILINGUAL_AVAILABLE = True
-except ImportError:
-    MULTILINGUAL_AVAILABLE = False
-    logging.warning("Enhanced 644 language support not available")
 
 logger = logging.getLogger(__name__)
 
@@ -84,6 +122,573 @@ class TextMetadata:
     lexical_diversity: Optional[float]
     avg_sentence_length: Optional[float]
     complexity_score: Optional[float]
+
+class EnterpriseTextFingerprinter:
+    """
+    Enterprise-grade text fingerprinting with BERT semantic similarity and 644 language support.
+    Includes paraphrase detection, style analysis, and anti-spinning protection.
+    """
+    
+    def __init__(self, model_name: str = "sentence-transformers/all-MiniLM-L6-v2"):
+        self.model_name = model_name
+        self.sentence_model = None
+        self.bert_model = None
+        self.bert_tokenizer = None
+        self.tfidf_vectorizer = None
+        self.faiss_index = None
+        self.language_support = None
+        
+        # Initialize models
+        self._initialize_models()
+        self._initialize_faiss_index()
+        
+        # Initialize multilingual support if available
+        try:
+            self.language_support = Enhanced644LanguageSupport()
+        except:
+            self.language_support = None
+    
+    def _initialize_models(self):
+        """Initialize BERT and sentence transformer models."""
+        try:
+            # Sentence transformer for semantic similarity
+            self.sentence_model = SentenceTransformer(self.model_name)
+            logger.info(f"Sentence transformer loaded: {self.model_name}")
+            
+            # BERT for detailed analysis
+            self.bert_tokenizer = AutoTokenizer.from_pretrained("bert-base-multilingual-cased")
+            self.bert_model = AutoModel.from_pretrained("bert-base-multilingual-cased")
+            self.bert_model.eval()
+            
+            # TF-IDF for traditional analysis
+            self.tfidf_vectorizer = TfidfVectorizer(
+                max_features=5000,
+                ngram_range=(1, 3),
+                stop_words='english'
+            )
+            
+            logger.info("Text fingerprinting models initialized successfully")
+            
+        except Exception as e:
+            logger.error(f"Model initialization failed: {e}")
+            # Fallback to basic models
+            self._initialize_fallback_models()
+    
+    def _initialize_fallback_models(self):
+        """Initialize fallback models when main models fail."""
+        try:
+            self.tfidf_vectorizer = TfidfVectorizer(
+                max_features=1000,
+                ngram_range=(1, 2)
+            )
+            logger.info("Fallback TF-IDF model initialized")
+        except Exception as e:
+            logger.error(f"Fallback model initialization failed: {e}")
+    
+    def _initialize_faiss_index(self):
+        """Initialize FAISS index for text similarity search."""
+        try:
+            # Use 384 dimensions for all-MiniLM-L6-v2 or 768 for BERT
+            dimension = 384 if "MiniLM" in self.model_name else 768
+            self.faiss_index = faiss.IndexFlatIP(dimension)  # Inner product for cosine similarity
+            logger.info(f"FAISS text index initialized with {dimension} dimensions")
+        except Exception as e:
+            logger.error(f"FAISS text index initialization failed: {e}")
+    
+    def extract_comprehensive_fingerprint(self, text: str, text_id: Optional[str] = None) -> Dict[str, Any]:
+        """
+        Extract comprehensive text fingerprint with semantic and structural analysis.
+        
+        Args:
+            text: Input text content
+            text_id: Optional identifier for the text
+            
+        Returns:
+            Dictionary containing all fingerprint data and features
+        """
+        try:
+            # Preprocessing
+            cleaned_text = self._preprocess_text(text)
+            
+            # Semantic embeddings
+            semantic_features = self._extract_semantic_features(cleaned_text)
+            
+            # Traditional NLP features
+            nlp_features = self._extract_nlp_features(cleaned_text)
+            
+            # Structural analysis
+            structural_features = self._analyze_text_structure(text, cleaned_text)
+            
+            # Language detection and analysis
+            language_features = self._analyze_language(text)
+            
+            # Paraphrase detection features
+            paraphrase_features = self._extract_paraphrase_features(cleaned_text)
+            
+            # Style analysis
+            style_features = self._analyze_writing_style(cleaned_text)
+            
+            # Anti-spinning features
+            spinning_features = self._detect_spinning_patterns(text, cleaned_text)
+            
+            # Metadata extraction
+            metadata = self._extract_text_metadata(text)
+            
+            # Create combined fingerprint
+            combined_fingerprint = self._create_combined_fingerprint(
+                semantic_features, nlp_features, structural_features
+            )
+            
+            fingerprint_data = {
+                "text_id": text_id or hashlib.sha256(text.encode()).hexdigest()[:16],
+                "semantic_features": semantic_features,
+                "nlp_features": nlp_features,
+                "structural_features": structural_features,
+                "language_features": language_features,
+                "paraphrase_features": paraphrase_features,
+                "style_features": style_features,
+                "spinning_features": spinning_features,
+                "metadata": metadata,
+                "combined_fingerprint": combined_fingerprint,
+                "timestamp": datetime.utcnow().isoformat(),
+                "original_text_hash": hashlib.sha256(text.encode()).hexdigest()
+            }
+            
+            # Add to FAISS index for similarity search
+            if self.faiss_index and semantic_features.get("sentence_embedding"):
+                embedding = np.array(semantic_features["sentence_embedding"]).reshape(1, -1)
+                self.faiss_index.add(embedding.astype(np.float32))
+            
+            return fingerprint_data
+            
+        except Exception as e:
+            logger.error(f"Comprehensive text fingerprinting failed: {e}")
+            return {"error": str(e)}
+    
+    def _preprocess_text(self, text: str) -> str:
+        """Preprocess text for analysis."""
+        try:
+            # Normalize unicode
+            text = unicodedata.normalize('NFKD', text)
+            
+            # Remove excessive whitespace
+            text = re.sub(r'\s+', ' ', text)
+            
+            # Remove non-printable characters but keep basic punctuation
+            text = re.sub(r'[^\w\s\.\,\!\?\;\:\-\(\)\[\]\{\}\"\']+', '', text)
+            
+            return text.strip()
+            
+        except Exception as e:
+            logger.error(f"Text preprocessing failed: {e}")
+            return text
+    
+    def _extract_semantic_features(self, text: str) -> Dict[str, Any]:
+        """Extract semantic features using BERT and sentence transformers."""
+        try:
+            features = {}
+            
+            # Sentence transformer embeddings
+            if self.sentence_model:
+                sentence_embedding = self.sentence_model.encode(text, convert_to_numpy=True)
+                features["sentence_embedding"] = sentence_embedding.tolist()
+                features["embedding_model"] = self.model_name
+            
+            # BERT embeddings for detailed analysis
+            if self.bert_model and self.bert_tokenizer:
+                inputs = self.bert_tokenizer(
+                    text, 
+                    return_tensors="pt", 
+                    max_length=512, 
+                    truncation=True, 
+                    padding=True
+                )
+                
+                with torch.no_grad():
+                    outputs = self.bert_model(**inputs)
+                    # Use CLS token embedding
+                    cls_embedding = outputs.last_hidden_state[:, 0, :].numpy().flatten()
+                    features["bert_cls_embedding"] = cls_embedding.tolist()
+                    
+                    # Aggregate sentence representation
+                    sentence_rep = torch.mean(outputs.last_hidden_state, dim=1).numpy().flatten()
+                    features["bert_sentence_embedding"] = sentence_rep.tolist()
+            
+            # Semantic density analysis
+            if NLP_AVAILABLE:
+                sentences = sent_tokenize(text)
+                if len(sentences) > 1:
+                    sentence_embeddings = []
+                    for sentence in sentences:
+                        if self.sentence_model:
+                            emb = self.sentence_model.encode(sentence, convert_to_numpy=True)
+                            sentence_embeddings.append(emb)
+                    
+                    if sentence_embeddings:
+                        # Calculate semantic coherence
+                        similarities = []
+                        for i in range(len(sentence_embeddings) - 1):
+                            sim = cosine_similarity([sentence_embeddings[i]], [sentence_embeddings[i+1]])[0][0]
+                            similarities.append(sim)
+                        
+                        features["semantic_coherence"] = float(np.mean(similarities))
+                        features["semantic_variance"] = float(np.var(similarities))
+            
+            return features
+            
+        except Exception as e:
+            logger.error(f"Semantic feature extraction failed: {e}")
+            return {}
+    
+    def _extract_nlp_features(self, text: str) -> Dict[str, Any]:
+        """Extract traditional NLP features."""
+        try:
+            features = {}
+            
+            if not NLP_AVAILABLE:
+                return features
+            
+            # Tokenization
+            words = word_tokenize(text.lower())
+            sentences = sent_tokenize(text)
+            
+            # Basic statistics
+            features["word_count"] = len(words)
+            features["sentence_count"] = len(sentences)
+            features["avg_word_length"] = np.mean([len(word) for word in words])
+            features["avg_sentence_length"] = np.mean([len(sent.split()) for sent in sentences])
+            
+            # Lexical diversity
+            unique_words = set(words)
+            features["lexical_diversity"] = len(unique_words) / len(words) if words else 0
+            
+            # N-gram analysis
+            bigrams = list(ngrams(words, 2))
+            trigrams = list(ngrams(words, 3))
+            
+            features["unique_bigrams"] = len(set(bigrams))
+            features["unique_trigrams"] = len(set(trigrams))
+            
+            # Part-of-speech distribution (simplified)
+            # This would require additional NLP libraries like spaCy
+            features["pos_complexity"] = len(set(words)) / len(words) if words else 0
+            
+            # Function word ratio
+            try:
+                stop_words = set(stopwords.words('english'))
+                function_words = [word for word in words if word in stop_words]
+                features["function_word_ratio"] = len(function_words) / len(words) if words else 0
+            except:
+                features["function_word_ratio"] = 0.0
+            
+            # Vocabulary complexity
+            word_freq = Counter(words)
+            features["vocabulary_richness"] = len([word for word, count in word_freq.items() if count == 1])
+            
+            return features
+            
+        except Exception as e:
+            logger.error(f"NLP feature extraction failed: {e}")
+            return {}
+    
+    def _analyze_text_structure(self, original_text: str, cleaned_text: str) -> Dict[str, Any]:
+        """Analyze text structure and formatting."""
+        try:
+            features = {}
+            
+            # Paragraph analysis
+            paragraphs = original_text.split('\n\n')
+            features["paragraph_count"] = len([p for p in paragraphs if p.strip()])
+            features["avg_paragraph_length"] = np.mean([len(p.split()) for p in paragraphs if p.strip()])
+            
+            # Punctuation analysis
+            punctuation_chars = '.,!?;:"()[]{}/-'
+            punct_count = sum(text.count(char) for char in punctuation_chars)
+            features["punctuation_density"] = punct_count / len(original_text) if original_text else 0
+            
+            # Capitalization patterns
+            capitals = sum(1 for char in original_text if char.isupper())
+            features["capitalization_ratio"] = capitals / len(original_text) if original_text else 0
+            
+            # Sentence structure variety
+            if NLP_AVAILABLE:
+                sentences = sent_tokenize(cleaned_text)
+                sentence_lengths = [len(sent.split()) for sent in sentences]
+                features["sentence_length_variance"] = float(np.var(sentence_lengths))
+                features["min_sentence_length"] = min(sentence_lengths) if sentence_lengths else 0
+                features["max_sentence_length"] = max(sentence_lengths) if sentence_lengths else 0
+            
+            # Special characters and formatting
+            features["has_numbers"] = bool(re.search(r'\d', original_text))
+            features["has_urls"] = bool(re.search(r'http[s]?://\S+', original_text))
+            features["has_emails"] = bool(re.search(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b', original_text))
+            
+            return features
+            
+        except Exception as e:
+            logger.error(f"Structural analysis failed: {e}")
+            return {}
+    
+    def _analyze_language(self, text: str) -> Dict[str, Any]:
+        """Analyze language and multilingual features."""
+        try:
+            features = {}
+            
+            # Language detection
+            if LANG_DETECT_AVAILABLE:
+                try:
+                    detected_lang = detect(text)
+                    features["detected_language"] = detected_lang
+                    
+                    # Multiple language probabilities
+                    lang_probs = detect_langs(text)
+                    features["language_probabilities"] = [
+                        {"lang": str(lang).split(':')[0], "prob": float(str(lang).split(':')[1])}
+                        for lang in lang_probs[:3]
+                    ]
+                except:
+                    features["detected_language"] = "unknown"
+                    features["language_probabilities"] = []
+            
+            # Character set analysis
+            features["has_non_ascii"] = any(ord(char) > 127 for char in text)
+            features["has_unicode"] = any(ord(char) > 255 for char in text)
+            
+            # Script analysis (basic)
+            scripts = set()
+            for char in text:
+                if char.isalpha():
+                    if ord(char) < 128:
+                        scripts.add("latin")
+                    elif 0x0370 <= ord(char) <= 0x03FF:
+                        scripts.add("greek")
+                    elif 0x0400 <= ord(char) <= 0x04FF:
+                        scripts.add("cyrillic")
+                    elif 0x4E00 <= ord(char) <= 0x9FFF:
+                        scripts.add("cjk")
+                    elif 0x0600 <= ord(char) <= 0x06FF:
+                        scripts.add("arabic")
+            
+            features["detected_scripts"] = list(scripts)
+            features["is_multilingual"] = len(scripts) > 1
+            
+            return features
+            
+        except Exception as e:
+            logger.error(f"Language analysis failed: {e}")
+            return {}
+    
+    def _extract_paraphrase_features(self, text: str) -> Dict[str, Any]:
+        """Extract features for paraphrase detection."""
+        try:
+            features = {}
+            
+            if not NLP_AVAILABLE:
+                return features
+            
+            # Sentence-level analysis for paraphrasing patterns
+            sentences = sent_tokenize(text)
+            
+            # Synonym usage patterns
+            words = word_tokenize(text.lower())
+            word_freq = Counter(words)
+            
+            # Rare word usage (potential synonym substitution)
+            rare_words = [word for word, count in word_freq.items() if count == 1 and len(word) > 6]
+            features["rare_word_ratio"] = len(rare_words) / len(words) if words else 0
+            
+            # Sentence complexity variation
+            sentence_complexities = []
+            for sentence in sentences:
+                sent_words = word_tokenize(sentence.lower())
+                # Simple complexity measure
+                complexity = len(sent_words) * len(set(sent_words)) / (len(sent_words) + 1)
+                sentence_complexities.append(complexity)
+            
+            features["complexity_variance"] = float(np.var(sentence_complexities)) if sentence_complexities else 0
+            
+            # Syntactic patterns
+            if FUZZY_AVAILABLE:
+                # Check for potential paraphrasing patterns between sentences
+                sentence_similarities = []
+                for i in range(len(sentences) - 1):
+                    similarity = fuzz.ratio(sentences[i], sentences[i + 1])
+                    sentence_similarities.append(similarity)
+                
+                features["inter_sentence_similarity"] = float(np.mean(sentence_similarities)) if sentence_similarities else 0
+            
+            return features
+            
+        except Exception as e:
+            logger.error(f"Paraphrase feature extraction failed: {e}")
+            return {}
+    
+    def _analyze_writing_style(self, text: str) -> Dict[str, Any]:
+        """Analyze writing style for author attribution."""
+        try:
+            features = {}
+            
+            if not NLP_AVAILABLE:
+                return features
+            
+            words = word_tokenize(text.lower())
+            sentences = sent_tokenize(text)
+            
+            # Stylometric features
+            features["avg_word_length"] = np.mean([len(word) for word in words]) if words else 0
+            features["word_length_variance"] = float(np.var([len(word) for word in words])) if words else 0
+            
+            # Sentence patterns
+            sentence_starters = []
+            for sentence in sentences:
+                words_in_sent = word_tokenize(sentence.lower())
+                if words_in_sent:
+                    sentence_starters.append(words_in_sent[0])
+            
+            features["sentence_starter_diversity"] = len(set(sentence_starters)) / len(sentence_starters) if sentence_starters else 0
+            
+            # Punctuation style
+            features["exclamation_ratio"] = text.count('!') / len(text) if text else 0
+            features["question_ratio"] = text.count('?') / len(text) if text else 0
+            features["comma_ratio"] = text.count(',') / len(text) if text else 0
+            
+            # Word choice patterns
+            word_lengths = [len(word) for word in words]
+            features["short_word_ratio"] = sum(1 for length in word_lengths if length <= 3) / len(words) if words else 0
+            features["long_word_ratio"] = sum(1 for length in word_lengths if length >= 7) / len(words) if words else 0
+            
+            return features
+            
+        except Exception as e:
+            logger.error(f"Style analysis failed: {e}")
+            return {}
+    
+    def _detect_spinning_patterns(self, original_text: str, cleaned_text: str) -> Dict[str, Any]:
+        """Detect content spinning and text manipulation patterns."""
+        try:
+            features = {}
+            
+            # Synonym spinning detection
+            if FUZZY_AVAILABLE:
+                words = word_tokenize(cleaned_text.lower())
+                
+                # Look for unnatural word choices (potential synonyms)
+                unusual_patterns = 0
+                for word in words:
+                    # Check if word might be an unusual synonym
+                    if len(word) > 6 and word.count('tion') == 0 and word.count('ing') == 0:
+                        unusual_patterns += 1
+                
+                features["potential_synonym_ratio"] = unusual_patterns / len(words) if words else 0
+            
+            # Sentence reordering detection
+            if NLP_AVAILABLE:
+                sentences = sent_tokenize(cleaned_text)
+                
+                # Check for logical flow disruption
+                if self.sentence_model and len(sentences) > 2:
+                    sentence_embeddings = []
+                    for sentence in sentences:
+                        emb = self.sentence_model.encode(sentence, convert_to_numpy=True)
+                        sentence_embeddings.append(emb)
+                    
+                    # Calculate coherence disruption
+                    coherence_scores = []
+                    for i in range(len(sentence_embeddings) - 1):
+                        sim = cosine_similarity([sentence_embeddings[i]], [sentence_embeddings[i+1]])[0][0]
+                        coherence_scores.append(sim)
+                    
+                    features["coherence_disruption"] = float(np.std(coherence_scores)) if coherence_scores else 0
+            
+            # Character-level manipulation detection
+            features["excessive_spacing"] = len(re.findall(r'\s{3,}', original_text))
+            features["mixed_case_words"] = len(re.findall(r'\b[a-z]+[A-Z]+[a-zA-Z]*\b', original_text))
+            features["special_char_insertions"] = len(re.findall(r'[a-zA-Z][^\w\s][a-zA-Z]', original_text))
+            
+            # Overall spinning likelihood
+            spinning_indicators = [
+                features.get("potential_synonym_ratio", 0) > 0.1,
+                features.get("coherence_disruption", 0) > 0.5,
+                features.get("excessive_spacing", 0) > 0,
+                features.get("mixed_case_words", 0) > 0
+            ]
+            
+            features["spinning_likelihood"] = sum(spinning_indicators) / len(spinning_indicators)
+            
+            return features
+            
+        except Exception as e:
+            logger.error(f"Spinning detection failed: {e}")
+            return {}
+    
+    def _extract_text_metadata(self, text: str) -> Dict[str, Any]:
+        """Extract comprehensive text metadata."""
+        try:
+            metadata = {}
+            
+            # Basic counts
+            metadata["character_count"] = len(text)
+            metadata["character_count_no_spaces"] = len(text.replace(' ', ''))
+            metadata["line_count"] = len(text.split('\n'))
+            
+            if NLP_AVAILABLE:
+                words = word_tokenize(text.lower())
+                sentences = sent_tokenize(text)
+                
+                metadata["word_count"] = len(words)
+                metadata["sentence_count"] = len(sentences)
+                metadata["unique_word_count"] = len(set(words))
+            
+            # Encoding and format
+            metadata["encoding"] = "utf-8"  # Assumed
+            metadata["has_non_printable"] = bool(re.search(r'[^\x20-\x7E\s]', text))
+            
+            # Content indicators
+            metadata["has_code"] = bool(re.search(r'[{}();]', text))
+            metadata["has_markup"] = bool(re.search(r'<[^>]+>', text))
+            metadata["has_math"] = bool(re.search(r'[\+\-\*/=\^]', text))
+            
+            return metadata
+            
+        except Exception as e:
+            logger.error(f"Metadata extraction failed: {e}")
+            return {}
+    
+    def _create_combined_fingerprint(self, semantic_features: Dict, 
+                                   nlp_features: Dict, structural_features: Dict) -> str:
+        """Create a combined fingerprint hash from all features."""
+        try:
+            # Combine key features into a string
+            feature_components = []
+            
+            # Add semantic embedding summary
+            if semantic_features.get("sentence_embedding"):
+                embedding = semantic_features["sentence_embedding"]
+                # Use statistical summary of embedding
+                stats = [np.mean(embedding), np.std(embedding), np.median(embedding)]
+                feature_components.extend([f"{stat:.6f}" for stat in stats])
+            
+            # Add NLP features
+            nlp_keys = ["word_count", "lexical_diversity", "function_word_ratio"]
+            for key in nlp_keys:
+                if key in nlp_features:
+                    feature_components.append(f"{nlp_features[key]:.6f}")
+            
+            # Add structural features
+            struct_keys = ["paragraph_count", "punctuation_density", "capitalization_ratio"]
+            for key in struct_keys:
+                if key in structural_features:
+                    feature_components.append(f"{structural_features[key]:.6f}")
+            
+            # Create hash
+            combined_string = "_".join(feature_components)
+            fingerprint = hashlib.sha256(combined_string.encode()).hexdigest()
+            
+            return fingerprint[:32]  # 32-character fingerprint
+            
+        except Exception as e:
+            logger.error(f"Combined fingerprint creation failed: {e}")
+            return "fingerprint_error"
 
 class BERTEmbeddingExtractor:
     """

@@ -30,18 +30,49 @@ import math
 
 try:
     import cv2
-    import imagehash
-    from PIL import Image
+    import numpy as np
     import torch
     import torch.nn as nn
     import torchvision.transforms as transforms
     import torchvision.models as models
-    from ultralytics import YOLO
+    from PIL import Image
+    import imagehash
     from sklearn.cluster import KMeans
-    from scipy.spatial.distance import cosine
-    import ffmpeg
+    from sklearn.preprocessing import StandardScaler
+    from scipy.spatial.distance import cosine, euclidean
+    import faiss
+    
+    # Video processing
+    VIDEO_PROCESSING_AVAILABLE = True
+    try:
+        import moviepy.editor as mp
+        import imageio
+    except ImportError:
+        VIDEO_PROCESSING_AVAILABLE = False
+        logging.warning("MoviePy not available - limited video processing")
+    
+    # YOLO for object detection
+    YOLO_AVAILABLE = True
+    try:
+        from ultralytics import YOLO
+    except ImportError:
+        YOLO_AVAILABLE = False
+        logging.warning("YOLO not available - object detection disabled")
+        
+    # FFmpeg for advanced video processing
+    FFMPEG_AVAILABLE = True
+    try:
+        import ffmpeg
+    except ImportError:
+        FFMPEG_AVAILABLE = False
+        logging.warning("FFmpeg not available - using OpenCV for video processing")
+        
 except ImportError as e:
-    logging.warning(f"Some video dependencies not available: {e}")
+    logging.error(f"Critical video dependencies missing: {e}")
+    logging.error("Please install: pip install opencv-python torch torchvision PIL moviepy")
+    VIDEO_PROCESSING_AVAILABLE = False
+    YOLO_AVAILABLE = False
+    FFMPEG_AVAILABLE = False
 
 from ..models import FingerprintResult, SimilarityMatch
 
@@ -62,6 +93,323 @@ class VideoMetadata:
     scene_changes: Optional[List[float]]
     dominant_colors: Optional[List[Tuple[int, int, int]]]
     object_detections: Optional[Dict[str, int]]
+
+class DeepVideoFingerprinter:
+    """
+    Advanced Deep Learning Video Fingerprinting with OpenCV + CNN Features.
+    Enterprise-grade detection of cuts, filters, overlays, and scene recognition.
+    """
+    
+    def __init__(self, model_name: str = "resnet50"):
+        self.model_name = model_name
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.feature_extractor = self._load_feature_extractor()
+        self.transform = self._get_transforms()
+        self.yolo_model = None
+        self.optical_flow = None
+        self.scene_classifier = None
+        
+        if YOLO_AVAILABLE:
+            try:
+                self.yolo_model = YOLO('yolov8n.pt')  # Nano model for speed
+            except Exception as e:
+                logger.warning(f"YOLO model loading failed: {e}")
+    
+    def _load_feature_extractor(self) -> nn.Module:
+        """Load pre-trained CNN for feature extraction."""
+        try:
+            if self.model_name == "resnet50":
+                model = models.resnet50(pretrained=True)
+                # Remove final classification layer
+                model = nn.Sequential(*list(model.children())[:-1])
+            elif self.model_name == "efficientnet":
+                model = models.efficientnet_b0(pretrained=True)
+                model.classifier = nn.Identity()
+            else:
+                # Default to ResNet18 for speed
+                model = models.resnet18(pretrained=True)
+                model = nn.Sequential(*list(model.children())[:-1])
+            
+            model.eval()
+            model.to(self.device)
+            return model
+            
+        except Exception as e:
+            logger.error(f"Failed to load feature extractor: {e}")
+            return None
+    
+    def _get_transforms(self):
+        """Get image transforms for CNN input."""
+        return transforms.Compose([
+            transforms.Resize((224, 224)),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], 
+                               std=[0.229, 0.224, 0.225])
+        ])
+    
+    def extract_deep_features(self, video_path: str) -> Dict[str, Any]:
+        """
+        Extract comprehensive deep learning features from video.
+        
+        Args:
+            video_path: Path to video file
+            
+        Returns:
+            Dictionary with deep features, scene analysis, and motion vectors
+        """
+        try:
+            cap = cv2.VideoCapture(video_path)
+            if not cap.isOpened():
+                raise ValueError(f"Cannot open video: {video_path}")
+            
+            # Video metadata
+            fps = cap.get(cv2.CAP_PROP_FPS)
+            total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+            width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+            height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+            
+            # Feature extraction setup
+            frame_features = []
+            scene_changes = []
+            motion_vectors = []
+            object_detections = {}
+            
+            # Optical flow setup
+            prev_gray = None
+            
+            # Process frames
+            frame_count = 0
+            sample_interval = max(1, int(fps))  # Sample every second
+            
+            while cap.isOpened():
+                ret, frame = cap.read()
+                if not ret:
+                    break
+                
+                if frame_count % sample_interval == 0:
+                    timestamp = frame_count / fps
+                    
+                    # CNN feature extraction
+                    cnn_features = self._extract_cnn_features(frame)
+                    
+                    # Scene change detection
+                    scene_change_score = self._detect_scene_change(frame, prev_gray)
+                    if scene_change_score > 0.3:  # Threshold for scene change
+                        scene_changes.append(timestamp)
+                    
+                    # Motion analysis
+                    motion_data = self._analyze_motion(frame, prev_gray)
+                    motion_vectors.append({
+                        "timestamp": timestamp,
+                        "motion_magnitude": motion_data["magnitude"],
+                        "motion_direction": motion_data["direction"],
+                        "optical_flow_density": motion_data["flow_density"]
+                    })
+                    
+                    # Object detection (if YOLO available)
+                    if self.yolo_model:
+                        objects = self._detect_objects(frame)
+                        for obj_class in objects:
+                            object_detections[obj_class] = object_detections.get(obj_class, 0) + 1
+                    
+                    # Store frame features
+                    frame_features.append({
+                        "timestamp": timestamp,
+                        "frame_number": frame_count,
+                        "cnn_features": cnn_features.tolist() if cnn_features is not None else [],
+                        "scene_change_score": scene_change_score,
+                        "motion_data": motion_data
+                    })
+                    
+                    # Update previous frame for motion analysis
+                    prev_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+                
+                frame_count += 1
+            
+            cap.release()
+            
+            # Create global video fingerprint
+            global_fingerprint = self._create_global_fingerprint(frame_features)
+            
+            return {
+                "global_fingerprint": global_fingerprint,
+                "frame_features": frame_features,
+                "scene_changes": scene_changes,
+                "motion_analysis": {
+                    "total_motion_vectors": len(motion_vectors),
+                    "avg_motion_magnitude": np.mean([m["motion_magnitude"] for m in motion_vectors]),
+                    "motion_vectors": motion_vectors
+                },
+                "object_detections": object_detections,
+                "video_metadata": {
+                    "duration": total_frames / fps,
+                    "fps": fps,
+                    "resolution": f"{width}x{height}",
+                    "total_frames": total_frames
+                },
+                "processing_timestamp": datetime.utcnow().isoformat()
+            }
+            
+        except Exception as e:
+            logger.error(f"Deep video fingerprinting failed for {video_path}: {e}")
+            return {"error": str(e)}
+    
+    def _extract_cnn_features(self, frame: np.ndarray) -> Optional[np.ndarray]:
+        """Extract CNN features from video frame."""
+        try:
+            if self.feature_extractor is None:
+                return None
+            
+            # Convert BGR to RGB
+            frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            pil_image = Image.fromarray(frame_rgb)
+            
+            # Apply transforms
+            input_tensor = self.transform(pil_image).unsqueeze(0).to(self.device)
+            
+            # Extract features
+            with torch.no_grad():
+                features = self.feature_extractor(input_tensor)
+                features = features.flatten().cpu().numpy()
+            
+            return features
+            
+        except Exception as e:
+            logger.error(f"CNN feature extraction failed: {e}")
+            return None
+    
+    def _detect_scene_change(self, current_frame: np.ndarray, 
+                           prev_gray: Optional[np.ndarray]) -> float:
+        """Detect scene changes using histogram comparison."""
+        try:
+            if prev_gray is None:
+                return 0.0
+            
+            current_gray = cv2.cvtColor(current_frame, cv2.COLOR_BGR2GRAY)
+            
+            # Calculate histograms
+            hist_prev = cv2.calcHist([prev_gray], [0], None, [256], [0, 256])
+            hist_curr = cv2.calcHist([current_gray], [0], None, [256], [0, 256])
+            
+            # Normalize histograms
+            cv2.normalize(hist_prev, hist_prev, 0, 1, cv2.NORM_MINMAX)
+            cv2.normalize(hist_curr, hist_curr, 0, 1, cv2.NORM_MINMAX)
+            
+            # Calculate correlation (lower = more different)
+            correlation = cv2.compareHist(hist_prev, hist_curr, cv2.HISTCMP_CORREL)
+            
+            # Convert to change score (higher = more change)
+            change_score = 1.0 - correlation
+            
+            return max(0.0, change_score)
+            
+        except Exception as e:
+            logger.error(f"Scene change detection failed: {e}")
+            return 0.0
+    
+    def _analyze_motion(self, current_frame: np.ndarray, 
+                       prev_gray: Optional[np.ndarray]) -> Dict[str, float]:
+        """Analyze motion using optical flow."""
+        try:
+            motion_data = {
+                "magnitude": 0.0,
+                "direction": 0.0,
+                "flow_density": 0.0
+            }
+            
+            if prev_gray is None:
+                return motion_data
+            
+            current_gray = cv2.cvtColor(current_frame, cv2.COLOR_BGR2GRAY)
+            
+            # Calculate optical flow
+            flow = cv2.calcOpticalFlowPyrLK(
+                prev_gray, current_gray, None, None,
+                winSize=(15, 15),
+                maxLevel=2,
+                criteria=(cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.03)
+            )
+            
+            if flow[0] is not None and len(flow[0]) > 0:
+                # Calculate motion magnitude and direction
+                good_new = flow[0][flow[1] == 1]
+                good_old = flow[2][flow[1] == 1]
+                
+                if len(good_new) > 0:
+                    # Motion vectors
+                    motion_vectors = good_new - good_old
+                    magnitudes = np.sqrt(motion_vectors[:, 0]**2 + motion_vectors[:, 1]**2)
+                    
+                    motion_data["magnitude"] = float(np.mean(magnitudes))
+                    motion_data["flow_density"] = float(len(good_new))
+                    
+                    # Average direction
+                    angles = np.arctan2(motion_vectors[:, 1], motion_vectors[:, 0])
+                    motion_data["direction"] = float(np.mean(angles))
+            
+            return motion_data
+            
+        except Exception as e:
+            logger.error(f"Motion analysis failed: {e}")
+            return motion_data
+    
+    def _detect_objects(self, frame: np.ndarray) -> List[str]:
+        """Detect objects in frame using YOLO."""
+        try:
+            if not self.yolo_model:
+                return []
+            
+            # Run YOLO detection
+            results = self.yolo_model(frame, verbose=False)
+            
+            detected_objects = []
+            for result in results:
+                if result.boxes is not None:
+                    for box in result.boxes:
+                        class_id = int(box.cls[0])
+                        confidence = float(box.conf[0])
+                        
+                        if confidence > 0.5:  # Confidence threshold
+                            class_name = self.yolo_model.names[class_id]
+                            detected_objects.append(class_name)
+            
+            return detected_objects
+            
+        except Exception as e:
+            logger.error(f"Object detection failed: {e}")
+            return []
+    
+    def _create_global_fingerprint(self, frame_features: List[Dict]) -> str:
+        """Create a global fingerprint from all frame features."""
+        try:
+            # Aggregate all CNN features
+            all_features = []
+            for frame_data in frame_features:
+                if frame_data["cnn_features"]:
+                    all_features.extend(frame_data["cnn_features"])
+            
+            if not all_features:
+                return "no_features_extracted"
+            
+            # Create statistical summary
+            features_array = np.array(all_features)
+            summary_stats = [
+                np.mean(features_array),
+                np.std(features_array),
+                np.median(features_array),
+                np.min(features_array),
+                np.max(features_array)
+            ]
+            
+            # Hash the summary statistics
+            stats_string = "_".join([f"{stat:.6f}" for stat in summary_stats])
+            fingerprint = hashlib.sha256(stats_string.encode()).hexdigest()
+            
+            return fingerprint[:32]  # 32-character fingerprint
+            
+        except Exception as e:
+            logger.error(f"Global fingerprint creation failed: {e}")
+            return "fingerprint_error"
 
 class PerceptualHashExtractor:
     """

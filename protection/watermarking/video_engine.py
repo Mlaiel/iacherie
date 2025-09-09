@@ -1947,7 +1947,7 @@ def get_supported_video_formats() -> List[str]:
 
 
 def validate_video_file(file_path: str) -> Dict[str, Any]:
-    """Validate video file format and properties"""
+    """Validate video file format and properties."""
     try:
         path = Path(file_path)
         

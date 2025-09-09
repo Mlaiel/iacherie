@@ -427,10 +427,11 @@ class ContentClassifierEngine:
             
                     logger.info(f"AI processing _classify_image_direct completed")
                     return final_result
-            
-                except Exception as e:
-                    logger.error(f"AI processing _classify_image_direct failed: {e}")
-                    raise
+        
+        except Exception as e:
+            logger.error(f"AI processing _classify_image_direct failed: {e}")
+            raise
+    
     async def _analyze_image_safety(self, image: Image.Image) -> Dict[str, Any]:
         """
 Analyze image for safety concerns"""

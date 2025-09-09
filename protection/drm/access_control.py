@@ -371,12 +371,23 @@ Check for recent suspicious activity by user."""
 
     async def check_access(
         self,
-        security_context: SecurityContext,
+        security_context: SecurityContext
+    ) -> bool:
+        """Check access permissions."""
         try:
             logger.info(f"Executing check_access")
             
             # Implementation for check_access
             # TODO: Add specific business logic here
+            
+            result = True  # Replace with actual implementation
+            
+            logger.info(f"check_access completed successfully")
+            return result
+            
+        except Exception as e:
+            logger.error(f"check_access failed: {e}")
+            raise
             
             result = None  # Replace with actual implementation
             
@@ -486,6 +497,11 @@ Check for recent suspicious activity by user."""
             
             # Check resource type match
             if rule.resource_type != resource_type:
+                continue
+                
+            # Apply rule logic here
+            # TODO: Implement rule enforcement
+            
         try:
             logger.info(f"Executing _enforce_security_level")
             

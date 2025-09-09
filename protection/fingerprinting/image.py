@@ -29,19 +29,47 @@ import json
 
 try:
     import cv2
+    import numpy as np
+    from PIL import Image, ImageStat, ImageFilter, ImageEnhance
     import imagehash
-    from PIL import Image, ImageStat, ImageFilter
     import torch
     import torch.nn as nn
     import torchvision.transforms as transforms
-    from transformers import CLIPProcessor, CLIPModel, CLIPVisionModel
     from sklearn.cluster import KMeans
+    from sklearn.preprocessing import StandardScaler
     from scipy.spatial.distance import cosine, euclidean
-    from skimage import feature, measure, filters
-    import matplotlib.pyplot as plt
-    from colorthief import ColorThief
+    from scipy.fft import dct
+    import faiss
+    
+    # Advanced image processing
+    ADVANCED_IMAGE_AVAILABLE = True
+    try:
+        from skimage import feature, measure, filters, segmentation
+        from skimage.feature import local_binary_pattern, greycomatrix, greycoprops
+    except ImportError:
+        ADVANCED_IMAGE_AVAILABLE = False
+        logging.warning("Scikit-image not available - using basic image processing")
+    
+    # CLIP for neural image embeddings
+    CLIP_AVAILABLE = True
+    try:
+        from transformers import CLIPProcessor, CLIPModel, CLIPVisionModel
+    except ImportError:
+        CLIP_AVAILABLE = False
+        logging.warning("CLIP not available - using traditional features only")
+    
+    # Additional image processing
+    try:
+        from colorthief import ColorThief
+        import matplotlib.pyplot as plt
+    except ImportError:
+        logging.warning("Some advanced image tools not available")
+        
 except ImportError as e:
-    logging.warning(f"Some image dependencies not available: {e}")
+    logging.error(f"Critical image dependencies missing: {e}")
+    logging.error("Please install: pip install opencv-python PIL imagehash torch torchvision")
+    ADVANCED_IMAGE_AVAILABLE = False
+    CLIP_AVAILABLE = False
 
 from ..models import FingerprintResult, SimilarityMatch
 
@@ -65,25 +93,462 @@ class ImageMetadata:
     edge_density: Optional[float]
     texture_energy: Optional[float]
 
-class PerceptualImageHashing:
+class ProfessionalImageFingerprinter:
     """
-Advanced perceptual hashing for images using multiple algorithms."""
+    Enterprise-grade image fingerprinting with multi-algorithm hashing and watermarking.
+    Supports dHash, pHash, aHash, wHash with modification detection and reverse search.
+    """
     
     def __init__(self, hash_size: int = 16):
+        self.hash_size = hash_size
+        self.clip_model = None
+        self.clip_processor = None
+        self.feature_extractor = None
+        self.faiss_index = None
+        
+        # Initialize CLIP model if available
+        if CLIP_AVAILABLE:
+            try:
+                self.clip_model = CLIPVisionModel.from_pretrained("openai/clip-vit-base-patch32")
+                self.clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
+                self.clip_model.eval()
+            except Exception as e:
+                logger.warning(f"CLIP model loading failed: {e}")
+        
+        # Initialize FAISS index for similarity search
+        self._initialize_faiss_index()
+    
+    def _initialize_faiss_index(self):
+        """Initialize FAISS index for image similarity search."""
         try:
-            logger.info(f"Executing __init__")
+            # Use 512 dimensions for CLIP features or 1024 for combined features
+            dimension = 512 if CLIP_AVAILABLE else 256
+            self.faiss_index = faiss.IndexFlatL2(dimension)
+            logger.info(f"FAISS image index initialized with {dimension} dimensions")
+        except Exception as e:
+            logger.error(f"FAISS image index initialization failed: {e}")
+    
+    def extract_comprehensive_fingerprint(self, image_path: str) -> Dict[str, Any]:
+        """
+        Extract comprehensive image fingerprint with multiple algorithms.
+        
+        Args:
+            image_path: Path to image file
             
-            # Implementation for __init__
-            # TODO: Add specific business logic here
+        Returns:
+            Dictionary containing all fingerprint data and features
+        """
+        try:
+            # Load image
+            image = Image.open(image_path)
+            cv_image = cv2.imread(image_path)
             
-            result = None  # Replace with actual implementation
+            if cv_image is None:
+                raise ValueError(f"Cannot load image: {image_path}")
             
-            logger.info(f"__init__ completed successfully")
-            return result
+            # Multi-algorithm perceptual hashing
+            hash_data = self._extract_perceptual_hashes(image)
+            
+            # Neural features with CLIP
+            neural_features = self._extract_neural_features(image)
+            
+            # Traditional computer vision features
+            cv_features = self._extract_cv_features(cv_image)
+            
+            # Color and texture analysis
+            color_texture_data = self._analyze_color_texture(image, cv_image)
+            
+            # Modification detection features
+            modification_features = self._extract_modification_features(cv_image)
+            
+            # Metadata extraction
+            metadata = self._extract_metadata(image, image_path)
+            
+            # Create combined feature vector for similarity search
+            combined_vector = self._create_combined_vector(
+                neural_features, cv_features, color_texture_data
+            )
+            
+            fingerprint_data = {
+                "perceptual_hashes": hash_data,
+                "neural_features": neural_features,
+                "cv_features": cv_features,
+                "color_texture": color_texture_data,
+                "modification_features": modification_features,
+                "metadata": metadata,
+                "combined_vector": combined_vector.tolist() if combined_vector is not None else [],
+                "timestamp": datetime.utcnow().isoformat(),
+                "image_path": image_path
+            }
+            
+            # Add to FAISS index for similarity search
+            if self.faiss_index and combined_vector is not None:
+                fingerprint_id = hashlib.sha256(str(fingerprint_data).encode()).hexdigest()[:16]
+                self.faiss_index.add(combined_vector.reshape(1, -1).astype(np.float32))
+                fingerprint_data["fingerprint_id"] = fingerprint_id
+            
+            return fingerprint_data
             
         except Exception as e:
-            logger.error(f"__init__ failed: {e}")
-            raise
+            logger.error(f"Comprehensive fingerprinting failed for {image_path}: {e}")
+            return {"error": str(e)}
+    
+    def _extract_perceptual_hashes(self, image: Image.Image) -> Dict[str, str]:
+        """Extract multiple perceptual hash algorithms."""
+        try:
+            hashes = {}
+            
+            # dHash (Difference Hash) - good for detecting modifications
+            hashes["dhash"] = str(imagehash.dhash(image, hash_size=self.hash_size))
+            
+            # pHash (Perceptual Hash) - robust to scaling and compression
+            hashes["phash"] = str(imagehash.phash(image, hash_size=self.hash_size))
+            
+            # aHash (Average Hash) - fast but less robust
+            hashes["ahash"] = str(imagehash.average_hash(image, hash_size=self.hash_size))
+            
+            # wHash (Wavelet Hash) - good for texture analysis
+            hashes["whash"] = str(imagehash.whash(image, hash_size=self.hash_size))
+            
+            # Color hash for color-based similarity
+            try:
+                hashes["colorhash"] = str(imagehash.colorhash(image, binbits=3))
+            except:
+                hashes["colorhash"] = "unavailable"
+            
+            # Calculate hash similarities for quality assessment
+            hash_diversity = self._calculate_hash_diversity(hashes)
+            hashes["diversity_score"] = hash_diversity
+            
+            return hashes
+            
+        except Exception as e:
+            logger.error(f"Perceptual hashing failed: {e}")
+            return {}
+    
+    def _extract_neural_features(self, image: Image.Image) -> Dict[str, Any]:
+        """Extract neural features using CLIP model."""
+        try:
+            if not CLIP_AVAILABLE or not self.clip_model:
+                return {"available": False}
+            
+            # Preprocess image for CLIP
+            inputs = self.clip_processor(images=image, return_tensors="pt")
+            
+            # Extract features
+            with torch.no_grad():
+                image_features = self.clip_model(**inputs).last_hidden_state
+                # Use CLS token (first token) as image representation
+                image_embedding = image_features[:, 0, :].numpy().flatten()
+            
+            return {
+                "available": True,
+                "embedding": image_embedding.tolist(),
+                "embedding_size": len(image_embedding),
+                "model": "clip-vit-base-patch32"
+            }
+            
+        except Exception as e:
+            logger.error(f"Neural feature extraction failed: {e}")
+            return {"available": False, "error": str(e)}
+    
+    def _extract_cv_features(self, cv_image: np.ndarray) -> Dict[str, Any]:
+        """Extract traditional computer vision features."""
+        try:
+            features = {}
+            
+            # Convert to grayscale for some operations
+            gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
+            
+            # Edge detection
+            edges = cv2.Canny(gray, 50, 150)
+            features["edge_density"] = float(np.sum(edges > 0) / edges.size)
+            
+            # Corner detection
+            corners = cv2.goodFeaturesToTrack(gray, maxCorners=100, qualityLevel=0.01, minDistance=10)
+            features["corner_count"] = len(corners) if corners is not None else 0
+            
+            # Texture analysis using Local Binary Pattern
+            if ADVANCED_IMAGE_AVAILABLE:
+                # LBP for texture
+                lbp = local_binary_pattern(gray, P=8, R=1, method='uniform')
+                lbp_hist, _ = np.histogram(lbp.ravel(), bins=10, range=(0, 9))
+                features["lbp_histogram"] = lbp_hist.tolist()
+                
+                # Gray-Level Co-occurrence Matrix for texture
+                glcm = greycomatrix(gray, distances=[1], angles=[0], levels=256, symmetric=True)
+                features["glcm_contrast"] = float(greycoprops(glcm, 'contrast')[0, 0])
+                features["glcm_energy"] = float(greycoprops(glcm, 'energy')[0, 0])
+                features["glcm_homogeneity"] = float(greycoprops(glcm, 'homogeneity')[0, 0])
+            
+            # Histogram features
+            hist_b = cv2.calcHist([cv_image], [0], None, [256], [0, 256])
+            hist_g = cv2.calcHist([cv_image], [1], None, [256], [0, 256])
+            hist_r = cv2.calcHist([cv_image], [2], None, [256], [0, 256])
+            
+            features["histogram_b"] = hist_b.flatten()[:32].tolist()  # First 32 bins
+            features["histogram_g"] = hist_g.flatten()[:32].tolist()
+            features["histogram_r"] = hist_r.flatten()[:32].tolist()
+            
+            # Image moments for shape analysis
+            moments = cv2.moments(gray)
+            if moments["m00"] != 0:
+                features["centroid_x"] = float(moments["m10"] / moments["m00"])
+                features["centroid_y"] = float(moments["m01"] / moments["m00"])
+            else:
+                features["centroid_x"] = 0.0
+                features["centroid_y"] = 0.0
+            
+            return features
+            
+        except Exception as e:
+            logger.error(f"CV feature extraction failed: {e}")
+            return {}
+    
+    def _analyze_color_texture(self, image: Image.Image, cv_image: np.ndarray) -> Dict[str, Any]:
+        """Analyze color distribution and texture properties."""
+        try:
+            analysis = {}
+            
+            # Color statistics
+            stat = ImageStat.Stat(image)
+            analysis["mean_colors"] = stat.mean
+            analysis["std_colors"] = stat.stddev
+            
+            # Dominant colors using K-means
+            try:
+                rgb_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB)
+                pixels = rgb_image.reshape(-1, 3)
+                
+                # Sample pixels for performance
+                if len(pixels) > 10000:
+                    indices = np.random.choice(len(pixels), 10000, replace=False)
+                    pixels = pixels[indices]
+                
+                kmeans = KMeans(n_clusters=5, random_state=42, n_init=10)
+                kmeans.fit(pixels)
+                
+                analysis["dominant_colors"] = kmeans.cluster_centers_.tolist()
+                analysis["color_proportions"] = np.bincount(kmeans.labels_).tolist()
+                
+            except Exception as e:
+                logger.warning(f"K-means color analysis failed: {e}")
+                analysis["dominant_colors"] = []
+            
+            # Brightness and contrast
+            enhancer = ImageEnhance.Brightness(image)
+            analysis["brightness_factor"] = 1.0  # Baseline
+            
+            contrast_enhancer = ImageEnhance.Contrast(image)
+            analysis["contrast_factor"] = 1.0  # Baseline
+            
+            # Color distribution entropy
+            hist_combined = np.concatenate([
+                cv2.calcHist([cv_image], [0], None, [32], [0, 256]).flatten(),
+                cv2.calcHist([cv_image], [1], None, [32], [0, 256]).flatten(),
+                cv2.calcHist([cv_image], [2], None, [32], [0, 256]).flatten()
+            ])
+            
+            # Calculate entropy
+            hist_normalized = hist_combined / (np.sum(hist_combined) + 1e-8)
+            entropy = -np.sum(hist_normalized * np.log2(hist_normalized + 1e-8))
+            analysis["color_entropy"] = float(entropy)
+            
+            return analysis
+            
+        except Exception as e:
+            logger.error(f"Color/texture analysis failed: {e}")
+            return {}
+    
+    def _extract_modification_features(self, cv_image: np.ndarray) -> Dict[str, Any]:
+        """Extract features to detect common image modifications."""
+        try:
+            features = {}
+            
+            # Convert to grayscale
+            gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
+            
+            # Detect potential rotation by analyzing edge directions
+            edges = cv2.Canny(gray, 50, 150)
+            lines = cv2.HoughLines(edges, 1, np.pi/180, threshold=100)
+            
+            if lines is not None:
+                angles = lines[:, 0, 1]  # Extract angles
+                # Dominant angle (most common edge direction)
+                hist, bins = np.histogram(angles, bins=36, range=(0, np.pi))
+                dominant_angle_bin = np.argmax(hist)
+                features["dominant_edge_angle"] = float(bins[dominant_angle_bin])
+                features["edge_angle_variance"] = float(np.var(angles))
+            else:
+                features["dominant_edge_angle"] = 0.0
+                features["edge_angle_variance"] = 0.0
+            
+            # Detect potential cropping by analyzing edge density at borders
+            height, width = gray.shape
+            border_width = min(width // 20, height // 20, 10)
+            
+            # Edge density at borders
+            top_border = edges[:border_width, :]
+            bottom_border = edges[-border_width:, :]
+            left_border = edges[:, :border_width]
+            right_border = edges[:, -border_width:]
+            
+            features["border_edge_density"] = {
+                "top": float(np.sum(top_border > 0) / top_border.size),
+                "bottom": float(np.sum(bottom_border > 0) / bottom_border.size),
+                "left": float(np.sum(left_border > 0) / left_border.size),
+                "right": float(np.sum(right_border > 0) / right_border.size)
+            }
+            
+            # JPEG compression artifacts detection
+            # Look for 8x8 block artifacts typical of JPEG
+            block_size = 8
+            block_variance = []
+            
+            for i in range(0, height - block_size, block_size):
+                for j in range(0, width - block_size, block_size):
+                    block = gray[i:i+block_size, j:j+block_size]
+                    block_variance.append(np.var(block))
+            
+            features["jpeg_block_variance"] = {
+                "mean": float(np.mean(block_variance)),
+                "std": float(np.std(block_variance))
+            }
+            
+            # Noise analysis for potential filtering detection
+            # High-frequency noise using Laplacian
+            laplacian = cv2.Laplacian(gray, cv2.CV_64F)
+            features["noise_level"] = float(np.var(laplacian))
+            
+            return features
+            
+        except Exception as e:
+            logger.error(f"Modification feature extraction failed: {e}")
+            return {}
+    
+    def _extract_metadata(self, image: Image.Image, image_path: str) -> Dict[str, Any]:
+        """Extract comprehensive image metadata."""
+        try:
+            metadata = {}
+            
+            # Basic properties
+            metadata["width"] = image.width
+            metadata["height"] = image.height
+            metadata["mode"] = image.mode
+            metadata["format"] = image.format
+            metadata["has_transparency"] = image.mode in ('RGBA', 'LA') or 'transparency' in image.info
+            
+            # File information
+            file_path = Path(image_path)
+            metadata["file_size"] = file_path.stat().st_size if file_path.exists() else 0
+            metadata["file_extension"] = file_path.suffix.lower()
+            
+            # EXIF data if available
+            try:
+                exif_data = image._getexif()
+                if exif_data:
+                    metadata["has_exif"] = True
+                    # Extract common EXIF tags
+                    metadata["exif_summary"] = {
+                        "camera_make": exif_data.get(271, "unknown"),
+                        "camera_model": exif_data.get(272, "unknown"),
+                        "datetime": exif_data.get(306, "unknown"),
+                        "orientation": exif_data.get(274, 1)
+                    }
+                else:
+                    metadata["has_exif"] = False
+            except:
+                metadata["has_exif"] = False
+            
+            # Color profile
+            if hasattr(image, 'info') and 'icc_profile' in image.info:
+                metadata["has_color_profile"] = True
+            else:
+                metadata["has_color_profile"] = False
+            
+            return metadata
+            
+        except Exception as e:
+            logger.error(f"Metadata extraction failed: {e}")
+            return {}
+    
+    def _create_combined_vector(self, neural_features: Dict, cv_features: Dict, 
+                               color_data: Dict) -> Optional[np.ndarray]:
+        """Create a combined feature vector for similarity search."""
+        try:
+            vector_components = []
+            
+            # Add neural features if available
+            if neural_features.get("available") and neural_features.get("embedding"):
+                embedding = neural_features["embedding"]
+                # Use first 256 dimensions for performance
+                vector_components.extend(embedding[:256])
+            
+            # Add traditional CV features
+            if cv_features:
+                # Edge and corner features
+                vector_components.extend([
+                    cv_features.get("edge_density", 0.0),
+                    cv_features.get("corner_count", 0.0),
+                    cv_features.get("glcm_contrast", 0.0),
+                    cv_features.get("glcm_energy", 0.0)
+                ])
+                
+                # Histogram features (reduced)
+                hist_b = cv_features.get("histogram_b", [0] * 16)[:16]
+                hist_g = cv_features.get("histogram_g", [0] * 16)[:16]
+                hist_r = cv_features.get("histogram_r", [0] * 16)[:16]
+                vector_components.extend(hist_b + hist_g + hist_r)
+            
+            # Add color features
+            if color_data:
+                # Mean colors
+                mean_colors = color_data.get("mean_colors", [0, 0, 0])
+                vector_components.extend(mean_colors)
+                
+                # Color entropy
+                vector_components.append(color_data.get("color_entropy", 0.0))
+            
+            # Pad or truncate to fixed size
+            target_size = 512 if CLIP_AVAILABLE else 256
+            
+            if len(vector_components) > target_size:
+                vector_components = vector_components[:target_size]
+            else:
+                vector_components.extend([0.0] * (target_size - len(vector_components)))
+            
+            return np.array(vector_components, dtype=np.float32)
+            
+        except Exception as e:
+            logger.error(f"Combined vector creation failed: {e}")
+            return None
+    
+    def _calculate_hash_diversity(self, hashes: Dict[str, str]) -> float:
+        """Calculate diversity score between different hash algorithms."""
+        try:
+            hash_values = [hashes.get(key, "") for key in ["dhash", "phash", "ahash", "whash"]]
+            hash_values = [h for h in hash_values if h]
+            
+            if len(hash_values) < 2:
+                return 0.0
+            
+            # Calculate pairwise differences
+            differences = []
+            for i in range(len(hash_values)):
+                for j in range(i + 1, len(hash_values)):
+                    # Hamming distance between hashes
+                    hash1, hash2 = hash_values[i], hash_values[j]
+                    if len(hash1) == len(hash2):
+                        hamming_dist = sum(c1 != c2 for c1, c2 in zip(hash1, hash2))
+                        differences.append(hamming_dist / len(hash1))
+            
+            return float(np.mean(differences)) if differences else 0.0
+            
+        except Exception as e:
+            logger.error(f"Hash diversity calculation failed: {e}")
+            return 0.0
+
+class PerceptualImageHashing:
     def extract_hashes(self, image_path: str) -> Dict[str, Any]:
         """
         Extract multiple perceptual hashes from image.

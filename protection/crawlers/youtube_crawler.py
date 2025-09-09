@@ -1,8 +1,15 @@
-"""🎬 YouTube Content Crawler
-==========================
+"""🎬 YouTube Content Crawler - ENTERPRISE EDITION
+===============================================
 
-Professional YouTube content discovery and monitoring system.
-Integrates YouTube Data API v3 with Selenium for comprehensive crawling.
+Enterprise-grade YouTube content discovery, monitoring, and violation detection system.
+Integrates YouTube Data API v3 with advanced fingerprinting and DMCA automation.
+
+Features:
+- Real-time content monitoring with fingerprinting
+- Automated violation detection and DMCA processing
+- Enterprise-grade rate limiting and scaling
+- Advanced content analysis with ML models
+- Multi-format fingerprint matching (audio, video, text)
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -15,19 +22,29 @@ Contact: mlaiel@live.de for licensing and authorization.
 import asyncio
 import logging
 import re
-from typing import Dict, List, Optional, Any, Union
+import hashlib
+from typing import Dict, List, Optional, Any, Union, Set
 from dataclasses import dataclass, asdict
 from datetime import datetime, timedelta
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.chrome.options import Options
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
-import requests
+from pathlib import Path
 import json
 import time
+
+try:
+    from selenium import webdriver
+    from selenium.webdriver.common.by import By
+    from selenium.webdriver.support.ui import WebDriverWait
+    from selenium.webdriver.support import expected_conditions as EC
+    from selenium.webdriver.chrome.options import Options
+    from googleapiclient.discovery import build
+    from googleapiclient.errors import HttpError
+    import requests
+    import yt_dlp
+    
+    YOUTUBE_ENTERPRISE_DEPS = True
+except ImportError as e:
+    logging.error(f"YouTube Enterprise dependencies missing: {e}")
+    YOUTUBE_ENTERPRISE_DEPS = False
 
 from .base_crawler import BasePlatformCrawler, CrawlResult, CrawlerStatus
 
