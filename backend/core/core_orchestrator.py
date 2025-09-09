@@ -106,9 +106,13 @@ class CorePerformanceOptimizer:
         return {'optimization_status': 'completed', 'performance_gain': '15%'}
 
 
+# Create alias for backward compatibility
+CoreOrchestrator = PlatformWideOrchestrationEngine
+
 # Export all classes
 __all__ = [
     'PlatformWideOrchestrationEngine',
+    'CoreOrchestrator',  # Alias for compatibility
     'MultiModuleCoordinator', 
     'CoreSystemIntegrator',
     'EventDrivenArchitecture',
