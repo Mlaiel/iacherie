@@ -72,7 +72,7 @@ from .streaming.streaming_infrastructure import StreamingInfrastructure
 # Advanced Systems
 from .quantum.quantum_processing_engine import QuantumProcessingEngine
 from .blockchain.blockchain_manager import BlockchainManager
-from .edge.edge_computing_manager import EdgeComputingManager
+from .edge import EdgeComputingManager
 
 # Database & Storage
 from .database.database_orchestrator import DatabaseOrchestrator

@@ -209,13 +209,13 @@ class GamificationOrchestrator:
         """Initialize all gamification modules."""
         try:
             # Initialize modules that are available
-            if achievement_system_available:
+            if achievement_engine_available:
                 self.achievement_system = await get_achievement_system()
             
             if ranking_engine_available:
                 self.ranking_engine = await get_ranking_engine()
             
-            if rewards_manager_available:
+            if reward_system_available:
                 self.rewards_manager = await get_rewards_manager()
             
             if challenge_system_available:
@@ -227,9 +227,9 @@ class GamificationOrchestrator:
             self.initialized = True
             
             available_modules = sum([
-                achievement_system_available,
+                achievement_engine_available,
                 ranking_engine_available,
-                rewards_manager_available,
+                reward_system_available,
                 challenge_system_available,
                 badge_generator_available
             ])
@@ -265,7 +265,7 @@ class GamificationOrchestrator:
         
         try:
             # Track achievements
-            if achievement_system_available and self.achievement_system:
+            if achievement_engine_available and self.achievement_system:
                 metric_mappings = {
                     "content_upload": "total_uploads",
                     "collaboration_success": "collaborations_completed",
@@ -284,7 +284,7 @@ class GamificationOrchestrator:
                     results["achievements_unlocked"] = unlocked_achievements
             
             # Calculate and award rewards
-            if rewards_manager_available and self.rewards_manager:
+            if reward_system_available and self.rewards_manager:
                 source_mappings = {
                     "content_upload": RewardSource.CONTENT_UPLOAD,
                     "achievement_unlock": RewardSource.ACHIEVEMENT_UNLOCK,
@@ -383,7 +383,7 @@ class GamificationOrchestrator:
         
         try:
             # Get achievement data
-            if achievement_system_available and self.achievement_system:
+            if achievement_engine_available and self.achievement_system:
                 dashboard["achievements"] = await self.achievement_system.get_user_achievement_summary(user_id)
             
             # Get ranking data
@@ -400,7 +400,7 @@ class GamificationOrchestrator:
                     }
             
             # Get rewards data
-            if rewards_manager_available and self.rewards_manager:
+            if reward_system_available and self.rewards_manager:
                 dashboard["rewards"] = await self.rewards_manager.get_reward_analytics(user_id)
             
             # Get challenges data
@@ -590,9 +590,9 @@ __all__ = [
     "award_badge_to_user",
     
     # Module availability flags
-    "achievement_system_available",
+    "achievement_engine_available",
     "ranking_engine_available",
-    "rewards_manager_available",
+    "reward_system_available",
     "challenge_system_available",
     "badge_generator_available"
 ]
@@ -604,9 +604,9 @@ logger.info("⚠️ Protected by copyright - Unauthorized use prohibited")
 
 # Availability summary
 available_count = sum([
-    achievement_system_available,
+    achievement_engine_available,
     ranking_engine_available,
-    rewards_manager_available,
+    reward_system_available,
     challenge_system_available,
     badge_generator_available
 ])

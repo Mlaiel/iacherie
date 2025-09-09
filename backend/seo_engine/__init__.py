@@ -7,7 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from .keyword_analyzer import (
     KeywordAnalyzer,
