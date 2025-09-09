@@ -16,8 +16,17 @@ from enum import Enum
 # Import AI agents
 try:
     from .agents import *
+except ImportError:
+    pass
+try:
     from .core_business_agents import *
+except ImportError:
+    pass
+try:
     from .specialized_agents import *
+except ImportError:
+    pass
+try:
     from .technical_agents import *
 except ImportError:
     pass

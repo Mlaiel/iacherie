@@ -16,12 +16,33 @@ from enum import Enum
 # Import protection modules
 try:
     from .ai_protection_orchestrator import *
+except ImportError:
+    pass
+try:
     from .copyright_detector import *
+except ImportError:
+    pass
+try:
     from .multimedia_protection_engine import *
+except ImportError:
+    pass
+try:
     from .rights_manager import *
+except ImportError:
+    pass
+try:
     from .violation_monitoring_system import *
+except ImportError:
+    pass
+try:
     from .watermark_engine import *
+except ImportError:
+    pass
+try:
     from .legal_automation_engine import *
+except ImportError:
+    pass
+try:
     from .protection_analytics_engine import *
 except ImportError:
     pass

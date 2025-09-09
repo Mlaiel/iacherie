@@ -16,13 +16,37 @@ from enum import Enum
 # Import monetization modules
 try:
     from .ai_revenue_optimization_engine import *
+except ImportError:
+    pass
+try:
     from .creator_monetization_orchestrator import *
+except ImportError:
+    pass
+try:
     from .dynamic_pricing_ai_engine import *
+except ImportError:
+    pass
+try:
     from .revenue_optimizer import *
+except ImportError:
+    pass
+try:
     from .payment_processor import *
+except ImportError:
+    pass
+try:
     from .subscription_engine import *
+except ImportError:
+    pass
+try:
     from .monetization_strategy_ai import *
+except ImportError:
+    pass
+try:
     from .content_monetization_analyzer import *
+except ImportError:
+    pass
+try:
     from .revenue_forecasting_ai import *
 except ImportError:
     pass

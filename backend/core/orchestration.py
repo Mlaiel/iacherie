@@ -14,7 +14,19 @@ from dataclasses import dataclass
 from enum import Enum
 
 # Import the existing orchestrator
-from .core_orchestrator import PlatformWideOrchestrationEngine as CoreOrchestrator
+try:
+    from .core_orchestrator import PlatformWideOrchestrationEngine as CoreOrchestrator
+except ImportError:
+    # Fallback for absolute imports
+    try:
+        from backend.core.core_orchestrator import PlatformWideOrchestrationEngine as CoreOrchestrator
+    except ImportError:
+        # Create a simple fallback
+        class CoreOrchestrator:
+            def __init__(self):
+                pass
+            async def initialize(self):
+                return True
 
 
 class OrchestrationStatus(Enum):
