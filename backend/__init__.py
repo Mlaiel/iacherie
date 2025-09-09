@@ -49,38 +49,108 @@ from pathlib import Path
 import sys
 from datetime import datetime
 
-# Core framework imports
-from .core.config import BackendConfig, get_backend_settings
-from .core.business_logic import AinflueCoreBusinessLogic
-from .core.orchestration import PlatformOrchestrator
+# Core framework imports (essential)
+try:
+    from .core.config import BackendConfig, get_backend_settings
+except ImportError:
+    BackendConfig = None
+    get_backend_settings = None
 
-# AI Intelligence System
-from .ai.ai_intelligence_engine import AIIntelligenceEngine
-from .ai_protection.protection_engine import ProtectionEngine
+try:
+    from .core.business_logic import AinflueCoreBusinessLogic
+except ImportError:
+    AinflueCoreBusinessLogic = None
 
-# Business Intelligence
-from .monetization.monetization_engine import MonetizationEngine
-from .collaboration.collaboration_engine import CollaborationEngine
-from .gamification.gamification_engine import GamificationEngine
+try:
+    from .core.orchestration import PlatformOrchestrator
+except ImportError:
+    PlatformOrchestrator = None
 
-# Technical Infrastructure
-from .analytics.analytics_engine import AnalyticsEngine
-from .seo_engine.seo_optimization_engine import SEOOptimizationEngine
-from .distribution.distribution_network import DistributionNetwork
-from .streaming.streaming_infrastructure import StreamingInfrastructure
+# AI Intelligence System (essential)
+try:
+    from .ai.ai_intelligence_engine import AIIntelligenceEngine
+except ImportError:
+    AIIntelligenceEngine = None
 
-# Advanced Systems
-from .quantum.quantum_processing_engine import QuantumProcessingEngine
-from .blockchain.blockchain_manager import BlockchainManager
-from .edge.edge_computing_manager import EdgeComputingManager
+try:
+    from .ai_protection.protection_engine import ProtectionEngine
+except ImportError:
+    ProtectionEngine = None
 
-# Database & Storage
-from .database.database_orchestrator import DatabaseOrchestrator
-from .media_processing.media_pipeline import MediaProcessingPipeline
+# Business Intelligence (optional for now)
+try:
+    from .monetization.monetization_engine import MonetizationEngine
+except ImportError:
+    MonetizationEngine = None
 
-# Monitoring & Compliance
-from .monitoring.system_monitor import SystemMonitor
-from .compliance.compliance_manager import ComplianceManager
+try:
+    from .collaboration.collaboration_engine import CollaborationEngine  
+except ImportError:
+    CollaborationEngine = None
+
+try:
+    from .gamification.gamification_engine import GamificationEngine
+except ImportError:
+    GamificationEngine = None
+
+# Technical Infrastructure (optional for now)
+try:
+    from .analytics.analytics_engine import AnalyticsEngine
+except ImportError:
+    AnalyticsEngine = None
+
+try:
+    from .seo_engine.seo_optimization_engine import SEOOptimizationEngine
+except ImportError:
+    SEOOptimizationEngine = None
+
+try:
+    from .distribution.distribution_network import DistributionNetwork
+except ImportError:
+    DistributionNetwork = None
+
+try:
+    from .streaming.streaming_infrastructure import StreamingInfrastructure
+except ImportError:
+    StreamingInfrastructure = None
+
+# Advanced Systems (optional for now)
+try:
+    from .quantum.quantum_processing_engine import QuantumProcessingEngine
+except ImportError:
+    QuantumProcessingEngine = None
+
+try:
+    from .blockchain.blockchain_manager import BlockchainManager
+except ImportError:
+    BlockchainManager = None
+
+try:
+    from .edge.edge_computing_manager import EdgeComputingManager
+except ImportError:
+    EdgeComputingManager = None
+
+# Database & Storage (optional for now)
+try:
+    from .database.database_orchestrator import DatabaseOrchestrator
+except ImportError:
+    DatabaseOrchestrator = None
+
+try:
+    from .media_processing.media_pipeline import MediaProcessingPipeline
+except ImportError:
+    MediaProcessingPipeline = None
+
+# Monitoring & Compliance (optional for now)
+try:
+    from .monitoring.system_monitor import SystemMonitor
+except ImportError:
+    SystemMonitor = None
+
+try:
+    from .compliance.compliance_manager import ComplianceManager
+except ImportError:
+    ComplianceManager = None
 
 # Configuration
 __version__ = "4.0.0"
