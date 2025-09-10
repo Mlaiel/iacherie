@@ -1,0 +1,217 @@
+# Ainflue Infrastructure Module
+# =============================
+# 
+# Enterprise-grade Helm ConfigMap template for Ainflue platform
+# Supports multi-cloud deployment and enterprise security
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+#
+# ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+
+{{- if .Values.configMap.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "ainflue.fullname" . }}-config
+  namespace: {{ .Values.namespace | default .Release.Namespace }}
+  labels:
+    {{- include "ainflue.labels" . | nindent 4 }}
+    component: configuration
+  {{- with .Values.configMap.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+data:
+  # Application Configuration
+  {{- range $key, $value := .Values.configMap.data }}
+  {{ $key }}: {{ $value | quote }}
+  {{- end }}
+  
+  # Environment Configuration
+  ENVIRONMENT: {{ .Values.environment | quote }}
+  LOG_LEVEL: {{ .Values.logging.level | quote }}
+  DEBUG: {{ .Values.debug | quote }}
+  
+  # Database Configuration
+  {{- if .Values.database.enabled }}
+  DATABASE_HOST: {{ .Values.database.host | quote }}
+  DATABASE_PORT: {{ .Values.database.port | quote }}
+  DATABASE_NAME: {{ .Values.database.name | quote }}
+  DATABASE_POOL_SIZE: {{ .Values.database.poolSize | quote }}
+  DATABASE_MAX_OVERFLOW: {{ .Values.database.maxOverflow | quote }}
+  {{- end }}
+  
+  # Redis Configuration
+  {{- if .Values.redis.enabled }}
+  REDIS_HOST: {{ .Values.redis.host | quote }}
+  REDIS_PORT: {{ .Values.redis.port | quote }}
+  REDIS_DB: {{ .Values.redis.database | quote }}
+  {{- end }}
+  
+  # Application Settings
+  APP_NAME: {{ .Values.app.name | quote }}
+  APP_VERSION: {{ .Chart.AppVersion | quote }}
+  API_VERSION: {{ .Values.api.version | quote }}
+  MAX_UPLOAD_SIZE: {{ .Values.app.maxUploadSize | quote }}
+  ALLOWED_FILE_TYPES: {{ .Values.app.allowedFileTypes | quote }}
+  
+  # Security Configuration
+  CORS_ORIGINS: {{ .Values.security.corsOrigins | quote }}
+  SESSION_TIMEOUT: {{ .Values.security.sessionTimeout | quote }}
+  MAX_LOGIN_ATTEMPTS: {{ .Values.security.maxLoginAttempts | quote }}
+  PASSWORD_MIN_LENGTH: {{ .Values.security.passwordMinLength | quote }}
+  
+  # AI/ML Configuration
+  {{- if .Values.ai.enabled }}
+  AI_PROCESSING_TIMEOUT: {{ .Values.ai.processingTimeout | quote }}
+  ML_MODEL_CACHE_SIZE: {{ .Values.ai.modelCacheSize | quote }}
+  GPU_ENABLED: {{ .Values.ai.gpuEnabled | quote }}
+  AI_BATCH_SIZE: {{ .Values.ai.batchSize | quote }}
+  {{- end }}
+  
+  # Content Processing Configuration
+  {{- if .Values.contentProcessing.enabled }}
+  IMAGE_PROCESSING_QUALITY: {{ .Values.contentProcessing.imageQuality | quote }}
+  VIDEO_PROCESSING_PRESET: {{ .Values.contentProcessing.videoPreset | quote }}
+  AUDIO_PROCESSING_BITRATE: {{ .Values.contentProcessing.audioBitrate | quote }}
+  THUMBNAIL_SIZE: {{ .Values.contentProcessing.thumbnailSize | quote }}
+  {{- end }}
+  
+  # Storage Configuration
+  {{- if .Values.storage.enabled }}
+  CONTENT_STORAGE_BUCKET: {{ .Values.storage.contentBucket | quote }}
+  BACKUP_STORAGE_BUCKET: {{ .Values.storage.backupBucket | quote }}
+  CDN_ENDPOINT: {{ .Values.storage.cdnEndpoint | quote }}
+  {{- end }}
+  
+  # Monitoring Configuration
+  {{- if .Values.monitoring.enabled }}
+  METRICS_ENABLED: {{ .Values.monitoring.metricsEnabled | quote }}
+  TRACING_ENABLED: {{ .Values.monitoring.tracingEnabled | quote }}
+  LOGGING_FORMAT: {{ .Values.monitoring.loggingFormat | quote }}
+  PROMETHEUS_METRICS_PATH: {{ .Values.monitoring.prometheusPath | quote }}
+  {{- end }}
+  
+  # Feature Flags
+  {{- range $key, $value := .Values.featureFlags }}
+  FEATURE_{{ $key | upper }}: {{ $value | quote }}
+  {{- end }}
+  
+  # Custom Configuration
+  {{- if .Values.customConfig }}
+  {{- range $key, $value := .Values.customConfig }}
+  {{ $key }}: {{ $value | quote }}
+  {{- end }}
+  {{- end }}
+
+  # Nginx Configuration (if nginx is enabled)
+  {{- if .Values.nginx.enabled }}
+  nginx.conf: |
+    user nginx;
+    worker_processes {{ .Values.nginx.workerProcesses }};
+    error_log /var/log/nginx/error.log {{ .Values.nginx.errorLogLevel }};
+    pid /var/run/nginx.pid;
+    
+    events {
+        worker_connections {{ .Values.nginx.workerConnections }};
+        use epoll;
+        multi_accept on;
+    }
+    
+    http {
+        include /etc/nginx/mime.types;
+        default_type application/octet-stream;
+        
+        # Logging
+        log_format main '$remote_addr - $remote_user [$time_local] "$request" '
+                        '$status $body_bytes_sent "$http_referer" '
+                        '"$http_user_agent" "$http_x_forwarded_for"';
+        
+        access_log /var/log/nginx/access.log main;
+        
+        # Performance
+        sendfile on;
+        tcp_nopush on;
+        tcp_nodelay on;
+        keepalive_timeout {{ .Values.nginx.keepaliveTimeout }};
+        types_hash_max_size 2048;
+        client_max_body_size {{ .Values.nginx.clientMaxBodySize }};
+        
+        # Security Headers
+        add_header X-Frame-Options "SAMEORIGIN" always;
+        add_header X-Content-Type-Options "nosniff" always;
+        add_header X-XSS-Protection "1; mode=block" always;
+        add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+        
+        # Gzip Compression
+        gzip on;
+        gzip_vary on;
+        gzip_proxied any;
+        gzip_comp_level {{ .Values.nginx.gzipLevel }};
+        gzip_types text/plain text/css text/xml text/javascript application/javascript application/xml+rss application/json;
+        
+        # Rate Limiting
+        limit_req_zone $binary_remote_addr zone=api:10m rate={{ .Values.nginx.rateLimitApi }};
+        limit_req_zone $binary_remote_addr zone=upload:10m rate={{ .Values.nginx.rateLimitUpload }};
+        
+        # Upstream Configuration
+        upstream {{ include "ainflue.fullname" . }}_backend {
+            least_conn;
+            {{- range .Values.nginx.upstreams }}
+            server {{ .host }}:{{ .port }} max_fails={{ .maxFails | default 3 }} fail_timeout={{ .failTimeout | default "30s" }};
+            {{- end }}
+        }
+        
+        # Main Server Block
+        server {
+            listen 80;
+            server_name {{ .Values.nginx.serverName | default "_" }};
+            {{- if .Values.nginx.redirectToHttps }}
+            return 301 https://$host$request_uri;
+            {{- else }}
+            location / {
+                proxy_pass http://{{ include "ainflue.fullname" . }}_backend;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+            }
+            {{- end }}
+        }
+        
+        {{- if .Values.nginx.ssl.enabled }}
+        server {
+            listen 443 ssl http2;
+            server_name {{ .Values.nginx.serverName | default "_" }};
+            
+            # SSL Configuration
+            ssl_certificate {{ .Values.nginx.ssl.certificatePath }};
+            ssl_certificate_key {{ .Values.nginx.ssl.privateKeyPath }};
+            ssl_protocols {{ .Values.nginx.ssl.protocols }};
+            ssl_ciphers {{ .Values.nginx.ssl.ciphers }};
+            ssl_prefer_server_ciphers {{ .Values.nginx.ssl.preferServerCiphers }};
+            
+            location / {
+                limit_req zone=api burst={{ .Values.nginx.rateLimitBurst }} nodelay;
+                proxy_pass http://{{ include "ainflue.fullname" . }}_backend;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+                proxy_connect_timeout {{ .Values.nginx.proxyTimeout }};
+                proxy_send_timeout {{ .Values.nginx.proxyTimeout }};
+                proxy_read_timeout {{ .Values.nginx.proxyTimeout }};
+            }
+            
+            # Health Check
+            location /health {
+                access_log off;
+                return 200 "healthy\n";
+                add_header Content-Type text/plain;
+            }
+        }
+        {{- end }}
+    }
+  {{- end }}
+{{- end }}
