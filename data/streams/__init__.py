@@ -48,107 +48,220 @@ Contact: mlaiel@live.de for licensing inquiries.
 # ============================================================================
 
 # Core streaming engine (consolidated from manager.py + processor.py + scheduler.py)
-from .streaming_engine import (
-    StreamingEngine,
-    # Legacy compatibility exports
-    DataStreamManager,
-    RealTimeProcessor,
-    StreamScheduler,
-    # Enums and types
-    StreamType,
-    StreamStatus,
-    ProcessingPriority,
-    ProcessingStage,
-    ContentFormat,
-    TaskPriority,
-    TaskStatus,
-    # Data classes
-    StreamEvent,
-    StreamMetrics,
-    ProcessingJob,
-    ProcessingResult,
-    ProcessingMetrics,
-    ScheduledTask
-)
+try:
+    from .streaming_engine import (
+        StreamingEngine,
+        # Legacy compatibility exports
+        DataStreamManager,
+        RealTimeProcessor,
+        StreamScheduler,
+        # Enums and types
+        StreamType,
+        StreamStatus,
+        ProcessingPriority,
+        ProcessingStage,
+        ContentFormat,
+        TaskPriority,
+        TaskStatus,
+        # Data classes
+        StreamEvent,
+        StreamMetrics,
+        ProcessingJob,
+        ProcessingResult,
+        ProcessingMetrics,
+        ScheduledTask
+    )
+except ImportError as e:
+    # Fallback implementations for missing dependencies
+    import logging
+    logger = logging.getLogger(__name__)
+    logger.warning(f"Streaming engine import failed: {e}")
+    
+    # Define minimal classes for compatibility
+    class StreamingEngine:
+        def __init__(self, *args, **kwargs): pass
+        async def initialize(self): pass
+    
+    class DataStreamManager:
+        def __init__(self, *args, **kwargs): pass
+        async def initialize(self): pass
+    
+    class RealTimeProcessor:
+        def __init__(self, *args, **kwargs): pass
+        async def initialize(self): pass
+    
+    class StreamScheduler:
+        def __init__(self, *args, **kwargs): pass
+        async def initialize(self): pass
 
 # Events and monitoring hub (consolidated from events.py + monitoring.py)
-from .events_monitoring import (
-    EventsMonitoringHub,
-    # Legacy compatibility exports
-    EventStreamer,
-    StreamMonitor,
-    # Enums and types
-    EventType,
-    EventPriority,
-    EventStatus,
-    AlertSeverity,
-    MonitoringMetric,
-    HealthStatus,
-    # Data classes
-    Event,
-    EventHandler,
-    MetricSample,
-    Alert,
-    HealthCheck
-)
+try:
+    from .events_monitoring import (
+        EventsMonitoringHub,
+        # Legacy compatibility exports
+        EventStreamer,
+        StreamMonitor,
+        # Enums and types
+        EventType,
+        EventPriority,
+        EventStatus,
+        AlertSeverity,
+        MonitoringMetric,
+        HealthStatus,
+        # Data classes
+        Event,
+        EventHandler,
+        MetricSample,
+        Alert,
+        HealthCheck
+    )
+except ImportError as e:
+    import logging
+    logger = logging.getLogger(__name__)
+    logger.warning(f"Events monitoring import failed: {e}")
+    
+    # Define minimal classes for compatibility
+    class EventsMonitoringHub:
+        def __init__(self, *args, **kwargs): pass
+        async def initialize(self): pass
+    
+    class EventStreamer:
+        def __init__(self, *args, **kwargs): pass
+        async def initialize(self): pass
+    
+    class StreamMonitor:
+        def __init__(self, *args, **kwargs): pass
+        async def initialize(self): pass
 
 # Platform integration and revenue tracking (consolidated from platform.py + revenue.py)
-from .platform_revenue import (
-    PlatformRevenueIntegration,
-    # Legacy compatibility exports
-    PlatformStreamer,
-    RevenueStreamer,
-    # Enums and types
-    PlatformType,
-    SyncMode,
-    PlatformStatus,
-    RevenueSource,
-    PaymentStatus,
-    CurrencyType,
-    # Data classes
-    PlatformConnection,
-    PlatformData,
-    RevenueTransaction,
-    RevenueAnalytics,
-    MonetizationGoal
-)
+try:
+    from .platform_revenue import (
+        PlatformRevenueIntegration,
+        # Legacy compatibility exports
+        PlatformStreamer,
+        RevenueStreamer,
+        # Enums and types
+        PlatformType,
+        SyncMode,
+        PlatformStatus,
+        RevenueSource,
+        PaymentStatus,
+        CurrencyType,
+        # Data classes
+        PlatformConnection,
+        PlatformData,
+        RevenueTransaction,
+        RevenueAnalytics,
+        MonetizationGoal
+    )
+except ImportError as e:
+    import logging
+    logger = logging.getLogger(__name__)
+    logger.warning(f"Platform revenue import failed: {e}")
+    
+    # Define minimal classes for compatibility
+    class PlatformRevenueIntegration:
+        def __init__(self, *args, **kwargs): pass
+        async def initialize(self): pass
+    
+    class PlatformStreamer:
+        def __init__(self, *args, **kwargs): pass
+        async def initialize(self): pass
+    
+    class RevenueStreamer:
+        def __init__(self, *args, **kwargs): pass
+        async def initialize(self): pass
 
 # Data flow orchestration (consolidated from buffer.py + queue.py + connector.py)
-from .data_flow_manager import (
-    DataFlowManager,
-    # Legacy compatibility exports
-    StreamBuffer,
-    StreamQueue,
-    StreamConnector,
-    # Base classes
-    BaseConnector,
-    # Enums and types
-    BufferType,
-    CompressionType,
-    EvictionPolicy,
-    QueuePriority,
-    MessageStatus,
-    ConnectorType,
-    ConnectionStatus,
-    # Data classes
-    BufferConfig,
-    BufferItem,
-    QueueMessage,
-    ConnectionConfig,
-    Connection
-)
+try:
+    from .data_flow_manager import (
+        DataFlowManager,
+        # Legacy compatibility exports
+        StreamBuffer,
+        StreamQueue,
+        StreamConnector,
+        # Base classes
+        BaseConnector,
+        # Enums and types
+        BufferType,
+        CompressionType,
+        EvictionPolicy,
+        QueuePriority,
+        MessageStatus,
+        ConnectorType,
+        ConnectionStatus,
+        # Data classes
+        BufferConfig,
+        BufferItem,
+        QueueMessage,
+        ConnectionConfig,
+        Connection
+    )
+except ImportError as e:
+    import logging
+    logger = logging.getLogger(__name__)
+    logger.warning(f"Data flow manager import failed: {e}")
+    
+    # Define minimal classes for compatibility
+    class DataFlowManager:
+        def __init__(self, *args, **kwargs): pass
+        async def initialize(self): pass
+    
+    class StreamBuffer:
+        def __init__(self, *args, **kwargs): pass
+        async def initialize(self): pass
+    
+    class StreamQueue:
+        def __init__(self, *args, **kwargs): pass
+        async def initialize(self): pass
+    
+    class StreamConnector:
+        def __init__(self, *args, **kwargs): pass
+        async def initialize(self): pass
+    
+    class BaseConnector:
+        def __init__(self, *args, **kwargs): pass
 
 # Preserved standalone modules
 from .analytics import StreamAnalytics
-from .index import (
-    streams_registry,
-    StreamsRegistry,
-    StreamsModuleConfig,
-    get_default_manager,
-    get_default_processor,
-    create_stream_components,
-    get_module_info
-)
+
+# Import index module with fallback
+try:
+    from .index import (
+        streams_registry,
+        StreamsRegistry,
+        StreamsModuleConfig,
+        get_default_manager,
+        get_default_processor,
+        create_stream_components,
+        get_module_info
+    )
+except ImportError as e:
+    import logging
+    logger = logging.getLogger(__name__)
+    logger.warning(f"Index module import failed: {e}")
+    
+    # Minimal registry implementation
+    class StreamsRegistry:
+        def __init__(self): pass
+        async def initialize(self): pass
+    
+    class StreamsModuleConfig:
+        DEFAULT_WORKERS = 16
+    
+    streams_registry = StreamsRegistry()
+    
+    async def get_default_manager():
+        return DataStreamManager()
+    
+    async def get_default_processor():
+        return RealTimeProcessor()
+    
+    async def create_stream_components():
+        return {}
+    
+    def get_module_info():
+        return {}
 
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
