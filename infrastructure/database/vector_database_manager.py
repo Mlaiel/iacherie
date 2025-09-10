@@ -439,3 +439,160 @@ class VectorDatabaseManager:
         
         store['statistics'].update(metrics)
         return metrics
+        
+    async def store_embeddings(self, collection_id: str, embeddings_batch: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """
+        Store multiple embeddings in batch for efficient processing
+        ML Engineer Role Implementation for Ainflue AI content analysis
+        
+        Args:
+            collection_id: Collection identifier
+            embeddings_batch: List of embedding dictionaries with vectors and metadata
+            
+        Returns:
+            Batch storage result with success/failure details
+        """
+        logger.info(f"Storing batch of {len(embeddings_batch)} embeddings in collection: {collection_id}")
+        
+        if collection_id not in self.vector_stores:
+            raise ValueError(f"Collection {collection_id} not found")
+            
+        store = self.vector_stores[collection_id]
+        batch_results = {
+            'collection_id': collection_id,
+            'total_embeddings': len(embeddings_batch),
+            'successful_insertions': 0,
+            'failed_insertions': 0,
+            'processing_time_ms': 0,
+            'batch_id': f"batch_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}",
+            'errors': []
+        }
+        
+        start_time = datetime.utcnow()
+        
+        try:
+            # Process embeddings in chunks for better memory management
+            chunk_size = 100  # Process 100 embeddings at a time
+            processed_count = 0
+            
+            for i in range(0, len(embeddings_batch), chunk_size):
+                chunk = embeddings_batch[i:i + chunk_size]
+                
+                for embedding_data in chunk:
+                    try:
+                        # Validate embedding data structure
+                        if not self._validate_embedding_data(embedding_data):
+                            batch_results['failed_insertions'] += 1
+                            batch_results['errors'].append(f"Invalid embedding data at index {processed_count}")
+                            continue
+                            
+                        # Prepare embedding for storage
+                        embedding_id = embedding_data.get('id') or f"{collection_id}_{len(store['vectors'])}"
+                        vector = np.array(embedding_data['vector'])
+                        metadata = EmbeddingMetadata(**embedding_data.get('metadata', {}))
+                        
+                        # Store in vector database
+                        await self._store_single_embedding(store, embedding_id, vector, metadata)
+                        
+                        batch_results['successful_insertions'] += 1
+                        processed_count += 1
+                        
+                        # Update collection statistics
+                        store['statistics']['total_vectors'] += 1
+                        store['statistics']['last_updated'] = datetime.utcnow()
+                        
+                    except Exception as e:
+                        batch_results['failed_insertions'] += 1
+                        batch_results['errors'].append(f"Failed to store embedding at index {processed_count}: {str(e)}")
+                        logger.warning(f"Failed to store embedding: {e}")
+                        
+                # Log progress for large batches
+                if len(embeddings_batch) > chunk_size:
+                    logger.info(f"Processed {min(i + chunk_size, len(embeddings_batch))}/{len(embeddings_batch)} embeddings")
+                    
+            # Calculate processing time
+            end_time = datetime.utcnow()
+            batch_results['processing_time_ms'] = int((end_time - start_time).total_seconds() * 1000)
+            
+            # Update store statistics
+            store['statistics']['total_size_gb'] = self._calculate_collection_size(store)
+            store['statistics']['last_batch_size'] = len(embeddings_batch)
+            store['statistics']['batch_success_rate'] = (
+                batch_results['successful_insertions'] / batch_results['total_embeddings'] * 100
+                if batch_results['total_embeddings'] > 0 else 0
+            )
+            
+            logger.info(f"Batch storage completed: {batch_results['successful_insertions']}/{batch_results['total_embeddings']} successful")
+            return batch_results
+            
+        except Exception as e:
+            logger.error(f"Batch embedding storage failed: {e}")
+            batch_results['errors'].append(f"Batch operation failed: {str(e)}")
+            return batch_results
+            
+    def _validate_embedding_data(self, embedding_data: Dict[str, Any]) -> bool:
+        """Validate embedding data structure"""
+        required_fields = ['vector']
+        
+        for field in required_fields:
+            if field not in embedding_data:
+                return False
+                
+        # Validate vector
+        vector = embedding_data['vector']
+        if not isinstance(vector, (list, np.ndarray)):
+            return False
+            
+        if len(vector) == 0:
+            return False
+            
+        # Validate metadata if present
+        if 'metadata' in embedding_data:
+            metadata = embedding_data['metadata']
+            if not isinstance(metadata, dict):
+                return False
+                
+        return True
+        
+    async def _store_single_embedding(self, store: Dict[str, Any], embedding_id: str, vector: np.ndarray, metadata: EmbeddingMetadata) -> None:
+        """Store a single embedding in the vector store"""
+        
+        # Create embedding entry
+        embedding_entry = {
+            'id': embedding_id,
+            'vector': vector.tolist() if isinstance(vector, np.ndarray) else vector,
+            'metadata': {
+                'content_type': metadata.content_type,
+                'creator_id': metadata.creator_id,
+                'timestamp': metadata.timestamp or datetime.utcnow(),
+                'content_id': metadata.content_id,
+                'tags': metadata.tags or [],
+                'custom_fields': metadata.custom_fields or {}
+            },
+            'indexed_at': datetime.utcnow()
+        }
+        
+        # Add to vector store
+        store['vectors'][embedding_id] = embedding_entry
+        
+        # Update indexes for fast retrieval
+        content_type = metadata.content_type
+        if content_type not in store['indexes']:
+            store['indexes'][content_type] = []
+        store['indexes'][content_type].append(embedding_id)
+        
+        # Creator index for collaboration features
+        creator_id = metadata.creator_id
+        if creator_id:
+            if 'creator_index' not in store:
+                store['creator_index'] = {}
+            if creator_id not in store['creator_index']:
+                store['creator_index'][creator_id] = []
+            store['creator_index'][creator_id].append(embedding_id)
+            
+    def _calculate_collection_size(self, store: Dict[str, Any]) -> float:
+        """Calculate approximate size of collection in GB"""
+        total_vectors = len(store['vectors'])
+        avg_vector_size_kb = 4  # Approximate size per vector in KB
+        total_size_gb = (total_vectors * avg_vector_size_kb) / (1024 * 1024)  # Convert to GB
+        return round(total_size_gb, 3)

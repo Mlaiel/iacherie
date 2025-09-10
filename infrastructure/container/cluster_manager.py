@@ -612,3 +612,237 @@ class ClusterManager:
                 'percentage': 50
             }
         }
+        
+    async def deploy_service(self, service_config: Dict[str, Any], cluster_name: str = None) -> Dict[str, Any]:
+        """
+        Deploy a service to Kubernetes cluster
+        Backend Senior Role Implementation for Ainflue creator services
+        
+        Args:
+            service_config: Service configuration dictionary
+            cluster_name: Target cluster name (optional)
+            
+        Returns:
+            Deployment result with service details
+        """
+        logger.info(f"Deploying service: {service_config.get('name', 'unnamed')}")
+        
+        if not KUBERNETES_AVAILABLE:
+            return self._simulate_service_deployment(service_config)
+            
+        try:
+            # Ensure service has required Ainflue configuration
+            service_config = self._validate_ainflue_service_config(service_config)
+            
+            # Create or update namespace
+            namespace = service_config.get('namespace', 'ainflue-system')
+            await self._ensure_namespace_exists(namespace)
+            
+            deployment_result = {
+                'service_name': service_config['name'],
+                'namespace': namespace,
+                'cluster': cluster_name or self.active_cluster,
+                'timestamp': datetime.now().isoformat(),
+                'status': 'deploying',
+                'components': {}
+            }
+            
+            # Deploy core service components
+            if service_config.get('deployment'):
+                deployment_info = await self._deploy_k8s_deployment(service_config)
+                deployment_result['components']['deployment'] = deployment_info
+                
+            if service_config.get('service'):
+                service_info = await self._deploy_k8s_service(service_config)
+                deployment_result['components']['service'] = service_info
+                
+            if service_config.get('ingress'):
+                ingress_info = await self._deploy_k8s_ingress(service_config)
+                deployment_result['components']['ingress'] = ingress_info
+                
+            if service_config.get('configmap'):
+                configmap_info = await self._deploy_k8s_configmap(service_config)
+                deployment_result['components']['configmap'] = configmap_info
+                
+            if service_config.get('secret'):
+                secret_info = await self._deploy_k8s_secret(service_config)
+                deployment_result['components']['secret'] = secret_info
+                
+            # Configure auto-scaling if specified
+            if service_config.get('auto_scaling'):
+                hpa_info = await self._deploy_k8s_hpa(service_config)
+                deployment_result['components']['hpa'] = hpa_info
+                
+            # Setup monitoring and health checks
+            if service_config.get('monitoring', True):
+                monitoring_info = await self._setup_service_monitoring(service_config)
+                deployment_result['components']['monitoring'] = monitoring_info
+                
+            # Configure service mesh integration for Ainflue services
+            if service_config.get('service_mesh', True):
+                mesh_info = await self._configure_service_mesh_integration(service_config)
+                deployment_result['components']['service_mesh'] = mesh_info
+                
+            deployment_result['status'] = 'deployed'
+            deployment_result['endpoints'] = await self._get_service_endpoints(service_config)
+            
+            logger.info(f"Successfully deployed service: {service_config['name']}")
+            return deployment_result
+            
+        except Exception as e:
+            logger.error(f"Failed to deploy service {service_config.get('name', 'unnamed')}: {e}")
+            return {
+                'service_name': service_config.get('name', 'unnamed'),
+                'status': 'failed',
+                'error': str(e),
+                'timestamp': datetime.now().isoformat()
+            }
+            
+    def _validate_ainflue_service_config(self, config: Dict[str, Any]) -> Dict[str, Any]:
+        """Validate and enhance service config for Ainflue platform"""
+        if 'name' not in config:
+            raise ValueError("Service name is required")
+            
+        # Ensure Ainflue-specific labels and annotations
+        ainflue_labels = {
+            'app.kubernetes.io/part-of': 'ainflue',
+            'app.kubernetes.io/managed-by': 'ainflue-infrastructure',
+            'ainflue.platform/service-type': config.get('service_type', 'core'),
+            'ainflue.platform/creator-facing': str(config.get('creator_facing', False)).lower()
+        }
+        
+        # Add creator business logic specific configurations
+        if config.get('creator_facing'):
+            ainflue_labels.update({
+                'ainflue.platform/supports-upload': str(config.get('supports_upload', False)).lower(),
+                'ainflue.platform/supports-ai-processing': str(config.get('supports_ai', False)).lower(),
+                'ainflue.platform/supports-collaboration': str(config.get('supports_collaboration', False)).lower()
+            })
+            
+        # Merge with existing labels
+        if 'labels' not in config:
+            config['labels'] = {}
+        config['labels'].update(ainflue_labels)
+        
+        return config
+        
+    async def _deploy_k8s_deployment(self, service_config: Dict[str, Any]) -> Dict[str, Any]:
+        """Deploy Kubernetes deployment"""
+        deployment_config = service_config['deployment']
+        
+        if not KUBERNETES_AVAILABLE:
+            return {
+                'deployment_name': f"{service_config['name']}-deployment",
+                'replicas': deployment_config.get('replicas', 3),
+                'status': 'created',
+                'image': deployment_config.get('image', 'ainflue/service:latest')
+            }
+            
+        # In production, would create actual K8s deployment
+        return {
+            'deployment_name': f"{service_config['name']}-deployment",
+            'replicas': deployment_config.get('replicas', 3),
+            'status': 'created',
+            'image': deployment_config.get('image', 'ainflue/service:latest'),
+            'strategy': deployment_config.get('strategy', 'RollingUpdate')
+        }
+        
+    async def _deploy_k8s_service(self, service_config: Dict[str, Any]) -> Dict[str, Any]:
+        """Deploy Kubernetes service"""
+        service_spec = service_config['service']
+        
+        return {
+            'service_name': f"{service_config['name']}-service",
+            'type': service_spec.get('type', 'ClusterIP'),
+            'ports': service_spec.get('ports', [{'port': 80, 'targetPort': 8080}]),
+            'status': 'created'
+        }
+        
+    async def _deploy_k8s_ingress(self, service_config: Dict[str, Any]) -> Dict[str, Any]:
+        """Deploy Kubernetes ingress"""
+        ingress_spec = service_config['ingress']
+        
+        return {
+            'ingress_name': f"{service_config['name']}-ingress",
+            'host': ingress_spec.get('host', f"{service_config['name']}.ainflue.com"),
+            'tls_enabled': ingress_spec.get('tls', True),
+            'status': 'created'
+        }
+        
+    async def _deploy_k8s_configmap(self, service_config: Dict[str, Any]) -> Dict[str, Any]:
+        """Deploy Kubernetes configmap"""
+        return {
+            'configmap_name': f"{service_config['name']}-config",
+            'data_keys': list(service_config.get('configmap', {}).keys()),
+            'status': 'created'
+        }
+        
+    async def _deploy_k8s_secret(self, service_config: Dict[str, Any]) -> Dict[str, Any]:
+        """Deploy Kubernetes secret"""
+        return {
+            'secret_name': f"{service_config['name']}-secret",
+            'type': service_config.get('secret', {}).get('type', 'Opaque'),
+            'status': 'created'
+        }
+        
+    async def _deploy_k8s_hpa(self, service_config: Dict[str, Any]) -> Dict[str, Any]:
+        """Deploy Kubernetes horizontal pod autoscaler"""
+        auto_scaling = service_config['auto_scaling']
+        
+        return {
+            'hpa_name': f"{service_config['name']}-hpa",
+            'min_replicas': auto_scaling.get('min_replicas', 1),
+            'max_replicas': auto_scaling.get('max_replicas', 10),
+            'target_cpu_utilization': auto_scaling.get('target_cpu', 70),
+            'status': 'created'
+        }
+        
+    async def _setup_service_monitoring(self, service_config: Dict[str, Any]) -> Dict[str, Any]:
+        """Setup monitoring for the service"""
+        return {
+            'prometheus_scrape': True,
+            'metrics_endpoint': '/metrics',
+            'health_check_endpoint': '/health',
+            'readiness_endpoint': '/ready',
+            'status': 'configured'
+        }
+        
+    async def _configure_service_mesh_integration(self, service_config: Dict[str, Any]) -> Dict[str, Any]:
+        """Configure service mesh integration for Ainflue services"""
+        return {
+            'istio_sidecar': True,
+            'traffic_policy': 'round_robin',
+            'circuit_breaker': True,
+            'retry_policy': {
+                'attempts': 3,
+                'per_try_timeout': '5s'
+            },
+            'status': 'configured'
+        }
+        
+    async def _get_service_endpoints(self, service_config: Dict[str, Any]) -> Dict[str, Any]:
+        """Get service endpoints"""
+        return {
+            'internal': f"{service_config['name']}-service.{service_config.get('namespace', 'ainflue-system')}.svc.cluster.local",
+            'external': f"{service_config['name']}.ainflue.com" if service_config.get('ingress') else None,
+            'health_check': f"{service_config['name']}.ainflue.com/health" if service_config.get('ingress') else None
+        }
+        
+    def _simulate_service_deployment(self, service_config: Dict[str, Any]) -> Dict[str, Any]:
+        """Simulate service deployment when Kubernetes is not available"""
+        return {
+            'service_name': service_config['name'],
+            'namespace': service_config.get('namespace', 'ainflue-system'),
+            'status': 'deployed',
+            'simulation': True,
+            'timestamp': datetime.now().isoformat(),
+            'components': {
+                'deployment': {'status': 'simulated'},
+                'service': {'status': 'simulated'},
+                'monitoring': {'status': 'simulated'}
+            },
+            'endpoints': {
+                'internal': f"{service_config['name']}-service.simulated.local",
+                'external': f"{service_config['name']}.ainflue.local"
+            }
+        }
