@@ -896,12 +896,12 @@ class FormatAdapter:
         # Implementation would add text overlay
         return clip
     
-    def _adjust_image_aspect_ratio(self, img: Image.Image, target_aspect_ratio: AspectRatio) -> Image.Image:
+    def _adjust_image_aspect_ratio(self, img: Any, target_aspect_ratio: AspectRatio) -> Any:
         """Adjust image to target aspect ratio"""
         # Implementation would crop/pad image
         return img
     
-    def _enhance_image_quality(self, img: Image.Image) -> Image.Image:
+    def _enhance_image_quality(self, img: Any) -> Any:
         """Enhance image quality"""
         # Apply sharpening and contrast enhancement
         enhancer = ImageEnhance.Sharpness(img)
@@ -912,7 +912,7 @@ class FormatAdapter:
         
         return img
     
-    def _add_image_watermark(self, img: Image.Image, watermark_text: str) -> Image.Image:
+    def _add_image_watermark(self, img: Any, watermark_text: str) -> Any:
         """Add watermark to image"""
         # Implementation would add text watermark
         return img
