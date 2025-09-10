@@ -1232,6 +1232,238 @@ class ComplianceManager:
             overall_score = 0.0
         
         return round(overall_score, 2)
+        
+    async def check_gdpr_compliance(self, infrastructure_config: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Check GDPR compliance specifically for Ainflue creator platform
+        Security Role Implementation for creator data protection
+        
+        Args:
+            infrastructure_config: Infrastructure configuration dictionary
+            
+        Returns:
+            GDPR compliance assessment with specific requirements
+        """
+        logger.info("Performing GDPR compliance check for Ainflue platform")
+        
+        gdpr_compliance = {
+            'overall_compliance': False,
+            'compliance_score': 0.0,
+            'assessment_timestamp': datetime.utcnow().isoformat(),
+            'framework': 'GDPR',
+            'requirements_checked': [],
+            'compliant_requirements': [],
+            'non_compliant_requirements': [],
+            'recommendations': [],
+            'creator_specific_checks': {}
+        }
+        
+        # Define GDPR requirements for creator platforms
+        gdpr_requirements = {
+            'lawful_basis': {
+                'description': 'Lawful basis for processing creator personal data',
+                'weight': 0.15,
+                'checks': ['consent_mechanism', 'legitimate_interest_assessment', 'contract_basis']
+            },
+            'data_minimization': {
+                'description': 'Collect only necessary creator data',
+                'weight': 0.12,
+                'checks': ['data_collection_purpose', 'retention_policies', 'purpose_limitation']
+            },
+            'consent_management': {
+                'description': 'Creator consent collection and withdrawal',
+                'weight': 0.15,
+                'checks': ['explicit_consent', 'consent_withdrawal', 'consent_records']
+            },
+            'data_subject_rights': {
+                'description': 'Creator rights implementation (access, deletion, portability)',
+                'weight': 0.15,
+                'checks': ['right_to_access', 'right_to_deletion', 'data_portability', 'right_to_rectification']
+            },
+            'data_protection_by_design': {
+                'description': 'Privacy by design in creator tools',
+                'weight': 0.10,
+                'checks': ['default_privacy_settings', 'privacy_impact_assessment', 'data_protection_officer']
+            },
+            'security_measures': {
+                'description': 'Technical and organizational security measures',
+                'weight': 0.12,
+                'checks': ['encryption_at_rest', 'encryption_in_transit', 'access_controls', 'security_monitoring']
+            },
+            'data_breach_response': {
+                'description': 'Data breach notification and response procedures',
+                'weight': 0.10,
+                'checks': ['breach_detection', 'notification_procedures', 'incident_response_plan']
+            },
+            'international_transfers': {
+                'description': 'Cross-border data transfer safeguards',
+                'weight': 0.08,
+                'checks': ['adequacy_decisions', 'standard_contractual_clauses', 'binding_corporate_rules']
+            },
+            'record_keeping': {
+                'description': 'Processing records and documentation',
+                'weight': 0.03,
+                'checks': ['processing_records', 'data_mapping', 'compliance_documentation']
+            }
+        }
+        
+        total_score = 0.0
+        total_weight = 0.0
+        
+        # Check each GDPR requirement
+        for requirement_id, requirement in gdpr_requirements.items():
+            requirement_result = await self._check_gdpr_requirement(
+                requirement_id, requirement, infrastructure_config
+            )
+            
+            gdpr_compliance['requirements_checked'].append(requirement_result)
+            
+            if requirement_result['compliant']:
+                gdpr_compliance['compliant_requirements'].append(requirement_id)
+            else:
+                gdpr_compliance['non_compliant_requirements'].append(requirement_id)
+                gdpr_compliance['recommendations'].extend(requirement_result['recommendations'])
+                
+            total_score += requirement_result['score'] * requirement['weight']
+            total_weight += requirement['weight']
+            
+        # Calculate overall compliance score
+        if total_weight > 0:
+            gdpr_compliance['compliance_score'] = round(total_score / total_weight * 100, 2)
+        else:
+            gdpr_compliance['compliance_score'] = 0.0
+            
+        gdpr_compliance['overall_compliance'] = gdpr_compliance['compliance_score'] >= 85.0
+        
+        # Add creator-specific compliance checks
+        creator_checks = await self._perform_creator_specific_gdpr_checks(infrastructure_config)
+        gdpr_compliance['creator_specific_checks'] = creator_checks
+        
+        # Generate summary recommendations
+        if not gdpr_compliance['overall_compliance']:
+            gdpr_compliance['recommendations'].extend([
+                "Implement comprehensive privacy policy for creators",
+                "Establish clear data retention periods for creator content",
+                "Provide creator dashboard for data management",
+                "Implement automated consent management system",
+                "Establish cross-border data transfer agreements",
+                "Conduct regular privacy impact assessments",
+                "Train staff on GDPR requirements for creator platforms"
+            ])
+            
+        logger.info(f"GDPR compliance check completed: {gdpr_compliance['compliance_score']}% compliant")
+        return gdpr_compliance
+        
+    async def _check_gdpr_requirement(self, requirement_id: str, requirement: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
+        """Check individual GDPR requirement"""
+        
+        requirement_result = {
+            'requirement_id': requirement_id,
+            'description': requirement['description'],
+            'compliant': False,
+            'score': 0.0,
+            'checks_passed': 0,
+            'total_checks': len(requirement['checks']),
+            'recommendations': []
+        }
+        
+        checks_passed = 0
+        
+        # Check each specific requirement
+        for check in requirement['checks']:
+            check_passed = await self._evaluate_gdpr_check(check, config)
+            if check_passed:
+                checks_passed += 1
+            else:
+                requirement_result['recommendations'].append(f"Implement {check.replace('_', ' ')}")
+                
+        requirement_result['checks_passed'] = checks_passed
+        requirement_result['score'] = checks_passed / len(requirement['checks'])
+        requirement_result['compliant'] = requirement_result['score'] >= 0.8  # 80% threshold
+        
+        return requirement_result
+        
+    async def _evaluate_gdpr_check(self, check: str, config: Dict[str, Any]) -> bool:
+        """Evaluate specific GDPR check"""
+        
+        # Map checks to configuration paths
+        check_mappings = {
+            'consent_mechanism': 'privacy_features.consent_management',
+            'consent_withdrawal': 'privacy_features.consent_withdrawal',
+            'explicit_consent': 'privacy_features.explicit_consent',
+            'consent_records': 'privacy_features.consent_records',
+            'right_to_access': 'privacy_features.data_access',
+            'right_to_deletion': 'privacy_features.data_deletion',
+            'data_portability': 'privacy_features.data_export',
+            'right_to_rectification': 'privacy_features.data_correction',
+            'encryption_at_rest': 'security_features.encryption_at_rest',
+            'encryption_in_transit': 'security_features.encryption_in_transit',
+            'access_controls': 'security_features.access_controls',
+            'security_monitoring': 'security_features.security_monitoring',
+            'breach_detection': 'security_features.breach_detection',
+            'notification_procedures': 'security_features.notification_procedures',
+            'data_collection_purpose': 'privacy_features.purpose_specification',
+            'retention_policies': 'privacy_features.data_retention',
+            'default_privacy_settings': 'privacy_features.privacy_by_default',
+            'processing_records': 'compliance_features.processing_records',
+            'data_mapping': 'compliance_features.data_mapping'
+        }
+        
+        config_path = check_mappings.get(check, f'features.{check}')
+        
+        # Navigate nested config
+        value = config
+        for key in config_path.split('.'):
+            if isinstance(value, dict) and key in value:
+                value = value[key]
+            else:
+                return False
+                
+        return bool(value)
+        
+    async def _perform_creator_specific_gdpr_checks(self, config: Dict[str, Any]) -> Dict[str, Any]:
+        """Perform creator platform specific GDPR checks"""
+        
+        creator_checks = {
+            'content_rights_management': {
+                'description': 'Creator content ownership and rights management',
+                'compliant': config.get('content_features', {}).get('rights_management', False),
+                'requirements': [
+                    'Clear content ownership policies',
+                    'Creator consent for content use',
+                    'Content deletion capabilities'
+                ]
+            },
+            'collaboration_privacy': {
+                'description': 'Privacy in creator collaboration features',
+                'compliant': config.get('collaboration_features', {}).get('privacy_controls', False),
+                'requirements': [
+                    'Collaboration consent mechanisms',
+                    'Shared content privacy controls',
+                    'Collaboration history management'
+                ]
+            },
+            'monetization_transparency': {
+                'description': 'Transparency in creator monetization data',
+                'compliant': config.get('monetization_features', {}).get('data_transparency', False),
+                'requirements': [
+                    'Revenue data transparency',
+                    'Audience analytics privacy',
+                    'Payment processing compliance'
+                ]
+            },
+            'ai_processing_consent': {
+                'description': 'Consent for AI processing of creator content',
+                'compliant': config.get('ai_features', {}).get('processing_consent', False),
+                'requirements': [
+                    'AI processing consent collection',
+                    'Model training opt-out options',
+                    'AI decision transparency'
+                ]
+            }
+        }
+        
+        return creator_checks
 
 
 # Example usage
