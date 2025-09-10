@@ -160,9 +160,10 @@ class MicroservicesCore:
     distributed system coordination, and intelligent service optimization.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None, level: str = "enterprise"):
         """Initialize microservices core"""
         self.config = config or {}
+        self.level = level
         self.service_definitions: Dict[str, ServiceDefinition] = {}
         self.service_instances: Dict[str, List[ServiceInstance]] = {}
         self.service_meshes: Dict[str, ServiceMesh] = {}

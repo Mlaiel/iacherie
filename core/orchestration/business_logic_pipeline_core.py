@@ -138,9 +138,10 @@ class BusinessLogicPipelineCore:
     and intelligent pipeline management for enterprise business logic execution.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None, level: str = "enterprise"):
         """Initialize business logic pipeline core"""
         self.config = config or {}
+        self.level = level
         self.pipelines: Dict[str, BusinessPipeline] = {}
         self.executions: Dict[str, PipelineExecution] = {}
         self.step_executions: Dict[str, List[StepExecution]] = defaultdict(list)
