@@ -783,7 +783,7 @@ class ClusterManager:
         return [
             {
                 'name': f"{service_name}_high_error_rate",
-                'condition': f"rate({service_name}_http_requests_total{{status=~\"5..\"}[5m]) > 0.1",
+                'condition': 'rate(' + service_name + '_http_requests_total{status=~"5.."}) > 0.1',
                 'duration': '5m',
                 'severity': 'warning'
             },
@@ -795,7 +795,7 @@ class ClusterManager:
             },
             {
                 'name': f"{service_name}_pod_crash_looping",
-                'condition': f"rate(kube_pod_container_status_restarts_total{{pod=~\"{service_name}.*\"}}[15m]) > 0",
+                'condition': 'rate(kube_pod_container_status_restarts_total{pod=~"' + service_name + '.*"}) > 0',
                 'duration': '5m',
                 'severity': 'critical'
             }
