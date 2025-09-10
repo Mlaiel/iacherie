@@ -38,7 +38,22 @@ from .copyright import (
     CopyrightRegistrationManager,
     DMCANoticeGenerator,
     CopyrightInfringementDetector,
-    IntellectualPropertyProtection
+    IntellectualPropertyProtection,
+    InternationalCopyrightCompliance,
+    CopyrightEnforcementEngine,
+    CopyrightRenewalManager,
+    CopyrightLicensingFramework,
+    CopyrightAuditTrail,
+    CopyrightDisputeResolver,
+    CopyrightComplianceReporter,
+    PatentComplianceMonitor,
+    TradeSecretProtection,
+    IPViolationDetector,
+    IPLegalDocumentGenerator,
+    IPEnforcementOrchestrator,
+    IPComplianceValidator,
+    IPLegalAnalytics,
+    IPInternationalFramework
 )
 
 # Data protection and privacy
@@ -46,7 +61,18 @@ from .privacy import (
     GDPRComplianceManager,
     PrivacyPolicyManager,
     ConsentManagementSystem,
-    DataMinimizationEngine
+    DataMinimizationEngine,
+    RightToErasureProcessor,
+    DataPortabilityManager,
+    ConsentWithdrawalProcessor,
+    DataProcessingLegalBasis,
+    PrivacyImpactAssessment,
+    CCPAComplianceEngine,
+    LGPDComplianceFramework,
+    PIPEDAComplianceSystem,
+    PDPAComplianceEngine,
+    COPPAChildProtection,
+    PrivacyComplianceReporter
 )
 
 # Content regulation and safety
