@@ -47,10 +47,8 @@ venv.bak/
 
 # Application specific
 logs/
-data/
-storage/
-uploads/
-backups/
+storage/uploads/
+backups/temp/
 
 # Test artifacts and temporary files
 test_*.py
