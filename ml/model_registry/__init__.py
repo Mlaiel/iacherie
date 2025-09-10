@@ -26,14 +26,106 @@ from .mlflow_registry import (
     ModelRegistryFactory
 )
 
+from .model_version_controller import (
+    ModelVersionController,
+    VersionInfo,
+    VersionControlConfig,
+    VersionOperation
+)
+
+from .model_encryption_manager import (
+    ModelEncryptionManager,
+    EncryptionLevel,
+    KeyType,
+    EncryptionConfig,
+    SecurityMetrics
+)
+
+from .model_access_controller import (
+    ModelAccessController,
+    Permission,
+    Role,
+    AccessLevel,
+    User,
+    AccessRequest,
+    AuditLog
+)
+
+from .model_compliance_validator import (
+    ModelComplianceValidator,
+    ComplianceStandard,
+    ComplianceLevel,
+    ViolationType,
+    ComplianceRule,
+    ComplianceViolation,
+    ComplianceAssessment,
+    ModelMetadata as ComplianceModelMetadata
+)
+
+from .model_bias_detector import (
+    ModelBiasDetector,
+    BiasType,
+    ProtectedAttribute,
+    BiasLevel,
+    FairnessMetric,
+    BiasTestResult,
+    CreatorBiasAnalysis,
+    BiasAssessment,
+    ModelPrediction
+)
+
 __all__ = [
+    # MLflow Registry (Existing)
     'MLflowModelRegistry',
     'ModelRegistryConfig',
     'ModelMetadata',
     'DeploymentInfo',
     'ModelStage',
     'RegistryStatus',
-    'ModelRegistryFactory'
+    'ModelRegistryFactory',
+    
+    # Version Control (Existing)
+    "ModelVersionController",
+    "VersionInfo",
+    "VersionControlConfig", 
+    "VersionOperation",
+    
+    # Encryption & Security (Existing)
+    "ModelEncryptionManager",
+    "EncryptionLevel",
+    "KeyType",
+    "EncryptionConfig",
+    "SecurityMetrics",
+    
+    # Access Control & RBAC (NEW - PHASE 2)
+    "ModelAccessController",
+    "Permission",
+    "Role",
+    "AccessLevel",
+    "User",
+    "AccessRequest",
+    "AuditLog",
+    
+    # Compliance & Governance (NEW - PHASE 2)
+    "ModelComplianceValidator",
+    "ComplianceStandard",
+    "ComplianceLevel",
+    "ViolationType",
+    "ComplianceRule",
+    "ComplianceViolation",
+    "ComplianceAssessment",
+    "ComplianceModelMetadata",
+    
+    # Bias Detection & Ethical AI (NEW - PHASE 2)
+    "ModelBiasDetector",
+    "BiasType",
+    "ProtectedAttribute",
+    "BiasLevel",
+    "FairnessMetric",
+    "BiasTestResult",
+    "CreatorBiasAnalysis",
+    "BiasAssessment",
+    "ModelPrediction"
 ]
 
 # Version du module
