@@ -1,0 +1,346 @@
+# Docker Compose for AI Services
+# ML inference engines and content generation services
+# Author: Fahed Mlaiel (mlaiel@live.de)
+
+version: '3.8'
+
+services:
+  # ML Inference Engine
+  ml-inference-engine:
+    build:
+      context: .
+      dockerfile: ml_inference_engine.dockerfile
+    container_name: ainflue-ml-inference
+    environment:
+      - SERVICE_NAME=ml_inference_engine
+      - DATABASE_URL=${AI_DB_URL}
+      - REDIS_URL=${REDIS_URL}
+      - MODEL_CACHE_PATH=/app/models
+      - GPU_ENABLED=true
+    volumes:
+      - ./models:/app/models:ro
+      - ./inference_data:/app/inference_data
+    ports:
+      - "8101:8000"
+    depends_on:
+      - ai-redis
+      - ai-db
+    restart: unless-stopped
+    networks:
+      - ai-network
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+        reservations:
+          cpus: '1.0'
+          memory: 2G
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 15s
+      retries: 3
+
+  # Content Generation Service
+  content-generation:
+    build:
+      context: .
+      dockerfile: content_generation.dockerfile
+    container_name: ainflue-content-generation
+    environment:
+      - SERVICE_NAME=content_generation
+      - DATABASE_URL=${AI_DB_URL}
+      - REDIS_URL=${REDIS_URL}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - CONTENT_MODELS_PATH=/app/models/generation
+    volumes:
+      - ./models/generation:/app/models/generation:ro
+      - ./generated_content:/app/generated_content
+    ports:
+      - "8102:8000"
+    depends_on:
+      - ai-redis
+      - ai-db
+    restart: unless-stopped
+    networks:
+      - ai-network
+
+  # Music Remix Engine
+  music-remix-engine:
+    build:
+      context: .
+      dockerfile: music_remix_engine.dockerfile
+    container_name: ainflue-music-remix
+    environment:
+      - SERVICE_NAME=music_remix_engine
+      - DATABASE_URL=${AI_DB_URL}
+      - REDIS_URL=${REDIS_URL}
+      - AUDIO_MODELS_PATH=/app/models/audio
+    volumes:
+      - ./models/audio:/app/models/audio:ro
+      - ./audio_processing:/app/audio_processing
+    ports:
+      - "8103:8000"
+    depends_on:
+      - ai-redis
+      - ai-db
+    restart: unless-stopped
+    networks:
+      - ai-network
+
+  # Style Transfer Service
+  style-transfer:
+    build:
+      context: .
+      dockerfile: style_transfer.dockerfile
+    container_name: ainflue-style-transfer
+    environment:
+      - SERVICE_NAME=style_transfer
+      - DATABASE_URL=${AI_DB_URL}
+      - REDIS_URL=${REDIS_URL}
+      - STYLE_MODELS_PATH=/app/models/style
+    volumes:
+      - ./models/style:/app/models/style:ro
+      - ./style_processing:/app/style_processing
+    ports:
+      - "8104:8000"
+    depends_on:
+      - ai-redis
+      - ai-db
+    restart: unless-stopped
+    networks:
+      - ai-network
+
+  # Content Enhancer
+  content-enhancer:
+    build:
+      context: .
+      dockerfile: content_enhancer.dockerfile
+    container_name: ainflue-content-enhancer
+    environment:
+      - SERVICE_NAME=content_enhancer
+      - DATABASE_URL=${AI_DB_URL}
+      - REDIS_URL=${REDIS_URL}
+      - ENHANCEMENT_MODELS_PATH=/app/models/enhancement
+    volumes:
+      - ./models/enhancement:/app/models/enhancement:ro
+      - ./enhanced_content:/app/enhanced_content
+    ports:
+      - "8105:8000"
+    depends_on:
+      - ai-redis
+      - ai-db
+    restart: unless-stopped
+    networks:
+      - ai-network
+
+  # Creative Assistant
+  creative-assistant:
+    build:
+      context: .
+      dockerfile: creative_assistant.dockerfile
+    container_name: ainflue-creative-assistant
+    environment:
+      - SERVICE_NAME=creative_assistant
+      - DATABASE_URL=${AI_DB_URL}
+      - REDIS_URL=${REDIS_URL}
+      - ASSISTANT_MODELS_PATH=/app/models/assistant
+    volumes:
+      - ./models/assistant:/app/models/assistant:ro
+      - ./assistant_data:/app/assistant_data
+    ports:
+      - "8106:8000"
+    depends_on:
+      - ai-redis
+      - ai-db
+    restart: unless-stopped
+    networks:
+      - ai-network
+
+  # Variation Generator
+  variation-generator:
+    build:
+      context: .
+      dockerfile: variation_generator.dockerfile
+    container_name: ainflue-variation-generator
+    environment:
+      - SERVICE_NAME=variation_generator
+      - DATABASE_URL=${AI_DB_URL}
+      - REDIS_URL=${REDIS_URL}
+      - VARIATION_MODELS_PATH=/app/models/variations
+    volumes:
+      - ./models/variations:/app/models/variations:ro
+      - ./variations:/app/variations
+    ports:
+      - "8107:8000"
+    depends_on:
+      - ai-redis
+      - ai-db
+    restart: unless-stopped
+    networks:
+      - ai-network
+
+  # Quality Assessor
+  quality-assessor:
+    build:
+      context: .
+      dockerfile: quality_assessor.dockerfile
+    container_name: ainflue-quality-assessor
+    environment:
+      - SERVICE_NAME=quality_assessor
+      - DATABASE_URL=${AI_DB_URL}
+      - REDIS_URL=${REDIS_URL}
+      - QUALITY_MODELS_PATH=/app/models/quality
+    volumes:
+      - ./models/quality:/app/models/quality:ro
+      - ./quality_reports:/app/quality_reports
+    ports:
+      - "8108:8000"
+    depends_on:
+      - ai-redis
+      - ai-db
+    restart: unless-stopped
+    networks:
+      - ai-network
+
+  # Trend Adapter
+  trend-adapter:
+    build:
+      context: .
+      dockerfile: trend_adapter.dockerfile
+    container_name: ainflue-trend-adapter
+    environment:
+      - SERVICE_NAME=trend_adapter
+      - DATABASE_URL=${AI_DB_URL}
+      - REDIS_URL=${REDIS_URL}
+      - TREND_MODELS_PATH=/app/models/trends
+    volumes:
+      - ./models/trends:/app/models/trends:ro
+      - ./trend_data:/app/trend_data
+    ports:
+      - "8109:8000"
+    depends_on:
+      - ai-redis
+      - ai-db
+    restart: unless-stopped
+    networks:
+      - ai-network
+
+  # Format Converter
+  format-converter:
+    build:
+      context: .
+      dockerfile: format_converter.dockerfile
+    container_name: ainflue-format-converter
+    environment:
+      - SERVICE_NAME=format_converter
+      - DATABASE_URL=${AI_DB_URL}
+      - REDIS_URL=${REDIS_URL}
+      - CONVERTER_MODELS_PATH=/app/models/conversion
+    volumes:
+      - ./models/conversion:/app/models/conversion:ro
+      - ./conversions:/app/conversions
+    ports:
+      - "8110:8000"
+    depends_on:
+      - ai-redis
+      - ai-db
+    restart: unless-stopped
+    networks:
+      - ai-network
+
+  # Neural Processor
+  neural-processor:
+    build:
+      context: .
+      dockerfile: neural_processor.dockerfile
+    container_name: ainflue-neural-processor
+    environment:
+      - SERVICE_NAME=neural_processor
+      - DATABASE_URL=${AI_DB_URL}
+      - REDIS_URL=${REDIS_URL}
+      - NEURAL_MODELS_PATH=/app/models/neural
+    volumes:
+      - ./models/neural:/app/models/neural:ro
+      - ./neural_processing:/app/neural_processing
+    ports:
+      - "8111:8000"
+    depends_on:
+      - ai-redis
+      - ai-db
+    restart: unless-stopped
+    networks:
+      - ai-network
+
+  # Infrastructure Services
+  ai-db:
+    image: postgres:15-alpine
+    container_name: ainflue-ai-postgres
+    environment:
+      POSTGRES_DB: ai_platform
+      POSTGRES_USER: ai_user
+      POSTGRES_PASSWORD: ${AI_DB_PASSWORD}
+    volumes:
+      - ai_postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"
+    restart: unless-stopped
+    networks:
+      - ai-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ai_user"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  ai-redis:
+    image: redis:7-alpine
+    container_name: ainflue-ai-redis
+    command: redis-server --appendonly yes --maxmemory 1gb --maxmemory-policy allkeys-lru
+    volumes:
+      - ai_redis_data:/data
+    ports:
+      - "6381:6379"
+    restart: unless-stopped
+    networks:
+      - ai-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Model Storage & Registry
+  ai-minio:
+    image: minio/minio:latest
+    container_name: ainflue-ai-minio
+    environment:
+      MINIO_ROOT_USER: ai_admin
+      MINIO_ROOT_PASSWORD: ${AI_MINIO_PASSWORD}
+    volumes:
+      - ai_minio_data:/data
+    ports:
+      - "9001:9000"
+      - "9091:9090"
+    command: server /data --console-address ":9090"
+    restart: unless-stopped
+    networks:
+      - ai-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  ai_postgres_data:
+  ai_redis_data:
+  ai_minio_data:
+
+networks:
+  ai-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.21.0.0/16
