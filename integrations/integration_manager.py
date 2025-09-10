@@ -15,22 +15,49 @@ from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
 
-from .oauth_manager import OAuthManager
-from .webhook_manager import WebhookManager
-from .rate_limiter import RateLimiter
-from .api_gateway import APIGateway
-from .authentication_handler import AuthenticationHandler
-from .error_handler import ErrorHandler
-from .monitoring_integration import MonitoringIntegration
-from .sync_manager import SyncManager
-from .transformation_engine import TransformationEngine
-from .configuration_manager import ConfigurationManager
-from .circuit_breaker import CircuitBreaker
-from .retry_handler import RetryHandler
-from .cache_manager import CacheManager
-from .audit_logger import AuditLogger
-from .performance_monitor import PerformanceMonitor
-from .security_scanner import SecurityScanner
+# Core integration components imports
+# These will be imported as they are implemented
+try:
+    from .oauth_manager import OAuthManager
+except ImportError:
+    OAuthManager = None
+
+try:
+    from .webhook_manager import WebhookManager
+except ImportError:
+    WebhookManager = None
+
+try:
+    from .rate_limiter import RateLimiter
+except ImportError:
+    RateLimiter = None
+
+try:
+    from .api_gateway import APIGateway
+except ImportError:
+    APIGateway = None
+
+try:
+    from .authentication_handler import AuthenticationHandler
+except ImportError:
+    AuthenticationHandler = None
+
+try:
+    from .error_handler import ErrorHandler as IntegrationErrorHandler
+except ImportError:
+    IntegrationErrorHandler = None
+
+# Placeholder imports for components to be implemented
+MonitoringIntegration = None
+SyncManager = None
+TransformationEngine = None
+ConfigurationManager = None
+CircuitBreaker = None
+RetryHandler = None
+CacheManager = None
+AuditLogger = None
+PerformanceMonitor = None
+SecurityScanner = None
 
 
 class IntegrationStatus(Enum):
@@ -78,23 +105,23 @@ class IntegrationManager:
         """Initialize integration manager with core components."""
         self.logger = logging.getLogger(__name__)
         
-        # Core management components
-        self.oauth_manager = OAuthManager()
-        self.webhook_manager = WebhookManager()
-        self.rate_limiter = RateLimiter()
-        self.api_gateway = APIGateway()
-        self.auth_handler = AuthenticationHandler()
-        self.error_handler = ErrorHandler()
-        self.monitoring = MonitoringIntegration()
-        self.sync_manager = SyncManager()
-        self.transformation_engine = TransformationEngine()
-        self.config_manager = ConfigurationManager()
-        self.circuit_breaker = CircuitBreaker()
-        self.retry_handler = RetryHandler()
-        self.cache_manager = CacheManager()
-        self.audit_logger = AuditLogger()
-        self.performance_monitor = PerformanceMonitor()
-        self.security_scanner = SecurityScanner()
+        # Core management components - initialize only if classes are available
+        self.oauth_manager = OAuthManager() if OAuthManager else None
+        self.webhook_manager = WebhookManager() if WebhookManager else None
+        self.rate_limiter = RateLimiter() if RateLimiter else None
+        self.api_gateway = APIGateway() if APIGateway else None
+        self.auth_handler = AuthenticationHandler() if AuthenticationHandler else None
+        self.error_handler = IntegrationErrorHandler() if IntegrationErrorHandler else None
+        self.monitoring = MonitoringIntegration() if MonitoringIntegration else None
+        self.sync_manager = SyncManager() if SyncManager else None
+        self.transformation_engine = TransformationEngine() if TransformationEngine else None
+        self.config_manager = ConfigurationManager() if ConfigurationManager else None
+        self.circuit_breaker = CircuitBreaker() if CircuitBreaker else None
+        self.retry_handler = RetryHandler() if RetryHandler else None
+        self.cache_manager = CacheManager() if CacheManager else None
+        self.audit_logger = AuditLogger() if AuditLogger else None
+        self.performance_monitor = PerformanceMonitor() if PerformanceMonitor else None
+        self.security_scanner = SecurityScanner() if SecurityScanner else None
         
         # Integration registry
         self.integrations: Dict[str, IntegrationConfig] = {}
