@@ -947,6 +947,45 @@ def _generate_integration_recommendations(config, health):
     return recommendations
 
 
+# ========== ANALYTICS INTEGRATIONS ENGINE ==========
+
+# ANALYTICS INTEGRATIONS ENGINE - 35+ Platform APIs, ML Models, External Services  
+from .analytics_integrations import (
+    AnalyticsIntegrationsEngine,      # Main integrations engine
+    PlatformIntegrationManager,       # Platform integration manager
+    APIIntegrationEngine,             # API integration engine
+    WebhookManager,                   # Webhook management
+    DataSyncManager,                  # Data synchronization
+    MLModelIntegrationEngine,         # ML model integration
+    ExternalServicesConnector,        # External services connector
+    
+    # Data Classes
+    PlatformCredentials,              # Platform API credentials
+    IntegrationConfig,                # Integration configuration
+    WebhookConfig,                    # Webhook configuration
+    DataMapping,                      # Data field mapping
+    SyncResult,                       # Synchronization result
+    EventPayload,                     # Event payload structure
+    APIResponse,                      # API response structure
+    
+    # Platform Handlers
+    BasePlatformHandler,              # Base platform handler
+    SpotifyHandler,                   # Spotify integration
+    YouTubeHandler,                   # YouTube integration
+    InstagramHandler,                 # Instagram integration
+    TikTokHandler,                    # TikTok integration
+    TwitterHandler,                   # Twitter integration
+    
+    # Enums
+    PlatformType,                     # 35+ supported platforms
+    IntegrationType,                  # Integration types
+    AuthenticationType,               # Authentication types
+    DataFormat,                       # Data formats
+    SyncFrequency,                    # Sync frequencies
+    IntegrationStatus,                # Integration status
+    EventType                         # Event types
+)
+
 # Import datetime for utility functions
 from datetime import datetime
 
