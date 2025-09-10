@@ -28,6 +28,23 @@ from .content_validator import (
     ValidationIssue
 )
 
+# Import from validation configuration
+from .validation_config import (
+    ValidationConfig as ValidatorConfig,
+    ConfigLevel,
+    ValidationMode,
+    PlatformType as ConfigPlatformType,
+    PerformanceConfig,
+    QualityThresholds,
+    SecurityConfig,
+    PlatformConfig,
+    AIModelConfig,
+    MonitoringConfig,
+    get_config,
+    configure_global,
+    load_config_from_env
+)
+
 # Import from consolidated security & compliance validator
 from .security_compliance_validator import (
     SecurityComplianceValidator,
@@ -100,7 +117,7 @@ from .file_performance_validator import (
     assess_performance
 )
 
-# Import from renamed validation chain
+# Import from validation chain
 from .validation_chain import (
     ChainValidator,
     ValidationChain,
@@ -109,12 +126,38 @@ from .validation_chain import (
     ValidationPipeline
 )
 
-# Import from renamed validation index
+# Import from validation index
 from .validation_index import (
     ValidationEngine,
     ValidatorRegistry,
     ValidationManager,
-    ValidationConfig
+    ValidationConfig,
+    get_validation_engine
+)
+
+# Import from AI content analyzer
+from .ai_content_analyzer import (
+    AIContentAnalyzer,
+    AnalysisType,
+    ContentCategory,
+    SentimentPolarity,
+    EmotionType,
+    SentimentAnalysis,
+    EmotionAnalysis,
+    QualityAnalysis,
+    GenreAnalysis,
+    EngagementAnalysis,
+    AIAnalysisResult
+)
+
+# Import from platform specific validator
+from .platform_specific_validator import (
+    PlatformSpecificValidator,
+    PlatformType,
+    ValidationCategory,
+    ComplianceLevel,
+    PlatformSpecification,
+    PlatformValidationResult
 )
 
 # Version information
@@ -134,13 +177,30 @@ __all__ = [
     "SchemaMetadataValidator",
     "FilePerformanceValidator",
     "ChainValidator",
+    "AIContentAnalyzer",
+    "PlatformSpecificValidator",
     
     # Validation engine
     "ValidationEngine",
     "ValidatorRegistry",
     "ValidationManager",
     "ValidationConfig",
+    "ValidatorConfig",
     "validation_engine",
+    "get_validation_engine",
+    
+    # Configuration
+    "ConfigLevel",
+    "ValidationMode",
+    "PerformanceConfig",
+    "QualityThresholds",
+    "SecurityConfig",
+    "PlatformConfig",
+    "AIModelConfig",
+    "MonitoringConfig",
+    "get_config",
+    "configure_global",
+    "load_config_from_env",
     
     # Types and enums - Core
     "ContentType",
@@ -176,6 +236,17 @@ __all__ = [
     "PerformanceLevel",
     "OptimizationType",
     
+    # Types and enums - AI Analysis
+    "AnalysisType",
+    "ContentCategory",
+    "SentimentPolarity",
+    "EmotionType",
+    
+    # Types and enums - Platform Specific
+    "PlatformType",
+    "ValidationCategory",
+    "ComplianceLevel",
+    
     # Result classes - Core
     "ValidationResult",
     "ValidationIssue",
@@ -209,6 +280,18 @@ __all__ = [
     "PerformanceIssue",
     "PerformanceValidationResult",
     
+    # Result classes - AI Analysis
+    "SentimentAnalysis",
+    "EmotionAnalysis",
+    "QualityAnalysis",
+    "GenreAnalysis",
+    "EngagementAnalysis",
+    "AIAnalysisResult",
+    
+    # Result classes - Platform Specific
+    "PlatformSpecification",
+    "PlatformValidationResult",
+    
     # Chain components
     "ValidationChain",
     "ChainResult",
@@ -241,7 +324,9 @@ DEFAULT_CONFIG = {
     "log_level": "INFO",
     "consolidated_architecture": True,
     "ai_enhancement": True,
-    "auto_optimization": True
+    "auto_optimization": True,
+    "enterprise_features": True,
+    "total_validators": 8  # Updated count
 }
 
 def configure_validators(config: dict = None) -> None:
@@ -266,7 +351,7 @@ def get_validator_info() -> dict:
         "version": __version__,
         "author": __author__,
         "architecture": "consolidated",
-        "total_files": 12,  # After consolidation
+        "total_files": 16,  # After consolidation (excluding README files)
         "consolidated_validators": [
             "SecurityComplianceValidator",
             "BusinessQualityValidator", 
@@ -276,9 +361,11 @@ def get_validator_info() -> dict:
         "unchanged_validators": [
             "ContentValidator"
         ],
-        "renamed_components": [
-            "validation_chain (formerly chain_validator)",
-            "validation_index (formerly index)"
+        "new_components": [
+            "ValidationChain",
+            "ValidationIndex", 
+            "AIContentAnalyzer",
+            "PlatformSpecificValidator"
         ],
         "config": validation_engine.config.dict() if hasattr(validation_engine, 'config') else DEFAULT_CONFIG
     }
