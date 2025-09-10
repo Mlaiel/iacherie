@@ -1652,6 +1652,10 @@ __all__ = [
     'AILegalContext',
     'SecurityLegalContext'
 ]
+
+
+class LegalSeverity:
+    """Legal severity levels for compliance and violations"""
     CRITICAL = "critical"
 
 
