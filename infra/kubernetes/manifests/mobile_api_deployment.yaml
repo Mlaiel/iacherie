@@ -1,0 +1,176 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ainflue-mobile-api
+  namespace: ainflue
+  labels:
+    app: ainflue-mobile-api
+    component: mobile-backend
+    environment: production
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ainflue-mobile-api
+  template:
+    metadata:
+      labels:
+        app: ainflue-mobile-api
+        component: mobile-backend
+    spec:
+      serviceAccountName: ainflue-api-service-account
+      containers:
+      - name: mobile-api
+        image: ainflue/mobile-api:latest
+        ports:
+        - containerPort: 8080
+          name: http
+        - containerPort: 8081
+          name: metrics
+        env:
+        - name: ENVIRONMENT
+          value: "production"
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: database-url
+        - name: REDIS_URL
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: redis-url
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: jwt-secret
+        - name: PUSH_NOTIFICATION_KEY
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: push-notification-key
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ainflue-worker
+  namespace: ainflue
+  labels:
+    app: ainflue-worker
+    component: background-worker
+    environment: production
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ainflue-worker
+  template:
+    metadata:
+      labels:
+        app: ainflue-worker
+        component: background-worker
+    spec:
+      serviceAccountName: ainflue-worker-service-account
+      containers:
+      - name: worker
+        image: ainflue/worker:latest
+        env:
+        - name: ENVIRONMENT
+          value: "production"
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: database-url
+        - name: REDIS_URL
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: redis-url
+        - name: CELERY_BROKER_URL
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-secrets
+              key: celery-broker-url
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        volumeMounts:
+        - name: worker-temp
+          mountPath: /tmp/worker
+      volumes:
+      - name: worker-temp
+        emptyDir:
+          sizeLimit: 5Gi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ainflue-mobile-api-service
+  namespace: ainflue
+  labels:
+    app: ainflue-mobile-api
+spec:
+  selector:
+    app: ainflue-mobile-api
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+  - name: metrics
+    port: 8081
+    targetPort: 8081
+  type: ClusterIP
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: ainflue-mobile-api-hpa
+  namespace: ainflue
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: ainflue-mobile-api
+  minReplicas: 2
+  maxReplicas: 8
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
