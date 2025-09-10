@@ -46,7 +46,12 @@ import spacy
 from langdetect import detect
 import textstat
 
-from ...core.exceptions import MetadataExtractionError, ValidationError
+try:
+    from core.exceptions import MetadataExtractionError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class MetadataExtractionError(Exception): pass
+    class ValidationError(Exception): pass
 
 
 class MetadataType(Enum):
