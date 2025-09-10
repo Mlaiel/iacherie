@@ -8,21 +8,35 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
 
-from .amplification_engine import AmplificationEngine, AmplificationStrategy
-from .boost_optimizer import BoostOptimizer, BoostStrategy
-from .organic_reach_maximizer import OrganicReachMaximizer, OrganicStrategy
-from .cross_promotion_manager import CrossPromotionManager, PromotionPlan
-from .influencer_connector import InfluencerConnector, InfluencerNetwork
-from .community_builder import CommunityBuilder, CommunityStrategy
-from .engagement_multiplier import EngagementMultiplier, MultiplicationStrategy
-from .reach_analytics import ReachAnalytics, ReachMetrics
+# Import newly implemented modules
+from .amplification_engine import (
+    IntelligentAmplificationEngine,
+    AmplificationPlan,
+    AmplificationResult,
+    AmplificationStrategy,
+    AmplificationPhase
+)
 
-__version__ = "1.0.0"
+from .boost_optimizer import (
+    AdvancedBoostOptimizer,
+    BoostCampaign,
+    BoostType
+)
+
+# Import main engine
+from .index import ContentAmplificationEngine
+
+__version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 
 __all__ = [
-    "AmplificationEngine", "AmplificationStrategy", "BoostOptimizer", "BoostStrategy",
-    "OrganicReachMaximizer", "OrganicStrategy", "CrossPromotionManager", "PromotionPlan",
-    "InfluencerConnector", "InfluencerNetwork", "CommunityBuilder", "CommunityStrategy",
-    "EngagementMultiplier", "MultiplicationStrategy", "ReachAnalytics", "ReachMetrics"
+    # Main Engine
+    "ContentAmplificationEngine",
+    
+    # Amplification Engine
+    "IntelligentAmplificationEngine", "AmplificationPlan", "AmplificationResult",
+    "AmplificationStrategy", "AmplificationPhase",
+    
+    # Boost Optimizer
+    "AdvancedBoostOptimizer", "BoostCampaign", "BoostType"
 ]

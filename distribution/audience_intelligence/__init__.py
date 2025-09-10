@@ -8,21 +8,80 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
 
-from .audience_profiler import AudienceProfiler, AudienceProfile
-from .behavior_analyzer import BehaviorAnalyzer, BehaviorPattern
-from .preference_engine import PreferenceEngine, UserPreferences
-from .demographic_mapper import DemographicMapper, DemographicSegment
-from .psychographic_analyzer import PsychographicAnalyzer, PersonalityProfile
-from .engagement_predictor import EngagementPredictor, EngagementScore
-from .lookalike_finder import LookalikeFinder, LookalikeAudience
-from .segment_optimizer import SegmentOptimizer, OptimalSegments
+# Core audience profiler
+from .audience_profiler import (
+    AudienceProfiler,
+    AudienceProfile,
+    AudienceSegment,
+    ProfileInsight,
+    EngagementPattern,
+    DemographicData
+)
 
-__version__ = "1.0.0"
+# Advanced behavior analyzer
+from .behavior_analyzer import (
+    AdvancedBehaviorAnalyzer,
+    BehaviorMetrics,
+    BehaviorInsight,
+    BehaviorPattern
+)
+
+# Preference engine
+from .preference_engine import (
+    AdvancedPreferenceEngine,
+    PreferenceProfile,
+    UserPreference,
+    PreferenceInsight,
+    PreferenceType,
+    PreferenceStrength
+)
+
+# Demographic mapper
+from .demographic_mapper import (
+    IntelligentDemographicMapper,
+    DemographicProfile,
+    DemographicInsight,
+    AgeGroup,
+    DemographicCategory,
+    DeviceType
+)
+
+# Engagement predictor
+from .engagement_predictor import (
+    AdvancedEngagementPredictor,
+    EngagementPrediction,
+    ComprehensiveEngagementForecast,
+    EngagementType,
+    PredictionTimeframe,
+    ConfidenceLevel
+)
+
+# Main intelligence engine
+from .index import AudienceIntelligenceEngine
+
+__version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 
 __all__ = [
-    "AudienceProfiler", "AudienceProfile", "BehaviorAnalyzer", "BehaviorPattern",
-    "PreferenceEngine", "UserPreferences", "DemographicMapper", "DemographicSegment",
-    "PsychographicAnalyzer", "PersonalityProfile", "EngagementPredictor", "EngagementScore",
-    "LookalikeFinder", "LookalikeAudience", "SegmentOptimizer", "OptimalSegments"
+    # Main Engine
+    "AudienceIntelligenceEngine",
+    
+    # Audience Profiler
+    "AudienceProfiler", "AudienceProfile", "AudienceSegment", 
+    "ProfileInsight", "EngagementPattern", "DemographicData",
+    
+    # Behavior Analyzer
+    "AdvancedBehaviorAnalyzer", "BehaviorMetrics", "BehaviorInsight", "BehaviorPattern",
+    
+    # Preference Engine
+    "AdvancedPreferenceEngine", "PreferenceProfile", "UserPreference", 
+    "PreferenceInsight", "PreferenceType", "PreferenceStrength",
+    
+    # Demographic Mapper
+    "IntelligentDemographicMapper", "DemographicProfile", "DemographicInsight",
+    "AgeGroup", "DemographicCategory", "DeviceType",
+    
+    # Engagement Predictor
+    "AdvancedEngagementPredictor", "EngagementPrediction", "ComprehensiveEngagementForecast",
+    "EngagementType", "PredictionTimeframe", "ConfidenceLevel"
 ]
