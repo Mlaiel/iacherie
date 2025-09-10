@@ -8,6 +8,12 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
 
+# Import core integration management
+try:
+    from .integration_manager import integration_manager
+except ImportError:
+    integration_manager = None
+
 # Import submodules to make them accessible
 from . import ai_services
 from . import cloud_providers  
@@ -18,6 +24,7 @@ from . import spotify
 from . import third_party
 
 __all__ = [
+    "integration_manager",
     "ai_services",
     "cloud_providers", 
     "payment_gateways",
