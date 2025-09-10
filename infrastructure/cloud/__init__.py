@@ -7,14 +7,10 @@ Handles AWS, GCP, and Azure integration with intelligent workload distribution.
 """
 
 from .aws_provider import AWSProvider
-from .gcp_provider import GCPProvider  
-from .azure_provider import AzureProvider
-from .multi_cloud_orchestrator import MultiCloudOrchestrator
-from .hybrid_cloud_manager import HybridCloudManager
-from .cloud_cost_optimizer import CloudCostOptimizer
-from .cloud_security_manager import CloudSecurityManager
-from .cloud_migration_tool import CloudMigrationTool
-from .resource_provisioner import ResourceProvisioner
+from .gcp_provider import GCPProvider, get_gcp_provider
+from .azure_provider import AzureProvider, get_azure_provider
+from .multi_cloud_orchestrator import MultiCloudOrchestrator, get_multi_cloud_orchestrator
+from .hybrid_cloud_manager import HybridCloudManager, get_hybrid_cloud_manager
 
 __all__ = [
     'AWSProvider',
@@ -22,10 +18,10 @@ __all__ = [
     'AzureProvider',
     'MultiCloudOrchestrator',
     'HybridCloudManager',
-    'CloudCostOptimizer',
-    'CloudSecurityManager',
-    'CloudMigrationTool',
-    'ResourceProvisioner'
+    'get_gcp_provider',
+    'get_azure_provider', 
+    'get_multi_cloud_orchestrator',
+    'get_hybrid_cloud_manager'
 ]
 
 # Cloud provider capabilities
