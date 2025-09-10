@@ -1,0 +1,277 @@
+# Docker Compose for Testing Infrastructure
+# Comprehensive testing suite for Ainflue Platform
+# Author: Fahed Mlaiel (mlaiel@live.de)
+
+version: '3.8'
+
+services:
+  # Core Test Runner
+  test_runner:
+    build:
+      context: .
+      dockerfile: test_runner.dockerfile
+    container_name: ainflue-test-runner
+    ports:
+      - "8000:8000"
+    volumes:
+      - test_reports:/app/reports
+      - test_logs:/app/logs
+      - test_coverage:/app/coverage
+    networks:
+      - testing_network
+    depends_on:
+      - test_database
+      - test_redis
+    environment:
+      - COVERAGE_THRESHOLD=95.0
+      - LOG_LEVEL=INFO
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Integration Testing
+  integration_tester:
+    build:
+      context: .
+      dockerfile: integration_tester.dockerfile
+    container_name: ainflue-integration-tester
+    ports:
+      - "8001:8001"
+    volumes:
+      - test_reports:/app/reports
+      - test_logs:/app/logs
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - testing_network
+    environment:
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Performance Testing
+  performance_tester:
+    build:
+      context: .
+      dockerfile: performance_tester.dockerfile
+    container_name: ainflue-performance-tester
+    ports:
+      - "8002:8002"
+      - "8089:8089"  # Locust web UI
+    volumes:
+      - test_reports:/app/reports
+      - test_logs:/app/logs
+    networks:
+      - testing_network
+    environment:
+      - MAX_RESPONSE_TIME=1000
+      - MIN_THROUGHPUT=1000
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8002/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Security Testing
+  security_tester:
+    build:
+      context: .
+      dockerfile: security_tester.dockerfile
+    container_name: ainflue-security-tester
+    ports:
+      - "8003:8003"
+    volumes:
+      - test_reports:/app/reports
+      - test_logs:/app/logs
+      - security_scans:/app/scan_results
+    networks:
+      - testing_network
+    environment:
+      - SECURITY_THRESHOLD=0
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8003/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Load Testing
+  load_tester:
+    build:
+      context: .
+      dockerfile: load_tester.dockerfile
+    container_name: ainflue-load-tester
+    ports:
+      - "8004:8004"
+    volumes:
+      - test_reports:/app/reports
+      - test_logs:/app/logs
+    networks:
+      - testing_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8004/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Stress Testing
+  stress_tester:
+    build:
+      context: .
+      dockerfile: stress_tester.dockerfile
+    container_name: ainflue-stress-tester
+    ports:
+      - "8005:8005"
+    volumes:
+      - test_reports:/app/reports
+      - test_logs:/app/logs
+    networks:
+      - testing_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8005/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Chaos Engineering
+  chaos_engineering:
+    build:
+      context: .
+      dockerfile: chaos_engineering.dockerfile
+    container_name: ainflue-chaos-engineering
+    ports:
+      - "8006:8006"
+    volumes:
+      - test_reports:/app/reports
+      - test_logs:/app/logs
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - testing_network
+    privileged: true
+    environment:
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8006/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # E2E Testing
+  e2e_tester:
+    build:
+      context: .
+      dockerfile: e2e_tester.dockerfile
+    container_name: ainflue-e2e-tester
+    ports:
+      - "8007:8007"
+    volumes:
+      - test_reports:/app/reports
+      - test_logs:/app/logs
+      - e2e_screenshots:/app/screenshots
+    networks:
+      - testing_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8007/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Smoke Testing
+  smoke_tester:
+    build:
+      context: .
+      dockerfile: smoke_tester.dockerfile
+    container_name: ainflue-smoke-tester
+    ports:
+      - "8008:8008"
+    volumes:
+      - test_reports:/app/reports
+      - test_logs:/app/logs
+    networks:
+      - testing_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8008/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Regression Testing
+  regression_tester:
+    build:
+      context: .
+      dockerfile: regression_tester.dockerfile
+    container_name: ainflue-regression-tester
+    ports:
+      - "8009:8009"
+    volumes:
+      - test_reports:/app/reports
+      - test_logs:/app/logs
+      - regression_baselines:/app/baselines
+    networks:
+      - testing_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8009/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Testing Database
+  test_database:
+    image: postgres:14-alpine
+    container_name: ainflue-test-database
+    environment:
+      POSTGRES_DB: ainflue_test
+      POSTGRES_USER: test_user
+      POSTGRES_PASSWORD: test_password
+    volumes:
+      - test_db_data:/var/lib/postgresql/data
+    networks:
+      - testing_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U test_user -d ainflue_test"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Testing Redis
+  test_redis:
+    image: redis:7-alpine
+    container_name: ainflue-test-redis
+    volumes:
+      - test_redis_data:/data
+    networks:
+      - testing_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  test_reports:
+    driver: local
+  test_logs:
+    driver: local
+  test_coverage:
+    driver: local
+  security_scans:
+    driver: local
+  e2e_screenshots:
+    driver: local
+  regression_baselines:
+    driver: local
+  test_db_data:
+    driver: local
+  test_redis_data:
+    driver: local
+
+networks:
+  testing_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.30.0.0/16
