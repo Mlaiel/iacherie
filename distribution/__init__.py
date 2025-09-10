@@ -115,7 +115,6 @@ from .cross_platform_sync import (
 
 # Advanced Distribution Modules (Level 2)
 from .viral_optimization import (
-    ViralOptimizationEngine,
     ViralPredictor,
     TrendAnalyzer,
     MomentumTracker,
