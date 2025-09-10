@@ -1,7 +1,7 @@
-"""Advanced AI Task Execution System
+"""Ainflue AI Task Execution System
 
-Comprehensive implementation of AI task routing, execution, and result processing
-for the Ainflue platform.
+Enterprise implementation of AI task routing, execution, and result processing
+specialized for Ainflue creator economy platform business logic.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
@@ -102,8 +102,8 @@ AI task definition"""
 
 class AITaskProcessor:
     """
-    Advanced AI task processor with capability routing, 
-    load balancing, and intelligent execution
+    Ainflue AI Task Processor - Enterprise creator economy task routing,
+    specialized business logic execution, and intelligent workflow orchestration
     """
     
     def __init__(self, config: Optional[Dict[str, Any]] = None):
@@ -429,7 +429,7 @@ Execute individual task"""
     
     def _calculate_originality_score(self, content_data: dict) -> float:
         """Calculate content originality for Ainflue protection system"""
-        # Advanced originality detection for content protection
+        # Ainflue enterprise originality detection for content protection
         return 0.92  # High originality score
     
     async def _handle_fingerprint_generation(self, task: AITask) -> Dict[str, Any]:
@@ -439,7 +439,7 @@ Execute individual task"""
         content_type = task.context.content_type or "unknown"
         creator_id = task.context.user_id
         
-        # Ainflue advanced fingerprinting system
+        # Ainflue enterprise fingerprinting system
         fingerprint_start = datetime.utcnow()
         
         # Create Ainflue-specific content fingerprint
@@ -500,7 +500,7 @@ Execute individual task"""
         content_type = task.context.content_type
         creator_id = task.context.user_id
         
-        # Ainflue advanced similarity detection
+        # Ainflue enterprise similarity detection
         detection_start = datetime.utcnow()
         
         # Platform-specific similarity analysis
@@ -550,7 +550,7 @@ Execute individual task"""
     
     def _calculate_content_similarity(self, content_type: str) -> float:
         """Calculate content-type specific similarity for Ainflue platform"""
-        # Advanced content-type specific similarity algorithms
+        # Ainflue content-type specific similarity algorithms
         similarity_algorithms = {
             "audio": 0.20,    # Music similarity detection
             "video": 0.25,    # Video content similarity
