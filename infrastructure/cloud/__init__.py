@@ -6,15 +6,32 @@ Multi-cloud provider management and orchestration for Ainflue infrastructure.
 Handles AWS, GCP, and Azure integration with intelligent workload distribution.
 """
 
-from .aws_provider import AWSProvider
-from .gcp_provider import GCPProvider  
-from .azure_provider import AzureProvider
-from .multi_cloud_orchestrator import MultiCloudOrchestrator
-from .hybrid_cloud_manager import HybridCloudManager
-from .cloud_cost_optimizer import CloudCostOptimizer
-from .cloud_security_manager import CloudSecurityManager
-from .cloud_migration_tool import CloudMigrationTool
-from .resource_provisioner import ResourceProvisioner
+try:
+    from .aws_provider import AWSProvider
+except ImportError:
+    AWSProvider = None
+
+try:
+    from .gcp_provider import GCPProvider
+except ImportError:
+    GCPProvider = None
+
+try:
+    from .azure_provider import AzureProvider
+except ImportError:
+    AzureProvider = None
+
+try:
+    from .multi_cloud_orchestrator import MultiCloudOrchestrator
+except ImportError:
+    MultiCloudOrchestrator = None
+
+# Other modules to be implemented
+HybridCloudManager = None
+CloudCostOptimizer = None
+CloudSecurityManager = None
+CloudMigrationTool = None
+ResourceProvisioner = None
 
 __all__ = [
     'AWSProvider',

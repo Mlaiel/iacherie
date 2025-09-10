@@ -76,8 +76,8 @@ from .autoscaling import (
 )
 
 from .deployment import (
-    DeploymentManager, CICDManager, PipelineManager, ReleaseManager,
-    deployment_manager, cicd_manager, pipeline_manager, release_manager
+    BlueGreenDeployer, CanaryDeployer, RollingUpdater, FeatureFlagManager,
+    PipelineOrchestrator, EnvironmentManager, RollbackManager, ValidationEngine, ReleaseManager
 )
 
 from .helm import (
