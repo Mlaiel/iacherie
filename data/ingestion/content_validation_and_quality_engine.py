@@ -44,7 +44,13 @@ from langdetect import detect, DetectorFactory
 import textstat
 
 # Core exceptions
-from ...core.exceptions import ValidationError, SecurityError, QualityError
+try:
+    from core.exceptions import ValidationError, SecurityError, QualityError
+except ImportError:
+    # Fallback exception classes
+    class ValidationError(Exception): pass
+    class SecurityError(Exception): pass
+    class QualityError(Exception): pass
 
 
 class ValidationSeverity(Enum):

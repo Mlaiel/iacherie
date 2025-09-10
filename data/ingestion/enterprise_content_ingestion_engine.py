@@ -27,7 +27,13 @@ import os
 from pathlib import Path
 
 # Core exceptions
-from ...core.exceptions import IngestionError, WorkflowError, ValidationError
+try:
+    from core.exceptions import IngestionError, WorkflowError, ValidationError
+except ImportError:
+    # Fallback exception classes
+    class IngestionError(Exception): pass
+    class WorkflowError(Exception): pass
+    class ValidationError(Exception): pass
 
 
 class IngestionStatus(Enum):
@@ -209,8 +215,8 @@ class WorkflowConfiguration:
 @dataclass
 class WorkflowExecution:
     """Workflow execution tracking"""
-    execution_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     workflow_config: WorkflowConfiguration
+    execution_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     status: WorkflowStatus = WorkflowStatus.PENDING
     current_stage: Optional[WorkflowStage] = None
     completed_stages: List[WorkflowStage] = field(default_factory=list)

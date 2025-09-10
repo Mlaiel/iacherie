@@ -36,7 +36,13 @@ from PIL import Image, ImageEnhance, ImageFilter
 import ffmpeg
 
 # Core exceptions
-from ...core.exceptions import ProcessingError, TransformationError, RoutingError
+try:
+    from core.exceptions import ProcessingError, TransformationError, RoutingError
+except ImportError:
+    # Fallback exception classes
+    class ProcessingError(Exception): pass
+    class TransformationError(Exception): pass
+    class RoutingError(Exception): pass
 
 
 class ProcessingQuality(Enum):

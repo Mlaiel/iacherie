@@ -36,7 +36,13 @@ import aiofiles
 import aiohttp
 
 # Core exceptions
-from ...core.exceptions import StreamingError, BatchProcessingError, ConnectionError
+try:
+    from core.exceptions import StreamingError, BatchProcessingError, ConnectionError
+except ImportError:
+    # Fallback exception classes
+    class StreamingError(Exception): pass
+    class BatchProcessingError(Exception): pass
+    class ConnectionError(Exception): pass
 
 
 class StreamingMode(Enum):
