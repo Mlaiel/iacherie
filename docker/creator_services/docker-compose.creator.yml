@@ -1,0 +1,400 @@
+version: '3.8'
+
+services:
+  # Musician Tools Service
+  musician-tools:
+    build:
+      context: .
+      dockerfile: musician_tools.dockerfile
+    container_name: ainflue-musician-tools
+    environment:
+      - AUDIO_PROCESSING_ENGINE=${AUDIO_ENGINE:-ffmpeg}
+      - ML_MODEL_PATH=/app/models/music
+      - SPOTIFY_API_KEY=${SPOTIFY_API_KEY}
+      - SOUNDCLOUD_API_KEY=${SOUNDCLOUD_API_KEY}
+      - MUSIC_AI_MODEL_PATH=/app/models/music
+    ports:
+      - "8300:8300"
+    volumes:
+      - music_models:/app/models
+      - audio_processing:/app/audio
+      - music_library:/app/library
+    networks:
+      - creator-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.5'
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8300/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Photographer Tools Service
+  photographer-tools:
+    build:
+      context: .
+      dockerfile: photographer_tools.dockerfile
+    container_name: ainflue-photographer-tools
+    environment:
+      - IMAGE_PROCESSING_ENGINE=${IMAGE_ENGINE:-opencv}
+      - AI_ENHANCEMENT_MODEL=/app/models/photo
+      - UNSPLASH_API_KEY=${UNSPLASH_API_KEY}
+      - ADOBE_API_KEY=${ADOBE_API_KEY}
+      - PHOTO_AI_MODEL_PATH=/app/models/photo
+    ports:
+      - "8301:8301"
+    volumes:
+      - photo_models:/app/models
+      - image_processing:/app/images
+      - photo_gallery:/app/gallery
+    networks:
+      - creator-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 3G
+          cpus: '2.0'
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8301/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Blogger Tools Service
+  blogger-tools:
+    build:
+      context: .
+      dockerfile: blogger_tools.dockerfile
+    container_name: ainflue-blogger-tools
+    environment:
+      - CONTENT_AI_MODEL=/app/models/writing
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - WORDPRESS_API_KEY=${WORDPRESS_API_KEY}
+      - SEO_TOOLS_INTEGRATION=${SEO_TOOLS}
+      - LANGUAGE_MODELS=${LANGUAGE_MODELS}
+    ports:
+      - "8302:8302"
+    volumes:
+      - writing_models:/app/models
+      - content_drafts:/app/drafts
+      - blog_analytics:/app/analytics
+    networks:
+      - creator-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8302/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Influencer Tools Service
+  influencer-tools:
+    build:
+      context: .
+      dockerfile: influencer_tools.dockerfile
+    container_name: ainflue-influencer-tools
+    environment:
+      - INSTAGRAM_GRAPH_API=${INSTAGRAM_GRAPH_API}
+      - TIKTOK_BUSINESS_API=${TIKTOK_BUSINESS_API}
+      - YOUTUBE_ANALYTICS_API=${YOUTUBE_ANALYTICS_API}
+      - BRAND_MATCHING_AI_MODEL=/app/models/brands
+      - ENGAGEMENT_AI_MODEL=/app/models/engagement
+    ports:
+      - "8303:8303"
+    volumes:
+      - influencer_models:/app/models
+      - brand_partnerships:/app/partnerships
+      - engagement_data:/app/engagement
+    networks:
+      - creator-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8303/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Comedian Tools Service
+  comedian-tools:
+    build:
+      context: .
+      dockerfile: comedian_tools.dockerfile
+    container_name: ainflue-comedian-tools
+    environment:
+      - COMEDY_AI_MODEL_PATH=/app/models/comedy
+      - AUDIENCE_ANALYSIS_API=${AUDIENCE_ANALYSIS_API}
+      - TIMING_ANALYSIS_MODEL=/app/models/timing
+      - JOKE_DATABASE_URL=${JOKE_DATABASE_URL}
+    ports:
+      - "8304:8304"
+    volumes:
+      - comedy_models:/app/models
+      - performance_data:/app/performances
+      - audience_feedback:/app/feedback
+    networks:
+      - creator-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8304/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Creator Profiler Service
+  creator-profiler:
+    build:
+      context: .
+      dockerfile: creator_profiler.dockerfile
+    container_name: ainflue-creator-profiler
+    environment:
+      - PROFILING_AI_MODEL=/app/models/profiling
+      - SOCIAL_MEDIA_APIS=${SOCIAL_MEDIA_APIS}
+      - ANALYTICS_DATABASE_URL=${ANALYTICS_DATABASE_URL}
+    ports:
+      - "8305:8305"
+    volumes:
+      - profiling_models:/app/models
+      - creator_profiles:/app/profiles
+    networks:
+      - creator-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8305/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Skill Mapper Service
+  skill-mapper:
+    build:
+      context: .
+      dockerfile: skill_mapper.dockerfile
+    container_name: ainflue-skill-mapper
+    environment:
+      - SKILL_ANALYSIS_MODEL=/app/models/skills
+      - LEARNING_RECOMMENDATIONS_AI=/app/models/learning
+      - COURSE_PROVIDER_APIS=${COURSE_PROVIDER_APIS}
+    ports:
+      - "8306:8306"
+    volumes:
+      - skill_models:/app/models
+      - skill_assessments:/app/assessments
+    networks:
+      - creator-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8306/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Growth Tracker Service
+  growth-tracker:
+    build:
+      context: .
+      dockerfile: growth_tracker.dockerfile
+    container_name: ainflue-growth-tracker
+    environment:
+      - GROWTH_PREDICTION_MODEL=/app/models/growth
+      - ANALYTICS_AGGREGATION_INTERVAL=${ANALYTICS_INTERVAL:-1h}
+      - MILESTONE_NOTIFICATION_WEBHOOK=${MILESTONE_WEBHOOK}
+    ports:
+      - "8307:8307"
+    volumes:
+      - growth_models:/app/models
+      - growth_analytics:/app/analytics
+      - milestone_data:/app/milestones
+    networks:
+      - creator-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8307/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Success Predictor Service
+  success-predictor:
+    build:
+      context: .
+      dockerfile: success_predictor.dockerfile
+    container_name: ainflue-success-predictor
+    environment:
+      - SUCCESS_PREDICTION_MODEL=/app/models/success
+      - TREND_ANALYSIS_API=${TREND_ANALYSIS_API}
+      - MARKET_RESEARCH_SOURCES=${MARKET_RESEARCH_SOURCES}
+    ports:
+      - "8308:8308"
+    volumes:
+      - success_models:/app/models
+      - prediction_reports:/app/predictions
+    networks:
+      - creator-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8308/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Mentor Matcher Service
+  mentor-matcher:
+    build:
+      context: .
+      dockerfile: mentor_matcher.dockerfile
+    container_name: ainflue-mentor-matcher
+    environment:
+      - MATCHING_ALGORITHM_MODEL=/app/models/matching
+      - MENTOR_DATABASE_URL=${MENTOR_DATABASE_URL}
+      - COMMUNICATION_PLATFORM_API=${COMMUNICATION_API}
+    ports:
+      - "8309:8309"
+    volumes:
+      - matching_models:/app/models
+      - mentor_profiles:/app/mentors
+      - mentorship_data:/app/mentorships
+    networks:
+      - creator-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8309/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Brand Analyzer Service
+  brand-analyzer:
+    build:
+      context: .
+      dockerfile: brand_analyzer.dockerfile
+    container_name: ainflue-brand-analyzer
+    environment:
+      - BRAND_ANALYSIS_MODEL=/app/models/brands
+      - SOCIAL_LISTENING_APIs=${SOCIAL_LISTENING_APIS}
+      - SENTIMENT_ANALYSIS_MODEL=/app/models/sentiment
+    ports:
+      - "8310:8310"
+    volumes:
+      - brand_models:/app/models
+      - brand_analytics:/app/analytics
+      - sentiment_data:/app/sentiment
+    networks:
+      - creator-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8310/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Supporting Infrastructure
+  creator-redis:
+    image: redis:7-alpine
+    container_name: ainflue-creator-redis
+    command: redis-server --appendonly yes --maxmemory 1gb --maxmemory-policy allkeys-lru
+    volumes:
+      - creator_redis_data:/data
+    networks:
+      - creator-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  creator-postgres:
+    image: postgres:15-alpine
+    container_name: ainflue-creator-postgres
+    environment:
+      - POSTGRES_DB=creators
+      - POSTGRES_USER=creators
+      - POSTGRES_PASSWORD=${CREATOR_DB_PASSWORD}
+    volumes:
+      - creator_postgres_data:/var/lib/postgresql/data
+    networks:
+      - creator-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U creators"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  music_models:
+    driver: local
+  audio_processing:
+    driver: local
+  music_library:
+    driver: local
+  photo_models:
+    driver: local
+  image_processing:
+    driver: local
+  photo_gallery:
+    driver: local
+  writing_models:
+    driver: local
+  content_drafts:
+    driver: local
+  blog_analytics:
+    driver: local
+  influencer_models:
+    driver: local
+  brand_partnerships:
+    driver: local
+  engagement_data:
+    driver: local
+  comedy_models:
+    driver: local
+  performance_data:
+    driver: local
+  audience_feedback:
+    driver: local
+  profiling_models:
+    driver: local
+  creator_profiles:
+    driver: local
+  skill_models:
+    driver: local
+  skill_assessments:
+    driver: local
+  growth_models:
+    driver: local
+  growth_analytics:
+    driver: local
+  milestone_data:
+    driver: local
+  success_models:
+    driver: local
+  prediction_reports:
+    driver: local
+  matching_models:
+    driver: local
+  mentor_profiles:
+    driver: local
+  mentorship_data:
+    driver: local
+  brand_models:
+    driver: local
+  brand_analytics:
+    driver: local
+  sentiment_data:
+    driver: local
+  creator_redis_data:
+    driver: local
+  creator_postgres_data:
+    driver: local
+
+networks:
+  creator-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.35.0.0/16
