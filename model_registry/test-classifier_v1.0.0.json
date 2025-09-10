@@ -1,0 +1,21 @@
+{
+  "model_id": "test-classifier",
+  "version": "1.0.0",
+  "status": "development",
+  "created_at": "2025-09-10T19:07:39.251962",
+  "performance_metrics": {
+    "accuracy": 0.95,
+    "precision": 0.93
+  },
+  "metadata": {
+    "training_data_size": 1000
+  },
+  "artifacts_path": "/tmp/tmp5jsxjhg6.pkl",
+  "parent_version": null,
+  "tags": [
+    "test",
+    "classifier"
+  ],
+  "checksum": "ed4d15fe3a46101dc2eb5ca0ffeb4ad72aa1ca818bdd80b6c06f1e7b570ce513",
+  "size_bytes": 15
+}
