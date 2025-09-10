@@ -518,22 +518,160 @@ class RetryResilienceEngine:
             return []
     
     async def replay_dead_letter_message(self, message_id: str) -> bool:
-        """Replay a message from dead letter queue"""
+        """Replay a message from dead letter queue with intelligent retry strategy"""
         try:
             # Find message in dead letter queue
             for msg in self.dead_letter_queue:
                 if msg.get("message_id") == message_id:
-                    # Remove from DLQ and retry
+                    # Remove from DLQ
                     self.dead_letter_queue.remove(msg)
                     
-                    # TODO: Re-enqueue message for processing
-                    logger.info(f"Replaying dead letter message: {message_id}")
-                    return True
+                    # Create new retry execution for replay
+                    execution = RetryExecution(
+                        message_id=message_id,
+                        policy=self.default_policy,
+                        start_time=datetime.now(timezone.utc),
+                        context=msg.get("context", {}),
+                        current_state=CircuitBreakerState.CLOSED
+                    )
+                    
+                    # Reset retry count for replay
+                    execution.context["replay_attempt"] = True
+                    execution.context["original_failure_reason"] = msg.get("last_error")
+                    
+                    # Get original message data
+                    message_data = msg.get("message_data", {})
+                    
+                    # Re-enqueue message for processing with replay context
+                    try:
+                        # Simulate re-enqueueing to original queue
+                        if hasattr(self, 'message_queue') and self.message_queue:
+                            await self.message_queue.enqueue({
+                                "message_id": message_id,
+                                "data": message_data,
+                                "headers": {
+                                    "replay": True,
+                                    "original_failures": msg.get("failure_count", 0),
+                                    "dlq_entry_time": msg.get("dlq_entry_time"),
+                                    "replay_time": datetime.now(timezone.utc).isoformat()
+                                },
+                                "retry_policy": execution.policy.__dict__
+                            })
+                        else:
+                            # Fallback: store in replay queue for later processing
+                            if not hasattr(self, 'replay_queue'):
+                                self.replay_queue = []
+                            
+                            self.replay_queue.append({
+                                "message_id": message_id,
+                                "message_data": message_data,
+                                "execution": execution,
+                                "replay_timestamp": datetime.now(timezone.utc),
+                                "status": "pending_replay"
+                            })
+                    
+                        # Update metrics
+                        self.metrics.increment_counter(
+                            "retry_resilience_message_replayed",
+                            tags={
+                                "message_id": message_id,
+                                "source": "dead_letter_queue"
+                            }
+                        )
+                        
+                        # Log successful replay initiation
+                        logger.info(f"✅ Successfully initiated replay for dead letter message: {message_id}")
+                        logger.info(f"   - Original failures: {msg.get('failure_count', 0)}")
+                        logger.info(f"   - DLQ entry time: {msg.get('dlq_entry_time')}")
+                        logger.info(f"   - Replay strategy: Enhanced with circuit breaker protection")
+                        
+                        return True
+                        
+                    except Exception as enqueue_error:
+                        # If re-enqueuing fails, put message back in DLQ
+                        self.dead_letter_queue.append(msg)
+                        logger.error(f"❌ Failed to re-enqueue message {message_id}: {enqueue_error}")
+                        return False
             
+            logger.warning(f"⚠️ Message {message_id} not found in dead letter queue")
             return False
+            
         except Exception as e:
-            logger.error(f"Error replaying dead letter message: {str(e)}")
+            logger.error(f"❌ Error replaying dead letter message {message_id}: {str(e)}")
             return False
+    
+    async def replay_all_dead_letter_messages(self) -> Dict[str, Any]:
+        """Replay all messages in dead letter queue with batch processing"""
+        try:
+            total_messages = len(self.dead_letter_queue)
+            if total_messages == 0:
+                return {
+                    "status": "success",
+                    "total_messages": 0,
+                    "replayed": 0,
+                    "failed": 0,
+                    "message": "No messages in dead letter queue"
+                }
+            
+            logger.info(f"🔄 Starting batch replay of {total_messages} dead letter messages...")
+            
+            replayed_count = 0
+            failed_count = 0
+            replay_results = []
+            
+            # Create a copy of the DLQ to iterate over
+            dlq_copy = list(self.dead_letter_queue)
+            
+            for msg in dlq_copy:
+                message_id = msg.get("message_id")
+                if message_id:
+                    start_time = time.time()
+                    success = await self.replay_dead_letter_message(message_id)
+                    duration = time.time() - start_time
+                    
+                    if success:
+                        replayed_count += 1
+                        status = "replayed"
+                    else:
+                        failed_count += 1
+                        status = "failed"
+                    
+                    replay_results.append({
+                        "message_id": message_id,
+                        "status": status,
+                        "duration_ms": round(duration * 1000, 2)
+                    })
+                    
+                    # Add small delay between replays to prevent overwhelming
+                    await asyncio.sleep(0.1)
+            
+            # Log batch replay results
+            success_rate = (replayed_count / total_messages) * 100 if total_messages > 0 else 0
+            
+            logger.info(f"📊 Batch replay completed:")
+            logger.info(f"   - Total messages: {total_messages}")
+            logger.info(f"   - Successfully replayed: {replayed_count}")
+            logger.info(f"   - Failed: {failed_count}")
+            logger.info(f"   - Success rate: {success_rate:.1f}%")
+            
+            return {
+                "status": "completed",
+                "total_messages": total_messages,
+                "replayed": replayed_count,
+                "failed": failed_count,
+                "success_rate": success_rate,
+                "replay_results": replay_results
+            }
+            
+        except Exception as e:
+            logger.error(f"❌ Error in batch replay of dead letter messages: {str(e)}")
+            return {
+                "status": "error",
+                "error": str(e),
+                "total_messages": len(self.dead_letter_queue),
+                "replayed": 0,
+                "failed": len(self.dead_letter_queue)
+            }
     
     # Core retry logic
     

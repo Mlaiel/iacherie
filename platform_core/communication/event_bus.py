@@ -212,48 +212,291 @@ class EventBus:
         self.start_time = datetime.utcnow()
         
     async def start(self):
+        """Démarre le bus d'événements avec support enterprise"""
         try:
-            logger.info(f"Executing start")
+            logger.info("Starting Enterprise Event Bus...")
             
-            # Implementation for start
-            # TODO: Add specific business logic here
+            if self._running:
+                logger.warning("Event Bus already running")
+                return
             
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"start completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"start failed: {e}")
-            raise
-    async def stop(self):
-        """Arrête le bus d'événements"""
-        self._running = False
-        
-        if self._processor_task:
-            self._processor_task.cancel()
+            # Initialize Redis consumer group
             try:
-        try:
-            logger.info(f"Executing stop")
+                await self.redis_client.xgroup_create(
+                    self.events_stream,
+                    self._consumer_group,
+                    id="0",
+                    mkstream=True
+                )
+                logger.info(f"Created consumer group: {self._consumer_group}")
+            except Exception as e:
+                if "BUSYGROUP" not in str(e):
+                    logger.error(f"Failed to create consumer group: {e}")
+                    raise
+                else:
+                    logger.info(f"Consumer group already exists: {self._consumer_group}")
             
-            # Implementation for stop
-            # TODO: Add specific business logic here
+            # Initialize dead letter queue consumer group
+            try:
+                await self.redis_client.xgroup_create(
+                    self.dead_letter_stream,
+                    f"{self._consumer_group}:dlq",
+                    id="0",
+                    mkstream=True
+                )
+            except Exception as e:
+                if "BUSYGROUP" not in str(e):
+                    logger.warning(f"Dead letter queue group creation failed: {e}")
             
-            result = None  # Replace with actual implementation
+            # Start event processing
+            self._running = True
+            self._processor_task = asyncio.create_task(self._process_events())
             
-            logger.info(f"stop completed successfully")
-            return result
+            # Start scheduled events processor
+            self._scheduler_task = asyncio.create_task(self._process_scheduled_events())
+            
+            # Start dead letter queue processor
+            self._dlq_task = asyncio.create_task(self._process_dead_letter_queue())
+            
+            # Start metrics collection
+            self._metrics_task = asyncio.create_task(self._collect_metrics())
+            
+            # Reset start time for metrics
+            self.start_time = datetime.utcnow()
+            
+            logger.info("✅ Enterprise Event Bus started successfully")
+            logger.info(f"  - Consumer Group: {self._consumer_group}")
+            logger.info(f"  - Consumer Name: {self._consumer_name}")
+            logger.info(f"  - Stream: {self.events_stream}")
+            logger.info(f"  - Dead Letter Queue: {self.dead_letter_stream}")
+            
+            # Health check
+            await self._perform_startup_health_check()
             
         except Exception as e:
-            logger.error(f"stop failed: {e}")
+            logger.error(f"❌ Failed to start Event Bus: {e}")
+            self._running = False
             raise
-                     priority: EventPriority = EventPriority.NORMAL,
-                     metadata: Optional[Dict[str, Any]] = None,
-                     correlation_id: Optional[str] = None,
-                     aggregate_id: Optional[str] = None,
-                     delay: Optional[float] = None,
-                     expires_in: Optional[float] = None) -> str:
-        """Publie un événement"""
+    
+    async def stop(self):
+        """Arrête le bus d'événements avec nettoyage graceful"""
+        try:
+            logger.info("Stopping Enterprise Event Bus...")
+            
+            if not self._running:
+                logger.warning("Event Bus not running")
+                return
+            
+            self._running = False
+            
+            # Cancel all background tasks gracefully
+            tasks_to_cancel = []
+            
+            if self._processor_task and not self._processor_task.done():
+                tasks_to_cancel.append(self._processor_task)
+            
+            if hasattr(self, '_scheduler_task') and self._scheduler_task and not self._scheduler_task.done():
+                tasks_to_cancel.append(self._scheduler_task)
+            
+            if hasattr(self, '_dlq_task') and self._dlq_task and not self._dlq_task.done():
+                tasks_to_cancel.append(self._dlq_task)
+            
+            if hasattr(self, '_metrics_task') and self._metrics_task and not self._metrics_task.done():
+                tasks_to_cancel.append(self._metrics_task)
+            
+            # Cancel tasks
+            for task in tasks_to_cancel:
+                task.cancel()
+            
+            # Wait for tasks to complete with timeout
+            if tasks_to_cancel:
+                try:
+                    await asyncio.wait_for(
+                        asyncio.gather(*tasks_to_cancel, return_exceptions=True),
+                        timeout=10.0
+                    )
+                except asyncio.TimeoutError:
+                    logger.warning("Some tasks did not complete within timeout")
+            
+            # Clear subscriptions and handlers
+            subscription_count = len(self.subscriptions)
+            handler_count = len(self.handlers)
+            
+            self.subscriptions.clear()
+            self.handlers.clear()
+            
+            # Log final metrics
+            uptime = datetime.utcnow() - self.start_time
+            logger.info("📊 Event Bus Final Metrics:")
+            logger.info(f"  - Uptime: {uptime}")
+            logger.info(f"  - Events Published: {self.events_published}")
+            logger.info(f"  - Events Processed: {self.events_processed}")
+            logger.info(f"  - Events Failed: {self.events_failed}")
+            logger.info(f"  - Subscriptions Cleared: {subscription_count}")
+            logger.info(f"  - Handlers Cleared: {handler_count}")
+            
+            # Calculate success rate
+            if self.events_processed > 0:
+                success_rate = ((self.events_processed - self.events_failed) / self.events_processed) * 100
+                logger.info(f"  - Success Rate: {success_rate:.2f}%")
+            
+            logger.info("✅ Enterprise Event Bus stopped successfully")
+            
+        except Exception as e:
+            logger.error(f"❌ Error stopping Event Bus: {e}")
+            raise
+    
+    async def _perform_startup_health_check(self):
+        """Perform health check after startup"""
+        try:
+            # Test Redis connection
+            await self.redis_client.ping()
+            
+            # Test stream operations
+            test_event_id = await self.publish(
+                event_type="system.health_check",
+                source="event_bus.startup",
+                data={"timestamp": datetime.utcnow().isoformat()},
+                metadata={"health_check": True}
+            )
+            
+            logger.info(f"✅ Health check passed - Test event: {test_event_id}")
+            
+        except Exception as e:
+            logger.error(f"❌ Health check failed: {e}")
+            raise
+    
+    async def _process_scheduled_events(self):
+        """Process scheduled events that are ready"""
+        logger.info("Started scheduled events processor")
+        
+        while self._running:
+            try:
+                await asyncio.sleep(5)  # Check every 5 seconds
+                
+                # Get all scheduled events (in production, this would be a separate sorted set)
+                # For now, we'll simulate scheduled event processing
+                current_time = datetime.utcnow()
+                
+                # Process any scheduled events that are due
+                # This is a simplified implementation
+                logger.debug("Checking for scheduled events...")
+                
+            except asyncio.CancelledError:
+                break
+            except Exception as e:
+                logger.error(f"Error in scheduled events processor: {e}")
+                await asyncio.sleep(5)
+        
+        logger.info("Scheduled events processor stopped")
+    
+    async def _process_dead_letter_queue(self):
+        """Process dead letter queue for retry logic"""
+        logger.info("Started dead letter queue processor")
+        
+        while self._running:
+            try:
+                await asyncio.sleep(30)  # Check every 30 seconds
+                
+                # Check for messages in dead letter queue that can be retried
+                try:
+                    result = await self.redis_client.xreadgroup(
+                        f"{self._consumer_group}:dlq",
+                        f"{self._consumer_name}:dlq",
+                        streams={self.dead_letter_stream: ">"},
+                        count=5,
+                        block=1000
+                    )
+                    
+                    if result:
+                        for stream_name, messages in result:
+                            for message_id, fields in messages:
+                                await self._process_dead_letter_message(
+                                    stream_name.decode(),
+                                    message_id.decode(),
+                                    fields
+                                )
+                                
+                except Exception as e:
+                    if "NOGROUP" in str(e):
+                        # Consumer group doesn't exist yet, skip
+                        continue
+                    else:
+                        logger.error(f"Error reading dead letter queue: {e}")
+                
+            except asyncio.CancelledError:
+                break
+            except Exception as e:
+                logger.error(f"Error in dead letter queue processor: {e}")
+                await asyncio.sleep(30)
+        
+        logger.info("Dead letter queue processor stopped")
+    
+    async def _collect_metrics(self):
+        """Collect and log metrics periodically"""
+        logger.info("Started metrics collector")
+        
+        while self._running:
+            try:
+                await asyncio.sleep(60)  # Collect metrics every minute
+                
+                uptime = datetime.utcnow() - self.start_time
+                
+                metrics = {
+                    "uptime_seconds": uptime.total_seconds(),
+                    "events_published": self.events_published,
+                    "events_processed": self.events_processed,
+                    "events_failed": self.events_failed,
+                    "active_subscriptions": len(self.subscriptions),
+                    "active_handlers": len(self.handlers)
+                }
+                
+                # Calculate rates
+                if uptime.total_seconds() > 0:
+                    metrics["events_per_second"] = self.events_processed / uptime.total_seconds()
+                    metrics["publish_rate"] = self.events_published / uptime.total_seconds()
+                    
+                if self.events_processed > 0:
+                    metrics["success_rate"] = ((self.events_processed - self.events_failed) / self.events_processed) * 100
+                
+                logger.debug(f"Event Bus Metrics: {metrics}")
+                
+                # Store metrics in Redis for monitoring
+                await self.redis_client.hset(
+                    f"{self.namespace}:metrics",
+                    mapping={k: str(v) for k, v in metrics.items()}
+                )
+                
+            except asyncio.CancelledError:
+                break
+            except Exception as e:
+                logger.error(f"Error collecting metrics: {e}")
+                await asyncio.sleep(60)
+        
+        logger.info("Metrics collector stopped")
+    
+    async def _process_dead_letter_message(self, stream_name: str, message_id: str, fields: Dict):
+        """Process a message from dead letter queue"""
+        try:
+            # Simplified dead letter processing
+            logger.debug(f"Processing dead letter message: {message_id}")
+            
+            # In production, this would implement retry logic based on:
+            # - Message age
+            # - Retry count
+            # - Error type
+            # - Business rules
+            
+            # For now, just acknowledge the message
+            await self.redis_client.xack(stream_name, f"{self._consumer_group}:dlq", message_id)
+            
+        except Exception as e:
+            logger.error(f"Error processing dead letter message {message_id}: {e}")
+    
+    async def publish(self,
+                     event_type: str,
+                     source: str,
+                     data: Dict[str, Any],
         
         event = Event(
             event_type=event_type,
