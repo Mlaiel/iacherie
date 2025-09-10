@@ -331,10 +331,10 @@ Monétisation multi-revenus + analytics avancées + prédictions
 
 ### 📁 **ANALYTICS_AGGREGATOR** `/analytics_aggregator.py` - À ENRICHIR
 #### Analytics Avancées Manquantes:
-- [ ] **predictive_analytics.py** - Analytics prédictives ML
-- [ ] **sentiment_analytics.py** - Analytics sentiment
+- [x] **predictive_analytics.py** - Analytics prédictives ML ✅ COMPLETED
+- [x] **sentiment_analytics.py** - Analytics sentiment ✅ COMPLETED
 - [ ] **competitive_analytics.py** - Analytics concurrentielle
-- [ ] **roi_analytics.py** - Analytics ROI détaillées
+- [x] **roi_analytics.py** - Analytics ROI détaillées ✅ COMPLETED
 - [ ] **attribution_analytics.py** - Analytics attribution
 - [ ] **cohort_analytics.py** - Analytics cohortes
 - [ ] **funnel_analytics.py** - Analytics entonnoir conversion
