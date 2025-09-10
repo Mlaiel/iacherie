@@ -4,7 +4,7 @@ Redis cache and session storage configuration
 """
 
 import os
-from typing import Optional
+from typing import Optional, Dict, Any
 from pydantic_settings import BaseSettings
 
 
@@ -88,8 +88,24 @@ def get_redis_config() -> dict:
 # Redis settings instance
 redis_settings = RedisSettings()
 
+class RedisConfiguration:
+    """Redis configuration manager for Ainflue platform"""
+    
+    def __init__(self, level: str = "enterprise"):
+        self.level = level
+        self.settings = redis_settings
+        
+    def get_config(self) -> Dict[str, Any]:
+        """Get Redis configuration"""
+        return get_redis_config()
+    
+    def get_url(self) -> str:
+        """Get Redis URL"""
+        return get_redis_url()
+
 __all__ = [
     "RedisSettings", 
+    "RedisConfiguration",
     "redis_settings", 
     "get_redis_url", 
     "get_redis_config"

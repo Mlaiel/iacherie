@@ -31,7 +31,12 @@ from typing import Optional, Dict, List, Any, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 from datetime import datetime, timedelta
-from pydantic import BaseSettings, validator
+try:
+    from pydantic_settings import BaseSettings
+    from pydantic import validator
+except ImportError:
+    # Fallback for environments without pydantic_settings
+    from pydantic import BaseModel as BaseSettings, validator
 from functools import lru_cache
 import json
 import time
@@ -415,8 +420,24 @@ def get_database_config() -> dict:
 # Database settings instance
 db_settings = DatabaseSettings()
 
+class DatabaseConfiguration:
+    """Database configuration manager for Ainflue platform"""
+    
+    def __init__(self, level: str = "enterprise"):
+        self.level = level
+        self.settings = db_settings
+        
+    def get_config(self) -> Dict[str, Any]:
+        """Get database configuration"""
+        return get_database_config()
+    
+    def get_url(self) -> str:
+        """Get database URL"""
+        return get_database_url()
+
 __all__ = [
     "DatabaseSettings", 
+    "DatabaseConfiguration",
     "db_settings", 
     "get_database_url", 
     "get_database_config"
