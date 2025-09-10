@@ -1,0 +1,455 @@
+version: '3.8'
+
+services:
+  # Vulnerability Scanner Service
+  vulnerability-scanner:
+    build:
+      context: .
+      dockerfile: vulnerability_scanner.dockerfile
+    container_name: ainflue-vulnerability-scanner
+    environment:
+      - SCAN_FREQUENCY=${SCAN_FREQUENCY:-daily}
+      - SEVERITY_THRESHOLD=${SEVERITY_THRESHOLD:-medium}
+      - CVE_DATABASE_URL=${CVE_DATABASE_URL:-https://cve.circl.lu/api/}
+      - TRIVY_DB_URL=${TRIVY_DB_URL:-ghcr.io/aquasecurity/trivy-db}
+      - ENABLE_CONTAINER_SCANNING=${ENABLE_CONTAINER_SCANNING:-true}
+      - POSTGRES_URL=postgresql://security:${SECURITY_DB_PASSWORD}@security-postgres:5432/security
+    depends_on:
+      - security-postgres
+      - redis
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - vulnerability_reports:/app/reports
+      - trivy_cache:/tmp/trivy
+    networks:
+      - security-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8100/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Threat Detector Service
+  threat-detector:
+    build:
+      context: .
+      dockerfile: threat_detector.dockerfile
+    container_name: ainflue-threat-detector
+    environment:
+      - ML_MODEL_PATH=/app/models
+      - THREAT_INTELLIGENCE_API=${THREAT_INTELLIGENCE_API}
+      - ENABLE_BEHAVIORAL_ANALYSIS=${ENABLE_BEHAVIORAL_ANALYSIS:-true}
+      - REDIS_URL=redis://redis:6379/10
+      - POSTGRES_URL=postgresql://security:${SECURITY_DB_PASSWORD}@security-postgres:5432/security
+      - ELASTICSEARCH_URL=${ELASTICSEARCH_URL:-http://elasticsearch:9200}
+    depends_on:
+      - security-postgres
+      - redis
+      - elasticsearch
+    volumes:
+      - ml_models:/app/models
+      - threat_logs:/app/logs
+    networks:
+      - security-network
+      - analytics-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.5'
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8101/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Access Controller Service
+  access-controller:
+    build:
+      context: .
+      dockerfile: access_controller.dockerfile
+    container_name: ainflue-access-controller
+    environment:
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+      - MFA_PROVIDER=${MFA_PROVIDER:-totp}
+      - SESSION_TIMEOUT=${SESSION_TIMEOUT:-3600}
+      - OAUTH_PROVIDERS=${OAUTH_PROVIDERS:-google,github,microsoft}
+      - REDIS_URL=redis://redis:6379/11
+      - POSTGRES_URL=postgresql://security:${SECURITY_DB_PASSWORD}@security-postgres:5432/security
+      - LDAP_SERVER=${LDAP_SERVER}
+      - LDAP_BIND_DN=${LDAP_BIND_DN}
+      - LDAP_BIND_PASSWORD=${LDAP_BIND_PASSWORD}
+    depends_on:
+      - security-postgres
+      - redis
+    networks:
+      - security-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8102/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Audit Logger Service
+  audit-logger:
+    build:
+      context: .
+      dockerfile: audit_logger.dockerfile
+    container_name: ainflue-audit-logger
+    environment:
+      - LOG_RETENTION_DAYS=${LOG_RETENTION_DAYS:-2555}
+      - SIEM_INTEGRATION=${SIEM_INTEGRATION:-enabled}
+      - POSTGRES_URL=postgresql://security:${SECURITY_DB_PASSWORD}@security-postgres:5432/security
+      - ELASTICSEARCH_URL=${ELASTICSEARCH_URL:-http://elasticsearch:9200}
+      - SPLUNK_HEC_URL=${SPLUNK_HEC_URL}
+      - SPLUNK_HEC_TOKEN=${SPLUNK_HEC_TOKEN}
+    depends_on:
+      - security-postgres
+      - elasticsearch
+    volumes:
+      - audit_logs:/var/log/audit
+      - compliance_reports:/app/compliance
+    networks:
+      - security-network
+      - analytics-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8103/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Encryption Manager Service
+  encryption-manager:
+    build:
+      context: .
+      dockerfile: encryption_manager.dockerfile
+    container_name: ainflue-encryption-manager
+    environment:
+      - VAULT_ADDR=${VAULT_ADDR:-http://vault:8200}
+      - VAULT_TOKEN=${VAULT_TOKEN}
+      - KMS_PROVIDER=${KMS_PROVIDER:-vault}
+      - AWS_KMS_KEY_ID=${AWS_KMS_KEY_ID}
+      - AZURE_KEY_VAULT_URL=${AZURE_KEY_VAULT_URL}
+      - POSTGRES_URL=postgresql://security:${SECURITY_DB_PASSWORD}@security-postgres:5432/security
+    depends_on:
+      - security-postgres
+      - vault
+    volumes:
+      - encryption_keys:/app/keys
+      - key_backups:/app/backups
+    networks:
+      - security-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8104/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Identity Verifier Service
+  identity-verifier:
+    build:
+      context: .
+      dockerfile: identity_verifier.dockerfile
+    container_name: ainflue-identity-verifier
+    environment:
+      - VERIFICATION_PROVIDERS=${VERIFICATION_PROVIDERS:-jumio,onfido}
+      - JUMIO_API_TOKEN=${JUMIO_API_TOKEN}
+      - JUMIO_API_SECRET=${JUMIO_API_SECRET}
+      - ONFIDO_API_KEY=${ONFIDO_API_KEY}
+      - POSTGRES_URL=postgresql://security:${SECURITY_DB_PASSWORD}@security-postgres:5432/security
+    depends_on:
+      - security-postgres
+    volumes:
+      - verification_docs:/app/documents
+    networks:
+      - security-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8105/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Fraud Detector Service
+  fraud-detector:
+    build:
+      context: .
+      dockerfile: fraud_detector.dockerfile
+    container_name: ainflue-fraud-detector
+    environment:
+      - ML_MODEL_PATH=/app/models/fraud
+      - REDIS_URL=redis://redis:6379/12
+      - POSTGRES_URL=postgresql://security:${SECURITY_DB_PASSWORD}@security-postgres:5432/security
+      - RISK_THRESHOLD=${RISK_THRESHOLD:-0.7}
+      - ENABLE_REAL_TIME_SCORING=${ENABLE_REAL_TIME_SCORING:-true}
+    depends_on:
+      - security-postgres
+      - redis
+    volumes:
+      - fraud_models:/app/models
+      - fraud_reports:/app/reports
+    networks:
+      - security-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 1.5G
+          cpus: '1.0'
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8106/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Compliance Monitor Service
+  compliance-monitor:
+    build:
+      context: .
+      dockerfile: compliance_monitor.dockerfile
+    container_name: ainflue-compliance-monitor
+    environment:
+      - COMPLIANCE_STANDARDS=${COMPLIANCE_STANDARDS:-ISO27001,SOC2,GDPR,HIPAA,PCI_DSS}
+      - POSTGRES_URL=postgresql://security:${SECURITY_DB_PASSWORD}@security-postgres:5432/security
+      - REPORT_SCHEDULE=${REPORT_SCHEDULE:-daily}
+      - NOTIFICATION_CHANNELS=${NOTIFICATION_CHANNELS:-email,slack}
+    depends_on:
+      - security-postgres
+    volumes:
+      - compliance_reports:/app/reports
+      - compliance_evidence:/app/evidence
+    networks:
+      - security-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8107/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Penetration Tester Service
+  penetration-tester:
+    build:
+      context: .
+      dockerfile: penetration_tester.dockerfile
+    container_name: ainflue-penetration-tester
+    environment:
+      - TEST_FREQUENCY=${TEST_FREQUENCY:-weekly}
+      - TEST_SCOPE=${TEST_SCOPE:-internal,external}
+      - POSTGRES_URL=postgresql://security:${SECURITY_DB_PASSWORD}@security-postgres:5432/security
+      - NMAP_OPTIONS=${NMAP_OPTIONS:--sS -T4}
+      - ENABLE_AUTOMATED_TESTS=${ENABLE_AUTOMATED_TESTS:-true}
+    depends_on:
+      - security-postgres
+    volumes:
+      - pentest_reports:/app/reports
+      - pentest_tools:/app/tools
+    networks:
+      - security-network
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8108/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Security Analytics Service
+  security-analytics:
+    build:
+      context: .
+      dockerfile: security_analytics.dockerfile
+    container_name: ainflue-security-analytics
+    environment:
+      - POSTGRES_URL=postgresql://security:${SECURITY_DB_PASSWORD}@security-postgres:5432/security
+      - ELASTICSEARCH_URL=${ELASTICSEARCH_URL:-http://elasticsearch:9200}
+      - REDIS_URL=redis://redis:6379/13
+      - ANALYTICS_RETENTION_DAYS=${ANALYTICS_RETENTION_DAYS:-365}
+      - ENABLE_ML_ANALYTICS=${ENABLE_ML_ANALYTICS:-true}
+    depends_on:
+      - security-postgres
+      - elasticsearch
+      - redis
+    volumes:
+      - analytics_models:/app/models
+      - analytics_reports:/app/reports
+    networks:
+      - security-network
+      - analytics-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.5'
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8109/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Incident Responder Service
+  incident-responder:
+    build:
+      context: .
+      dockerfile: incident_responder.dockerfile
+    container_name: ainflue-incident-responder
+    environment:
+      - POSTGRES_URL=postgresql://security:${SECURITY_DB_PASSWORD}@security-postgres:5432/security
+      - REDIS_URL=redis://redis:6379/14
+      - RESPONSE_TIME_TARGET=${RESPONSE_TIME_TARGET:-300}
+      - ESCALATION_RULES=${ESCALATION_RULES:-auto}
+      - NOTIFICATION_WEBHOOKS=${NOTIFICATION_WEBHOOKS}
+    depends_on:
+      - security-postgres
+      - redis
+    volumes:
+      - incident_playbooks:/app/playbooks
+      - incident_reports:/app/reports
+    networks:
+      - security-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8110/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Supporting Infrastructure
+  security-postgres:
+    image: postgres:15-alpine
+    container_name: ainflue-security-postgres
+    environment:
+      - POSTGRES_DB=security
+      - POSTGRES_USER=security
+      - POSTGRES_PASSWORD=${SECURITY_DB_PASSWORD}
+    volumes:
+      - security_postgres_data:/var/lib/postgresql/data
+      - ./init-security-db.sql:/docker-entrypoint-initdb.d/init-security-db.sql
+    networks:
+      - security-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U security"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  redis:
+    image: redis:7-alpine
+    container_name: ainflue-security-redis
+    command: redis-server --appendonly yes --maxmemory 1gb --maxmemory-policy allkeys-lru
+    volumes:
+      - security_redis_data:/data
+    networks:
+      - security-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  elasticsearch:
+    image: elasticsearch:8.8.0
+    container_name: ainflue-security-elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+    volumes:
+      - security_elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      - security-network
+      - analytics-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  vault:
+    image: vault:latest
+    container_name: ainflue-vault
+    environment:
+      - VAULT_DEV_ROOT_TOKEN_ID=${VAULT_ROOT_TOKEN}
+      - VAULT_DEV_LISTEN_ADDRESS=0.0.0.0:8200
+    volumes:
+      - vault_data:/vault/data
+      - ./vault-config.hcl:/vault/config/vault.hcl
+    networks:
+      - security-network
+    restart: unless-stopped
+    cap_add:
+      - IPC_LOCK
+    healthcheck:
+      test: ["CMD", "vault", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  security_postgres_data:
+    driver: local
+  security_redis_data:
+    driver: local
+  security_elasticsearch_data:
+    driver: local
+  vault_data:
+    driver: local
+  vulnerability_reports:
+    driver: local
+  trivy_cache:
+    driver: local
+  ml_models:
+    driver: local
+  threat_logs:
+    driver: local
+  audit_logs:
+    driver: local
+  compliance_reports:
+    driver: local
+  encryption_keys:
+    driver: local
+  key_backups:
+    driver: local
+  verification_docs:
+    driver: local
+  fraud_models:
+    driver: local
+  fraud_reports:
+    driver: local
+  compliance_evidence:
+    driver: local
+  pentest_reports:
+    driver: local
+  pentest_tools:
+    driver: local
+  analytics_models:
+    driver: local
+  analytics_reports:
+    driver: local
+  incident_playbooks:
+    driver: local
+  incident_reports:
+    driver: local
+
+networks:
+  security-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.25.0.0/16
+  analytics-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.26.0.0/16
