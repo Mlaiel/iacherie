@@ -48,7 +48,7 @@ export enum Permission {
 
 export enum SubscriptionTier {
   FREE = 'free',
-  BASIC = 'basic',
+  STANDARD = 'standard',
   PREMIUM = 'premium',
   ENTERPRISE = 'enterprise',
 }

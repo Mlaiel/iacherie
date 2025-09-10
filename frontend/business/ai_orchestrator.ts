@@ -7,16 +7,16 @@
  */
 
 import { useState, useCallback, useEffect } from 'react';
-import type { AIConfiguration, AIProcessingRequest, AIProcessingResult, AIProvider } from '../core/types';
+import { AICapability, AIProvider, AIProcessingRequest, AIProcessingResult, AIProcessingOptions } from '../core/ai_types';
 
 // ====================================================================
 // AI ORCHESTRATOR INTERFACES
 // ====================================================================
 
 export interface AIOrchestatorState {
+  availableProviders: AIProvider[];
   activeProcessing: AIProcessingJob[];
   completedJobs: AIProcessingResult[];
-  availableProviders: AIProvider[];
   isProcessing: boolean;
   queue: AIProcessingRequest[];
   systemHealth: AISystemHealth;
@@ -24,7 +24,7 @@ export interface AIOrchestatorState {
 
 export interface AIProcessingJob {
   id: string;
-  type: AIProcessingType;
+  type: AICapability;
   status: 'queued' | 'processing' | 'completed' | 'failed';
   provider: string;
   input: any;
@@ -35,22 +35,13 @@ export interface AIProcessingJob {
   error?: string;
 }
 
-export type AIProcessingType = 
-  | 'text-generation'
-  | 'text-summarization' 
-  | 'text-translation'
-  | 'image-generation'
-  | 'image-enhancement'
-  | 'image-analysis'
-  | 'audio-transcription'
-  | 'audio-generation'
-  | 'audio-enhancement'
-  | 'video-analysis'
-  | 'video-generation'
-  | 'content-optimization'
-  | 'seo-analysis'
-  | 'sentiment-analysis'
-  | 'content-moderation';
+export interface ProviderHealth {
+  status: 'online' | 'offline' | 'limited';
+  responseTime: number;
+  errorRate: number;
+  queueSize: number;
+  lastCheck: number;
+}
 
 export interface AISystemHealth {
   overallStatus: 'healthy' | 'degraded' | 'down';
@@ -60,29 +51,31 @@ export interface AISystemHealth {
   errorRate: number;
 }
 
-export interface ProviderHealth {
-  status: 'online' | 'offline' | 'limited';
-  responseTime: number;
-  successRate: number;
-  lastCheck: number;
-  rateLimitRemaining: number;
+export interface AIConfiguration {
+  providers: {
+    openai?: { apiKey: string; model: string };
+    anthropic?: { apiKey: string; model: string };
+    midjourney?: { apiKey: string };
+    stability?: { apiKey: string };
+    elevenlabs?: { apiKey: string };
+  };
+  defaultProvider: string;
+  maxConcurrentJobs: number;
+  timeoutMs: number;
 }
 
 // ====================================================================
-// AI ORCHESTRATOR IMPLEMENTATION
+// AI ORCHESTRATOR CLASS
 // ====================================================================
 
 export class AIOrchestrator {
+  private providers: Map<string, AIProvider> = new Map();
+  private processingQueue: AIProcessingRequest[] = [];
+  private activeJobs: Map<string, AIProcessingJob> = new Map();
   private config: AIConfiguration;
-  private providers: Map<string, AIProvider>;
-  private processingQueue: AIProcessingJob[];
-  private isProcessingActive: boolean;
 
   constructor(config: AIConfiguration) {
     this.config = config;
-    this.providers = new Map();
-    this.processingQueue = [];
-    this.isProcessingActive = false;
     this.initializeProviders();
   }
 
@@ -95,7 +88,7 @@ export class AIOrchestrator {
         id: 'openai',
         name: 'OpenAI GPT',
         type: 'text',
-        capabilities: ['text-generation', 'text-summarization', 'seo-analysis'],
+        capabilities: ['text-generation', 'text-summarization', 'text-analysis'],
         pricing: { costPer1K: 0.002, model: 'pay-per-use', currency: 'USD' },
         rateLimits: { requestsPerMinute: 60, tokensPerMinute: 40000 },
         config: {
@@ -110,52 +103,13 @@ export class AIOrchestrator {
         name: 'Anthropic Claude',
         type: 'text',
         capabilities: ['text-generation', 'text-analysis', 'content-moderation'],
-        pricing: { costPer1K: 0.003, model: 'pay-per-use', currency: 'USD' },
+        pricing: { costPer1K: 0.015, model: 'pay-per-use', currency: 'USD' },
         rateLimits: { requestsPerMinute: 50, tokensPerMinute: 30000 },
         config: {
           apiKey: this.config.providers?.anthropic?.apiKey || '',
-          model: 'claude-3-sonnet',
+          model: 'claude-3',
           temperature: 0.7,
-          maxTokens: 2048
-        }
-      },
-      {
-        id: 'midjourney',
-        name: 'Midjourney',
-        type: 'image',
-        capabilities: ['image-generation'],
-        pricing: { costPer1K: 0.04, model: 'pay-per-use', currency: 'USD' },
-        rateLimits: { requestsPerMinute: 10, imagesPerHour: 200 },
-        config: {
-          apiKey: this.config.providers?.midjourney?.apiKey || '',
-          version: 'v6',
-          quality: 'standard'
-        }
-      },
-      {
-        id: 'elevenlabs',
-        name: 'ElevenLabs',
-        type: 'audio',
-        capabilities: ['audio-generation', 'audio-enhancement'],
-        pricing: { costPer1K: 0.18, model: 'pay-per-use', currency: 'USD' },
-        rateLimits: { requestsPerMinute: 20, charactersPerMonth: 330000 },
-        config: {
-          apiKey: this.config.providers?.elevenlabs?.apiKey || '',
-          voice: 'default',
-          model: 'eleven_multilingual_v2'
-        }
-      },
-      {
-        id: 'whisper',
-        name: 'OpenAI Whisper',
-        type: 'audio',
-        capabilities: ['audio-transcription'],
-        pricing: { costPer1K: 0.006, model: 'pay-per-use', currency: 'USD' },
-        rateLimits: { requestsPerMinute: 50, minutesPerHour: 1000 },
-        config: {
-          apiKey: this.config.providers?.openai?.apiKey || '',
-          model: 'whisper-1',
-          language: 'auto'
+          maxTokens: 4096
         }
       }
     ];
@@ -166,48 +120,98 @@ export class AIOrchestrator {
   }
 
   /**
-   * Submit AI processing request
+   * Process AI request with optimal provider selection
    */
-  public async submitRequest(request: AIProcessingRequest): Promise<string> {
+  async processRequest(request: AIProcessingRequest): Promise<AIProcessingResult> {
     const jobId = this.generateJobId();
-    const provider = this.selectOptimalProvider(request.type);
     
-    if (!provider) {
-      throw new Error(`No available provider for ${request.type}`);
+    try {
+      // Select optimal provider for the request type
+      const provider = this.selectOptimalProvider(request.type);
+      if (!provider) {
+        throw new Error(`No provider available for capability: ${request.type}`);
+      }
+
+      // Create processing job
+      const job: AIProcessingJob = {
+        id: jobId,
+        type: request.type,
+        status: 'processing',
+        provider: provider.id,
+        input: request.input,
+        progress: 0,
+        startTime: Date.now()
+      };
+
+      this.activeJobs.set(jobId, job);
+
+      // Simulate AI processing (replace with actual provider calls)
+      const result = await this.executeProviderRequest(provider, request);
+
+      // Update job status
+      job.status = 'completed';
+      job.progress = 100;
+      job.output = result;
+
+      return {
+        id: jobId,
+        requestId: request.id || jobId,
+        type: request.type,
+        provider: provider.id,
+        result: result,
+        status: 'completed',
+        processingTime: Date.now() - job.startTime,
+        metadata: {
+          model: provider.config.model || 'unknown',
+          version: '1.0',
+          cost: this.calculateCost(provider, request),
+          quality: 0.95
+        }
+      };
+
+    } catch (error) {
+      return {
+        id: jobId,
+        requestId: request.id || jobId,
+        type: request.type,
+        provider: 'unknown',
+        result: null,
+        status: 'failed',
+        error: error instanceof Error ? {
+          code: 'PROCESSING_ERROR',
+          message: error.message,
+          type: 'server_error',
+          retryable: true
+        } : {
+          code: 'UNKNOWN_ERROR',
+          message: 'Unknown error',
+          type: 'unknown',
+          retryable: false
+        },
+        processingTime: Date.now() - (this.activeJobs.get(jobId)?.startTime || Date.now()),
+        metadata: {
+          model: 'unknown',
+          version: '1.0'
+        }
+      };
+    } finally {
+      this.activeJobs.delete(jobId);
     }
-
-    const job: AIProcessingJob = {
-      id: jobId,
-      type: request.type,
-      status: 'queued',
-      provider: provider.id,
-      input: request.input,
-      progress: 0,
-      startTime: Date.now()
-    };
-
-    this.processingQueue.push(job);
-    
-    if (!this.isProcessingActive) {
-      this.startProcessing();
-    }
-
-    return jobId;
   }
 
   /**
-   * Select optimal provider for processing type
+   * Select optimal provider for given capability
    */
-  private selectOptimalProvider(type: AIProcessingType): AIProvider | null {
-    const compatibleProviders = Array.from(this.providers.values())
+  private selectOptimalProvider(type: AICapability): AIProvider | null {
+    const suitableProviders = Array.from(this.providers.values())
       .filter(provider => provider.capabilities.includes(type));
 
-    if (compatibleProviders.length === 0) return null;
+    if (suitableProviders.length === 0) return null;
 
-    // Select based on performance and availability
-    return compatibleProviders.reduce((best, current) => {
-      const bestScore = this.calculateProviderScore(best);
+    // Score providers based on performance, cost, and availability
+    return suitableProviders.reduce((best, current) => {
       const currentScore = this.calculateProviderScore(current);
+      const bestScore = this.calculateProviderScore(best);
       return currentScore > bestScore ? current : best;
     });
   }
@@ -216,292 +220,70 @@ export class AIOrchestrator {
    * Calculate provider performance score
    */
   private calculateProviderScore(provider: AIProvider): number {
-    // Consider pricing, rate limits, and availability
-    const pricingScore = 1 / (provider.pricing.costPer1K + 0.001);
-    const rateLimitScore = provider.rateLimits.requestsPerMinute / 100;
+    const availabilityScore = provider.status === 'online' ? 1 : 0.5;
+    const pricingScore = 1 / ((provider.pricing.costPer1K || 0.001) + 0.001);
+    const performanceScore = provider.rateLimits.requestsPerMinute / 100;
     
-    return pricingScore * 0.3 + rateLimitScore * 0.7;
+    return availabilityScore * 0.4 + pricingScore * 0.3 + performanceScore * 0.3;
   }
 
   /**
-   * Start processing queue
+   * Execute actual provider request (mock implementation)
    */
-  private async startProcessing(): Promise<void> {
-    if (this.isProcessingActive) return;
+  private async executeProviderRequest(provider: AIProvider, request: AIProcessingRequest): Promise<any> {
+    // Mock processing delay
+    await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 2000));
     
-    this.isProcessingActive = true;
-    
-    while (this.processingQueue.length > 0) {
-      const job = this.processingQueue.shift();
-      if (!job) continue;
-
-      try {
-        await this.processJob(job);
-      } catch (error) {
-        job.status = 'failed';
-        job.error = error instanceof Error ? error.message : 'Unknown error';
-      }
-    }
-    
-    this.isProcessingActive = false;
-  }
-
-  /**
-   * Process individual job
-   */
-  private async processJob(job: AIProcessingJob): Promise<void> {
-    job.status = 'processing';
-    job.estimatedCompletion = Date.now() + this.estimateProcessingTime(job);
-
-    const provider = this.providers.get(job.provider);
-    if (!provider) {
-      throw new Error(`Provider ${job.provider} not found`);
-    }
-
-    try {
-      const result = await this.executeAIRequest(job, provider);
-      job.output = result;
-      job.status = 'completed';
-      job.progress = 100;
-    } catch (error) {
-      throw error;
+    // Mock result based on request type
+    switch (request.type) {
+      case 'text-generation':
+        return { text: `Generated content based on: ${JSON.stringify(request.input)}` };
+      case 'text-summarization':
+        return { summary: `Summary of: ${JSON.stringify(request.input)}` };
+      case 'image-generation':
+        return { imageUrl: 'https://example.com/generated-image.jpg' };
+      default:
+        return { result: `Processed ${request.type}` };
     }
   }
 
   /**
-   * Execute AI request with specific provider
+   * Calculate processing cost
    */
-  private async executeAIRequest(job: AIProcessingJob, provider: AIProvider): Promise<any> {
-    // Simulate progress updates
-    const progressInterval = setInterval(() => {
-      if (job.progress < 90) {
-        job.progress += Math.random() * 20;
-      }
-    }, 1000);
-
-    try {
-      switch (job.type) {
-        case 'text-generation':
-          return await this.executeTextGeneration(job, provider);
-        
-        case 'text-summarization':
-          return await this.executeTextSummarization(job, provider);
-        
-        case 'image-generation':
-          return await this.executeImageGeneration(job, provider);
-        
-        case 'audio-generation':
-          return await this.executeAudioGeneration(job, provider);
-        
-        case 'audio-transcription':
-          return await this.executeAudioTranscription(job, provider);
-        
-        case 'content-optimization':
-          return await this.executeContentOptimization(job, provider);
-        
-        case 'sentiment-analysis':
-          return await this.executeSentimentAnalysis(job, provider);
-        
-        default:
-          throw new Error(`Unsupported processing type: ${job.type}`);
-      }
-    } finally {
-      clearInterval(progressInterval);
-    }
+  private calculateCost(provider: AIProvider, request: AIProcessingRequest): number {
+    const baseTokens = 1000; // Estimate based on request
+    return (provider.pricing.costPer1K || 0) * (baseTokens / 1000);
   }
 
-  // ====================================================================
-  // AI PROCESSING IMPLEMENTATIONS
-  // ====================================================================
-
-  private async executeTextGeneration(job: AIProcessingJob, provider: AIProvider): Promise<any> {
-    const { prompt, maxTokens = 1000, temperature = 0.7 } = job.input;
-    
-    // Simulate API call
-    await this.simulateAPICall(2000);
-    
-    return {
-      text: `Generated content based on: "${prompt.substring(0, 50)}..." - Professional content creation with AI enhancement and optimization for maximum engagement.`,
-      usage: {
-        promptTokens: prompt.length / 4,
-        completionTokens: maxTokens,
-        totalTokens: (prompt.length / 4) + maxTokens
-      },
-      model: provider.config.model
-    };
-  }
-
-  private async executeTextSummarization(job: AIProcessingJob, provider: AIProvider): Promise<any> {
-    const { text, maxLength = 100 } = job.input;
-    
-    await this.simulateAPICall(1500);
-    
-    return {
-      summary: `Concise summary of content covering key points about ${text.substring(0, 30)}... Expert analysis and optimization recommendations included.`,
-      originalLength: text.length,
-      summaryLength: maxLength,
-      compressionRatio: text.length / maxLength
-    };
-  }
-
-  private async executeImageGeneration(job: AIProcessingJob, provider: AIProvider): Promise<any> {
-    const { prompt, style = 'photorealistic', dimensions = '1024x1024' } = job.input;
-    
-    await this.simulateAPICall(8000);
-    
-    return {
-      imageUrl: `https://generated-images.ainflue.com/${this.generateJobId()}.jpg`,
-      prompt: prompt,
-      style: style,
-      dimensions: dimensions,
-      seed: Math.floor(Math.random() * 1000000)
-    };
-  }
-
-  private async executeAudioGeneration(job: AIProcessingJob, provider: AIProvider): Promise<any> {
-    const { text, voice = 'default', speed = 1.0 } = job.input;
-    
-    await this.simulateAPICall(5000);
-    
-    return {
-      audioUrl: `https://generated-audio.ainflue.com/${this.generateJobId()}.mp3`,
-      duration: text.length * 0.05, // Rough estimate
-      voice: voice,
-      speed: speed,
-      format: 'mp3',
-      bitrate: '128kbps'
-    };
-  }
-
-  private async executeAudioTranscription(job: AIProcessingJob, provider: AIProvider): Promise<any> {
-    const { audioUrl, language = 'auto' } = job.input;
-    
-    await this.simulateAPICall(3000);
-    
-    return {
-      text: 'Professional transcription of audio content with high accuracy and proper formatting for content creation workflows.',
-      confidence: 0.95,
-      language: language === 'auto' ? 'en' : language,
-      segments: [
-        { start: 0, end: 5, text: 'Professional transcription' },
-        { start: 5, end: 10, text: 'of audio content' },
-        { start: 10, end: 15, text: 'with high accuracy' }
-      ]
-    };
-  }
-
-  private async executeContentOptimization(job: AIProcessingJob, provider: AIProvider): Promise<any> {
-    const { content, platform, goals } = job.input;
-    
-    await this.simulateAPICall(2500);
-    
-    return {
-      optimizedContent: `${content} - Enhanced for ${platform} with professional optimization techniques and engagement strategies.`,
-      improvements: [
-        'Enhanced keyword density for SEO',
-        'Improved readability score',
-        'Added call-to-action elements',
-        'Optimized for platform algorithms'
-      ],
-      metrics: {
-        seoScore: 92,
-        readabilityScore: 85,
-        engagementPotential: 88
-      }
-    };
-  }
-
-  private async executeSentimentAnalysis(job: AIProcessingJob, provider: AIProvider): Promise<any> {
-    const { text } = job.input;
-    
-    await this.simulateAPICall(1000);
-    
-    const positiveWords = text.match(/\b(great|excellent|amazing|wonderful|fantastic|good|positive|success)\b/gi)?.length || 0;
-    const negativeWords = text.match(/\b(bad|terrible|awful|horrible|negative|fail|problem|issue)\b/gi)?.length || 0;
-    
-    let sentiment: 'positive' | 'neutral' | 'negative' = 'neutral';
-    let confidence = 0.5;
-    
-    if (positiveWords > negativeWords) {
-      sentiment = 'positive';
-      confidence = Math.min(0.9, 0.5 + (positiveWords * 0.1));
-    } else if (negativeWords > positiveWords) {
-      sentiment = 'negative';
-      confidence = Math.min(0.9, 0.5 + (negativeWords * 0.1));
-    }
-    
-    return {
-      sentiment,
-      confidence,
-      scores: {
-        positive: positiveWords * 0.2,
-        neutral: Math.max(0, 1 - (positiveWords + negativeWords) * 0.1),
-        negative: negativeWords * 0.2
-      },
-      emotions: ['confidence', 'optimism', 'determination']
-    };
-  }
-
-  // ====================================================================
-  // UTILITY METHODS
-  // ====================================================================
-
+  /**
+   * Generate unique job ID
+   */
   private generateJobId(): string {
-    return `ai_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return `job_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   }
 
-  private estimateProcessingTime(job: AIProcessingJob): number {
-    const timeEstimates: Record<AIProcessingType, number> = {
-      'text-generation': 3000,
-      'text-summarization': 2000,
-      'text-translation': 2500,
-      'image-generation': 10000,
-      'image-enhancement': 8000,
-      'image-analysis': 5000,
-      'audio-transcription': 4000,
-      'audio-generation': 6000,
-      'audio-enhancement': 7000,
-      'video-analysis': 15000,
-      'video-generation': 30000,
-      'content-optimization': 3000,
-      'seo-analysis': 2000,
-      'sentiment-analysis': 1000,
-      'content-moderation': 1500
-    };
-
-    return timeEstimates[job.type] || 5000;
-  }
-
-  private async simulateAPICall(duration: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, duration));
-  }
-
-  public getJobStatus(jobId: string): AIProcessingJob | null {
-    return this.processingQueue.find(job => job.id === jobId) || null;
-  }
-
-  public getSystemHealth(): AISystemHealth {
-    const totalJobs = this.processingQueue.length;
-    const completedJobs = this.processingQueue.filter(job => job.status === 'completed');
-    const failedJobs = this.processingQueue.filter(job => job.status === 'failed');
+  /**
+   * Get system health status
+   */
+  getSystemHealth(): AISystemHealth {
+    const providers: Record<string, ProviderHealth> = {};
     
-    const providerHealth: Record<string, ProviderHealth> = {};
     this.providers.forEach((provider, id) => {
-      providerHealth[id] = {
-        status: 'online',
-        responseTime: Math.random() * 1000 + 200,
-        successRate: 0.95 + Math.random() * 0.05,
-        lastCheck: Date.now(),
-        rateLimitRemaining: Math.floor(Math.random() * 100)
+      providers[id] = {
+        status: provider.status || 'online',
+        responseTime: 150 + Math.random() * 100,
+        errorRate: Math.random() * 0.05,
+        queueSize: 0,
+        lastCheck: Date.now()
       };
     });
 
     return {
-      overallStatus: failedJobs.length / totalJobs > 0.1 ? 'degraded' : 'healthy',
-      providers: providerHealth,
-      queueSize: this.processingQueue.filter(job => job.status === 'queued').length,
-      averageProcessingTime: 3500,
-      errorRate: totalJobs > 0 ? failedJobs.length / totalJobs : 0
+      overallStatus: 'healthy',
+      providers,
+      queueSize: this.processingQueue.length,
+      averageProcessingTime: 2500,
+      errorRate: 0.02
     };
   }
 }
@@ -510,11 +292,11 @@ export class AIOrchestrator {
 // REACT HOOK FOR AI ORCHESTRATOR
 // ====================================================================
 
-export const useAIOrchestrator = (config: AIConfiguration) => {
+export function useAIOrchestrator(config: AIConfiguration) {
   const [state, setState] = useState<AIOrchestatorState>({
+    availableProviders: [],
     activeProcessing: [],
     completedJobs: [],
-    availableProviders: [],
     isProcessing: false,
     queue: [],
     systemHealth: {
@@ -528,46 +310,23 @@ export const useAIOrchestrator = (config: AIConfiguration) => {
 
   const [orchestrator] = useState(() => new AIOrchestrator(config));
 
-  const submitRequest = useCallback(async (request: AIProcessingRequest) => {
+  const processRequest = useCallback(async (request: AIProcessingRequest) => {
     setState(prev => ({ ...prev, isProcessing: true }));
     
     try {
-      const jobId = await orchestrator.submitRequest(request);
+      const result = await orchestrator.processRequest(request);
       
-      // Update state with new job
-      const interval = setInterval(() => {
-        const job = orchestrator.getJobStatus(jobId);
-        if (job) {
-          setState(prev => ({
-            ...prev,
-            activeProcessing: prev.activeProcessing.some(j => j.id === jobId)
-              ? prev.activeProcessing.map(j => j.id === jobId ? job : j)
-              : [...prev.activeProcessing, job],
-            isProcessing: job.status === 'processing',
-            systemHealth: orchestrator.getSystemHealth()
-          }));
-
-          if (job.status === 'completed' || job.status === 'failed') {
-            clearInterval(interval);
-            setState(prev => ({
-              ...prev,
-              activeProcessing: prev.activeProcessing.filter(j => j.id !== jobId),
-              completedJobs: [...prev.completedJobs, job],
-              isProcessing: false
-            }));
-          }
-        }
-      }, 1000);
+      setState(prev => ({
+        ...prev,
+        completedJobs: [...prev.completedJobs, result],
+        isProcessing: false
+      }));
       
-      return jobId;
+      return result;
     } catch (error) {
       setState(prev => ({ ...prev, isProcessing: false }));
       throw error;
     }
-  }, [orchestrator]);
-
-  const getJobStatus = useCallback((jobId: string) => {
-    return orchestrator.getJobStatus(jobId);
   }, [orchestrator]);
 
   const getSystemHealth = useCallback(() => {
@@ -575,6 +334,7 @@ export const useAIOrchestrator = (config: AIConfiguration) => {
   }, [orchestrator]);
 
   useEffect(() => {
+    // Update system health periodically
     const interval = setInterval(() => {
       setState(prev => ({
         ...prev,
@@ -587,11 +347,10 @@ export const useAIOrchestrator = (config: AIConfiguration) => {
 
   return {
     state,
-    submitRequest,
-    getJobStatus,
+    processRequest,
     getSystemHealth,
-    orchestrator
+    isProcessing: state.isProcessing
   };
-};
+}
 
 export default AIOrchestrator;
