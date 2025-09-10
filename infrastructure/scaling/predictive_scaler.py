@@ -641,3 +641,118 @@ class PredictiveScaler:
                 'current_utilization': 0.21
             }
         }
+    
+    async def predict_resource_needs(self, test_patterns: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Predict resource needs based on creator behavior patterns
+        
+        Lead Dev IA Role Implementation:
+        - Creator behavior pattern analysis
+        - Content upload spike prediction
+        - Intelligent resource allocation
+        
+        Args:
+            test_patterns: Creator behavior patterns including upload times, content types, user count
+            
+        Returns:
+            Dict containing resource scaling predictions
+        """
+        try:
+            # Extract pattern data
+            upload_peak_hours = test_patterns.get('upload_peak_hours', [])
+            content_types = test_patterns.get('content_types', [])
+            user_count = test_patterns.get('user_count', 1000)
+            
+            current_hour = datetime.now().hour
+            
+            # Analyze upload patterns
+            is_peak_hour = current_hour in upload_peak_hours
+            peak_multiplier = 1.5 if is_peak_hour else 1.0
+            
+            # Analyze content type load factors
+            content_load_factors = {
+                'audio': 1.2,
+                'video': 2.5,
+                'image': 1.0,
+                'text': 0.5,
+                'live_stream': 3.0
+            }
+            
+            # Calculate weighted content load
+            content_load = 1.0
+            if content_types:
+                total_factor = sum(content_load_factors.get(ct, 1.0) for ct in content_types)
+                content_load = total_factor / len(content_types)
+            
+            # Calculate base resource requirements
+            base_cpu_requirement = user_count / 1000  # Base CPU per 1000 users
+            base_memory_requirement = user_count / 500  # Base memory per 500 users
+            
+            # Apply multipliers for patterns
+            predicted_cpu_scaling = base_cpu_requirement * peak_multiplier * content_load
+            predicted_memory_scaling = base_memory_requirement * peak_multiplier * content_load
+            
+            # Calculate predicted load
+            predicted_load = {
+                'cpu_load': min(predicted_cpu_scaling, 10.0),  # Cap at 10x
+                'memory_load': min(predicted_memory_scaling, 8.0),  # Cap at 8x
+                'upload_spike_probability': 0.8 if is_peak_hour else 0.3,
+                'content_processing_demand': content_load
+            }
+            
+            # Generate scaling recommendations
+            cpu_scaling_recommendation = "scale_up" if predicted_cpu_scaling > 2.0 else "maintain"
+            memory_scaling_recommendation = "scale_up" if predicted_memory_scaling > 2.0 else "maintain"
+            
+            # Calculate processing time estimate
+            processing_time_factors = {
+                'audio': 15,  # seconds per MB
+                'video': 45,  # seconds per MB 
+                'image': 5,   # seconds per MB
+                'text': 1     # seconds per MB
+            }
+            
+            avg_processing_time = sum(processing_time_factors.get(ct, 10) for ct in content_types) / len(content_types) if content_types else 10
+            estimated_processing_time = avg_processing_time * content_load * (1.2 if is_peak_hour else 1.0)
+            
+            prediction_result = {
+                'cpu_scaling': {
+                    'current_requirement': base_cpu_requirement,
+                    'predicted_requirement': predicted_cpu_scaling,
+                    'scaling_factor': predicted_cpu_scaling / base_cpu_requirement if base_cpu_requirement > 0 else 1.0,
+                    'recommendation': cpu_scaling_recommendation
+                },
+                'memory_scaling': {
+                    'current_requirement': base_memory_requirement,
+                    'predicted_requirement': predicted_memory_scaling,
+                    'scaling_factor': predicted_memory_scaling / base_memory_requirement if base_memory_requirement > 0 else 1.0,
+                    'recommendation': memory_scaling_recommendation
+                },
+                'predicted_load': predicted_load,
+                'creator_patterns': {
+                    'is_peak_hour': is_peak_hour,
+                    'peak_multiplier': peak_multiplier,
+                    'content_load_factor': content_load,
+                    'user_scaling_factor': user_count / 1000
+                },
+                'performance_metrics': {
+                    'estimated_processing_time_s': estimated_processing_time,
+                    'upload_capacity_utilization': min(predicted_cpu_scaling * 0.6, 1.0),
+                    'ai_processing_queue_depth': int(user_count * content_load * 0.1)
+                },
+                'confidence_score': 0.85,  # High confidence in pattern-based prediction
+                'timestamp': datetime.now().isoformat()
+            }
+            
+            logger.info(f"Resource prediction completed for {user_count} users with {len(content_types)} content types")
+            return prediction_result
+            
+        except Exception as e:
+            logger.error(f"Error in resource prediction: {e}")
+            return {
+                'cpu_scaling': {'recommendation': 'maintain', 'scaling_factor': 1.0},
+                'memory_scaling': {'recommendation': 'maintain', 'scaling_factor': 1.0}, 
+                'predicted_load': {'cpu_load': 1.0, 'memory_load': 1.0},
+                'error': str(e),
+                'timestamp': datetime.now().isoformat()
+            }
