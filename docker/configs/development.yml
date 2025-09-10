@@ -1,0 +1,111 @@
+# Development Configuration for Ainflue Docker Platform
+version: '3.8'
+
+# Development environment variables
+environment:
+  NODE_ENV: development
+  DEBUG: "*"
+  LOG_LEVEL: debug
+  ENABLE_METRICS: false
+  ENABLE_TRACING: false
+  HOT_RELOAD: true
+  AUTO_RESTART: true
+
+# Resource limits for development (minimal)
+resources:
+  api_gateway:
+    limits:
+      cpus: '1.0'
+      memory: 2G
+    reservations:
+      cpus: '0.5'
+      memory: 1G
+  
+  audio_processor:
+    limits:
+      cpus: '2.0'
+      memory: 4G
+    reservations:
+      cpus: '1.0'
+      memory: 2G
+  
+  database:
+    limits:
+      cpus: '1.0'
+      memory: 4G
+    reservations:
+      cpus: '0.5'
+      memory: 2G
+
+# Scaling configuration (single replicas)
+scaling:
+  api_gateway:
+    min_replicas: 1
+    max_replicas: 1
+  
+  audio_processor:
+    min_replicas: 1
+    max_replicas: 1
+  
+  payment_processor:
+    min_replicas: 1
+    max_replicas: 1
+
+# Network configuration
+networks:
+  development:
+    driver: bridge
+    
+  monitoring:
+    driver: bridge
+
+# Storage configuration (host mounts for development)
+volumes:
+  postgres_data:
+    driver: local
+  
+  redis_data:
+    driver: local
+    
+  source_code:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./
+
+# Security settings (minimal for development)
+security:
+  secrets_backend: local
+  image_scanning: disabled
+  network_policies: disabled
+  user_namespace: disabled
+
+# Monitoring configuration (basic)
+monitoring:
+  prometheus:
+    retention: 1d
+    scrape_interval: 60s
+  
+  grafana:
+    admin_password: admin
+    smtp_enabled: false
+
+# Backup configuration (disabled)
+backup:
+  schedule: ""
+  retention_days: 1
+  encryption: disabled
+
+# Development-specific settings
+development:
+  code_reload: true
+  port_forwarding: enabled
+  debug_ports:
+    api_gateway: 9229
+    audio_processor: 9230
+    payment_processor: 9231
+  
+  test_data:
+    load_fixtures: true
+    reset_on_start: true

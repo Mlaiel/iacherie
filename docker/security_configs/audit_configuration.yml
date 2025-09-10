@@ -1,0 +1,11 @@
+# Audit Configuration
+audit_backend: elasticsearch
+log_format: json
+events:
+  - container_create
+  - container_start
+  - container_stop
+  - image_pull
+  - secret_access
+retention: 2y
+encryption: enabled
