@@ -1,0 +1,82 @@
+# Ainflue Infrastructure Module
+# =============================
+# 
+# Enterprise-grade infrastructure management for Ainflue platform
+# Supports multi-cloud deployment and enterprise security
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+#
+# ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+
+apiVersion: v2
+name: ainflue-platform
+description: Enterprise-grade Helm chart for Ainflue Creator Economy Platform
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+
+keywords:
+  - ainflue
+  - creator-economy
+  - ai-platform
+  - enterprise
+  - kubernetes
+
+home: https://ainflue.com
+sources:
+  - https://github.com/Mlaiel/Ainflue
+
+maintainers:
+  - name: Fahed Mlaiel
+    email: mlaiel@live.de
+    url: https://github.com/Mlaiel
+
+annotations:
+  category: Infrastructure
+  licenses: Proprietary
+  images: |
+    - name: ainflue-api
+      image: ainflue/api:1.0.0
+    - name: ainflue-ai-engine
+      image: ainflue/ai-engine:1.0.0
+    - name: ainflue-mobile-api
+      image: ainflue/mobile-api:1.0.0
+    - name: ainflue-worker
+      image: ainflue/worker:1.0.0
+
+dependencies:
+  - name: postgresql
+    version: 12.1.2
+    repository: https://charts.bitnami.com/bitnami
+    condition: postgresql.enabled
+    
+  - name: redis
+    version: 17.4.3
+    repository: https://charts.bitnami.com/bitnami
+    condition: redis.enabled
+    
+  - name: prometheus
+    version: 15.16.1
+    repository: https://prometheus-community.github.io/helm-charts
+    condition: monitoring.prometheus.enabled
+    
+  - name: grafana
+    version: 6.44.11
+    repository: https://grafana.github.io/helm-charts
+    condition: monitoring.grafana.enabled
+    
+  - name: jaeger
+    version: 0.64.1
+    repository: https://jaegertracing.github.io/helm-charts
+    condition: monitoring.jaeger.enabled
+    
+  - name: nginx-ingress
+    version: 4.4.0
+    repository: https://kubernetes.github.io/ingress-nginx
+    condition: ingress.nginx.enabled
+    
+  - name: cert-manager
+    version: v1.13.2
+    repository: https://charts.jetstack.io
+    condition: security.certManager.enabled
