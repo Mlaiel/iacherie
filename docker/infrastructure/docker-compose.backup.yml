@@ -1,0 +1,247 @@
+# Docker Compose for Backup Services
+# Automated backup infrastructure for Ainflue Platform
+# Author: Fahed Mlaiel (mlaiel@live.de)
+
+version: '3.8'
+
+services:
+  # Database Backup Service
+  database_backup:
+    image: postgres:14-alpine
+    environment:
+      - PGUSER=backup_user
+      - PGPASSWORD=${BACKUP_DB_PASSWORD}
+      - BACKUP_SCHEDULE=0 2 * * *
+      - BACKUP_RETENTION_DAYS=30
+      - S3_BUCKET=${BACKUP_S3_BUCKET}
+      - S3_ACCESS_KEY=${BACKUP_S3_ACCESS_KEY}
+      - S3_SECRET_KEY=${BACKUP_S3_SECRET_KEY}
+    volumes:
+      - database_backups:/backups
+      - ./scripts/backup_database.sh:/usr/local/bin/backup_database.sh
+    command: ["/usr/local/bin/backup_database.sh"]
+    networks:
+      - backup_network
+    depends_on:
+      - backup_storage
+
+  # Redis Backup Service
+  redis_backup:
+    image: redis:7-alpine
+    environment:
+      - BACKUP_SCHEDULE=0 */6 * * *
+      - BACKUP_RETENTION_DAYS=7
+      - S3_BUCKET=${BACKUP_S3_BUCKET}
+    volumes:
+      - redis_backups:/backups
+      - ./scripts/backup_redis.sh:/usr/local/bin/backup_redis.sh
+    command: ["/usr/local/bin/backup_redis.sh"]
+    networks:
+      - backup_network
+    depends_on:
+      - backup_storage
+
+  # File System Backup Service
+  filesystem_backup:
+    image: alpine:latest
+    environment:
+      - BACKUP_SCHEDULE=0 1 * * *
+      - BACKUP_RETENTION_DAYS=30
+      - S3_BUCKET=${BACKUP_S3_BUCKET}
+      - BACKUP_EXCLUDE_PATTERNS="*.tmp,*.log,node_modules,__pycache__"
+    volumes:
+      - application_data:/data:ro
+      - filesystem_backups:/backups
+      - ./scripts/backup_filesystem.sh:/usr/local/bin/backup_filesystem.sh
+    command: ["/usr/local/bin/backup_filesystem.sh"]
+    networks:
+      - backup_network
+    depends_on:
+      - backup_storage
+
+  # Container Image Backup Service
+  image_backup:
+    image: docker:dind
+    environment:
+      - BACKUP_SCHEDULE=0 3 * * 0
+      - BACKUP_RETENTION_WEEKS=4
+      - REGISTRY_URL=${BACKUP_REGISTRY_URL}
+      - REGISTRY_USER=${BACKUP_REGISTRY_USER}
+      - REGISTRY_PASS=${BACKUP_REGISTRY_PASS}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - image_backups:/backups
+      - ./scripts/backup_images.sh:/usr/local/bin/backup_images.sh
+    command: ["/usr/local/bin/backup_images.sh"]
+    networks:
+      - backup_network
+    privileged: true
+
+  # Configuration Backup Service
+  config_backup:
+    image: alpine:latest
+    environment:
+      - BACKUP_SCHEDULE=0 0 * * *
+      - BACKUP_RETENTION_DAYS=90
+      - GIT_REPOSITORY=${CONFIG_GIT_REPOSITORY}
+      - GIT_USERNAME=${CONFIG_GIT_USERNAME}
+      - GIT_PASSWORD=${CONFIG_GIT_PASSWORD}
+    volumes:
+      - configuration_data:/config:ro
+      - config_backups:/backups
+      - ./scripts/backup_config.sh:/usr/local/bin/backup_config.sh
+    command: ["/usr/local/bin/backup_config.sh"]
+    networks:
+      - backup_network
+
+  # Backup Storage (MinIO)
+  backup_storage:
+    image: minio/minio:latest
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    volumes:
+      - backup_storage_data:/data
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    command: server /data --console-address ":9001"
+    networks:
+      - backup_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+  # Backup Monitor & Alerting
+  backup_monitor:
+    image: ainflue/backup-monitor:latest
+    environment:
+      - ALERT_EMAIL=${BACKUP_ALERT_EMAIL}
+      - ALERT_SLACK_WEBHOOK=${BACKUP_ALERT_SLACK_WEBHOOK}
+      - CHECK_INTERVAL=3600
+      - BACKUP_MAX_AGE_HOURS=26
+    volumes:
+      - backup_logs:/logs
+      - ./config/backup_monitor.yml:/app/config.yml
+    networks:
+      - backup_network
+    depends_on:
+      - backup_storage
+
+  # Backup Verification Service
+  backup_verifier:
+    image: ainflue/backup-verifier:latest
+    environment:
+      - VERIFICATION_SCHEDULE=0 4 * * *
+      - VERIFICATION_SAMPLE_RATE=0.1
+      - TEST_RESTORE_ENABLED=true
+    volumes:
+      - verification_workspace:/workspace
+      - backup_logs:/logs
+    networks:
+      - backup_network
+      - verification_network
+    depends_on:
+      - backup_storage
+      - test_database
+
+  # Test Database for Verification
+  test_database:
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_DB: backup_test
+      POSTGRES_USER: test_user
+      POSTGRES_PASSWORD: test_password
+    networks:
+      - verification_network
+    tmpfs:
+      - /var/lib/postgresql/data
+
+  # Backup Scheduler (Cron)
+  backup_scheduler:
+    image: alpine:latest
+    environment:
+      - TZ=UTC
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./config/crontab:/etc/crontabs/root
+      - backup_logs:/logs
+    command: ["crond", "-f", "-l", "2"]
+    networks:
+      - backup_network
+
+volumes:
+  database_backups:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=${NFS_SERVER},rw
+      device: ":${NFS_PATH}/database_backups"
+  
+  redis_backups:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=${NFS_SERVER},rw
+      device: ":${NFS_PATH}/redis_backups"
+  
+  filesystem_backups:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=${NFS_SERVER},rw
+      device: ":${NFS_PATH}/filesystem_backups"
+  
+  image_backups:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=${NFS_SERVER},rw
+      device: ":${NFS_PATH}/image_backups"
+  
+  config_backups:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=${NFS_SERVER},rw
+      device: ":${NFS_PATH}/config_backups"
+  
+  backup_storage_data:
+    driver: local
+  
+  backup_logs:
+    driver: local
+  
+  verification_workspace:
+    driver: local
+  
+  application_data:
+    external: true
+  
+  configuration_data:
+    external: true
+
+networks:
+  backup_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.40.0.0/16
+  
+  verification_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.41.0.0/16
+
+secrets:
+  backup_encryption_key:
+    external: true
+  s3_credentials:
+    external: true
+  git_credentials:
+    external: true

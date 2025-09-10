@@ -1,0 +1,326 @@
+# Docker Compose for Disaster Recovery
+# Disaster recovery infrastructure for Ainflue Platform
+# Author: Fahed Mlaiel (mlaiel@live.de)
+
+version: '3.8'
+
+services:
+  # Disaster Recovery Coordinator
+  dr_coordinator:
+    image: ainflue/dr-coordinator:latest
+    environment:
+      - DR_SITE_REGION=${DR_SITE_REGION}
+      - PRIMARY_SITE_REGION=${PRIMARY_SITE_REGION}
+      - FAILOVER_THRESHOLD_MINUTES=5
+      - AUTO_FAILBACK_ENABLED=false
+      - RTO_TARGET_MINUTES=30
+      - RPO_TARGET_MINUTES=5
+    volumes:
+      - dr_logs:/logs
+      - dr_state:/state
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - dr_network
+    ports:
+      - "8090:8090"
+    depends_on:
+      - dr_storage
+      - dr_monitoring
+
+  # Data Replication Service
+  data_replication:
+    image: ainflue/data-replication:latest
+    environment:
+      - PRIMARY_DB_HOST=${PRIMARY_DB_HOST}
+      - PRIMARY_DB_PORT=${PRIMARY_DB_PORT}
+      - DR_DB_HOST=${DR_DB_HOST}
+      - DR_DB_PORT=${DR_DB_PORT}
+      - REPLICATION_MODE=async
+      - REPLICATION_LAG_THRESHOLD=60
+    volumes:
+      - replication_logs:/logs
+      - replication_config:/config
+    networks:
+      - dr_network
+      - primary_network
+    secrets:
+      - source: db_replication_key
+        target: /run/secrets/replication_key
+
+  # File Synchronization Service
+  file_sync:
+    image: ainflue/file-sync:latest
+    environment:
+      - PRIMARY_STORAGE_PATH=${PRIMARY_STORAGE_PATH}
+      - DR_STORAGE_PATH=${DR_STORAGE_PATH}
+      - SYNC_INTERVAL_SECONDS=300
+      - COMPRESSION_ENABLED=true
+      - ENCRYPTION_ENABLED=true
+    volumes:
+      - primary_files:/primary:ro
+      - dr_files:/dr
+      - sync_logs:/logs
+    networks:
+      - dr_network
+
+  # Configuration Sync Service
+  config_sync:
+    image: ainflue/config-sync:latest
+    environment:
+      - PRIMARY_CONFIG_REPO=${PRIMARY_CONFIG_REPO}
+      - DR_CONFIG_REPO=${DR_CONFIG_REPO}
+      - SYNC_INTERVAL_SECONDS=180
+      - AUTO_DEPLOY_CONFIGS=true
+    volumes:
+      - config_sync_logs:/logs
+      - dr_configs:/configs
+    networks:
+      - dr_network
+
+  # Health Check Monitoring
+  dr_health_monitor:
+    image: ainflue/dr-health-monitor:latest
+    environment:
+      - PRIMARY_ENDPOINTS=${PRIMARY_HEALTH_ENDPOINTS}
+      - CHECK_INTERVAL_SECONDS=30
+      - FAILURE_THRESHOLD_COUNT=3
+      - ALERT_WEBHOOK=${DR_ALERT_WEBHOOK}
+    volumes:
+      - health_logs:/logs
+    networks:
+      - dr_network
+      - monitoring_network
+
+  # Load Balancer (DR Site)
+  dr_load_balancer:
+    image: nginx:alpine
+    volumes:
+      - ./config/nginx.dr.conf:/etc/nginx/nginx.conf
+      - dr_nginx_logs:/var/log/nginx
+      - dr_ssl_certs:/etc/ssl/certs
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - dr_network
+    depends_on:
+      - dr_api_gateway
+
+  # API Gateway (DR Site)
+  dr_api_gateway:
+    image: ainflue/platform:${VERSION:-latest}
+    environment:
+      - ENV=disaster_recovery
+      - DATABASE_URL=${DR_DATABASE_URL}
+      - REDIS_URL=${DR_REDIS_URL}
+      - PRIMARY_SITE_MODE=false
+      - READ_ONLY_MODE=true
+    volumes:
+      - dr_api_logs:/app/logs
+    networks:
+      - dr_network
+    depends_on:
+      - dr_database
+      - dr_redis
+    deploy:
+      replicas: 2
+
+  # Database (DR Site)
+  dr_database:
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_DB: ${DR_DB_NAME}
+      POSTGRES_USER: ${DR_DB_USER}
+      POSTGRES_PASSWORD: ${DR_DB_PASSWORD}
+    volumes:
+      - dr_db_data:/var/lib/postgresql/data
+      - dr_db_backups:/backups
+    networks:
+      - dr_network
+
+  # Redis (DR Site)
+  dr_redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes
+    volumes:
+      - dr_redis_data:/data
+    networks:
+      - dr_network
+
+  # Storage Service (DR Site)
+  dr_storage:
+    image: minio/minio:latest
+    environment:
+      MINIO_ROOT_USER: ${DR_MINIO_USER}
+      MINIO_ROOT_PASSWORD: ${DR_MINIO_PASSWORD}
+    volumes:
+      - dr_storage_data:/data
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    command: server /data --console-address ":9001"
+    networks:
+      - dr_network
+
+  # Monitoring (DR Site)
+  dr_monitoring:
+    image: prom/prometheus:latest
+    volumes:
+      - ./config/prometheus.dr.yml:/etc/prometheus/prometheus.yml
+      - dr_prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - dr_network
+      - monitoring_network
+
+  # Grafana (DR Site)
+  dr_grafana:
+    image: grafana/grafana:latest
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${DR_GRAFANA_PASSWORD}
+    volumes:
+      - dr_grafana_data:/var/lib/grafana
+      - ./config/grafana/dr:/etc/grafana/provisioning
+    ports:
+      - "3000:3000"
+    networks:
+      - dr_network
+      - monitoring_network
+    depends_on:
+      - dr_monitoring
+
+  # Failover Test Service
+  failover_tester:
+    image: ainflue/failover-tester:latest
+    environment:
+      - TEST_SCHEDULE=0 2 * * 0
+      - TEST_DURATION_MINUTES=30
+      - ROLLBACK_ENABLED=true
+      - NOTIFICATION_WEBHOOK=${FAILOVER_TEST_WEBHOOK}
+    volumes:
+      - failover_test_logs:/logs
+    networks:
+      - dr_network
+    depends_on:
+      - dr_coordinator
+
+  # DNS Failover Service
+  dns_failover:
+    image: ainflue/dns-failover:latest
+    environment:
+      - DNS_PROVIDER=${DNS_PROVIDER}
+      - PRIMARY_IP=${PRIMARY_SITE_IP}
+      - DR_IP=${DR_SITE_IP}
+      - DOMAIN=${PLATFORM_DOMAIN}
+      - TTL=300
+    volumes:
+      - dns_logs:/logs
+    networks:
+      - dr_network
+    secrets:
+      - source: dns_api_key
+        target: /run/secrets/dns_key
+
+  # Backup Restore Service
+  backup_restore:
+    image: ainflue/backup-restore:latest
+    environment:
+      - BACKUP_SOURCE=${BACKUP_S3_BUCKET}
+      - RESTORE_TARGET_DB=${DR_DATABASE_URL}
+      - RESTORE_TARGET_FILES=/dr/files
+      - PARALLEL_WORKERS=4
+    volumes:
+      - dr_files:/dr/files
+      - restore_logs:/logs
+    networks:
+      - dr_network
+    depends_on:
+      - dr_database
+      - dr_storage
+
+volumes:
+  dr_logs:
+    driver: local
+  dr_state:
+    driver: local
+  replication_logs:
+    driver: local
+  replication_config:
+    driver: local
+  sync_logs:
+    driver: local
+  config_sync_logs:
+    driver: local
+  health_logs:
+    driver: local
+  failover_test_logs:
+    driver: local
+  dns_logs:
+    driver: local
+  restore_logs:
+    driver: local
+  dr_nginx_logs:
+    driver: local
+  dr_api_logs:
+    driver: local
+  dr_db_data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=${DR_NFS_SERVER},rw
+      device: ":${DR_NFS_PATH}/db_data"
+  dr_db_backups:
+    driver: local
+  dr_redis_data:
+    driver: local
+  dr_storage_data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=${DR_NFS_SERVER},rw
+      device: ":${DR_NFS_PATH}/storage_data"
+  dr_prometheus_data:
+    driver: local
+  dr_grafana_data:
+    driver: local
+  dr_ssl_certs:
+    driver: local
+  dr_configs:
+    driver: local
+  primary_files:
+    external: true
+  dr_files:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=${DR_NFS_SERVER},rw
+      device: ":${DR_NFS_PATH}/files"
+
+networks:
+  dr_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.50.0.0/16
+  
+  primary_network:
+    external: true
+  
+  monitoring_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.51.0.0/16
+
+secrets:
+  db_replication_key:
+    external: true
+  dns_api_key:
+    external: true
+  dr_ssl_key:
+    external: true
+  dr_ssl_cert:
+    external: true
