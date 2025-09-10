@@ -108,8 +108,8 @@ paypalrestsdk>=1.13.3             # PayPal
 
 # Monetization & Financial Processing
 stripe>=7.0.0                      # Stripe payments
-wise-sdk>=1.2.0                    # Wise transfers (if available)
-decimal>=1.70                      # Precise financial calculations
+# wise-sdk>=1.2.0  # Not available                    # Wise transfers (if available)
+# decimal>=1.70  # Built-in module                      # Precise financial calculations
 python-dateutil>=2.8.2           # Date handling for financial records
 
 # Extended functionality (optional - loads from config/requirements.txt if available)
