@@ -56,6 +56,27 @@ from .data_protection_manager import (
     DataSubjectRight
 )
 
+# New security modules
+from .vulnerability_scanner import (
+    DistributionVulnerabilityScanner,
+    create_vulnerability_scanner,
+    Vulnerability,
+    VulnerabilityLevel,
+    VulnerabilityCategory,
+    ScanResult
+)
+
+from .incident_responder import (
+    DistributionIncidentResponder,
+    create_incident_responder,
+    SecurityEvent,
+    Incident,
+    IncidentSeverity,
+    IncidentType,
+    IncidentStatus,
+    ResponseAction
+)
+
 __all__ = [
     # Access Control
     'AccessController',
@@ -97,7 +118,25 @@ __all__ = [
     'EncryptionConfig',
     'DataCategory',
     'ConsentType',
-    'DataSubjectRight'
+    'DataSubjectRight',
+    
+    # Vulnerability Scanning
+    'DistributionVulnerabilityScanner',
+    'create_vulnerability_scanner',
+    'Vulnerability',
+    'VulnerabilityLevel',
+    'VulnerabilityCategory',
+    'ScanResult',
+    
+    # Incident Response
+    'DistributionIncidentResponder',
+    'create_incident_responder',
+    'SecurityEvent',
+    'Incident',
+    'IncidentSeverity',
+    'IncidentType',
+    'IncidentStatus',
+    'ResponseAction'
 ]
 
 __version__ = "1.0.0"

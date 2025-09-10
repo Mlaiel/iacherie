@@ -51,6 +51,61 @@ from .dashboard_generator import (
     RefreshRate
 )
 
+from .anomaly_detector import (
+    AnomalyDetector,
+    AnomalyType,
+    AnomalyDetectionConfig,
+    AnomalyAlert,
+    DetectionMethod
+)
+
+# New monitoring modules
+from .report_engine import (
+    DistributionReportEngine,
+    create_report_engine,
+    ReportType,
+    ReportFormat,
+    ReportConfig,
+    GeneratedReport
+)
+
+from .capacity_planner import (
+    DistributionCapacityPlanner,
+    create_capacity_planner,
+    ResourceType,
+    PlanningHorizon,
+    CapacityPrediction,
+    CapacityAlert
+)
+
+from .sla_monitor import (
+    DistributionSLAMonitor,
+    create_sla_monitor,
+    SLAMetricType,
+    SLATarget,
+    SLAMeasurement,
+    SLABreach,
+    SLAReport
+)
+
+from .cost_tracker import (
+    DistributionCostTracker,
+    create_cost_tracker,
+    CostCategory,
+    CostItem,
+    CostBudget,
+    CostAlert
+)
+
+from .roi_calculator import (
+    DistributionROICalculator,
+    create_roi_calculator,
+    RevenueStream,
+    InvestmentType,
+    ROIAnalysis,
+    CustomerMetrics
+)
+
 __all__ = [
     # Metrics Collection
     'DistributionMetricsCollector',
@@ -88,7 +143,55 @@ __all__ = [
     'MetricConfig',
     'ChartType',
     'DashboardTheme',
-    'RefreshRate'
+    'RefreshRate',
+    
+    # Anomaly Detection
+    'AnomalyDetector',
+    'AnomalyType',
+    'AnomalyDetectionConfig',
+    'AnomalyAlert',
+    'DetectionMethod',
+    
+    # Reporting
+    'DistributionReportEngine',
+    'create_report_engine',
+    'ReportType',
+    'ReportFormat',
+    'ReportConfig',
+    'GeneratedReport',
+    
+    # Capacity Planning
+    'DistributionCapacityPlanner',
+    'create_capacity_planner',
+    'ResourceType',
+    'PlanningHorizon',
+    'CapacityPrediction',
+    'CapacityAlert',
+    
+    # SLA Monitoring
+    'DistributionSLAMonitor',
+    'create_sla_monitor',
+    'SLAMetricType',
+    'SLATarget',
+    'SLAMeasurement',
+    'SLABreach',
+    'SLAReport',
+    
+    # Cost Tracking
+    'DistributionCostTracker',
+    'create_cost_tracker',
+    'CostCategory',
+    'CostItem',
+    'CostBudget',
+    'CostAlert',
+    
+    # ROI Calculation
+    'DistributionROICalculator',
+    'create_roi_calculator',
+    'RevenueStream',
+    'InvestmentType',
+    'ROIAnalysis',
+    'CustomerMetrics'
 ]
 
 __version__ = "1.0.0"
