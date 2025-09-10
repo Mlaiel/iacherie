@@ -48,15 +48,15 @@ from .business_intelligence_engine import (
     
     # Enums
     InsightType,                   # AI insight categories
-    ContentIntelligenceLevel,      # Intelligence complexity levels
     AgentType,                     # 53+ AI agent types
     MarketSegment,                 # Market segments
     TrendType,                     # Trend types
     CompetitivePosition,           # Competitive positioning
-    CompetitorTier,                # Competitor tiers
     PredictionType,                # Prediction types
-    ModelType,                     # ML model types
-    PredictionConfidence           # Prediction confidence levels
+    RiskLevel,                     # Risk levels
+    OpportunityType,               # Opportunity types
+    BenchmarkCategory,             # Benchmark categories
+    RecommendationType             # Recommendation types
 )
 
 # 2. CREATOR CONTENT PERFORMANCE ENGINE - Content Analytics, Creator Metrics, User Behavior, Performance
@@ -402,9 +402,9 @@ __all__ = [
     # === BUSINESS INTELLIGENCE TYPES ===
     "AIInsight", "ContentIntelligence", "AudiencePersona", "MarketTrend", 
     "CompetitorProfile", "MarketOpportunity", "PredictionResult", "TrendAnalysis",
-    "MarketIntelligenceReport", "InsightType", "ContentIntelligenceLevel",
-    "AgentType", "MarketSegment", "TrendType", "CompetitivePosition",
-    "CompetitorTier", "PredictionType", "ModelType", "PredictionConfidence",
+    "MarketIntelligenceReport", "InsightType", "AgentType", "MarketSegment", 
+    "TrendType", "CompetitivePosition", "PredictionType", "RiskLevel", 
+    "OpportunityType", "BenchmarkCategory", "RecommendationType",
     
     # === CREATOR CONTENT PERFORMANCE TYPES ===
     "ContentMetrics", "CreatorProfile", "UserBehaviorPattern", "PerformanceMetric",
