@@ -1,0 +1,192 @@
+# Docker Compose for Testing Environment Integration
+# Links testing infrastructure with main platform
+# Author: Fahed Mlaiel (mlaiel@live.de)
+
+version: '3.8'
+
+services:
+  # Test Orchestrator
+  test_orchestrator:
+    build:
+      context: ../testing
+      dockerfile: test_runner.dockerfile
+    environment:
+      - ENV=testing
+      - COVERAGE_THRESHOLD=95.0
+      - TEST_PARALLEL=true
+    volumes:
+      - test_results:/app/reports
+      - test_logs:/app/logs
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - testing_network
+      - platform_network
+    depends_on:
+      - test_database
+      - test_redis
+
+  # Integration Test Services
+  integration_tests:
+    build:
+      context: ../testing
+      dockerfile: integration_tester.dockerfile
+    environment:
+      - PLATFORM_API_URL=http://api_gateway:8000
+      - DATABASE_URL=postgresql://test_user:test_password@test_database:5432/ainflue_test
+    volumes:
+      - test_results:/app/reports
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - testing_network
+      - platform_network
+    depends_on:
+      - api_gateway
+      - test_database
+
+  # Performance Test Services
+  performance_tests:
+    build:
+      context: ../testing
+      dockerfile: performance_tester.dockerfile
+    environment:
+      - TARGET_HOST=api_gateway
+      - TARGET_PORT=8000
+      - CONCURRENT_USERS=100
+      - TEST_DURATION=300
+    volumes:
+      - test_results:/app/reports
+    networks:
+      - testing_network
+      - platform_network
+    depends_on:
+      - api_gateway
+
+  # Security Test Services
+  security_tests:
+    build:
+      context: ../testing
+      dockerfile: security_tester.dockerfile
+    environment:
+      - TARGET_HOST=api_gateway
+      - SECURITY_SCAN_DEPTH=deep
+    volumes:
+      - test_results:/app/reports
+      - security_scans:/app/scans
+    networks:
+      - testing_network
+      - platform_network
+    depends_on:
+      - api_gateway
+
+  # Platform Services for Testing
+  api_gateway:
+    image: ainflue/platform:test
+    environment:
+      - ENV=testing
+      - DATABASE_URL=postgresql://test_user:test_password@test_database:5432/ainflue_test
+      - REDIS_URL=redis://test_redis:6379/0
+    networks:
+      - platform_network
+    depends_on:
+      - test_database
+      - test_redis
+
+  # Audio Service for Testing
+  audio_service:
+    image: ainflue/audio:test
+    environment:
+      - ENV=testing
+      - API_GATEWAY_URL=http://api_gateway:8000
+    networks:
+      - platform_network
+    depends_on:
+      - api_gateway
+
+  # Protection Service for Testing
+  protection_service:
+    image: ainflue/protection:test
+    environment:
+      - ENV=testing
+      - API_GATEWAY_URL=http://api_gateway:8000
+    networks:
+      - platform_network
+    depends_on:
+      - api_gateway
+
+  # Monetization Service for Testing
+  monetization_service:
+    image: ainflue/monetization:test
+    environment:
+      - ENV=testing
+      - API_GATEWAY_URL=http://api_gateway:8000
+      - DATABASE_URL=postgresql://test_user:test_password@test_database:5432/ainflue_test
+    networks:
+      - platform_network
+    depends_on:
+      - api_gateway
+      - test_database
+
+  # Test Infrastructure
+  test_database:
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_DB: ainflue_test
+      POSTGRES_USER: test_user
+      POSTGRES_PASSWORD: test_password
+    volumes:
+      - test_db_data:/var/lib/postgresql/data
+    networks:
+      - platform_network
+    tmpfs:
+      - /var/lib/postgresql/data
+
+  test_redis:
+    image: redis:7-alpine
+    networks:
+      - platform_network
+    tmpfs:
+      - /data
+
+  # Test Report Aggregator
+  test_reporter:
+    image: ainflue/test-reporter:latest
+    environment:
+      - REPORT_OUTPUT_FORMAT=html,xml,json
+      - COVERAGE_THRESHOLD=95.0
+    volumes:
+      - test_results:/app/input
+      - test_reports:/app/output
+    networks:
+      - testing_network
+    depends_on:
+      - test_orchestrator
+      - integration_tests
+      - performance_tests
+      - security_tests
+
+volumes:
+  test_results:
+    driver: local
+  test_reports:
+    driver: local
+  test_logs:
+    driver: local
+  security_scans:
+    driver: local
+  test_db_data:
+    driver: tmpfs
+
+networks:
+  testing_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.30.0.0/16
+  
+  platform_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.31.0.0/16

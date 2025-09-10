@@ -1,0 +1,160 @@
+# Docker Compose for Development Environment
+# Development-optimized configuration for Ainflue Platform
+# Author: Fahed Mlaiel (mlaiel@live.de)
+
+version: '3.8'
+
+services:
+  # Development API Gateway
+  api_gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./src:/app/src:ro
+      - dev_logs:/app/logs
+    environment:
+      - ENV=development
+      - DEBUG=true
+      - LOG_LEVEL=DEBUG
+      - RELOAD=true
+    networks:
+      - dev_network
+    depends_on:
+      - dev_database
+      - dev_redis
+
+  # Development Database
+  dev_database:
+    image: postgres:14-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: ainflue_dev
+      POSTGRES_USER: dev_user
+      POSTGRES_PASSWORD: dev_password
+    volumes:
+      - dev_db_data:/var/lib/postgresql/data
+      - ./scripts/init_dev_db.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - dev_network
+
+  # Development Redis
+  dev_redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - dev_redis_data:/data
+    networks:
+      - dev_network
+
+  # Development Message Broker
+  dev_rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: dev_user
+      RABBITMQ_DEFAULT_PASS: dev_password
+    volumes:
+      - dev_rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - dev_network
+
+  # Development Monitoring
+  dev_prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./config/prometheus.dev.yml:/etc/prometheus/prometheus.yml
+      - dev_prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    networks:
+      - dev_network
+
+  # Development Grafana
+  dev_grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: dev_password
+    volumes:
+      - dev_grafana_data:/var/lib/grafana
+      - ./config/grafana/provisioning:/etc/grafana/provisioning
+    networks:
+      - dev_network
+    depends_on:
+      - dev_prometheus
+
+  # Development Hot Reload Server
+  dev_hot_reload:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+    networks:
+      - dev_network
+
+  # Development Testing Runner
+  dev_test_runner:
+    build:
+      context: .
+      dockerfile: testing/test_runner.dockerfile
+      target: development
+    volumes:
+      - ./tests:/app/tests
+      - ./src:/app/src
+      - dev_test_reports:/app/reports
+    environment:
+      - ENV=development
+      - RUN_TESTS=true
+      - COVERAGE_THRESHOLD=80.0
+    networks:
+      - dev_network
+    depends_on:
+      - dev_database
+      - dev_redis
+
+volumes:
+  dev_db_data:
+    driver: local
+  dev_redis_data:
+    driver: local
+  dev_rabbitmq_data:
+    driver: local
+  dev_prometheus_data:
+    driver: local
+  dev_grafana_data:
+    driver: local
+  dev_logs:
+    driver: local
+  dev_test_reports:
+    driver: local
+
+networks:
+  dev_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/16

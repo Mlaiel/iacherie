@@ -1,0 +1,216 @@
+# Docker Compose for Staging Environment
+# Staging environment configuration for Ainflue Platform
+# Author: Fahed Mlaiel (mlaiel@live.de)
+
+version: '3.8'
+
+services:
+  # Staging API Gateway
+  api_gateway:
+    image: ainflue/platform:${VERSION:-latest}
+    ports:
+      - "80:8000"
+      - "443:8443"
+    environment:
+      - ENV=staging
+      - DEBUG=false
+      - LOG_LEVEL=INFO
+    volumes:
+      - staging_logs:/app/logs
+      - staging_ssl_certs:/app/ssl
+    networks:
+      - staging_network
+    depends_on:
+      - staging_database
+      - staging_redis
+      - staging_load_balancer
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+
+  # Staging Load Balancer
+  staging_load_balancer:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./config/nginx.staging.conf:/etc/nginx/nginx.conf
+      - staging_nginx_logs:/var/log/nginx
+    networks:
+      - staging_network
+    depends_on:
+      - api_gateway
+
+  # Staging Database
+  staging_database:
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_DB: ainflue_staging
+      POSTGRES_USER: staging_user
+      POSTGRES_PASSWORD: ${STAGING_DB_PASSWORD}
+    volumes:
+      - staging_db_data:/var/lib/postgresql/data
+      - staging_db_backups:/backups
+    networks:
+      - staging_network
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.db == true
+
+  # Staging Redis Cluster
+  staging_redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes --cluster-enabled yes
+    volumes:
+      - staging_redis_data:/data
+    networks:
+      - staging_network
+    deploy:
+      replicas: 3
+
+  # Staging Message Broker
+  staging_rabbitmq:
+    image: rabbitmq:3-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: staging_user
+      RABBITMQ_DEFAULT_PASS: ${STAGING_RABBITMQ_PASSWORD}
+      RABBITMQ_MANAGEMENT_SSL_CACERTFILE: /ssl/ca.pem
+      RABBITMQ_MANAGEMENT_SSL_CERTFILE: /ssl/cert.pem
+      RABBITMQ_MANAGEMENT_SSL_KEYFILE: /ssl/key.pem
+    volumes:
+      - staging_rabbitmq_data:/var/lib/rabbitmq
+      - staging_ssl_certs:/ssl
+    networks:
+      - staging_network
+
+  # Staging Monitoring Stack
+  staging_prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./config/prometheus.staging.yml:/etc/prometheus/prometheus.yml
+      - staging_prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=720h'
+      - '--web.enable-lifecycle'
+    networks:
+      - staging_network
+
+  staging_grafana:
+    image: grafana/grafana:latest
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${STAGING_GRAFANA_PASSWORD}
+      GF_SERVER_PROTOCOL: https
+      GF_SERVER_CERT_FILE: /ssl/cert.pem
+      GF_SERVER_CERT_KEY: /ssl/key.pem
+    volumes:
+      - staging_grafana_data:/var/lib/grafana
+      - staging_ssl_certs:/ssl
+      - ./config/grafana/staging:/etc/grafana/provisioning
+    networks:
+      - staging_network
+    depends_on:
+      - staging_prometheus
+
+  # Staging Log Aggregation
+  staging_elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.8.0
+    environment:
+      - cluster.name=ainflue-staging
+      - node.name=staging-es-01
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - staging_es_data:/usr/share/elasticsearch/data
+    networks:
+      - staging_network
+
+  staging_logstash:
+    image: docker.elastic.co/logstash/logstash:8.8.0
+    volumes:
+      - ./config/logstash/staging:/usr/share/logstash/pipeline
+      - staging_logs:/logs
+    networks:
+      - staging_network
+    depends_on:
+      - staging_elasticsearch
+
+  staging_kibana:
+    image: docker.elastic.co/kibana/kibana:8.8.0
+    environment:
+      ELASTICSEARCH_HOSTS: http://staging_elasticsearch:9200
+    ports:
+      - "5601:5601"
+    networks:
+      - staging_network
+    depends_on:
+      - staging_elasticsearch
+
+  # Staging Backup Service
+  staging_backup:
+    image: ainflue/backup-service:latest
+    environment:
+      - BACKUP_SCHEDULE=0 2 * * *
+      - BACKUP_RETENTION_DAYS=30
+      - S3_BUCKET=${STAGING_BACKUP_BUCKET}
+      - S3_ACCESS_KEY=${STAGING_S3_ACCESS_KEY}
+      - S3_SECRET_KEY=${STAGING_S3_SECRET_KEY}
+    volumes:
+      - staging_db_backups:/db_backups
+      - staging_file_backups:/file_backups
+    networks:
+      - staging_network
+    depends_on:
+      - staging_database
+
+volumes:
+  staging_db_data:
+    driver: local
+  staging_db_backups:
+    driver: local
+  staging_redis_data:
+    driver: local
+  staging_rabbitmq_data:
+    driver: local
+  staging_prometheus_data:
+    driver: local
+  staging_grafana_data:
+    driver: local
+  staging_es_data:
+    driver: local
+  staging_logs:
+    driver: local
+  staging_nginx_logs:
+    driver: local
+  staging_ssl_certs:
+    driver: local
+  staging_file_backups:
+    driver: local
+
+networks:
+  staging_network:
+    driver: overlay
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.25.0.0/16
+
+secrets:
+  staging_db_password:
+    external: true
+  staging_ssl_cert:
+    external: true
+  staging_ssl_key:
+    external: true
