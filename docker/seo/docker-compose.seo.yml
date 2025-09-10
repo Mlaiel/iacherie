@@ -1,0 +1,301 @@
+# Docker Compose for SEO Services
+# Platform optimization and keyword intelligence services
+# Author: Fahed Mlaiel (mlaiel@live.de)
+
+version: '3.8'
+
+services:
+  # Platform Optimizer
+  platform-optimizer:
+    build:
+      context: .
+      dockerfile: platform_optimizer.dockerfile
+    container_name: ainflue-platform-optimizer
+    environment:
+      - SERVICE_NAME=platform_optimizer
+      - DATABASE_URL=${SEO_DB_URL}
+      - REDIS_URL=${REDIS_URL}
+      - YOUTUBE_API_KEY=${YOUTUBE_API_KEY}
+      - INSTAGRAM_API_KEY=${INSTAGRAM_API_KEY}
+      - TIKTOK_API_KEY=${TIKTOK_API_KEY}
+    volumes:
+      - ./optimization_data:/app/optimization_data
+    ports:
+      - "8201:8000"
+    depends_on:
+      - seo-redis
+      - seo-db
+    restart: unless-stopped
+    networks:
+      - seo-network
+
+  # Keyword Intelligence
+  keyword-intelligence:
+    build:
+      context: .
+      dockerfile: keyword_intelligence.dockerfile
+    container_name: ainflue-keyword-intelligence
+    environment:
+      - SERVICE_NAME=keyword_intelligence
+      - DATABASE_URL=${SEO_DB_URL}
+      - REDIS_URL=${REDIS_URL}
+      - GOOGLE_TRENDS_API=${GOOGLE_TRENDS_API}
+    volumes:
+      - ./keyword_data:/app/keyword_data
+    ports:
+      - "8202:8000"
+    depends_on:
+      - seo-redis
+      - seo-db
+    restart: unless-stopped
+    networks:
+      - seo-network
+
+  # Trending Analyzer
+  trending-analyzer:
+    build:
+      context: .
+      dockerfile: trending_analyzer.dockerfile
+    container_name: ainflue-trending-analyzer
+    environment:
+      - SERVICE_NAME=trending_analyzer
+      - DATABASE_URL=${SEO_DB_URL}
+      - REDIS_URL=${REDIS_URL}
+      - TREND_API_KEYS=${TREND_API_KEYS}
+    volumes:
+      - ./trending_data:/app/trending_data
+    ports:
+      - "8203:8000"
+    depends_on:
+      - seo-redis
+      - seo-db
+    restart: unless-stopped
+    networks:
+      - seo-network
+
+  # Metadata Enhancer
+  metadata-enhancer:
+    build:
+      context: .
+      dockerfile: metadata_enhancer.dockerfile
+    container_name: ainflue-metadata-enhancer
+    environment:
+      - SERVICE_NAME=metadata_enhancer
+      - DATABASE_URL=${SEO_DB_URL}
+      - REDIS_URL=${REDIS_URL}
+    volumes:
+      - ./metadata:/app/metadata
+    ports:
+      - "8204:8000"
+    depends_on:
+      - seo-redis
+      - seo-db
+    restart: unless-stopped
+    networks:
+      - seo-network
+
+  # Hashtag Generator
+  hashtag-generator:
+    build:
+      context: .
+      dockerfile: hashtag_generator.dockerfile
+    container_name: ainflue-hashtag-generator
+    environment:
+      - SERVICE_NAME=hashtag_generator
+      - DATABASE_URL=${SEO_DB_URL}
+      - REDIS_URL=${REDIS_URL}
+    volumes:
+      - ./hashtag_data:/app/hashtag_data
+    ports:
+      - "8205:8000"
+    depends_on:
+      - seo-redis
+      - seo-db
+    restart: unless-stopped
+    networks:
+      - seo-network
+
+  # Content Scheduler
+  content-scheduler:
+    build:
+      context: .
+      dockerfile: content_scheduler.dockerfile
+    container_name: ainflue-content-scheduler
+    environment:
+      - SERVICE_NAME=content_scheduler
+      - DATABASE_URL=${SEO_DB_URL}
+      - REDIS_URL=${REDIS_URL}
+      - SCHEDULER_TIMEZONE=${SCHEDULER_TIMEZONE}
+    volumes:
+      - ./scheduled_content:/app/scheduled_content
+    ports:
+      - "8206:8000"
+    depends_on:
+      - seo-redis
+      - seo-db
+    restart: unless-stopped
+    networks:
+      - seo-network
+
+  # Viral Predictor
+  viral-predictor:
+    build:
+      context: .
+      dockerfile: viral_predictor.dockerfile
+    container_name: ainflue-viral-predictor
+    environment:
+      - SERVICE_NAME=viral_predictor
+      - DATABASE_URL=${SEO_DB_URL}
+      - REDIS_URL=${REDIS_URL}
+      - ML_MODELS_PATH=/app/models/viral
+    volumes:
+      - ./models/viral:/app/models/viral:ro
+      - ./viral_analysis:/app/viral_analysis
+    ports:
+      - "8207:8000"
+    depends_on:
+      - seo-redis
+      - seo-db
+    restart: unless-stopped
+    networks:
+      - seo-network
+
+  # Competitor Analyzer
+  competitor-analyzer:
+    build:
+      context: .
+      dockerfile: competitor_analyzer.dockerfile
+    container_name: ainflue-competitor-analyzer
+    environment:
+      - SERVICE_NAME=competitor_analyzer
+      - DATABASE_URL=${SEO_DB_URL}
+      - REDIS_URL=${REDIS_URL}
+    volumes:
+      - ./competitor_data:/app/competitor_data
+    ports:
+      - "8208:8000"
+    depends_on:
+      - seo-redis
+      - seo-db
+    restart: unless-stopped
+    networks:
+      - seo-network
+
+  # Rank Tracker
+  rank-tracker:
+    build:
+      context: .
+      dockerfile: rank_tracker.dockerfile
+    container_name: ainflue-rank-tracker
+    environment:
+      - SERVICE_NAME=rank_tracker
+      - DATABASE_URL=${SEO_DB_URL}
+      - REDIS_URL=${REDIS_URL}
+    volumes:
+      - ./ranking_data:/app/ranking_data
+    ports:
+      - "8209:8000"
+    depends_on:
+      - seo-redis
+      - seo-db
+    restart: unless-stopped
+    networks:
+      - seo-network
+
+  # Backlink Analyzer
+  backlink-analyzer:
+    build:
+      context: .
+      dockerfile: backlink_analyzer.dockerfile
+    container_name: ainflue-backlink-analyzer
+    environment:
+      - SERVICE_NAME=backlink_analyzer
+      - DATABASE_URL=${SEO_DB_URL}
+      - REDIS_URL=${REDIS_URL}
+    volumes:
+      - ./backlink_data:/app/backlink_data
+    ports:
+      - "8210:8000"
+    depends_on:
+      - seo-redis
+      - seo-db
+    restart: unless-stopped
+    networks:
+      - seo-network
+
+  # Schema Optimizer
+  schema-optimizer:
+    build:
+      context: .
+      dockerfile: schema_optimizer.dockerfile
+    container_name: ainflue-schema-optimizer
+    environment:
+      - SERVICE_NAME=schema_optimizer
+      - DATABASE_URL=${SEO_DB_URL}
+      - REDIS_URL=${REDIS_URL}
+    volumes:
+      - ./schema_data:/app/schema_data
+    ports:
+      - "8211:8000"
+    depends_on:
+      - seo-redis
+      - seo-db
+    restart: unless-stopped
+    networks:
+      - seo-network
+
+  # Infrastructure Services
+  seo-db:
+    image: postgres:15-alpine
+    container_name: ainflue-seo-postgres
+    environment:
+      POSTGRES_DB: seo_platform
+      POSTGRES_USER: seo_user
+      POSTGRES_PASSWORD: ${SEO_DB_PASSWORD}
+    volumes:
+      - seo_postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5435:5432"
+    restart: unless-stopped
+    networks:
+      - seo-network
+
+  seo-redis:
+    image: redis:7-alpine
+    container_name: ainflue-seo-redis
+    command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru
+    volumes:
+      - seo_redis_data:/data
+    ports:
+      - "6382:6379"
+    restart: unless-stopped
+    networks:
+      - seo-network
+
+  # Elasticsearch for search and analytics
+  seo-elasticsearch:
+    image: elasticsearch:8.12.0
+    container_name: ainflue-seo-elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx1g"
+    volumes:
+      - seo_elasticsearch_data:/usr/share/elasticsearch/data
+    ports:
+      - "9201:9200"
+    restart: unless-stopped
+    networks:
+      - seo-network
+
+volumes:
+  seo_postgres_data:
+  seo_redis_data:
+  seo_elasticsearch_data:
+
+networks:
+  seo-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.22.0.0/16

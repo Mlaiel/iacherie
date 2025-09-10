@@ -1,0 +1,436 @@
+# Docker Compose for Collaboration Services
+# AI-powered collaboration matching and project orchestration
+# Author: Fahed Mlaiel (mlaiel@live.de)
+
+version: '3.8'
+
+services:
+  # AI-powered collaboration matcher
+  collaboration-matcher:
+    build:
+      context: .
+      dockerfile: collaboration_matcher.dockerfile
+    container_name: ainflue-collaboration-matcher
+    environment:
+      - SERVICE_NAME=collaboration_matcher
+      - DATABASE_URL=${COLLABORATION_DB_URL}
+      - REDIS_URL=${REDIS_URL}
+      - AI_MODEL_PATH=/app/models/collaboration
+    volumes:
+      - ./models:/app/models:ro
+      - ./data:/app/data
+    ports:
+      - "8001:8000"
+    depends_on:
+      - collaboration-db
+      - collaboration-redis
+    restart: unless-stopped
+    networks:
+      - collaboration-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+  # Project orchestrator
+  project-orchestrator:
+    build:
+      context: .
+      dockerfile: project_orchestrator.dockerfile
+    container_name: ainflue-project-orchestrator
+    environment:
+      - SERVICE_NAME=project_orchestrator
+      - DATABASE_URL=${COLLABORATION_DB_URL}
+      - REDIS_URL=${REDIS_URL}
+      - WORKFLOW_ENGINE_URL=http://workflow-manager:8000
+    volumes:
+      - ./templates:/app/templates:ro
+      - ./projects:/app/projects
+    ports:
+      - "8002:8000"
+    depends_on:
+      - collaboration-db
+      - collaboration-redis
+      - workflow-manager
+    restart: unless-stopped
+    networks:
+      - collaboration-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Workflow manager
+  workflow-manager:
+    build:
+      context: .
+      dockerfile: workflow_manager.dockerfile
+    container_name: ainflue-workflow-manager
+    environment:
+      - SERVICE_NAME=workflow_manager
+      - DATABASE_URL=${COLLABORATION_DB_URL}
+      - REDIS_URL=${REDIS_URL}
+      - MESSAGE_QUEUE_URL=${RABBITMQ_URL}
+    volumes:
+      - ./workflows:/app/workflows:ro
+      - ./logs:/app/logs
+    ports:
+      - "8003:8000"
+    depends_on:
+      - collaboration-db
+      - collaboration-redis
+      - collaboration-mq
+    restart: unless-stopped
+    networks:
+      - collaboration-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Communication hub
+  communication-hub:
+    build:
+      context: .
+      dockerfile: communication_hub.dockerfile
+    container_name: ainflue-communication-hub
+    environment:
+      - SERVICE_NAME=communication_hub
+      - DATABASE_URL=${COLLABORATION_DB_URL}
+      - REDIS_URL=${REDIS_URL}
+      - WEBSOCKET_ENABLED=true
+    volumes:
+      - ./messages:/app/messages
+    ports:
+      - "8004:8000"
+      - "8005:8001"  # WebSocket port
+    depends_on:
+      - collaboration-db
+      - collaboration-redis
+    restart: unless-stopped
+    networks:
+      - collaboration-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Skill analyzer
+  skill-analyzer:
+    build:
+      context: .
+      dockerfile: skill_analyzer.dockerfile
+    container_name: ainflue-skill-analyzer
+    environment:
+      - SERVICE_NAME=skill_analyzer
+      - DATABASE_URL=${COLLABORATION_DB_URL}
+      - REDIS_URL=${REDIS_URL}
+      - ML_MODEL_PATH=/app/models/skills
+    volumes:
+      - ./models/skills:/app/models/skills:ro
+      - ./skill_data:/app/skill_data
+    ports:
+      - "8006:8000"
+    depends_on:
+      - collaboration-db
+      - collaboration-redis
+    restart: unless-stopped
+    networks:
+      - collaboration-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Compatibility engine
+  compatibility-engine:
+    build:
+      context: .
+      dockerfile: compatibility_engine.dockerfile
+    container_name: ainflue-compatibility-engine
+    environment:
+      - SERVICE_NAME=compatibility_engine
+      - DATABASE_URL=${COLLABORATION_DB_URL}
+      - REDIS_URL=${REDIS_URL}
+      - AI_MODELS_PATH=/app/models/compatibility
+    volumes:
+      - ./models/compatibility:/app/models/compatibility:ro
+    ports:
+      - "8007:8000"
+    depends_on:
+      - collaboration-db
+      - collaboration-redis
+    restart: unless-stopped
+    networks:
+      - collaboration-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Collaboration analytics
+  collaboration-analytics:
+    build:
+      context: .
+      dockerfile: collaboration_analytics.dockerfile
+    container_name: ainflue-collaboration-analytics
+    environment:
+      - SERVICE_NAME=collaboration_analytics
+      - DATABASE_URL=${COLLABORATION_DB_URL}
+      - REDIS_URL=${REDIS_URL}
+      - INFLUXDB_URL=${INFLUXDB_URL}
+    volumes:
+      - ./analytics_data:/app/analytics_data
+    ports:
+      - "8008:8000"
+    depends_on:
+      - collaboration-db
+      - collaboration-redis
+      - collaboration-influxdb
+    restart: unless-stopped
+    networks:
+      - collaboration-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Project templates
+  project-templates:
+    build:
+      context: .
+      dockerfile: project_templates.dockerfile
+    container_name: ainflue-project-templates
+    environment:
+      - SERVICE_NAME=project_templates
+      - DATABASE_URL=${COLLABORATION_DB_URL}
+      - REDIS_URL=${REDIS_URL}
+    volumes:
+      - ./templates:/app/templates
+      - ./generated_projects:/app/generated_projects
+    ports:
+      - "8009:8000"
+    depends_on:
+      - collaboration-db
+      - collaboration-redis
+    restart: unless-stopped
+    networks:
+      - collaboration-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Creator network builder
+  creator-network-builder:
+    build:
+      context: .
+      dockerfile: creator_network_builder.dockerfile
+    container_name: ainflue-creator-network-builder
+    environment:
+      - SERVICE_NAME=creator_network_builder
+      - DATABASE_URL=${COLLABORATION_DB_URL}
+      - REDIS_URL=${REDIS_URL}
+      - GRAPH_DB_URL=${NEO4J_URL}
+    volumes:
+      - ./network_data:/app/network_data
+    ports:
+      - "8010:8000"
+    depends_on:
+      - collaboration-db
+      - collaboration-redis
+      - collaboration-neo4j
+    restart: unless-stopped
+    networks:
+      - collaboration-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Partnership optimizer
+  partnership-optimizer:
+    build:
+      context: .
+      dockerfile: partnership_optimizer.dockerfile
+    container_name: ainflue-partnership-optimizer
+    environment:
+      - SERVICE_NAME=partnership_optimizer
+      - DATABASE_URL=${COLLABORATION_DB_URL}
+      - REDIS_URL=${REDIS_URL}
+      - OPTIMIZATION_ENGINE_URL=http://compatibility-engine:8000
+    ports:
+      - "8011:8000"
+    depends_on:
+      - collaboration-db
+      - collaboration-redis
+      - compatibility-engine
+    restart: unless-stopped
+    networks:
+      - collaboration-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Revenue sharing calculator
+  revenue-sharing-calculator:
+    build:
+      context: .
+      dockerfile: revenue_sharing_calculator.dockerfile
+    container_name: ainflue-revenue-sharing-calculator
+    environment:
+      - SERVICE_NAME=revenue_sharing_calculator
+      - DATABASE_URL=${COLLABORATION_DB_URL}
+      - REDIS_URL=${REDIS_URL}
+      - BLOCKCHAIN_RPC_URL=${BLOCKCHAIN_RPC_URL}
+    volumes:
+      - ./revenue_data:/app/revenue_data
+    ports:
+      - "8012:8000"
+    depends_on:
+      - collaboration-db
+      - collaboration-redis
+    restart: unless-stopped
+    networks:
+      - collaboration-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Infrastructure Services
+  collaboration-db:
+    image: postgres:15-alpine
+    container_name: ainflue-collaboration-postgres
+    environment:
+      POSTGRES_DB: collaboration_platform
+      POSTGRES_USER: collaboration
+      POSTGRES_PASSWORD: ${COLLABORATION_DB_PASSWORD}
+    volumes:
+      - collaboration_postgres_data:/var/lib/postgresql/data
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    ports:
+      - "5433:5432"
+    restart: unless-stopped
+    networks:
+      - collaboration-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U collaboration"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  collaboration-redis:
+    image: redis:7-alpine
+    container_name: ainflue-collaboration-redis
+    command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru
+    volumes:
+      - collaboration_redis_data:/data
+    ports:
+      - "6380:6379"
+    restart: unless-stopped
+    networks:
+      - collaboration-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  collaboration-mq:
+    image: rabbitmq:3-management-alpine
+    container_name: ainflue-collaboration-rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: collaboration
+      RABBITMQ_DEFAULT_PASS: ${COLLABORATION_MQ_PASSWORD}
+    volumes:
+      - collaboration_rabbitmq_data:/var/lib/rabbitmq
+    ports:
+      - "5673:5672"
+      - "15673:15672"
+    restart: unless-stopped
+    networks:
+      - collaboration-network
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  collaboration-neo4j:
+    image: neo4j:5-enterprise
+    container_name: ainflue-collaboration-neo4j
+    environment:
+      NEO4J_AUTH: neo4j/${COLLABORATION_NEO4J_PASSWORD}
+      NEO4J_ACCEPT_LICENSE_AGREEMENT: "yes"
+      NEO4J_server_memory_heap_initial__size: 512m
+      NEO4J_server_memory_heap_max__size: 1G
+    volumes:
+      - collaboration_neo4j_data:/data
+    ports:
+      - "7475:7474"
+      - "7688:7687"
+    restart: unless-stopped
+    networks:
+      - collaboration-network
+    healthcheck:
+      test: ["CMD", "cypher-shell", "-u", "neo4j", "-p", "${COLLABORATION_NEO4J_PASSWORD}", "RETURN 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  collaboration-influxdb:
+    image: influxdb:2-alpine
+    container_name: ainflue-collaboration-influxdb
+    environment:
+      DOCKER_INFLUXDB_INIT_MODE: setup
+      DOCKER_INFLUXDB_INIT_USERNAME: collaboration
+      DOCKER_INFLUXDB_INIT_PASSWORD: ${COLLABORATION_INFLUXDB_PASSWORD}
+      DOCKER_INFLUXDB_INIT_ORG: ainflue
+      DOCKER_INFLUXDB_INIT_BUCKET: collaboration_metrics
+    volumes:
+      - collaboration_influxdb_data:/var/lib/influxdb2
+    ports:
+      - "8087:8086"
+    restart: unless-stopped
+    networks:
+      - collaboration-network
+    healthcheck:
+      test: ["CMD", "influx", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  collaboration_postgres_data:
+  collaboration_redis_data:
+  collaboration_rabbitmq_data:
+  collaboration_neo4j_data:
+  collaboration_influxdb_data:
+
+networks:
+  collaboration-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
