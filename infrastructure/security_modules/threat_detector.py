@@ -87,7 +87,19 @@ class SecurityEvent:
 
 
 class ThreatDetector:
-    """Enterprise threat detection system for Ainflue creator platform"""
+    """
+    Enterprise threat detection system for Ainflue creator platform
+    
+    Security Role Enhancement - Advanced Features:
+    - Real-time behavioral analysis using ML algorithms
+    - Creator-specific threat patterns recognition
+    - Content protection and intellectual property monitoring
+    - Zero-trust architecture enforcement
+    - Advanced persistent threat (APT) detection
+    - Creator account takeover prevention
+    - Revenue fraud detection and prevention
+    - Real-time collaboration security monitoring
+    """
     
     def __init__(self):
         """Initialize threat detection system"""
@@ -180,12 +192,249 @@ class ThreatDetector:
         return threats
         
     async def _detect_behavioral_anomalies(self, event_data: Dict[str, Any]) -> List[ThreatIndicator]:
-        """Detect behavioral anomalies using ML models"""
+        """
+        Detect behavioral anomalies using ML models
+        
+        Security Role - Enhanced Behavioral Analysis:
+        - Creator account behavior baseline analysis
+        - Unusual upload patterns detection
+        - Abnormal collaboration session behavior
+        - Revenue manipulation attempts
+        - Content access pattern anomalies
+        """
         threats = []
         
         user_id = event_data.get('user_id')
-        if not user_id:
+        creator_id = event_data.get('creator_id')
+        
+        if not user_id and not creator_id:
             return threats
+            
+        # Analyze creator-specific behavioral patterns
+        if creator_id:
+            creator_threats = await self._analyze_creator_behavior(creator_id, event_data)
+            threats.extend(creator_threats)
+            
+        # Analyze user interaction patterns
+        if user_id:
+            user_threats = await self._analyze_user_behavior(user_id, event_data)
+            threats.extend(user_threats)
+            
+        return threats
+
+    async def _analyze_creator_behavior(self, creator_id: str, event_data: Dict[str, Any]) -> List[ThreatIndicator]:
+        """Analyze creator behavior for security anomalies"""
+        threats = []
+        
+        # Get creator behavior baseline
+        baseline = self.user_behavior_profiles.get(creator_id, {})
+        if not baseline:
+            # Initialize baseline for new creator
+            baseline = await self._initialize_creator_baseline(creator_id)
+            self.user_behavior_profiles[creator_id] = baseline
+            
+        # Check for anomalous upload patterns
+        upload_anomaly = await self._check_upload_pattern_anomaly(creator_id, event_data, baseline)
+        if upload_anomaly:
+            threats.append(ThreatIndicator(
+                indicator_id=f"upload_anomaly_{creator_id}_{datetime.now().timestamp()}",
+                threat_type=ThreatType.SUSPICIOUS_LOGIN,
+                severity=ThreatLevel.MEDIUM,
+                confidence_score=upload_anomaly['confidence'],
+                user_id=creator_id,
+                description=f"Anomalous upload pattern detected: {upload_anomaly['reason']}",
+                mitigation_actions=['require_2fa', 'flag_for_review', 'temporary_upload_limit']
+            ))
+            
+        # Check for unusual collaboration patterns
+        collab_anomaly = await self._check_collaboration_anomaly(creator_id, event_data, baseline)
+        if collab_anomaly:
+            threats.append(ThreatIndicator(
+                indicator_id=f"collab_anomaly_{creator_id}_{datetime.now().timestamp()}",
+                threat_type=ThreatType.ACCOUNT_TAKEOVER,
+                severity=ThreatLevel.HIGH,
+                confidence_score=collab_anomaly['confidence'],
+                user_id=creator_id,
+                description=f"Unusual collaboration behavior: {collab_anomaly['reason']}",
+                mitigation_actions=['verify_identity', 'pause_collaboration', 'alert_security_team']
+            ))
+            
+        # Check for revenue manipulation attempts
+        revenue_anomaly = await self._check_revenue_manipulation(creator_id, event_data, baseline)
+        if revenue_anomaly:
+            threats.append(ThreatIndicator(
+                indicator_id=f"revenue_fraud_{creator_id}_{datetime.now().timestamp()}",
+                threat_type=ThreatType.PAYMENT_FRAUD,
+                severity=ThreatLevel.CRITICAL,
+                confidence_score=revenue_anomaly['confidence'],
+                user_id=creator_id,
+                description=f"Revenue manipulation detected: {revenue_anomaly['reason']}",
+                mitigation_actions=['freeze_payouts', 'audit_transactions', 'notify_legal_team']
+            ))
+            
+        return threats
+
+    async def _check_upload_pattern_anomaly(self, creator_id: str, event_data: Dict[str, Any], baseline: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+        """Check for anomalous upload patterns"""
+        event_type = event_data.get('event_type')
+        if event_type != 'content_upload':
+            return None
+            
+        current_hour = datetime.now().hour
+        upload_frequency = event_data.get('upload_frequency', 0)
+        file_size = event_data.get('file_size_mb', 0)
+        
+        # Check upload timing anomaly
+        normal_hours = baseline.get('normal_upload_hours', [14, 15, 16, 20, 21])
+        if current_hour not in normal_hours:
+            unusual_hour_score = 0.3
+        else:
+            unusual_hour_score = 0.0
+            
+        # Check upload frequency anomaly
+        normal_frequency = baseline.get('average_uploads_per_day', 2)
+        if upload_frequency > normal_frequency * 5:  # 5x normal frequency
+            frequency_score = 0.7
+        else:
+            frequency_score = 0.0
+            
+        # Check file size anomaly
+        normal_file_size = baseline.get('average_file_size_mb', 50)
+        if file_size > normal_file_size * 10:  # 10x normal size
+            size_score = 0.5
+        else:
+            size_score = 0.0
+            
+        total_score = unusual_hour_score + frequency_score + size_score
+        
+        if total_score > 0.6:  # Threshold for anomaly
+            return {
+                'confidence': min(total_score, 1.0),
+                'reason': f"Upload pattern deviation: frequency={upload_frequency}, size={file_size}MB, hour={current_hour}"
+            }
+            
+        return None
+
+    async def analyze_creator_threat(self, threat_scenario: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Analyze creator-specific threat scenarios
+        
+        Enhanced Security Role Implementation:
+        - Content theft protection
+        - Account takeover prevention
+        - Revenue fraud detection
+        - Collaboration security monitoring
+        """
+        threat_response = {
+            'threat_id': f"threat_{datetime.now().timestamp()}",
+            'creator_id': threat_scenario.get('creator_id'),
+            'threat_level': ThreatLevel.LOW.value,
+            'protection_actions': [],
+            'creator_protection_activated': False,
+            'timestamp': datetime.now().isoformat()
+        }
+        
+        threat_type = threat_scenario.get('type')
+        
+        if threat_type == 'content_theft_attempt':
+            threat_response = await self._handle_content_theft_threat(threat_scenario, threat_response)
+        elif threat_type == 'account_takeover_attempt':
+            threat_response = await self._handle_account_takeover_threat(threat_scenario, threat_response)
+        elif threat_type == 'revenue_manipulation':
+            threat_response = await self._handle_revenue_fraud_threat(threat_scenario, threat_response)
+        elif threat_type == 'collaboration_hijack':
+            threat_response = await self._handle_collaboration_threat(threat_scenario, threat_response)
+            
+        return threat_response
+
+    async def _handle_content_theft_threat(self, scenario: Dict[str, Any], response: Dict[str, Any]) -> Dict[str, Any]:
+        """Handle content theft protection"""
+        suspicious_activity = scenario.get('suspicious_activity')
+        source_ip = scenario.get('source_ip')
+        creator_id = scenario.get('creator_id')
+        
+        if suspicious_activity == 'bulk_download_attempt':
+            response['threat_level'] = ThreatLevel.HIGH.value
+            response['protection_actions'] = [
+                'block_ip_address',
+                'enable_enhanced_drm',
+                'alert_creator',
+                'increase_monitoring',
+                'require_captcha_verification'
+            ]
+            response['creator_protection_activated'] = True
+            
+            # Add to IP reputation blacklist
+            await self._add_to_ip_blacklist(source_ip, 'content_theft_attempt')
+            
+        elif suspicious_activity == 'unauthorized_api_access':
+            response['threat_level'] = ThreatLevel.CRITICAL.value
+            response['protection_actions'] = [
+                'revoke_api_tokens',
+                'force_password_reset',
+                'enable_2fa_mandatory',
+                'alert_security_team',
+                'forensic_investigation'
+            ]
+            response['creator_protection_activated'] = True
+            
+        return response
+
+    async def _handle_account_takeover_threat(self, scenario: Dict[str, Any], response: Dict[str, Any]) -> Dict[str, Any]:
+        """Handle account takeover prevention"""
+        suspicious_activity = scenario.get('suspicious_activity')
+        source_ip = scenario.get('source_ip')
+        creator_id = scenario.get('creator_id')
+        
+        if suspicious_activity == 'multiple_login_failures':
+            response['threat_level'] = ThreatLevel.HIGH.value
+            response['protection_actions'] = [
+                'temporary_account_lock',
+                'require_identity_verification',
+                'send_security_alert',
+                'enable_enhanced_monitoring',
+                'block_suspicious_ip'
+            ]
+            response['creator_protection_activated'] = True
+            
+            # Track failed login attempts
+            self.failed_login_attempts[creator_id].append(datetime.now())
+            
+        elif suspicious_activity == 'login_from_new_location':
+            response['threat_level'] = ThreatLevel.MEDIUM.value
+            response['protection_actions'] = [
+                'require_2fa_verification',
+                'send_location_alert',
+                'temporary_content_lock',
+                'verify_device'
+            ]
+            response['creator_protection_activated'] = True
+            
+        return response
+
+    async def _add_to_ip_blacklist(self, ip_address: str, reason: str) -> None:
+        """Add IP to blacklist with reason"""
+        self.ip_reputation_cache[ip_address] = {
+            'status': 'blacklisted',
+            'reason': reason,
+            'timestamp': datetime.now(),
+            'confidence': 0.9
+        }
+        logger.warning(f"IP {ip_address} blacklisted for {reason}")
+
+    async def _initialize_creator_baseline(self, creator_id: str) -> Dict[str, Any]:
+        """Initialize behavioral baseline for creator"""
+        return {
+            'normal_upload_hours': [14, 15, 16, 20, 21],  # Default hours
+            'average_uploads_per_day': 2,
+            'average_file_size_mb': 50,
+            'typical_collaboration_partners': [],
+            'normal_revenue_patterns': {},
+            'device_fingerprints': [],
+            'location_history': [],
+            'creation_date': datetime.now(),
+            'last_updated': datetime.now()
+        }
             
         # Get user behavior profile
         profile = self.user_behavior_profiles.get(user_id, {})
