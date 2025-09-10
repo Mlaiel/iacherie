@@ -166,7 +166,7 @@ class ContentUploadImplementation:
             "video": self._analyze_video_content,
             "image": self._analyze_image_content,
             "text": self._analyze_text_content,
-            "document": self._analyze_document_content
+            "document": self._analyze_generic_content
         }
         
         # Optimization engines

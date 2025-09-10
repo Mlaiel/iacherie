@@ -182,10 +182,10 @@ class ProtectionImplementation:
         
         # Legal protection frameworks
         self.legal_frameworks = {
-            "dmca": self._register_dmca_protection,
-            "copyright": self._register_copyright_protection,
-            "trademark": self._register_trademark_protection,
-            "international": self._register_international_protection
+            "dmca": self._apply_watermark_protection,
+            "copyright": self._apply_watermark_protection,
+            "trademark": self._apply_watermark_protection,
+            "international": self._apply_watermark_protection
         }
         
         # Performance metrics

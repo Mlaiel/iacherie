@@ -212,10 +212,10 @@ class MonetizationImplementation:
         
         # Pricing optimization algorithms
         self.pricing_algorithms = {
-            PricingStrategy.DYNAMIC_PRICING: self._calculate_dynamic_pricing,
-            PricingStrategy.TIERED_PRICING: self._calculate_tiered_pricing,
-            PricingStrategy.VALUE_BASED: self._calculate_value_based_pricing,
-            PricingStrategy.COMPETITIVE_PRICING: self._calculate_competitive_pricing
+            PricingStrategy.DYNAMIC_PRICING: self._calculate_optimal_content_price,
+            PricingStrategy.TIERED_PRICING: self._calculate_optimal_subscription_price,
+            PricingStrategy.VALUE_BASED: self._calculate_optimal_content_price,
+            PricingStrategy.COMPETITIVE_PRICING: self._calculate_optimal_content_price
         }
         
         # Performance metrics
