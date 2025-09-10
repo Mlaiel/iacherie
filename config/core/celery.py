@@ -133,8 +133,24 @@ def create_celery_app(app_name: str = "ainflue"):
 # Celery settings instance
 celery_settings = CelerySettings()
 
+class CeleryConfiguration:
+    """Celery configuration manager for Ainflue platform"""
+    
+    def __init__(self, level: str = "enterprise"):
+        self.level = level
+        self.settings = celery_settings
+        
+    def get_config(self) -> Dict[str, Any]:
+        """Get Celery configuration"""
+        return get_celery_config()
+    
+    def create_app(self):
+        """Create Celery app"""
+        return create_celery_app()
+
 __all__ = [
     "CelerySettings", 
+    "CeleryConfiguration",
     "celery_settings", 
     "get_celery_config", 
     "create_celery_app"

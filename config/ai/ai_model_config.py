@@ -13,7 +13,12 @@ from dataclasses import dataclass
 from datetime import datetime
 
 try:
-    from pydantic import BaseSettings, validator, Field
+try:
+    from pydantic_settings import BaseSettings
+    from pydantic import validator, Field
+except ImportError:
+    # Fallback for environments without pydantic_settings
+    from pydantic import BaseModel as BaseSettings, validator, Field
 except ImportError:
     # Fallback for environments without pydantic
     class BaseSettings:
