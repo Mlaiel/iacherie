@@ -278,7 +278,7 @@ class MonitoringMetrics(Base):
     
     # Additional data
     tags = Column(JSONB, default={})
-    metadata = Column(JSONB, default={})
+    metric_metadata = Column(JSONB, default={})
     
     # Timestamp
     recorded_at = Column(DateTime, default=func.now(), nullable=False, index=True)

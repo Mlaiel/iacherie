@@ -478,5 +478,3 @@ __all__ = [
     "AlertForensics",
     "AlertCompliance"
 ]
-    last_triggered: Optional[datetime] = Field(None)
-    trigger_count: int = Field(default=0)

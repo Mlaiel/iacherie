@@ -372,6 +372,10 @@ Check for recent suspicious activity by user."""
     async def check_access(
         self,
         security_context: SecurityContext,
+        resource_id: str,
+        requested_access: AccessLevel
+    ) -> bool:
+        """Check access permissions for a resource."""
         try:
             logger.info(f"Executing check_access")
             
@@ -477,28 +481,34 @@ Check for recent suspicious activity by user."""
         permission: PermissionType
     ) -> Tuple[bool, str]:
         """Check custom access rules."""
-        applicable_rules = []
-        
-        # Find applicable rules
-        for rule in self.access_rules.values():
-            if not rule.is_active:
-                continue
-            
-            # Check resource type match
-            if rule.resource_type != resource_type:
         try:
-            logger.info(f"Executing _enforce_security_level")
+            applicable_rules = []
             
-            # Implementation for _enforce_security_level
-            # TODO: Add specific business logic here
+            # Find applicable rules
+            for rule in self.access_rules.values():
+                if not rule.is_active:
+                    continue
+                
+                # Check resource type match
+                if rule.resource_type != resource_type:
+                    continue
+                    
+                # Check permission match
+                if permission not in rule.permissions:
+                    continue
+                    
+                # Rule matches - check if access should be granted
+                applicable_rules.append(rule)
             
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"_enforce_security_level completed successfully")
-            return result
+            if not applicable_rules:
+                return False, "No applicable access rules found"
+                
+            # At least one rule matches
+            return True, f"Access granted by {len(applicable_rules)} rule(s)"
             
         except Exception as e:
-            logger.error(f"_enforce_security_level failed: {e}")
+            logger.error(f"Access rules check failed: {e}")
+            return False, f"Access rules check error: {e}"
             raise
         if 'allowed_ips' in conditions:
             allowed_ips = conditions['allowed_ips']

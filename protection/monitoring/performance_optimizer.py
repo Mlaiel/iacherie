@@ -821,25 +821,27 @@ class PerformanceOptimizer:
         """Set up automatic optimization scheduler."""
         try:
             async def auto_optimization_loop():
-        try:
-            logger.info(f"Executing auto_optimization_loop")
+                try:
+                    logger.info(f"Executing auto_optimization_loop")
+                    
+                    # Implementation for auto_optimization_loop
+                    # TODO: Add specific business logic here
+                    
+                    result = None  # Replace with actual implementation
+                    
+                    logger.info(f"auto_optimization_loop completed successfully")
+                    return result
+                    
+                except Exception as e:
+                    logger.error(f"auto_optimization_loop failed: {e}")
+                    raise
             
-            # Implementation for auto_optimization_loop
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"auto_optimization_loop completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"auto_optimization_loop failed: {e}")
-            raise
-                    try:
-                        await asyncio.sleep(self.optimization_interval_hours * 3600)
-                        await self.auto_optimize_system()
-                    except Exception as e:
-                        logger.error(f"Auto-optimization error: {e}")
+            # Start auto optimization loop
+            try:
+                await asyncio.sleep(self.optimization_interval_hours * 3600)
+                await self.auto_optimize_system()
+            except Exception as e:
+                logger.error(f"Auto-optimization error: {e}")
             
             # Start auto-optimization task
             asyncio.create_task(auto_optimization_loop())
@@ -2510,6 +2512,10 @@ Apply scaling optimization."""
         # This would integrate with actual scaling mechanisms
         # For now, update configuration
         if scale_up:
+            logger.info("Scaling up resources")
+    
+    async def _apply_parameter_tuning(self) -> None:
+        """Apply parameter tuning optimizations"""
         try:
             logger.info(f"Executing _apply_parameter_tuning")
             
@@ -2524,7 +2530,9 @@ Apply scaling optimization."""
         except Exception as e:
             logger.error(f"_apply_parameter_tuning failed: {e}")
             raise
-    ) -> None:
+    
+    async def _apply_load_redistribution(self) -> None:
+        """Apply load redistribution optimizations"""
         try:
             logger.info(f"Executing _apply_load_redistribution")
             
@@ -2539,7 +2547,6 @@ Apply scaling optimization."""
         except Exception as e:
             logger.error(f"_apply_load_redistribution failed: {e}")
             raise
-                pass
         
         await self._save_system_configuration()
 

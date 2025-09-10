@@ -15,7 +15,7 @@ from datetime import datetime
 import json
 
 # Import our 53 AI agents orchestrator
-from ai_agents_orchestrator import get_orchestrator, AIAgentsOrchestrator
+from .ia_agents_orchestrator import get_orchestrator, AIAgentsOrchestrator
 
 logger = logging.getLogger(__name__)
 

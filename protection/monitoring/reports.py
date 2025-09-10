@@ -819,25 +819,25 @@ Generate Excel report with multiple sheets."""
         
         # Convert datetime objects to ISO format strings
         def convert_datetime(obj):
-        try:
-            logger.info(f"Executing convert_datetime")
-            
-            # Implementation for convert_datetime
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"convert_datetime completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"convert_datetime failed: {e}")
-            raise
-                return obj.isoformat()
-            elif isinstance(obj, dict):
-                return {k: convert_datetime(v) for k, v in obj.items()}
-            elif isinstance(obj, list):
-                return [convert_datetime(item) for item in obj]
+            try:
+                logger.info(f"Executing convert_datetime")
+                
+                # Implementation for convert_datetime
+                if isinstance(obj, datetime):
+                    return obj.isoformat()
+                elif isinstance(obj, dict):
+                    return {k: convert_datetime(v) for k, v in obj.items()}
+                elif isinstance(obj, list):
+                    return [convert_datetime(item) for item in obj]
+                else:
+                    return obj
+                
+                logger.info(f"convert_datetime completed successfully")
+                return obj
+                
+            except Exception as e:
+                logger.error(f"convert_datetime failed: {e}")
+                raise
             else:
                 return obj
         

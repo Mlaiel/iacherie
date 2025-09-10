@@ -28,9 +28,9 @@ except ImportError:
     MEDIA_AVAILABLE = False
 
 # Import existing watermarking engines
-from ...protection.watermarking.audio_engine import AudioWatermarkEngine
-from ...protection.watermarking.video_engine import VideoWatermarkEngine
-from ...protection.watermarking.image_engine import ImageWatermarkEngine
+from protection.watermarking.audio_engine import AudioWatermarkEngine
+from protection.watermarking.video_engine import VideoWatermarkEngine
+from protection.watermarking.image_engine import ImageWatermarkEngine
 
 logger = logging.getLogger(__name__)
 
