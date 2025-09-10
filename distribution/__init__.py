@@ -113,6 +113,34 @@ from .cross_platform_sync import (
     PlatformState
 )
 
+# New Platform Connectors
+from .clubhouse_connector import (
+    ClubhouseConnector,
+    ClubhouseDistributionManager,
+    ClubhouseRoom,
+    ClubhouseMetrics,
+    ClubhouseCredentials
+)
+from .telegram_connector import (
+    TelegramConnector,
+    TelegramDistributionManager,
+    TelegramMessage,
+    TelegramChannel,
+    TelegramMetrics,
+    TelegramCredentials
+)
+
+# Enhanced Scheduling
+from .event_based_scheduler import (
+    EventBasedScheduler,
+    EventTrigger,
+    EventData,
+    ScheduledTask,
+    EventType,
+    EventPriority,
+    SchedulingAction
+)
+
 # Advanced Distribution Modules (Level 2)
 from .viral_optimization import (
     ViralPredictor,
@@ -213,11 +241,31 @@ __all__ = [
     "SocialPlatform", 
     "ContentFormat",
     "PublicationResult",
+    # New Platform Connectors
+    "ClubhouseConnector",
+    "ClubhouseDistributionManager", 
+    "ClubhouseRoom",
+    "ClubhouseMetrics",
+    "ClubhouseCredentials",
+    "TelegramConnector",
+    "TelegramDistributionManager",
+    "TelegramMessage",
+    "TelegramChannel",
+    "TelegramMetrics",
+    "TelegramCredentials",
     # Publication Scheduler
     "PublicationScheduler",
     "ScheduledPublication",
     "ScheduleStrategy", 
     "PublicationStatus",
+    # Enhanced Scheduling
+    "EventBasedScheduler",
+    "EventTrigger",
+    "EventData",
+    "ScheduledTask",
+    "EventType",
+    "EventPriority",
+    "SchedulingAction",
     # Format Adapter
     "FormatAdapter",
     "PlatformSpecifications",
