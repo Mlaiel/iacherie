@@ -1169,6 +1169,12 @@ __all__ = [
     'ContentModerationResult',
     'ContentPolicy'
 ]
+
+
+class LegalContentEnforcer:
+    """Content enforcement with legal compliance"""
+    
+    async def enforce_content_policy(self, content_id: str, policy_type: str) -> Dict[str, Any]:
         """Enforce content policy with legal compliance"""
         # Simulate content analysis
         await asyncio.sleep(0.1)
