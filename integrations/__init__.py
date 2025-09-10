@@ -20,8 +20,8 @@ from . import cloud_providers
 from . import payment_gateways
 from . import platforms
 from . import social_media
-from . import spotify
 from . import third_party
+from . import communication
 
 __all__ = [
     "integration_manager",
@@ -30,8 +30,8 @@ __all__ = [
     "payment_gateways",
     "platforms",
     "social_media", 
-    "spotify",
-    "third_party"
+    "third_party",
+    "communication"
 ]
 
 __version__ = "1.0.0"
