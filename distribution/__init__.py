@@ -113,7 +113,97 @@ from .cross_platform_sync import (
     PlatformState
 )
 
-__version__ = "2.0.0"
+# Advanced Distribution Modules (Level 2)
+from .viral_optimization import (
+    ViralOptimizationEngine,
+    ViralPredictor,
+    TrendAnalyzer,
+    MomentumTracker,
+    InfluenceMapper,
+    CascadeOptimizer,
+    TimingOracle,
+    ViralityAmplifier,
+    NetworkDynamics
+)
+from .audience_intelligence import (
+    AudienceIntelligenceEngine,
+    AudienceProfiler,
+    BehaviorAnalyzer,
+    PreferenceEngine,
+    DemographicMapper,
+    PsychographicAnalyzer,
+    EngagementPredictor,
+    LookalikeFinder,
+    SegmentOptimizer
+)
+from .content_amplification import (
+    ContentAmplificationEngine,
+    AmplificationEngine,
+    BoostOptimizer,
+    OrganicReachMaximizer,
+    CrossPromotionManager,
+    InfluencerConnector,
+    CommunityBuilder,
+    EngagementMultiplier,
+    ReachAnalytics
+)
+from .platform_optimization import (
+    PlatformOptimizationEngine,
+    PlatformAnalyzer,
+    AlgorithmTracker,
+    FeatureOptimizer,
+    PolicyMonitor,
+    TrendingTracker,
+    CreatorFundOptimizer,
+    MonetizationMaximizer,
+    CompetitionAnalyzer
+)
+from .geographic_optimization import (
+    GeographicOptimizationEngine,
+    GeoTargetingEngine,
+    CulturalAdapter,
+    TimezoneOptimizer,
+    LocalizationManager,
+    RegionalTrendsAnalyzer,
+    LanguageOptimizer,
+    ComplianceChecker,
+    MarketPenetrationAnalyzer
+)
+from .real_time_optimization import (
+    RealTimeOptimizationEngine,
+    LivePerformanceMonitor,
+    AdaptiveOptimizer,
+    EmergencyResponse,
+    TrendSurfingEngine,
+    MomentumCapitalizer,
+    RealTimeABTester,
+    InstantFeedbackProcessor,
+    DynamicContentOptimizer
+)
+from .creator_collaboration_hub import (
+    CreatorCollaborationEngine,
+    CollaborationOrchestrator,
+    CrossCreatorAmplifier,
+    CollaborationMatcher,
+    JointCampaignManager,
+    CreatorNetworkBuilder,
+    CollaborationAnalytics,
+    PartnershipOptimizer,
+    RevenueSharingCalculator
+)
+from .crisis_management import (
+    CrisisManagementEngine,
+    CrisisDetector,
+    DamageControlEngine,
+    ReputationProtector,
+    EmergencyCommunication,
+    SentimentMonitor,
+    RecoveryPlanner,
+    BrandSafetyGuardian,
+    CrisisAnalytics
+)
+
+__version__ = "3.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 
@@ -198,5 +288,86 @@ __all__ = [
     "SyncConflict",
     "SyncRule",
     "SyncSession",
-    "PlatformState"
+    "PlatformState",
+    # Advanced Distribution Modules (Level 2)
+    # Viral Optimization
+    "ViralOptimizationEngine",
+    "ViralPredictor",
+    "TrendAnalyzer",
+    "MomentumTracker",
+    "InfluenceMapper",
+    "CascadeOptimizer",
+    "TimingOracle",
+    "ViralityAmplifier",
+    "NetworkDynamics",
+    # Audience Intelligence
+    "AudienceIntelligenceEngine",
+    "AudienceProfiler",
+    "BehaviorAnalyzer",
+    "PreferenceEngine",
+    "DemographicMapper",
+    "PsychographicAnalyzer",
+    "EngagementPredictor",
+    "LookalikeFinder",
+    "SegmentOptimizer",
+    # Content Amplification
+    "ContentAmplificationEngine",
+    "AmplificationEngine",
+    "BoostOptimizer",
+    "OrganicReachMaximizer",
+    "CrossPromotionManager",
+    "InfluencerConnector",
+    "CommunityBuilder",
+    "EngagementMultiplier",
+    "ReachAnalytics",
+    # Platform Optimization
+    "PlatformOptimizationEngine",
+    "PlatformAnalyzer",
+    "AlgorithmTracker",
+    "FeatureOptimizer",
+    "PolicyMonitor",
+    "TrendingTracker",
+    "CreatorFundOptimizer",
+    "MonetizationMaximizer",
+    "CompetitionAnalyzer",
+    # Geographic Optimization
+    "GeographicOptimizationEngine",
+    "GeoTargetingEngine",
+    "CulturalAdapter",
+    "TimezoneOptimizer",
+    "LocalizationManager",
+    "RegionalTrendsAnalyzer",
+    "LanguageOptimizer",
+    "ComplianceChecker",
+    "MarketPenetrationAnalyzer",
+    # Real-Time Optimization
+    "RealTimeOptimizationEngine",
+    "LivePerformanceMonitor",
+    "AdaptiveOptimizer",
+    "EmergencyResponse",
+    "TrendSurfingEngine",
+    "MomentumCapitalizer",
+    "RealTimeABTester",
+    "InstantFeedbackProcessor",
+    "DynamicContentOptimizer",
+    # Creator Collaboration Hub
+    "CreatorCollaborationEngine",
+    "CollaborationOrchestrator",
+    "CrossCreatorAmplifier",
+    "CollaborationMatcher",
+    "JointCampaignManager",
+    "CreatorNetworkBuilder",
+    "CollaborationAnalytics",
+    "PartnershipOptimizer",
+    "RevenueSharingCalculator",
+    # Crisis Management
+    "CrisisManagementEngine",
+    "CrisisDetector",
+    "DamageControlEngine",
+    "ReputationProtector",
+    "EmergencyCommunication",
+    "SentimentMonitor",
+    "RecoveryPlanner",
+    "BrandSafetyGuardian",
+    "CrisisAnalytics"
 ]
