@@ -70,6 +70,8 @@ export type AICapability =
   | 'sentiment-analysis'
   | 'content-moderation'
   | 'keyword-extraction'
+  | 'seo-analysis'
+  | 'content-optimization'
   | 'image-generation'
   | 'image-editing'
   | 'image-analysis'
@@ -145,14 +147,15 @@ export interface AIProcessingOptions {
 export interface AIProcessingResult {
   id: string;
   requestId: string;
+  type: AICapability;
+  provider: string;
   status: 'completed' | 'failed' | 'partial';
   result: any;
   metadata: AIResultMetadata;
   error?: AIError;
   usage?: UsageMetrics;
   processingTime: number;
-  providerId: string;
-  timestamp: number;
+  timestamp?: number;
 }
 
 export interface AIResultMetadata {
@@ -161,6 +164,7 @@ export interface AIResultMetadata {
   confidence?: number;
   quality?: number;
   accuracy?: number;
+  cost?: number;
   flags?: string[];
   tokens?: TokenUsage;
   dimensions?: ImageDimensions;
@@ -682,6 +686,7 @@ export interface Evidence {
 // EXPORT ALL TYPES
 // ====================================================================
 
-export * from './api.types';
-export * from './ui.types';
-export * from './business.types';
+// Export note: Some modules may not exist yet - exported when available
+// export * from './api.types';
+// export * from './ui.types'; 
+// export * from './business.types';
