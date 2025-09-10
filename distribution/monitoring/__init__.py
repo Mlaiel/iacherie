@@ -43,9 +43,12 @@ from .alerting_system import (
 
 from .dashboard_generator import (
     DashboardGenerator,
-    Dashboard,
-    Widget,
-    Visualization
+    DashboardConfig,
+    ChartConfig,
+    MetricConfig,
+    ChartType,
+    DashboardTheme,
+    RefreshRate
 )
 
 __all__ = [
@@ -80,9 +83,12 @@ __all__ = [
     
     # Dashboards
     'DashboardGenerator',
-    'Dashboard',
-    'Widget',
-    'Visualization'
+    'DashboardConfig',
+    'ChartConfig',
+    'MetricConfig',
+    'ChartType',
+    'DashboardTheme',
+    'RefreshRate'
 ]
 
 __version__ = "1.0.0"

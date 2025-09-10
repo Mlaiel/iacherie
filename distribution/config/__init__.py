@@ -50,6 +50,28 @@ from .security_configs import (
     SECURITY_CONFIG
 )
 
+from .audience_configs import (
+    AudienceConfig,
+    AudienceSegment,
+    DemographicConfig,
+    PsychographicConfig,
+    BehavioralConfig,
+    get_audience_config,
+    load_audience_config
+)
+
+from .real_time_configs import (
+    RealTimeConfig,
+    PerformanceThresholds,
+    OptimizationTrigger,
+    AdaptiveSettings,
+    EmergencyResponse,
+    MonitoringConfig,
+    ABTestingConfig,
+    get_real_time_config,
+    load_real_time_config
+)
+
 __all__ = [
     # Platform Configuration
     'PlatformConfiguration',
@@ -87,7 +109,27 @@ __all__ = [
     'AccessControlConfig',
     'SecurityMonitoringConfig',
     'DEFAULT_SECURITY_CONFIG',
-    'SECURITY_CONFIG'
+    'SECURITY_CONFIG',
+    
+    # Audience Configuration
+    'AudienceConfig',
+    'AudienceSegment',
+    'DemographicConfig',
+    'PsychographicConfig',
+    'BehavioralConfig',
+    'get_audience_config',
+    'load_audience_config',
+    
+    # Real-time Configuration
+    'RealTimeConfig',
+    'PerformanceThresholds',
+    'OptimizationTrigger',
+    'AdaptiveSettings',
+    'EmergencyResponse',
+    'MonitoringConfig',
+    'ABTestingConfig',
+    'get_real_time_config',
+    'load_real_time_config'
 ]
 
 __version__ = "1.0.0"
