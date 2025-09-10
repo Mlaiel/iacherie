@@ -755,8 +755,9 @@ class EventBus:
 class EnterpriseOrchestrationCore:
     """Main Enterprise Orchestration Core System"""
     
-    def __init__(self):
+    def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
+        self.level = level
         self.service_registry = ServiceRegistry()
         self.task_executor = TaskExecutor(self.service_registry)
         self.workflow_engine = WorkflowEngine(self.task_executor)

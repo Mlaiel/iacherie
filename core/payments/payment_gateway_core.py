@@ -710,8 +710,9 @@ class FraudDetection:
 class PaymentGatewayCore:
     """Main Payment Gateway Core System"""
     
-    def __init__(self):
+    def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
+        self.level = level
         self.gateways = {}
         self.gateway_configs = {}
         self.transactions = {}

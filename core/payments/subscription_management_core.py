@@ -872,8 +872,9 @@ class RevenueAnalytics:
 class SubscriptionManagementCore:
     """Main Subscription Management Core System"""
     
-    def __init__(self):
+    def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
+        self.level = level
         self.plan_manager = PlanManager()
         self.billing_engine = BillingEngine()
         self.revenue_analytics = RevenueAnalytics()

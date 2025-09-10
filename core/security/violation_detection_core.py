@@ -864,8 +864,9 @@ Respectfully,
 class ViolationDetectionCore:
     """Main Violation Detection Core System"""
     
-    def __init__(self):
+    def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
+        self.level = level
         self.fingerprinting = ContentFingerprinting()
         self.platform_monitor = PlatformMonitor(self.fingerprinting)
         self.dmca_manager = DMCAManager()

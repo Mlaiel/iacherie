@@ -638,8 +638,9 @@ class DeFiManager:
 class CryptoPaymentCore:
     """Main Crypto Payment Core System"""
     
-    def __init__(self):
+    def __init__(self, level: str = "enterprise"):
         self.version = "2.1.0"
+        self.level = level
         self.wallets = {}
         self.transactions = {}
         self.price_oracle = CryptoPriceOracle()
