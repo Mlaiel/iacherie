@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, ReactNode, useReducer, useCallback } from 'react';
+import React, { createContext, useContext, ReactNode, useReducer, useCallback } from 'react';
 import { toast } from 'react-hot-toast';
 
 // Types for the global state
