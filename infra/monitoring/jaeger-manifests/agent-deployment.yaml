@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: jaeger-agent
+    component: jaeger
+  name: jaeger-agent
+  namespace: jaeger-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jaeger-agent
+  template:
+    metadata:
+      labels:
+        app: jaeger-agent
+        component: jaeger
+    spec:
+      containers:
+      - env:
+        - name: REPORTER_GRPC_HOST_PORT
+          value: jaeger-collector:14250
+        image: jaegertracing/jaeger-agent:1.53.0
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 6831
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        name: jaeger-agent
+        ports:
+        - containerPort: 6831
+        - containerPort: 6832
+        - containerPort: 5778
+        - containerPort: 14271
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 6831
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          limits:
+            cpu: 100m
+            memory: 128Mi
+          requests:
+            cpu: 25m
+            memory: 64Mi

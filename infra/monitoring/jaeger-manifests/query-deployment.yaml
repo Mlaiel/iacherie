@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: jaeger-query
+    component: jaeger
+  name: jaeger-query
+  namespace: jaeger-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jaeger-query
+  template:
+    metadata:
+      labels:
+        app: jaeger-query
+        component: jaeger
+    spec:
+      containers:
+      - env:
+        - name: SPAN_STORAGE_TYPE
+          value: elasticsearch
+        - name: QUERY_BASE_PATH
+          value: /jaeger
+        - name: ES_SERVER_URLS
+          value: http://elasticsearch:9200
+        - name: ES_NUM_SHARDS
+          value: '3'
+        - name: ES_NUM_REPLICAS
+          value: '1'
+        - name: ES_INDEX_PREFIX
+          value: jaeger
+        image: jaegertracing/jaeger-query:1.53.0
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 16686
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        name: jaeger-query
+        ports:
+        - containerPort: 16686
+        - containerPort: 16687
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 16686
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          limits:
+            cpu: 200m
+            memory: 256Mi
+          requests:
+            cpu: 50m
+            memory: 128Mi
