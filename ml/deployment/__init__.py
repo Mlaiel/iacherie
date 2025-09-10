@@ -27,7 +27,38 @@ from .deployment_manager import (
     DeploymentManagerFactory
 )
 
+from .containerization_manager import (
+    ContainerizationManager,
+    ContainerConfig,
+    ImagePurpose,
+    OptimizationLevel,
+    SecurityLevel,
+    BuildResult,
+    ContainerMetrics
+)
+
+from .auto_scaling_manager import (
+    AutoScalingManager,
+    ScalingTrigger,
+    ScalingPolicy,
+    ScalingRule,
+    ScalingAction,
+    WorkloadPattern,
+    PerformanceMetrics as ScalingMetrics
+)
+
+from .load_balancing_optimizer import (
+    LoadBalancingOptimizer,
+    LoadBalancingAlgorithm,
+    RoutingStrategy,
+    BackendNode,
+    RequestContext,
+    RoutingDecision,
+    PerformanceMetrics as LoadBalancingMetrics
+)
+
 __all__ = [
+    # Core Deployment (Existing)
     'ModelDeploymentManager',
     'DeploymentConfig',
     'DeploymentInfo',
@@ -35,7 +66,34 @@ __all__ = [
     'DeploymentType',
     'DeploymentStrategy',
     'DeploymentStatus',
-    'DeploymentManagerFactory'
+    'DeploymentManagerFactory',
+    
+    # Containerization (NEW - PHASE 3)
+    "ContainerizationManager",
+    "ContainerConfig",
+    "ImagePurpose",
+    "OptimizationLevel",
+    "SecurityLevel",
+    "BuildResult",
+    "ContainerMetrics",
+    
+    # Auto-Scaling (NEW - PHASE 3)
+    "AutoScalingManager",
+    "ScalingTrigger",
+    "ScalingPolicy",
+    "ScalingRule",
+    "ScalingAction",
+    "WorkloadPattern",
+    "ScalingMetrics",
+    
+    # Load Balancing (NEW - PHASE 3)
+    "LoadBalancingOptimizer",
+    "LoadBalancingAlgorithm",
+    "RoutingStrategy",
+    "BackendNode",
+    "RequestContext",
+    "RoutingDecision",
+    "LoadBalancingMetrics"
 ]
 
 # Version du module
