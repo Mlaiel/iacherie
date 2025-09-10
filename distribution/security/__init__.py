@@ -8,71 +8,57 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
 
-from .api_security_manager import (
-    APISecurityManager,
-    SecurityPolicy,
-    SecurityIncident,
-    ThreatLevel
-)
-
-from .credential_vault import (
-    CredentialVault,
-    SecureCredential,
-    CredentialType,
-    EncryptionLevel
-)
-
+# Available imports - only import what exists
 from .access_controller import (
     AccessController,
-    AccessPolicy,
     Permission,
-    AccessDecision
-)
-
-from .audit_logger import (
-    AuditLogger,
-    AuditEvent,
-    AuditLevel,
-    AuditReport
+    Role,
+    AccessContext,
+    AccessRequest,
+    AccessResult
 )
 
 from .threat_detector import (
     ThreatDetector,
-    ThreatAnalysis,
+    ThreatEvent,
     ThreatPattern,
-    SecurityAlert
+    ThreatType,
+    ThreatLevel
 )
 
+from .rate_limit_enforcer import (
+    RateLimitEnforcer,
+    RateLimitType,
+    RateLimitRule,
+    RateLimitResult
+)
+
+# TODO: Add imports for remaining security modules when implemented
+# from .api_security_manager import APISecurityManager
+# from .credential_vault import CredentialVault
+# from .audit_logger import AuditLogger
+
 __all__ = [
-    # API Security
-    'APISecurityManager',
-    'SecurityPolicy',
-    'SecurityIncident',
-    'ThreatLevel',
-    
-    # Credential Management
-    'CredentialVault',
-    'SecureCredential',
-    'CredentialType',
-    'EncryptionLevel',
-    
     # Access Control
     'AccessController',
-    'AccessPolicy',
     'Permission',
-    'AccessDecision',
-    
-    # Audit Logging
-    'AuditLogger',
-    'AuditEvent',
-    'AuditLevel',
-    'AuditReport',
+    'Role',
+    'AccessContext',
+    'AccessRequest',
+    'AccessResult',
     
     # Threat Detection
     'ThreatDetector',
-    'ThreatAnalysis',
+    'ThreatEvent',
     'ThreatPattern',
-    'SecurityAlert'
+    'ThreatType',
+    'ThreatLevel',
+    
+    # Rate Limiting
+    'RateLimitEnforcer',
+    'RateLimitType',
+    'RateLimitRule',
+    'RateLimitResult'
 ]
 
 __version__ = "1.0.0"
