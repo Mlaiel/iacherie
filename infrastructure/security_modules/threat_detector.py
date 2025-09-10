@@ -541,3 +541,159 @@ class ThreatDetector:
             "description": response_actions[action],
             "timestamp": datetime.utcnow().isoformat()
         }
+    
+    async def analyze_behavior(self, user_behavior: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Analyze user behavior for threat detection
+        
+        Security Role Implementation:
+        - Real-time behavioral analysis for creator accounts
+        - AI-powered anomaly detection
+        - Creator account protection mechanisms
+        
+        Args:
+            user_behavior: User behavior patterns including login times, activities, etc.
+            
+        Returns:
+            Dict containing threat analysis results
+        """
+        try:
+            login_patterns = user_behavior.get('login_patterns', [])
+            upload_frequency = user_behavior.get('upload_frequency', 0)
+            collaboration_requests = user_behavior.get('collaboration_requests', 0)
+            ip_addresses = user_behavior.get('ip_addresses', [])
+            
+            # Calculate risk factors
+            risk_factors = []
+            risk_score = 0.0
+            
+            # Analyze login patterns
+            if login_patterns:
+                # Convert time strings to hours for analysis
+                login_hours = []
+                for pattern in login_patterns:
+                    try:
+                        hour = int(pattern.split(':')[0])
+                        login_hours.append(hour)
+                    except:
+                        continue
+                
+                # Check for unusual login times (very early morning or late night)
+                unusual_hours = [h for h in login_hours if h < 6 or h > 23]
+                if len(unusual_hours) > len(login_hours) * 0.5:
+                    risk_factors.append("unusual_login_times")
+                    risk_score += 0.3
+            
+            # Analyze upload frequency
+            if upload_frequency > 10:  # Very high upload frequency
+                risk_factors.append("suspicious_upload_frequency")
+                risk_score += 0.4
+            elif upload_frequency > 5:
+                risk_factors.append("high_upload_frequency")
+                risk_score += 0.2
+            
+            # Analyze collaboration requests
+            if collaboration_requests > 20:  # Spam-like behavior
+                risk_factors.append("excessive_collaboration_requests")
+                risk_score += 0.3
+            
+            # Analyze IP addresses for geographic anomalies
+            if len(ip_addresses) > 5:  # Multiple IPs could indicate account sharing or compromise
+                risk_factors.append("multiple_ip_addresses")
+                risk_score += 0.4
+            
+            # Check for private/internal IP addresses that shouldn't be used
+            suspicious_ips = []
+            for ip in ip_addresses:
+                try:
+                    ip_obj = ipaddress.ip_address(ip)
+                    if ip_obj.is_private and not ip.startswith('192.168.1.'):  # Allow common home networks
+                        suspicious_ips.append(ip)
+                        risk_score += 0.2
+                except:
+                    continue
+            
+            if suspicious_ips:
+                risk_factors.append("suspicious_ip_addresses")
+            
+            # Determine threat level based on risk score
+            if risk_score >= 0.8:
+                threat_level = "critical"
+            elif risk_score >= 0.6:
+                threat_level = "high" 
+            elif risk_score >= 0.4:
+                threat_level = "medium"
+            elif risk_score >= 0.2:
+                threat_level = "low"
+            else:
+                threat_level = "minimal"
+            
+            # Generate recommendations based on risk factors
+            recommendations = []
+            if "unusual_login_times" in risk_factors:
+                recommendations.append("Enable login time restrictions")
+            if "suspicious_upload_frequency" in risk_factors:
+                recommendations.append("Implement upload rate limiting")
+            if "excessive_collaboration_requests" in risk_factors:
+                recommendations.append("Temporarily limit collaboration features")
+            if "multiple_ip_addresses" in risk_factors:
+                recommendations.append("Require additional authentication")
+            if "suspicious_ip_addresses" in risk_factors:
+                recommendations.append("Block suspicious IP addresses")
+            
+            if not recommendations:
+                recommendations.append("Continue monitoring")
+            
+            # Additional behavioral analysis
+            behavioral_score = {
+                'login_consistency': 1.0 - (len(set(login_hours)) / 24) if login_patterns else 0.5,
+                'activity_level': min(upload_frequency / 10, 1.0),
+                'social_engagement': min(collaboration_requests / 20, 1.0),
+                'location_stability': 1.0 - (len(ip_addresses) / 10) if ip_addresses else 1.0
+            }
+            
+            analysis_result = {
+                'risk_score': round(risk_score, 2),
+                'threat_level': threat_level,
+                'risk_factors': risk_factors,
+                'recommendations': recommendations,
+                'behavioral_analysis': {
+                    'login_pattern_analysis': {
+                        'login_hours': login_hours if login_patterns else [],
+                        'unusual_hours_count': len(unusual_hours) if login_patterns else 0,
+                        'consistency_score': behavioral_score['login_consistency']
+                    },
+                    'activity_analysis': {
+                        'upload_frequency': upload_frequency,
+                        'activity_level_score': behavioral_score['activity_level'],
+                        'collaboration_requests': collaboration_requests,
+                        'social_score': behavioral_score['social_engagement']
+                    },
+                    'location_analysis': {
+                        'ip_count': len(ip_addresses),
+                        'suspicious_ips': suspicious_ips,
+                        'location_stability_score': behavioral_score['location_stability']
+                    }
+                },
+                'monitoring_recommendations': {
+                    'increase_monitoring': risk_score > 0.5,
+                    'require_mfa': risk_score > 0.7,
+                    'limit_functionality': risk_score > 0.8,
+                    'alert_security_team': risk_score > 0.6
+                },
+                'timestamp': datetime.now().isoformat()
+            }
+            
+            logger.info(f"Behavioral analysis completed: {threat_level} threat level with {risk_score} risk score")
+            return analysis_result
+            
+        except Exception as e:
+            logger.error(f"Error in behavioral analysis: {e}")
+            return {
+                'risk_score': 0.5,
+                'threat_level': 'unknown',
+                'risk_factors': ['analysis_error'],
+                'recommendations': ['Manual review required'],
+                'error': str(e),
+                'timestamp': datetime.now().isoformat()
+            }

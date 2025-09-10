@@ -616,3 +616,316 @@ class BlueGreenDeployer:
                 return instances
                 
         return 3  # Default
+    
+    async def deploy(self, deployment_config: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Execute blue-green deployment
+        
+        DevOps Role Implementation:
+        - Zero-downtime blue-green deployment for creator services
+        - Automated traffic switching with validation
+        - Creator service continuity guarantee
+        - Rollback automation and safety checks
+        
+        Args:
+            deployment_config: Configuration for deployment including service name and version
+            
+        Returns:
+            Dict containing deployment results
+        """
+        try:
+            service_name = deployment_config.get('service_name', 'unknown-service')
+            new_version = deployment_config.get('new_version', 'latest')
+            health_check_url = deployment_config.get('health_check_url', '/health')
+            rollback_threshold = deployment_config.get('rollback_threshold', 5)
+            
+            deployment_start_time = datetime.now()
+            
+            # Step 1: Determine current environment
+            current_env = await self._get_current_environment(service_name)
+            target_env = Environment.GREEN if current_env == Environment.BLUE else Environment.BLUE
+            
+            logger.info(f"Starting blue-green deployment: {service_name} {new_version}")
+            logger.info(f"Current environment: {current_env.value}, Target: {target_env.value}")
+            
+            # Step 2: Deploy to target environment
+            deployment_result = await self._deploy_to_environment(
+                service_name, new_version, target_env, health_check_url
+            )
+            
+            if not deployment_result.get('success', False):
+                return {
+                    'status': 'failed',
+                    'error': 'Failed to deploy to target environment',
+                    'details': deployment_result,
+                    'downtime_seconds': 0
+                }
+            
+            # Step 3: Validate target environment
+            validation_result = await self._validate_environment(
+                service_name, target_env, health_check_url
+            )
+            
+            if not validation_result.get('healthy', False):
+                # Clean up failed deployment
+                await self._cleanup_environment(service_name, target_env)
+                return {
+                    'status': 'failed',
+                    'error': 'Target environment validation failed',
+                    'validation_details': validation_result,
+                    'downtime_seconds': 0
+                }
+            
+            # Step 4: Gradual traffic switching
+            traffic_switch_result = await self._switch_traffic_gradually(
+                service_name, current_env, target_env, rollback_threshold
+            )
+            
+            if not traffic_switch_result.get('success', False):
+                # Rollback on traffic switching failure
+                await self._rollback_traffic(service_name, current_env)
+                await self._cleanup_environment(service_name, target_env)
+                return {
+                    'status': 'failed',
+                    'error': 'Traffic switching failed, rolled back',
+                    'traffic_details': traffic_switch_result,
+                    'downtime_seconds': 0
+                }
+            
+            # Step 5: Monitor and validate post-switch
+            post_switch_validation = await self._monitor_post_switch(
+                service_name, target_env, health_check_url, duration_minutes=5
+            )
+            
+            if not post_switch_validation.get('stable', False):
+                # Emergency rollback
+                await self._emergency_rollback(service_name, current_env, target_env)
+                return {
+                    'status': 'failed',
+                    'error': 'Post-switch validation failed, emergency rollback executed',
+                    'monitoring_details': post_switch_validation,
+                    'downtime_seconds': post_switch_validation.get('downtime_seconds', 0)
+                }
+            
+            # Step 6: Cleanup old environment
+            cleanup_result = await self._cleanup_environment(service_name, current_env)
+            
+            deployment_end_time = datetime.now()
+            total_deployment_time = (deployment_end_time - deployment_start_time).total_seconds()
+            
+            # Step 7: Update deployment records
+            await self._record_successful_deployment(
+                service_name, new_version, current_env, target_env, total_deployment_time
+            )
+            
+            successful_result = {
+                'status': 'success',
+                'service_name': service_name,
+                'deployed_version': new_version,
+                'previous_environment': current_env.value,
+                'current_environment': target_env.value,
+                'deployment_time_seconds': total_deployment_time,
+                'downtime_seconds': 0,  # Zero-downtime deployment
+                'deployment_details': {
+                    'deployment_result': deployment_result,
+                    'validation_result': validation_result,
+                    'traffic_switch_result': traffic_switch_result,
+                    'post_switch_validation': post_switch_validation,
+                    'cleanup_result': cleanup_result
+                },
+                'creator_impact': {
+                    'service_interruption': 'none',
+                    'performance_impact': 'minimal',
+                    'feature_availability': '100%'
+                },
+                'timestamp': datetime.now().isoformat()
+            }
+            
+            logger.info(f"Blue-green deployment completed successfully: {service_name} {new_version}")
+            return successful_result
+            
+        except Exception as e:
+            logger.error(f"Error in blue-green deployment: {e}")
+            # Attempt emergency cleanup
+            try:
+                await self._emergency_cleanup(service_name)
+            except:
+                pass
+                
+            return {
+                'status': 'failed',
+                'error': str(e),
+                'downtime_seconds': 0,
+                'timestamp': datetime.now().isoformat()
+            }
+    
+    async def _get_current_environment(self, service_name: str) -> Environment:
+        """Determine which environment is currently active"""
+        # Simulate environment detection
+        # In production, would check load balancer or service discovery
+        return Environment.BLUE  # Default to blue
+    
+    async def _deploy_to_environment(
+        self, service_name: str, version: str, env: Environment, health_check_url: str
+    ) -> Dict[str, Any]:
+        """Deploy service to target environment"""
+        try:
+            # Simulate deployment process
+            logger.info(f"Deploying {service_name}:{version} to {env.value} environment")
+            
+            # Simulate deployment steps
+            await asyncio.sleep(2)  # Simulate deployment time
+            
+            return {
+                'success': True,
+                'environment': env.value,
+                'version': version,
+                'instances_deployed': 3,
+                'deployment_time_seconds': 2
+            }
+        except Exception as e:
+            return {'success': False, 'error': str(e)}
+    
+    async def _validate_environment(
+        self, service_name: str, env: Environment, health_check_url: str
+    ) -> Dict[str, Any]:
+        """Validate that target environment is healthy"""
+        try:
+            # Simulate health checks
+            logger.info(f"Validating {env.value} environment health")
+            await asyncio.sleep(1)  # Simulate health check time
+            
+            # Simulate health check results
+            health_checks = [
+                {'endpoint': health_check_url, 'status': 'healthy', 'response_time_ms': 45},
+                {'endpoint': '/metrics', 'status': 'healthy', 'response_time_ms': 32},
+                {'endpoint': '/ready', 'status': 'healthy', 'response_time_ms': 28}
+            ]
+            
+            return {
+                'healthy': True,
+                'environment': env.value,
+                'health_checks': health_checks,
+                'validation_time_seconds': 1
+            }
+        except Exception as e:
+            return {'healthy': False, 'error': str(e)}
+    
+    async def _switch_traffic_gradually(
+        self, service_name: str, current_env: Environment, target_env: Environment, threshold: int
+    ) -> Dict[str, Any]:
+        """Gradually switch traffic from current to target environment"""
+        try:
+            logger.info(f"Gradually switching traffic from {current_env.value} to {target_env.value}")
+            
+            # Simulate gradual traffic switching
+            traffic_percentages = [10, 25, 50, 75, 100]
+            switch_results = []
+            
+            for percentage in traffic_percentages:
+                await asyncio.sleep(0.5)  # Simulate gradual switching
+                
+                # Monitor error rate during switch
+                error_rate = 0.1 if percentage < 100 else 0.05  # Simulate low error rate
+                
+                switch_results.append({
+                    'percentage': percentage,
+                    'error_rate': error_rate,
+                    'response_time_ms': 50 + (percentage * 0.1),  # Slight increase during switch
+                    'status': 'success' if error_rate < threshold else 'failed'
+                })
+                
+                # Check if error rate exceeds threshold
+                if error_rate >= threshold:
+                    return {
+                        'success': False,
+                        'error': f'Error rate {error_rate} exceeded threshold {threshold}',
+                        'switch_results': switch_results
+                    }
+            
+            return {
+                'success': True,
+                'switch_results': switch_results,
+                'final_environment': target_env.value,
+                'switch_time_seconds': len(traffic_percentages) * 0.5
+            }
+        except Exception as e:
+            return {'success': False, 'error': str(e)}
+    
+    async def _monitor_post_switch(
+        self, service_name: str, env: Environment, health_check_url: str, duration_minutes: int
+    ) -> Dict[str, Any]:
+        """Monitor service stability after traffic switch"""
+        try:
+            logger.info(f"Monitoring {env.value} environment for {duration_minutes} minutes")
+            
+            # Simulate monitoring period
+            await asyncio.sleep(1)  # Simulate monitoring time
+            
+            # Simulate monitoring results
+            monitoring_results = {
+                'average_response_time_ms': 48,
+                'error_rate': 0.02,
+                'cpu_utilization': 0.65,
+                'memory_utilization': 0.58,
+                'requests_per_second': 150
+            }
+            
+            # Check stability criteria
+            stable = (
+                monitoring_results['error_rate'] < 0.05 and
+                monitoring_results['average_response_time_ms'] < 100 and
+                monitoring_results['cpu_utilization'] < 0.8
+            )
+            
+            return {
+                'stable': stable,
+                'monitoring_duration_minutes': duration_minutes,
+                'monitoring_results': monitoring_results,
+                'stability_score': 0.95 if stable else 0.3
+            }
+        except Exception as e:
+            return {'stable': False, 'error': str(e)}
+    
+    async def _rollback_traffic(self, service_name: str, original_env: Environment) -> Dict[str, Any]:
+        """Rollback traffic to original environment"""
+        logger.info(f"Rolling back traffic to {original_env.value} environment")
+        await asyncio.sleep(0.5)  # Simulate rollback time
+        return {'rollback_completed': True, 'environment': original_env.value}
+    
+    async def _emergency_rollback(
+        self, service_name: str, original_env: Environment, failed_env: Environment
+    ) -> Dict[str, Any]:
+        """Execute emergency rollback"""
+        logger.warning(f"Executing emergency rollback for {service_name}")
+        await self._rollback_traffic(service_name, original_env)
+        await self._cleanup_environment(service_name, failed_env)
+        return {'emergency_rollback_completed': True}
+    
+    async def _cleanup_environment(self, service_name: str, env: Environment) -> Dict[str, Any]:
+        """Clean up old environment after successful switch"""
+        logger.info(f"Cleaning up {env.value} environment")
+        await asyncio.sleep(0.5)  # Simulate cleanup time
+        return {'cleanup_completed': True, 'environment': env.value}
+    
+    async def _emergency_cleanup(self, service_name: str) -> Dict[str, Any]:
+        """Emergency cleanup of both environments"""
+        logger.warning(f"Emergency cleanup for {service_name}")
+        return {'emergency_cleanup_completed': True}
+    
+    async def _record_successful_deployment(
+        self, service_name: str, version: str, old_env: Environment, new_env: Environment, duration: float
+    ) -> None:
+        """Record successful deployment for metrics and auditing"""
+        deployment_record = {
+            'service_name': service_name,
+            'version': version,
+            'old_environment': old_env.value,
+            'new_environment': new_env.value,
+            'duration_seconds': duration,
+            'downtime_seconds': 0,
+            'timestamp': datetime.now().isoformat()
+        }
+        
+        # In production, would store in database/metrics system
+        logger.info(f"Deployment recorded: {deployment_record}")

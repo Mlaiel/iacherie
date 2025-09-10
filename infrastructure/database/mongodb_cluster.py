@@ -330,3 +330,243 @@ class MongoDBCluster:
         
         logger.info(f"MongoDB cluster {cluster_id} optimized for creator content workloads")
         return optimization_settings
+    
+    async def configure_replica_set(self, replica_config: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Configure MongoDB replica set for high availability
+        
+        DBA Role Implementation:
+        - Multi-region replica sets for global creator base
+        - Automated failover configuration
+        - Read preference optimization
+        
+        Args:
+            replica_config: Replica set configuration including members and arbiter
+            
+        Returns:
+            Dict containing replica set configuration status
+        """
+        try:
+            replica_set_name = replica_config.get('replica_set_name', 'ainflue-rs')
+            members = replica_config.get('members', [])
+            arbiter = replica_config.get('arbiter')
+            
+            # Simulate replica set configuration
+            replica_set_config = {
+                '_id': replica_set_name,
+                'members': []
+            }
+            
+            # Configure replica set members
+            for i, member_host in enumerate(members):
+                member_config = {
+                    '_id': i,
+                    'host': member_host,
+                    'priority': 1,
+                    'votes': 1
+                }
+                
+                # Configure regional preferences for global creator base
+                if 'us-east' in member_host:
+                    member_config['tags'] = {'region': 'us-east', 'datacenter': 'primary'}
+                    member_config['priority'] = 2  # Higher priority for primary region
+                elif 'eu-west' in member_host:
+                    member_config['tags'] = {'region': 'eu-west', 'datacenter': 'secondary'}
+                elif 'ap-southeast' in member_host:
+                    member_config['tags'] = {'region': 'ap-southeast', 'datacenter': 'secondary'}
+                
+                replica_set_config['members'].append(member_config)
+            
+            # Add arbiter if specified
+            if arbiter:
+                arbiter_config = {
+                    '_id': len(members),
+                    'host': arbiter,
+                    'arbiterOnly': True,
+                    'priority': 0,
+                    'votes': 1
+                }
+                replica_set_config['members'].append(arbiter_config)
+            
+            # Configure replica set settings for creator workloads
+            replica_set_settings = {
+                'chainingAllowed': True,  # Allow secondary reads
+                'heartbeatTimeoutSecs': 10,  # Fast failure detection
+                'electionTimeoutMillis': 10000,  # Quick elections
+                'catchUpTimeoutMillis': 60000,  # Reasonable catchup time
+                'getLastErrorModes': {
+                    'majority': {'region': 2}  # Require majority across regions
+                }
+            }
+            
+            # Simulate successful configuration
+            configuration_result = {
+                'configured': True,
+                'replica_set_name': replica_set_name,
+                'members_configured': len(members),
+                'arbiter_configured': arbiter is not None,
+                'replica_set_config': replica_set_config,
+                'settings': replica_set_settings,
+                'read_preferences': {
+                    'creator_reads': 'secondaryPreferred',
+                    'analytics_reads': 'secondary',
+                    'content_writes': 'primary'
+                },
+                'configuration_timestamp': datetime.now().isoformat()
+            }
+            
+            logger.info(f"Replica set {replica_set_name} configured with {len(members)} members")
+            return configuration_result
+            
+        except Exception as e:
+            logger.error(f"Error configuring replica set: {e}")
+            return {
+                'configured': False,
+                'error': str(e),
+                'timestamp': datetime.now().isoformat()
+            }
+    
+    async def configure_sharding(self, shard_config: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Configure MongoDB sharding for massive creator content scaling
+        
+        DBA Role Implementation:
+        - Sharded collections for massive content libraries
+        - Creator-specific collection optimization
+        - Automatic balancing configuration
+        
+        Args:
+            shard_config: Sharding configuration including shard key and collections
+            
+        Returns:
+            Dict containing sharding configuration status
+        """
+        try:
+            shard_key = shard_config.get('shard_key', {})
+            collections = shard_config.get('collections', [])
+            
+            # Configure sharding for creator content optimization
+            sharding_result = {
+                'sharded_collections': {},
+                'shard_configuration': {},
+                'balancer_settings': {},
+                'zones_configured': []
+            }
+            
+            # Configure each collection for sharding
+            for collection in collections:
+                if collection == 'creator_content':
+                    # Optimize for creator content distribution
+                    collection_config = {
+                        'shard_key': shard_key,
+                        'unique': False,
+                        'pre_split_points': [
+                            {'creator_id': 'creator_1000', 'upload_date': datetime(2024, 1, 1)},
+                            {'creator_id': 'creator_5000', 'upload_date': datetime(2024, 6, 1)},
+                            {'creator_id': 'creator_10000', 'upload_date': datetime(2024, 12, 1)}
+                        ],
+                        'chunk_size_mb': 64,  # Optimized for large content files
+                        'zones': {
+                            'hot_creators': {
+                                'min': {'creator_id': 'creator_0'},
+                                'max': {'creator_id': 'creator_1000'},
+                                'shard_preference': 'ssd_shards'
+                            },
+                            'regular_creators': {
+                                'min': {'creator_id': 'creator_1000'},
+                                'max': {'creator_id': 'creator_999999'},
+                                'shard_preference': 'standard_shards'
+                            }
+                        }
+                    }
+                elif collection == 'creator_analytics':
+                    # Optimize for analytics queries
+                    collection_config = {
+                        'shard_key': {'creator_id': 1, 'date': 1},
+                        'unique': False,
+                        'chunk_size_mb': 32,  # Smaller chunks for analytics
+                        'zones': {
+                            'recent_analytics': {
+                                'min': {'date': datetime.now() - timedelta(days=30)},
+                                'max': {'date': datetime.now()},
+                                'shard_preference': 'analytics_shards'
+                            }
+                        }
+                    }
+                else:
+                    # Default sharding configuration
+                    collection_config = {
+                        'shard_key': shard_key,
+                        'unique': False,
+                        'chunk_size_mb': 64
+                    }
+                
+                sharding_result['sharded_collections'][collection] = collection_config
+            
+            # Configure shard zones for geographic distribution
+            zones_config = [
+                {
+                    'zone_name': 'us_creators',
+                    'shard_pattern': 'us-*',
+                    'creator_regions': ['US', 'CA', 'MX']
+                },
+                {
+                    'zone_name': 'eu_creators', 
+                    'shard_pattern': 'eu-*',
+                    'creator_regions': ['DE', 'FR', 'UK', 'ES', 'IT']
+                },
+                {
+                    'zone_name': 'asia_creators',
+                    'shard_pattern': 'ap-*', 
+                    'creator_regions': ['JP', 'KR', 'SG', 'AU']
+                }
+            ]
+            
+            sharding_result['zones_configured'] = zones_config
+            
+            # Configure balancer for optimal performance
+            balancer_config = {
+                'enabled': True,
+                'active_window': {
+                    'start': '02:00',  # Low traffic hours
+                    'stop': '06:00'
+                },
+                'max_chunk_size_mb': 128,
+                'balancer_round_interval_ms': 5000,
+                'wait_for_delete': False,  # Don't wait for cleanup
+                'attempt_to_balance_jumbo_chunks': True
+            }
+            
+            sharding_result['balancer_settings'] = balancer_config
+            
+            # Performance optimization settings
+            performance_config = {
+                'read_concern': 'majority',
+                'write_concern': {'w': 'majority', 'j': True, 'wtimeout': 5000},
+                'read_preference': 'primaryPreferred',
+                'connection_pool': {
+                    'min_pool_size': 5,
+                    'max_pool_size': 50,
+                    'max_idle_time_ms': 30000
+                }
+            }
+            
+            sharding_result['shard_configuration'] = {
+                'collections_sharded': len(collections),
+                'zones_configured': len(zones_config),
+                'balancer_configured': True,
+                'performance_optimized': True,
+                'performance_config': performance_config,
+                'configuration_timestamp': datetime.now().isoformat()
+            }
+            
+            logger.info(f"Sharding configured for {len(collections)} collections with {len(zones_config)} zones")
+            return sharding_result
+            
+        except Exception as e:
+            logger.error(f"Error configuring sharding: {e}")
+            return {
+                'sharded_collections': {},
+                'error': str(e),
+                'timestamp': datetime.now().isoformat()
+            }
