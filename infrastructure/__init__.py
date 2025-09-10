@@ -77,7 +77,7 @@ from .autoscaling import (
 
 from .deployment import (
     DeploymentManager, CICDManager, PipelineManager, ReleaseManager,
-    deployment_manager, cicd_manager, pipeline_manager, release_manager
+    get_deployment_manager, get_cicd_manager, get_pipeline_manager, get_release_manager
 )
 
 from .helm import (
