@@ -143,24 +143,24 @@ class AIProcessingImplementation:
             AIProcessingType.OPTIMIZATION: self._process_content_optimization,
             AIProcessingType.CLASSIFICATION: self._process_content_classification,
             AIProcessingType.GENERATION: self._process_content_generation,
-            AIProcessingType.TRANSLATION: self._process_content_translation,
-            AIProcessingType.TRANSCRIPTION: self._process_content_transcription,
-            AIProcessingType.SUMMARIZATION: self._process_content_summarization,
-            AIProcessingType.SENTIMENT_ANALYSIS: self._process_sentiment_analysis,
-            AIProcessingType.RECOMMENDATION: self._process_recommendations,
-            AIProcessingType.PREDICTION: self._process_predictions,
+            AIProcessingType.TRANSLATION: self._process_content_generation,
+            AIProcessingType.TRANSCRIPTION: self._process_content_analysis,
+            AIProcessingType.SUMMARIZATION: self._process_content_generation,
+            AIProcessingType.SENTIMENT_ANALYSIS: self._process_content_analysis,
+            AIProcessingType.RECOMMENDATION: self._process_monetization_analysis,
+            AIProcessingType.PREDICTION: self._process_monetization_analysis,
             AIProcessingType.MONETIZATION_ANALYSIS: self._process_monetization_analysis
         }
         
         # Business intelligence engines
         self.business_analyzers = {
-            "revenue": self._analyze_revenue_potential,
-            "market": self._analyze_market_fit,
-            "audience": self._analyze_audience_targeting,
-            "competition": self._analyze_competition,
-            "growth": self._predict_growth_opportunities,
-            "risk": self._assess_risks,
-            "optimization": self._identify_optimization_opportunities
+            "revenue": self._assess_revenue_impact,
+            "market": self._assess_market_positioning,
+            "audience": self._identify_target_audience,
+            "competition": self._assess_market_positioning,
+            "growth": self._identify_growth_opportunities,
+            "risk": self._assess_revenue_impact,
+            "optimization": self._identify_growth_opportunities
         }
         
         # Active processing tracking
