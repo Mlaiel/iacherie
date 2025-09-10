@@ -1,0 +1,398 @@
+version: '3.8'
+
+services:
+  # Platform Connectors Service
+  platform-connectors:
+    build:
+      context: .
+      dockerfile: platform_connectors.dockerfile
+    container_name: ainflue-platform-connectors
+    environment:
+      - YOUTUBE_API_KEY=${YOUTUBE_API_KEY}
+      - YOUTUBE_CLIENT_ID=${YOUTUBE_CLIENT_ID}
+      - YOUTUBE_CLIENT_SECRET=${YOUTUBE_CLIENT_SECRET}
+      - INSTAGRAM_ACCESS_TOKEN=${INSTAGRAM_ACCESS_TOKEN}
+      - INSTAGRAM_CLIENT_ID=${INSTAGRAM_CLIENT_ID}
+      - INSTAGRAM_CLIENT_SECRET=${INSTAGRAM_CLIENT_SECRET}
+      - TIKTOK_CLIENT_KEY=${TIKTOK_CLIENT_KEY}
+      - TIKTOK_CLIENT_SECRET=${TIKTOK_CLIENT_SECRET}
+      - SPOTIFY_CLIENT_ID=${SPOTIFY_CLIENT_ID}
+      - SPOTIFY_CLIENT_SECRET=${SPOTIFY_CLIENT_SECRET}
+      - SOUNDCLOUD_CLIENT_ID=${SOUNDCLOUD_CLIENT_ID}
+      - SOUNDCLOUD_CLIENT_SECRET=${SOUNDCLOUD_CLIENT_SECRET}
+      - FACEBOOK_APP_ID=${FACEBOOK_APP_ID}
+      - FACEBOOK_APP_SECRET=${FACEBOOK_APP_SECRET}
+      - TWITTER_API_KEY=${TWITTER_API_KEY}
+      - TWITTER_API_SECRET=${TWITTER_API_SECRET}
+      - LINKEDIN_CLIENT_ID=${LINKEDIN_CLIENT_ID}
+      - LINKEDIN_CLIENT_SECRET=${LINKEDIN_CLIENT_SECRET}
+      - PINTEREST_APP_ID=${PINTEREST_APP_ID}
+      - PINTEREST_APP_SECRET=${PINTEREST_APP_SECRET}
+      - REDIS_URL=redis://redis:6379/0
+      - DATABASE_URL=postgresql://distribution:${DB_PASSWORD}@postgres:5432/distribution
+    depends_on:
+      - redis
+      - postgres
+    networks:
+      - distribution-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Publication Scheduler Service  
+  publication-scheduler:
+    build:
+      context: .
+      dockerfile: publication_scheduler.dockerfile
+    container_name: ainflue-publication-scheduler
+    environment:
+      - REDIS_URL=redis://redis:6379/1
+      - DATABASE_URL=postgresql://distribution:${DB_PASSWORD}@postgres:5432/distribution
+      - SCHEDULER_TIMEZONE=${SCHEDULER_TIMEZONE:-UTC}
+      - MAX_CONCURRENT_JOBS=${MAX_CONCURRENT_JOBS:-10}
+      - ENABLE_AB_TESTING=${ENABLE_AB_TESTING:-true}
+    depends_on:
+      - redis
+      - postgres
+    networks:
+      - distribution-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8001/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Format Adapter Service
+  format-adapter:
+    build:
+      context: .
+      dockerfile: format_adapter.dockerfile
+    container_name: ainflue-format-adapter
+    environment:
+      - REDIS_URL=redis://redis:6379/2
+      - STORAGE_BACKEND=${STORAGE_BACKEND:-local}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_S3_BUCKET=${AWS_S3_BUCKET}
+      - MAX_FILE_SIZE=${MAX_FILE_SIZE:-500MB}
+      - FFMPEG_QUALITY=${FFMPEG_QUALITY:-high}
+      - ENABLE_GPU_ACCELERATION=${ENABLE_GPU_ACCELERATION:-false}
+    volumes:
+      - media_processing:/app/media
+      - format_cache:/app/cache
+      - ./temp:/app/temp
+    networks:
+      - distribution-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+          cpus: '2.0'
+        reservations:
+          memory: 2G
+          cpus: '1.0'
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8002/health')"]
+      interval: 30s
+      timeout: 15s
+      retries: 3
+
+  # Analytics Aggregator Service
+  analytics-aggregator:
+    build:
+      context: .
+      dockerfile: analytics_aggregator.dockerfile
+    container_name: ainflue-analytics-aggregator
+    environment:
+      - ANALYTICS_DB_URL=postgresql://analytics:${ANALYTICS_DB_PASSWORD}@analytics-postgres:5432/analytics
+      - REDIS_URL=redis://redis:6379/3
+      - ELASTICSEARCH_URL=${ELASTICSEARCH_URL:-http://elasticsearch:9200}
+      - METRICS_RETENTION_DAYS=${METRICS_RETENTION_DAYS:-90}
+      - ENABLE_REAL_TIME_ANALYTICS=${ENABLE_REAL_TIME_ANALYTICS:-true}
+    depends_on:
+      - redis
+      - analytics-postgres
+      - elasticsearch
+    networks:
+      - distribution-network
+      - analytics-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8003/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Hashtag Optimizer Service
+  hashtag-optimizer:
+    build:
+      context: .
+      dockerfile: hashtag_optimizer.dockerfile
+    container_name: ainflue-hashtag-optimizer
+    environment:
+      - REDIS_URL=redis://redis:6379/4
+      - ML_MODEL_ENDPOINT=${ML_MODEL_ENDPOINT}
+      - TRENDING_API_KEYS=${TRENDING_API_KEYS}
+      - HASHTAG_DB_URL=postgresql://distribution:${DB_PASSWORD}@postgres:5432/distribution
+    depends_on:
+      - redis
+      - postgres
+    networks:
+      - distribution-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8004/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # A/B Testing Engine Service
+  ab-testing-engine:
+    build:
+      context: .
+      dockerfile: ab_testing_engine.dockerfile
+    container_name: ainflue-ab-testing-engine
+    environment:
+      - REDIS_URL=redis://redis:6379/5
+      - DATABASE_URL=postgresql://distribution:${DB_PASSWORD}@postgres:5432/distribution
+      - MIN_SAMPLE_SIZE=${MIN_SAMPLE_SIZE:-1000}
+      - CONFIDENCE_LEVEL=${CONFIDENCE_LEVEL:-0.95}
+      - MAX_TEST_DURATION_DAYS=${MAX_TEST_DURATION_DAYS:-14}
+    depends_on:
+      - redis
+      - postgres
+    networks:
+      - distribution-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8005/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Distribution Intelligence Service
+  distribution-intelligence:
+    build:
+      context: .
+      dockerfile: distribution_intelligence.dockerfile
+    container_name: ainflue-distribution-intelligence
+    environment:
+      - REDIS_URL=redis://redis:6379/6
+      - ML_MODELS_PATH=/app/models
+      - ANALYTICS_DB_URL=postgresql://analytics:${ANALYTICS_DB_PASSWORD}@analytics-postgres:5432/analytics
+      - ENABLE_PREDICTIVE_SCHEDULING=${ENABLE_PREDICTIVE_SCHEDULING:-true}
+    volumes:
+      - ml_models:/app/models
+    depends_on:
+      - redis
+      - analytics-postgres
+    networks:
+      - distribution-network
+      - analytics-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 3G
+          cpus: '1.5'
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8006/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Revenue Distribution Service
+  revenue-distribution:
+    build:
+      context: .
+      dockerfile: revenue_distribution.dockerfile
+    container_name: ainflue-revenue-distribution
+    environment:
+      - DATABASE_URL=postgresql://distribution:${DB_PASSWORD}@postgres:5432/distribution
+      - PAYMENT_PROCESSOR_API_KEY=${PAYMENT_PROCESSOR_API_KEY}
+      - REVENUE_SHARE_PERCENTAGE=${REVENUE_SHARE_PERCENTAGE:-70}
+      - ENABLE_AUTOMATIC_PAYOUTS=${ENABLE_AUTOMATIC_PAYOUTS:-false}
+    depends_on:
+      - postgres
+    networks:
+      - distribution-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8007/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Content Security Service
+  content-security:
+    build:
+      context: .
+      dockerfile: content_security.dockerfile
+    container_name: ainflue-content-security
+    environment:
+      - REDIS_URL=redis://redis:6379/7
+      - DATABASE_URL=postgresql://distribution:${DB_PASSWORD}@postgres:5432/distribution
+      - ENABLE_WATERMARKING=${ENABLE_WATERMARKING:-true}
+      - ENABLE_DRM=${ENABLE_DRM:-true}
+      - CONTENT_ENCRYPTION_KEY=${CONTENT_ENCRYPTION_KEY}
+    depends_on:
+      - redis
+      - postgres
+    networks:
+      - distribution-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8008/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Automation Orchestrator Service
+  automation-orchestrator:
+    build:
+      context: .
+      dockerfile: automation_orchestrator.dockerfile
+    container_name: ainflue-automation-orchestrator
+    environment:
+      - REDIS_URL=redis://redis:6379/8
+      - DATABASE_URL=postgresql://distribution:${DB_PASSWORD}@postgres:5432/distribution
+      - WORKFLOW_ENGINE=${WORKFLOW_ENGINE:-airflow}
+      - MAX_PARALLEL_WORKFLOWS=${MAX_PARALLEL_WORKFLOWS:-50}
+    depends_on:
+      - redis
+      - postgres
+    networks:
+      - distribution-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8009/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Cross-Platform Sync Service
+  cross-platform-sync:
+    build:
+      context: .
+      dockerfile: cross_platform_sync.dockerfile
+    container_name: ainflue-cross-platform-sync
+    environment:
+      - REDIS_URL=redis://redis:6379/9
+      - DATABASE_URL=postgresql://distribution:${DB_PASSWORD}@postgres:5432/distribution
+      - SYNC_INTERVAL_MINUTES=${SYNC_INTERVAL_MINUTES:-15}
+      - ENABLE_CONFLICT_RESOLUTION=${ENABLE_CONFLICT_RESOLUTION:-true}
+    depends_on:
+      - redis
+      - postgres
+    networks:
+      - distribution-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8010/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Supporting Infrastructure
+  redis:
+    image: redis:7-alpine
+    container_name: ainflue-distribution-redis
+    command: redis-server --appendonly yes --maxmemory 2gb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_data:/data
+    networks:
+      - distribution-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: ainflue-distribution-postgres
+    environment:
+      - POSTGRES_DB=distribution
+      - POSTGRES_USER=distribution
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    networks:
+      - distribution-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U distribution"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  analytics-postgres:
+    image: postgres:15-alpine
+    container_name: ainflue-analytics-postgres
+    environment:
+      - POSTGRES_DB=analytics
+      - POSTGRES_USER=analytics
+      - POSTGRES_PASSWORD=${ANALYTICS_DB_PASSWORD}
+    volumes:
+      - analytics_postgres_data:/var/lib/postgresql/data
+    networks:
+      - analytics-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U analytics"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  elasticsearch:
+    image: elasticsearch:8.8.0
+    container_name: ainflue-elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      - analytics-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  redis_data:
+    driver: local
+  postgres_data:
+    driver: local
+  analytics_postgres_data:
+    driver: local
+  elasticsearch_data:
+    driver: local
+  media_processing:
+    driver: local
+  format_cache:
+    driver: local
+  ml_models:
+    driver: local
+
+networks:
+  distribution-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+  analytics-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.21.0.0/16
