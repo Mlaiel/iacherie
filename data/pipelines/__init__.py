@@ -34,6 +34,25 @@ from .distribution_pipeline import DistributionPipeline, PlatformManager
 from .orchestrator import PipelineOrchestrator, WorkflowManager
 from .monitoring import PipelineMonitor, HealthChecker
 
+# Enterprise Pipelines - Advanced AI & Security
+from .ai_optimization_pipeline import (
+    AIOptimizationPipeline, 
+    ModelOptimizationEngine, 
+    PerformanceTuningEngine,
+    ResourceOptimizationEngine
+)
+from .security_compliance_pipeline import (
+    SecurityCompliancePipeline,
+    ThreatDetectionEngine,
+    ComplianceMonitoringEngine,
+    IncidentResponsePipeline
+)
+from .notification_intelligence_pipeline import (
+    NotificationIntelligencePipeline,
+    UserPreferenceEngine,
+    MultiChannelNotificationEngine
+)
+
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
@@ -61,4 +80,21 @@ __all__ = [
     "WorkflowManager",
     "PipelineMonitor",
     "HealthChecker",
+    
+    # Enterprise AI Optimization
+    "AIOptimizationPipeline",
+    "ModelOptimizationEngine",
+    "PerformanceTuningEngine",
+    "ResourceOptimizationEngine",
+    
+    # Enterprise Security & Compliance
+    "SecurityCompliancePipeline",
+    "ThreatDetectionEngine",
+    "ComplianceMonitoringEngine", 
+    "IncidentResponsePipeline",
+    
+    # Enterprise Notification Intelligence
+    "NotificationIntelligencePipeline",
+    "UserPreferenceEngine",
+    "MultiChannelNotificationEngine",
 ]
