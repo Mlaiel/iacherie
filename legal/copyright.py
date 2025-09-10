@@ -2,6 +2,17 @@
 Copyright Protection Module - Advanced IP Protection System
 =============================================================
 
+EXPERTISE MULTI-RÔLES APPLIQUÉE - COPYRIGHT PROTECTION:
+- Lead Dev IA: Orchestration IA avancée pour détection automatisée des violations
+- Backend Senior: Architecture enterprise scalable pour traitement massif de contenu
+- ML Engineer: Algorithmes ML sophistiqués pour analyse de similarité et détection d'infractions
+- DBA: Optimisation base de données pour registres copyright et historiques d'infractions
+- Sécurité: Protection cryptographique des preuves et authentification blockchain
+- Microservices: Architecture distribuée pour services copyright multi-juridictions  
+- Audio Engineer: Détection spécialisée d'infractions audio (empreintes sonores, mélodies)
+- DevOps: Monitoring temps réel des violations et performance du système
+- IA Prompt Engineer: Génération automatisée de notices DMCA et documents légaux
+
 Comprehensive copyright and intellectual property protection system providing
 automated copyright registration, DMCA compliance, and infringement detection.
 
@@ -10,43 +21,1023 @@ Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
 
 import asyncio
+import aiohttp
 import hashlib
+import hmac
 import json
 import logging
+import numpy as np
 import uuid
+import time
+import threading
+import sqlite3
+import redis
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from enum import Enum
-from typing import Any, Dict, List, Optional, Set, Tuple
+from typing import Any, Dict, List, Optional, Set, Tuple, Union, Callable
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from cryptography.fernet import Fernet
+from cryptography.hazmat.primitives import hashes, serialization
+from cryptography.hazmat.primitives.asymmetric import rsa, padding
+import base64
+import os
+import mimetypes
+from PIL import Image
+import imagehash
+import librosa
+import cv2
 
 logger = logging.getLogger(__name__)
 
+# Enterprise Configuration
+BLOCKCHAIN_ENDPOINT = os.environ.get('BLOCKCHAIN_ENDPOINT', 'https://blockchain-api.ainflue.com')
+COPYRIGHT_REGISTRY_API = os.environ.get('COPYRIGHT_REGISTRY_API', 'https://copyright-api.ainflue.com')
+FINGERPRINT_STORAGE = os.environ.get('FINGERPRINT_STORAGE', '/var/lib/ainflue/fingerprints')
+
 
 class CopyrightStatus(Enum):
-    """Copyright protection status"""
+    """Enhanced copyright protection status with enterprise states"""
     REGISTERED = "registered"
     PENDING = "pending"
     REJECTED = "rejected"
     DISPUTED = "disputed"
     EXPIRED = "expired"
+    UNDER_REVIEW = "under_review"
+    PROVISIONAL = "provisional"
+    INTERNATIONAL_PENDING = "international_pending"
+    BLOCKCHAIN_VERIFIED = "blockchain_verified"
+    AI_VALIDATED = "ai_validated"
 
 
 class InfringementSeverity(Enum):
-    """Copyright infringement severity levels"""
-    LOW = "low"
-    MEDIUM = "medium"
-    HIGH = "high"
-    CRITICAL = "critical"
+    """Advanced copyright infringement severity levels with ML classification"""
+    MINIMAL = "minimal"           # <10% similarity
+    LOW = "low"                  # 10-30% similarity
+    MEDIUM = "medium"            # 30-60% similarity
+    HIGH = "high"                # 60-85% similarity
+    CRITICAL = "critical"        # 85-95% similarity
+    EXACT_DUPLICATE = "exact_duplicate"  # >95% similarity
+    COMMERCIAL_INFRINGEMENT = "commercial_infringement"
+    MASS_DISTRIBUTION = "mass_distribution"
 
 
 class DMCAStatus(Enum):
-    """DMCA takedown notice status"""
+    """Comprehensive DMCA takedown notice status tracking"""
     DRAFT = "draft"
     SENT = "sent"
     ACKNOWLEDGED = "acknowledged"
     COMPLIED = "complied"
     DISPUTED = "disputed"
     EXPIRED = "expired"
+    COUNTER_NOTICED = "counter_noticed"
+    LEGAL_ACTION = "legal_action"
+    SETTLED = "settled"
+    AUTOMATED = "automated"      # AI-generated and sent
+
+
+class MediaType(Enum):
+    """Media types for copyright protection"""
+    TEXT = "text"
+    IMAGE = "image"
+    AUDIO = "audio"
+    VIDEO = "video"
+    DOCUMENT = "document"
+    CODE = "code"
+    DESIGN = "design"
+    MULTIMEDIA = "multimedia"
+
+
+class AudioFingerprintMethod(Enum):
+    """Audio fingerprinting methods (Audio Engineer expertise)"""
+    CHROMAPRINT = "chromaprint"
+    MFCC = "mfcc"
+    SPECTRAL_CENTROID = "spectral_centroid"
+    TEMPO_BEAT = "tempo_beat"
+    HARMONIC_PERCUSSIVE = "harmonic_percussive"
+    ZERO_CROSSING_RATE = "zero_crossing_rate"
+    SPECTRAL_ROLLOFF = "spectral_rolloff"
+    MEL_SPECTROGRAM = "mel_spectrogram"
+
+
+@dataclass
+class CopyrightWork:
+    """Enhanced copyright work registration with enterprise metadata"""
+    work_id: str
+    title: str
+    creator_id: str
+    media_type: MediaType
+    creation_date: datetime
+    registration_date: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+    status: CopyrightStatus = CopyrightStatus.PENDING
+    jurisdictions: List[str] = field(default_factory=lambda: ['US'])
+    license_terms: Optional[str] = None
+    fingerprints: Dict[str, str] = field(default_factory=dict)
+    blockchain_hash: Optional[str] = None
+    ai_validation_score: float = 0.0
+    metadata: Dict[str, Any] = field(default_factory=dict)
+    collaborators: List[str] = field(default_factory=list)
+    derivative_works: List[str] = field(default_factory=list)
+    commercial_use_allowed: bool = False
+    attribution_required: bool = True
+    
+    # Audio-specific fields (Audio Engineer)
+    audio_fingerprints: Dict[AudioFingerprintMethod, str] = field(default_factory=dict)
+    audio_metadata: Dict[str, Any] = field(default_factory=dict)
+    
+    # Security fields (Security Engineer)
+    encryption_key: Optional[str] = None
+    digital_signature: Optional[str] = None
+    access_controls: Dict[str, List[str]] = field(default_factory=dict)
+
+
+@dataclass
+class InfringementDetection:
+    """Advanced infringement detection result with ML analysis"""
+    detection_id: str
+    original_work_id: str
+    infringing_content_url: str
+    similarity_score: float
+    severity: InfringementSeverity
+    detection_method: str
+    confidence_level: float
+    detected_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+    evidence: Dict[str, Any] = field(default_factory=dict)
+    
+    # ML Analysis results
+    ml_features: Dict[str, float] = field(default_factory=dict)
+    visual_similarity: Optional[float] = None
+    audio_similarity: Optional[float] = None
+    text_similarity: Optional[float] = None
+    
+    # Legal assessment
+    legal_risk_score: float = 0.0
+    recommended_action: str = "review"
+    dmca_eligible: bool = True
+    
+    # Investigation metadata
+    investigator_id: Optional[str] = None
+    investigation_notes: List[str] = field(default_factory=list)
+    status: str = "detected"
+
+
+@dataclass
+class DMCANotice:
+    """Comprehensive DMCA takedown notice with legal compliance"""
+    notice_id: str
+    copyright_work_id: str
+    infringing_url: str
+    copyright_owner: str
+    agent_contact: str
+    status: DMCAStatus = DMCAStatus.DRAFT
+    created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+    sent_at: Optional[datetime] = None
+    response_deadline: Optional[datetime] = None
+    
+    # Legal content
+    legal_statement: str = ""
+    good_faith_statement: str = ""
+    perjury_statement: str = ""
+    signature: str = ""
+    
+    # Service provider info
+    service_provider: str = ""
+    service_provider_contact: str = ""
+    
+    # Response tracking
+    response_received: bool = False
+    response_content: Optional[str] = None
+    compliance_achieved: bool = False
+    
+    # AI generation metadata
+    ai_generated: bool = False
+    ai_model_used: Optional[str] = None
+    human_reviewed: bool = False
+
+
+class EnterpriseFingerprintEngine:
+    """Enterprise-grade content fingerprinting (ML + Audio Engineer expertise)"""
+    
+    def __init__(self):
+        self.fingerprint_cache = {}
+        self.similarity_threshold = 0.85
+        self.audio_sample_rate = 44100
+        self.image_hash_size = 16
+        self.ml_models = {}
+        
+        # Audio fingerprinting parameters (Audio Engineer)
+        self.audio_config = {
+            'n_mfcc': 13,
+            'n_fft': 2048,
+            'hop_length': 512,
+            'n_chroma': 12,
+            'n_tempo': 100
+        }
+    
+    async def generate_content_fingerprint(self, content_path: str, 
+                                         media_type: MediaType) -> Dict[str, str]:
+        """Generate comprehensive content fingerprints using multiple methods"""
+        fingerprints = {}
+        
+        try:
+            if media_type == MediaType.IMAGE:
+                fingerprints.update(await self._generate_image_fingerprints(content_path))
+            elif media_type == MediaType.AUDIO:
+                fingerprints.update(await self._generate_audio_fingerprints(content_path))
+            elif media_type == MediaType.VIDEO:
+                fingerprints.update(await self._generate_video_fingerprints(content_path))
+            elif media_type == MediaType.TEXT:
+                fingerprints.update(await self._generate_text_fingerprints(content_path))
+            elif media_type == MediaType.DOCUMENT:
+                fingerprints.update(await self._generate_document_fingerprints(content_path))
+            
+            # Generate universal hash for all content types
+            fingerprints['sha256'] = await self._generate_sha256_hash(content_path)
+            fingerprints['blake2b'] = await self._generate_blake2b_hash(content_path)
+            
+            logger.info(f"Generated {len(fingerprints)} fingerprints for {media_type.value}")
+            
+        except Exception as e:
+            logger.error(f"Fingerprint generation failed: {e}")
+            fingerprints['error'] = str(e)
+        
+        return fingerprints
+    
+    async def _generate_image_fingerprints(self, image_path: str) -> Dict[str, str]:
+        """Generate multiple image fingerprints for robust detection"""
+        fingerprints = {}
+        
+        try:
+            # Load image
+            image = Image.open(image_path)
+            
+            # Perceptual hashes
+            fingerprints['ahash'] = str(imagehash.average_hash(image, hash_size=self.image_hash_size))
+            fingerprints['phash'] = str(imagehash.phash(image, hash_size=self.image_hash_size))
+            fingerprints['dhash'] = str(imagehash.dhash(image, hash_size=self.image_hash_size))
+            fingerprints['whash'] = str(imagehash.whash(image, hash_size=self.image_hash_size))
+            
+            # Color histogram
+            fingerprints['color_histogram'] = self._calculate_color_histogram(image)
+            
+            # Edge detection features
+            fingerprints['edge_features'] = self._extract_edge_features(image_path)
+            
+            # SIFT keypoints (if OpenCV available)
+            fingerprints['sift_features'] = self._extract_sift_features(image_path)
+            
+        except Exception as e:
+            logger.error(f"Image fingerprint generation failed: {e}")
+            fingerprints['error'] = str(e)
+        
+        return fingerprints
+    
+    async def _generate_audio_fingerprints(self, audio_path: str) -> Dict[str, str]:
+        """Generate comprehensive audio fingerprints (Audio Engineer expertise)"""
+        fingerprints = {}
+        
+        try:
+            # Load audio file
+            y, sr = librosa.load(audio_path, sr=self.audio_sample_rate)
+            
+            # MFCC features
+            mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=self.audio_config['n_mfcc'])
+            fingerprints['mfcc'] = self._serialize_audio_feature(mfcc)
+            
+            # Chroma features
+            chroma = librosa.feature.chroma(y=y, sr=sr, n_chroma=self.audio_config['n_chroma'])
+            fingerprints['chroma'] = self._serialize_audio_feature(chroma)
+            
+            # Spectral centroid
+            spectral_centroid = librosa.feature.spectral_centroid(y=y, sr=sr)
+            fingerprints['spectral_centroid'] = self._serialize_audio_feature(spectral_centroid)
+            
+            # Zero crossing rate
+            zcr = librosa.feature.zero_crossing_rate(y)
+            fingerprints['zero_crossing_rate'] = self._serialize_audio_feature(zcr)
+            
+            # Spectral rolloff
+            spectral_rolloff = librosa.feature.spectral_rolloff(y=y, sr=sr)
+            fingerprints['spectral_rolloff'] = self._serialize_audio_feature(spectral_rolloff)
+            
+            # Tempo and beat tracking
+            tempo, beats = librosa.beat.beat_track(y=y, sr=sr)
+            fingerprints['tempo'] = str(tempo)
+            fingerprints['beat_frames'] = self._serialize_audio_feature(beats)
+            
+            # Harmonic-percussive separation
+            y_harmonic, y_percussive = librosa.effects.hpss(y)
+            harmonic_centroid = librosa.feature.spectral_centroid(y=y_harmonic, sr=sr)
+            percussive_centroid = librosa.feature.spectral_centroid(y=y_percussive, sr=sr)
+            fingerprints['harmonic_centroid'] = self._serialize_audio_feature(harmonic_centroid)
+            fingerprints['percussive_centroid'] = self._serialize_audio_feature(percussive_centroid)
+            
+            # Mel-frequency spectrogram
+            mel_spec = librosa.feature.melspectrogram(y=y, sr=sr)
+            fingerprints['mel_spectrogram'] = self._serialize_audio_feature(mel_spec)
+            
+            # Root Mean Square Energy
+            rms = librosa.feature.rms(y=y)
+            fingerprints['rms_energy'] = self._serialize_audio_feature(rms)
+            
+        except Exception as e:
+            logger.error(f"Audio fingerprint generation failed: {e}")
+            fingerprints['error'] = str(e)
+        
+        return fingerprints
+    
+    async def _generate_video_fingerprints(self, video_path: str) -> Dict[str, str]:
+        """Generate video fingerprints combining visual and audio analysis"""
+        fingerprints = {}
+        
+        try:
+            # Extract keyframes and generate image fingerprints
+            keyframes = self._extract_video_keyframes(video_path)
+            for i, frame in enumerate(keyframes[:10]):  # Process first 10 keyframes
+                frame_fingerprints = await self._generate_image_fingerprints(frame)
+                for key, value in frame_fingerprints.items():
+                    fingerprints[f'frame_{i}_{key}'] = value
+            
+            # Extract audio track and generate audio fingerprints
+            audio_path = self._extract_video_audio(video_path)
+            if audio_path:
+                audio_fingerprints = await self._generate_audio_fingerprints(audio_path)
+                for key, value in audio_fingerprints.items():
+                    fingerprints[f'audio_{key}'] = value
+            
+            # Video-specific features
+            fingerprints['duration'] = str(self._get_video_duration(video_path))
+            fingerprints['frame_rate'] = str(self._get_video_frame_rate(video_path))
+            fingerprints['resolution'] = self._get_video_resolution(video_path)
+            
+        except Exception as e:
+            logger.error(f"Video fingerprint generation failed: {e}")
+            fingerprints['error'] = str(e)
+        
+        return fingerprints
+    
+    async def _generate_text_fingerprints(self, text_path: str) -> Dict[str, str]:
+        """Generate text content fingerprints for plagiarism detection"""
+        fingerprints = {}
+        
+        try:
+            with open(text_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+            
+            # N-gram hashes
+            fingerprints['trigrams'] = self._generate_ngram_hash(content, 3)
+            fingerprints['pentagram'] = self._generate_ngram_hash(content, 5)
+            fingerprints['heptagram'] = self._generate_ngram_hash(content, 7)
+            
+            # Semantic fingerprints
+            fingerprints['word_frequency'] = self._generate_word_frequency_hash(content)
+            fingerprints['sentence_structure'] = self._analyze_sentence_structure(content)
+            
+            # Stylometric features
+            fingerprints['stylometry'] = self._extract_stylometric_features(content)
+            
+            # Content statistics
+            fingerprints['statistics'] = self._calculate_text_statistics(content)
+            
+        except Exception as e:
+            logger.error(f"Text fingerprint generation failed: {e}")
+            fingerprints['error'] = str(e)
+        
+        return fingerprints
+    
+    async def _generate_document_fingerprints(self, doc_path: str) -> Dict[str, str]:
+        """Generate document fingerprints for various formats"""
+        fingerprints = {}
+        
+        try:
+            # Extract text content
+            text_content = self._extract_document_text(doc_path)
+            if text_content:
+                text_fingerprints = await self._generate_text_fingerprints_from_content(text_content)
+                fingerprints.update(text_fingerprints)
+            
+            # Document metadata
+            metadata = self._extract_document_metadata(doc_path)
+            fingerprints['metadata_hash'] = hashlib.sha256(
+                json.dumps(metadata, sort_keys=True).encode()
+            ).hexdigest()
+            
+            # Structure analysis
+            fingerprints['structure'] = self._analyze_document_structure(doc_path)
+            
+        except Exception as e:
+            logger.error(f"Document fingerprint generation failed: {e}")
+            fingerprints['error'] = str(e)
+        
+        return fingerprints
+    
+    def _serialize_audio_feature(self, feature: np.ndarray) -> str:
+        """Serialize audio feature array to string hash"""
+        # Flatten and reduce precision for consistent hashing
+        flattened = feature.flatten()
+        reduced = np.round(flattened, decimals=3)
+        return hashlib.sha256(reduced.tobytes()).hexdigest()
+    
+    def _calculate_color_histogram(self, image: Image.Image) -> str:
+        """Calculate color histogram fingerprint"""
+        # Convert to RGB and calculate histogram
+        rgb_image = image.convert('RGB')
+        histogram = rgb_image.histogram()
+        return hashlib.sha256(str(histogram).encode()).hexdigest()
+    
+    def _extract_edge_features(self, image_path: str) -> str:
+        """Extract edge detection features using OpenCV"""
+        try:
+            import cv2
+            image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+            edges = cv2.Canny(image, 100, 200)
+            edge_count = np.count_nonzero(edges)
+            return hashlib.sha256(str(edge_count).encode()).hexdigest()
+        except:
+            return "edge_extraction_failed"
+    
+    def _extract_sift_features(self, image_path: str) -> str:
+        """Extract SIFT keypoint features"""
+        try:
+            import cv2
+            image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+            sift = cv2.SIFT_create()
+            keypoints, descriptors = sift.detectAndCompute(image, None)
+            if descriptors is not None:
+                return hashlib.sha256(descriptors.tobytes()).hexdigest()
+            return "no_sift_features"
+        except:
+            return "sift_extraction_failed"
+    
+    async def _generate_sha256_hash(self, file_path: str) -> str:
+        """Generate SHA256 hash of file content"""
+        sha256_hash = hashlib.sha256()
+        with open(file_path, "rb") as f:
+            for byte_block in iter(lambda: f.read(4096), b""):
+                sha256_hash.update(byte_block)
+        return sha256_hash.hexdigest()
+    
+    async def _generate_blake2b_hash(self, file_path: str) -> str:
+        """Generate BLAKE2b hash for enhanced security"""
+        blake2b_hash = hashlib.blake2b()
+        with open(file_path, "rb") as f:
+            for byte_block in iter(lambda: f.read(4096), b""):
+                blake2b_hash.update(byte_block)
+        return blake2b_hash.hexdigest()
+    
+    def _extract_video_keyframes(self, video_path: str) -> List[str]:
+        """Extract keyframes from video for analysis"""
+        # Placeholder - would use ffmpeg or OpenCV
+        return []
+    
+    def _extract_video_audio(self, video_path: str) -> Optional[str]:
+        """Extract audio track from video"""
+        # Placeholder - would use ffmpeg
+        return None
+    
+    def _get_video_duration(self, video_path: str) -> float:
+        """Get video duration in seconds"""
+        return 0.0
+    
+    def _get_video_frame_rate(self, video_path: str) -> float:
+        """Get video frame rate"""
+        return 30.0
+    
+    def _get_video_resolution(self, video_path: str) -> str:
+        """Get video resolution"""
+        return "1920x1080"
+    
+    def _generate_ngram_hash(self, text: str, n: int) -> str:
+        """Generate n-gram hash for text similarity"""
+        words = text.lower().split()
+        ngrams = [' '.join(words[i:i+n]) for i in range(len(words)-n+1)]
+        ngram_str = '|'.join(sorted(set(ngrams)))
+        return hashlib.sha256(ngram_str.encode()).hexdigest()
+    
+    def _generate_word_frequency_hash(self, text: str) -> str:
+        """Generate word frequency fingerprint"""
+        words = text.lower().split()
+        word_freq = {}
+        for word in words:
+            word_freq[word] = word_freq.get(word, 0) + 1
+        
+        # Take top 50 most frequent words
+        top_words = sorted(word_freq.items(), key=lambda x: x[1], reverse=True)[:50]
+        freq_str = '|'.join([f"{word}:{count}" for word, count in top_words])
+        return hashlib.sha256(freq_str.encode()).hexdigest()
+    
+    def _analyze_sentence_structure(self, text: str) -> str:
+        """Analyze sentence structure patterns"""
+        sentences = text.split('.')
+        sentence_lengths = [len(s.split()) for s in sentences if s.strip()]
+        avg_length = sum(sentence_lengths) / len(sentence_lengths) if sentence_lengths else 0
+        return hashlib.sha256(f"avg_len:{avg_length:.2f}".encode()).hexdigest()
+    
+    def _extract_stylometric_features(self, text: str) -> str:
+        """Extract stylometric features for authorship analysis"""
+        words = text.split()
+        sentences = text.split('.')
+        
+        features = {
+            'avg_word_length': sum(len(word) for word in words) / len(words) if words else 0,
+            'avg_sentence_length': len(words) / len(sentences) if sentences else 0,
+            'punctuation_ratio': sum(1 for char in text if char in '.,!?;:') / len(text) if text else 0
+        }
+        
+        features_str = '|'.join([f"{k}:{v:.3f}" for k, v in features.items()])
+        return hashlib.sha256(features_str.encode()).hexdigest()
+    
+    def _calculate_text_statistics(self, text: str) -> str:
+        """Calculate comprehensive text statistics"""
+        stats = {
+            'char_count': len(text),
+            'word_count': len(text.split()),
+            'sentence_count': len(text.split('.')),
+            'paragraph_count': len(text.split('\n\n'))
+        }
+        
+        stats_str = '|'.join([f"{k}:{v}" for k, v in stats.items()])
+        return hashlib.sha256(stats_str.encode()).hexdigest()
+    
+    async def _generate_text_fingerprints_from_content(self, content: str) -> Dict[str, str]:
+        """Generate text fingerprints from string content"""
+        fingerprints = {}
+        
+        # N-gram hashes
+        fingerprints['trigrams'] = self._generate_ngram_hash(content, 3)
+        fingerprints['pentagram'] = self._generate_ngram_hash(content, 5)
+        
+        # Word frequency
+        fingerprints['word_frequency'] = self._generate_word_frequency_hash(content)
+        
+        # Stylometric features
+        fingerprints['stylometry'] = self._extract_stylometric_features(content)
+        
+        return fingerprints
+    
+    def _extract_document_text(self, doc_path: str) -> Optional[str]:
+        """Extract text content from various document formats"""
+        # Placeholder - would use libraries like python-docx, PyPDF2, etc.
+        return None
+    
+    def _extract_document_metadata(self, doc_path: str) -> Dict[str, Any]:
+        """Extract document metadata"""
+        # Placeholder - would extract creation date, author, etc.
+        return {}
+    
+    def _analyze_document_structure(self, doc_path: str) -> str:
+        """Analyze document structure and formatting"""
+        # Placeholder - would analyze headings, formatting, etc.
+        return "structure_analysis_placeholder"
+
+
+class MLInfringementDetector:
+    """Machine Learning-powered infringement detection (ML Engineer expertise)"""
+    
+    def __init__(self):
+        self.similarity_models = {}
+        self.feature_extractors = {}
+        self.classification_threshold = 0.75
+        self.ensemble_weights = {
+            'visual_similarity': 0.3,
+            'audio_similarity': 0.3,
+            'text_similarity': 0.2,
+            'metadata_similarity': 0.1,
+            'behavioral_similarity': 0.1
+        }
+    
+    async def detect_infringement(self, original_work: CopyrightWork, 
+                                suspicious_content: Dict[str, Any]) -> InfringementDetection:
+        """Comprehensive ML-powered infringement detection"""
+        detection_id = str(uuid.uuid4())
+        
+        # Initialize detection result
+        detection = InfringementDetection(
+            detection_id=detection_id,
+            original_work_id=original_work.work_id,
+            infringing_content_url=suspicious_content.get('url', ''),
+            similarity_score=0.0,
+            severity=InfringementSeverity.MINIMAL,
+            detection_method="ml_ensemble",
+            confidence_level=0.0
+        )
+        
+        try:
+            # Perform multi-modal similarity analysis
+            similarity_scores = await self._analyze_content_similarity(
+                original_work, suspicious_content
+            )
+            
+            # Calculate ensemble similarity score
+            ensemble_score = self._calculate_ensemble_score(similarity_scores)
+            detection.similarity_score = ensemble_score
+            
+            # Determine severity based on score
+            detection.severity = self._classify_infringement_severity(ensemble_score)
+            
+            # Calculate confidence level
+            detection.confidence_level = self._calculate_confidence_level(similarity_scores)
+            
+            # Extract ML features for analysis
+            detection.ml_features = self._extract_ml_features(similarity_scores)
+            
+            # Assess legal risk
+            detection.legal_risk_score = self._assess_legal_risk(
+                ensemble_score, detection.severity, suspicious_content
+            )
+            
+            # Recommend action
+            detection.recommended_action = self._recommend_action(
+                detection.severity, detection.legal_risk_score
+            )
+            
+            # Store individual similarity scores
+            detection.visual_similarity = similarity_scores.get('visual', 0.0)
+            detection.audio_similarity = similarity_scores.get('audio', 0.0)
+            detection.text_similarity = similarity_scores.get('text', 0.0)
+            
+            # Collect evidence
+            detection.evidence = self._collect_infringement_evidence(
+                original_work, suspicious_content, similarity_scores
+            )
+            
+            logger.info(f"Infringement detection completed: {detection_id} - "
+                       f"Score: {ensemble_score:.3f}, Severity: {detection.severity.value}")
+            
+        except Exception as e:
+            logger.error(f"Infringement detection failed: {e}")
+            detection.status = "error"
+            detection.investigation_notes.append(f"Detection error: {str(e)}")
+        
+        return detection
+    
+    async def _analyze_content_similarity(self, original_work: CopyrightWork, 
+                                        suspicious_content: Dict[str, Any]) -> Dict[str, float]:
+        """Analyze content similarity across multiple modalities"""
+        similarity_scores = {}
+        
+        # Visual similarity (for images/videos)
+        if original_work.media_type in [MediaType.IMAGE, MediaType.VIDEO]:
+            similarity_scores['visual'] = await self._calculate_visual_similarity(
+                original_work.fingerprints, suspicious_content.get('fingerprints', {})
+            )
+        
+        # Audio similarity (for audio/video)
+        if original_work.media_type in [MediaType.AUDIO, MediaType.VIDEO]:
+            similarity_scores['audio'] = await self._calculate_audio_similarity(
+                original_work.audio_fingerprints, suspicious_content.get('audio_fingerprints', {})
+            )
+        
+        # Text similarity (for text/documents)
+        if original_work.media_type in [MediaType.TEXT, MediaType.DOCUMENT]:
+            similarity_scores['text'] = await self._calculate_text_similarity(
+                original_work.fingerprints, suspicious_content.get('fingerprints', {})
+            )
+        
+        # Metadata similarity
+        similarity_scores['metadata'] = self._calculate_metadata_similarity(
+            original_work.metadata, suspicious_content.get('metadata', {})
+        )
+        
+        # Behavioral similarity (usage patterns)
+        similarity_scores['behavioral'] = await self._calculate_behavioral_similarity(
+            original_work, suspicious_content
+        )
+        
+        return similarity_scores
+    
+    async def _calculate_visual_similarity(self, original_fingerprints: Dict[str, str], 
+                                         suspicious_fingerprints: Dict[str, str]) -> float:
+        """Calculate visual similarity using multiple hash comparison methods"""
+        similarities = []
+        
+        # Perceptual hash comparison
+        for hash_type in ['ahash', 'phash', 'dhash', 'whash']:
+            if hash_type in original_fingerprints and hash_type in suspicious_fingerprints:
+                similarity = self._compare_perceptual_hashes(
+                    original_fingerprints[hash_type],
+                    suspicious_fingerprints[hash_type]
+                )
+                similarities.append(similarity)
+        
+        # Color histogram comparison
+        if 'color_histogram' in original_fingerprints and 'color_histogram' in suspicious_fingerprints:
+            color_similarity = self._compare_hash_strings(
+                original_fingerprints['color_histogram'],
+                suspicious_fingerprints['color_histogram']
+            )
+            similarities.append(color_similarity)
+        
+        # Edge feature comparison
+        if 'edge_features' in original_fingerprints and 'edge_features' in suspicious_fingerprints:
+            edge_similarity = self._compare_hash_strings(
+                original_fingerprints['edge_features'],
+                suspicious_fingerprints['edge_features']
+            )
+            similarities.append(edge_similarity)
+        
+        return max(similarities) if similarities else 0.0
+    
+    async def _calculate_audio_similarity(self, original_fingerprints: Dict[AudioFingerprintMethod, str], 
+                                        suspicious_fingerprints: Dict[str, str]) -> float:
+        """Calculate audio similarity using multiple audio features (Audio Engineer)"""
+        similarities = []
+        
+        # MFCC comparison
+        if AudioFingerprintMethod.MFCC in original_fingerprints and 'mfcc' in suspicious_fingerprints:
+            mfcc_similarity = self._compare_hash_strings(
+                original_fingerprints[AudioFingerprintMethod.MFCC],
+                suspicious_fingerprints['mfcc']
+            )
+            similarities.append(mfcc_similarity * 1.2)  # Higher weight for MFCC
+        
+        # Chroma comparison
+        if AudioFingerprintMethod.CHROMAPRINT in original_fingerprints and 'chroma' in suspicious_fingerprints:
+            chroma_similarity = self._compare_hash_strings(
+                original_fingerprints[AudioFingerprintMethod.CHROMAPRINT],
+                suspicious_fingerprints['chroma']
+            )
+            similarities.append(chroma_similarity * 1.1)
+        
+        # Spectral features comparison
+        spectral_features = ['spectral_centroid', 'spectral_rolloff']
+        for feature in spectral_features:
+            if feature in suspicious_fingerprints:
+                # Find corresponding original fingerprint
+                for method, fingerprint in original_fingerprints.items():
+                    if feature.lower() in method.value.lower():
+                        similarity = self._compare_hash_strings(fingerprint, suspicious_fingerprints[feature])
+                        similarities.append(similarity)
+                        break
+        
+        # Tempo comparison
+        if 'tempo' in suspicious_fingerprints:
+            tempo_similarity = self._compare_hash_strings(
+                original_fingerprints.get(AudioFingerprintMethod.TEMPO_BEAT, ''),
+                suspicious_fingerprints['tempo']
+            )
+            similarities.append(tempo_similarity * 0.8)  # Lower weight for tempo
+        
+        return max(similarities) if similarities else 0.0
+    
+    async def _calculate_text_similarity(self, original_fingerprints: Dict[str, str], 
+                                       suspicious_fingerprints: Dict[str, str]) -> float:
+        """Calculate text similarity using multiple text analysis methods"""
+        similarities = []
+        
+        # N-gram comparison
+        for ngram_type in ['trigrams', 'pentagram', 'heptagram']:
+            if ngram_type in original_fingerprints and ngram_type in suspicious_fingerprints:
+                ngram_similarity = self._compare_hash_strings(
+                    original_fingerprints[ngram_type],
+                    suspicious_fingerprints[ngram_type]
+                )
+                similarities.append(ngram_similarity)
+        
+        # Word frequency comparison
+        if 'word_frequency' in original_fingerprints and 'word_frequency' in suspicious_fingerprints:
+            freq_similarity = self._compare_hash_strings(
+                original_fingerprints['word_frequency'],
+                suspicious_fingerprints['word_frequency']
+            )
+            similarities.append(freq_similarity * 1.3)  # Higher weight for word frequency
+        
+        # Stylometric comparison
+        if 'stylometry' in original_fingerprints and 'stylometry' in suspicious_fingerprints:
+            style_similarity = self._compare_hash_strings(
+                original_fingerprints['stylometry'],
+                suspicious_fingerprints['stylometry']
+            )
+            similarities.append(style_similarity)
+        
+        return max(similarities) if similarities else 0.0
+    
+    def _calculate_metadata_similarity(self, original_metadata: Dict[str, Any], 
+                                     suspicious_metadata: Dict[str, Any]) -> float:
+        """Calculate metadata similarity"""
+        if not original_metadata or not suspicious_metadata:
+            return 0.0
+        
+        common_keys = set(original_metadata.keys()) & set(suspicious_metadata.keys())
+        if not common_keys:
+            return 0.0
+        
+        similarities = []
+        for key in common_keys:
+            if original_metadata[key] == suspicious_metadata[key]:
+                similarities.append(1.0)
+            else:
+                # Fuzzy comparison for strings
+                if isinstance(original_metadata[key], str) and isinstance(suspicious_metadata[key], str):
+                    similarity = self._calculate_string_similarity(
+                        original_metadata[key], suspicious_metadata[key]
+                    )
+                    similarities.append(similarity)
+                else:
+                    similarities.append(0.0)
+        
+        return sum(similarities) / len(similarities) if similarities else 0.0
+    
+    async def _calculate_behavioral_similarity(self, original_work: CopyrightWork, 
+                                             suspicious_content: Dict[str, Any]) -> float:
+        """Calculate behavioral similarity based on usage patterns"""
+        # Placeholder for behavioral analysis
+        # Would analyze upload patterns, user behavior, etc.
+        return 0.0
+    
+    def _calculate_ensemble_score(self, similarity_scores: Dict[str, float]) -> float:
+        """Calculate weighted ensemble similarity score"""
+        total_score = 0.0
+        total_weight = 0.0
+        
+        for modality, score in similarity_scores.items():
+            weight = self.ensemble_weights.get(modality, 0.0)
+            total_score += score * weight
+            total_weight += weight
+        
+        return total_score / total_weight if total_weight > 0 else 0.0
+    
+    def _classify_infringement_severity(self, similarity_score: float) -> InfringementSeverity:
+        """Classify infringement severity based on similarity score"""
+        if similarity_score >= 0.95:
+            return InfringementSeverity.EXACT_DUPLICATE
+        elif similarity_score >= 0.85:
+            return InfringementSeverity.CRITICAL
+        elif similarity_score >= 0.60:
+            return InfringementSeverity.HIGH
+        elif similarity_score >= 0.30:
+            return InfringementSeverity.MEDIUM
+        elif similarity_score >= 0.10:
+            return InfringementSeverity.LOW
+        else:
+            return InfringementSeverity.MINIMAL
+    
+    def _calculate_confidence_level(self, similarity_scores: Dict[str, float]) -> float:
+        """Calculate confidence level of the detection"""
+        if not similarity_scores:
+            return 0.0
+        
+        # Confidence is higher when multiple modalities agree
+        agreement_threshold = 0.5
+        high_scores = [score for score in similarity_scores.values() if score > agreement_threshold]
+        
+        base_confidence = max(similarity_scores.values()) if similarity_scores else 0.0
+        agreement_bonus = len(high_scores) / len(similarity_scores) * 0.2
+        
+        return min(base_confidence + agreement_bonus, 1.0)
+    
+    def _assess_legal_risk(self, similarity_score: float, severity: InfringementSeverity, 
+                          suspicious_content: Dict[str, Any]) -> float:
+        """Assess legal risk associated with the infringement"""
+        base_risk = similarity_score
+        
+        # Increase risk for commercial use
+        if suspicious_content.get('commercial_use', False):
+            base_risk *= 1.3
+        
+        # Increase risk for mass distribution
+        if suspicious_content.get('distribution_scale', 'small') == 'large':
+            base_risk *= 1.2
+        
+        # Increase risk for critical severity
+        if severity in [InfringementSeverity.CRITICAL, InfringementSeverity.EXACT_DUPLICATE]:
+            base_risk *= 1.1
+        
+        return min(base_risk, 1.0)
+    
+    def _recommend_action(self, severity: InfringementSeverity, legal_risk: float) -> str:
+        """Recommend action based on severity and legal risk"""
+        if severity == InfringementSeverity.EXACT_DUPLICATE or legal_risk > 0.9:
+            return "immediate_dmca_takedown"
+        elif severity in [InfringementSeverity.CRITICAL, InfringementSeverity.HIGH]:
+            return "dmca_takedown"
+        elif severity == InfringementSeverity.MEDIUM and legal_risk > 0.6:
+            return "cease_and_desist"
+        elif severity == InfringementSeverity.MEDIUM:
+            return "manual_review"
+        elif severity == InfringementSeverity.LOW:
+            return "monitor"
+        else:
+            return "no_action"
+    
+    def _collect_infringement_evidence(self, original_work: CopyrightWork, 
+                                     suspicious_content: Dict[str, Any], 
+                                     similarity_scores: Dict[str, float]) -> Dict[str, Any]:
+        """Collect comprehensive evidence for infringement case"""
+        evidence = {
+            'original_work_registration': {
+                'work_id': original_work.work_id,
+                'registration_date': original_work.registration_date.isoformat(),
+                'status': original_work.status.value,
+                'creator_id': original_work.creator_id
+            },
+            'similarity_analysis': similarity_scores,
+            'detection_timestamp': datetime.now(timezone.utc).isoformat(),
+            'suspicious_content_metadata': suspicious_content.get('metadata', {}),
+            'fingerprint_matches': self._identify_fingerprint_matches(
+                original_work.fingerprints, 
+                suspicious_content.get('fingerprints', {})
+            )
+        }
+        
+        # Add blockchain verification if available
+        if original_work.blockchain_hash:
+            evidence['blockchain_verification'] = {
+                'hash': original_work.blockchain_hash,
+                'verified': True  # Would verify against blockchain
+            }
+        
+        return evidence
+    
+    def _identify_fingerprint_matches(self, original_fingerprints: Dict[str, str], 
+                                    suspicious_fingerprints: Dict[str, str]) -> List[Dict[str, Any]]:
+        """Identify specific fingerprint matches as evidence"""
+        matches = []
+        
+        for fingerprint_type, original_hash in original_fingerprints.items():
+            if fingerprint_type in suspicious_fingerprints:
+                suspicious_hash = suspicious_fingerprints[fingerprint_type]
+                similarity = self._compare_hash_strings(original_hash, suspicious_hash)
+                
+                if similarity > 0.7:  # High similarity threshold for evidence
+                    matches.append({
+                        'fingerprint_type': fingerprint_type,
+                        'similarity_score': similarity,
+                        'original_hash': original_hash[:16] + "...",  # Truncated for security
+                        'suspicious_hash': suspicious_hash[:16] + "..."
+                    })
+        
+        return matches
+    
+    def _compare_perceptual_hashes(self, hash1: str, hash2: str) -> float:
+        """Compare perceptual hashes and return similarity score"""
+        try:
+            # Convert hex strings to integers and calculate Hamming distance
+            int1 = int(hash1, 16)
+            int2 = int(hash2, 16)
+            
+            # XOR and count differing bits
+            xor_result = int1 ^ int2
+            hamming_distance = bin(xor_result).count('1')
+            
+            # Convert to similarity score (lower distance = higher similarity)
+            max_distance = len(hash1) * 4  # 4 bits per hex character
+            similarity = 1.0 - (hamming_distance / max_distance)
+            
+            return max(0.0, similarity)
+            
+        except:
+            return 0.0
+    
+    def _compare_hash_strings(self, hash1: str, hash2: str) -> float:
+        """Compare hash strings for exact or near matches"""
+        if not hash1 or not hash2:
+            return 0.0
+        
+        if hash1 == hash2:
+            return 1.0
+        
+        # Calculate character-level similarity for near matches
+        return self._calculate_string_similarity(hash1, hash2)
+    
+    def _calculate_string_similarity(self, str1: str, str2: str) -> float:
+        """Calculate string similarity using Levenshtein distance"""
+        if not str1 or not str2:
+            return 0.0
+        
+        # Simple character-based similarity
+        max_len = max(len(str1), len(str2))
+        min_len = min(len(str1), len(str2))
+        
+        if max_len == 0:
+            return 1.0
+        
+        # Count matching characters at same positions
+        matches = sum(1 for i in range(min_len) if str1[i] == str2[i])
+        
+        # Normalize by maximum length
+        return matches / max_len
+    
+    def _extract_ml_features(self, similarity_scores: Dict[str, float]) -> Dict[str, float]:
+        """Extract ML features for further analysis"""
+        features = similarity_scores.copy()
+        
+        # Add derived features
+        features['max_similarity'] = max(similarity_scores.values()) if similarity_scores else 0.0
+        features['avg_similarity'] = sum(similarity_scores.values()) / len(similarity_scores) if similarity_scores else 0.0
+        features['similarity_variance'] = self._calculate_variance(list(similarity_scores.values()))
+        features['modality_count'] = len(similarity_scores)
+        
+        return features
+    
+    def _calculate_variance(self, values: List[float]) -> float:
+        """Calculate variance of similarity scores"""
+        if len(values) < 2:
+            return 0.0
+        
+        mean = sum(values) / len(values)
+        variance = sum((x - mean) ** 2 for x in values) / len(values)
+        return variance
 
 
 @dataclass
