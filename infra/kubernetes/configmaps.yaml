@@ -1,0 +1,312 @@
+# Ainflue Infrastructure Module
+# =============================
+# 
+# Enterprise-grade Kubernetes ConfigMaps for Ainflue platform
+# Supports multi-cloud deployment and enterprise security
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+#
+# ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ainflue-config
+  namespace: ainflue-platform
+  labels:
+    app: ainflue-platform
+    component: configuration
+    version: v1.0.0
+data:
+  environment: "production"
+  log-level: "INFO"
+  debug: "false"
+  
+  # Database Configuration
+  database-host: "ainflue-postgres.ainflue-db.svc.cluster.local"
+  database-port: "5432"
+  database-name: "ainflue_production"
+  database-pool-size: "20"
+  database-max-overflow: "30"
+  
+  # Redis Configuration
+  redis-host: "ainflue-redis.ainflue-cache.svc.cluster.local"
+  redis-port: "6379"
+  redis-db: "0"
+  
+  # Application Configuration
+  app-name: "Ainflue Platform"
+  app-version: "v1.0.0"
+  api-version: "v1"
+  max-upload-size: "500MB"
+  allowed-file-types: "jpg,jpeg,png,gif,mp4,mov,avi,mp3,wav,flac,pdf,doc,docx"
+  
+  # Security Configuration
+  cors-origins: "https://ainflue.com,https://app.ainflue.com,https://admin.ainflue.com"
+  session-timeout: "3600"
+  max-login-attempts: "5"
+  password-min-length: "8"
+  
+  # AI/ML Configuration
+  ai-processing-timeout: "300"
+  ml-model-cache-size: "1000"
+  gpu-enabled: "true"
+  ai-batch-size: "32"
+  
+  # Content Processing
+  image-processing-quality: "90"
+  video-processing-preset: "fast"
+  audio-processing-bitrate: "320"
+  thumbnail-size: "300x300"
+  
+  # Storage Configuration
+  content-storage-bucket: "ainflue-content-production"
+  backup-storage-bucket: "ainflue-backup-production"
+  cdn-endpoint: "https://cdn.ainflue.com"
+  
+  # Monitoring Configuration
+  metrics-enabled: "true"
+  tracing-enabled: "true"
+  logging-format: "json"
+  prometheus-metrics-path: "/metrics"
+  
+  # Feature Flags
+  feature-ai-enhancement: "true"
+  feature-collaborative-editing: "true"
+  feature-advanced-analytics: "true"
+  feature-blockchain-integration: "false"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ainflue-worker-config
+  namespace: ainflue-platform
+  labels:
+    app: ainflue-worker
+    component: worker-configuration
+    version: v1.0.0
+data:
+  # Worker Configuration
+  worker-concurrency: "4"
+  worker-max-tasks-per-child: "1000"
+  worker-prefetch-multiplier: "1"
+  worker-timeout: "300"
+  
+  # Celery Configuration
+  celery-broker-pool-limit: "10"
+  celery-result-expires: "3600"
+  celery-task-routes: |
+    {
+      "ainflue.tasks.ai_processing": {"queue": "ai_processing"},
+      "ainflue.tasks.content_upload": {"queue": "content_upload"},
+      "ainflue.tasks.image_processing": {"queue": "image_processing"},
+      "ainflue.tasks.video_processing": {"queue": "video_processing"},
+      "ainflue.tasks.audio_processing": {"queue": "audio_processing"},
+      "ainflue.tasks.analytics": {"queue": "analytics"},
+      "ainflue.tasks.notifications": {"queue": "notifications"},
+      "ainflue.tasks.backup": {"queue": "backup"}
+    }
+  
+  # Queue Configuration
+  queue-ai-processing-priority: "9"
+  queue-content-upload-priority: "7"
+  queue-media-processing-priority: "6"
+  queue-analytics-priority: "4"
+  queue-notifications-priority: "3"
+  queue-backup-priority: "1"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ainflue-nginx-config
+  namespace: ainflue-platform
+  labels:
+    app: ainflue-nginx
+    component: proxy-configuration
+    version: v1.0.0
+data:
+  nginx.conf: |
+    user nginx;
+    worker_processes auto;
+    error_log /var/log/nginx/error.log warn;
+    pid /var/run/nginx.pid;
+    
+    events {
+        worker_connections 1024;
+        use epoll;
+        multi_accept on;
+    }
+    
+    http {
+        include /etc/nginx/mime.types;
+        default_type application/octet-stream;
+        
+        # Logging
+        log_format main '$remote_addr - $remote_user [$time_local] "$request" '
+                        '$status $body_bytes_sent "$http_referer" '
+                        '"$http_user_agent" "$http_x_forwarded_for"';
+        
+        access_log /var/log/nginx/access.log main;
+        
+        # Performance
+        sendfile on;
+        tcp_nopush on;
+        tcp_nodelay on;
+        keepalive_timeout 65;
+        types_hash_max_size 2048;
+        client_max_body_size 500M;
+        
+        # Security Headers
+        add_header X-Frame-Options "SAMEORIGIN" always;
+        add_header X-Content-Type-Options "nosniff" always;
+        add_header X-XSS-Protection "1; mode=block" always;
+        add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+        add_header Content-Security-Policy "default-src 'self'" always;
+        
+        # Gzip Compression
+        gzip on;
+        gzip_vary on;
+        gzip_proxied any;
+        gzip_comp_level 6;
+        gzip_types text/plain text/css text/xml text/javascript application/javascript application/xml+rss application/json;
+        
+        # Rate Limiting
+        limit_req_zone $binary_remote_addr zone=api:10m rate=10r/s;
+        limit_req_zone $binary_remote_addr zone=upload:10m rate=2r/s;
+        
+        # Upstream Configuration
+        upstream ainflue_api {
+            least_conn;
+            server ainflue-api-service:8000 max_fails=3 fail_timeout=30s;
+        }
+        
+        upstream ainflue_ai_engine {
+            least_conn;
+            server ainflue-ai-service:8001 max_fails=3 fail_timeout=30s;
+        }
+        
+        # Main Server Block
+        server {
+            listen 80;
+            server_name _;
+            return 301 https://$host$request_uri;
+        }
+        
+        server {
+            listen 443 ssl http2;
+            server_name api.ainflue.com;
+            
+            # SSL Configuration
+            ssl_certificate /etc/ssl/certs/ainflue.crt;
+            ssl_certificate_key /etc/ssl/private/ainflue.key;
+            ssl_protocols TLSv1.2 TLSv1.3;
+            ssl_ciphers ECDHE-RSA-AES256-GCM-SHA512:DHE-RSA-AES256-GCM-SHA512:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384;
+            ssl_prefer_server_ciphers off;
+            
+            # API Routes
+            location /api/ {
+                limit_req zone=api burst=20 nodelay;
+                proxy_pass http://ainflue_api;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+                proxy_connect_timeout 60s;
+                proxy_send_timeout 60s;
+                proxy_read_timeout 60s;
+            }
+            
+            # AI Processing Routes
+            location /ai/ {
+                limit_req zone=api burst=10 nodelay;
+                proxy_pass http://ainflue_ai_engine;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+                proxy_connect_timeout 300s;
+                proxy_send_timeout 300s;
+                proxy_read_timeout 300s;
+            }
+            
+            # Upload Routes
+            location /upload/ {
+                limit_req zone=upload burst=5 nodelay;
+                proxy_pass http://ainflue_api;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+                client_max_body_size 500M;
+                proxy_connect_timeout 300s;
+                proxy_send_timeout 300s;
+                proxy_read_timeout 300s;
+            }
+            
+            # Health Check
+            location /health {
+                access_log off;
+                return 200 "healthy\n";
+                add_header Content-Type text/plain;
+            }
+        }
+    }
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ainflue-monitoring-config
+  namespace: ainflue-platform
+  labels:
+    app: ainflue-monitoring
+    component: monitoring-configuration
+    version: v1.0.0
+data:
+  # Prometheus Configuration
+  prometheus.yml: |
+    global:
+      scrape_interval: 15s
+      evaluation_interval: 15s
+    
+    scrape_configs:
+    - job_name: 'ainflue-api'
+      static_configs:
+      - targets: ['ainflue-api-service:8000']
+      metrics_path: '/metrics'
+      scrape_interval: 30s
+    
+    - job_name: 'ainflue-worker'
+      static_configs:
+      - targets: ['ainflue-worker-service:9090']
+      metrics_path: '/metrics'
+      scrape_interval: 30s
+    
+    - job_name: 'nginx'
+      static_configs:
+      - targets: ['ainflue-nginx-service:9113']
+      metrics_path: '/metrics'
+      scrape_interval: 30s
+  
+  # Grafana Dashboard Configuration
+  grafana-dashboard.json: |
+    {
+      "dashboard": {
+        "title": "Ainflue Platform Monitoring",
+        "panels": [
+          {
+            "title": "API Response Time",
+            "type": "graph",
+            "targets": [
+              {
+                "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m]))",
+                "legendFormat": "95th percentile"
+              }
+            ]
+          }
+        ]
+      }
+    }
