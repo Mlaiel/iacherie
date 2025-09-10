@@ -60,6 +60,42 @@ class PsychographicData:
     content_motivations: List[str]
 
 
+@dataclass
+class AudienceSegment:
+    """Audience segment definition"""
+    segment_id: str
+    segment_name: str
+    criteria: Dict[str, Any]
+    size_percentage: float
+    characteristics: Dict[str, Any]
+    engagement_patterns: Dict[str, Any]
+    content_preferences: List[str]
+    optimal_timing: Dict[str, Any]
+
+
+@dataclass
+class ProfileInsight:
+    """Audience profile insight"""
+    insight_id: str
+    insight_type: str
+    description: str
+    confidence_score: float
+    actionable_recommendations: List[str]
+    supporting_data: Dict[str, Any]
+
+
+@dataclass
+class EngagementPattern:
+    """Audience engagement pattern"""
+    pattern_id: str
+    pattern_type: str
+    frequency: str
+    peak_times: List[str]
+    content_types: List[str]
+    engagement_metrics: Dict[str, float]
+    seasonal_variations: Dict[str, Any]
+
+
 class AudienceProfiler:
     """Advanced audience profiling engine"""
     
