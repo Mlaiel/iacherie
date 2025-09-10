@@ -14,24 +14,43 @@ import logging
 # Setup module logger
 core_logger = logging.getLogger(__name__)
 
-# Core Foundation Components
-from .logging import logger, get_logger, set_log_level
-from .middleware import (
-    RequestLoggingMiddleware, CORSMiddleware, RateLimitMiddleware, SecurityHeadersMiddleware,
-    create_logging_middleware, create_cors_middleware, create_rate_limit_middleware, create_security_headers_middleware
-)
-from .security import (
-    SecurityManager, TokenManager, SecurityValidator,
-    create_security_manager, create_token_manager, create_security_validator
-)
-from .auth import (
-    User, AuthenticationManager, AuthorizationManager,
-    create_authentication_manager, create_authorization_manager, create_auth_system
-)
+# Core Foundation Components - Updated for reorganized structure
+try:
+    from .infrastructure.logging import logger, get_logger, set_log_level
+except ImportError as e:
+    core_logger.warning(f"Infrastructure logging not available: {e}")
+    # Create fallback logger
+    logger = core_logger
+    get_logger = lambda name=None: core_logger
+    set_log_level = lambda level: None
+
+try:
+    from .infrastructure.middleware import (
+        RequestLoggingMiddleware, CORSMiddleware, RateLimitMiddleware, SecurityHeadersMiddleware,
+        create_logging_middleware, create_cors_middleware, create_rate_limit_middleware, create_security_headers_middleware
+    )
+except ImportError as e:
+    core_logger.warning(f"Infrastructure middleware not available: {e}")
+
+try:
+    from .security.security import (
+        SecurityManager, TokenManager, SecurityValidator,
+        create_security_manager, create_token_manager, create_security_validator
+    )
+except ImportError as e:
+    core_logger.warning(f"Security components not available: {e}")
+
+try:
+    from .security.auth import (
+        User, AuthenticationManager, AuthorizationManager,
+        create_authentication_manager, create_authorization_manager, create_auth_system
+    )
+except ImportError as e:
+    core_logger.warning(f"Auth components not available: {e}")
 
 # Enterprise Business Logic Core Components (PHASE 1 - KRITISCH)
 try:
-    from .creator_multi_format_core import (
+    from .business.creator_multi_format_core import (
         CreatorMultiFormatCore,
         CreatorProfile,
         ContentProcessingRequest,
@@ -48,7 +67,7 @@ except ImportError as e:
     core_logger.warning(f"❌ Creator Multi-Format Core not available: {e}")
 
 try:
-    from .content_format_core import (
+    from .business.content_format_core import (
         ContentFormatCore,
         ContentMetadata,
         ProcessingOptions,
@@ -67,7 +86,7 @@ except ImportError as e:
     core_logger.warning(f"❌ Content Format Core not available: {e}")
 
 try:
-    from .ia_processing_core import (
+    from .ai.ia_processing_core import (
         IAProcessingCore,
         AIModelConfig,
         InferenceRequest,
@@ -85,7 +104,7 @@ except ImportError as e:
     core_logger.warning(f"❌ IA Processing Core not available: {e}")
 
 try:
-    from .ai_model_core import (
+    from .ai.ai_model_core import (
         AIModelCore,
         ModelConfiguration,
         ModelVersion,
@@ -104,7 +123,7 @@ except ImportError as e:
 
 # Protection Business Core (PHASE 2 - KRITISCH)
 try:
-    from .protection_business_core import (
+    from .security.protection_business_core import (
         ProtectionBusinessCore,
         ProtectionProfile,
         ViolationReport,
@@ -122,7 +141,7 @@ except ImportError as e:
 
 # Monetization Business Core (PHASE 2 - KRITISCH)
 try:
-    from .monetization_business_core import (
+    from .business.monetization_business_core import (
         MonetizationBusinessCore,
         RevenueStream,
         PaymentTransaction,
@@ -228,7 +247,7 @@ if ai_model_available:
 
 # Specialized Core Modules (PHASE 3 - ENTERPRISE SPECIALIZED)
 try:
-    from .content_ingestion_core import (
+    from .business.content_ingestion_core import (
         ContentIngestionCore,
         IngestionRequest,
         ValidationResult,
@@ -245,7 +264,7 @@ except ImportError as e:
     core_logger.warning(f"❌ Content Ingestion Core not available: {e}")
 
 try:
-    from .ml_pipeline_core import (
+    from .ai.ml_pipeline_core import (
         MLPipelineCore,
         PipelineConfiguration,
         PipelineExecution,
@@ -264,7 +283,7 @@ except ImportError as e:
     core_logger.warning(f"❌ ML Pipeline Core not available: {e}")
 
 try:
-    from .intelligent_analysis_core import (
+    from .ai.intelligent_analysis_core import (
         IntelligentAnalysisCore,
         AnalysisRequest,
         IntelligentAnalysisResult,
@@ -287,7 +306,7 @@ except ImportError as e:
     core_logger.warning(f"❌ Intelligent Analysis Core not available: {e}")
 
 try:
-    from .copyright_fingerprinting_core import (
+    from .security.copyright_fingerprinting_core import (
         CopyrightFingerprintingCore,
         ContentFingerprint,
         FingerprintMatch,
@@ -305,7 +324,7 @@ except ImportError as e:
     core_logger.warning(f"❌ Copyright Fingerprinting Core not available: {e}")
 
 try:
-    from .performance_monitoring_core import (
+    from .infrastructure.performance_monitoring_core import (
         PerformanceMonitoringCore,
         PerformanceMetric,
         PerformanceAlert,
