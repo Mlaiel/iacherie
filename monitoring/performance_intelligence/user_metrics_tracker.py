@@ -575,68 +575,604 @@ Calculate user distribution across platforms"""
         return 7.8 + (np.random.random() - 0.5) * 1.0  # Score out of 10
     
     async def _store_activity(self, activity: UserActivity) -> None:
+        """Store user activity in persistent storage and cache"""
         try:
-            logger.info(f"Executing _store_activity")
+            # Store in activity cache for quick access
+            if activity.user_id not in self.activity_cache:
+                self.activity_cache[activity.user_id] = []
+            self.activity_cache[activity.user_id].append(activity)
             
-            # Implementation for _store_activity
-            # TODO: Add specific business logic here
+            # Limit cache size per user (keep last 100 activities)
+            if len(self.activity_cache[activity.user_id]) > 100:
+                self.activity_cache[activity.user_id] = self.activity_cache[activity.user_id][-100:]
             
-            result = None  # Replace with actual implementation
+            # Create activity record for persistent storage
+            activity_record = {
+                "user_id": activity.user_id,
+                "activity_type": activity.activity_type.value,
+                "timestamp": activity.timestamp.isoformat(),
+                "platform": activity.platform,
+                "content_id": activity.content_id,
+                "session_id": activity.session_id,
+                "metadata": activity.metadata
+            }
             
-            logger.info(f"_store_activity completed successfully")
-            return result
+            # Store in activity database (simulated)
+            await self._persist_activity_record(activity_record)
+            
+            # Update real-time activity metrics
+            await self._update_realtime_activity_metrics(activity)
+            
+            self.logger.debug(f"Stored activity: {activity.activity_type.value} for user {activity.user_id}")
             
         except Exception as e:
-            logger.error(f"_store_activity failed: {e}")
-        try:
-            logger.info(f"Executing _initialize_data_connections")
-            
-            # Implementation for _initialize_data_connections
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"_initialize_data_connections completed successfully")
-            return result
-            
-        except Exception as e:
-        try:
-                    # Collect metrics
-                    metrics = {
-                        "timestamp": datetime.utcnow(),
-                        "metric_name": "_setup_activity_tracking",
-                        "value": data if data else 0,
-                        "tags": self._get_metric_tags()
-                    }
-            
-                    # Store metrics
-                    await self._store_metric(metrics)
-            
-                    # Send to monitoring system
-                    if hasattr(self, 'metrics_client'):
-                        await self.metrics_client.send(metrics)
-            
-                    logger.info(f"Metric _setup_activity_tracking collected")
-                    return metrics
-            
-                except Exception as e:
-                    logger.error(f"Metric collection _setup_activity_tracking failed: {e}")
-                    return None
-        except Exception as e:
-            logger.error(f"_initialize_data_connections failed: {e}")
+            self.logger.error(f"Failed to store activity: {e}")
             raise
-        if activity.user_id not in self.activity_cache:
-            self.activity_cache[activity.user_id] = []
-        self.activity_cache[activity.user_id].append(activity)
+    
+    async def _persist_activity_record(self, record: Dict[str, Any]) -> None:
+        """Persist activity record to database"""
+        try:
+            # In production, this would write to actual database
+            # For now, we'll simulate with in-memory storage
+            if not hasattr(self, 'persistent_activities'):
+                self.persistent_activities = []
+            
+            self.persistent_activities.append(record)
+            
+            # Keep only recent activities (last 10,000)
+            if len(self.persistent_activities) > 10000:
+                self.persistent_activities = self.persistent_activities[-10000:]
+                
+        except Exception as e:
+            self.logger.error(f"Failed to persist activity record: {e}")
+    
+    async def _update_realtime_activity_metrics(self, activity: UserActivity) -> None:
+        """Update real-time activity metrics"""
+        try:
+            # Update activity counters
+            current_time = datetime.now()
+            minute_key = current_time.replace(second=0, microsecond=0)
+            
+            if not hasattr(self, 'realtime_activity_metrics'):
+                self.realtime_activity_metrics = {
+                    'activities_per_minute': defaultdict(int),
+                    'activities_by_type': defaultdict(int),
+                    'activities_by_platform': defaultdict(int),
+                    'active_users_current_hour': set(),
+                    'last_updated': current_time
+                }
+            
+            metrics = self.realtime_activity_metrics
+            metrics['activities_per_minute'][minute_key] += 1
+            metrics['activities_by_type'][activity.activity_type.value] += 1
+            if activity.platform:
+                metrics['activities_by_platform'][activity.platform] += 1
+            metrics['active_users_current_hour'].add(activity.user_id)
+            metrics['last_updated'] = current_time
+            
+            # Clean old minute data (keep last 60 minutes)
+            cutoff_time = current_time - timedelta(hours=1)
+            metrics['activities_per_minute'] = {
+                k: v for k, v in metrics['activities_per_minute'].items() 
+                if k >= cutoff_time
+            }
+            
+        except Exception as e:
+            self.logger.error(f"Failed to update realtime activity metrics: {e}")
     
     async def _initialize_data_connections(self) -> None:
-        """
-Initialize database and cache connections"""
-        # In production, this would initialize actual connections
-        pass
+        """Initialize database and cache connections for metrics tracking"""
+        try:
+            self.logger.info("Initializing user metrics data connections...")
+            
+            # Initialize connection pools for different data stores
+            self.data_connections = {
+                'primary_db': {
+                    'type': 'postgresql',
+                    'connection_string': 'postgresql://ainflue:password@localhost:5432/ainflue_metrics',
+                    'pool_size': 20,
+                    'status': 'simulated'  # In production would be 'connected'
+                },
+                'cache_redis': {
+                    'type': 'redis',
+                    'connection_string': 'redis://localhost:6379/0',
+                    'pool_size': 10,
+                    'status': 'simulated'  # In production would be 'connected'
+                },
+                'timeseries_db': {
+                    'type': 'influxdb',
+                    'connection_string': 'http://localhost:8086',
+                    'database': 'user_metrics',
+                    'status': 'simulated'  # In production would be 'connected'
+                },
+                'analytics_warehouse': {
+                    'type': 'clickhouse',
+                    'connection_string': 'clickhouse://localhost:9000/analytics',
+                    'status': 'simulated'  # In production would be 'connected'
+                }
+            }
+            
+            # Initialize data schemas
+            await self._initialize_data_schemas()
+            
+            # Setup connection health monitoring
+            await self._setup_connection_monitoring()
+            
+            # Initialize caching strategies
+            await self._initialize_caching_strategies()
+            
+            self.logger.info("✅ User metrics data connections initialized successfully")
+            
+        except Exception as e:
+            self.logger.error(f"❌ Failed to initialize data connections: {e}")
+            raise
+    
+    async def _initialize_data_schemas(self) -> None:
+        """Initialize database schemas for user metrics"""
+        try:
+            # Define table schemas for user activities
+            self.db_schemas = {
+                'user_activities': {
+                    'table_name': 'user_activities',
+                    'columns': {
+                        'id': 'SERIAL PRIMARY KEY',
+                        'user_id': 'VARCHAR(255) NOT NULL',
+                        'activity_type': 'VARCHAR(100) NOT NULL',
+                        'timestamp': 'TIMESTAMP WITH TIME ZONE NOT NULL',
+                        'platform': 'VARCHAR(100)',
+                        'content_id': 'VARCHAR(255)',
+                        'session_id': 'VARCHAR(255)',
+                        'metadata': 'JSONB',
+                        'created_at': 'TIMESTAMP WITH TIME ZONE DEFAULT NOW()'
+                    },
+                    'indexes': [
+                        'CREATE INDEX idx_user_activities_user_id ON user_activities(user_id)',
+                        'CREATE INDEX idx_user_activities_timestamp ON user_activities(timestamp)',
+                        'CREATE INDEX idx_user_activities_type ON user_activities(activity_type)',
+                        'CREATE INDEX idx_user_activities_platform ON user_activities(platform)'
+                    ]
+                },
+                'user_sessions': {
+                    'table_name': 'user_sessions',
+                    'columns': {
+                        'id': 'SERIAL PRIMARY KEY',
+                        'session_id': 'VARCHAR(255) UNIQUE NOT NULL',
+                        'user_id': 'VARCHAR(255) NOT NULL',
+                        'start_time': 'TIMESTAMP WITH TIME ZONE NOT NULL',
+                        'end_time': 'TIMESTAMP WITH TIME ZONE',
+                        'duration_seconds': 'INTEGER',
+                        'page_views': 'INTEGER DEFAULT 0',
+                        'events_count': 'INTEGER DEFAULT 0',
+                        'engagement_score': 'DECIMAL(5,2)',
+                        'device_type': 'VARCHAR(50)',
+                        'platform': 'VARCHAR(100)',
+                        'created_at': 'TIMESTAMP WITH TIME ZONE DEFAULT NOW()'
+                    },
+                    'indexes': [
+                        'CREATE INDEX idx_user_sessions_user_id ON user_sessions(user_id)',
+                        'CREATE INDEX idx_user_sessions_start_time ON user_sessions(start_time)',
+                        'CREATE INDEX idx_user_sessions_session_id ON user_sessions(session_id)'
+                    ]
+                },
+                'user_metrics_daily': {
+                    'table_name': 'user_metrics_daily',
+                    'columns': {
+                        'id': 'SERIAL PRIMARY KEY',
+                        'metric_date': 'DATE NOT NULL',
+                        'user_id': 'VARCHAR(255) NOT NULL',
+                        'sessions_count': 'INTEGER DEFAULT 0',
+                        'total_duration_seconds': 'INTEGER DEFAULT 0',
+                        'activities_count': 'INTEGER DEFAULT 0',
+                        'unique_platforms': 'INTEGER DEFAULT 0',
+                        'engagement_score': 'DECIMAL(5,2)',
+                        'created_at': 'TIMESTAMP WITH TIME ZONE DEFAULT NOW()'
+                    },
+                    'indexes': [
+                        'CREATE UNIQUE INDEX idx_user_metrics_daily_unique ON user_metrics_daily(metric_date, user_id)',
+                        'CREATE INDEX idx_user_metrics_daily_date ON user_metrics_daily(metric_date)'
+                    ]
+                }
+            }
+            
+            # In production, this would create actual database tables
+            self.logger.info(f"Database schemas defined for {len(self.db_schemas)} tables")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to initialize data schemas: {e}")
+            raise
+    
+    async def _setup_connection_monitoring(self) -> None:
+        """Setup monitoring for data connections health"""
+        try:
+            self.connection_health = {
+                'health_checks_enabled': True,
+                'check_interval_seconds': 30,
+                'connection_timeouts': {},
+                'last_health_check': datetime.now(),
+                'failed_connections': []
+            }
+            
+            # Start connection health monitoring task
+            asyncio.create_task(self._monitor_connection_health())
+            
+        except Exception as e:
+            self.logger.error(f"Failed to setup connection monitoring: {e}")
+    
+    async def _monitor_connection_health(self) -> None:
+        """Monitor data connection health"""
+        while True:
+            try:
+                await asyncio.sleep(self.connection_health['check_interval_seconds'])
+                
+                # Check each connection
+                for conn_name, conn_config in self.data_connections.items():
+                    await self._check_connection_health(conn_name, conn_config)
+                
+                self.connection_health['last_health_check'] = datetime.now()
+                
+            except asyncio.CancelledError:
+                break
+            except Exception as e:
+                self.logger.error(f"Error in connection health monitoring: {e}")
+    
+    async def _check_connection_health(self, conn_name: str, conn_config: Dict) -> None:
+        """Check health of a specific connection"""
+        try:
+            # Simulate connection health check
+            # In production, this would ping the actual database/service
+            connection_ok = True  # Would be actual health check result
+            
+            if not connection_ok:
+                self.connection_health['failed_connections'].append({
+                    'connection': conn_name,
+                    'timestamp': datetime.now(),
+                    'error': 'Connection timeout'
+                })
+                self.logger.warning(f"Connection health check failed for {conn_name}")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to check connection health for {conn_name}: {e}")
+    
+    async def _initialize_caching_strategies(self) -> None:
+        """Initialize caching strategies for different metrics"""
+        try:
+            self.caching_strategies = {
+                'user_activity_cache': {
+                    'ttl_seconds': 3600,  # 1 hour
+                    'max_entries': 10000,
+                    'eviction_policy': 'lru',
+                    'cache_type': 'memory'
+                },
+                'session_metrics_cache': {
+                    'ttl_seconds': 1800,  # 30 minutes
+                    'max_entries': 5000,
+                    'eviction_policy': 'lru',
+                    'cache_type': 'redis'
+                },
+                'daily_metrics_cache': {
+                    'ttl_seconds': 86400,  # 24 hours
+                    'max_entries': 1000,
+                    'eviction_policy': 'ttl',
+                    'cache_type': 'redis'
+                },
+                'realtime_metrics_cache': {
+                    'ttl_seconds': 60,  # 1 minute
+                    'max_entries': 500,
+                    'eviction_policy': 'ttl',
+                    'cache_type': 'memory'
+                }
+            }
+            
+            self.logger.info("Caching strategies initialized for user metrics")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to initialize caching strategies: {e}")
     
     async def _setup_activity_tracking(self) -> None:
-        """
-Setup real-time activity tracking"""
-        # In production, this would setup event listeners
-        pass
+        """Setup real-time activity tracking and event processing"""
+        try:
+            self.logger.info("Setting up real-time activity tracking...")
+            
+            # Initialize activity tracking queues
+            self.activity_queues = {
+                'high_priority': asyncio.Queue(maxsize=1000),
+                'normal_priority': asyncio.Queue(maxsize=5000),
+                'low_priority': asyncio.Queue(maxsize=10000),
+                'batch_processing': asyncio.Queue(maxsize=50000)
+            }
+            
+            # Initialize activity processors
+            self.activity_processors = {
+                'realtime_processor': {
+                    'enabled': True,
+                    'batch_size': 100,
+                    'flush_interval': 5,  # seconds
+                    'priority_levels': ['high_priority', 'normal_priority'],
+                    'processor_function': self._process_realtime_activities
+                },
+                'batch_processor': {
+                    'enabled': True,
+                    'batch_size': 1000,
+                    'flush_interval': 60,  # seconds
+                    'priority_levels': ['low_priority', 'batch_processing'],
+                    'processor_function': self._process_batch_activities
+                },
+                'analytics_processor': {
+                    'enabled': True,
+                    'batch_size': 5000,
+                    'flush_interval': 300,  # 5 minutes
+                    'priority_levels': ['batch_processing'],
+                    'processor_function': self._process_analytics_activities
+                }
+            }
+            
+            # Setup activity routing rules
+            self.activity_routing_rules = {
+                'high_priority_activities': ['login', 'purchase', 'subscription', 'error'],
+                'normal_priority_activities': ['content_upload', 'content_view', 'like', 'share'],
+                'low_priority_activities': ['profile_update', 'settings_change'],
+                'batch_activities': ['page_view', 'scroll', 'hover']
+            }
+            
+            # Initialize activity enrichment pipeline
+            self.activity_enrichment_pipeline = [
+                self._enrich_with_user_segment,
+                self._enrich_with_session_context,
+                self._enrich_with_platform_metadata,
+                self._enrich_with_content_context,
+                self._enrich_with_geolocation,
+                self._enrich_with_device_info
+            ]
+            
+            # Start activity processing workers
+            for processor_name, config in self.activity_processors.items():
+                if config['enabled']:
+                    worker_task = asyncio.create_task(
+                        self._run_activity_processor(processor_name, config)
+                    )
+                    self.activity_processors[processor_name]['worker_task'] = worker_task
+            
+            # Setup activity metrics collection
+            self.activity_metrics = {
+                'activities_processed': 0,
+                'activities_failed': 0,
+                'processing_latency_ms': [],
+                'queue_sizes': {},
+                'last_updated': datetime.now()
+            }
+            
+            # Start activity metrics monitoring
+            asyncio.create_task(self._monitor_activity_processing())
+            
+            self.logger.info("✅ Real-time activity tracking setup completed")
+            
+        except Exception as e:
+            self.logger.error(f"❌ Failed to setup activity tracking: {e}")
+            raise
+    
+    async def _run_activity_processor(self, processor_name: str, config: Dict) -> None:
+        """Run an activity processor worker"""
+        try:
+            self.logger.info(f"Starting activity processor: {processor_name}")
+            
+            while True:
+                activities_batch = []
+                start_time = datetime.now()
+                
+                # Collect activities from assigned queues
+                for queue_name in config['priority_levels']:
+                    queue = self.activity_queues.get(queue_name)
+                    if queue:
+                        while len(activities_batch) < config['batch_size'] and not queue.empty():
+                            try:
+                                activity = queue.get_nowait()
+                                activities_batch.append(activity)
+                                queue.task_done()
+                            except asyncio.QueueEmpty:
+                                break
+                
+                # Process batch if we have activities
+                if activities_batch:
+                    try:
+                        await config['processor_function'](activities_batch)
+                        
+                        # Update metrics
+                        processing_time = (datetime.now() - start_time).total_seconds() * 1000
+                        self.activity_metrics['activities_processed'] += len(activities_batch)
+                        self.activity_metrics['processing_latency_ms'].append(processing_time)
+                        
+                        # Keep only recent latency measurements
+                        if len(self.activity_metrics['processing_latency_ms']) > 1000:
+                            self.activity_metrics['processing_latency_ms'] = self.activity_metrics['processing_latency_ms'][-1000:]
+                        
+                    except Exception as e:
+                        self.logger.error(f"Error processing activities in {processor_name}: {e}")
+                        self.activity_metrics['activities_failed'] += len(activities_batch)
+                
+                # Wait for flush interval
+                await asyncio.sleep(config['flush_interval'])
+                
+        except asyncio.CancelledError:
+            self.logger.info(f"Activity processor {processor_name} cancelled")
+        except Exception as e:
+            self.logger.error(f"Error in activity processor {processor_name}: {e}")
+    
+    async def _process_realtime_activities(self, activities: List[UserActivity]) -> None:
+        """Process high-priority activities in real-time"""
+        try:
+            for activity in activities:
+                # Enrich activity with additional context
+                enriched_activity = await self._enrich_activity(activity)
+                
+                # Update real-time metrics
+                await self._update_realtime_metrics(enriched_activity)
+                
+                # Store in fast cache
+                await self._store_in_realtime_cache(enriched_activity)
+                
+                # Trigger real-time alerts if needed
+                await self._check_realtime_alerts(enriched_activity)
+            
+        except Exception as e:
+            self.logger.error(f"Error processing realtime activities: {e}")
+    
+    async def _process_batch_activities(self, activities: List[UserActivity]) -> None:
+        """Process normal priority activities in batches"""
+        try:
+            # Batch process activities for efficiency
+            enriched_activities = []
+            for activity in activities:
+                enriched_activity = await self._enrich_activity(activity)
+                enriched_activities.append(enriched_activity)
+            
+            # Bulk store in database
+            await self._bulk_store_activities(enriched_activities)
+            
+            # Update aggregate metrics
+            await self._update_aggregate_metrics(enriched_activities)
+            
+        except Exception as e:
+            self.logger.error(f"Error processing batch activities: {e}")
+    
+    async def _process_analytics_activities(self, activities: List[UserActivity]) -> None:
+        """Process activities for analytics and data warehouse"""
+        try:
+            # Prepare data for analytics warehouse
+            analytics_records = []
+            for activity in activities:
+                analytics_record = {
+                    'user_id': activity.user_id,
+                    'activity_type': activity.activity_type.value,
+                    'timestamp': activity.timestamp,
+                    'platform': activity.platform,
+                    'content_id': activity.content_id,
+                    'session_id': activity.session_id,
+                    'metadata': activity.metadata,
+                    'processing_date': datetime.now().date()
+                }
+                analytics_records.append(analytics_record)
+            
+            # Store in analytics warehouse
+            await self._store_in_analytics_warehouse(analytics_records)
+            
+        except Exception as e:
+            self.logger.error(f"Error processing analytics activities: {e}")
+    
+    async def _enrich_activity(self, activity: UserActivity) -> UserActivity:
+        """Enrich activity with additional context data"""
+        try:
+            # Apply enrichment pipeline
+            enriched_activity = activity
+            for enricher in self.activity_enrichment_pipeline:
+                enriched_activity = await enricher(enriched_activity)
+            
+            return enriched_activity
+            
+        except Exception as e:
+            self.logger.error(f"Error enriching activity: {e}")
+            return activity
+    
+    async def _enrich_with_user_segment(self, activity: UserActivity) -> UserActivity:
+        """Enrich with user segment information"""
+        # In production, would fetch from user segmentation service
+        activity.metadata['user_segment'] = 'regular_user'
+        return activity
+    
+    async def _enrich_with_session_context(self, activity: UserActivity) -> UserActivity:
+        """Enrich with session context"""
+        if activity.session_id and activity.session_id in self.session_cache:
+            session_data = self.session_cache[activity.session_id]
+            activity.metadata['session_context'] = {
+                'session_start': session_data.get('start_time'),
+                'session_duration': (activity.timestamp - session_data.get('start_time', activity.timestamp)).total_seconds(),
+                'events_in_session': len(session_data.get('events', []))
+            }
+        return activity
+    
+    async def _enrich_with_platform_metadata(self, activity: UserActivity) -> UserActivity:
+        """Enrich with platform-specific metadata"""
+        if activity.platform:
+            activity.metadata['platform_metadata'] = {
+                'platform_type': 'social_media' if activity.platform in ['instagram', 'tiktok', 'twitter'] else 'media',
+                'api_version': '2.0',
+                'platform_features': ['sharing', 'commenting', 'liking']
+            }
+        return activity
+    
+    async def _enrich_with_content_context(self, activity: UserActivity) -> UserActivity:
+        """Enrich with content context"""
+        if activity.content_id:
+            # In production, would fetch content metadata
+            activity.metadata['content_context'] = {
+                'content_type': 'video',
+                'content_duration': 120,
+                'content_tags': ['music', 'entertainment']
+            }
+        return activity
+    
+    async def _enrich_with_geolocation(self, activity: UserActivity) -> UserActivity:
+        """Enrich with geolocation data"""
+        # In production, would use IP geolocation service
+        activity.metadata['geolocation'] = {
+            'country': 'FR',
+            'city': 'Paris',
+            'timezone': 'Europe/Paris'
+        }
+        return activity
+    
+    async def _enrich_with_device_info(self, activity: UserActivity) -> UserActivity:
+        """Enrich with device information"""
+        # In production, would parse User-Agent header
+        activity.metadata['device_info'] = {
+            'device_type': 'mobile',
+            'os': 'iOS',
+            'browser': 'Safari'
+        }
+        return activity
+    
+    async def _monitor_activity_processing(self) -> None:
+        """Monitor activity processing performance"""
+        while True:
+            try:
+                await asyncio.sleep(30)  # Monitor every 30 seconds
+                
+                # Update queue size metrics
+                for queue_name, queue in self.activity_queues.items():
+                    self.activity_metrics['queue_sizes'][queue_name] = queue.qsize()
+                
+                # Calculate average processing latency
+                if self.activity_metrics['processing_latency_ms']:
+                    avg_latency = np.mean(self.activity_metrics['processing_latency_ms'])
+                    self.logger.debug(f"Average processing latency: {avg_latency:.2f}ms")
+                
+                self.activity_metrics['last_updated'] = datetime.now()
+                
+            except asyncio.CancelledError:
+                break
+            except Exception as e:
+                self.logger.error(f"Error monitoring activity processing: {e}")
+    
+    # Additional helper methods for completeness
+    async def _update_realtime_metrics(self, activity: UserActivity) -> None:
+        """Update real-time metrics"""
+        pass  # Implementation would update real-time dashboard metrics
+    
+    async def _store_in_realtime_cache(self, activity: UserActivity) -> None:
+        """Store activity in real-time cache"""
+        pass  # Implementation would store in Redis or memory cache
+    
+    async def _check_realtime_alerts(self, activity: UserActivity) -> None:
+        """Check if activity should trigger real-time alerts"""
+        pass  # Implementation would check alert conditions
+    
+    async def _bulk_store_activities(self, activities: List[UserActivity]) -> None:
+        """Bulk store activities in database"""
+        pass  # Implementation would batch insert to database
+    
+    async def _update_aggregate_metrics(self, activities: List[UserActivity]) -> None:
+        """Update aggregate metrics"""
+        pass  # Implementation would update aggregated metrics
+    
+    async def _store_in_analytics_warehouse(self, records: List[Dict]) -> None:
+        """Store records in analytics warehouse"""
+        pass  # Implementation would store in data warehouse

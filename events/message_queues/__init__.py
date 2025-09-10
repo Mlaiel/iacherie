@@ -128,163 +128,39 @@ Convert message to dictionary for serialization"""
 class MessageQueue(ABC):
     """Abstract base class for message queues"""
     
-    async def dequeue(self):
-        """Dequeue a message from the queue"""
-        try:
-            logger.info(f"Executing dequeue")
-            
-            # Implementation for dequeue
-            # TODO: Add specific business logic here
-            return None
-            
-        except Exception as e:
-            logger.error(f"dequeue failed: {e}")
-            raise
-
-    async def peek(self):
-        """Peek at next message without removing it"""
-        try:
-            logger.info(f"Executing peek")
-            
-            # Implementation for peek  
-            # TODO: Add specific business logic here
-            return None
-            
-        except Exception as e:
-            logger.error(f"peek failed: {e}")
-            raise
-            logger.info(f"Executing ack")
-            
-            # Implementation for ack
-            # TODO: Add specific business logic here
-        try:
-            logger.info(f"Executing nack")
-            
-            # Implementation for nack
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"nack completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"nack failed: {e}")
-            raise
-
-    async def purge(self):
-        """Purge all messages from the queue"""
-        try:
-            logger.info(f"Executing purge")
-            
-            # Implementation for purge
-            # TODO: Add specific business logic here
-            return True
-            
-        except Exception as e:
-            logger.error(f"purge failed: {e}")
-            raise
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"purge completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"purge failed: {e}")
-            raise
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"size completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"size failed: {e}")
-            raise
-            return result
-            
-        except Exception as e:
-            logger.error(f"nack failed: {e}")
-            raise
-            logger.info(f"ack completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"ack failed: {e}")
-            raise
-            logger.info(f"peek completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"peek failed: {e}")
-            raise
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"dequeue completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"dequeue failed: {e}")
-            raise
-        try:
-            logger.info(f"Executing enqueue")
-            
-            # Implementation for enqueue
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"enqueue completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"enqueue failed: {e}")
-            raise
-
-
-class MessageQueue(ABC):
-    """Abstract base class for message queues"""
-    
     @abstractmethod
     async def enqueue(self, message: QueueMessage) -> str:
-        """
-Add message to queue"""
+        """Add message to queue"""
         pass
     
     @abstractmethod
     async def dequeue(self, timeout: Optional[int] = None) -> Optional[QueueMessage]:
-        """
-Remove and return message from queue"""
+        """Remove and return message from queue"""
         pass
     
     @abstractmethod
     async def peek(self) -> Optional[QueueMessage]:
-        """
-Peek at next message without removing it"""
+        """Peek at next message without removing it"""
         pass
     
     @abstractmethod
     async def ack(self, message_id: str) -> bool:
-        """
-Acknowledge message processing"""
+        """Acknowledge message processing"""
         pass
     
     @abstractmethod
     async def nack(self, message_id: str, requeue: bool = True) -> bool:
-        """
-Negative acknowledge - message processing failed"""
+        """Negative acknowledge - message processing failed"""
         pass
     
     @abstractmethod
     async def size(self) -> int:
-        """
-Get queue size"""
+        """Get queue size"""
         pass
     
     @abstractmethod
     async def purge(self) -> int:
-        """
-Remove all messages from queue"""
+        """Remove all messages from queue"""
         pass
 
 
