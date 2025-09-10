@@ -24,30 +24,30 @@ from .database_configs import (
 
 from .viral_configs import (
     ViralOptimizationConfig,
-    TrendingParameters,
-    ViralThresholds,
-    AmplificationSettings
-)
-
-from .audience_configs import (
-    AudienceAnalysisConfig,
-    SegmentationSettings,
-    BehaviorParameters,
-    PredictionConfig
+    ViralPredictionConfig,
+    TrendAnalysisConfig,
+    TimingOptimizationConfig,
+    ViralAmplificationConfig,
+    NetworkDynamicsConfig,
+    DEFAULT_VIRAL_CONFIG,
+    VIRAL_CONFIG
 )
 
 from .security_configs import (
-    SecurityConfiguration,
-    EncryptionSettings,
+    SecurityConfig,
+    SecurityLevel,
+    ThreatLevel,
+    EncryptionAlgorithm,
     AuthenticationConfig,
-    AuditSettings
-)
-
-from .monitoring_configs import (
-    MonitoringConfiguration,
-    MetricsSettings,
-    AlertingConfig,
-    PerformanceThresholds
+    APISecurityConfig,
+    EncryptionConfig,
+    VaultConfig,
+    ThreatDetectionConfig,
+    ComplianceConfig,
+    AccessControlConfig,
+    SecurityMonitoringConfig,
+    DEFAULT_SECURITY_CONFIG,
+    SECURITY_CONFIG
 )
 
 __all__ = [
@@ -63,29 +63,31 @@ __all__ = [
     'QueryOptimization',
     'BackupSettings',
     
-    # Viral Optimization
+    # Viral Optimization Configuration
     'ViralOptimizationConfig',
-    'TrendingParameters',
-    'ViralThresholds',
-    'AmplificationSettings',
-    
-    # Audience Analysis
-    'AudienceAnalysisConfig',
-    'SegmentationSettings',
-    'BehaviorParameters',
-    'PredictionConfig',
+    'ViralPredictionConfig',
+    'TrendAnalysisConfig',
+    'TimingOptimizationConfig',
+    'ViralAmplificationConfig',
+    'NetworkDynamicsConfig',
+    'DEFAULT_VIRAL_CONFIG',
+    'VIRAL_CONFIG',
     
     # Security Configuration
-    'SecurityConfiguration',
-    'EncryptionSettings',
+    'SecurityConfig',
+    'SecurityLevel',
+    'ThreatLevel',
+    'EncryptionAlgorithm',
     'AuthenticationConfig',
-    'AuditSettings',
-    
-    # Monitoring Configuration
-    'MonitoringConfiguration',
-    'MetricsSettings',
-    'AlertingConfig',
-    'PerformanceThresholds'
+    'APISecurityConfig',
+    'EncryptionConfig',
+    'VaultConfig',
+    'ThreatDetectionConfig',
+    'ComplianceConfig',
+    'AccessControlConfig',
+    'SecurityMonitoringConfig',
+    'DEFAULT_SECURITY_CONFIG',
+    'SECURITY_CONFIG'
 ]
 
 __version__ = "1.0.0"
