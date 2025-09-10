@@ -1,0 +1,428 @@
+# =============================================
+# Docker Compose - Gamification Services
+# Ainflue Platform - Enterprise Gamification
+# =============================================
+# 
+# Complete gamification stack with 12 microservices
+# Handles challenges, rewards, leaderboards, achievements,
+# social features, tournaments, badges, and engagement optimization
+#
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Version: 3.0.0
+# Security: Production-ready with resource limits and health checks
+# =============================================
+
+version: '3.8'
+
+networks:
+  gamification_network:
+    driver: bridge
+    internal: false
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+  ainflue_network:
+    external: true
+
+volumes:
+  gamification_data:
+    driver: local
+  redis_gamification_data:
+    driver: local
+  postgres_gamification_data:
+    driver: local
+
+services:
+  # ========================================
+  # Core Infrastructure Services
+  # ========================================
+  
+  redis_gamification:
+    image: redis:7-alpine
+    container_name: redis_gamification
+    restart: unless-stopped
+    command: >
+      --requirepass ${REDIS_PASSWORD:-gamification_redis_pass}
+      --maxmemory 256mb
+      --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_gamification_data:/data
+    networks:
+      - gamification_network
+    ports:
+      - "6380:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.5'
+        reservations:
+          memory: 128M
+          cpus: '0.25'
+  
+  postgres_gamification:
+    image: postgres:15-alpine
+    container_name: postgres_gamification
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${GAMIFICATION_DB_NAME:-ainflue_gamification}
+      POSTGRES_USER: ${GAMIFICATION_DB_USER:-gamification_user}
+      POSTGRES_PASSWORD: ${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"
+    volumes:
+      - postgres_gamification_data:/var/lib/postgresql/data
+      - ./sql/init_gamification.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - gamification_network
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${GAMIFICATION_DB_USER:-gamification_user} -d ${GAMIFICATION_DB_NAME:-ainflue_gamification}"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '1.0'
+        reservations:
+          memory: 256M
+          cpus: '0.5'
+
+  # ========================================
+  # Gamification Microservices
+  # ========================================
+
+  challenge_engine:
+    build:
+      context: ../../
+      dockerfile: docker/gamification/challenge_engine.dockerfile
+    container_name: gamification_challenge_engine
+    restart: unless-stopped
+    environment:
+      - CHALLENGE_ENGINE_PORT=8080
+      - CHALLENGE_ENGINE_HOST=0.0.0.0
+      - REDIS_URL=redis://redis_gamification:6379
+      - DATABASE_URL=postgresql://${GAMIFICATION_DB_USER:-gamification_user}:${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}@postgres_gamification:5432/${GAMIFICATION_DB_NAME:-ainflue_gamification}
+      - JWT_SECRET=${JWT_SECRET:-challenge_jwt_secret}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    depends_on:
+      redis_gamification:
+        condition: service_healthy
+      postgres_gamification:
+        condition: service_healthy
+    networks:
+      - gamification_network
+      - ainflue_network
+    ports:
+      - "8080:8080"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '1.0'
+        reservations:
+          memory: 256M
+          cpus: '0.5'
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+        window: 120s
+
+  reward_system:
+    build:
+      context: ../../
+      dockerfile: docker/gamification/reward_system.dockerfile
+    container_name: gamification_reward_system
+    restart: unless-stopped
+    environment:
+      - REWARD_SYSTEM_PORT=8081
+      - REWARD_SYSTEM_HOST=0.0.0.0
+      - REDIS_URL=redis://redis_gamification:6379
+      - DATABASE_URL=postgresql://${GAMIFICATION_DB_USER:-gamification_user}:${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}@postgres_gamification:5432/${GAMIFICATION_DB_NAME:-ainflue_gamification}
+      - JWT_SECRET=${JWT_SECRET:-reward_jwt_secret}
+    depends_on:
+      - redis_gamification
+      - postgres_gamification
+    networks:
+      - gamification_network
+      - ainflue_network
+    ports:
+      - "8081:8081"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '1.0'
+        reservations:
+          memory: 256M
+          cpus: '0.5'
+
+  leaderboard_manager:
+    build:
+      context: ../../
+      dockerfile: docker/gamification/leaderboard_manager.dockerfile
+    container_name: gamification_leaderboard_manager
+    restart: unless-stopped
+    environment:
+      - LEADERBOARD_PORT=8082
+      - LEADERBOARD_HOST=0.0.0.0
+      - REDIS_URL=redis://redis_gamification:6379
+      - DATABASE_URL=postgresql://${GAMIFICATION_DB_USER:-gamification_user}:${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}@postgres_gamification:5432/${GAMIFICATION_DB_NAME:-ainflue_gamification}
+    depends_on:
+      - redis_gamification
+      - postgres_gamification
+    networks:
+      - gamification_network
+      - ainflue_network
+    ports:
+      - "8082:8082"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '1.0'
+
+  achievement_tracker:
+    build:
+      context: ../../
+      dockerfile: docker/gamification/achievement_tracker.dockerfile
+    container_name: gamification_achievement_tracker
+    restart: unless-stopped
+    environment:
+      - ACHIEVEMENT_PORT=8083
+      - ACHIEVEMENT_HOST=0.0.0.0
+      - REDIS_URL=redis://redis_gamification:6379
+      - DATABASE_URL=postgresql://${GAMIFICATION_DB_USER:-gamification_user}:${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}@postgres_gamification:5432/${GAMIFICATION_DB_NAME:-ainflue_gamification}
+    depends_on:
+      - redis_gamification
+      - postgres_gamification
+    networks:
+      - gamification_network
+      - ainflue_network
+    ports:
+      - "8083:8083"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '1.0'
+
+  social_features:
+    build:
+      context: ../../
+      dockerfile: docker/gamification/social_features.dockerfile
+    container_name: gamification_social_features
+    restart: unless-stopped
+    environment:
+      - SOCIAL_PORT=8084
+      - SOCIAL_HOST=0.0.0.0
+      - REDIS_URL=redis://redis_gamification:6379
+      - DATABASE_URL=postgresql://${GAMIFICATION_DB_USER:-gamification_user}:${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}@postgres_gamification:5432/${GAMIFICATION_DB_NAME:-ainflue_gamification}
+    depends_on:
+      - redis_gamification
+      - postgres_gamification
+    networks:
+      - gamification_network
+      - ainflue_network
+    ports:
+      - "8084:8084"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '1.0'
+
+  tournament_organizer:
+    build:
+      context: ../../
+      dockerfile: docker/gamification/tournament_organizer.dockerfile
+    container_name: gamification_tournament_organizer
+    restart: unless-stopped
+    environment:
+      - TOURNAMENT_PORT=8085
+      - TOURNAMENT_HOST=0.0.0.0
+      - REDIS_URL=redis://redis_gamification:6379
+      - DATABASE_URL=postgresql://${GAMIFICATION_DB_USER:-gamification_user}:${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}@postgres_gamification:5432/${GAMIFICATION_DB_NAME:-ainflue_gamification}
+    depends_on:
+      - redis_gamification
+      - postgres_gamification
+    networks:
+      - gamification_network
+      - ainflue_network
+    ports:
+      - "8085:8085"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '1.0'
+
+  badge_system:
+    build:
+      context: ../../
+      dockerfile: docker/gamification/badge_system.dockerfile
+    container_name: gamification_badge_system
+    restart: unless-stopped
+    environment:
+      - BADGE_PORT=8086
+      - BADGE_HOST=0.0.0.0
+      - REDIS_URL=redis://redis_gamification:6379
+      - DATABASE_URL=postgresql://${GAMIFICATION_DB_USER:-gamification_user}:${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}@postgres_gamification:5432/${GAMIFICATION_DB_NAME:-ainflue_gamification}
+    depends_on:
+      - redis_gamification
+      - postgres_gamification
+    networks:
+      - gamification_network
+      - ainflue_network
+    ports:
+      - "8086:8086"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '1.0'
+
+  engagement_optimizer:
+    build:
+      context: ../../
+      dockerfile: docker/gamification/engagement_optimizer.dockerfile
+    container_name: gamification_engagement_optimizer
+    restart: unless-stopped
+    environment:
+      - ENGAGEMENT_PORT=8087
+      - ENGAGEMENT_HOST=0.0.0.0
+      - REDIS_URL=redis://redis_gamification:6379
+      - DATABASE_URL=postgresql://${GAMIFICATION_DB_USER:-gamification_user}:${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}@postgres_gamification:5432/${GAMIFICATION_DB_NAME:-ainflue_gamification}
+    depends_on:
+      - redis_gamification
+      - postgres_gamification
+    networks:
+      - gamification_network
+      - ainflue_network
+    ports:
+      - "8087:8087"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '1.0'
+
+  community_builder:
+    build:
+      context: ../../
+      dockerfile: docker/gamification/community_builder.dockerfile
+    container_name: gamification_community_builder
+    restart: unless-stopped
+    environment:
+      - COMMUNITY_PORT=8088
+      - COMMUNITY_HOST=0.0.0.0
+      - REDIS_URL=redis://redis_gamification:6379
+      - DATABASE_URL=postgresql://${GAMIFICATION_DB_USER:-gamification_user}:${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}@postgres_gamification:5432/${GAMIFICATION_DB_NAME:-ainflue_gamification}
+    depends_on:
+      - redis_gamification
+      - postgres_gamification
+    networks:
+      - gamification_network
+      - ainflue_network
+    ports:
+      - "8088:8088"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '1.0'
+
+  point_calculator:
+    build:
+      context: ../../
+      dockerfile: docker/gamification/point_calculator.dockerfile
+    container_name: gamification_point_calculator
+    restart: unless-stopped
+    environment:
+      - POINT_PORT=8089
+      - POINT_HOST=0.0.0.0
+      - REDIS_URL=redis://redis_gamification:6379
+      - DATABASE_URL=postgresql://${GAMIFICATION_DB_USER:-gamification_user}:${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}@postgres_gamification:5432/${GAMIFICATION_DB_NAME:-ainflue_gamification}
+    depends_on:
+      - redis_gamification
+      - postgres_gamification
+    networks:
+      - gamification_network
+      - ainflue_network
+    ports:
+      - "8089:8089"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '1.0'
+
+  level_progression:
+    build:
+      context: ../../
+      dockerfile: docker/gamification/level_progression.dockerfile
+    container_name: gamification_level_progression
+    restart: unless-stopped
+    environment:
+      - LEVEL_PORT=8090
+      - LEVEL_HOST=0.0.0.0
+      - REDIS_URL=redis://redis_gamification:6379
+      - DATABASE_URL=postgresql://${GAMIFICATION_DB_USER:-gamification_user}:${GAMIFICATION_DB_PASSWORD:-gamification_secure_pass}@postgres_gamification:5432/${GAMIFICATION_DB_NAME:-ainflue_gamification}
+    depends_on:
+      - redis_gamification
+      - postgres_gamification
+    networks:
+      - gamification_network
+      - ainflue_network
+    ports:
+      - "8090:8090"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '1.0'
+
+  # ========================================
+  # Load Balancer & API Gateway
+  # ========================================
+  
+  gamification_gateway:
+    image: nginx:alpine
+    container_name: gamification_gateway
+    restart: unless-stopped
+    ports:
+      - "8091:80"
+    volumes:
+      - ./nginx/gamification.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - challenge_engine
+      - reward_system
+      - leaderboard_manager
+      - achievement_tracker
+      - social_features
+      - tournament_organizer
+      - badge_system
+      - engagement_optimizer
+      - community_builder
+      - point_calculator
+      - level_progression
+    networks:
+      - gamification_network
+      - ainflue_network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.5'
