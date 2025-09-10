@@ -37,6 +37,16 @@ from .metadata_processor import MetadataProcessor
 from .unified_converter import UnifiedConverter
 from .workflow_orchestrator import WorkflowOrchestrator
 
+# AI Enhancement processors
+from .ai_content_optimizer import AIContentOptimizer
+from .quality_enhancement_processor import QualityEnhancementProcessor
+from .semantic_analysis_processor import SemanticAnalysisProcessor
+
+# Enterprise processors
+from .security_content_processor import SecurityContentProcessor
+from .compliance_content_processor import ComplianceContentProcessor
+from .collaboration_content_processor import CollaborationContentProcessor
+
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
@@ -97,7 +107,13 @@ Initialize all processor instances"""
             'text': TextProcessor(),
             'metadata': MetadataProcessor(),
             'unified_converter': UnifiedConverter(),
-            'workflow_orchestrator': WorkflowOrchestrator()
+            'workflow_orchestrator': WorkflowOrchestrator(),
+            'ai_content_optimizer': AIContentOptimizer(),
+            'quality_enhancement': QualityEnhancementProcessor(),
+            'semantic_analysis': SemanticAnalysisProcessor(),
+            'security_content': SecurityContentProcessor(),
+            'compliance_content': ComplianceContentProcessor(),
+            'collaboration_content': CollaborationContentProcessor()
         }
         
         logger.info(f"Initialized {len(self._processors)} processors")
@@ -175,6 +191,16 @@ __all__ = [
     'MetadataProcessor',
     'UnifiedConverter',
     'WorkflowOrchestrator',
+    
+    # AI Enhancement processors
+    'AIContentOptimizer',
+    'QualityEnhancementProcessor',
+    'SemanticAnalysisProcessor',
+    
+    # Enterprise processors
+    'SecurityContentProcessor',
+    'ComplianceContentProcessor',
+    'CollaborationContentProcessor',
     
     # Registry and functions
     'ProcessorRegistry',
