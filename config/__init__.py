@@ -38,7 +38,7 @@ import weakref
 
 # Core infrastructure imports
 try:
-    from .settings import EnterpriseApplicationSettings, app_settings
+    from .settings import ApplicationSettings, app_settings
 except ImportError:
     # Fallback if settings not available
     app_settings = None
@@ -70,7 +70,7 @@ class AinflueMasterConfiguration:
     def __init__(self, level: ConfigurationLevel = ConfigurationLevel.ENTERPRISE):
         """Initialize master configuration"""
         self.level = level
-        self.app_settings = EnterpriseApplicationSettings()
+        self.app_settings = app_settings
         self.configurations: Dict[str, Any] = {}
         self.business_flow_configs: Dict[BusinessLogicFlow, Dict[str, Any]] = {}
         self._initialize_configurations()
@@ -265,7 +265,7 @@ class AinflueMasterConfiguration:
         }
 
 # Global configuration instances
-app_settings = EnterpriseApplicationSettings()
+# app_settings imported from settings.py
 master_config = AinflueMasterConfiguration(ConfigurationLevel.ENTERPRISE)
 
 # Convenience functions
@@ -304,9 +304,9 @@ from typing import Optional, List
 
 # Import specialized configuration modules
 from .settings import ApplicationSettings, app_settings
-from .database import DatabaseSettings, db_settings, get_database_url, get_database_config
-from .redis import RedisSettings, redis_settings, get_redis_url, get_redis_config
-from .celery import CelerySettings, celery_settings, get_celery_config, create_celery_app
+from .core.database import DatabaseSettings, db_settings, get_database_url, get_database_config
+from .core.redis import RedisSettings, redis_settings, get_redis_url, get_redis_config
+from .core.celery import CelerySettings, celery_settings, get_celery_config, create_celery_app
 
 # Import business logic configuration modules
 from .creator_multi_format_config import (
