@@ -152,7 +152,7 @@ class PlatformContentSurveillance:
             elif platform == "tiktok":
                 return await self._extract_tiktok_info(url)
             else:
-                return await self._extract_generic_info(url)
+                return await self._extract_platform_specific_info(url)
                 
         except Exception as e:
             self.logger.error(f"Error extracting content info from {url}: {e}")
@@ -175,7 +175,7 @@ class PlatformContentSurveillance:
         elif "tiktok.com" in url_lower:
             return "tiktok"
         else:
-            return "generic"
+            return "platform_agnostic"
     
     async def take_screenshot(self, url: str) -> Optional[str]:
         """
