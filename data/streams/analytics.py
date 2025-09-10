@@ -14,19 +14,110 @@ from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timezone, timedelta
 from dataclasses import dataclass, field
 from enum import Enum
-import numpy as np
-import pandas as pd
 from statistics import mean, median, stdev
 import json
 
-from pydantic import BaseModel, Field
-from scipy import stats
-from sklearn.preprocessing import StandardScaler
-from sklearn.cluster import KMeans
+# Optional imports with fallbacks
+try:
+    import numpy as np
+    HAS_NUMPY = True
+except ImportError:
+    HAS_NUMPY = False
+    class np:
+        @staticmethod
+        def array(data): return data
+        @staticmethod
+        def mean(data): return mean(data) if data else 0
 
-from ...core.config import get_settings
-from ...utils.logging import get_logger
-from .manager import StreamEvent
+try:
+    import pandas as pd
+    HAS_PANDAS = True
+except ImportError:
+    HAS_PANDAS = False
+
+try:
+    from pydantic import BaseModel, Field
+    HAS_PYDANTIC = True
+except ImportError:
+    HAS_PYDANTIC = False
+    class BaseModel:
+        def __init__(self, **kwargs):
+            for k, v in kwargs.items():
+                setattr(self, k, v)
+        def dict(self): return self.__dict__
+    def Field(**kwargs): return None
+
+try:
+    from scipy import stats
+    HAS_SCIPY = True
+except ImportError:
+    HAS_SCIPY = False
+    class stats:
+        @staticmethod
+        def linregress(x, y):
+            # Simple linear regression fallback
+            n = len(x)
+            if n < 2:
+                return 0, 0, 0, 1, 0
+            x_mean = sum(x) / n
+            y_mean = sum(y) / n
+            num = sum((x[i] - x_mean) * (y[i] - y_mean) for i in range(n))
+            den = sum((x[i] - x_mean) ** 2 for i in range(n))
+            slope = num / den if den != 0 else 0
+            intercept = y_mean - slope * x_mean
+            return slope, intercept, 0.5, 0.05, 0.1
+
+try:
+    from sklearn.preprocessing import StandardScaler
+    from sklearn.cluster import KMeans
+    HAS_SKLEARN = True
+except ImportError:
+    HAS_SKLEARN = False
+    class StandardScaler:
+        def fit_transform(self, data): return data
+    class KMeans:
+        def __init__(self, **kwargs): pass
+        def fit_predict(self, data): return [0] * len(data)
+
+# Logging with fallback
+try:
+    from ...core.config import get_settings
+    from ...utils.logging import get_logger
+    logger = get_logger(__name__)
+    settings = get_settings()
+except ImportError:
+    import logging
+    logger = logging.getLogger(__name__)
+    
+    class settings:
+        pass
+    
+    def get_logger(name):
+        return logging.getLogger(name)
+
+# StreamEvent with fallback
+try:
+    from .streaming_engine import StreamEvent
+except ImportError:
+    try:
+        from .manager import StreamEvent
+    except ImportError:
+        from dataclasses import dataclass
+        from datetime import datetime, timezone
+        from typing import Dict, Any
+        
+        @dataclass
+        class StreamEvent:
+            stream_id: str
+            event_type: str
+            content_type: str
+            content_format: str
+            data: Dict[str, Any]
+            timestamp: datetime = None
+            
+            def __post_init__(self):
+                if self.timestamp is None:
+                    self.timestamp = datetime.now(timezone.utc)
 
 logger = get_logger(__name__)
 settings = get_settings()

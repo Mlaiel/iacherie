@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, ReactNode, useReducer, useCallback } from 'react';
+import React, { createContext, useContext, ReactNode, useReducer, useCallback } from 'react';
 import { toast } from 'react-hot-toast';
 
 // Types for the global state
@@ -18,7 +18,7 @@ interface ContentItem {
   type: 'audio' | 'video' | 'image' | 'text';
   status: 'uploading' | 'processing' | 'protected' | 'failed';
   fingerprint_id?: string;
-  protection_level: 'basic' | 'advanced' | 'enterprise';
+  protection_level: 'standard' | 'professional' | 'enterprise';
   created_at: string;
   size: number;
 }
@@ -219,7 +219,7 @@ export function Providers({ children }: { children: ReactNode }) {
                 file.type.startsWith('video/') ? 'video' :
                 file.type.startsWith('image/') ? 'image' : 'text',
           status: 'uploading',
-          protection_level: 'basic',
+          protection_level: 'standard',
           created_at: new Date().toISOString(),
           size: file.size,
         };

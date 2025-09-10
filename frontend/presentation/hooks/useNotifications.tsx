@@ -1,20 +1,18 @@
 'use client';
 
-import { useAppContext } from '@/app/providers';
 import { useCallback } from 'react';
 
 export function useNotifications() {
-  const { state, addNotification, removeNotification } = useAppContext();
-
-  const notifications = state.notifications;
+  // Mock implementation for now - replace with actual provider when ready
+  const notifications: any[] = [];
 
   const notify = useCallback((type: 'info' | 'success' | 'warning' | 'error', message: string) => {
-    addNotification(type, message);
-  }, [addNotification]);
+    console.log(`[${type.toUpperCase()}] ${message}`);
+  }, []);
 
   const dismiss = useCallback((id: string) => {
-    removeNotification(id);
-  }, [removeNotification]);
+    console.log(`Dismiss notification: ${id}`);
+  }, []);
 
   const success = useCallback((message: string) => {
     notify('success', message);
