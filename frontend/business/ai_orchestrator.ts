@@ -95,8 +95,8 @@ export class AIOrchestrator {
         id: 'openai',
         name: 'OpenAI GPT',
         type: 'text',
-        capabilities: ['text-generation', 'text-summarization', 'content-optimization'],
-        pricing: { costPer1K: 0.002 },
+        capabilities: ['text-generation', 'text-summarization', 'seo-analysis'],
+        pricing: { costPer1K: 0.002, model: 'pay-per-use', currency: 'USD' },
         rateLimits: { requestsPerMinute: 60, tokensPerMinute: 40000 },
         config: {
           apiKey: this.config.providers?.openai?.apiKey || '',
@@ -110,7 +110,7 @@ export class AIOrchestrator {
         name: 'Anthropic Claude',
         type: 'text',
         capabilities: ['text-generation', 'text-analysis', 'content-moderation'],
-        pricing: { costPer1K: 0.003 },
+        pricing: { costPer1K: 0.003, model: 'pay-per-use', currency: 'USD' },
         rateLimits: { requestsPerMinute: 50, tokensPerMinute: 30000 },
         config: {
           apiKey: this.config.providers?.anthropic?.apiKey || '',
@@ -124,7 +124,7 @@ export class AIOrchestrator {
         name: 'Midjourney',
         type: 'image',
         capabilities: ['image-generation'],
-        pricing: { costPer1K: 0.04 },
+        pricing: { costPer1K: 0.04, model: 'pay-per-use', currency: 'USD' },
         rateLimits: { requestsPerMinute: 10, imagesPerHour: 200 },
         config: {
           apiKey: this.config.providers?.midjourney?.apiKey || '',
@@ -137,7 +137,7 @@ export class AIOrchestrator {
         name: 'ElevenLabs',
         type: 'audio',
         capabilities: ['audio-generation', 'audio-enhancement'],
-        pricing: { costPer1K: 0.18 },
+        pricing: { costPer1K: 0.18, model: 'pay-per-use', currency: 'USD' },
         rateLimits: { requestsPerMinute: 20, charactersPerMonth: 330000 },
         config: {
           apiKey: this.config.providers?.elevenlabs?.apiKey || '',
@@ -150,7 +150,7 @@ export class AIOrchestrator {
         name: 'OpenAI Whisper',
         type: 'audio',
         capabilities: ['audio-transcription'],
-        pricing: { costPer1K: 0.006 },
+        pricing: { costPer1K: 0.006, model: 'pay-per-use', currency: 'USD' },
         rateLimits: { requestsPerMinute: 50, minutesPerHour: 1000 },
         config: {
           apiKey: this.config.providers?.openai?.apiKey || '',
