@@ -1,0 +1,379 @@
+version: '3.8'
+
+services:
+  # Prometheus Collector Service
+  prometheus:
+    build:
+      context: .
+      dockerfile: prometheus_collector.dockerfile
+    container_name: ainflue-prometheus
+    environment:
+      - SCRAPE_INTERVAL=${SCRAPE_INTERVAL:-15s}
+      - RETENTION_TIME=${RETENTION_TIME:-15d}
+      - REMOTE_WRITE_URL=${REMOTE_WRITE_URL}
+    ports:
+      - "9090:9090"
+    volumes:
+      - prometheus_data:/prometheus
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./alert.rules.yml:/etc/prometheus/alert.rules.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=15d'
+      - '--web.enable-lifecycle'
+    networks:
+      - monitoring-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:9090/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Grafana Dashboard Service
+  grafana:
+    build:
+      context: .
+      dockerfile: grafana_dashboard.dockerfile
+    container_name: ainflue-grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+      - GF_DATABASE_URL=${GRAFANA_DB_URL}
+      - GF_SMTP_ENABLED=${SMTP_ENABLED:-false}
+      - GF_SMTP_HOST=${SMTP_HOST}
+      - GF_SMTP_FROM_ADDRESS=${SMTP_FROM_ADDRESS}
+      - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./dashboards:/etc/grafana/provisioning/dashboards
+      - ./datasources:/etc/grafana/provisioning/datasources
+    depends_on:
+      - prometheus
+    networks:
+      - monitoring-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # AlertManager Service
+  alertmanager:
+    build:
+      context: .
+      dockerfile: alertmanager.dockerfile
+    container_name: ainflue-alertmanager
+    environment:
+      - SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL}
+      - PAGERDUTY_SERVICE_KEY=${PAGERDUTY_SERVICE_KEY}
+      - EMAIL_SMTP_HOST=${EMAIL_SMTP_HOST}
+      - EMAIL_FROM=${EMAIL_FROM}
+    ports:
+      - "9093:9093"
+    volumes:
+      - alertmanager_data:/alertmanager
+      - ./alertmanager.yml:/etc/alertmanager/alertmanager.yml
+    networks:
+      - monitoring-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:9093/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Jaeger Tracing Service
+  jaeger:
+    build:
+      context: .
+      dockerfile: jaeger_tracing.dockerfile
+    container_name: ainflue-jaeger
+    environment:
+      - SPAN_STORAGE_TYPE=${SPAN_STORAGE:-elasticsearch}
+      - ES_SERVER_URLS=${ELASTICSEARCH_URL:-http://elasticsearch:9200}
+      - ES_INDEX_PREFIX=jaeger
+    ports:
+      - "16686:16686"  # Jaeger UI
+      - "14268:14268"  # HTTP collector
+      - "6831:6831/udp"  # Agent UDP port
+      - "6832:6832/udp"  # Agent UDP port
+    depends_on:
+      - elasticsearch
+    networks:
+      - monitoring-network
+      - tracing-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:16686/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ELK Stack - Elasticsearch
+  elasticsearch:
+    build:
+      context: .
+      dockerfile: elk_stack.dockerfile
+      target: elasticsearch
+    container_name: ainflue-elasticsearch
+    environment:
+      - cluster.name=ainflue-monitoring
+      - node.name=elasticsearch
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
+      - xpack.security.enabled=false
+      - xpack.monitoring.collection.enabled=true
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      - monitoring-network
+      - logging-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ELK Stack - Logstash
+  logstash:
+    build:
+      context: .
+      dockerfile: elk_stack.dockerfile
+      target: logstash
+    container_name: ainflue-logstash
+    environment:
+      - "LS_JAVA_OPTS=-Xmx1g -Xms1g"
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - "5044:5044"  # Beats input
+      - "9600:9600"  # API
+    volumes:
+      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+      - logstash_data:/usr/share/logstash/data
+    depends_on:
+      - elasticsearch
+    networks:
+      - monitoring-network
+      - logging-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9600/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ELK Stack - Kibana
+  kibana:
+    build:
+      context: .
+      dockerfile: elk_stack.dockerfile
+      target: kibana
+    container_name: ainflue-kibana
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - SERVER_NAME=kibana
+      - SERVER_HOST=0.0.0.0
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    networks:
+      - monitoring-network
+      - logging-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5601/api/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Health Checker Service
+  health-checker:
+    build:
+      context: .
+      dockerfile: health_checker.dockerfile
+    container_name: ainflue-health-checker
+    environment:
+      - CHECK_INTERVAL=${HEALTH_CHECK_INTERVAL:-60}
+      - PROMETHEUS_URL=http://prometheus:9090
+      - ALERT_WEBHOOK_URL=${ALERT_WEBHOOK_URL}
+    volumes:
+      - ./health-checks.yml:/app/health-checks.yml
+    networks:
+      - monitoring-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8200/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Performance Monitor Service
+  performance-monitor:
+    build:
+      context: .
+      dockerfile: performance_monitor.dockerfile
+    container_name: ainflue-performance-monitor
+    environment:
+      - PROMETHEUS_URL=http://prometheus:9090
+      - ALERT_THRESHOLD_CPU=80
+      - ALERT_THRESHOLD_MEMORY=85
+      - ALERT_THRESHOLD_DISK=90
+    networks:
+      - monitoring-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8201/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Capacity Planner Service
+  capacity-planner:
+    build:
+      context: .
+      dockerfile: capacity_planner.dockerfile
+    container_name: ainflue-capacity-planner
+    environment:
+      - PROMETHEUS_URL=http://prometheus:9090
+      - PREDICTION_HORIZON_DAYS=${PREDICTION_HORIZON:-30}
+      - ML_MODEL_PATH=/app/models
+    volumes:
+      - capacity_models:/app/models
+      - capacity_reports:/app/reports
+    networks:
+      - monitoring-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '0.5'
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8202/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Anomaly Detector Service
+  anomaly-detector:
+    build:
+      context: .
+      dockerfile: anomaly_detector.dockerfile
+    container_name: ainflue-anomaly-detector
+    environment:
+      - PROMETHEUS_URL=http://prometheus:9090
+      - ML_MODEL_PATH=/app/models/anomaly
+      - SENSITIVITY_THRESHOLD=${ANOMALY_SENSITIVITY:-0.8}
+      - TRAINING_INTERVAL_HOURS=${TRAINING_INTERVAL:-24}
+    volumes:
+      - anomaly_models:/app/models
+      - anomaly_reports:/app/reports
+    networks:
+      - monitoring-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 1.5G
+          cpus: '1.0'
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8203/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # SLA Monitor Service
+  sla-monitor:
+    build:
+      context: .
+      dockerfile: sla_monitor.dockerfile
+    container_name: ainflue-sla-monitor
+    environment:
+      - PROMETHEUS_URL=http://prometheus:9090
+      - SLA_TARGETS_CONFIG=/app/sla-targets.yml
+      - REPORT_FREQUENCY=${SLA_REPORT_FREQUENCY:-daily}
+    volumes:
+      - ./sla-targets.yml:/app/sla-targets.yml
+      - sla_reports:/app/reports
+    networks:
+      - monitoring-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8204/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Cost Tracker Service
+  cost-tracker:
+    build:
+      context: .
+      dockerfile: cost_tracker.dockerfile
+    container_name: ainflue-cost-tracker
+    environment:
+      - PROMETHEUS_URL=http://prometheus:9090
+      - CLOUD_PROVIDER=${CLOUD_PROVIDER:-aws}
+      - AWS_COST_EXPLORER_API=${AWS_COST_EXPLORER_API}
+      - AZURE_COST_MANAGEMENT_API=${AZURE_COST_MANAGEMENT_API}
+      - GCP_BILLING_API=${GCP_BILLING_API}
+    volumes:
+      - cost_reports:/app/reports
+    networks:
+      - monitoring-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8205/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
+  alertmanager_data:
+    driver: local
+  elasticsearch_data:
+    driver: local
+  logstash_data:
+    driver: local
+  capacity_models:
+    driver: local
+  capacity_reports:
+    driver: local
+  anomaly_models:
+    driver: local
+  anomaly_reports:
+    driver: local
+  sla_reports:
+    driver: local
+  cost_reports:
+    driver: local
+
+networks:
+  monitoring-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.0.0/16
+  logging-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.31.0.0/16
+  tracing-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.32.0.0/16
