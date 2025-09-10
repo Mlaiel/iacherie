@@ -1,0 +1,107 @@
+# Production Configuration for Ainflue Docker Platform
+version: '3.8'
+
+# Production environment variables
+environment:
+  NODE_ENV: production
+  DEBUG: false
+  LOG_LEVEL: info
+  ENABLE_METRICS: true
+  ENABLE_TRACING: true
+
+# Resource limits for production
+resources:
+  api_gateway:
+    limits:
+      cpus: '4.0'
+      memory: 8G
+    reservations:
+      cpus: '2.0'
+      memory: 4G
+  
+  audio_processor:
+    limits:
+      cpus: '6.0'
+      memory: 12G
+    reservations:
+      cpus: '3.0'
+      memory: 6G
+  
+  database:
+    limits:
+      cpus: '4.0'
+      memory: 16G
+    reservations:
+      cpus: '2.0'
+      memory: 8G
+
+# Scaling configuration
+scaling:
+  api_gateway:
+    min_replicas: 3
+    max_replicas: 10
+    target_cpu: 70
+  
+  audio_processor:
+    min_replicas: 2
+    max_replicas: 8
+    target_cpu: 80
+  
+  payment_processor:
+    min_replicas: 2
+    max_replicas: 6
+    target_cpu: 60
+
+# Network configuration
+networks:
+  production:
+    driver: overlay
+    encrypted: true
+    attachable: false
+  
+  monitoring:
+    driver: overlay
+    encrypted: false
+    internal: true
+
+# Storage configuration
+volumes:
+  postgres_data:
+    driver: local
+    driver_opts:
+      type: ext4
+      device: /dev/sdb1
+  
+  redis_data:
+    driver: local
+    driver_opts:
+      type: ext4
+      device: /dev/sdc1
+
+# Security settings
+security:
+  secrets_backend: vault
+  image_scanning: enabled
+  network_policies: strict
+  user_namespace: enabled
+
+# Monitoring configuration
+monitoring:
+  prometheus:
+    retention: 30d
+    scrape_interval: 15s
+  
+  grafana:
+    admin_password: ${GRAFANA_ADMIN_PASSWORD}
+    smtp_enabled: true
+  
+  alertmanager:
+    smtp_smarthost: smtp.ainflue.com:587
+    webhook_url: ${SLACK_WEBHOOK_URL}
+
+# Backup configuration
+backup:
+  schedule: "0 2 * * *"  # Daily at 2 AM
+  retention_days: 30
+  s3_bucket: ainflue-production-backups
+  encryption: enabled

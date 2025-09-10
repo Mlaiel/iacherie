@@ -1,0 +1,25 @@
+# SSL/TLS Certificate Configuration
+version: '3.8'
+
+certificates:
+  api_ainflue_com:
+    domains:
+      - api.ainflue.com
+      - www.api.ainflue.com
+    provider: letsencrypt
+    renewal: automatic
+    
+  admin_ainflue_com:
+    domains:
+      - admin.ainflue.com
+    provider: internal_ca
+    
+ssl_policy:
+  min_tls_version: "1.2"
+  ciphers: ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384
+  protocols: TLSv1.2 TLSv1.3
+  
+certificate_store:
+  backend: vault
+  path: /certificates
+  rotation_days: 30

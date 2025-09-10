@@ -1,0 +1,23 @@
+# Scaling Configuration
+version: '3.8'
+
+autoscaling:
+  enabled: true
+  metrics:
+    - cpu_usage
+    - memory_usage
+    - request_rate
+    
+scale_up:
+  cpu_threshold: 70
+  memory_threshold: 80
+  cooldown: 300s
+  
+scale_down:
+  cpu_threshold: 30
+  memory_threshold: 40
+  cooldown: 600s
+  
+limits:
+  max_replicas: 20
+  min_replicas: 2

@@ -1,0 +1,23 @@
+# Backup Configuration
+version: '3.8'
+
+backup_schedule:
+  databases: "0 2 * * *"
+  volumes: "0 3 * * *"
+  configs: "0 4 * * 0"
+  
+retention:
+  daily: 7
+  weekly: 4
+  monthly: 12
+  
+destinations:
+  s3:
+    bucket: ainflue-backups
+    region: us-east-1
+  azure:
+    container: backups
+    
+encryption:
+  algorithm: AES256
+  key_rotation: 90d

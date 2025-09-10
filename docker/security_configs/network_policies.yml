@@ -1,0 +1,26 @@
+# Network Security Policies
+version: '3.8'
+
+default_policy: deny_all
+
+ingress_rules:
+  api_gateway:
+    - from: external
+      ports: [80, 443]
+  monitoring:
+    - from: admin_network
+      ports: [9090, 3000]
+      
+egress_rules:
+  database:
+    - to: database_network
+      ports: [5432, 6379]
+  external_apis:
+    - to: internet
+      ports: [443]
+      
+network_segmentation:
+  frontend: 10.0.1.0/24
+  backend: 10.0.2.0/24
+  database: 10.0.3.0/24
+  monitoring: 10.0.4.0/24

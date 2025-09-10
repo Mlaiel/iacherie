@@ -1,0 +1,100 @@
+# Staging Configuration for Ainflue Docker Platform
+version: '3.8'
+
+# Staging environment variables
+environment:
+  NODE_ENV: staging
+  DEBUG: true
+  LOG_LEVEL: debug
+  ENABLE_METRICS: true
+  ENABLE_TRACING: true
+
+# Resource limits for staging (reduced)
+resources:
+  api_gateway:
+    limits:
+      cpus: '2.0'
+      memory: 4G
+    reservations:
+      cpus: '1.0'
+      memory: 2G
+  
+  audio_processor:
+    limits:
+      cpus: '3.0'
+      memory: 6G
+    reservations:
+      cpus: '1.5'
+      memory: 3G
+  
+  database:
+    limits:
+      cpus: '2.0'
+      memory: 8G
+    reservations:
+      cpus: '1.0'
+      memory: 4G
+
+# Scaling configuration (lower replicas)
+scaling:
+  api_gateway:
+    min_replicas: 2
+    max_replicas: 4
+    target_cpu: 70
+  
+  audio_processor:
+    min_replicas: 1
+    max_replicas: 3
+    target_cpu: 80
+  
+  payment_processor:
+    min_replicas: 1
+    max_replicas: 2
+    target_cpu: 60
+
+# Network configuration
+networks:
+  staging:
+    driver: overlay
+    encrypted: false
+    attachable: true
+  
+  monitoring:
+    driver: overlay
+    encrypted: false
+    internal: true
+
+# Storage configuration (smaller volumes)
+volumes:
+  postgres_data:
+    driver: local
+  
+  redis_data:
+    driver: local
+
+# Security settings (relaxed for testing)
+security:
+  secrets_backend: docker
+  image_scanning: enabled
+  network_policies: permissive
+  user_namespace: disabled
+
+# Monitoring configuration
+monitoring:
+  prometheus:
+    retention: 7d
+    scrape_interval: 30s
+  
+  grafana:
+    admin_password: admin
+    smtp_enabled: false
+  
+  alertmanager:
+    webhook_url: ${STAGING_WEBHOOK_URL}
+
+# Backup configuration
+backup:
+  schedule: "0 4 * * *"  # Daily at 4 AM
+  retention_days: 7
+  s3_bucket: ainflue-staging-backups
+  encryption: disabled
