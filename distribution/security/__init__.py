@@ -45,6 +45,17 @@ from .audit_logger import (
     log_distribution_event
 )
 
+from .data_protection_manager import (
+    DataProtectionManager,
+    ConsentRecord,
+    DataProcessingRecord,
+    DataSubjectRequest,
+    EncryptionConfig,
+    DataCategory,
+    ConsentType,
+    DataSubjectRight
+)
+
 __all__ = [
     # Access Control
     'AccessController',
@@ -76,7 +87,17 @@ __all__ = [
     'log_authentication_event',
     'log_api_call',
     'log_security_violation',
-    'log_distribution_event'
+    'log_distribution_event',
+    
+    # Data Protection
+    'DataProtectionManager',
+    'ConsentRecord',
+    'DataProcessingRecord',
+    'DataSubjectRequest',
+    'EncryptionConfig',
+    'DataCategory',
+    'ConsentType',
+    'DataSubjectRight'
 ]
 
 __version__ = "1.0.0"
