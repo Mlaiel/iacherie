@@ -1,0 +1,809 @@
+# Ainflue Infrastructure Module
+# =============================
+# 
+# Enterprise Database Infrastructure Provisioning Playbook
+# Automated deployment of multi-tier database infrastructure
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+#
+# ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+
+---
+- name: "Ainflue Enterprise Database Infrastructure Provisioning"
+  hosts: database_servers
+  become: yes
+  gather_facts: yes
+  vars:
+    # Database versions
+    postgresql_version: "15.2"
+    mongodb_version: "6.0.4"
+    redis_version: "7.0.8"
+    elasticsearch_version: "8.6.0"
+    
+    # Cluster configuration
+    database_cluster_config:
+      postgresql:
+        primary_nodes: 1
+        replica_nodes: 2
+        storage_size: "100Gi"
+        memory_limit: "8Gi"
+        cpu_limit: "4"
+      mongodb:
+        replica_set_nodes: 3
+        shard_nodes: 2
+        config_servers: 3
+        storage_size: "200Gi"
+        memory_limit: "16Gi"
+        cpu_limit: "8"
+      redis:
+        master_nodes: 3
+        replica_nodes: 6
+        memory_limit: "4Gi"
+        cpu_limit: "2"
+      elasticsearch:
+        master_nodes: 3
+        data_nodes: 6
+        storage_size: "500Gi"
+        memory_limit: "32Gi"
+        cpu_limit: "16"
+    
+    # Security configuration
+    security_config:
+      encryption_at_rest: true
+      encryption_in_transit: true
+      authentication: "scram-sha-256"
+      ssl_mode: "require"
+      backup_encryption: true
+      
+    # High availability configuration
+    ha_config:
+      replication: true
+      automatic_failover: true
+      backup_retention: "30d"
+      point_in_time_recovery: true
+      cross_region_replication: true
+
+  pre_tasks:
+    - name: "Validate database server requirements"
+      assert:
+        that:
+          - ansible_memtotal_mb >= 32768
+          - ansible_processor_vcpus >= 8
+          - ansible_mounts | selectattr('mount', 'equalto', '/') | list | first | int >= 500
+        fail_msg: "Insufficient resources for enterprise database infrastructure"
+        success_msg: "Database server requirements validated"
+
+    - name: "Check Kubernetes cluster connectivity"
+      shell: kubectl cluster-info
+      register: cluster_status
+      failed_when: cluster_status.rc != 0
+
+  tasks:
+    # ==========================================
+    # PHASE 1: INFRASTRUCTURE PREPARATION
+    # ==========================================
+    
+    - name: "Create database namespaces"
+      kubernetes.core.k8s:
+        name: "{{ item }}"
+        api_version: v1
+        kind: Namespace
+        state: present
+        definition:
+          metadata:
+            labels:
+              name: "{{ item }}"
+              purpose: "database-infrastructure"
+              managed-by: "ainflue-infrastructure"
+              security-policy: "strict"
+      loop:
+        - "postgresql"
+        - "mongodb" 
+        - "redis"
+        - "elasticsearch"
+        - "database-backups"
+      tags: ["namespaces", "preparation"]
+
+    - name: "Create database storage classes"
+      kubernetes.core.k8s:
+        definition:
+          apiVersion: storage.k8s.io/v1
+          kind: StorageClass
+          metadata:
+            name: "{{ item.name }}"
+          provisioner: kubernetes.io/aws-ebs
+          parameters:
+            type: "{{ item.type }}"
+            fsType: ext4
+            encrypted: "true"
+            iops: "{{ item.iops | default('3000') }}"
+          allowVolumeExpansion: true
+          reclaimPolicy: Retain
+      loop:
+        - { name: "database-ssd-high-iops", type: "io2", iops: "10000" }
+        - { name: "database-ssd-standard", type: "gp3", iops: "3000" }
+        - { name: "database-backup-storage", type: "sc1" }
+      tags: ["storage", "preparation"]
+
+    # ==========================================
+    # PHASE 2: POSTGRESQL CLUSTER DEPLOYMENT
+    # ==========================================
+    
+    - name: "Deploy PostgreSQL Operator"
+      kubernetes.core.k8s:
+        definition:
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: postgres-operator
+            namespace: postgresql
+            labels:
+              app: postgres-operator
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                app: postgres-operator
+            template:
+              metadata:
+                labels:
+                  app: postgres-operator
+              spec:
+                serviceAccountName: postgres-operator
+                containers:
+                - name: postgres-operator
+                  image: "registry.opensource.zalan.do/acid/postgres-operator:v1.9.0"
+                  env:
+                  - name: CONFIG_MAP_NAME
+                    value: postgres-operator
+                  - name: WATCHED_NAMESPACE
+                    value: postgresql
+                  resources:
+                    limits:
+                      memory: 1Gi
+                      cpu: 500m
+                    requests:
+                      memory: 512Mi
+                      cpu: 100m
+      tags: ["postgresql", "operator"]
+
+    - name: "Create PostgreSQL cluster configuration"
+      kubernetes.core.k8s:
+        definition:
+          apiVersion: "acid.zalan.do/v1"
+          kind: postgresql
+          metadata:
+            name: ainflue-postgresql-cluster
+            namespace: postgresql
+          spec:
+            teamId: "ainflue"
+            volume:
+              size: "{{ database_cluster_config.postgresql.storage_size }}"
+              storageClass: database-ssd-high-iops
+            numberOfInstances: "{{ database_cluster_config.postgresql.primary_nodes + database_cluster_config.postgresql.replica_nodes }}"
+            users:
+              ainflue_admin:
+                - superuser
+                - createdb
+              ainflue_app:
+                - login
+              ainflue_readonly:
+                - login
+            databases:
+              ainflue_main: ainflue_app
+              ainflue_analytics: ainflue_app
+              ainflue_ai_models: ainflue_app
+            postgresql:
+              version: "{{ postgresql_version }}"
+              parameters:
+                max_connections: "200"
+                shared_buffers: "2GB"
+                effective_cache_size: "6GB"
+                work_mem: "64MB"
+                maintenance_work_mem: "512MB"
+                checkpoint_completion_target: "0.9"
+                wal_buffers: "16MB"
+                default_statistics_target: "100"
+                random_page_cost: "1.1"
+                effective_io_concurrency: "200"
+                logging_collector: "on"
+                log_directory: "pg_log"
+                log_filename: "postgresql-%Y-%m-%d_%H%M%S.log"
+                log_statement: "all"
+                log_min_duration_statement: "1000ms"
+            resources:
+              requests:
+                cpu: "{{ database_cluster_config.postgresql.cpu_limit | int // 2 }}"
+                memory: "{{ database_cluster_config.postgresql.memory_limit | regex_replace('Gi', '') | int // 2 }}Gi"
+              limits:
+                cpu: "{{ database_cluster_config.postgresql.cpu_limit }}"
+                memory: "{{ database_cluster_config.postgresql.memory_limit }}"
+            patroni:
+              initdb:
+                encoding: "UTF8"
+                locale: "en_US.UTF-8"
+                data-checksums: true
+              pg_hba:
+                - hostssl all all 0.0.0.0/0 scram-sha-256
+                - host    all all 127.0.0.1/32 scram-sha-256
+                - host    all all ::1/128 scram-sha-256
+              ttl: 30
+              loop_wait: 10
+              retry_timeout: 10
+              maximum_lag_on_failover: 1048576
+            connectionPooler:
+              numberOfInstances: 3
+              mode: "transaction"
+              schema: "pooler"
+              user: "pooler"
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 128Mi
+                limits:
+                  cpu: 500m
+                  memory: 512Mi
+      tags: ["postgresql", "cluster"]
+
+    # ==========================================
+    # PHASE 3: MONGODB CLUSTER DEPLOYMENT
+    # ==========================================
+    
+    - name: "Deploy MongoDB Operator"
+      kubernetes.core.k8s:
+        definition:
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: mongodb-kubernetes-operator
+            namespace: mongodb
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                name: mongodb-kubernetes-operator
+            template:
+              metadata:
+                labels:
+                  name: mongodb-kubernetes-operator
+              spec:
+                serviceAccountName: mongodb-kubernetes-operator
+                containers:
+                - name: mongodb-kubernetes-operator
+                  image: "quay.io/mongodb/mongodb-kubernetes-operator:0.7.6"
+                  command:
+                  - mongodb-kubernetes-operator
+                  env:
+                  - name: WATCH_NAMESPACE
+                    value: mongodb
+                  - name: POD_NAME
+                    valueFrom:
+                      fieldRef:
+                        fieldPath: metadata.name
+                  - name: OPERATOR_NAME
+                    value: mongodb-kubernetes-operator
+                  resources:
+                    limits:
+                      memory: 1Gi
+                      cpu: 500m
+                    requests:
+                      memory: 512Mi
+                      cpu: 100m
+      tags: ["mongodb", "operator"]
+
+    - name: "Create MongoDB replica set cluster"
+      kubernetes.core.k8s:
+        definition:
+          apiVersion: mongodbcommunity.mongodb.com/v1
+          kind: MongoDBCommunity
+          metadata:
+            name: ainflue-mongodb-cluster
+            namespace: mongodb
+          spec:
+            members: "{{ database_cluster_config.mongodb.replica_set_nodes }}"
+            type: ReplicaSet
+            version: "{{ mongodb_version }}"
+            security:
+              authentication:
+                modes: ["SCRAM"]
+              tls:
+                enabled: true
+                certificateKeySecretRef:
+                  name: mongodb-tls
+                caConfigMapRef:
+                  name: mongodb-ca
+            users:
+            - name: ainflue-admin
+              db: admin
+              passwordSecretRef:
+                name: mongodb-admin-password
+              roles:
+              - name: clusterAdmin
+                db: admin
+              - name: userAdminAnyDatabase
+                db: admin
+              - name: readWriteAnyDatabase
+                db: admin
+            - name: ainflue-app
+              db: ainflue_main
+              passwordSecretRef:
+                name: mongodb-app-password
+              roles:
+              - name: readWrite
+                db: ainflue_main
+              - name: readWrite
+                db: ainflue_analytics
+              - name: readWrite
+                db: ainflue_content
+            additionalMongodConfig:
+              storage.wiredTiger.engineConfig.journalCompressor: zlib
+              storage.wiredTiger.collectionConfig.blockCompressor: snappy
+              storage.wiredTiger.indexConfig.prefixCompression: true
+              operationProfiling.mode: slowOp
+              operationProfiling.slowOpThresholdMs: 100
+              replication.enableMajorityReadConcern: true
+            statefulSet:
+              spec:
+                volumeClaimTemplates:
+                - metadata:
+                    name: data-volume
+                  spec:
+                    accessModes: ["ReadWriteOnce"]
+                    storageClassName: database-ssd-high-iops
+                    resources:
+                      requests:
+                        storage: "{{ database_cluster_config.mongodb.storage_size }}"
+                - metadata:
+                    name: logs-volume
+                  spec:
+                    accessModes: ["ReadWriteOnce"]
+                    storageClassName: database-ssd-standard
+                    resources:
+                      requests:
+                        storage: 10Gi
+                template:
+                  spec:
+                    containers:
+                    - name: mongod
+                      resources:
+                        limits:
+                          cpu: "{{ database_cluster_config.mongodb.cpu_limit }}"
+                          memory: "{{ database_cluster_config.mongodb.memory_limit }}"
+                        requests:
+                          cpu: "{{ database_cluster_config.mongodb.cpu_limit | int // 2 }}"
+                          memory: "{{ database_cluster_config.mongodb.memory_limit | regex_replace('Gi', '') | int // 2 }}Gi"
+      tags: ["mongodb", "cluster"]
+
+    # ==========================================
+    # PHASE 4: REDIS CLUSTER DEPLOYMENT
+    # ==========================================
+    
+    - name: "Deploy Redis Operator"
+      kubernetes.core.k8s:
+        definition:
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: redis-operator
+            namespace: redis
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                name: redis-operator
+            template:
+              metadata:
+                labels:
+                  name: redis-operator
+              spec:
+                serviceAccountName: redis-operator
+                containers:
+                - name: redis-operator
+                  image: "quay.io/spotahome/redis-operator:v1.2.4"
+                  env:
+                  - name: WATCH_NAMESPACE
+                    value: redis
+                  resources:
+                    limits:
+                      memory: 512Mi
+                      cpu: 200m
+                    requests:
+                      memory: 256Mi
+                      cpu: 100m
+      tags: ["redis", "operator"]
+
+    - name: "Create Redis cluster"
+      kubernetes.core.k8s:
+        definition:
+          apiVersion: databases.spotahome.com/v1
+          kind: RedisFailover
+          metadata:
+            name: ainflue-redis-cluster
+            namespace: redis
+          spec:
+            sentinel:
+              replicas: 3
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 256Mi
+                limits:
+                  cpu: 500m
+                  memory: 512Mi
+            redis:
+              replicas: "{{ database_cluster_config.redis.replica_nodes }}"
+              resources:
+                requests:
+                  cpu: "{{ database_cluster_config.redis.cpu_limit | int // 2 }}"
+                  memory: "{{ database_cluster_config.redis.memory_limit | regex_replace('Gi', '') | int // 2 }}Gi"
+                limits:
+                  cpu: "{{ database_cluster_config.redis.cpu_limit }}"
+                  memory: "{{ database_cluster_config.redis.memory_limit }}"
+              storage:
+                persistentVolumeClaim:
+                  metadata:
+                    name: redis-data
+                  spec:
+                    accessModes:
+                      - ReadWriteOnce
+                    storageClassName: database-ssd-standard
+                    resources:
+                      requests:
+                        storage: 50Gi
+              customConfig:
+                - "maxmemory-policy allkeys-lru"
+                - "save 900 1"
+                - "save 300 10"
+                - "save 60 10000"
+                - "tcp-keepalive 60"
+                - "tcp-backlog 511"
+                - "timeout 0"
+                - "databases 16"
+                - "maxclients 10000"
+            auth:
+              secretPath: redis-auth
+      tags: ["redis", "cluster"]
+
+    # ==========================================
+    # PHASE 5: ELASTICSEARCH CLUSTER DEPLOYMENT
+    # ==========================================
+    
+    - name: "Deploy Elasticsearch Operator"
+      kubernetes.core.k8s:
+        definition:
+          apiVersion: apps/v1
+          kind: StatefulSet
+          metadata:
+            name: elastic-operator
+            namespace: elasticsearch
+          spec:
+            serviceName: elastic-operator
+            replicas: 1
+            selector:
+              matchLabels:
+                control-plane: elastic-operator
+            template:
+              metadata:
+                labels:
+                  control-plane: elastic-operator
+              spec:
+                serviceAccountName: elastic-operator
+                containers:
+                - image: "docker.elastic.co/eck/eck-operator:2.6.1"
+                  name: manager
+                  args:
+                  - manager
+                  - --config=/conf/eck.yaml
+                  env:
+                  - name: OPERATOR_NAMESPACE
+                    valueFrom:
+                      fieldRef:
+                        fieldPath: metadata.namespace
+                  - name: POD_IP
+                    valueFrom:
+                      fieldRef:
+                        fieldPath: status.podIP
+                  - name: WEBHOOK_SECRET
+                    value: elastic-webhook-server-certs
+                  resources:
+                    limits:
+                      memory: 1Gi
+                      cpu: 500m
+                    requests:
+                      memory: 512Mi
+                      cpu: 100m
+      tags: ["elasticsearch", "operator"]
+
+    - name: "Create Elasticsearch cluster"
+      kubernetes.core.k8s:
+        definition:
+          apiVersion: elasticsearch.k8s.elastic.co/v1
+          kind: Elasticsearch
+          metadata:
+            name: ainflue-elasticsearch-cluster
+            namespace: elasticsearch
+          spec:
+            version: "{{ elasticsearch_version }}"
+            nodeSets:
+            - name: masters
+              count: "{{ database_cluster_config.elasticsearch.master_nodes }}"
+              config:
+                node.roles: ["master"]
+                cluster.remote.connect: false
+                xpack.security.enabled: true
+                xpack.security.transport.ssl.enabled: true
+                xpack.security.http.ssl.enabled: true
+                xpack.monitoring.collection.enabled: true
+              volumeClaimTemplates:
+              - metadata:
+                  name: elasticsearch-data
+                spec:
+                  accessModes:
+                  - ReadWriteOnce
+                  resources:
+                    requests:
+                      storage: 100Gi
+                  storageClassName: database-ssd-high-iops
+              podTemplate:
+                spec:
+                  containers:
+                  - name: elasticsearch
+                    resources:
+                      requests:
+                        memory: 4Gi
+                        cpu: 2
+                      limits:
+                        memory: 8Gi
+                        cpu: 4
+                    env:
+                    - name: ES_JAVA_OPTS
+                      value: -Xms4g -Xmx4g
+            - name: data
+              count: "{{ database_cluster_config.elasticsearch.data_nodes }}"
+              config:
+                node.roles: ["data", "ingest"]
+                cluster.remote.connect: false
+                xpack.security.enabled: true
+                xpack.security.transport.ssl.enabled: true
+                xpack.security.http.ssl.enabled: true
+              volumeClaimTemplates:
+              - metadata:
+                  name: elasticsearch-data
+                spec:
+                  accessModes:
+                  - ReadWriteOnce
+                  resources:
+                    requests:
+                      storage: "{{ database_cluster_config.elasticsearch.storage_size }}"
+                  storageClassName: database-ssd-high-iops
+              podTemplate:
+                spec:
+                  containers:
+                  - name: elasticsearch
+                    resources:
+                      requests:
+                        memory: "{{ database_cluster_config.elasticsearch.memory_limit | regex_replace('Gi', '') | int // 2 }}Gi"
+                        cpu: "{{ database_cluster_config.elasticsearch.cpu_limit | int // 2 }}"
+                      limits:
+                        memory: "{{ database_cluster_config.elasticsearch.memory_limit }}"
+                        cpu: "{{ database_cluster_config.elasticsearch.cpu_limit }}"
+                    env:
+                    - name: ES_JAVA_OPTS
+                      value: "-Xms{{ database_cluster_config.elasticsearch.memory_limit | regex_replace('Gi', '') | int // 2 }}g -Xmx{{ database_cluster_config.elasticsearch.memory_limit | regex_replace('Gi', '') | int // 2 }}g"
+            http:
+              service:
+                spec:
+                  type: LoadBalancer
+              tls:
+                selfSignedCertificate:
+                  disabled: false
+      tags: ["elasticsearch", "cluster"]
+
+    # ==========================================
+    # PHASE 6: BACKUP INFRASTRUCTURE
+    # ==========================================
+    
+    - name: "Deploy backup infrastructure"
+      kubernetes.core.k8s:
+        definition:
+          apiVersion: apps/v1
+          kind: CronJob
+          metadata:
+            name: "{{ item.name }}-backup"
+            namespace: "{{ item.namespace }}"
+          spec:
+            schedule: "{{ item.schedule }}"
+            jobTemplate:
+              spec:
+                template:
+                  spec:
+                    containers:
+                    - name: backup
+                      image: "{{ item.image }}"
+                      command: "{{ item.command }}"
+                      env:
+                      - name: AWS_ACCESS_KEY_ID
+                        valueFrom:
+                          secretKeyRef:
+                            name: backup-credentials
+                            key: aws-access-key-id
+                      - name: AWS_SECRET_ACCESS_KEY
+                        valueFrom:
+                          secretKeyRef:
+                            name: backup-credentials
+                            key: aws-secret-access-key
+                      - name: BACKUP_RETENTION_DAYS
+                        value: "{{ ha_config.backup_retention | regex_replace('d', '') }}"
+                      volumeMounts:
+                      - name: backup-storage
+                        mountPath: /backup
+                    volumes:
+                    - name: backup-storage
+                      persistentVolumeClaim:
+                        claimName: backup-pvc
+                    restartPolicy: OnFailure
+      loop:
+        - name: postgresql
+          namespace: postgresql
+          schedule: "0 2 * * *"
+          image: "postgres:15-alpine"
+          command: ["/bin/sh", "-c", "pg_dumpall -h ainflue-postgresql-cluster -U postgres | gzip > /backup/postgresql-$(date +%Y%m%d).sql.gz"]
+        - name: mongodb
+          namespace: mongodb
+          schedule: "0 3 * * *"
+          image: "mongo:6.0"
+          command: ["/bin/sh", "-c", "mongodump --host ainflue-mongodb-cluster --archive=/backup/mongodb-$(date +%Y%m%d).archive --gzip"]
+        - name: redis
+          namespace: redis
+          schedule: "0 4 * * *"
+          image: "redis:7-alpine"
+          command: ["/bin/sh", "-c", "redis-cli -h ainflue-redis-cluster --rdb /backup/redis-$(date +%Y%m%d).rdb"]
+      tags: ["backup", "infrastructure"]
+
+    # ==========================================
+    # PHASE 7: MONITORING AND ALERTING
+    # ==========================================
+    
+    - name: "Deploy database monitoring"
+      kubernetes.core.k8s:
+        definition:
+          apiVersion: monitoring.coreos.com/v1
+          kind: ServiceMonitor
+          metadata:
+            name: "{{ item.name }}-monitor"
+            namespace: "{{ item.namespace }}"
+            labels:
+              prometheus: cluster
+          spec:
+            selector:
+              matchLabels:
+                app: "{{ item.name }}"
+            endpoints:
+            - port: metrics
+              interval: 15s
+              path: /metrics
+      loop:
+        - { name: "postgresql", namespace: "postgresql" }
+        - { name: "mongodb", namespace: "mongodb" }
+        - { name: "redis", namespace: "redis" }
+        - { name: "elasticsearch", namespace: "elasticsearch" }
+      tags: ["monitoring", "servicemonitors"]
+
+    # ==========================================
+    # PHASE 8: SECURITY HARDENING
+    # ==========================================
+    
+    - name: "Apply database security policies"
+      kubernetes.core.k8s:
+        definition:
+          apiVersion: networking.k8s.io/v1
+          kind: NetworkPolicy
+          metadata:
+            name: "{{ item }}-security-policy"
+            namespace: "{{ item }}"
+          spec:
+            podSelector: {}
+            policyTypes:
+            - Ingress
+            - Egress
+            ingress:
+            - from:
+              - namespaceSelector:
+                  matchLabels:
+                    database-access: "allowed"
+              - podSelector:
+                  matchLabels:
+                    database-client: "true"
+            egress:
+            - to: []
+              ports:
+              - protocol: TCP
+                port: 53
+              - protocol: UDP
+                port: 53
+            - to:
+              - namespaceSelector:
+                  matchLabels:
+                    name: monitoring
+      loop:
+        - postgresql
+        - mongodb
+        - redis
+        - elasticsearch
+      tags: ["security", "network-policies"]
+
+  post_tasks:
+    - name: "Verify database cluster deployments"
+      kubernetes.core.k8s_info:
+        api_version: apps/v1
+        kind: StatefulSet
+        namespace: "{{ item.namespace }}"
+        name: "{{ item.name }}"
+      register: cluster_status
+      failed_when: cluster_status.resources | length == 0
+      loop:
+        - { name: "ainflue-postgresql-cluster", namespace: "postgresql" }
+        - { name: "ainflue-mongodb-cluster", namespace: "mongodb" }
+        - { name: "ainflue-redis-cluster", namespace: "redis" }
+        - { name: "ainflue-elasticsearch-cluster-es-masters", namespace: "elasticsearch" }
+      tags: ["verification"]
+
+    - name: "Display database connection information"
+      debug:
+        msg:
+          - "PostgreSQL: ainflue-postgresql-cluster.postgresql.svc.cluster.local:5432"
+          - "MongoDB: ainflue-mongodb-cluster.mongodb.svc.cluster.local:27017"
+          - "Redis: ainflue-redis-cluster.redis.svc.cluster.local:6379"
+          - "Elasticsearch: ainflue-elasticsearch-cluster-es-http.elasticsearch.svc.cluster.local:9200"
+      tags: ["endpoints"]
+
+  handlers:
+    - name: restart database operators
+      kubernetes.core.k8s:
+        state: absent
+        api_version: apps/v1
+        kind: Deployment
+        namespace: "{{ item }}"
+        name: "{{ item }}-operator"
+      loop:
+        - postgresql
+        - mongodb
+        - redis
+        - elasticsearch
+      listen: "restart operators"
+
+# Database cluster validation
+- name: "Database Infrastructure Validation"
+  hosts: database_servers
+  tasks:
+    - name: "Test database connectivity"
+      shell: |
+        kubectl run test-{{ item.db }} --rm -i --tty \
+          --image={{ item.image }} \
+          --namespace={{ item.namespace }} \
+          --restart=Never -- {{ item.command }}
+      loop:
+        - db: postgresql
+          namespace: postgresql
+          image: postgres:15-alpine
+          command: "psql -h ainflue-postgresql-cluster -U postgres -c 'SELECT 1'"
+        - db: mongodb
+          namespace: mongodb
+          image: mongo:6.0
+          command: "mongosh --host ainflue-mongodb-cluster --eval 'db.adminCommand(\"hello\")'"
+        - db: redis
+          namespace: redis
+          image: redis:7-alpine
+          command: "redis-cli -h ainflue-redis-cluster ping"
+      register: connectivity_tests
+      tags: ["validation", "connectivity"]
+
+    - name: "Generate database infrastructure report"
+      template:
+        src: database_report.j2
+        dest: "/tmp/ainflue_database_infrastructure_report.json"
+      vars:
+        deployment_timestamp: "{{ ansible_date_time.iso8601 }}"
+        connectivity_status: "{{ connectivity_tests.results }}"
+      tags: ["reporting"]
