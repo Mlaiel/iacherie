@@ -24,9 +24,14 @@ from .platform_health_monitor import (
 
 from .performance_tracker import (
     PerformanceTracker,
-    PerformanceMetrics,
-    PerformanceAlert,
-    PerformanceThreshold
+    PerformanceMetric,
+    PerformanceThreshold,
+    SystemMetrics,
+    ApplicationMetrics,
+    MetricType,
+    AlertLevel,
+    PerformanceTimer,
+    track_performance
 )
 
 from .alerting_system import (
@@ -58,9 +63,14 @@ __all__ = [
     
     # Performance Tracking
     'PerformanceTracker',
-    'PerformanceMetrics',
-    'PerformanceAlert',
+    'PerformanceMetric',
     'PerformanceThreshold',
+    'SystemMetrics',
+    'ApplicationMetrics',
+    'MetricType',
+    'AlertLevel',
+    'PerformanceTimer',
+    'track_performance',
     
     # Alerting
     'AlertingSystem',

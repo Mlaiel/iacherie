@@ -33,10 +33,17 @@ from .rate_limit_enforcer import (
     RateLimitResult
 )
 
-# TODO: Add imports for remaining security modules when implemented
-# from .api_security_manager import APISecurityManager
-# from .credential_vault import CredentialVault
-# from .audit_logger import AuditLogger
+from .audit_logger import (
+    AuditLogger,
+    AuditEvent,
+    AuditEventType,
+    AuditSeverity,
+    AuditLogConfig,
+    log_authentication_event,
+    log_api_call,
+    log_security_violation,
+    log_distribution_event
+)
 
 __all__ = [
     # Access Control
@@ -58,7 +65,18 @@ __all__ = [
     'RateLimitEnforcer',
     'RateLimitType',
     'RateLimitRule',
-    'RateLimitResult'
+    'RateLimitResult',
+    
+    # Audit Logging
+    'AuditLogger',
+    'AuditEvent',
+    'AuditEventType',
+    'AuditSeverity',
+    'AuditLogConfig',
+    'log_authentication_event',
+    'log_api_call',
+    'log_security_violation',
+    'log_distribution_event'
 ]
 
 __version__ = "1.0.0"
