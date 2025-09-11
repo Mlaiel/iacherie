@@ -53,7 +53,7 @@ except ImportError:
 
 # Add mock implementations for missing dependencies
 if PANDAS_AVAILABLE:
-    DataFrame = DataFrame
+    from pandas import DataFrame
 else:
     from typing import Any
     DataFrame = Any  # Fallback when pandas not available
