@@ -166,7 +166,8 @@ class AinflueMasterStudio {
         contextIsolation: true,
         enableRemoteModule: false,
         preload: path.join(__dirname, 'preload.js'),
-        webSecurity: this.isProduction,
+        webSecurity: true,
+        sandbox: true,
         spellcheck: false,
         backgroundThrottling: false
       },

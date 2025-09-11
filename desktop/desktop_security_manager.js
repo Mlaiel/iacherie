@@ -25,7 +25,12 @@ class DesktopSecurityManager {
       enableRemoteContent: false,
       strictTransportSecurity: true,
       contentTypeNoSniff: true,
-      frameOptions: 'DENY'
+      frameOptions: 'DENY',
+      // Electron Security Configuration
+      nodeIntegration: false,
+      contextIsolation: true,
+      sandbox: true,
+      webSecurity: true
     };
     
     this.encryptionKey = this.generateEncryptionKey();
@@ -378,6 +383,19 @@ class DesktopSecurityManager {
   }
 
   // Security validation methods
+  getSecureWebPreferences(preloadPath) {
+    return {
+      nodeIntegration: this.securityPolicies.nodeIntegration,
+      contextIsolation: this.securityPolicies.contextIsolation,
+      sandbox: this.securityPolicies.sandbox,
+      webSecurity: this.securityPolicies.webSecurity,
+      enableRemoteModule: false,
+      preload: preloadPath,
+      spellcheck: false,
+      backgroundThrottling: false
+    };
+  }
+
   isUrlAllowed(url) {
     const hostname = url.hostname;
     
