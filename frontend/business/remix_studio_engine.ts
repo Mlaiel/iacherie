@@ -235,12 +235,18 @@ export const studioComponents = {
     width: '300px',
     backgroundColor: studioColors.studio.background,
     borderColor: studioColors.studio.border,
-    channelWidth: 80
+    channelWidth: 80,
+    meterWidth: 12,
+    meterHeight: 120,
+    faderHeight: 140
   },
   waveform: {
     backgroundColor: studioColors.waveform.background,
     waveformColor: studioColors.waveform.waveform,
-    selectionColor: studioColors.waveform.selection
+    selectionColor: studioColors.waveform.selection,
+    waveColor: '#06B6D4',
+    cursorColor: '#F59E0B',
+    progressColor: '#10B981'
   },
   controls: {
     backgroundColor: studioColors.controls.background,

@@ -7,7 +7,8 @@
  */
 
 import { useState, useCallback, useRef, useEffect } from 'react';
-import type { UploadConfiguration, UploadSession, UploadProgress, FileMetadata } from '../core/types';
+import type { UploadConfiguration, FileMetadata } from '../core/types';
+import type { UploadSession as CoreUploadSession, UploadProgress as CoreUploadProgress } from '../core/types';
 
 // ====================================================================
 // UPLOAD ORCHESTRATOR INTERFACES
@@ -26,11 +27,17 @@ export interface UploadSession {
   id: string;
   files: UploadFile[];
   status: 'preparing' | 'uploading' | 'processing' | 'completed' | 'failed';
-  progress: UploadProgress;
+  progress: LocalUploadProgress;
   startTime: number;
   endTime?: number;
   error?: string;
   metadata: SessionMetadata;
+}
+
+export interface LocalUploadProgress {
+  current: number;
+  total: number;
+  percentage: number;
 }
 
 export interface UploadFile {
@@ -161,6 +168,8 @@ export class UploadOrchestrator {
     this.activeSessions = new Map();
     this.uploadQueue = [];
     this.chunkSize = config.chunkSize || 1024 * 1024; // 1MB default
+    this.supportedFormats = [];
+    this.initializeSupportedFormats();
     this.initializeSupportedFormats();
   }
 
@@ -295,7 +304,7 @@ export class UploadOrchestrator {
       session.status = 'uploading';
       
       // Upload files concurrently with limit
-      const concurrentLimit = this.config.concurrentUploads || 3;
+      const concurrentLimit = this.config.maxConcurrentUploads || 3;
       const chunks = this.chunkArray(session.files, concurrentLimit);
       
       for (const chunk of chunks) {
@@ -530,10 +539,10 @@ export class UploadOrchestrator {
       name: file.name,
       size: file.size,
       type: file.type,
-      lastModified: file.lastModified,
-      extension: '.' + file.name.split('.').pop()?.toLowerCase(),
-      uploadTime: Date.now()
-    } as FileMetadata;
+      format: file.type,
+      lastModified: new Date(file.lastModified),
+      checksum: `${file.name}_${file.size}_${file.lastModified}` // Simple checksum placeholder
+    };
   }
 
   private generateSessionId(): string {

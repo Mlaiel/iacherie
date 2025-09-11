@@ -32,16 +32,16 @@ export { gamificationStyles, tierIcons, challengeIcons, difficultyColors, getDif
 
 // Import all components first
 import GamificationDashboard from './GamificationDashboard';
-import ChallengeInterface from '../gamification_challenges/ChallengeInterface';
-import LeaderboardComponent from '../gamification_social/LeaderboardComponent';
-import SocialCompetitions from '../gamification_social/SocialCompetitions';
-import AchievementPanel from '../gamification_achievements/AchievementPanel';
+import ChallengeInterface from '../challenges_components/ChallengeInterface';
+import LeaderboardComponent from '../social_components/LeaderboardComponent';
+import SocialCompetitions from '../social_components/SocialCompetitions';
+import AchievementPanel from '../achievements_components/AchievementPanel';
 import RewardSystem from './RewardSystem';
-import ProgressTracker from '../gamification_achievements/ProgressTracker';
-import BadgeCollection from '../gamification_achievements/BadgeCollection';
-import VirtualEconomy from '../gamification_social/VirtualEconomy';
-import ChallengeCreator from '../gamification_challenges/ChallengeCreator';
-import CompetitionCalendar from '../gamification_challenges/CompetitionCalendar';
+import ProgressTracker from '../achievements_components/ProgressTracker';
+import BadgeCollection from '../achievements_components/BadgeCollection';
+import VirtualEconomy from '../social_components/VirtualEconomy';
+import ChallengeCreator from '../challenges_components/ChallengeCreator';
+import CompetitionCalendar from '../challenges_components/CompetitionCalendar';
 import EngagementMetrics from './EngagementMetrics';
 import RewardStore from './RewardStore';
 
