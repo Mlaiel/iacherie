@@ -1,12 +1,13 @@
-"""🎨 Generative AI Researcher - Cutting-Edge AI Research Platform
-==================================================================
-Module: ml/experiments/generative_ai_researcher.py
-Author: Fahed Mlaiel (mlaiel@live.de)
-==================================================================
+"""
+🧠 Generative AI Researcher - Advanced AI Research & Content Creation Module
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-(c) 2025 Fahed Mlaiel. Tous droits réservés.
-Contact: mlaiel@live.de
+Cutting-edge generative AI research system for content creation, enhancement, and 
+creative assistance across all creator types on the Ainflue platform. Leverages 
+state-of-the-art models for multimodal content generation and optimization.
+
+Author: Fahed Mlaiel (mlaiel@live.de)
+Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+Version: 1.0.0
 
 🎨 GENERATIVE AI RESEARCH PLATFORM
 Cutting-edge generative AI research for creator content enhancement
