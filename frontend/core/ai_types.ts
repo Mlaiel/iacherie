@@ -215,7 +215,7 @@ export interface ContentAnalysis {
   type: 'text' | 'image' | 'audio' | 'video';
   content: any;
   analysis: AnalysisResult;
-  metadata: ContentMetadata;
+  metadata: AIContentMetadata;
   timestamp: number;
 }
 
@@ -476,7 +476,7 @@ export interface PerformanceAnalysis {
   warnings: number[];
 }
 
-export interface ContentMetadata {
+export interface AIContentMetadata {
   source: string;
   format: string;
   size: number;

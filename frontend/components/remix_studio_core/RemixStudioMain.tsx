@@ -498,3 +498,4 @@ const RemixStudioMain: React.FC<RemixStudioMainProps> = ({
 };
 
 export default RemixStudioMain;
+export type { RemixStudioMainProps };

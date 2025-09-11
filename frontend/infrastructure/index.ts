@@ -9,7 +9,7 @@
 export * from './api';
 
 // Storage services exports
-export * from './storage';
+// export * from './storage'; // TODO: Implement storage module when needed
 
 // Security services exports
 export * from './security';
