@@ -1,0 +1,108 @@
+{
+  "name": "@ainflue/sdk",
+  "version": "1.0.0",
+  "description": "Official TypeScript/JavaScript SDK for the Ainflue AI-powered content protection platform",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "build:types": "tsc --emitDeclarationOnly",
+    "dev": "rollup -c -w",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint src/**/*.ts --fix",
+    "format": "prettier --write src/**/*.ts",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
+  },
+  "keywords": [
+    "ainflue",
+    "api",
+    "sdk",
+    "typescript",
+    "javascript",
+    "content-protection",
+    "ai",
+    "monetization",
+    "creator-tools"
+  ],
+  "author": {
+    "name": "Fahed Mlaiel",
+    "email": "mlaiel@live.de",
+    "url": "https://github.com/Mlaiel"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Mlaiel/Ainflue.git",
+    "directory": "sdk/javascript"
+  },
+  "bugs": {
+    "url": "https://github.com/Mlaiel/Ainflue/issues"
+  },
+  "homepage": "https://ainflue.com",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "ws": "^8.14.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.0",
+    "@types/node": "^20.0.0",
+    "@types/ws": "^8.5.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.50.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.0.0",
+    "rollup": "^4.0.0",
+    "@rollup/plugin-typescript": "^11.1.0",
+    "@rollup/plugin-node-resolve": "^15.2.0",
+    "@rollup/plugin-commonjs": "^25.0.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "ts-jest": "^29.1.0",
+    "typescript": "^5.2.0"
+  },
+  "peerDependencies": {
+    "typescript": ">=4.5.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./browser": {
+      "import": "./dist/browser-client.esm.js",
+      "require": "./dist/browser-client.js",
+      "types": "./dist/browser-client.d.ts"
+    },
+    "./node": {
+      "import": "./dist/node-client.esm.js", 
+      "require": "./dist/node-client.js",
+      "types": "./dist/node-client.d.ts"
+    }
+  },
+  "browser": {
+    "./dist/node-client.js": "./dist/browser-client.js",
+    "./dist/node-client.esm.js": "./dist/browser-client.esm.js"
+  }
+}
