@@ -98,27 +98,147 @@ class AIPromptInfrastructureOptimizer:
                 optimized_prompts, effectiveness_metrics
             )
             
-            result = {
+            return {
                 'optimization_id': f"prompt_opt_{int(asyncio.get_event_loop().time())}",
                 'infrastructure_analysis': infrastructure_analysis,
                 'optimized_prompts': optimized_prompts,
                 'effectiveness_metrics': effectiveness_metrics,
                 'deployment_plan': deployment_plan,
-                'creator_specific_optimizations': await self._get_creator_specific_optimizations(),
-                'status': 'optimized',
-                'timestamp': datetime.utcnow().isoformat()
+                'estimated_improvement': self._calculate_improvement_metrics(effectiveness_metrics),
+                'creator_impact': await self._assess_creator_impact(optimized_prompts)
             }
-            
-            self.logger.info("AI prompt infrastructure optimization completed successfully")
-            return result
             
         except Exception as e:
-            self.logger.error(f"AI prompt optimization failed: {e}")
+            self.logger.error(f"Prompt optimization failed: {e}")
+            return {'status': 'failed', 'error': str(e)}
+    
+    async def coordinate_ai_providers(self, coordination_config: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Coordinate multiple AI providers for infrastructure optimization
+        
+        IA Prompt Engineer Role: Multi-provider AI coordination
+        """
+        try:
+            providers = coordination_config.get('providers', [AIProvider.OPENAI_GPT4])
+            task_distribution = coordination_config.get('task_distribution', {})
+            failover_strategy = coordination_config.get('failover_strategy', 'round_robin')
+            
+            coordination_results = {}
+            
+            # Distribute tasks across providers
+            for provider in providers:
+                provider_tasks = task_distribution.get(provider.value, [])
+                if provider_tasks:
+                    provider_result = await self._execute_provider_tasks(provider, provider_tasks)
+                    coordination_results[provider.value] = provider_result
+            
+            # Aggregate results
+            aggregated_results = await self._aggregate_provider_results(coordination_results)
+            
+            # Implement failover if needed
+            failover_actions = await self._implement_failover_strategy(
+                coordination_results, failover_strategy
+            )
+            
             return {
-                'status': 'failed',
-                'error': str(e),
-                'timestamp': datetime.utcnow().isoformat()
+                'coordination_id': f"ai_coord_{int(asyncio.get_event_loop().time())}",
+                'provider_results': coordination_results,
+                'aggregated_results': aggregated_results,
+                'failover_actions': failover_actions,
+                'performance_metrics': await self._calculate_provider_performance(coordination_results)
             }
+            
+        except Exception as e:
+            self.logger.error(f"AI provider coordination failed: {e}")
+            return {'status': 'failed', 'error': str(e)}
+    
+    def generate_infrastructure_prompt(self, operation_type: str, context: Dict[str, Any]) -> str:
+        """
+        Generate AI prompt for specific infrastructure operation
+        
+        IA Prompt Engineer Role: Dynamic prompt generation
+        """
+        try:
+            # Creator-specific infrastructure prompt templates
+            if operation_type == 'scaling':
+                base_prompt = """
+                You are an expert infrastructure engineer managing the Ainflue creator economy platform.
+                Analyze the following infrastructure metrics and provide scaling recommendations:
+                
+                Current Infrastructure State:
+                - CPU Usage: {cpu_usage}%
+                - Memory Usage: {memory_usage}%
+                - Creator Activity Level: {creator_activity}
+                - Upload Volume: {upload_volume} files/hour
+                - AI Processing Queue: {ai_queue_size} jobs
+                
+                Provide specific recommendations for:
+                1. Immediate scaling actions (next 15 minutes)
+                2. Predicted resource needs (next 2 hours)
+                3. Cost optimization opportunities
+                4. Creator experience impact assessment
+                
+                Format your response as JSON with scaling_actions, resource_predictions, cost_impact, and creator_impact fields.
+                """
+                
+            elif operation_type == 'security':
+                base_prompt = """
+                You are a cybersecurity expert protecting the Ainflue creator platform.
+                Analyze the following security events and recommend actions:
+                
+                Security Context:
+                - Threat Level: {threat_level}
+                - Suspicious Activities: {suspicious_activities}
+                - Creator Account Alerts: {account_alerts}
+                - System Vulnerabilities: {vulnerabilities}
+                
+                Provide:
+                1. Immediate threat mitigation steps
+                2. Creator account protection measures
+                3. System hardening recommendations
+                4. Incident response procedures
+                
+                Priority: Protect creator content and revenue streams.
+                """
+                
+            elif operation_type == 'performance':
+                base_prompt = """
+                You are a performance optimization expert for the Ainflue creator platform.
+                Analyze the performance metrics and optimize for creator experience:
+                
+                Performance Metrics:
+                - API Response Time: {response_time}ms
+                - Database Query Time: {db_query_time}ms
+                - Content Upload Speed: {upload_speed}
+                - AI Processing Time: {ai_processing_time}s
+                - Creator Satisfaction Score: {satisfaction_score}
+                
+                Optimize for:
+                1. Sub-100ms API response times
+                2. Fast content upload experience
+                3. Real-time collaboration performance
+                4. AI processing efficiency
+                
+                Focus on creator workflow optimization and revenue impact.
+                """
+                
+            else:
+                base_prompt = """
+                You are an infrastructure expert managing the Ainflue creator economy platform.
+                Operation: {operation_type}
+                Context: {context}
+                
+                Provide expert recommendations optimized for creator success and platform scalability.
+                """
+            
+            # Format prompt with context
+            formatted_prompt = base_prompt.format(**context)
+            
+            return formatted_prompt
+            
+        except Exception as e:
+            self.logger.error(f"Prompt generation failed: {e}")
+            return f"Error generating prompt for {operation_type}: {str(e)}"
     
     def _initialize_ainflue_prompt_templates(self):
         """Initialize Ainflue-specific prompt templates"""
