@@ -1,0 +1,2301 @@
+{
+  "timestamp": "2025-09-11T07:46:40.909772",
+  "session": "SESSION_5_FEBRUARY_2025",
+  "summary": {
+    "total_modules": 126,
+    "valid_modules": 126,
+    "invalid_modules": 0,
+    "total_lines": 108369,
+    "total_classes": 922,
+    "total_functions": 3293,
+    "validation_time": 1.552994728088379,
+    "results": [
+      {
+        "module_path": "monitoring_integration.py",
+        "is_valid": true,
+        "lines_count": 534,
+        "classes_count": 6,
+        "functions_count": 19,
+        "imports_count": 14,
+        "error_message": ""
+      },
+      {
+        "module_path": "retry_handler.py",
+        "is_valid": true,
+        "lines_count": 792,
+        "classes_count": 7,
+        "functions_count": 19,
+        "imports_count": 10,
+        "error_message": ""
+      },
+      {
+        "module_path": "performance_monitor.py",
+        "is_valid": true,
+        "lines_count": 932,
+        "classes_count": 8,
+        "functions_count": 42,
+        "imports_count": 19,
+        "error_message": ""
+      },
+      {
+        "module_path": "sync_manager.py",
+        "is_valid": true,
+        "lines_count": 780,
+        "classes_count": 10,
+        "functions_count": 35,
+        "imports_count": 16,
+        "error_message": ""
+      },
+      {
+        "module_path": "api_gateway.py",
+        "is_valid": true,
+        "lines_count": 677,
+        "classes_count": 6,
+        "functions_count": 30,
+        "imports_count": 13,
+        "error_message": ""
+      },
+      {
+        "module_path": "integration_tests.py",
+        "is_valid": true,
+        "lines_count": 1276,
+        "classes_count": 6,
+        "functions_count": 26,
+        "imports_count": 24,
+        "error_message": ""
+      },
+      {
+        "module_path": "__init__.py",
+        "is_valid": true,
+        "lines_count": 38,
+        "classes_count": 0,
+        "functions_count": 0,
+        "imports_count": 8,
+        "error_message": ""
+      },
+      {
+        "module_path": "webhook_manager.py",
+        "is_valid": true,
+        "lines_count": 761,
+        "classes_count": 7,
+        "functions_count": 35,
+        "imports_count": 14,
+        "error_message": ""
+      },
+      {
+        "module_path": "cache_manager.py",
+        "is_valid": true,
+        "lines_count": 809,
+        "classes_count": 6,
+        "functions_count": 36,
+        "imports_count": 19,
+        "error_message": ""
+      },
+      {
+        "module_path": "rate_limiter.py",
+        "is_valid": true,
+        "lines_count": 794,
+        "classes_count": 6,
+        "functions_count": 26,
+        "imports_count": 10,
+        "error_message": ""
+      },
+      {
+        "module_path": "integration_manager.py",
+        "is_valid": true,
+        "lines_count": 501,
+        "classes_count": 4,
+        "functions_count": 13,
+        "imports_count": 12,
+        "error_message": ""
+      },
+      {
+        "module_path": "transformation_engine.py",
+        "is_valid": true,
+        "lines_count": 780,
+        "classes_count": 6,
+        "functions_count": 39,
+        "imports_count": 18,
+        "error_message": ""
+      },
+      {
+        "module_path": "security_scanner.py",
+        "is_valid": true,
+        "lines_count": 999,
+        "classes_count": 7,
+        "functions_count": 25,
+        "imports_count": 24,
+        "error_message": ""
+      },
+      {
+        "module_path": "oauth_manager.py",
+        "is_valid": true,
+        "lines_count": 623,
+        "classes_count": 6,
+        "functions_count": 21,
+        "imports_count": 13,
+        "error_message": ""
+      },
+      {
+        "module_path": "authentication_handler.py",
+        "is_valid": true,
+        "lines_count": 751,
+        "classes_count": 5,
+        "functions_count": 23,
+        "imports_count": 16,
+        "error_message": ""
+      },
+      {
+        "module_path": "error_handler.py",
+        "is_valid": true,
+        "lines_count": 704,
+        "classes_count": 7,
+        "functions_count": 29,
+        "imports_count": 11,
+        "error_message": ""
+      },
+      {
+        "module_path": "validate_integrations.py",
+        "is_valid": true,
+        "lines_count": 300,
+        "classes_count": 3,
+        "functions_count": 8,
+        "imports_count": 9,
+        "error_message": ""
+      },
+      {
+        "module_path": "audit_logger.py",
+        "is_valid": true,
+        "lines_count": 857,
+        "classes_count": 6,
+        "functions_count": 40,
+        "imports_count": 17,
+        "error_message": ""
+      },
+      {
+        "module_path": "circuit_breaker.py",
+        "is_valid": true,
+        "lines_count": 574,
+        "classes_count": 5,
+        "functions_count": 26,
+        "imports_count": 8,
+        "error_message": ""
+      },
+      {
+        "module_path": "configuration_manager.py",
+        "is_valid": true,
+        "lines_count": 807,
+        "classes_count": 7,
+        "functions_count": 31,
+        "imports_count": 19,
+        "error_message": ""
+      },
+      {
+        "module_path": "social_media/crisis_detection.py",
+        "is_valid": true,
+        "lines_count": 895,
+        "classes_count": 7,
+        "functions_count": 13,
+        "imports_count": 43,
+        "error_message": ""
+      },
+      {
+        "module_path": "social_media/engagement_tracker.py",
+        "is_valid": true,
+        "lines_count": 1332,
+        "classes_count": 9,
+        "functions_count": 17,
+        "imports_count": 20,
+        "error_message": ""
+      },
+      {
+        "module_path": "social_media/__init__.py",
+        "is_valid": true,
+        "lines_count": 125,
+        "classes_count": 0,
+        "functions_count": 0,
+        "imports_count": 13,
+        "error_message": ""
+      },
+      {
+        "module_path": "social_media/brand_monitoring.py",
+        "is_valid": true,
+        "lines_count": 919,
+        "classes_count": 5,
+        "functions_count": 14,
+        "imports_count": 42,
+        "error_message": ""
+      },
+      {
+        "module_path": "social_media/content_scheduler.py",
+        "is_valid": true,
+        "lines_count": 1265,
+        "classes_count": 9,
+        "functions_count": 20,
+        "imports_count": 21,
+        "error_message": ""
+      },
+      {
+        "module_path": "social_media/community_manager.py",
+        "is_valid": true,
+        "lines_count": 780,
+        "classes_count": 7,
+        "functions_count": 23,
+        "imports_count": 15,
+        "error_message": ""
+      },
+      {
+        "module_path": "social_media/viral_predictor.py",
+        "is_valid": true,
+        "lines_count": 842,
+        "classes_count": 5,
+        "functions_count": 11,
+        "imports_count": 47,
+        "error_message": ""
+      },
+      {
+        "module_path": "social_media/social_graph_analyzer.py",
+        "is_valid": true,
+        "lines_count": 951,
+        "classes_count": 11,
+        "functions_count": 19,
+        "imports_count": 16,
+        "error_message": ""
+      },
+      {
+        "module_path": "social_media/audience_insights.py",
+        "is_valid": true,
+        "lines_count": 967,
+        "classes_count": 5,
+        "functions_count": 20,
+        "imports_count": 39,
+        "error_message": ""
+      },
+      {
+        "module_path": "social_media/influencer_discovery.py",
+        "is_valid": true,
+        "lines_count": 1435,
+        "classes_count": 11,
+        "functions_count": 24,
+        "imports_count": 25,
+        "error_message": ""
+      },
+      {
+        "module_path": "social_media/hashtag_optimizer.py",
+        "is_valid": true,
+        "lines_count": 846,
+        "classes_count": 4,
+        "functions_count": 18,
+        "imports_count": 30,
+        "error_message": ""
+      },
+      {
+        "module_path": "social_media/sentiment_analyzer.py",
+        "is_valid": true,
+        "lines_count": 785,
+        "classes_count": 5,
+        "functions_count": 12,
+        "imports_count": 43,
+        "error_message": ""
+      },
+      {
+        "module_path": "social_media/trend_analyzer.py",
+        "is_valid": true,
+        "lines_count": 910,
+        "classes_count": 5,
+        "functions_count": 16,
+        "imports_count": 38,
+        "error_message": ""
+      },
+      {
+        "module_path": "social_media/advanced_analytics.py",
+        "is_valid": true,
+        "lines_count": 895,
+        "classes_count": 7,
+        "functions_count": 24,
+        "imports_count": 16,
+        "error_message": ""
+      },
+      {
+        "module_path": "cloud_providers/supabase_integration.py",
+        "is_valid": true,
+        "lines_count": 1358,
+        "classes_count": 12,
+        "functions_count": 52,
+        "imports_count": 26,
+        "error_message": ""
+      },
+      {
+        "module_path": "cloud_providers/aws_integration.py",
+        "is_valid": true,
+        "lines_count": 810,
+        "classes_count": 9,
+        "functions_count": 19,
+        "imports_count": 16,
+        "error_message": ""
+      },
+      {
+        "module_path": "cloud_providers/heroku_integration.py",
+        "is_valid": true,
+        "lines_count": 1170,
+        "classes_count": 13,
+        "functions_count": 44,
+        "imports_count": 20,
+        "error_message": ""
+      },
+      {
+        "module_path": "cloud_providers/vercel_integration.py",
+        "is_valid": true,
+        "lines_count": 1087,
+        "classes_count": 13,
+        "functions_count": 48,
+        "imports_count": 27,
+        "error_message": ""
+      },
+      {
+        "module_path": "cloud_providers/netlify_integration.py",
+        "is_valid": true,
+        "lines_count": 1255,
+        "classes_count": 13,
+        "functions_count": 51,
+        "imports_count": 23,
+        "error_message": ""
+      },
+      {
+        "module_path": "cloud_providers/__init__.py",
+        "is_valid": true,
+        "lines_count": 75,
+        "classes_count": 0,
+        "functions_count": 0,
+        "imports_count": 8,
+        "error_message": ""
+      },
+      {
+        "module_path": "cloud_providers/cloud_database_manager.py",
+        "is_valid": true,
+        "lines_count": 1289,
+        "classes_count": 10,
+        "functions_count": 25,
+        "imports_count": 22,
+        "error_message": ""
+      },
+      {
+        "module_path": "cloud_providers/cloud_monitoring.py",
+        "is_valid": true,
+        "lines_count": 1271,
+        "classes_count": 10,
+        "functions_count": 30,
+        "imports_count": 19,
+        "error_message": ""
+      },
+      {
+        "module_path": "cloud_providers/gcp_integration.py",
+        "is_valid": true,
+        "lines_count": 980,
+        "classes_count": 6,
+        "functions_count": 18,
+        "imports_count": 23,
+        "error_message": ""
+      },
+      {
+        "module_path": "cloud_providers/digitalocean_integration.py",
+        "is_valid": true,
+        "lines_count": 992,
+        "classes_count": 7,
+        "functions_count": 20,
+        "imports_count": 13,
+        "error_message": ""
+      },
+      {
+        "module_path": "cloud_providers/cloud_compute_manager.py",
+        "is_valid": true,
+        "lines_count": 1010,
+        "classes_count": 8,
+        "functions_count": 22,
+        "imports_count": 17,
+        "error_message": ""
+      },
+      {
+        "module_path": "cloud_providers/firebase_integration.py",
+        "is_valid": true,
+        "lines_count": 1403,
+        "classes_count": 12,
+        "functions_count": 70,
+        "imports_count": 26,
+        "error_message": ""
+      },
+      {
+        "module_path": "cloud_providers/azure_integration.py",
+        "is_valid": true,
+        "lines_count": 910,
+        "classes_count": 6,
+        "functions_count": 19,
+        "imports_count": 25,
+        "error_message": ""
+      },
+      {
+        "module_path": "cloud_providers/cloud_storage_manager.py",
+        "is_valid": true,
+        "lines_count": 1165,
+        "classes_count": 14,
+        "functions_count": 55,
+        "imports_count": 27,
+        "error_message": ""
+      },
+      {
+        "module_path": "cloud_providers/cloudflare_integration.py",
+        "is_valid": true,
+        "lines_count": 971,
+        "classes_count": 7,
+        "functions_count": 20,
+        "imports_count": 9,
+        "error_message": ""
+      },
+      {
+        "module_path": "third_party/legal_services.py",
+        "is_valid": true,
+        "lines_count": 748,
+        "classes_count": 10,
+        "functions_count": 30,
+        "imports_count": 16,
+        "error_message": ""
+      },
+      {
+        "module_path": "third_party/document_services.py",
+        "is_valid": true,
+        "lines_count": 1044,
+        "classes_count": 10,
+        "functions_count": 51,
+        "imports_count": 35,
+        "error_message": ""
+      },
+      {
+        "module_path": "third_party/audio_processing.py",
+        "is_valid": true,
+        "lines_count": 874,
+        "classes_count": 9,
+        "functions_count": 16,
+        "imports_count": 22,
+        "error_message": ""
+      },
+      {
+        "module_path": "third_party/cdn_services.py",
+        "is_valid": true,
+        "lines_count": 1400,
+        "classes_count": 14,
+        "functions_count": 74,
+        "imports_count": 20,
+        "error_message": ""
+      },
+      {
+        "module_path": "third_party/sms_services.py",
+        "is_valid": true,
+        "lines_count": 861,
+        "classes_count": 6,
+        "functions_count": 22,
+        "imports_count": 12,
+        "error_message": ""
+      },
+      {
+        "module_path": "third_party/crm_integration.py",
+        "is_valid": true,
+        "lines_count": 1331,
+        "classes_count": 12,
+        "functions_count": 73,
+        "imports_count": 17,
+        "error_message": ""
+      },
+      {
+        "module_path": "third_party/weather_services.py",
+        "is_valid": true,
+        "lines_count": 1321,
+        "classes_count": 12,
+        "functions_count": 51,
+        "imports_count": 14,
+        "error_message": ""
+      },
+      {
+        "module_path": "third_party/__init__.py",
+        "is_valid": true,
+        "lines_count": 48,
+        "classes_count": 0,
+        "functions_count": 0,
+        "imports_count": 7,
+        "error_message": ""
+      },
+      {
+        "module_path": "third_party/search_engines.py",
+        "is_valid": true,
+        "lines_count": 968,
+        "classes_count": 13,
+        "functions_count": 36,
+        "imports_count": 19,
+        "error_message": ""
+      },
+      {
+        "module_path": "third_party/email_services.py",
+        "is_valid": true,
+        "lines_count": 1083,
+        "classes_count": 8,
+        "functions_count": 24,
+        "imports_count": 11,
+        "error_message": ""
+      },
+      {
+        "module_path": "third_party/compliance_services.py",
+        "is_valid": true,
+        "lines_count": 1228,
+        "classes_count": 11,
+        "functions_count": 34,
+        "imports_count": 23,
+        "error_message": ""
+      },
+      {
+        "module_path": "third_party/analytics_services.py",
+        "is_valid": true,
+        "lines_count": 907,
+        "classes_count": 7,
+        "functions_count": 31,
+        "imports_count": 12,
+        "error_message": ""
+      },
+      {
+        "module_path": "third_party/geolocation_services.py",
+        "is_valid": true,
+        "lines_count": 1093,
+        "classes_count": 14,
+        "functions_count": 38,
+        "imports_count": 15,
+        "error_message": ""
+      },
+      {
+        "module_path": "third_party/translation_services.py",
+        "is_valid": true,
+        "lines_count": 1029,
+        "classes_count": 12,
+        "functions_count": 41,
+        "imports_count": 17,
+        "error_message": ""
+      },
+      {
+        "module_path": "third_party/calendar_services.py",
+        "is_valid": true,
+        "lines_count": 1348,
+        "classes_count": 12,
+        "functions_count": 49,
+        "imports_count": 17,
+        "error_message": ""
+      },
+      {
+        "module_path": "third_party/news_services.py",
+        "is_valid": true,
+        "lines_count": 1316,
+        "classes_count": 12,
+        "functions_count": 46,
+        "imports_count": 19,
+        "error_message": ""
+      },
+      {
+        "module_path": "third_party/video_processing.py",
+        "is_valid": true,
+        "lines_count": 1457,
+        "classes_count": 12,
+        "functions_count": 50,
+        "imports_count": 39,
+        "error_message": ""
+      },
+      {
+        "module_path": "payment_gateways/payout_manager.py",
+        "is_valid": true,
+        "lines_count": 871,
+        "classes_count": 8,
+        "functions_count": 29,
+        "imports_count": 10,
+        "error_message": ""
+      },
+      {
+        "module_path": "payment_gateways/apple_pay_integration.py",
+        "is_valid": true,
+        "lines_count": 761,
+        "classes_count": 8,
+        "functions_count": 15,
+        "imports_count": 24,
+        "error_message": ""
+      },
+      {
+        "module_path": "payment_gateways/mercadopago_integration.py",
+        "is_valid": true,
+        "lines_count": 952,
+        "classes_count": 10,
+        "functions_count": 17,
+        "imports_count": 20,
+        "error_message": ""
+      },
+      {
+        "module_path": "payment_gateways/razorpay_integration.py",
+        "is_valid": true,
+        "lines_count": 991,
+        "classes_count": 8,
+        "functions_count": 25,
+        "imports_count": 14,
+        "error_message": ""
+      },
+      {
+        "module_path": "payment_gateways/adyen_integration.py",
+        "is_valid": true,
+        "lines_count": 847,
+        "classes_count": 7,
+        "functions_count": 17,
+        "imports_count": 15,
+        "error_message": ""
+      },
+      {
+        "module_path": "payment_gateways/paypal_integration.py",
+        "is_valid": true,
+        "lines_count": 979,
+        "classes_count": 9,
+        "functions_count": 26,
+        "imports_count": 11,
+        "error_message": ""
+      },
+      {
+        "module_path": "payment_gateways/braintree_integration.py",
+        "is_valid": true,
+        "lines_count": 960,
+        "classes_count": 7,
+        "functions_count": 29,
+        "imports_count": 12,
+        "error_message": ""
+      },
+      {
+        "module_path": "payment_gateways/subscription_manager.py",
+        "is_valid": true,
+        "lines_count": 1354,
+        "classes_count": 12,
+        "functions_count": 23,
+        "imports_count": 22,
+        "error_message": ""
+      },
+      {
+        "module_path": "payment_gateways/fraud_detection.py",
+        "is_valid": true,
+        "lines_count": 1246,
+        "classes_count": 8,
+        "functions_count": 25,
+        "imports_count": 24,
+        "error_message": ""
+      },
+      {
+        "module_path": "payment_gateways/cryptocurrency_gateways.py",
+        "is_valid": true,
+        "lines_count": 920,
+        "classes_count": 8,
+        "functions_count": 25,
+        "imports_count": 18,
+        "error_message": ""
+      },
+      {
+        "module_path": "payment_gateways/wise_integration.py",
+        "is_valid": true,
+        "lines_count": 832,
+        "classes_count": 12,
+        "functions_count": 27,
+        "imports_count": 17,
+        "error_message": ""
+      },
+      {
+        "module_path": "payment_gateways/__init__.py",
+        "is_valid": true,
+        "lines_count": 80,
+        "classes_count": 0,
+        "functions_count": 0,
+        "imports_count": 11,
+        "error_message": ""
+      },
+      {
+        "module_path": "payment_gateways/payment_aggregator.py",
+        "is_valid": true,
+        "lines_count": 871,
+        "classes_count": 8,
+        "functions_count": 27,
+        "imports_count": 19,
+        "error_message": ""
+      },
+      {
+        "module_path": "payment_gateways/stripe_integration.py",
+        "is_valid": true,
+        "lines_count": 811,
+        "classes_count": 9,
+        "functions_count": 25,
+        "imports_count": 12,
+        "error_message": ""
+      },
+      {
+        "module_path": "payment_gateways/google_pay_integration.py",
+        "is_valid": true,
+        "lines_count": 905,
+        "classes_count": 11,
+        "functions_count": 18,
+        "imports_count": 23,
+        "error_message": ""
+      },
+      {
+        "module_path": "payment_gateways/square_integration.py",
+        "is_valid": true,
+        "lines_count": 970,
+        "classes_count": 12,
+        "functions_count": 30,
+        "imports_count": 14,
+        "error_message": ""
+      },
+      {
+        "module_path": "ai_services/replicate_integration.py",
+        "is_valid": true,
+        "lines_count": 767,
+        "classes_count": 5,
+        "functions_count": 27,
+        "imports_count": 9,
+        "error_message": ""
+      },
+      {
+        "module_path": "ai_services/ai_model_router.py",
+        "is_valid": true,
+        "lines_count": 659,
+        "classes_count": 7,
+        "functions_count": 18,
+        "imports_count": 15,
+        "error_message": ""
+      },
+      {
+        "module_path": "ai_services/midjourney_integration.py",
+        "is_valid": true,
+        "lines_count": 585,
+        "classes_count": 5,
+        "functions_count": 26,
+        "imports_count": 9,
+        "error_message": ""
+      },
+      {
+        "module_path": "ai_services/ai_response_processor.py",
+        "is_valid": true,
+        "lines_count": 870,
+        "classes_count": 10,
+        "functions_count": 32,
+        "imports_count": 19,
+        "error_message": ""
+      },
+      {
+        "module_path": "ai_services/ai_cost_optimizer.py",
+        "is_valid": true,
+        "lines_count": 947,
+        "classes_count": 11,
+        "functions_count": 30,
+        "imports_count": 14,
+        "error_message": ""
+      },
+      {
+        "module_path": "ai_services/__init__.py",
+        "is_valid": true,
+        "lines_count": 0,
+        "classes_count": 0,
+        "functions_count": 0,
+        "imports_count": 0,
+        "error_message": ""
+      },
+      {
+        "module_path": "ai_services/openai_integration.py",
+        "is_valid": true,
+        "lines_count": 812,
+        "classes_count": 8,
+        "functions_count": 17,
+        "imports_count": 14,
+        "error_message": ""
+      },
+      {
+        "module_path": "ai_services/google_ai_integration.py",
+        "is_valid": true,
+        "lines_count": 907,
+        "classes_count": 6,
+        "functions_count": 29,
+        "imports_count": 22,
+        "error_message": ""
+      },
+      {
+        "module_path": "ai_services/stability_ai_integration.py",
+        "is_valid": true,
+        "lines_count": 836,
+        "classes_count": 7,
+        "functions_count": 24,
+        "imports_count": 15,
+        "error_message": ""
+      },
+      {
+        "module_path": "ai_services/elevenlabs_integration.py",
+        "is_valid": true,
+        "lines_count": 782,
+        "classes_count": 8,
+        "functions_count": 22,
+        "imports_count": 14,
+        "error_message": ""
+      },
+      {
+        "module_path": "ai_services/azure_ai_integration.py",
+        "is_valid": true,
+        "lines_count": 1131,
+        "classes_count": 6,
+        "functions_count": 31,
+        "imports_count": 20,
+        "error_message": ""
+      },
+      {
+        "module_path": "ai_services/anthropic_integration.py",
+        "is_valid": true,
+        "lines_count": 630,
+        "classes_count": 6,
+        "functions_count": 18,
+        "imports_count": 10,
+        "error_message": ""
+      },
+      {
+        "module_path": "ai_services/huggingface_integration.py",
+        "is_valid": true,
+        "lines_count": 781,
+        "classes_count": 6,
+        "functions_count": 22,
+        "imports_count": 20,
+        "error_message": ""
+      },
+      {
+        "module_path": "ai_services/aws_ai_integration.py",
+        "is_valid": true,
+        "lines_count": 1025,
+        "classes_count": 6,
+        "functions_count": 31,
+        "imports_count": 15,
+        "error_message": ""
+      },
+      {
+        "module_path": "ai_services/ai_performance_monitor.py",
+        "is_valid": true,
+        "lines_count": 1046,
+        "classes_count": 9,
+        "functions_count": 32,
+        "imports_count": 16,
+        "error_message": ""
+      },
+      {
+        "module_path": "ai_services/cohere_integration.py",
+        "is_valid": true,
+        "lines_count": 812,
+        "classes_count": 7,
+        "functions_count": 21,
+        "imports_count": 8,
+        "error_message": ""
+      },
+      {
+        "module_path": "communication/chat_integration.py",
+        "is_valid": true,
+        "lines_count": 1057,
+        "classes_count": 10,
+        "functions_count": 26,
+        "imports_count": 21,
+        "error_message": ""
+      },
+      {
+        "module_path": "communication/notification_manager.py",
+        "is_valid": true,
+        "lines_count": 746,
+        "classes_count": 8,
+        "functions_count": 27,
+        "imports_count": 15,
+        "error_message": ""
+      },
+      {
+        "module_path": "communication/video_conferencing.py",
+        "is_valid": true,
+        "lines_count": 767,
+        "classes_count": 5,
+        "functions_count": 28,
+        "imports_count": 10,
+        "error_message": ""
+      },
+      {
+        "module_path": "communication/email_campaigns.py",
+        "is_valid": true,
+        "lines_count": 669,
+        "classes_count": 7,
+        "functions_count": 16,
+        "imports_count": 20,
+        "error_message": ""
+      },
+      {
+        "module_path": "communication/__init__.py",
+        "is_valid": true,
+        "lines_count": 50,
+        "classes_count": 0,
+        "functions_count": 0,
+        "imports_count": 8,
+        "error_message": ""
+      },
+      {
+        "module_path": "communication/collaboration_tools.py",
+        "is_valid": true,
+        "lines_count": 852,
+        "classes_count": 6,
+        "functions_count": 25,
+        "imports_count": 10,
+        "error_message": ""
+      },
+      {
+        "module_path": "communication/push_notification.py",
+        "is_valid": true,
+        "lines_count": 1011,
+        "classes_count": 8,
+        "functions_count": 27,
+        "imports_count": 9,
+        "error_message": ""
+      },
+      {
+        "module_path": "communication/sms_campaigns.py",
+        "is_valid": true,
+        "lines_count": 866,
+        "classes_count": 9,
+        "functions_count": 20,
+        "imports_count": 13,
+        "error_message": ""
+      },
+      {
+        "module_path": "communication/voice_services.py",
+        "is_valid": true,
+        "lines_count": 788,
+        "classes_count": 6,
+        "functions_count": 26,
+        "imports_count": 10,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/platform_coordinator.py",
+        "is_valid": true,
+        "lines_count": 642,
+        "classes_count": 9,
+        "functions_count": 16,
+        "imports_count": 18,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/youtube_content_id_api.py",
+        "is_valid": true,
+        "lines_count": 564,
+        "classes_count": 4,
+        "functions_count": 13,
+        "imports_count": 12,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/instagram_business_api.py",
+        "is_valid": true,
+        "lines_count": 595,
+        "classes_count": 4,
+        "functions_count": 20,
+        "imports_count": 12,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/twitch_creator_api.py",
+        "is_valid": true,
+        "lines_count": 1039,
+        "classes_count": 5,
+        "functions_count": 50,
+        "imports_count": 12,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/platform_oauth_manager.py",
+        "is_valid": true,
+        "lines_count": 556,
+        "classes_count": 3,
+        "functions_count": 13,
+        "imports_count": 12,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/snapchat_creator_api.py",
+        "is_valid": true,
+        "lines_count": 1167,
+        "classes_count": 4,
+        "functions_count": 54,
+        "imports_count": 12,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/__init__.py",
+        "is_valid": true,
+        "lines_count": 170,
+        "classes_count": 0,
+        "functions_count": 3,
+        "imports_count": 12,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/discord_bot_api.py",
+        "is_valid": true,
+        "lines_count": 941,
+        "classes_count": 6,
+        "functions_count": 43,
+        "imports_count": 10,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/reddit_api.py",
+        "is_valid": true,
+        "lines_count": 1047,
+        "classes_count": 6,
+        "functions_count": 35,
+        "imports_count": 10,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/pinterest_business_api.py",
+        "is_valid": true,
+        "lines_count": 1230,
+        "classes_count": 12,
+        "functions_count": 18,
+        "imports_count": 21,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/substack_api.py",
+        "is_valid": true,
+        "lines_count": 710,
+        "classes_count": 5,
+        "functions_count": 27,
+        "imports_count": 10,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/spotify_artists_api.py",
+        "is_valid": true,
+        "lines_count": 606,
+        "classes_count": 5,
+        "functions_count": 24,
+        "imports_count": 11,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/medium_partner_api.py",
+        "is_valid": true,
+        "lines_count": 855,
+        "classes_count": 5,
+        "functions_count": 34,
+        "imports_count": 10,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/facebook_rights_api.py",
+        "is_valid": true,
+        "lines_count": 442,
+        "classes_count": 4,
+        "functions_count": 16,
+        "imports_count": 10,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/api_rate_limiter.py",
+        "is_valid": true,
+        "lines_count": 366,
+        "classes_count": 3,
+        "functions_count": 14,
+        "imports_count": 10,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/tiktok_creator_api.py",
+        "is_valid": true,
+        "lines_count": 578,
+        "classes_count": 4,
+        "functions_count": 17,
+        "imports_count": 12,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/twitter_api_v2.py",
+        "is_valid": true,
+        "lines_count": 557,
+        "classes_count": 4,
+        "functions_count": 20,
+        "imports_count": 10,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/linkedin_creator_api.py",
+        "is_valid": true,
+        "lines_count": 1011,
+        "classes_count": 10,
+        "functions_count": 14,
+        "imports_count": 21,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/dmca_services_api.py",
+        "is_valid": true,
+        "lines_count": 509,
+        "classes_count": 4,
+        "functions_count": 16,
+        "imports_count": 9,
+        "error_message": ""
+      }
+    ]
+  },
+  "directory_breakdown": {
+    ".": [
+      {
+        "module_path": "monitoring_integration.py",
+        "is_valid": true,
+        "lines_count": 534,
+        "classes_count": 6,
+        "functions_count": 19,
+        "imports_count": 14,
+        "error_message": ""
+      },
+      {
+        "module_path": "retry_handler.py",
+        "is_valid": true,
+        "lines_count": 792,
+        "classes_count": 7,
+        "functions_count": 19,
+        "imports_count": 10,
+        "error_message": ""
+      },
+      {
+        "module_path": "performance_monitor.py",
+        "is_valid": true,
+        "lines_count": 932,
+        "classes_count": 8,
+        "functions_count": 42,
+        "imports_count": 19,
+        "error_message": ""
+      },
+      {
+        "module_path": "sync_manager.py",
+        "is_valid": true,
+        "lines_count": 780,
+        "classes_count": 10,
+        "functions_count": 35,
+        "imports_count": 16,
+        "error_message": ""
+      },
+      {
+        "module_path": "api_gateway.py",
+        "is_valid": true,
+        "lines_count": 677,
+        "classes_count": 6,
+        "functions_count": 30,
+        "imports_count": 13,
+        "error_message": ""
+      },
+      {
+        "module_path": "integration_tests.py",
+        "is_valid": true,
+        "lines_count": 1276,
+        "classes_count": 6,
+        "functions_count": 26,
+        "imports_count": 24,
+        "error_message": ""
+      },
+      {
+        "module_path": "__init__.py",
+        "is_valid": true,
+        "lines_count": 38,
+        "classes_count": 0,
+        "functions_count": 0,
+        "imports_count": 8,
+        "error_message": ""
+      },
+      {
+        "module_path": "webhook_manager.py",
+        "is_valid": true,
+        "lines_count": 761,
+        "classes_count": 7,
+        "functions_count": 35,
+        "imports_count": 14,
+        "error_message": ""
+      },
+      {
+        "module_path": "cache_manager.py",
+        "is_valid": true,
+        "lines_count": 809,
+        "classes_count": 6,
+        "functions_count": 36,
+        "imports_count": 19,
+        "error_message": ""
+      },
+      {
+        "module_path": "rate_limiter.py",
+        "is_valid": true,
+        "lines_count": 794,
+        "classes_count": 6,
+        "functions_count": 26,
+        "imports_count": 10,
+        "error_message": ""
+      },
+      {
+        "module_path": "integration_manager.py",
+        "is_valid": true,
+        "lines_count": 501,
+        "classes_count": 4,
+        "functions_count": 13,
+        "imports_count": 12,
+        "error_message": ""
+      },
+      {
+        "module_path": "transformation_engine.py",
+        "is_valid": true,
+        "lines_count": 780,
+        "classes_count": 6,
+        "functions_count": 39,
+        "imports_count": 18,
+        "error_message": ""
+      },
+      {
+        "module_path": "security_scanner.py",
+        "is_valid": true,
+        "lines_count": 999,
+        "classes_count": 7,
+        "functions_count": 25,
+        "imports_count": 24,
+        "error_message": ""
+      },
+      {
+        "module_path": "oauth_manager.py",
+        "is_valid": true,
+        "lines_count": 623,
+        "classes_count": 6,
+        "functions_count": 21,
+        "imports_count": 13,
+        "error_message": ""
+      },
+      {
+        "module_path": "authentication_handler.py",
+        "is_valid": true,
+        "lines_count": 751,
+        "classes_count": 5,
+        "functions_count": 23,
+        "imports_count": 16,
+        "error_message": ""
+      },
+      {
+        "module_path": "error_handler.py",
+        "is_valid": true,
+        "lines_count": 704,
+        "classes_count": 7,
+        "functions_count": 29,
+        "imports_count": 11,
+        "error_message": ""
+      },
+      {
+        "module_path": "validate_integrations.py",
+        "is_valid": true,
+        "lines_count": 300,
+        "classes_count": 3,
+        "functions_count": 8,
+        "imports_count": 9,
+        "error_message": ""
+      },
+      {
+        "module_path": "audit_logger.py",
+        "is_valid": true,
+        "lines_count": 857,
+        "classes_count": 6,
+        "functions_count": 40,
+        "imports_count": 17,
+        "error_message": ""
+      },
+      {
+        "module_path": "circuit_breaker.py",
+        "is_valid": true,
+        "lines_count": 574,
+        "classes_count": 5,
+        "functions_count": 26,
+        "imports_count": 8,
+        "error_message": ""
+      },
+      {
+        "module_path": "configuration_manager.py",
+        "is_valid": true,
+        "lines_count": 807,
+        "classes_count": 7,
+        "functions_count": 31,
+        "imports_count": 19,
+        "error_message": ""
+      }
+    ],
+    "social_media": [
+      {
+        "module_path": "social_media/crisis_detection.py",
+        "is_valid": true,
+        "lines_count": 895,
+        "classes_count": 7,
+        "functions_count": 13,
+        "imports_count": 43,
+        "error_message": ""
+      },
+      {
+        "module_path": "social_media/engagement_tracker.py",
+        "is_valid": true,
+        "lines_count": 1332,
+        "classes_count": 9,
+        "functions_count": 17,
+        "imports_count": 20,
+        "error_message": ""
+      },
+      {
+        "module_path": "social_media/__init__.py",
+        "is_valid": true,
+        "lines_count": 125,
+        "classes_count": 0,
+        "functions_count": 0,
+        "imports_count": 13,
+        "error_message": ""
+      },
+      {
+        "module_path": "social_media/brand_monitoring.py",
+        "is_valid": true,
+        "lines_count": 919,
+        "classes_count": 5,
+        "functions_count": 14,
+        "imports_count": 42,
+        "error_message": ""
+      },
+      {
+        "module_path": "social_media/content_scheduler.py",
+        "is_valid": true,
+        "lines_count": 1265,
+        "classes_count": 9,
+        "functions_count": 20,
+        "imports_count": 21,
+        "error_message": ""
+      },
+      {
+        "module_path": "social_media/community_manager.py",
+        "is_valid": true,
+        "lines_count": 780,
+        "classes_count": 7,
+        "functions_count": 23,
+        "imports_count": 15,
+        "error_message": ""
+      },
+      {
+        "module_path": "social_media/viral_predictor.py",
+        "is_valid": true,
+        "lines_count": 842,
+        "classes_count": 5,
+        "functions_count": 11,
+        "imports_count": 47,
+        "error_message": ""
+      },
+      {
+        "module_path": "social_media/social_graph_analyzer.py",
+        "is_valid": true,
+        "lines_count": 951,
+        "classes_count": 11,
+        "functions_count": 19,
+        "imports_count": 16,
+        "error_message": ""
+      },
+      {
+        "module_path": "social_media/audience_insights.py",
+        "is_valid": true,
+        "lines_count": 967,
+        "classes_count": 5,
+        "functions_count": 20,
+        "imports_count": 39,
+        "error_message": ""
+      },
+      {
+        "module_path": "social_media/influencer_discovery.py",
+        "is_valid": true,
+        "lines_count": 1435,
+        "classes_count": 11,
+        "functions_count": 24,
+        "imports_count": 25,
+        "error_message": ""
+      },
+      {
+        "module_path": "social_media/hashtag_optimizer.py",
+        "is_valid": true,
+        "lines_count": 846,
+        "classes_count": 4,
+        "functions_count": 18,
+        "imports_count": 30,
+        "error_message": ""
+      },
+      {
+        "module_path": "social_media/sentiment_analyzer.py",
+        "is_valid": true,
+        "lines_count": 785,
+        "classes_count": 5,
+        "functions_count": 12,
+        "imports_count": 43,
+        "error_message": ""
+      },
+      {
+        "module_path": "social_media/trend_analyzer.py",
+        "is_valid": true,
+        "lines_count": 910,
+        "classes_count": 5,
+        "functions_count": 16,
+        "imports_count": 38,
+        "error_message": ""
+      },
+      {
+        "module_path": "social_media/advanced_analytics.py",
+        "is_valid": true,
+        "lines_count": 895,
+        "classes_count": 7,
+        "functions_count": 24,
+        "imports_count": 16,
+        "error_message": ""
+      }
+    ],
+    "cloud_providers": [
+      {
+        "module_path": "cloud_providers/supabase_integration.py",
+        "is_valid": true,
+        "lines_count": 1358,
+        "classes_count": 12,
+        "functions_count": 52,
+        "imports_count": 26,
+        "error_message": ""
+      },
+      {
+        "module_path": "cloud_providers/aws_integration.py",
+        "is_valid": true,
+        "lines_count": 810,
+        "classes_count": 9,
+        "functions_count": 19,
+        "imports_count": 16,
+        "error_message": ""
+      },
+      {
+        "module_path": "cloud_providers/heroku_integration.py",
+        "is_valid": true,
+        "lines_count": 1170,
+        "classes_count": 13,
+        "functions_count": 44,
+        "imports_count": 20,
+        "error_message": ""
+      },
+      {
+        "module_path": "cloud_providers/vercel_integration.py",
+        "is_valid": true,
+        "lines_count": 1087,
+        "classes_count": 13,
+        "functions_count": 48,
+        "imports_count": 27,
+        "error_message": ""
+      },
+      {
+        "module_path": "cloud_providers/netlify_integration.py",
+        "is_valid": true,
+        "lines_count": 1255,
+        "classes_count": 13,
+        "functions_count": 51,
+        "imports_count": 23,
+        "error_message": ""
+      },
+      {
+        "module_path": "cloud_providers/__init__.py",
+        "is_valid": true,
+        "lines_count": 75,
+        "classes_count": 0,
+        "functions_count": 0,
+        "imports_count": 8,
+        "error_message": ""
+      },
+      {
+        "module_path": "cloud_providers/cloud_database_manager.py",
+        "is_valid": true,
+        "lines_count": 1289,
+        "classes_count": 10,
+        "functions_count": 25,
+        "imports_count": 22,
+        "error_message": ""
+      },
+      {
+        "module_path": "cloud_providers/cloud_monitoring.py",
+        "is_valid": true,
+        "lines_count": 1271,
+        "classes_count": 10,
+        "functions_count": 30,
+        "imports_count": 19,
+        "error_message": ""
+      },
+      {
+        "module_path": "cloud_providers/gcp_integration.py",
+        "is_valid": true,
+        "lines_count": 980,
+        "classes_count": 6,
+        "functions_count": 18,
+        "imports_count": 23,
+        "error_message": ""
+      },
+      {
+        "module_path": "cloud_providers/digitalocean_integration.py",
+        "is_valid": true,
+        "lines_count": 992,
+        "classes_count": 7,
+        "functions_count": 20,
+        "imports_count": 13,
+        "error_message": ""
+      },
+      {
+        "module_path": "cloud_providers/cloud_compute_manager.py",
+        "is_valid": true,
+        "lines_count": 1010,
+        "classes_count": 8,
+        "functions_count": 22,
+        "imports_count": 17,
+        "error_message": ""
+      },
+      {
+        "module_path": "cloud_providers/firebase_integration.py",
+        "is_valid": true,
+        "lines_count": 1403,
+        "classes_count": 12,
+        "functions_count": 70,
+        "imports_count": 26,
+        "error_message": ""
+      },
+      {
+        "module_path": "cloud_providers/azure_integration.py",
+        "is_valid": true,
+        "lines_count": 910,
+        "classes_count": 6,
+        "functions_count": 19,
+        "imports_count": 25,
+        "error_message": ""
+      },
+      {
+        "module_path": "cloud_providers/cloud_storage_manager.py",
+        "is_valid": true,
+        "lines_count": 1165,
+        "classes_count": 14,
+        "functions_count": 55,
+        "imports_count": 27,
+        "error_message": ""
+      },
+      {
+        "module_path": "cloud_providers/cloudflare_integration.py",
+        "is_valid": true,
+        "lines_count": 971,
+        "classes_count": 7,
+        "functions_count": 20,
+        "imports_count": 9,
+        "error_message": ""
+      }
+    ],
+    "third_party": [
+      {
+        "module_path": "third_party/legal_services.py",
+        "is_valid": true,
+        "lines_count": 748,
+        "classes_count": 10,
+        "functions_count": 30,
+        "imports_count": 16,
+        "error_message": ""
+      },
+      {
+        "module_path": "third_party/document_services.py",
+        "is_valid": true,
+        "lines_count": 1044,
+        "classes_count": 10,
+        "functions_count": 51,
+        "imports_count": 35,
+        "error_message": ""
+      },
+      {
+        "module_path": "third_party/audio_processing.py",
+        "is_valid": true,
+        "lines_count": 874,
+        "classes_count": 9,
+        "functions_count": 16,
+        "imports_count": 22,
+        "error_message": ""
+      },
+      {
+        "module_path": "third_party/cdn_services.py",
+        "is_valid": true,
+        "lines_count": 1400,
+        "classes_count": 14,
+        "functions_count": 74,
+        "imports_count": 20,
+        "error_message": ""
+      },
+      {
+        "module_path": "third_party/sms_services.py",
+        "is_valid": true,
+        "lines_count": 861,
+        "classes_count": 6,
+        "functions_count": 22,
+        "imports_count": 12,
+        "error_message": ""
+      },
+      {
+        "module_path": "third_party/crm_integration.py",
+        "is_valid": true,
+        "lines_count": 1331,
+        "classes_count": 12,
+        "functions_count": 73,
+        "imports_count": 17,
+        "error_message": ""
+      },
+      {
+        "module_path": "third_party/weather_services.py",
+        "is_valid": true,
+        "lines_count": 1321,
+        "classes_count": 12,
+        "functions_count": 51,
+        "imports_count": 14,
+        "error_message": ""
+      },
+      {
+        "module_path": "third_party/__init__.py",
+        "is_valid": true,
+        "lines_count": 48,
+        "classes_count": 0,
+        "functions_count": 0,
+        "imports_count": 7,
+        "error_message": ""
+      },
+      {
+        "module_path": "third_party/search_engines.py",
+        "is_valid": true,
+        "lines_count": 968,
+        "classes_count": 13,
+        "functions_count": 36,
+        "imports_count": 19,
+        "error_message": ""
+      },
+      {
+        "module_path": "third_party/email_services.py",
+        "is_valid": true,
+        "lines_count": 1083,
+        "classes_count": 8,
+        "functions_count": 24,
+        "imports_count": 11,
+        "error_message": ""
+      },
+      {
+        "module_path": "third_party/compliance_services.py",
+        "is_valid": true,
+        "lines_count": 1228,
+        "classes_count": 11,
+        "functions_count": 34,
+        "imports_count": 23,
+        "error_message": ""
+      },
+      {
+        "module_path": "third_party/analytics_services.py",
+        "is_valid": true,
+        "lines_count": 907,
+        "classes_count": 7,
+        "functions_count": 31,
+        "imports_count": 12,
+        "error_message": ""
+      },
+      {
+        "module_path": "third_party/geolocation_services.py",
+        "is_valid": true,
+        "lines_count": 1093,
+        "classes_count": 14,
+        "functions_count": 38,
+        "imports_count": 15,
+        "error_message": ""
+      },
+      {
+        "module_path": "third_party/translation_services.py",
+        "is_valid": true,
+        "lines_count": 1029,
+        "classes_count": 12,
+        "functions_count": 41,
+        "imports_count": 17,
+        "error_message": ""
+      },
+      {
+        "module_path": "third_party/calendar_services.py",
+        "is_valid": true,
+        "lines_count": 1348,
+        "classes_count": 12,
+        "functions_count": 49,
+        "imports_count": 17,
+        "error_message": ""
+      },
+      {
+        "module_path": "third_party/news_services.py",
+        "is_valid": true,
+        "lines_count": 1316,
+        "classes_count": 12,
+        "functions_count": 46,
+        "imports_count": 19,
+        "error_message": ""
+      },
+      {
+        "module_path": "third_party/video_processing.py",
+        "is_valid": true,
+        "lines_count": 1457,
+        "classes_count": 12,
+        "functions_count": 50,
+        "imports_count": 39,
+        "error_message": ""
+      }
+    ],
+    "payment_gateways": [
+      {
+        "module_path": "payment_gateways/payout_manager.py",
+        "is_valid": true,
+        "lines_count": 871,
+        "classes_count": 8,
+        "functions_count": 29,
+        "imports_count": 10,
+        "error_message": ""
+      },
+      {
+        "module_path": "payment_gateways/apple_pay_integration.py",
+        "is_valid": true,
+        "lines_count": 761,
+        "classes_count": 8,
+        "functions_count": 15,
+        "imports_count": 24,
+        "error_message": ""
+      },
+      {
+        "module_path": "payment_gateways/mercadopago_integration.py",
+        "is_valid": true,
+        "lines_count": 952,
+        "classes_count": 10,
+        "functions_count": 17,
+        "imports_count": 20,
+        "error_message": ""
+      },
+      {
+        "module_path": "payment_gateways/razorpay_integration.py",
+        "is_valid": true,
+        "lines_count": 991,
+        "classes_count": 8,
+        "functions_count": 25,
+        "imports_count": 14,
+        "error_message": ""
+      },
+      {
+        "module_path": "payment_gateways/adyen_integration.py",
+        "is_valid": true,
+        "lines_count": 847,
+        "classes_count": 7,
+        "functions_count": 17,
+        "imports_count": 15,
+        "error_message": ""
+      },
+      {
+        "module_path": "payment_gateways/paypal_integration.py",
+        "is_valid": true,
+        "lines_count": 979,
+        "classes_count": 9,
+        "functions_count": 26,
+        "imports_count": 11,
+        "error_message": ""
+      },
+      {
+        "module_path": "payment_gateways/braintree_integration.py",
+        "is_valid": true,
+        "lines_count": 960,
+        "classes_count": 7,
+        "functions_count": 29,
+        "imports_count": 12,
+        "error_message": ""
+      },
+      {
+        "module_path": "payment_gateways/subscription_manager.py",
+        "is_valid": true,
+        "lines_count": 1354,
+        "classes_count": 12,
+        "functions_count": 23,
+        "imports_count": 22,
+        "error_message": ""
+      },
+      {
+        "module_path": "payment_gateways/fraud_detection.py",
+        "is_valid": true,
+        "lines_count": 1246,
+        "classes_count": 8,
+        "functions_count": 25,
+        "imports_count": 24,
+        "error_message": ""
+      },
+      {
+        "module_path": "payment_gateways/cryptocurrency_gateways.py",
+        "is_valid": true,
+        "lines_count": 920,
+        "classes_count": 8,
+        "functions_count": 25,
+        "imports_count": 18,
+        "error_message": ""
+      },
+      {
+        "module_path": "payment_gateways/wise_integration.py",
+        "is_valid": true,
+        "lines_count": 832,
+        "classes_count": 12,
+        "functions_count": 27,
+        "imports_count": 17,
+        "error_message": ""
+      },
+      {
+        "module_path": "payment_gateways/__init__.py",
+        "is_valid": true,
+        "lines_count": 80,
+        "classes_count": 0,
+        "functions_count": 0,
+        "imports_count": 11,
+        "error_message": ""
+      },
+      {
+        "module_path": "payment_gateways/payment_aggregator.py",
+        "is_valid": true,
+        "lines_count": 871,
+        "classes_count": 8,
+        "functions_count": 27,
+        "imports_count": 19,
+        "error_message": ""
+      },
+      {
+        "module_path": "payment_gateways/stripe_integration.py",
+        "is_valid": true,
+        "lines_count": 811,
+        "classes_count": 9,
+        "functions_count": 25,
+        "imports_count": 12,
+        "error_message": ""
+      },
+      {
+        "module_path": "payment_gateways/google_pay_integration.py",
+        "is_valid": true,
+        "lines_count": 905,
+        "classes_count": 11,
+        "functions_count": 18,
+        "imports_count": 23,
+        "error_message": ""
+      },
+      {
+        "module_path": "payment_gateways/square_integration.py",
+        "is_valid": true,
+        "lines_count": 970,
+        "classes_count": 12,
+        "functions_count": 30,
+        "imports_count": 14,
+        "error_message": ""
+      }
+    ],
+    "ai_services": [
+      {
+        "module_path": "ai_services/replicate_integration.py",
+        "is_valid": true,
+        "lines_count": 767,
+        "classes_count": 5,
+        "functions_count": 27,
+        "imports_count": 9,
+        "error_message": ""
+      },
+      {
+        "module_path": "ai_services/ai_model_router.py",
+        "is_valid": true,
+        "lines_count": 659,
+        "classes_count": 7,
+        "functions_count": 18,
+        "imports_count": 15,
+        "error_message": ""
+      },
+      {
+        "module_path": "ai_services/midjourney_integration.py",
+        "is_valid": true,
+        "lines_count": 585,
+        "classes_count": 5,
+        "functions_count": 26,
+        "imports_count": 9,
+        "error_message": ""
+      },
+      {
+        "module_path": "ai_services/ai_response_processor.py",
+        "is_valid": true,
+        "lines_count": 870,
+        "classes_count": 10,
+        "functions_count": 32,
+        "imports_count": 19,
+        "error_message": ""
+      },
+      {
+        "module_path": "ai_services/ai_cost_optimizer.py",
+        "is_valid": true,
+        "lines_count": 947,
+        "classes_count": 11,
+        "functions_count": 30,
+        "imports_count": 14,
+        "error_message": ""
+      },
+      {
+        "module_path": "ai_services/__init__.py",
+        "is_valid": true,
+        "lines_count": 0,
+        "classes_count": 0,
+        "functions_count": 0,
+        "imports_count": 0,
+        "error_message": ""
+      },
+      {
+        "module_path": "ai_services/openai_integration.py",
+        "is_valid": true,
+        "lines_count": 812,
+        "classes_count": 8,
+        "functions_count": 17,
+        "imports_count": 14,
+        "error_message": ""
+      },
+      {
+        "module_path": "ai_services/google_ai_integration.py",
+        "is_valid": true,
+        "lines_count": 907,
+        "classes_count": 6,
+        "functions_count": 29,
+        "imports_count": 22,
+        "error_message": ""
+      },
+      {
+        "module_path": "ai_services/stability_ai_integration.py",
+        "is_valid": true,
+        "lines_count": 836,
+        "classes_count": 7,
+        "functions_count": 24,
+        "imports_count": 15,
+        "error_message": ""
+      },
+      {
+        "module_path": "ai_services/elevenlabs_integration.py",
+        "is_valid": true,
+        "lines_count": 782,
+        "classes_count": 8,
+        "functions_count": 22,
+        "imports_count": 14,
+        "error_message": ""
+      },
+      {
+        "module_path": "ai_services/azure_ai_integration.py",
+        "is_valid": true,
+        "lines_count": 1131,
+        "classes_count": 6,
+        "functions_count": 31,
+        "imports_count": 20,
+        "error_message": ""
+      },
+      {
+        "module_path": "ai_services/anthropic_integration.py",
+        "is_valid": true,
+        "lines_count": 630,
+        "classes_count": 6,
+        "functions_count": 18,
+        "imports_count": 10,
+        "error_message": ""
+      },
+      {
+        "module_path": "ai_services/huggingface_integration.py",
+        "is_valid": true,
+        "lines_count": 781,
+        "classes_count": 6,
+        "functions_count": 22,
+        "imports_count": 20,
+        "error_message": ""
+      },
+      {
+        "module_path": "ai_services/aws_ai_integration.py",
+        "is_valid": true,
+        "lines_count": 1025,
+        "classes_count": 6,
+        "functions_count": 31,
+        "imports_count": 15,
+        "error_message": ""
+      },
+      {
+        "module_path": "ai_services/ai_performance_monitor.py",
+        "is_valid": true,
+        "lines_count": 1046,
+        "classes_count": 9,
+        "functions_count": 32,
+        "imports_count": 16,
+        "error_message": ""
+      },
+      {
+        "module_path": "ai_services/cohere_integration.py",
+        "is_valid": true,
+        "lines_count": 812,
+        "classes_count": 7,
+        "functions_count": 21,
+        "imports_count": 8,
+        "error_message": ""
+      }
+    ],
+    "communication": [
+      {
+        "module_path": "communication/chat_integration.py",
+        "is_valid": true,
+        "lines_count": 1057,
+        "classes_count": 10,
+        "functions_count": 26,
+        "imports_count": 21,
+        "error_message": ""
+      },
+      {
+        "module_path": "communication/notification_manager.py",
+        "is_valid": true,
+        "lines_count": 746,
+        "classes_count": 8,
+        "functions_count": 27,
+        "imports_count": 15,
+        "error_message": ""
+      },
+      {
+        "module_path": "communication/video_conferencing.py",
+        "is_valid": true,
+        "lines_count": 767,
+        "classes_count": 5,
+        "functions_count": 28,
+        "imports_count": 10,
+        "error_message": ""
+      },
+      {
+        "module_path": "communication/email_campaigns.py",
+        "is_valid": true,
+        "lines_count": 669,
+        "classes_count": 7,
+        "functions_count": 16,
+        "imports_count": 20,
+        "error_message": ""
+      },
+      {
+        "module_path": "communication/__init__.py",
+        "is_valid": true,
+        "lines_count": 50,
+        "classes_count": 0,
+        "functions_count": 0,
+        "imports_count": 8,
+        "error_message": ""
+      },
+      {
+        "module_path": "communication/collaboration_tools.py",
+        "is_valid": true,
+        "lines_count": 852,
+        "classes_count": 6,
+        "functions_count": 25,
+        "imports_count": 10,
+        "error_message": ""
+      },
+      {
+        "module_path": "communication/push_notification.py",
+        "is_valid": true,
+        "lines_count": 1011,
+        "classes_count": 8,
+        "functions_count": 27,
+        "imports_count": 9,
+        "error_message": ""
+      },
+      {
+        "module_path": "communication/sms_campaigns.py",
+        "is_valid": true,
+        "lines_count": 866,
+        "classes_count": 9,
+        "functions_count": 20,
+        "imports_count": 13,
+        "error_message": ""
+      },
+      {
+        "module_path": "communication/voice_services.py",
+        "is_valid": true,
+        "lines_count": 788,
+        "classes_count": 6,
+        "functions_count": 26,
+        "imports_count": 10,
+        "error_message": ""
+      }
+    ],
+    "platforms": [
+      {
+        "module_path": "platforms/platform_coordinator.py",
+        "is_valid": true,
+        "lines_count": 642,
+        "classes_count": 9,
+        "functions_count": 16,
+        "imports_count": 18,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/youtube_content_id_api.py",
+        "is_valid": true,
+        "lines_count": 564,
+        "classes_count": 4,
+        "functions_count": 13,
+        "imports_count": 12,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/instagram_business_api.py",
+        "is_valid": true,
+        "lines_count": 595,
+        "classes_count": 4,
+        "functions_count": 20,
+        "imports_count": 12,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/twitch_creator_api.py",
+        "is_valid": true,
+        "lines_count": 1039,
+        "classes_count": 5,
+        "functions_count": 50,
+        "imports_count": 12,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/platform_oauth_manager.py",
+        "is_valid": true,
+        "lines_count": 556,
+        "classes_count": 3,
+        "functions_count": 13,
+        "imports_count": 12,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/snapchat_creator_api.py",
+        "is_valid": true,
+        "lines_count": 1167,
+        "classes_count": 4,
+        "functions_count": 54,
+        "imports_count": 12,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/__init__.py",
+        "is_valid": true,
+        "lines_count": 170,
+        "classes_count": 0,
+        "functions_count": 3,
+        "imports_count": 12,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/discord_bot_api.py",
+        "is_valid": true,
+        "lines_count": 941,
+        "classes_count": 6,
+        "functions_count": 43,
+        "imports_count": 10,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/reddit_api.py",
+        "is_valid": true,
+        "lines_count": 1047,
+        "classes_count": 6,
+        "functions_count": 35,
+        "imports_count": 10,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/pinterest_business_api.py",
+        "is_valid": true,
+        "lines_count": 1230,
+        "classes_count": 12,
+        "functions_count": 18,
+        "imports_count": 21,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/substack_api.py",
+        "is_valid": true,
+        "lines_count": 710,
+        "classes_count": 5,
+        "functions_count": 27,
+        "imports_count": 10,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/spotify_artists_api.py",
+        "is_valid": true,
+        "lines_count": 606,
+        "classes_count": 5,
+        "functions_count": 24,
+        "imports_count": 11,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/medium_partner_api.py",
+        "is_valid": true,
+        "lines_count": 855,
+        "classes_count": 5,
+        "functions_count": 34,
+        "imports_count": 10,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/facebook_rights_api.py",
+        "is_valid": true,
+        "lines_count": 442,
+        "classes_count": 4,
+        "functions_count": 16,
+        "imports_count": 10,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/api_rate_limiter.py",
+        "is_valid": true,
+        "lines_count": 366,
+        "classes_count": 3,
+        "functions_count": 14,
+        "imports_count": 10,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/tiktok_creator_api.py",
+        "is_valid": true,
+        "lines_count": 578,
+        "classes_count": 4,
+        "functions_count": 17,
+        "imports_count": 12,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/twitter_api_v2.py",
+        "is_valid": true,
+        "lines_count": 557,
+        "classes_count": 4,
+        "functions_count": 20,
+        "imports_count": 10,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/linkedin_creator_api.py",
+        "is_valid": true,
+        "lines_count": 1011,
+        "classes_count": 10,
+        "functions_count": 14,
+        "imports_count": 21,
+        "error_message": ""
+      },
+      {
+        "module_path": "platforms/dmca_services_api.py",
+        "is_valid": true,
+        "lines_count": 509,
+        "classes_count": 4,
+        "functions_count": 16,
+        "imports_count": 9,
+        "error_message": ""
+      }
+    ]
+  }
+}
