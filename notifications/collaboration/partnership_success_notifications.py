@@ -1,0 +1,2 @@
+# Collaboration Engine: partnership_success_notifications.py
+class PartnershipSuccessNotificationsEngine: pass
