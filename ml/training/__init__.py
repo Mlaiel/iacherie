@@ -37,6 +37,14 @@ from .hyperparameter_tuning import (
     CommonParameterSpaces
 )
 
+from .distributed_training_manager import (
+    DistributedTrainingManager,
+    DistributedTrainingConfig,
+    TrainingStrategy,
+    NodeStatus,
+    TrainingNode
+)
+
 __all__ = [
     # AutoML Pipeline
     'AutoMLPipeline',
@@ -55,7 +63,14 @@ __all__ = [
     'OptimizationDirection',
     'SamplerType',
     'PrunerType',
-    'CommonParameterSpaces'
+    'CommonParameterSpaces',
+    
+    # Distributed Training
+    'DistributedTrainingManager',
+    'DistributedTrainingConfig',
+    'TrainingStrategy',
+    'NodeStatus',
+    'TrainingNode'
 ]
 
 # Version du module
