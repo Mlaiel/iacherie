@@ -356,60 +356,172 @@ class DatabasePerformanceTuner:
         return optimizations
     
     async def _optimize_for_creator_workloads(self, db_type: DatabaseType) -> Dict[str, Any]:
-        """Optimize database for Ainflue creator-specific workloads"""
+        """Enhanced optimization for Ainflue creator-specific workloads with advanced patterns"""
+        
+        # Advanced creator economy database optimizations
         creator_optimizations = {
             'content_upload_optimization': {
                 'bulk_insert_batch_size': 1000,
                 'parallel_processing': True,
-                'async_indexing': True
+                'async_indexing': True,
+                'compression_enabled': True,  # Save storage for large content files metadata
+                'upload_pipeline_optimization': {
+                    'streaming_inserts': True,
+                    'metadata_caching': 'redis',
+                    'duplicate_detection': 'hash_based',
+                    'content_versioning': 'optimized'
+                }
             },
             'ai_processing_optimization': {
                 'vector_indexing': 'enabled',
                 'similarity_search_optimization': True,
-                'embedding_storage_optimization': True
+                'embedding_storage_optimization': True,
+                'ai_workload_patterns': {
+                    'content_analysis_queries': 'pre_aggregated',
+                    'recommendation_engine_cache': 'hot_data_redis',
+                    'ml_feature_storage': 'columnar_format',
+                    'model_versioning': 'efficient_storage'
+                }
             },
             'collaboration_optimization': {
                 'real_time_queries': 'optimized',
                 'session_management': 'efficient',
-                'notification_processing': 'async'
+                'notification_processing': 'async',
+                'creator_matching_algorithms': {
+                    'skill_based_indexing': True,
+                    'geographic_clustering': True,
+                    'collaboration_history_cache': 'warm',
+                    'real_time_availability_tracking': True
+                }
+            },
+            'monetization_optimization': {
+                'revenue_tracking_real_time': True,
+                'payment_processing_queue': 'optimized',
+                'financial_analytics': {
+                    'time_series_partitioning': 'monthly',
+                    'creator_earnings_cache': 'redis',
+                    'payout_calculation_optimization': True,
+                    'tax_reporting_pre_computation': True
+                }
             },
             'analytics_optimization': {
                 'aggregation_pipelines': 'optimized',
                 'time_series_data': 'partitioned',
-                'reporting_queries': 'cached'
+                'reporting_queries': 'cached',
+                'creator_insights_engine': {
+                    'performance_metrics_rollup': 'hourly',
+                    'trend_analysis_cache': 'hot_data',
+                    'cross_platform_analytics': 'unified_view',
+                    'engagement_pattern_analysis': 'real_time'
+                }
+            },
+            'content_protection_optimization': {
+                'copyright_detection_cache': 'persistent',
+                'fingerprint_matching': 'optimized_indices',
+                'rights_management_queries': 'cached',
+                'violation_tracking': 'real_time_alerts'
             }
         }
         
+        # Database-specific optimizations for Ainflue creator economy
         if db_type == DatabaseType.MONGODB:
             creator_optimizations['content_collections'] = {
                 'sharding_key': 'creator_id',
                 'chunk_size': '64MB',
-                'balancer_enabled': True
+                'balancer_enabled': True,
+                'creator_specific_sharding': {
+                    'high_volume_creators': 'dedicated_shards',
+                    'geographic_sharding': 'timezone_based',
+                    'content_type_sharding': 'media_optimized'
+                }
+            }
+        elif db_type == DatabaseType.POSTGRESQL:
+            creator_optimizations['relational_optimizations'] = {
+                'partitioning_strategy': 'creator_id_hash',
+                'materialized_views': 'creator_analytics',
+                'parallel_query_execution': True,
+                'connection_pooling': 'pgbouncer_optimized'
+            }
+        elif db_type == DatabaseType.REDIS:
+            creator_optimizations['cache_optimizations'] = {
+                'creator_session_cache': 'cluster_mode',
+                'content_metadata_cache': 'hot_keys_optimization',
+                'real_time_notifications': 'pub_sub_optimized',
+                'collaboration_state_cache': 'memory_efficient'
             }
         
         return creator_optimizations
     
     async def _setup_performance_monitoring(self, db_type: DatabaseType) -> Dict[str, Any]:
-        """Setup performance monitoring for continuous optimization"""
+        """Enhanced performance monitoring setup for Ainflue creator platform"""
         return {
             'monitoring_tools': [
                 'Prometheus metrics collection',
                 'Grafana performance dashboards',
-                'Custom alerting rules'
+                'Custom alerting rules',
+                'Creator-specific monitoring dashboards',
+                'Real-time performance analytics'
             ],
             'metrics_collected': [
                 'Query execution time',
                 'Connection pool statistics',
                 'Index usage statistics',
                 'Cache hit ratios',
-                'Resource utilization'
+                'Resource utilization',
+                # Creator economy specific metrics
+                'creator_upload_latency',
+                'ai_processing_queue_depth',
+                'collaboration_session_duration',
+                'monetization_query_performance',
+                'content_protection_scan_time',
+                'real_time_notification_latency'
             ],
+            'creator_specific_monitoring': {
+                'content_upload_metrics': {
+                    'upload_success_rate': 'per_creator',
+                    'upload_latency_p99': 'per_content_type',
+                    'storage_utilization': 'per_creator_tier',
+                    'metadata_processing_time': 'real_time'
+                },
+                'ai_processing_metrics': {
+                    'content_analysis_latency': 'per_ai_model',
+                    'recommendation_engine_performance': 'real_time',
+                    'similarity_search_response_time': 'p95',
+                    'ml_feature_extraction_time': 'per_content_type'
+                },
+                'collaboration_metrics': {
+                    'creator_matching_latency': 'real_time',
+                    'real_time_session_stability': 'per_session',
+                    'notification_delivery_time': 'p99',
+                    'collaboration_success_rate': 'daily'
+                },
+                'monetization_metrics': {
+                    'revenue_calculation_latency': 'real_time',
+                    'payment_processing_time': 'p95',
+                    'payout_query_performance': 'per_creator',
+                    'financial_analytics_refresh_time': 'hourly'
+                }
+            },
             'alerting_thresholds': {
                 'query_latency_p95_ms': 200,
                 'connection_pool_usage_percent': 80,
-                'cache_hit_ratio_minimum': 85
+                'cache_hit_ratio_minimum': 85,
+                # Creator platform specific thresholds
+                'creator_upload_latency_p99_ms': 5000,
+                'ai_processing_queue_max_size': 1000,
+                'collaboration_session_timeout_ms': 30000,
+                'monetization_query_latency_p95_ms': 100,
+                'content_protection_scan_max_time_ms': 2000
+            },
+            'business_impact_monitoring': {
+                'creator_satisfaction_score': 'derived_from_performance',
+                'platform_availability_sla': '99.9%',
+                'content_processing_sla': '95th_percentile_under_30s',
+                'real_time_collaboration_uptime': '99.95%'
             },
             'optimization_schedule': 'weekly',
+            'auto_optimization_enabled': True,
+            'creator_feedback_integration': True,
             'status': 'enabled'
         }
 

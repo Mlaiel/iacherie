@@ -253,36 +253,186 @@ class WebSocketManager:
     """Gestionnaire WebSocket pour temps réel"""
     
     def __init__(self):
+        """Initialize WebSocket manager for Ainflue creator real-time communication"""
         try:
-            logger.info(f"Executing __init__")
+            logger.info(f"Initializing WebSocket Manager for Ainflue creator platform")
             
-            # Implementation for __init__
-            # TODO: Add specific business logic here
+            # Ainflue Creator Economy Business Logic Integration
+            self.connected_clients = {}  # Track connected creators
+            self.creator_rooms = {}      # Creator collaboration rooms
+            self.ai_processing_channels = {}  # AI processing notifications
+            self.content_upload_channels = {}  # Real-time upload progress
+            self.collaboration_channels = {}   # Creator collaboration updates
+            self.monetization_channels = {}   # Revenue tracking updates
             
-            result = None  # Replace with actual implementation
+            # Creator workflow event types
+            self.event_handlers = {
+                'content_upload_progress': self._handle_upload_progress,
+                'ai_processing_complete': self._handle_ai_processing,
+                'collaboration_request': self._handle_collaboration,
+                'revenue_update': self._handle_revenue_update,
+                'content_protection_alert': self._handle_protection_alert
+            }
             
-            logger.info(f"__init__ completed successfully")
-            return result
+            logger.info(f"WebSocket Manager initialized successfully for Ainflue creator ecosystem")
             
         except Exception as e:
-            logger.error(f"__init__ failed: {e}")
+            logger.error(f"WebSocket Manager initialization failed: {e}")
             raise
-    async def connect(self, websocket):
-        """
-Connexion WebSocket"""
+    
+    # =============== Ainflue Creator Economy Event Handlers ===============
+    
+    async def _handle_upload_progress(self, creator_id: str, upload_data: Dict[str, Any]):
+        """Handle real-time content upload progress for creators"""
+        progress_update = {
+            'event': 'upload_progress',
+            'creator_id': creator_id,
+            'upload_id': upload_data.get('upload_id'),
+            'progress': upload_data.get('progress', 0),
+            'stage': upload_data.get('stage', 'uploading'),  # uploading, processing, completed
+            'estimated_time': upload_data.get('estimated_time', 0)
+        }
+        await self._broadcast_to_creator(creator_id, progress_update)
+    
+    async def _handle_ai_processing(self, creator_id: str, processing_data: Dict[str, Any]):
+        """Handle AI processing completion notifications"""
+        ai_update = {
+            'event': 'ai_processing_complete',
+            'creator_id': creator_id,
+            'content_id': processing_data.get('content_id'),
+            'analysis_results': processing_data.get('analysis_results', {}),
+            'recommendations': processing_data.get('recommendations', []),
+            'optimization_suggestions': processing_data.get('optimizations', [])
+        }
+        await self._broadcast_to_creator(creator_id, ai_update)
+    
+    async def _handle_collaboration(self, initiator_id: str, collaboration_data: Dict[str, Any]):
+        """Handle creator collaboration requests"""
+        collab_update = {
+            'event': 'collaboration_request',
+            'initiator_id': initiator_id,
+            'target_creator_id': collaboration_data.get('target_creator_id'),
+            'collaboration_type': collaboration_data.get('type', 'general'),  # music, video, content
+            'message': collaboration_data.get('message', ''),
+            'skills_requested': collaboration_data.get('skills', [])
+        }
+        target_id = collaboration_data.get('target_creator_id')
+        if target_id:
+            await self._broadcast_to_creator(target_id, collab_update)
+    
+    async def _handle_revenue_update(self, creator_id: str, revenue_data: Dict[str, Any]):
+        """Handle real-time revenue tracking updates"""
+        revenue_update = {
+            'event': 'revenue_update',
+            'creator_id': creator_id,
+            'total_earnings': revenue_data.get('total_earnings', 0),
+            'recent_transactions': revenue_data.get('recent_transactions', []),
+            'trending_content': revenue_data.get('trending_content', []),
+            'payout_status': revenue_data.get('payout_status', 'pending')
+        }
+        await self._broadcast_to_creator(creator_id, revenue_update)
+    
+    async def _handle_protection_alert(self, creator_id: str, protection_data: Dict[str, Any]):
+        """Handle content protection and security alerts"""
+        protection_alert = {
+            'event': 'content_protection_alert',
+            'creator_id': creator_id,
+            'alert_type': protection_data.get('alert_type', 'copyright'),
+            'content_id': protection_data.get('content_id'),
+            'threat_level': protection_data.get('threat_level', 'medium'),
+            'action_required': protection_data.get('action_required', False),
+            'protection_status': protection_data.get('status', 'protected')
+        }
+        await self._broadcast_to_creator(creator_id, protection_alert)
+    
+    async def _broadcast_to_creator(self, creator_id: str, message: Dict[str, Any]):
+        """Broadcast message to specific creator's connected clients"""
+        if creator_id in self.connected_clients:
+            for websocket in self.connected_clients[creator_id]:
+                try:
+                    await websocket.send_json(message)
+                except Exception as e:
+                    logger.warning(f"Failed to send message to creator {creator_id}: {e}")
+    
+    async def connect(self, websocket, creator_id: str = None):
+        """Enhanced WebSocket connection for Ainflue creators"""
         await websocket.accept()
-        self.active_connections.append(websocket)
+        
+        if creator_id:
+            # Initialize creator connection tracking
+            if creator_id not in self.connected_clients:
+                self.connected_clients[creator_id] = []
+            self.connected_clients[creator_id].append(websocket)
+            
+            # Send welcome message with creator-specific data
+            welcome_message = {
+                'event': 'connected',
+                'creator_id': creator_id,
+                'features': ['real_time_uploads', 'ai_processing', 'collaboration', 'revenue_tracking'],
+                'status': 'connected_to_ainflue_platform'
+            }
+            await websocket.send_json(welcome_message)
+            
+            logger.info(f"Creator {creator_id} connected to Ainflue WebSocket")
+        else:
+            # Generic connection for non-creator clients
+            if 'general' not in self.connected_clients:
+                self.connected_clients['general'] = []
+            self.connected_clients['general'].append(websocket)
     
-    def disconnect(self, websocket):
-        """
-Déconnexion WebSocket"""
-        self.active_connections.remove(websocket)
+    def disconnect(self, websocket, creator_id: str = None):
+        """Enhanced WebSocket disconnection for Ainflue creators"""
+        if creator_id and creator_id in self.connected_clients:
+            if websocket in self.connected_clients[creator_id]:
+                self.connected_clients[creator_id].remove(websocket)
+                if not self.connected_clients[creator_id]:
+                    del self.connected_clients[creator_id]
+                logger.info(f"Creator {creator_id} disconnected from Ainflue WebSocket")
+        else:
+            # Handle generic disconnections
+            for client_group in self.connected_clients.values():
+                if websocket in client_group:
+                    client_group.remove(websocket)
+                    break
     
-    async def broadcast(self, message: str):
-        """
-Diffusion message à tous les clients"""
-        for connection in self.active_connections:
-            await connection.send_text(message)
+    async def broadcast(self, message: str, target_creators: List[str] = None):
+        """Enhanced broadcast for Ainflue creator platform"""
+        if target_creators:
+            # Broadcast to specific creators
+            for creator_id in target_creators:
+                if creator_id in self.connected_clients:
+                    for websocket in self.connected_clients[creator_id]:
+                        try:
+                            await websocket.send_text(message)
+                        except Exception as e:
+                            logger.warning(f"Failed to broadcast to creator {creator_id}: {e}")
+        else:
+            # Broadcast to all connected clients
+            for client_group in self.connected_clients.values():
+                for websocket in client_group:
+                    try:
+                        await websocket.send_text(message)
+                    except Exception as e:
+                        logger.warning(f"Failed to broadcast message: {e}")
+    
+    async def broadcast_platform_update(self, update_data: Dict[str, Any]):
+        """Broadcast platform-wide updates to all Ainflue creators"""
+        platform_update = {
+            'event': 'platform_update',
+            'timestamp': datetime.now().isoformat(),
+            'update_type': update_data.get('type', 'general'),
+            'message': update_data.get('message', ''),
+            'affects_creators': update_data.get('affects_creators', True),
+            'action_required': update_data.get('action_required', False)
+        }
+        
+        for creator_id, websockets in self.connected_clients.items():
+            if creator_id != 'general':  # Skip non-creator connections
+                for websocket in websockets:
+                    try:
+                        await websocket.send_json(platform_update)
+                    except Exception as e:
+                        logger.warning(f"Failed to send platform update to creator {creator_id}: {e}")
 
 # =============== EXPORT MODULE ===============
 
