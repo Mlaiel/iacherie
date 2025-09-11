@@ -165,20 +165,33 @@ class APIBreakingChangesDetector:
         )
 
     def _contains_api_definitions(self, file_path: Path) -> bool:
+        """Check if file contains API definitions"""
         try:
-            logger.info(f"Executing _contains_api_definitions")
+            with open(file_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+                
+            # Check for common API patterns
+            api_patterns = [
+                r"@app\.(get|post|put|delete|patch)",
+                r"@router\.(get|post|put|delete|patch)", 
+                r"@api\.(route|get|post|put|delete|patch)",
+                r"@route\(",
+                r"@blueprint\.",
+                r"app\.route\(",
+                r"router\.",
+                r"FastAPI\(",
+                r"APIRouter\("
+            ]
             
-            # Implementation for _contains_api_definitions
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"_contains_api_definitions completed successfully")
-            return result
+            for pattern in api_patterns:
+                if re.search(pattern, content):
+                    return True
+                    
+            return False
             
         except Exception as e:
-            logger.error(f"_contains_api_definitions failed: {e}")
-            raise
+            self.logger.warning(f"Error checking API definitions in {file_path}: {e}")
+            return False
     async def _extract_endpoints_from_file(self, file_path: Path) -> List[APIEndpoint]:
         """Extract API endpoints from a file"""
         endpoints = []
@@ -314,21 +327,6 @@ class APIBreakingChangesDetector:
                 tree = ast.parse(content)
             
             class SchemaVisitor(ast.NodeVisitor):
-        try:
-            logger.info(f"Executing __init__")
-            
-            # Implementation for __init__
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"__init__ completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"__init__ failed: {e}")
-            raise
-            class SchemaVisitor(ast.NodeVisitor):
                 def __init__(self):
                     self.schemas = {}
                 
@@ -423,20 +421,62 @@ class APIBreakingChangesDetector:
         
         # Check for modified endpoints
         for key in old_endpoints.keys() & new_endpoints.keys():
-        try:
-            logger.info(f"Executing _compare_endpoints")
+            old_ep = old_endpoints[key]
+            new_ep = new_endpoints[key]
             
-            # Implementation for _compare_endpoints
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"_compare_endpoints completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"_compare_endpoints failed: {e}")
-            raise
+            # Compare endpoint changes
+            endpoint_changes = await self._compare_endpoints(old_ep, new_ep)
+            changes.extend(endpoint_changes)
+        
+        # Compare schemas
+        schema_changes = await self._compare_schemas(old_contract.schemas, new_contract.schemas)
+        changes.extend(schema_changes)
+        
+        return changes
+
+    async def _compare_endpoints(self, old_ep: APIEndpoint, new_ep: APIEndpoint) -> List[APIChange]:
+        """Compare two endpoints for changes"""
+        changes = []
+        
+        # Check parameter changes
+        old_params = {p["name"]: p for p in old_ep.parameters}
+        new_params = {p["name"]: p for p in new_ep.parameters}
+        
+        # Removed parameters (breaking)
+        for param_name in old_params.keys() - new_params.keys():
+            if old_params[param_name].get("required", True):
+                changes.append(APIChange(
+                    change_type=ChangeType.BREAKING,
+                    severity=BreakingSeverity.MAJOR,
+                    endpoint_path=old_ep.path,
+                    method=old_ep.method,
+                    description=f"Required parameter '{param_name}' was removed",
+                    old_value=param_name,
+                    new_value=None,
+                    impact_description="Clients sending this parameter will receive errors",
+                    remediation="Keep parameter for backward compatibility or make it optional",
+                    file_path=new_ep.file_path,
+                    line_number=new_ep.line_number
+                ))
+        
+        # Added required parameters (breaking)
+        for param_name in new_params.keys() - old_params.keys():
+            if new_params[param_name].get("required", True):
+                changes.append(APIChange(
+                    change_type=ChangeType.BREAKING,
+                    severity=BreakingSeverity.MAJOR,
+                    endpoint_path=old_ep.path,
+                    method=old_ep.method,
+                    description=f"New required parameter '{param_name}' was added",
+                    old_value=None,
+                    new_value=param_name,
+                    impact_description="Existing clients will receive validation errors",
+                    remediation="Make parameter optional with default value",
+                    file_path=new_ep.file_path,
+                    line_number=new_ep.line_number
+                ))
+        
+        # Check return type changes
         if old_ep.return_type != new_ep.return_type:
             changes.append(APIChange(
                 change_type=ChangeType.BREAKING,

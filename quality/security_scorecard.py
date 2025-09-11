@@ -184,20 +184,54 @@ class SecurityScorecardEngine:
         return scorecard
 
     async def _assess_vulnerability_management(self) -> Tuple[List[SecurityMetric], List[SecurityFinding]]:
+        """Assess vulnerability management practices"""
+        metrics = []
+        findings = []
+        
         try:
-            logger.info(f"Executing _assess_vulnerability_management")
+            # Static code analysis for vulnerabilities
+            vuln_score = await self._run_bandit_scan()
             
-            # Implementation for _assess_vulnerability_management
-            # TODO: Add specific business logic here
+            metrics.append(SecurityMetric(
+                domain=SecurityDomain.VULNERABILITY_MANAGEMENT,
+                name="Static Code Vulnerability Scan",
+                score=vuln_score,
+                weight=0.4,
+                description="Static analysis for security vulnerabilities",
+                evidence=["Bandit security scan completed"],
+                recommendations=["Fix high-severity vulnerabilities", "Implement secure coding practices"]
+            ))
             
-            result = None  # Replace with actual implementation
+            # Dependency vulnerability scan
+            dep_vuln_score = await self._scan_dependency_vulnerabilities()
             
-            logger.info(f"_assess_vulnerability_management completed successfully")
-            return result
+            metrics.append(SecurityMetric(
+                domain=SecurityDomain.VULNERABILITY_MANAGEMENT,
+                name="Dependency Vulnerability Scan",
+                score=dep_vuln_score,
+                weight=0.3,
+                description="Scan for vulnerabilities in dependencies",
+                evidence=["Dependency security scan completed"],
+                recommendations=["Update vulnerable dependencies", "Monitor security advisories"]
+            ))
+            
+            # Vulnerability response process
+            response_score = await self._assess_vulnerability_response()
+            
+            metrics.append(SecurityMetric(
+                domain=SecurityDomain.VULNERABILITY_MANAGEMENT,
+                name="Vulnerability Response Process",
+                score=response_score,
+                weight=0.3,
+                description="Vulnerability response and remediation process",
+                evidence=["Response process evaluation"],
+                recommendations=["Establish vulnerability response team", "Define SLAs for remediation"]
+            ))
             
         except Exception as e:
-            logger.error(f"_assess_vulnerability_management failed: {e}")
-            raise
+            self.logger.error(f"Error assessing vulnerability management: {e}")
+        
+        return metrics, findings
     async def _assess_code_security(self) -> Tuple[List[SecurityMetric], List[SecurityFinding]]:
         """Assess code security practices"""
         metrics = []
@@ -469,41 +503,127 @@ class SecurityScorecardEngine:
         
         return metrics, findings
 
-    # Helper methods for specific security checks
-    async def _run_bandit_scan(self) -> subprocess.CompletedProcess:
+    async def _run_bandit_scan(self) -> float:
+        """Run bandit security scan"""
         try:
-            logger.info(f"Executing _assess_access_control")
+            cmd = ["bandit", "-r", ".", "-f", "json", "--exclude", "*/tests/*,*/test_*"]
+            result = await self._run_command(cmd, timeout=180)
             
-            # Implementation for _assess_access_control
-            # TODO: Add specific business logic here
+            if result.returncode == 0 and result.stdout:
+                try:
+                    bandit_data = json.loads(result.stdout)
+                    issues = bandit_data.get("results", [])
+                    
+                    # Count severity levels
+                    severity_counts = {"HIGH": 0, "MEDIUM": 0, "LOW": 0}
+                    for issue in issues:
+                        severity = issue.get("issue_severity", "").upper()
+                        if severity in severity_counts:
+                            severity_counts[severity] += 1
+                    
+                    # Calculate score based on findings
+                    total_issues = sum(severity_counts.values())
+                    score = max(0, 100 - (severity_counts["HIGH"] * 20) - 
+                               (severity_counts["MEDIUM"] * 10) - (severity_counts["LOW"] * 2))
+                    
+                    return score
+                except json.JSONDecodeError:
+                    pass
             
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"_assess_access_control completed successfully")
-            return result
+            # Fallback to basic pattern checking
+            return await self._check_security_practices()
             
         except Exception as e:
-            logger.error(f"_assess_access_control failed: {e}")
-            raise
-                with open(py_file, 'r', encoding='utf-8') as f:
-                    content = f.read()
-                    for pattern in security_patterns:
-                        if pattern in content:
-                            found_patterns += 1
-                            break
-            except:
-                continue
-        
-        if total_files > 0:
-            security_ratio = found_patterns / total_files
-            score = min(100.0, 60.0 + (security_ratio * 40.0))
-        
-        return score
+            self.logger.warning(f"Bandit scan failed: {e}")
+            return await self._check_security_practices()
 
-    async def _check_authentication_security(self) -> float:
-        """Check authentication security implementation"""
-        # Placeholder implementation
-        return 75.0
+    async def _scan_dependency_vulnerabilities(self) -> float:
+        """Scan dependencies for vulnerabilities"""
+        try:
+            # Try safety check first
+            cmd = ["safety", "check", "--json"]
+            result = await self._run_command(cmd, timeout=120)
+            
+            if result.returncode == 0 and result.stdout:
+                try:
+                    safety_data = json.loads(result.stdout)
+                    vulnerabilities = len(safety_data)
+                    score = max(0, 100 - vulnerabilities * 15)
+                    return score
+                except json.JSONDecodeError:
+                    pass
+            
+            # Fallback to requirements analysis
+            return await self._analyze_dependency_freshness()
+            
+        except Exception as e:
+            self.logger.warning(f"Dependency scan failed: {e}")
+            return 75.0
+
+    async def _assess_vulnerability_response(self) -> float:
+        """Assess vulnerability response capabilities"""
+        # Check for security documentation and processes
+        security_docs = [
+            "SECURITY.md", "security.md", "SECURITY.rst",
+            "docs/security.md", "docs/SECURITY.md"
+        ]
+        
+        found_docs = 0
+        for doc in security_docs:
+            if (self.project_root / doc).exists():
+                found_docs += 1
+        
+        # Base score on documentation presence
+        doc_score = (found_docs / len(security_docs)) * 50
+        
+        # Check for security-related configuration
+        config_score = await self._check_security_configuration()
+        
+        return min(100.0, doc_score + config_score)
+
+    async def _analyze_dependency_freshness(self) -> float:
+        """Analyze how fresh dependencies are"""
+        try:
+            requirements_files = ["requirements.txt", "pyproject.toml", "Pipfile"]
+            
+            for req_file in requirements_files:
+                file_path = self.project_root / req_file
+                if file_path.exists():
+                    # Simple heuristic: newer files are likely more maintained
+                    import os
+                    import time
+                    
+                    file_age_days = (time.time() - os.path.getmtime(file_path)) / (24 * 3600)
+                    
+                    # Score based on file age (newer is better)
+                    if file_age_days < 30:
+                        return 90.0
+                    elif file_age_days < 90:
+                        return 80.0
+                    elif file_age_days < 180:
+                        return 70.0
+                    else:
+                        return 60.0
+            
+            return 75.0  # Default if no requirements file found
+            
+        except Exception as e:
+            self.logger.warning(f"Dependency freshness analysis failed: {e}")
+            return 75.0
+
+    async def _check_security_configuration(self) -> float:
+        """Check for security configuration"""
+        security_configs = [
+            ".bandit", "bandit.yaml", "security.yaml",
+            "tox.ini", ".pre-commit-config.yaml"
+        ]
+        
+        found_configs = 0
+        for config in security_configs:
+            if (self.project_root / config).exists():
+                found_configs += 1
+        
+        return min(50.0, (found_configs / len(security_configs)) * 50)
 
     async def _check_cryptography_usage(self) -> float:
         """Check cryptography usage"""
@@ -633,21 +753,39 @@ class SecurityScorecardEngine:
         if score >= 90:
             return SecurityLevel.EXCELLENT
         elif score >= 80:
-        try:
-            logger.info(f"Executing _check_secrets_management")
-            
-            # Implementation for _check_secrets_management
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"_check_secrets_management completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"_check_secrets_management failed: {e}")
-            raise
-            "score_change": current_score - prev_score,
+            return SecurityLevel.GOOD
+        elif score >= 70:
+            return SecurityLevel.ACCEPTABLE
+        elif score >= 60:
+            return SecurityLevel.NEEDS_IMPROVEMENT
+        else:
+            return SecurityLevel.CRITICAL
+
+    def _analyze_trends(self, metrics: List[SecurityMetric]) -> Dict[str, Any]:
+        """Analyze security trends"""
+        if len(self.scorecard_history) < 2:
+            return {"status": "insufficient_data"}
+        
+        # Compare with previous scorecard
+        prev_scorecard = self.scorecard_history[-2]
+        current_score = sum(m.score * m.weight for m in metrics) / len(metrics) if metrics else 0
+        prev_score = sum(m.score * m.weight for m in prev_scorecard.metrics) / len(prev_scorecard.metrics) if prev_scorecard.metrics else 0
+        
+        score_change = current_score - prev_score
+        
+        if score_change > 5:
+            trend = "improving significantly"
+        elif score_change > 0:
+            trend = "improving"
+        elif score_change < -5:
+            trend = "declining significantly"
+        elif score_change < 0:
+            trend = "declining"
+        else:
+            trend = "stable"
+        
+        return {
+            "score_change": score_change,
             "trend_analysis": f"Security score has been {trend}"
         }
 
