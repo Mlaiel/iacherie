@@ -73,7 +73,15 @@ const AIAssistantInterface: React.FC<AIAssistantInterfaceProps> = ({
       key: ['C', 'D', 'E', 'F', 'G', 'A', 'B'][Math.floor(Math.random() * 7)] + 
            ['', 'm', '#', 'b'][Math.floor(Math.random() * 4)],
       tempo: Math.round(studioState.bpm + (Math.random() - 0.5) * 20),
-      timeSignature: studioState.timeSignature.split('/').map(Number) as [number, number] || [4, 4],
+      timeSignature: (() => {
+        if (typeof studioState.timeSignature === 'string') {
+          const parts = studioState.timeSignature.split('/').map(Number);
+          return parts.length >= 2 ? [parts[0], parts[1]] as [number, number] : [4, 4];
+        }
+        return Array.isArray(studioState.timeSignature) && studioState.timeSignature.length >= 2 
+          ? [studioState.timeSignature[0], studioState.timeSignature[1]] as [number, number]
+          : [4, 4];
+      })(),
       genre: ['Pop', 'Rock', 'Electronic', 'Hip-Hop', 'Jazz', 'Classical'][Math.floor(Math.random() * 6)],
       mood: ['Energetic', 'Melancholic', 'Uplifting', 'Dramatic', 'Peaceful', 'Intense'][Math.floor(Math.random() * 6)],
       complexity: ['simple', 'moderate', 'complex'][Math.floor(Math.random() * 3)] as any,
