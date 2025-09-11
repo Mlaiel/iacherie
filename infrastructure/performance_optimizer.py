@@ -512,7 +512,6 @@ class PerformanceOptimizer:
             'scaling_recommendation_confidence': 0.91,
             'model_accuracy_score': 0.94
         }
-        }
         
         # Cost optimization weights
         self.cost_weights = {
