@@ -15,13 +15,17 @@ import { useState, useCallback, useEffect, useRef } from 'react';
 export interface StudioState {
   tracks: AudioTrack[];
   selectedTrackId: string | null;
+  selectedTracks: string[]; // For multi-selection
   isPlaying: boolean;
+  isRecording: boolean; // Add recording state
   currentTime: number;
   duration: number;
   volume: number;
   bpm: number;
+  tempo: number; // Add tempo for BPM analysis
   key: string;
-  timeSignature: string;
+  timeSignature: string | number[]; // Support both string and array format
+  zoomLevel: number; // Add zoom level for timeline
   project: ProjectSettings;
   effects: StudioEffect[];
   instruments: VirtualInstrument[];
@@ -32,6 +36,7 @@ export interface AudioTrack {
   name: string;
   type: 'audio' | 'midi' | 'instrument';
   audioBuffer?: AudioBuffer;
+  audioUrl?: string; // Add audio URL for loading
   effects: AudioEffect[];
   volume: number;
   pan: number;
@@ -40,6 +45,7 @@ export interface AudioTrack {
   armed: boolean;
   color: string;
   length: number;
+  duration: number; // Add duration property
   startTime: number;
 }
 
@@ -244,6 +250,33 @@ export const studioUtils = {
     return (samples / sampleRate) * 1000;
   },
 
+  msToTime: (ms: number): string => {
+    const seconds = ms / 1000;
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    const centisecs = Math.floor((seconds % 1) * 100);
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}.${centisecs.toString().padStart(2, '0')}`;
+  },
+
+  getTrackColor: (type: string | number): string => {
+    const colors = [
+      '#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57',
+      '#ff9ff3', '#54a0ff', '#5f27cd', '#00d2d3', '#ff9f43',
+      '#10ac84', '#ee5a24', '#0abde3', '#3742fa', '#2f3542'
+    ];
+    
+    if (typeof type === 'string') {
+      // Hash string to get consistent color
+      let hash = 0;
+      for (let i = 0; i < type.length; i++) {
+        hash = ((hash << 5) - hash + type.charCodeAt(i)) & 0xffffffff;
+      }
+      return colors[Math.abs(hash) % colors.length];
+    }
+    
+    return colors[type % colors.length];
+  },
+
   getClassName: (baseClass: string, additionalClass?: string): string => {
     return additionalClass ? `${baseClass} ${additionalClass}` : baseClass;
   }
@@ -281,13 +314,17 @@ export class RemixStudioEngine {
     return {
       tracks: [],
       selectedTrackId: null,
+      selectedTracks: [],
       isPlaying: false,
+      isRecording: false,
       currentTime: 0,
       duration: 0,
       volume: 0.8,
       bpm: 120,
+      tempo: 120,
       key: 'C',
       timeSignature: '4/4',
+      zoomLevel: 1.0,
       project: {
         name: 'New Project',
         sampleRate: 44100,
@@ -476,6 +513,7 @@ export class RemixStudioEngine {
       armed: false,
       color: this.getTrackColor(type),
       length: 0,
+      duration: 0,
       startTime: 0
     };
 
