@@ -34,6 +34,26 @@ class ProtectionModules(Enum):
     FAIR_USE_ANALYSIS = "fair_use_analysis"
     PROTECTION_INTELLIGENCE = "protection_intelligence"
 
+# Import all protection modules
+try:
+    from .ai_fingerprinting_monitor import ai_fingerprinting_monitor
+    from .copyright_detection_tracker import copyright_detection_tracker
+    from .rights_management_monitor import rights_management_monitor
+    from .piracy_detection_alerting import piracy_detection_alerting
+    from .dmca_compliance_tracker import dmca_compliance_tracker
+    from .protection_intelligence_system import protection_intelligence_system
+    from .content_authenticity_validator import content_authenticity_validator
+    from .blockchain_rights_monitor import blockchain_rights_monitor
+    from .watermark_integrity_checker import watermark_integrity_checker
+    from .content_similarity_analyzer import content_similarity_analyzer
+    from .takedown_automation_monitor import takedown_automation_monitor
+    from .fair_use_analysis_engine import fair_use_analysis_engine
+    
+    logger.info("All content protection modules loaded successfully")
+    
+except ImportError as e:
+    logger.warning(f"Some content protection modules could not be imported: {str(e)}")
+
 @dataclass
 class ContentProtectionConfig:
     """Configuration for content protection monitoring."""
