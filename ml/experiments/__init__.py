@@ -28,13 +28,12 @@ from .experiment_tracking_system import (
 
 from .hypothesis_validation_framework import (
     HypothesisValidationFramework,
-    HypothesisDefinition,
     HypothesisType,
     StatisticalTest,
-    StatisticalResult,
-    BayesianResult,
-    ExperimentValidation,
-    EffectSizeMetric
+    MultipleComparisonMethod,
+    HypothesisTestResult,
+    BayesianAnalysisResult,
+    ExperimentValidation
 )
 
 __all__ = [
@@ -47,15 +46,14 @@ __all__ = [
     'Artifact',
     'HyperparameterOptimizer',
     
-    # Hypothesis Validation (NEW - PHASE 3)
+    # Hypothesis Validation (NEW - PHASE 5)
     'HypothesisValidationFramework',
-    'HypothesisDefinition',
     'HypothesisType',
     'StatisticalTest',
-    'StatisticalResult',
-    'BayesianResult',
-    'ExperimentValidation',
-    'EffectSizeMetric'
+    'MultipleComparisonMethod',
+    'HypothesisTestResult',
+    'BayesianAnalysisResult',
+    'ExperimentValidation'
 ]
 
 # Version du module
