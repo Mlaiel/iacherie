@@ -18,7 +18,7 @@ import hashlib
 
 import aiohttp
 import numpy as np
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -74,7 +74,8 @@ class TelegramMessage(BaseModel):
     disable_notification: bool = Field(default=False, description="Silent message")
     protect_content: bool = Field(default=False, description="Content protection")
     
-    @validator('scheduled_time')
+    @field_validator('scheduled_time')
+    @classmethod
     def validate_scheduled_time(cls, v):
         if isinstance(v, str):
             return datetime.fromisoformat(v.replace('Z', '+00:00'))

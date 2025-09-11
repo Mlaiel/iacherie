@@ -533,6 +533,199 @@ class RecoveryPlanner:
                 return phase.value
         
         return "completed"
+    
+    async def create_recovery_plan(self, crisis_id: str, crisis_type: str, 
+                                 severity_level: str = "medium", 
+                                 affected_platforms: List[str] = None) -> Dict[str, Any]:
+        """
+        Create a comprehensive recovery plan for a crisis
+        
+        Args:
+            crisis_id: Unique crisis identifier
+            crisis_type: Type of crisis from CrisisType enum
+            severity_level: Severity level (low, medium, high, critical)
+            affected_platforms: List of affected platforms
+            
+        Returns:
+            Dict containing the recovery plan details
+        """
+        try:
+            # Create recovery strategy using existing method
+            strategy = await self.create_recovery_strategy(
+                crisis_id=crisis_id,
+                crisis_type=crisis_type,
+                severity_level=severity_level,
+                affected_platforms=affected_platforms or []
+            )
+            
+            # Format as a comprehensive plan
+            recovery_plan = {
+                'plan_id': strategy.strategy_id,
+                'crisis_id': crisis_id,
+                'crisis_type': crisis_type,
+                'severity_level': severity_level,
+                'affected_platforms': affected_platforms or [],
+                'created_at': strategy.created_at.isoformat(),
+                'estimated_recovery_time': str(strategy.estimated_recovery_time),
+                'success_probability': strategy.success_probability,
+                'total_actions': len(strategy.actions),
+                'phases': self._format_plan_phases(strategy),
+                'timeline': self._create_recovery_timeline(strategy.actions),
+                'budget_estimate': self._calculate_budget_estimate(strategy.actions),
+                'key_stakeholders': self._identify_key_stakeholders(crisis_type),
+                'communication_strategy': self._create_communication_strategy(crisis_type, severity_level),
+                'success_metrics': self._define_success_metrics(crisis_type),
+                'contingency_plans': self._create_contingency_plans(crisis_type)
+            }
+            
+            self.logger.info(f"Recovery plan created for crisis {crisis_id}: {len(strategy.actions)} actions planned")
+            return recovery_plan
+            
+        except Exception as e:
+            self.logger.error(f"Recovery plan creation failed for crisis {crisis_id}: {e}")
+            raise
+    
+    def _format_plan_phases(self, strategy: RecoveryStrategy) -> Dict[str, List[Dict[str, Any]]]:
+        """Format recovery actions by phase for the plan"""
+        phases = {}
+        for phase in RecoveryPhase:
+            phase_actions = [a for a in strategy.actions if a.phase == phase]
+            phases[phase.value] = [
+                {
+                    'action_id': a.action_id,
+                    'title': a.title,
+                    'description': a.description,
+                    'priority': a.priority,
+                    'estimated_duration': str(a.estimated_duration),
+                    'required_resources': a.required_resources,
+                    'status': a.status.value
+                }
+                for a in phase_actions
+            ]
+        return phases
+    
+    def _calculate_budget_estimate(self, actions: List[RecoveryAction]) -> Dict[str, float]:
+        """Calculate estimated budget for recovery actions"""
+        # Simple budget estimation based on action complexity
+        budget_estimates = {
+            'immediate_response': 5000.0,
+            'content_removal': 1000.0,
+            'legal_consultation': 10000.0,
+            'public_relations': 15000.0,
+            'platform_negotiation': 3000.0,
+            'monitoring_enhancement': 2000.0,
+            'process_improvement': 8000.0
+        }
+        
+        total_budget = 0.0
+        breakdown = {}
+        
+        for action in actions:
+            # Estimate based on action title keywords
+            action_cost = 2000.0  # Default
+            for keyword, cost in budget_estimates.items():
+                if keyword.replace('_', ' ') in action.title.lower():
+                    action_cost = cost
+                    break
+            
+            breakdown[action.action_id] = action_cost
+            total_budget += action_cost
+        
+        return {
+            'total_estimated_cost': total_budget,
+            'breakdown_by_action': breakdown,
+            'currency': 'USD'
+        }
+    
+    def _identify_key_stakeholders(self, crisis_type: str) -> List[Dict[str, str]]:
+        """Identify key stakeholders for the recovery plan"""
+        stakeholder_mapping = {
+            'reputation_damage': [
+                {'role': 'PR Manager', 'responsibility': 'Public communications'},
+                {'role': 'Legal Counsel', 'responsibility': 'Legal assessment'},
+                {'role': 'Platform Managers', 'responsibility': 'Platform relations'},
+                {'role': 'Content Team', 'responsibility': 'Content strategy adjustment'}
+            ],
+            'negative_sentiment': [
+                {'role': 'Community Manager', 'responsibility': 'Community engagement'},
+                {'role': 'Content Team', 'responsibility': 'Content adjustment'},
+                {'role': 'Data Analyst', 'responsibility': 'Sentiment monitoring'}
+            ],
+            'platform_policy_violation': [
+                {'role': 'Legal Counsel', 'responsibility': 'Policy compliance'},
+                {'role': 'Platform Relations', 'responsibility': 'Platform negotiation'},
+                {'role': 'Compliance Officer', 'responsibility': 'Policy adherence'}
+            ]
+        }
+        
+        return stakeholder_mapping.get(crisis_type, [
+            {'role': 'Crisis Manager', 'responsibility': 'Overall coordination'},
+            {'role': 'Communications Team', 'responsibility': 'Stakeholder communications'}
+        ])
+    
+    def _create_communication_strategy(self, crisis_type: str, severity_level: str) -> Dict[str, Any]:
+        """Create communication strategy for the recovery plan"""
+        return {
+            'internal_communications': {
+                'frequency': 'hourly' if severity_level == 'critical' else 'daily',
+                'channels': ['email', 'slack', 'emergency_hotline'],
+                'stakeholders': ['management', 'legal', 'pr_team', 'technical_team']
+            },
+            'external_communications': {
+                'public_statement_required': severity_level in ['high', 'critical'],
+                'social_media_response': True,
+                'media_outreach': severity_level == 'critical',
+                'customer_notification': crisis_type in ['platform_policy_violation', 'reputation_damage']
+            },
+            'messaging_framework': {
+                'acknowledge': 'Acknowledge the issue promptly',
+                'responsibility': 'Take appropriate responsibility',
+                'action': 'Communicate concrete actions being taken',
+                'prevention': 'Outline prevention measures for future'
+            }
+        }
+    
+    def _define_success_metrics(self, crisis_type: str) -> List[Dict[str, str]]:
+        """Define success metrics for recovery plan evaluation"""
+        base_metrics = [
+            {'metric': 'sentiment_recovery', 'target': 'Return to pre-crisis sentiment levels within 30 days'},
+            {'metric': 'engagement_restoration', 'target': 'Restore engagement rates to 90% of pre-crisis levels'},
+            {'metric': 'reputation_score', 'target': 'Achieve reputation score above 7.0/10'}
+        ]
+        
+        crisis_specific_metrics = {
+            'platform_policy_violation': [
+                {'metric': 'policy_compliance', 'target': '100% compliance verification'},
+                {'metric': 'platform_relations', 'target': 'Restore good standing on all platforms'}
+            ],
+            'reputation_damage': [
+                {'metric': 'media_coverage', 'target': 'Achieve 60% positive media coverage'},
+                {'metric': 'brand_mentions', 'target': 'Reduce negative mentions by 80%'}
+            ]
+        }
+        
+        return base_metrics + crisis_specific_metrics.get(crisis_type, [])
+    
+    def _create_contingency_plans(self, crisis_type: str) -> List[Dict[str, str]]:
+        """Create contingency plans for potential escalations"""
+        return [
+            {
+                'scenario': 'Recovery plan fails to show progress within 72 hours',
+                'action': 'Activate escalated response protocol with external crisis management firm'
+            },
+            {
+                'scenario': 'Media attention intensifies beyond planned response',
+                'action': 'Implement full media strategy with press conferences and interviews'
+            },
+            {
+                'scenario': 'Additional platforms affected during recovery',
+                'action': 'Expand recovery plan scope and reallocate resources accordingly'
+            },
+            {
+                'scenario': 'Legal implications emerge during recovery',
+                'action': 'Prioritize legal consultation and adjust communications strategy'
+            }
+        ]
 
 
 # Export classes

@@ -13,7 +13,7 @@ import hashlib
 import json
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass, asdict
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from enum import Enum
 import numpy as np
 
@@ -90,7 +90,7 @@ class ViralPredictor:
                 accuracy=0.94,
                 features_count=156,
                 training_data_size=50_000_000,
-                last_updated=datetime.utcnow()
+                last_updated=datetime.now(timezone.utc)
             ),
             'gradient_boosting': PredictionModel(
                 model_name="ViralBoost-XGBoost-v2.5",
@@ -98,7 +98,7 @@ class ViralPredictor:
                 accuracy=0.91,
                 features_count=143,
                 training_data_size=30_000_000,
-                last_updated=datetime.utcnow()
+                last_updated=datetime.now(timezone.utc)
             ),
             'transformer_attention': PredictionModel(
                 model_name="ViralBERT-Attention-v1.8",
@@ -106,7 +106,7 @@ class ViralPredictor:
                 accuracy=0.89,
                 features_count=768,
                 training_data_size=20_000_000,
-                last_updated=datetime.utcnow()
+                last_updated=datetime.now(timezone.utc)
             )
         }
         self.feature_extractors = self._initialize_feature_extractors()
@@ -162,7 +162,7 @@ class ViralPredictor:
                 potential_reach=potential_reach,
                 viral_factors=viral_factors,
                 platform_scores=platform_scores,
-                prediction_timestamp=datetime.utcnow(),
+                prediction_timestamp=datetime.now(timezone.utc),
                 model_version="ViraNet-Ensemble-v3.1",
                 feature_importance=feature_importance,
                 risk_factors=risk_factors,
@@ -196,7 +196,7 @@ class ViralPredictor:
         content_type = content.get('type', 'unknown')
         
         # Temporal features
-        upload_time = datetime.fromisoformat(content.get('upload_time', datetime.utcnow().isoformat()))
+        upload_time = datetime.fromisoformat(content.get('upload_time', datetime.now(timezone.utc).isoformat()))
         
         # Creator influence
         creator_influence = await self._calculate_creator_influence(content.get('creator_id'))
