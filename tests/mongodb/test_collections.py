@@ -12,10 +12,10 @@ from unittest.mock import MagicMock, AsyncMock, patch
 from typing import Dict, Any, List
 
 # Import test configuration
-from conftest import MongoDBTestCase, MONGODB_MODULES_AVAILABLE
+from .conftest import MongoDBTestCase, MONGODB_MODULES_AVAILABLE
 
 if MONGODB_MODULES_AVAILABLE:
-    from mongodb.collections import CollectionManager
+    from mongodb.collections import MongoDBCollectionManager as CollectionManager
     from bson import ObjectId
 else:
     # Create mock classes for testing when modules not available
@@ -34,9 +34,10 @@ class TestCollectionManager:
         if not MONGODB_MODULES_AVAILABLE:
             pytest.skip("MongoDB modules not available")
             
-        mock_database = MagicMock()
-        manager = CollectionManager(mock_database)
-        assert manager.database == mock_database
+        mock_connection = MagicMock()
+        manager = CollectionManager(mock_connection)
+        assert manager.connection == mock_connection
+        assert hasattr(manager, '_collections_cache')
     
     async def test_get_collection(self):
         """Test getting a collection."""

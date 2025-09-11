@@ -23,7 +23,7 @@ sys.path.insert(0, str(project_root))
 try:
     from mongodb.connection import MongoDBConnection, MongoDBConfig
     from mongodb.models import BaseModel
-    from mongodb.collections import CollectionManager
+    from mongodb.collections import MongoDBCollectionManager as CollectionManager
     MONGODB_MODULES_AVAILABLE = True
 except ImportError as e:
     print(f"MongoDB modules not available: {e}")

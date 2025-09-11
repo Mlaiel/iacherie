@@ -13,7 +13,7 @@ from unittest.mock import MagicMock, AsyncMock, patch
 from typing import Dict, Any
 
 # Import test configuration
-from conftest import MongoDBTestCase, MONGODB_MODULES_AVAILABLE
+from .conftest import MongoDBTestCase, MONGODB_MODULES_AVAILABLE
 
 if MONGODB_MODULES_AVAILABLE:
     from mongodb.connection import MongoDBConnection, MongoDBConfig, ConnectionPool

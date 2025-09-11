@@ -16,7 +16,7 @@ import hashlib
 from datetime import datetime, timezone
 
 # Import test configuration
-from conftest import MongoDBTestCase, MONGODB_MODULES_AVAILABLE
+from .conftest import MongoDBTestCase, MONGODB_MODULES_AVAILABLE
 
 if MONGODB_MODULES_AVAILABLE:
     try:
