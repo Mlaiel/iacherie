@@ -16,15 +16,16 @@
  */
 
 // Main Studio Component
-export { default as RemixStudioMain } from '../remix_studio_core/RemixStudioMain';
+export { default as RemixStudioMain } from './RemixStudioMain';
 
 // Collaboration Components
 export { default as CollaborativeWorkspace } from '../remix_studio_effects/CollaborativeWorkspace';
 
 // AI-Powered Components
 export { default as AIAssistantInterface } from '../remix_studio_effects/AIAssistantInterface';
-export { default as StyleTransferPanel } from '../remix_studio_effects/StyleTransferPanel';
-export { default as QualityEnhancer } from '../remix_studio_effects/QualityEnhancer';
+// Temporarily disabled while implementing core system
+// export { default as StyleTransferPanel } from '../remix_studio_effects/StyleTransferPanel';
+// export { default as QualityEnhancer } from '../remix_studio_effects/QualityEnhancer';
 
 // Timeline and Editing Components
 export { default as TimelineEditor } from './TimelineEditor';
@@ -33,12 +34,14 @@ export { default as LoopManager } from './LoopManager';
 // Audio Processing Components
 export { default as EffectsPanel } from '../remix_studio_effects/EffectsPanel';
 export { default as TrackMixer } from '../remix_studio_audio/TrackMixer';
-export { default as VocalProcessor } from '../remix_studio_audio/VocalProcessor';
+// Temporarily disabled while implementing core system
+// export { default as VocalProcessor } from '../remix_studio_audio/VocalProcessor';
 
 // Instrument and MIDI Components
 export { default as InstrumentSelector } from '../remix_studio_effects/InstrumentSelector';
 export { default as TempoController } from './TempoController';
-export { default as KeyTransposer } from '../remix_studio_effects/KeyTransposer';
+// Temporarily disabled while implementing core system
+// export { default as KeyTransposer } from '../remix_studio_effects/KeyTransposer';
 
 // Visualization Components
 export { default as WaveformVisualizer } from '../remix_studio_audio/WaveformVisualizer';
@@ -72,6 +75,7 @@ export interface StudioComponentProps {
 export interface AudioTrack {
   id: string;
   name: string;
+  type: 'audio' | 'midi' | 'instrument' | 'vocal' | 'drums' | 'bass';
   color: string;
   volume: number;
   pan: number;
@@ -81,6 +85,7 @@ export interface AudioTrack {
   audioUrl?: string;
   startTime: number;
   duration: number;
+  length: number; // Track length in samples or beats
   effects: AudioEffect[];
 }
 

@@ -42,8 +42,8 @@ import CollaborativeWorkspace from '../remix_studio_effects/CollaborativeWorkspa
 import WaveformVisualizer from '../remix_studio_audio/WaveformVisualizer';
 import SpectrogramAnalyzer from '../remix_studio_audio/SpectrogramAnalyzer';
 import ExportManager from '../remix_studio_effects/ExportManager';
-import { studioColors, studioUtils } from '../remix_studio/remix_studio.styles';
-import type { StudioState, AudioTrack } from '../remix_studio/index';
+import { studioColors, studioUtils } from './remix_studio.styles';
+import type { StudioState, AudioTrack, RemixStudioComponent } from './index';
 
 interface RemixStudioMainProps {
   projectId?: string;
@@ -73,6 +73,7 @@ const RemixStudioMain: React.FC<RemixStudioMainProps> = ({
       {
         id: 'track-1',
         name: 'Main Vocal',
+        type: 'vocal',
         color: studioUtils.getTrackColor(0),
         volume: 0.8,
         pan: 0,
@@ -81,11 +82,13 @@ const RemixStudioMain: React.FC<RemixStudioMainProps> = ({
         armed: false,
         startTime: 0,
         duration: 180000,
+        length: 180000,
         effects: []
       },
       {
         id: 'track-2', 
         name: 'Instrumental',
+        type: 'audio',
         color: studioUtils.getTrackColor(1),
         volume: 0.7,
         pan: 0,
@@ -94,6 +97,7 @@ const RemixStudioMain: React.FC<RemixStudioMainProps> = ({
         armed: false,
         startTime: 0,
         duration: 180000,
+        length: 180000,
         effects: []
       }
     ],
