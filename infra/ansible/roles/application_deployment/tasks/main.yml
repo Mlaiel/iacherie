@@ -1,0 +1,89 @@
+# Ainflue Infrastructure Module
+# =============================
+# 
+# Enterprise-grade application deployment role for Ainflue platform
+# Supports multi-environment deployments with zero-downtime strategies
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+#
+# ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+
+---
+# Application deployment main tasks
+
+- name: "Validate deployment prerequisites"
+  include_tasks: validate.yml
+  tags:
+    - validation
+    - deployment
+
+- name: "Setup application directories"
+  include_tasks: setup_directories.yml
+  tags:
+    - setup
+    - deployment
+
+- name: "Deploy application code"
+  include_tasks: deploy_code.yml
+  tags:
+    - code
+    - deployment
+
+- name: "Configure application environment"
+  include_tasks: configure_environment.yml
+  tags:
+    - configuration
+    - deployment
+
+- name: "Manage database migrations"
+  include_tasks: database_migrations.yml
+  when: run_migrations | default(true)
+  tags:
+    - database
+    - migrations
+
+- name: "Deploy AI/ML models"
+  include_tasks: deploy_models.yml
+  when: deploy_ai_models | default(true)
+  tags:
+    - ai_models
+    - deployment
+
+- name: "Configure load balancer"
+  include_tasks: configure_load_balancer.yml
+  tags:
+    - load_balancer
+    - deployment
+
+- name: "Perform zero-downtime deployment"
+  include_tasks: zero_downtime_deployment.yml
+  when: zero_downtime_enabled | default(true)
+  tags:
+    - zero_downtime
+    - deployment
+
+- name: "Configure monitoring and health checks"
+  include_tasks: configure_monitoring.yml
+  tags:
+    - monitoring
+    - deployment
+
+- name: "Setup backup and recovery"
+  include_tasks: setup_backup.yml
+  tags:
+    - backup
+    - deployment
+
+- name: "Validate deployment"
+  include_tasks: validate_deployment.yml
+  tags:
+    - validation
+    - deployment
+
+- name: "Cleanup old versions"
+  include_tasks: cleanup.yml
+  when: cleanup_enabled | default(true)
+  tags:
+    - cleanup
+    - deployment

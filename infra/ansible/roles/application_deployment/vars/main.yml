@@ -1,0 +1,156 @@
+# Ainflue Infrastructure Module
+# =============================
+# 
+# Application deployment role variables
+# Environment-specific variables for Ainflue deployment
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+#
+# ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+
+---
+# Git repository configuration
+git_repo: "https://github.com/Mlaiel/Ainflue.git"
+git_branch: "{{ deployment_branch | default('main') }}"
+git_commit: "{{ deployment_commit | default('HEAD') }}"
+
+# Docker configuration
+docker_enabled: true
+docker_registry: "{{ docker_registry_url | default('ghcr.io/mlaiel/ainflue') }}"
+docker_images:
+  api: "{{ docker_registry }}/api:{{ app_version }}"
+  ai_engine: "{{ docker_registry }}/ai-engine:{{ app_version }}"
+  mobile_api: "{{ docker_registry }}/mobile-api:{{ app_version }}"
+  worker: "{{ docker_registry }}/worker:{{ app_version }}"
+
+# Kubernetes configuration
+kubernetes_enabled: true
+kubernetes_namespace: "ainflue-{{ app_environment }}"
+kubernetes_manifests_dir: "{{ app_config_dir }}/k8s"
+
+# Environment variables for application
+app_environment_vars:
+  ENVIRONMENT: "{{ app_environment }}"
+  DEBUG: "{{ debug | default(false) }}"
+  LOG_LEVEL: "{{ log_level | default('info') }}"
+  
+  # Database configuration
+  DATABASE_URL: "postgresql://{{ database.user }}:{{ database.password }}@{{ database.host }}:{{ database.port }}/{{ database.name }}"
+  
+  # Redis configuration
+  REDIS_URL: "redis://{{ redis.password }}@{{ redis.host }}:{{ redis.port }}/{{ redis.db }}"
+  
+  # AI/ML configuration
+  MODEL_REGISTRY_URL: "{{ ai_models.model_registry }}"
+  MODEL_CACHE_DIR: "{{ ai_models.model_cache_dir }}"
+  
+  # Security configuration
+  SECRET_KEY: "{{ secret_key }}"
+  JWT_SECRET_KEY: "{{ jwt_secret_key }}"
+  
+  # External services
+  OPENAI_API_KEY: "{{ openai_api_key | default('') }}"
+  GOOGLE_API_KEY: "{{ google_api_key | default('') }}"
+  AZURE_API_KEY: "{{ azure_api_key | default('') }}"
+  
+  # Payment configuration
+  STRIPE_SECRET_KEY: "{{ stripe_secret_key | default('') }}"
+  PAYPAL_CLIENT_SECRET: "{{ paypal_client_secret | default('') }}"
+  
+  # Storage configuration
+  AWS_ACCESS_KEY_ID: "{{ aws_access_key_id | default('') }}"
+  AWS_SECRET_ACCESS_KEY: "{{ aws_secret_access_key | default('') }}"
+  AWS_S3_BUCKET: "{{ aws_s3_bucket | default('') }}"
+  
+  # Monitoring configuration
+  PROMETHEUS_ENABLED: "{{ monitoring.prometheus_enabled }}"
+  GRAFANA_ENABLED: "{{ monitoring.grafana_enabled }}"
+  JAEGER_ENABLED: "{{ monitoring.jaeger_enabled }}"
+
+# SSL/TLS configuration
+ssl_certificate_path: "{{ app_config_dir }}/ssl/certificate.crt"
+ssl_private_key_path: "{{ app_config_dir }}/ssl/private.key"
+ssl_ca_certificate_path: "{{ app_config_dir }}/ssl/ca.crt"
+
+# Systemd service configuration
+systemd_services:
+  - name: "ainflue-api"
+    type: "notify"
+    user: "{{ app_user }}"
+    group: "{{ app_group }}"
+    working_directory: "{{ app_current_dir }}"
+    exec_start: "{{ app_current_dir }}/bin/start-api.sh"
+    restart: "always"
+    restart_sec: 10
+    
+  - name: "ainflue-worker"
+    type: "notify"
+    user: "{{ app_user }}"
+    group: "{{ app_group }}"
+    working_directory: "{{ app_current_dir }}"
+    exec_start: "{{ app_current_dir }}/bin/start-worker.sh"
+    restart: "always"
+    restart_sec: 10
+
+# Nginx upstream configuration
+nginx_upstreams:
+  - name: "ainflue_api"
+    servers: "{{ groups['api_servers'] | map('extract', hostvars, 'ansible_default_ipv4') | map(attribute='address') | list }}"
+    port: 8000
+    
+  - name: "ainflue_ai_engine"
+    servers: "{{ groups['ai_servers'] | map('extract', hostvars, 'ansible_default_ipv4') | map(attribute='address') | list }}"
+    port: 8001
+    
+  - name: "ainflue_mobile_api"
+    servers: "{{ groups['mobile_servers'] | map('extract', hostvars, 'ansible_default_ipv4') | map(attribute='address') | list }}"
+    port: 8002
+
+# Database migration configuration
+migration_commands:
+  - "python manage.py migrate --noinput"
+  - "python manage.py collectstatic --noinput"
+  - "python manage.py createsuperuser --noinput || true"
+
+# Pre-deployment checks
+pre_deployment_checks:
+  - name: "Database connectivity"
+    command: "pg_isready -h {{ database.host }} -p {{ database.port }}"
+    
+  - name: "Redis connectivity"
+    command: "redis-cli -h {{ redis.host }} -p {{ redis.port }} ping"
+    
+  - name: "Disk space"
+    command: "df -h {{ app_base_dir }}"
+    
+  - name: "Memory availability"
+    command: "free -m"
+
+# Post-deployment checks
+post_deployment_checks:
+  - name: "API health check"
+    url: "http://localhost:8000/health"
+    expected_status: 200
+    
+  - name: "AI engine health check"
+    url: "http://localhost:8001/health"
+    expected_status: 200
+    
+  - name: "Mobile API health check"
+    url: "http://localhost:8002/health"
+    expected_status: 200
+
+# Rollback configuration
+rollback:
+  enabled: true
+  auto_rollback_on_failure: true
+  rollback_timeout: 300
+  health_check_retries: 5
+
+# Notification configuration
+notifications:
+  slack_enabled: "{{ slack_webhook_url is defined }}"
+  slack_webhook_url: "{{ slack_webhook_url | default('') }}"
+  email_enabled: "{{ smtp_host is defined }}"
+  email_recipients: "{{ notification_emails | default([]) }}"
