@@ -43,7 +43,7 @@ import WaveformVisualizer from '../remix_studio_audio/WaveformVisualizer';
 import SpectrogramAnalyzer from '../remix_studio_audio/SpectrogramAnalyzer';
 import ExportManager from '../remix_studio_effects/ExportManager';
 import { studioColors, studioUtils } from '../remix_studio/remix_studio.styles';
-import type { StudioState, AudioTrack, RemixStudioComponent } from '../remix_studio/index';
+import type { StudioState, AudioTrack } from '../remix_studio/index';
 
 interface RemixStudioMainProps {
   projectId?: string;
