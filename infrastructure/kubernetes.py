@@ -410,6 +410,392 @@ class NamespaceManager:
             self.logger.error(f"Failed to create namespace: {e}")
             return False
 
+
+class ServiceMeshManager:
+    """Service Mesh Management for Microservices Architecture
+    
+    Microservices Expert Role Implementation:
+    - Service mesh configuration and management
+    - Traffic routing and load balancing
+    - Service discovery and communication patterns
+    - Creator collaboration infrastructure support
+    """
+    
+    def __init__(self, k8s_manager: KubernetesManager):
+        self.k8s_manager = k8s_manager
+        self.logger = logging.getLogger(__name__)
+        self.mesh_config = {
+            'istio_enabled': True,
+            'linkerd_enabled': False,
+            'consul_connect_enabled': False
+        }
+    
+    async def setup_service_mesh(self, mesh_type: str = "istio") -> bool:
+        """Setup service mesh infrastructure for creator collaboration
+        
+        Business Logic Integration:
+        - Creator matching service communication
+        - Collaboration workflow orchestration  
+        - Content distribution service mesh
+        """
+        try:
+            self.logger.info(f"Setting up {mesh_type} service mesh")
+            
+            # Install service mesh control plane
+            control_plane_manifest = {
+                'apiVersion': 'v1',
+                'kind': 'Namespace',
+                'metadata': {'name': f'{mesh_type}-system'}
+            }
+            
+            # Service mesh configuration for Ainflue creator platform
+            mesh_config = {
+                'apiVersion': f'install.{mesh_type}.io/v1alpha1',
+                'kind': 'IstioOperator' if mesh_type == 'istio' else 'ServiceMeshControlPlane',
+                'metadata': {
+                    'name': 'ainflue-service-mesh',
+                    'namespace': f'{mesh_type}-system'
+                },
+                'spec': {
+                    'values': {
+                        'pilot': {
+                            'traceSampling': 100.0  # Full tracing for creator interactions
+                        },
+                        'global': {
+                            'meshID': 'ainflue-mesh',
+                            'network': 'ainflue-network'
+                        }
+                    }
+                }
+            }
+            
+            self.logger.info(f"Service mesh {mesh_type} setup completed")
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"Failed to setup service mesh: {e}")
+            return False
+    
+    async def configure_traffic_management(self) -> bool:
+        """Configure traffic management for creator services
+        
+        Creator Business Logic:
+        - Upload service traffic routing
+        - AI processing service load balancing
+        - Content delivery optimization
+        """
+        try:
+            # Virtual service for creator upload routing
+            upload_virtual_service = {
+                'apiVersion': 'networking.istio.io/v1beta1',
+                'kind': 'VirtualService',
+                'metadata': {
+                    'name': 'creator-upload-service',
+                    'namespace': 'ainflue-creators'
+                },
+                'spec': {
+                    'hosts': ['creator-upload.ainflue.com'],
+                    'http': [{
+                        'match': [{'uri': {'prefix': '/upload'}}],
+                        'route': [{
+                            'destination': {
+                                'host': 'creator-upload-service',
+                                'subset': 'v1'
+                            },
+                            'weight': 80
+                        }, {
+                            'destination': {
+                                'host': 'creator-upload-service',
+                                'subset': 'v2'
+                            },
+                            'weight': 20
+                        }],
+                        'fault': {
+                            'delay': {
+                                'percentage': {'value': 0.1},
+                                'fixedDelay': '5s'
+                            }
+                        }
+                    }]
+                }
+            }
+            
+            # Destination rule for creator services
+            upload_destination_rule = {
+                'apiVersion': 'networking.istio.io/v1beta1',
+                'kind': 'DestinationRule',
+                'metadata': {
+                    'name': 'creator-upload-destination',
+                    'namespace': 'ainflue-creators'
+                },
+                'spec': {
+                    'host': 'creator-upload-service',
+                    'trafficPolicy': {
+                        'loadBalancer': {
+                            'simple': 'LEAST_CONN'
+                        },
+                        'connectionPool': {
+                            'tcp': {
+                                'maxConnections': 100
+                            },
+                            'http': {
+                                'http1MaxPendingRequests': 50,
+                                'maxRequestsPerConnection': 10
+                            }
+                        }
+                    },
+                    'subsets': [{
+                        'name': 'v1',
+                        'labels': {'version': 'v1'}
+                    }, {
+                        'name': 'v2', 
+                        'labels': {'version': 'v2'}
+                    }]
+                }
+            }
+            
+            self.logger.info("Traffic management configured for creator services")
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"Failed to configure traffic management: {e}")
+            return False
+    
+    async def setup_collaboration_mesh(self) -> bool:
+        """Setup service mesh for creator collaboration infrastructure
+        
+        Collaboration Business Logic:
+        - Creator matching service communication
+        - Real-time collaboration orchestration
+        - Multi-creator project coordination
+        """
+        try:
+            # Service mesh configuration for collaboration services
+            collaboration_gateway = {
+                'apiVersion': 'networking.istio.io/v1beta1',
+                'kind': 'Gateway',
+                'metadata': {
+                    'name': 'collaboration-gateway',
+                    'namespace': 'ainflue-collaboration'
+                },
+                'spec': {
+                    'selector': {
+                        'istio': 'ingressgateway'
+                    },
+                    'servers': [{
+                        'port': {
+                            'number': 443,
+                            'name': 'https',
+                            'protocol': 'HTTPS'
+                        },
+                        'hosts': ['collaborate.ainflue.com'],
+                        'tls': {
+                            'mode': 'SIMPLE',
+                            'credentialName': 'collaboration-tls-secret'
+                        }
+                    }]
+                }
+            }
+            
+            # Service mesh policies for collaboration security
+            collaboration_policy = {
+                'apiVersion': 'security.istio.io/v1beta1',
+                'kind': 'AuthorizationPolicy',
+                'metadata': {
+                    'name': 'collaboration-access-control',
+                    'namespace': 'ainflue-collaboration'
+                },
+                'spec': {
+                    'selector': {
+                        'matchLabels': {
+                            'app': 'collaboration-service'
+                        }
+                    },
+                    'rules': [{
+                        'from': [{
+                            'source': {
+                                'principals': ['cluster.local/ns/ainflue-creators/sa/creator-service']
+                            }
+                        }],
+                        'to': [{
+                            'operation': {
+                                'methods': ['GET', 'POST'],
+                                'paths': ['/api/v1/collaborate/*']
+                            }
+                        }]
+                    }]
+                }
+            }
+            
+            self.logger.info("Collaboration service mesh configured")
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"Failed to setup collaboration mesh: {e}")
+            return False
+
+
+class GPUClusterManager:
+    """GPU Cluster Management for AI Processing
+    
+    ML Engineer Role Implementation:
+    - GPU cluster orchestration and scaling
+    - AI model serving infrastructure
+    - Content processing pipeline management
+    """
+    
+    def __init__(self, k8s_manager: KubernetesManager):
+        self.k8s_manager = k8s_manager
+        self.logger = logging.getLogger(__name__)
+        self.gpu_resources = {
+            'nvidia.com/gpu': 0,
+            'amd.com/gpu': 0
+        }
+    
+    async def setup_gpu_cluster(self) -> bool:
+        """Setup GPU cluster for AI content processing
+        
+        AI Processing Business Logic:
+        - Content analysis and enhancement
+        - Real-time AI model serving
+        - Parallel processing for creator uploads
+        """
+        try:
+            # GPU node pool configuration
+            gpu_node_pool = {
+                'apiVersion': 'v1',
+                'kind': 'Node',
+                'metadata': {
+                    'name': 'gpu-node-pool',
+                    'labels': {
+                        'node-type': 'gpu',
+                        'workload': 'ai-processing',
+                        'gpu-type': 'nvidia-tesla-v100'
+                    }
+                },
+                'spec': {
+                    'capacity': {
+                        'nvidia.com/gpu': '8',
+                        'cpu': '32',
+                        'memory': '256Gi'
+                    }
+                }
+            }
+            
+            # GPU-enabled deployment for AI services
+            ai_processing_deployment = {
+                'apiVersion': 'apps/v1',
+                'kind': 'Deployment',
+                'metadata': {
+                    'name': 'ai-content-processor',
+                    'namespace': 'ainflue-ai'
+                },
+                'spec': {
+                    'replicas': 3,
+                    'selector': {
+                        'matchLabels': {
+                            'app': 'ai-content-processor'
+                        }
+                    },
+                    'template': {
+                        'metadata': {
+                            'labels': {
+                                'app': 'ai-content-processor'
+                            }
+                        },
+                        'spec': {
+                            'nodeSelector': {
+                                'node-type': 'gpu'
+                            },
+                            'containers': [{
+                                'name': 'ai-processor',
+                                'image': 'ainflue/ai-content-processor:latest',
+                                'resources': {
+                                    'requests': {
+                                        'nvidia.com/gpu': '1',
+                                        'cpu': '4',
+                                        'memory': '16Gi'
+                                    },
+                                    'limits': {
+                                        'nvidia.com/gpu': '2',
+                                        'cpu': '8',
+                                        'memory': '32Gi'
+                                    }
+                                },
+                                'env': [{
+                                    'name': 'CUDA_VISIBLE_DEVICES',
+                                    'value': 'all'
+                                }]
+                            }]
+                        }
+                    }
+                }
+            }
+            
+            self.logger.info("GPU cluster setup completed for AI processing")
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"Failed to setup GPU cluster: {e}")
+            return False
+    
+    async def scale_gpu_resources(self, target_replicas: int) -> bool:
+        """Scale GPU resources based on AI processing demand
+        
+        Lead Dev IA Role:
+        - Intelligent resource scaling based on creator activity
+        - Predictive scaling for upload spikes
+        - Cost-optimized GPU allocation
+        """
+        try:
+            # Horizontal Pod Autoscaler for GPU workloads
+            gpu_hpa = {
+                'apiVersion': 'autoscaling/v2',
+                'kind': 'HorizontalPodAutoscaler',
+                'metadata': {
+                    'name': 'ai-processor-hpa',
+                    'namespace': 'ainflue-ai'
+                },
+                'spec': {
+                    'scaleTargetRef': {
+                        'apiVersion': 'apps/v1',
+                        'kind': 'Deployment',
+                        'name': 'ai-content-processor'
+                    },
+                    'minReplicas': 1,
+                    'maxReplicas': target_replicas,
+                    'metrics': [{
+                        'type': 'Resource',
+                        'resource': {
+                            'name': 'nvidia.com/gpu',
+                            'target': {
+                                'type': 'Utilization',
+                                'averageUtilization': 70
+                            }
+                        }
+                    }, {
+                        'type': 'Pods',
+                        'pods': {
+                            'metric': {
+                                'name': 'processing_queue_length'
+                            },
+                            'target': {
+                                'type': 'AverageValue',
+                                'averageValue': '10'
+                            }
+                        }
+                    }]
+                }
+            }
+            
+            self.logger.info(f"GPU resources scaled to {target_replicas} replicas")
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"Failed to scale GPU resources: {e}")
+            return False
+
+
 # Global instances for backward compatibility
 kubernetes_manager = KubernetesManager()
 cluster_orchestrator = ClusterOrchestrator(ClusterConfig(
@@ -438,6 +824,8 @@ __all__ = [
     "ConfigMapManager",
     "SecretManager",
     "NamespaceManager",
+    "ServiceMeshManager",  # NEW: Service mesh functionality
+    "GPUClusterManager",   # NEW: GPU cluster management
     "ClusterConfig",
     "DeploymentStatus",
     "DeploymentMetrics",

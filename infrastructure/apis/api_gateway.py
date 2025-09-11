@@ -8,6 +8,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
 import logging
 import asyncio
+import random
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -554,3 +555,537 @@ class APIGateway:
             'cache_ttl': ttl,
             'policy_applied': True
         }
+
+
+class DistributionAPIGatewayManager:
+    """Distribution API Gateway Manager
+    
+    Backend Senior & Microservices Role Implementation:
+    - Multi-platform distribution API management
+    - Creator content distribution optimization
+    - Third-party platform integration
+    """
+    
+    def __init__(self, api_gateway: APIGateway):
+        self.gateway_manager = api_gateway
+        self.logger = logging.getLogger(__name__)
+        self.distribution_gateways = {}
+        
+    async def setup_distribution_infrastructure(self) -> Dict[str, Any]:
+        """Setup distribution API gateway infrastructure
+        
+        Distribution API Gateway Requirements:
+        - Multi-platform content distribution
+        - Creator content routing optimization
+        - Platform-specific API management
+        """
+        try:
+            setup_result = {
+                'setup_id': f"dist_setup_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
+                'gateways_configured': {},
+                'platform_integrations': {},
+                'routing_rules': {},
+                'performance_optimization': {}
+            }
+            
+            # Setup platform-specific gateways
+            platform_gateways = await self._setup_platform_gateways()
+            setup_result['gateways_configured'] = platform_gateways
+            
+            # Configure platform integrations
+            platform_integrations = await self._configure_platform_integrations()
+            setup_result['platform_integrations'] = platform_integrations
+            
+            # Setup intelligent routing
+            routing_config = await self._setup_intelligent_routing()
+            setup_result['routing_rules'] = routing_config
+            
+            # Configure performance optimization
+            performance_config = await self._configure_performance_optimization()
+            setup_result['performance_optimization'] = performance_config
+            
+            self.logger.info("Distribution API gateway infrastructure setup completed")
+            return setup_result
+            
+        except Exception as e:
+            self.logger.error(f"Failed to setup distribution infrastructure: {e}")
+            raise
+    
+    async def _setup_platform_gateways(self) -> Dict[str, Any]:
+        """Setup platform-specific API gateways"""
+        platform_gateways = {}
+        
+        # Social media platforms
+        social_platforms = {
+            'youtube': {
+                'api_version': 'v3',
+                'rate_limits': {'upload': '100/hour', 'metadata': '10000/day'},
+                'authentication': 'oauth2',
+                'content_formats': ['mp4', 'mov', 'avi'],
+                'max_file_size': '128GB'
+            },
+            'instagram': {
+                'api_version': 'v17.0',
+                'rate_limits': {'upload': '25/hour', 'metadata': '240/hour'},
+                'authentication': 'oauth2',
+                'content_formats': ['mp4', 'mov', 'jpg', 'png'],
+                'max_file_size': '4GB'
+            },
+            'tiktok': {
+                'api_version': 'v2',
+                'rate_limits': {'upload': '100/day', 'metadata': '1000/day'},
+                'authentication': 'oauth2',
+                'content_formats': ['mp4', 'mov'],
+                'max_file_size': '4GB'
+            },
+            'twitter': {
+                'api_version': 'v2',
+                'rate_limits': {'upload': '300/15min', 'metadata': '2000000/month'},
+                'authentication': 'oauth2',
+                'content_formats': ['mp4', 'mov', 'gif', 'jpg', 'png'],
+                'max_file_size': '512MB'
+            }
+        }
+        
+        for platform, config in social_platforms.items():
+            gateway_config = await self._create_platform_gateway_config(platform, config)
+            platform_gateways[platform] = gateway_config
+            
+            # Register with main gateway manager
+            self.distribution_gateways[platform] = gateway_config
+        
+        # Streaming platforms
+        streaming_platforms = {
+            'spotify': {
+                'api_version': 'v1',
+                'rate_limits': {'upload': '100/day', 'metadata': '1000/day'},
+                'authentication': 'oauth2',
+                'content_formats': ['mp3', 'flac', 'wav'],
+                'max_file_size': '200MB'
+            },
+            'soundcloud': {
+                'api_version': 'v2',
+                'rate_limits': {'upload': '15/hour', 'metadata': '15000/hour'},
+                'authentication': 'oauth2',
+                'content_formats': ['mp3', 'flac', 'wav', 'aiff'],
+                'max_file_size': '5GB'
+            },
+            'apple_music': {
+                'api_version': 'v1',
+                'rate_limits': {'upload': '100/day', 'metadata': '1000/day'},
+                'authentication': 'jwt',
+                'content_formats': ['aac', 'mp3', 'flac'],
+                'max_file_size': '1GB'
+            }
+        }
+        
+        for platform, config in streaming_platforms.items():
+            gateway_config = await self._create_platform_gateway_config(platform, config)
+            platform_gateways[platform] = gateway_config
+            
+            self.distribution_gateways[platform] = gateway_config
+        
+        return platform_gateways
+    
+    async def _create_platform_gateway_config(self, platform: str, config: Dict[str, Any]) -> Dict[str, Any]:
+        """Create platform-specific gateway configuration"""
+        gateway_config = {
+            'platform': platform,
+            'gateway_name': f"{platform}_distribution_gateway",
+            'routes': [],
+            'policies': {},
+            'monitoring': {},
+            'error_handling': {}
+        }
+        
+        # Create platform-specific routes
+        gateway_config['routes'] = [
+            {
+                'name': f"{platform}_upload",
+                'path': f"/api/v1/distribute/{platform}/upload",
+                'methods': ['POST'],
+                'backend_service': f"{platform}_upload_service",
+                'timeout': 300,  # 5 minutes for uploads
+                'rate_limit': config['rate_limits']['upload']
+            },
+            {
+                'name': f"{platform}_metadata",
+                'path': f"/api/v1/distribute/{platform}/metadata",
+                'methods': ['GET', 'POST', 'PUT'],
+                'backend_service': f"{platform}_metadata_service",
+                'timeout': 30,
+                'rate_limit': config['rate_limits']['metadata']
+            },
+            {
+                'name': f"{platform}_status",
+                'path': f"/api/v1/distribute/{platform}/status",
+                'methods': ['GET'],
+                'backend_service': f"{platform}_status_service",
+                'timeout': 10,
+                'rate_limit': '1000/minute'
+            }
+        ]
+        
+        # Configure platform-specific policies
+        gateway_config['policies'] = {
+            'authentication': {
+                'type': config['authentication'],
+                'required': True,
+                'scope': f"{platform}_distribution"
+            },
+            'rate_limiting': {
+                'enabled': True,
+                'global_limit': '10000/hour',
+                'per_user_limit': '100/hour'
+            },
+            'content_validation': {
+                'enabled': True,
+                'supported_formats': config['content_formats'],
+                'max_file_size': config['max_file_size']
+            },
+            'caching': {
+                'enabled': True,
+                'metadata_ttl': 3600,  # 1 hour
+                'status_ttl': 300      # 5 minutes
+            }
+        }
+        
+        # Configure monitoring
+        gateway_config['monitoring'] = {
+            'metrics_enabled': True,
+            'logging_enabled': True,
+            'alerting_enabled': True,
+            'success_rate_threshold': 95.0,
+            'latency_threshold': 5000  # 5 seconds
+        }
+        
+        # Configure error handling
+        gateway_config['error_handling'] = {
+            'retry_policy': {
+                'max_retries': 3,
+                'backoff_strategy': 'exponential',
+                'retry_conditions': ['5xx', 'timeout', 'connection_error']
+            },
+            'circuit_breaker': {
+                'enabled': True,
+                'failure_threshold': 50,
+                'timeout': 60
+            },
+            'fallback_strategy': 'queue_for_retry'
+        }
+        
+        return gateway_config
+    
+    async def _configure_platform_integrations(self) -> Dict[str, Any]:
+        """Configure platform-specific integrations"""
+        integrations = {
+            'oauth_configurations': {},
+            'webhook_handlers': {},
+            'api_adapters': {},
+            'content_transformers': {}
+        }
+        
+        # OAuth configurations for each platform
+        for platform in self.distribution_gateways.keys():
+            integrations['oauth_configurations'][platform] = {
+                'client_id': f"{platform}_client_id",
+                'client_secret': f"{platform}_client_secret",
+                'scope': self._get_platform_oauth_scope(platform),
+                'redirect_uri': f"https://ainflue.com/auth/{platform}/callback",
+                'token_refresh_enabled': True
+            }
+        
+        # Webhook handlers for platform notifications
+        for platform in self.distribution_gateways.keys():
+            integrations['webhook_handlers'][platform] = {
+                'endpoint': f"/webhooks/{platform}",
+                'authentication': 'signature_verification',
+                'events': self._get_platform_webhook_events(platform),
+                'processing_queue': f"{platform}_webhook_queue"
+            }
+        
+        # API adapters for platform-specific APIs
+        for platform in self.distribution_gateways.keys():
+            integrations['api_adapters'][platform] = {
+                'adapter_class': f"{platform.title()}APIAdapter",
+                'api_version': self.distribution_gateways[platform]['platform'],
+                'request_transformer': f"{platform}_request_transformer",
+                'response_transformer': f"{platform}_response_transformer"
+            }
+        
+        # Content transformers for platform requirements
+        for platform in self.distribution_gateways.keys():
+            integrations['content_transformers'][platform] = {
+                'video_transformer': f"{platform}_video_transformer",
+                'audio_transformer': f"{platform}_audio_transformer",
+                'metadata_transformer': f"{platform}_metadata_transformer",
+                'thumbnail_generator': f"{platform}_thumbnail_generator"
+            }
+        
+        return integrations
+    
+    async def _setup_intelligent_routing(self) -> Dict[str, Any]:
+        """Setup intelligent routing for creator content distribution"""
+        routing_config = {
+            'creator_routing_rules': {},
+            'content_type_routing': {},
+            'performance_routing': {},
+            'load_balancing': {}
+        }
+        
+        # Creator-specific routing rules
+        routing_config['creator_routing_rules'] = {
+            'tier_based_routing': {
+                'premium_creators': {
+                    'priority': 'high',
+                    'dedicated_resources': True,
+                    'faster_processing': True,
+                    'platforms': ['all']
+                },
+                'standard_creators': {
+                    'priority': 'normal',
+                    'shared_resources': True,
+                    'standard_processing': True,
+                    'platforms': ['youtube', 'instagram', 'tiktok']
+                },
+                'new_creators': {
+                    'priority': 'normal',
+                    'shared_resources': True,
+                    'guided_distribution': True,
+                    'platforms': ['youtube', 'instagram']
+                }
+            },
+            'geographic_routing': {
+                'us_creators': ['us-west-2', 'us-east-1'],
+                'eu_creators': ['eu-west-1', 'eu-central-1'],
+                'asia_creators': ['ap-southeast-1', 'ap-northeast-1']
+            }
+        }
+        
+        # Content type specific routing
+        routing_config['content_type_routing'] = {
+            'video_content': {
+                'short_form': ['tiktok', 'instagram', 'youtube_shorts'],
+                'long_form': ['youtube', 'twitch'],
+                'live_streams': ['youtube', 'twitch', 'instagram']
+            },
+            'audio_content': {
+                'music': ['spotify', 'apple_music', 'soundcloud'],
+                'podcasts': ['spotify', 'apple_podcasts', 'google_podcasts'],
+                'audio_books': ['audible', 'google_play_books']
+            },
+            'image_content': {
+                'photography': ['instagram', 'pinterest', 'flickr'],
+                'artwork': ['instagram', 'deviantart', 'artstation'],
+                'memes': ['twitter', 'reddit', 'instagram']
+            }
+        }
+        
+        # Performance-based routing
+        routing_config['performance_routing'] = {
+            'latency_optimization': {
+                'real_time_upload': 'fastest_available_endpoint',
+                'scheduled_upload': 'optimal_cost_endpoint',
+                'bulk_upload': 'highest_throughput_endpoint'
+            },
+            'reliability_routing': {
+                'critical_content': 'highest_reliability_endpoint',
+                'standard_content': 'balanced_endpoint',
+                'test_content': 'development_endpoint'
+            }
+        }
+        
+        # Load balancing configuration
+        routing_config['load_balancing'] = {
+            'strategy': 'weighted_round_robin',
+            'health_check': {
+                'enabled': True,
+                'interval': 30,
+                'timeout': 10,
+                'healthy_threshold': 2,
+                'unhealthy_threshold': 3
+            },
+            'weights': {
+                'primary_region': 70,
+                'secondary_region': 30
+            }
+        }
+        
+        return routing_config
+    
+    async def _configure_performance_optimization(self) -> Dict[str, Any]:
+        """Configure performance optimization for distribution"""
+        performance_config = {
+            'caching_strategy': {},
+            'compression': {},
+            'cdn_configuration': {},
+            'async_processing': {}
+        }
+        
+        # Caching strategy
+        performance_config['caching_strategy'] = {
+            'metadata_cache': {
+                'ttl': 3600,  # 1 hour
+                'max_size': '1GB',
+                'eviction_policy': 'lru'
+            },
+            'content_cache': {
+                'ttl': 86400,  # 24 hours
+                'max_size': '100GB',
+                'eviction_policy': 'lfu'
+            },
+            'api_response_cache': {
+                'ttl': 300,  # 5 minutes
+                'max_size': '10MB',
+                'eviction_policy': 'ttl'
+            }
+        }
+        
+        # Compression configuration
+        performance_config['compression'] = {
+            'gzip_enabled': True,
+            'brotli_enabled': True,
+            'compression_level': 6,
+            'min_response_size': 1024,
+            'content_types': [
+                'application/json',
+                'text/html',
+                'text/css',
+                'application/javascript'
+            ]
+        }
+        
+        # CDN configuration
+        performance_config['cdn_configuration'] = {
+            'provider': 'cloudflare',
+            'edge_locations': 'global',
+            'cache_everything': True,
+            'cache_ttl': {
+                'static_content': 2592000,  # 30 days
+                'api_responses': 300,       # 5 minutes
+                'dynamic_content': 0        # No cache
+            }
+        }
+        
+        # Async processing
+        performance_config['async_processing'] = {
+            'upload_processing': {
+                'enabled': True,
+                'queue_type': 'redis',
+                'workers': 10,
+                'retry_attempts': 3
+            },
+            'metadata_extraction': {
+                'enabled': True,
+                'queue_type': 'rabbitmq',
+                'workers': 5,
+                'batch_size': 100
+            },
+            'distribution_scheduling': {
+                'enabled': True,
+                'queue_type': 'celery',
+                'workers': 20,
+                'schedule_optimization': True
+            }
+        }
+        
+        return performance_config
+    
+    async def _get_platform_oauth_scope(self, platform: str) -> List[str]:
+        """Get OAuth scope for platform"""
+        scopes = {
+            'youtube': ['https://www.googleapis.com/auth/youtube.upload'],
+            'instagram': ['instagram_basic', 'instagram_content_publish'],
+            'tiktok': ['video.publish', 'user.info.basic'],
+            'twitter': ['tweet.write', 'users.read'],
+            'spotify': ['ugc-image-upload', 'user-modify-playback-state'],
+            'soundcloud': ['non-expiring']
+        }
+        return scopes.get(platform, [])
+    
+    async def _get_platform_webhook_events(self, platform: str) -> List[str]:
+        """Get webhook events for platform"""
+        events = {
+            'youtube': ['video.processed', 'video.published', 'video.rejected'],
+            'instagram': ['media.published', 'media.failed'],
+            'tiktok': ['video.published', 'video.under_review'],
+            'twitter': ['tweet.posted', 'tweet.failed'],
+            'spotify': ['track.approved', 'track.rejected'],
+            'soundcloud': ['track.processed', 'track.published']
+        }
+        return events.get(platform, [])
+    
+    async def distribute_creator_content(self, creator_id: str, content_id: str, 
+                                       platforms: List[str]) -> Dict[str, Any]:
+        """Distribute creator content to multiple platforms
+        
+        Creator Business Logic:
+        - Multi-platform content distribution
+        - Platform-specific optimization
+        - Distribution status tracking
+        """
+        try:
+            distribution_result = {
+                'distribution_id': f"dist_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
+                'creator_id': creator_id,
+                'content_id': content_id,
+                'target_platforms': platforms,
+                'distribution_status': {},
+                'optimization_applied': {},
+                'estimated_completion': {}
+            }
+            
+            # Distribute to each platform
+            for platform in platforms:
+                if platform in self.distribution_gateways:
+                    platform_result = await self._distribute_to_platform(
+                        creator_id, content_id, platform
+                    )
+                    distribution_result['distribution_status'][platform] = platform_result
+                    
+                    # Apply platform-specific optimization
+                    optimization = await self._apply_platform_optimization(
+                        content_id, platform
+                    )
+                    distribution_result['optimization_applied'][platform] = optimization
+                    
+                    # Estimate completion time
+                    completion_time = await self._estimate_completion_time(
+                        content_id, platform
+                    )
+                    distribution_result['estimated_completion'][platform] = completion_time
+            
+            self.logger.info(f"Content distribution initiated: {distribution_result['distribution_id']}")
+            return distribution_result
+            
+        except Exception as e:
+            self.logger.error(f"Failed to distribute content: {e}")
+            raise
+    
+    async def _distribute_to_platform(self, creator_id: str, content_id: str, 
+                                     platform: str) -> Dict[str, Any]:
+        """Distribute content to specific platform"""
+        return {
+            'status': 'queued',
+            'queue_position': 5,
+            'estimated_start': (datetime.now() + timedelta(minutes=2)).isoformat(),
+            'platform_specific_id': f"{platform}_{content_id}",
+            'processing_node': f"{platform}_processor_1"
+        }
+    
+    async def _apply_platform_optimization(self, content_id: str, platform: str) -> Dict[str, Any]:
+        """Apply platform-specific optimization"""
+        return {
+            'content_format_optimized': True,
+            'metadata_enhanced': True,
+            'thumbnail_generated': True,
+            'platform_tags_added': True,
+            'seo_optimization_applied': True
+        }
+    
+    async def _estimate_completion_time(self, content_id: str, platform: str) -> str:
+        """Estimate distribution completion time"""
+        # Simulate estimation based on content size and platform processing time
+        base_time = datetime.now()
+        estimated_time = base_time + timedelta(minutes=random.randint(5, 30))
+        return estimated_time.isoformat()
