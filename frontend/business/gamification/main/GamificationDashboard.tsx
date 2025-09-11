@@ -34,8 +34,8 @@ import {
   Challenge, 
   LeaderboardEntry,
   Reward
-} from '../gamification/types';
-import { gamificationStyles, tierIcons, challengeIcons } from '../gamification/gamification.styles';
+} from '../types';
+import { gamificationStyles, tierIcons, challengeIcons } from '../gamification.styles';
 import { 
   TrophyIcon, 
   ChartBarIcon, 

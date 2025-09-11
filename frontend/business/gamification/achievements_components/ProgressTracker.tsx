@@ -32,8 +32,8 @@ import {
   Achievement,
   Challenge,
   ApiResponse 
-} from '../gamification/types';
-import { gamificationStyles } from '../gamification/gamification.styles';
+} from '../types';
+import { gamificationStyles } from '../gamification.styles';
 import { 
   ChartBarIcon,
   ArrowTrendingUpIcon,

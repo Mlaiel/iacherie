@@ -207,7 +207,14 @@ export class SEOEngine {
       wordCount: words.length,
       sentenceCount: sentences.length,
       readabilityScore: this.calculateReadability(words, sentences),
-      keywords: keywords,
+      keywords: keywords.map(keyword => ({
+        keyword,
+        density: this.calculateKeywordDensity(keyword, words),
+        position: words.indexOf(keyword),
+        difficulty: Math.random() * 100, // Placeholder
+        searchVolume: Math.floor(Math.random() * 10000), // Placeholder
+        competition: 'medium' as const
+      })),
       keywordDensity: this.calculateKeywordDensity(keywords[0], words),
       sentiment: await this.analyzeSentiment(content),
       topics: await this.extractTopics(content),
@@ -230,7 +237,7 @@ export class SEOEngine {
     return {
       title,
       description,
-      keywords: analysis.keywords.slice(0, 5),
+      keywords: analysis.keywords.slice(0, 5).map(k => k.keyword),
       hashtags,
       customFields: this.generateCustomFields(analysis, platform, options)
     };
@@ -520,7 +527,14 @@ export const useSEOEngine = (config: SEOConfiguration) => {
       
       setState(prev => ({
         ...prev,
-        optimization: optimization as ContentOptimization,
+        optimization: {
+          originalContent: content,
+          optimizedContent: optimization.description,
+          keywords: optimization.keywords,
+          readabilityScore: 80, // placeholder
+          seoScore: 85, // placeholder
+          changes: [`Optimized for ${platformId}`, 'Generated platform-specific keywords', 'Added hashtags']
+        } as ContentOptimization,
         isAnalyzing: false
       }));
       

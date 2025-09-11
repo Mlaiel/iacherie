@@ -33,8 +33,8 @@ import {
   ApiResponse,
   PaginatedResponse,
   FilterOptions
-} from '../gamification/types';
-import { gamificationStyles, tierIcons } from '../gamification/gamification.styles';
+} from '../types';
+import { gamificationStyles, tierIcons } from '../gamification.styles';
 import { 
   TrophyIcon,
   LockClosedIcon,
@@ -304,7 +304,7 @@ const AchievementPanel: React.FC<AchievementPanelProps> = ({
                     [AchievementTier.PLATINUM]: 10,
                     [AchievementTier.DIAMOND]: 25
                   };
-                  return score + (tierValues[tier as AchievementTier] * count);
+                  return score + (tierValues[tier as AchievementTier] * (count as number));
                 }, 0)}
               </div>
               <div className={gamificationStyles.typography.body.small}>
