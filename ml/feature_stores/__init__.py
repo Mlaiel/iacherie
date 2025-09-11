@@ -58,6 +58,18 @@ from .streaming_feature_processor import (
     WindowType
 )
 
+# NEW PHASE 15 MODULES - Advanced Feature Engineering
+from .temporal_feature_generator import (
+    TemporalFeatureGenerator,
+    TemporalFeature,
+    TimeSeriesData,
+    TemporalPattern,
+    TemporalFeatureType,
+    GeneratorConfig,
+    CreatorType as FeatureCreatorType,
+    create_temporal_feature_generator
+)
+
 __all__ = [
     # Feature Store (Existing)
     'FeatureStore',
@@ -95,7 +107,17 @@ __all__ = [
     'StreamSource',
     'FeatureType',
     'AggregationType',
-    'WindowType'
+    'WindowType',
+    
+    # NEW PHASE 15 - Advanced Feature Engineering
+    'TemporalFeatureGenerator',
+    'TemporalFeature',
+    'TimeSeriesData',
+    'TemporalPattern',
+    'TemporalFeatureType',
+    'GeneratorConfig',
+    'FeatureCreatorType',
+    'create_temporal_feature_generator'
 ]
 
 # Version du module

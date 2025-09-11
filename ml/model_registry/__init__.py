@@ -74,6 +74,31 @@ from .model_bias_detector import (
     ModelPrediction
 )
 
+# NEW PHASE 15 MODULES - Model Lifecycle Management
+from .model_performance_tracker import (
+    ModelPerformanceTracker,
+    PerformanceMetric as RegistryPerformanceMetric,
+    ModelPerformanceSnapshot,
+    PerformanceTrend,
+    DegradationAlert,
+    PerformanceStatus,
+    TrackerConfig,
+    create_model_performance_tracker
+)
+
+from .model_format_converter import (
+    ModelFormatConverter,
+    ConversionConfig,
+    ConversionResult,
+    ModelMetadata as ConverterModelMetadata,
+    ModelFormat,
+    OptimizationLevel,
+    TargetPlatform,
+    CreatorType as ConverterCreatorType,
+    create_model_format_converter,
+    create_conversion_config
+)
+
 __all__ = [
     # MLflow Registry (Existing)
     'MLflowModelRegistry',
@@ -125,7 +150,29 @@ __all__ = [
     "BiasTestResult",
     "CreatorBiasAnalysis",
     "BiasAssessment",
-    "ModelPrediction"
+    "ModelPrediction",
+    
+    # NEW PHASE 15 - Model Lifecycle Management
+    "ModelPerformanceTracker",
+    "RegistryPerformanceMetric",
+    "ModelPerformanceSnapshot",
+    "PerformanceTrend",
+    "DegradationAlert",
+    "PerformanceStatus",
+    "TrackerConfig",
+    "create_model_performance_tracker",
+    
+    # Model Format Converter (NEW PHASE 15)
+    "ModelFormatConverter",
+    "ConversionConfig",
+    "ConversionResult",
+    "ConverterModelMetadata",
+    "ModelFormat",
+    "OptimizationLevel",
+    "TargetPlatform",
+    "ConverterCreatorType",
+    "create_model_format_converter",
+    "create_conversion_config"
 ]
 
 # Version du module
