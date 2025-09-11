@@ -1,0 +1,340 @@
+# Ainflue Infrastructure Module - Mobile API Deployment Manifest
+# ==============================================================
+# 
+# Enterprise-grade mobile API deployment for Ainflue platform
+# Supports high availability and enterprise security for mobile clients
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+#
+# ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ainflue-mobile-api
+  namespace: ainflue-production
+  labels:
+    app: ainflue-mobile-api
+    version: v1.0.0
+    component: mobile-backend
+    tier: api
+    environment: production
+    managed-by: terraform
+spec:
+  replicas: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: ainflue-mobile-api
+      version: v1.0.0
+  template:
+    metadata:
+      labels:
+        app: ainflue-mobile-api
+        version: v1.0.0
+        component: mobile-backend
+        tier: api
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8081"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: ainflue-mobile-api-sa
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10002
+        fsGroup: 10002
+      containers:
+      - name: ainflue-mobile-api
+        image: ainflue/mobile-api:v1.0.0
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8081
+          protocol: TCP
+        - name: metrics
+          containerPort: 9091
+          protocol: TCP
+        - name: websocket
+          containerPort: 8082
+          protocol: TCP
+        env:
+        - name: ENVIRONMENT
+          value: "production"
+        - name: API_VERSION
+          value: "v1"
+        - name: MOBILE_API_PORT
+          value: "8081"
+        - name: WEBSOCKET_PORT
+          value: "8082"
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-database-secret
+              key: connection_string
+        - name: REDIS_URL
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-cache-secret
+              key: redis_url
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-auth-secret
+              key: jwt_secret
+        - name: PUSH_NOTIFICATION_KEY
+          valueFrom:
+            secretKeyRef:
+              name: ainflue-push-secret
+              key: fcm_key
+        - name: AWS_REGION
+          value: "us-east-1"
+        - name: S3_BUCKET_MOBILE
+          value: "ainflue-mobile-content"
+        - name: CDN_BASE_URL
+          value: "https://cdn.ainflue.com"
+        - name: RATE_LIMIT_REQUESTS
+          value: "1000"
+        - name: RATE_LIMIT_WINDOW
+          value: "3600"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "200m"
+          limits:
+            memory: "512Mi"
+            cpu: "400m"
+        livenessProbe:
+          httpGet:
+            path: /mobile/health
+            port: 8081
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /mobile/ready
+            port: 8081
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        startupProbe:
+          httpGet:
+            path: /mobile/startup
+            port: 8081
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 10
+        volumeMounts:
+        - name: config-volume
+          mountPath: /app/config
+          readOnly: true
+        - name: tmp-volume
+          mountPath: /tmp
+        - name: cache-volume
+          mountPath: /app/cache
+      volumes:
+      - name: config-volume
+        configMap:
+          name: ainflue-mobile-api-config
+      - name: tmp-volume
+        emptyDir: {}
+      - name: cache-volume
+        emptyDir:
+          sizeLimit: 1Gi
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - ainflue-mobile-api
+              topologyKey: kubernetes.io/hostname
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            preference:
+              matchExpressions:
+              - key: ainflue.com/workload-type
+                operator: In
+                values:
+                - api
+      tolerations:
+      - key: "ainflue.com/mobile-node"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ainflue-mobile-api-service
+  namespace: ainflue-production
+  labels:
+    app: ainflue-mobile-api
+    component: mobile-backend
+    tier: api
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8081
+    protocol: TCP
+  - name: metrics
+    port: 9091
+    targetPort: 9091
+    protocol: TCP
+  - name: websocket
+    port: 8082
+    targetPort: 8082
+    protocol: TCP
+  selector:
+    app: ainflue-mobile-api
+    version: v1.0.0
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ainflue-mobile-api-sa
+  namespace: ainflue-production
+  labels:
+    app: ainflue-mobile-api
+    component: mobile-backend
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::ACCOUNT_ID:role/ainflue-mobile-api-role
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: ainflue-mobile-api-hpa
+  namespace: ainflue-production
+  labels:
+    app: ainflue-mobile-api
+    component: mobile-backend
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: ainflue-mobile-api
+  minReplicas: 5
+  maxReplicas: 50
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
+  - type: Pods
+    pods:
+      metric:
+        name: http_requests_per_second
+      target:
+        type: AverageValue
+        averageValue: "100"
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+      - type: Percent
+        value: 20
+        periodSeconds: 60
+    scaleUp:
+      stabilizationWindowSeconds: 60
+      policies:
+      - type: Percent
+        value: 100
+        periodSeconds: 60
+
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: ainflue-mobile-api-pdb
+  namespace: ainflue-production
+  labels:
+    app: ainflue-mobile-api
+    component: mobile-backend
+spec:
+  minAvailable: 3
+  selector:
+    matchLabels:
+      app: ainflue-mobile-api
+      version: v1.0.0
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: ainflue-mobile-api-netpol
+  namespace: ainflue-production
+  labels:
+    app: ainflue-mobile-api
+spec:
+  podSelector:
+    matchLabels:
+      app: ainflue-mobile-api
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ainflue-ingress
+    - podSelector:
+        matchLabels:
+          app: nginx-ingress
+    ports:
+    - protocol: TCP
+      port: 8081
+  - from:
+    - podSelector:
+        matchLabels:
+          app: prometheus
+    ports:
+    - protocol: TCP
+      port: 9091
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          app: ainflue-database
+    ports:
+    - protocol: TCP
+      port: 5432
+  - to:
+    - podSelector:
+        matchLabels:
+          app: redis
+    ports:
+    - protocol: TCP
+      port: 6379
+  - to: []
+    ports:
+    - protocol: TCP
+      port: 443
+    - protocol: TCP
+      port: 80
