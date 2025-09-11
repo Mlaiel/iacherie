@@ -16,13 +16,16 @@ Contact: mlaiel@live.de
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 """
 
-from .email_services import EmailServicesHub, EmailProvider
+from .email_services import EmailEnterpriseService, EmailProvider
 from .audio_processing import AudioProcessingHub, AudioProvider
 from .sms_services import SMSServicesHub, SMSProvider, MessageType as SMSMessageType
 from .analytics_services import AnalyticsServicesHub, AnalyticsProvider, EventType
+from .crm_integration import CRMIntegrationService, CRMPlatform
+from .compliance_services import ComplianceServicesIntegration, ComplianceStandard
+from .cdn_services import CDNServicesIntegration, CDNProvider
 
 __all__ = [
-    'EmailServicesHub',
+    'EmailEnterpriseService',
     'EmailProvider',
     'AudioProcessingHub', 
     'AudioProvider',
@@ -31,7 +34,13 @@ __all__ = [
     'SMSMessageType',
     'AnalyticsServicesHub',
     'AnalyticsProvider',
-    'EventType'
+    'EventType',
+    'CRMIntegrationService',
+    'CRMPlatform',
+    'ComplianceServicesIntegration',
+    'ComplianceStandard',
+    'CDNServicesIntegration',
+    'CDNProvider'
 ]
 
 __version__ = "1.0.0"
