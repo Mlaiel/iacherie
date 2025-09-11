@@ -44,7 +44,7 @@ from .auto_scaling_manager import (
     ScalingRule,
     ScalingAction,
     WorkloadPattern,
-    PerformanceMetrics as ScalingMetrics
+    ScalingMetric
 )
 
 from .load_balancing_optimizer import (
@@ -55,6 +55,17 @@ from .load_balancing_optimizer import (
     RequestContext,
     RoutingDecision,
     PerformanceMetrics as LoadBalancingMetrics
+)
+
+from .cloud_deployment_orchestrator import (
+    CloudDeploymentOrchestrator,
+    CloudConfiguration,
+    DeploymentSpec,
+    DeploymentInstance,
+    CloudProvider,
+    DeploymentRegion,
+    InstanceType,
+    DeploymentStatus as CloudDeploymentStatus
 )
 
 __all__ = [
@@ -84,7 +95,7 @@ __all__ = [
     "ScalingRule",
     "ScalingAction",
     "WorkloadPattern",
-    "ScalingMetrics",
+    "ScalingMetric",
     
     # Load Balancing (NEW - PHASE 3)
     "LoadBalancingOptimizer",
@@ -93,7 +104,17 @@ __all__ = [
     "BackendNode",
     "RequestContext",
     "RoutingDecision",
-    "LoadBalancingMetrics"
+    "LoadBalancingMetrics",
+    
+    # Cloud Deployment (NEW - PHASE 2)
+    "CloudDeploymentOrchestrator",
+    "CloudConfiguration",
+    "DeploymentSpec",
+    "DeploymentInstance",
+    "CloudProvider",
+    "DeploymentRegion",
+    "InstanceType",
+    "CloudDeploymentStatus"
 ]
 
 # Version du module
