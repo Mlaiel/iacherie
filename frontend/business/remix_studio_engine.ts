@@ -50,6 +50,7 @@ export interface AudioEffect {
   enabled: boolean;
   parameters: Record<string, number>;
   preset?: string;
+  presetName?: string;
 }
 
 export interface StudioEffect {
@@ -139,6 +140,7 @@ export interface ExportSettings {
   quality: 'low' | 'medium' | 'high' | 'studio';
   sampleRate: number;
   bitDepth: number;
+  channels: 'mono' | 'stereo';
   normalization: boolean;
   fadeIn: number;
   fadeOut: number;
@@ -238,6 +240,10 @@ export const studioUtils = {
   
   samplesToMs: (samples: number, sampleRate: number): number => {
     return (samples / sampleRate) * 1000;
+  },
+
+  getClassName: (baseClass: string, additionalClass?: string): string => {
+    return additionalClass ? `${baseClass} ${additionalClass}` : baseClass;
   }
 };
 

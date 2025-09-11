@@ -46,7 +46,7 @@ const ExportManager: React.FC<ExportManagerProps> = ({
     sampleRate: 44100,
     bitDepth: 24,
     channels: 'stereo',
-    normalize: true,
+    normalization: true,
     fadeIn: 0,
     fadeOut: 0,
     trimSilence: true
