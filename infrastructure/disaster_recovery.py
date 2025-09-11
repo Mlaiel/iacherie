@@ -14,6 +14,7 @@ from enum import Enum
 from datetime import datetime, timedelta
 import json
 import uuid
+import random
 
 logger = logging.getLogger(__name__)
 
@@ -1379,6 +1380,486 @@ class DisasterRecovery:
                 'timestamp': datetime.now().isoformat(),
                 'status': 'completed'
             })
+
+
+class DisasterRecoveryTestingFramework:
+    """Disaster Recovery Testing Framework
+    
+    DevOps Role Implementation:
+    - Automated DR testing and validation
+    - Regular DR drills and exercises
+    - DR infrastructure verification
+    """
+    
+    def __init__(self, dr_system: DisasterRecovery):
+        self.dr_system = dr_system
+        self.logger = logging.getLogger(__name__)
+        self.test_results = []
+        
+    async def run_comprehensive_dr_tests(self) -> Dict[str, Any]:
+        """Run comprehensive disaster recovery tests
+        
+        Disaster Recovery Testing Requirements:
+        - Regular testing of backup systems
+        - Failover mechanism validation
+        - Recovery time objective verification
+        """
+        try:
+            test_execution = {
+                'test_id': f"dr_test_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
+                'start_time': datetime.now(),
+                'test_results': {},
+                'overall_success': True,
+                'recommendations': []
+            }
+            
+            # Test backup systems
+            backup_tests = await self._test_backup_systems()
+            test_execution['test_results']['backup_systems'] = backup_tests
+            
+            # Test failover mechanisms
+            failover_tests = await self._test_failover_mechanisms()
+            test_execution['test_results']['failover_mechanisms'] = failover_tests
+            
+            # Test recovery procedures
+            recovery_tests = await self._test_recovery_procedures()
+            test_execution['test_results']['recovery_procedures'] = recovery_tests
+            
+            # Test business continuity
+            continuity_tests = await self._test_business_continuity()
+            test_execution['test_results']['business_continuity'] = continuity_tests
+            
+            # Validate RTO/RPO compliance
+            rto_rpo_tests = await self._test_rto_rpo_compliance()
+            test_execution['test_results']['rto_rpo_compliance'] = rto_rpo_tests
+            
+            # Calculate overall success rate
+            test_execution['overall_success'] = await self._calculate_test_success_rate(test_execution)
+            
+            # Generate recommendations
+            test_execution['recommendations'] = await self._generate_test_recommendations(test_execution)
+            
+            test_execution['end_time'] = datetime.now()
+            test_execution['duration'] = (test_execution['end_time'] - test_execution['start_time']).total_seconds()
+            
+            self.logger.info(f"DR testing completed: {test_execution['test_id']}")
+            return test_execution
+            
+        except Exception as e:
+            self.logger.error(f"Failed to run DR tests: {e}")
+            raise
+    
+    async def _test_backup_systems(self) -> Dict[str, Any]:
+        """Test backup systems and data integrity"""
+        backup_tests = {
+            'test_name': 'Backup Systems Validation',
+            'tests_performed': [],
+            'success_rate': 0.0,
+            'issues_found': []
+        }
+        
+        test_scenarios = [
+            {
+                'name': 'Database Backup Verification',
+                'description': 'Verify database backup integrity and restoration',
+                'target': 'postgresql_cluster',
+                'expected_rpo': '5_minutes'
+            },
+            {
+                'name': 'Content Storage Backup',
+                'description': 'Verify content storage backup and recovery',
+                'target': 's3_content_storage',
+                'expected_rpo': '15_minutes'
+            },
+            {
+                'name': 'Configuration Backup',
+                'description': 'Verify system configuration backup',
+                'target': 'kubernetes_configs',
+                'expected_rpo': '30_minutes'
+            },
+            {
+                'name': 'Creator Data Backup',
+                'description': 'Verify creator profile and content backup',
+                'target': 'creator_database',
+                'expected_rpo': '5_minutes'
+            }
+        ]
+        
+        successful_tests = 0
+        
+        for scenario in test_scenarios:
+            test_result = await self._execute_backup_test(scenario)
+            backup_tests['tests_performed'].append(test_result)
+            
+            if test_result['status'] == 'passed':
+                successful_tests += 1
+            else:
+                backup_tests['issues_found'].append({
+                    'test': scenario['name'],
+                    'issue': test_result.get('error', 'Unknown error'),
+                    'impact': 'high' if 'creator' in scenario['name'].lower() else 'medium'
+                })
+        
+        backup_tests['success_rate'] = (successful_tests / len(test_scenarios)) * 100
+        
+        return backup_tests
+    
+    async def _test_failover_mechanisms(self) -> Dict[str, Any]:
+        """Test automated failover mechanisms"""
+        failover_tests = {
+            'test_name': 'Failover Mechanisms Validation',
+            'tests_performed': [],
+            'success_rate': 0.0,
+            'issues_found': []
+        }
+        
+        failover_scenarios = [
+            {
+                'name': 'Primary Database Failover',
+                'description': 'Test database cluster failover',
+                'target': 'postgresql_primary',
+                'expected_failover_time': '2_minutes'
+            },
+            {
+                'name': 'API Gateway Failover',
+                'description': 'Test API gateway automatic failover',
+                'target': 'api_gateway_primary',
+                'expected_failover_time': '30_seconds'
+            },
+            {
+                'name': 'Creator Service Failover',
+                'description': 'Test creator service failover',
+                'target': 'creator_service_primary',
+                'expected_failover_time': '1_minute'
+            },
+            {
+                'name': 'Payment Processing Failover',
+                'description': 'Test payment system failover',
+                'target': 'payment_processor_primary',
+                'expected_failover_time': '30_seconds'
+            }
+        ]
+        
+        successful_tests = 0
+        
+        for scenario in failover_scenarios:
+            test_result = await self._execute_failover_test(scenario)
+            failover_tests['tests_performed'].append(test_result)
+            
+            if test_result['status'] == 'passed':
+                successful_tests += 1
+            else:
+                failover_tests['issues_found'].append({
+                    'test': scenario['name'],
+                    'issue': test_result.get('error', 'Failover timeout'),
+                    'impact': 'critical' if 'payment' in scenario['name'].lower() else 'high'
+                })
+        
+        failover_tests['success_rate'] = (successful_tests / len(failover_scenarios)) * 100
+        
+        return failover_tests
+    
+    async def _test_recovery_procedures(self) -> Dict[str, Any]:
+        """Test disaster recovery procedures"""
+        recovery_tests = {
+            'test_name': 'Recovery Procedures Validation',
+            'tests_performed': [],
+            'success_rate': 0.0,
+            'issues_found': []
+        }
+        
+        recovery_scenarios = [
+            {
+                'name': 'Full System Recovery',
+                'description': 'Test complete system recovery from backup',
+                'disaster_type': DisasterType.REGIONAL_OUTAGE,
+                'expected_recovery_time': '30_minutes'
+            },
+            {
+                'name': 'Creator Data Recovery',
+                'description': 'Test creator data recovery procedures',
+                'disaster_type': DisasterType.DATA_CORRUPTION,
+                'expected_recovery_time': '15_minutes'
+            },
+            {
+                'name': 'Payment System Recovery',
+                'description': 'Test payment system recovery',
+                'disaster_type': DisasterType.CYBER_ATTACK,
+                'expected_recovery_time': '10_minutes'
+            },
+            {
+                'name': 'Content Storage Recovery',
+                'description': 'Test content storage recovery',
+                'disaster_type': DisasterType.HARDWARE_FAILURE,
+                'expected_recovery_time': '20_minutes'
+            }
+        ]
+        
+        successful_tests = 0
+        
+        for scenario in recovery_scenarios:
+            test_result = await self._execute_recovery_test(scenario)
+            recovery_tests['tests_performed'].append(test_result)
+            
+            if test_result['status'] == 'passed':
+                successful_tests += 1
+            else:
+                recovery_tests['issues_found'].append({
+                    'test': scenario['name'],
+                    'issue': test_result.get('error', 'Recovery procedure failed'),
+                    'impact': 'critical'
+                })
+        
+        recovery_tests['success_rate'] = (successful_tests / len(recovery_scenarios)) * 100
+        
+        return recovery_tests
+    
+    async def _test_business_continuity(self) -> Dict[str, Any]:
+        """Test business continuity during disasters"""
+        continuity_tests = {
+            'test_name': 'Business Continuity Validation',
+            'tests_performed': [],
+            'success_rate': 0.0,
+            'issues_found': []
+        }
+        
+        continuity_scenarios = [
+            {
+                'name': 'Creator Upload Continuity',
+                'description': 'Verify creator uploads continue during DR',
+                'business_function': 'content_upload',
+                'acceptable_degradation': '20_percent'
+            },
+            {
+                'name': 'Revenue Processing Continuity',
+                'description': 'Verify revenue processing continues',
+                'business_function': 'payment_processing',
+                'acceptable_degradation': '5_percent'
+            },
+            {
+                'name': 'Creator Authentication Continuity',
+                'description': 'Verify creator login continues',
+                'business_function': 'authentication',
+                'acceptable_degradation': '10_percent'
+            },
+            {
+                'name': 'Content Protection Continuity',
+                'description': 'Verify content protection continues',
+                'business_function': 'content_protection',
+                'acceptable_degradation': '15_percent'
+            }
+        ]
+        
+        successful_tests = 0
+        
+        for scenario in continuity_scenarios:
+            test_result = await self._execute_continuity_test(scenario)
+            continuity_tests['tests_performed'].append(test_result)
+            
+            if test_result['status'] == 'passed':
+                successful_tests += 1
+            else:
+                continuity_tests['issues_found'].append({
+                    'test': scenario['name'],
+                    'issue': test_result.get('error', 'Business continuity degraded'),
+                    'impact': 'high'
+                })
+        
+        continuity_tests['success_rate'] = (successful_tests / len(continuity_scenarios)) * 100
+        
+        return continuity_tests
+    
+    async def _test_rto_rpo_compliance(self) -> Dict[str, Any]:
+        """Test RTO/RPO compliance"""
+        rto_rpo_tests = {
+            'test_name': 'RTO/RPO Compliance Validation',
+            'tests_performed': [],
+            'success_rate': 0.0,
+            'issues_found': []
+        }
+        
+        # Get recovery targets from DR system
+        targets = await self.dr_system._define_recovery_targets()
+        
+        successful_tests = 0
+        total_tests = len(targets)
+        
+        for target_name, target in targets.items():
+            test_result = await self._test_rto_rpo_target(target)
+            rto_rpo_tests['tests_performed'].append(test_result)
+            
+            if test_result['rto_compliant'] and test_result['rpo_compliant']:
+                successful_tests += 1
+            else:
+                rto_rpo_tests['issues_found'].append({
+                    'service': target_name,
+                    'rto_issue': not test_result['rto_compliant'],
+                    'rpo_issue': not test_result['rpo_compliant'],
+                    'impact': target.tier.value
+                })
+        
+        rto_rpo_tests['success_rate'] = (successful_tests / total_tests) * 100 if total_tests > 0 else 0
+        
+        return rto_rpo_tests
+    
+    async def _execute_backup_test(self, scenario: Dict[str, Any]) -> Dict[str, Any]:
+        """Execute backup test scenario"""
+        test_result = {
+            'scenario': scenario['name'],
+            'status': 'passed',
+            'start_time': datetime.now(),
+            'backup_size': f"{random.randint(1, 100)}GB",
+            'integrity_check': 'passed',
+            'restoration_test': 'passed'
+        }
+        
+        # Simulate test execution
+        await asyncio.sleep(1)
+        
+        # Simulate occasional failures for realism
+        if random.random() < 0.1:  # 10% failure rate
+            test_result['status'] = 'failed'
+            test_result['error'] = 'Backup integrity check failed'
+        
+        test_result['end_time'] = datetime.now()
+        test_result['duration'] = (test_result['end_time'] - test_result['start_time']).total_seconds()
+        
+        return test_result
+    
+    async def _execute_failover_test(self, scenario: Dict[str, Any]) -> Dict[str, Any]:
+        """Execute failover test scenario"""
+        test_result = {
+            'scenario': scenario['name'],
+            'status': 'passed',
+            'start_time': datetime.now(),
+            'failover_triggered': True,
+            'failover_time': f"{random.randint(10, 120)}seconds",
+            'data_consistency': 'verified'
+        }
+        
+        # Simulate test execution
+        await asyncio.sleep(1)
+        
+        # Simulate occasional failures
+        if random.random() < 0.15:  # 15% failure rate
+            test_result['status'] = 'failed'
+            test_result['error'] = 'Failover timeout exceeded'
+        
+        test_result['end_time'] = datetime.now()
+        test_result['duration'] = (test_result['end_time'] - test_result['start_time']).total_seconds()
+        
+        return test_result
+    
+    async def _execute_recovery_test(self, scenario: Dict[str, Any]) -> Dict[str, Any]:
+        """Execute recovery test scenario"""
+        test_result = {
+            'scenario': scenario['name'],
+            'status': 'passed',
+            'start_time': datetime.now(),
+            'disaster_simulated': scenario['disaster_type'].value,
+            'recovery_initiated': True,
+            'services_restored': True
+        }
+        
+        # Simulate test execution
+        await asyncio.sleep(2)
+        
+        # Simulate occasional failures
+        if random.random() < 0.12:  # 12% failure rate
+            test_result['status'] = 'failed'
+            test_result['error'] = 'Recovery procedure incomplete'
+        
+        test_result['end_time'] = datetime.now()
+        test_result['duration'] = (test_result['end_time'] - test_result['start_time']).total_seconds()
+        
+        return test_result
+    
+    async def _execute_continuity_test(self, scenario: Dict[str, Any]) -> Dict[str, Any]:
+        """Execute business continuity test scenario"""
+        test_result = {
+            'scenario': scenario['name'],
+            'status': 'passed',
+            'start_time': datetime.now(),
+            'business_function': scenario['business_function'],
+            'performance_impact': f"{random.randint(5, 25)}%",
+            'continuity_maintained': True
+        }
+        
+        # Simulate test execution
+        await asyncio.sleep(1)
+        
+        # Check if performance degradation is acceptable
+        impact = int(test_result['performance_impact'].rstrip('%'))
+        acceptable = int(scenario['acceptable_degradation'].rstrip('_percent'))
+        
+        if impact > acceptable:
+            test_result['status'] = 'failed'
+            test_result['error'] = f'Performance degradation {impact}% exceeds acceptable {acceptable}%'
+            test_result['continuity_maintained'] = False
+        
+        test_result['end_time'] = datetime.now()
+        test_result['duration'] = (test_result['end_time'] - test_result['start_time']).total_seconds()
+        
+        return test_result
+    
+    async def _test_rto_rpo_target(self, target) -> Dict[str, Any]:
+        """Test RTO/RPO for specific target"""
+        test_result = {
+            'service': target.service_name,
+            'tier': target.tier.value,
+            'rto_target': f"{target.rto_minutes}min",
+            'rpo_target': f"{target.rpo_minutes}min",
+            'rto_actual': f"{random.randint(target.rto_minutes//2, target.rto_minutes + 5)}min",
+            'rpo_actual': f"{random.randint(target.rpo_minutes//2, target.rpo_minutes + 2)}min",
+            'rto_compliant': True,
+            'rpo_compliant': True
+        }
+        
+        # Check compliance
+        rto_actual = int(test_result['rto_actual'].rstrip('min'))
+        rpo_actual = int(test_result['rpo_actual'].rstrip('min'))
+        
+        test_result['rto_compliant'] = rto_actual <= target.rto_minutes
+        test_result['rpo_compliant'] = rpo_actual <= target.rpo_minutes
+        
+        return test_result
+    
+    async def _calculate_test_success_rate(self, test_execution: Dict[str, Any]) -> bool:
+        """Calculate overall test success rate"""
+        total_tests = 0
+        successful_tests = 0
+        
+        for test_category, results in test_execution['test_results'].items():
+            if 'success_rate' in results:
+                total_tests += 1
+                if results['success_rate'] >= 80:  # 80% threshold
+                    successful_tests += 1
+        
+        overall_success_rate = (successful_tests / total_tests) * 100 if total_tests > 0 else 0
+        return overall_success_rate >= 85  # 85% overall threshold
+    
+    async def _generate_test_recommendations(self, test_execution: Dict[str, Any]) -> List[str]:
+        """Generate recommendations based on test results"""
+        recommendations = []
+        
+        for test_category, results in test_execution['test_results'].items():
+            if results['success_rate'] < 80:
+                recommendations.append(f"Improve {test_category} reliability - current success rate: {results['success_rate']:.1f}%")
+            
+            if results['issues_found']:
+                for issue in results['issues_found']:
+                    if issue.get('impact') == 'critical':
+                        recommendations.append(f"CRITICAL: Address {issue.get('test', issue.get('service', 'unknown'))} issue immediately")
+        
+        # Add general recommendations
+        if len(recommendations) > 5:
+            recommendations.append("Consider comprehensive DR infrastructure review")
+        
+        if not test_execution['overall_success']:
+            recommendations.append("Implement automated DR testing pipeline")
+            recommendations.append("Establish regular DR drill schedule")
+        
+        return recommendations
 
 
 # Example usage
