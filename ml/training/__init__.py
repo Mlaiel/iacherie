@@ -45,7 +45,7 @@ from .distributed_training_manager import (
     TrainingNode
 )
 
-# NEW PHASE 10 MODULES - Advanced Training Infrastructure
+# NEW PHASE 10 & 11 MODULES - Advanced Training Infrastructure
 from .continual_learning_engine import (
     ContinualLearningEngine, 
     ContinualLearningConfig,
@@ -72,6 +72,24 @@ from .gradient_optimization_engine import (
     CreatorOptimizationProfile,
     create_optimization_engine,
     create_creator_profile
+)
+from .model_compression_toolkit import (
+    ModelCompressionToolkit,
+    CompressionConfig,
+    CompressionResults,
+    create_compression_toolkit
+)
+from .training_metrics_collector import (
+    TrainingMetricsCollector,
+    MetricConfig,
+    MetricData,
+    create_metrics_collector
+)
+from .model_convergence_analyzer import (
+    ModelConvergenceAnalyzer,
+    ConvergenceConfig,
+    ConvergenceAnalysis,
+    create_convergence_analyzer
 )
 
 __all__ = [
@@ -101,7 +119,7 @@ __all__ = [
     'NodeStatus',
     'TrainingNode',
     
-    # NEW PHASE 10 - Advanced Training Infrastructure
+    # NEW PHASE 10 & 11 - Advanced Training Infrastructure
     'ContinualLearningEngine',
     'ContinualLearningConfig',
     'TaskMetadata',
@@ -120,7 +138,19 @@ __all__ = [
     'GradOptConfig',
     'CreatorOptimizationProfile',
     'create_optimization_engine',
-    'create_creator_profile'
+    'create_creator_profile',
+    'ModelCompressionToolkit',
+    'CompressionConfig',
+    'CompressionResults',
+    'create_compression_toolkit',
+    'TrainingMetricsCollector',
+    'MetricConfig',
+    'MetricData',
+    'create_metrics_collector',
+    'ModelConvergenceAnalyzer',
+    'ConvergenceConfig',
+    'ConvergenceAnalysis',
+    'create_convergence_analyzer'
 ]
 
 # Version du module
