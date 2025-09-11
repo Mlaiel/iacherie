@@ -441,7 +441,7 @@ class BlockchainCopyrightRegistry:
             return "0" * 64  # Genesis block
         return list(self.blockchain_records.values())[-1]["block_hash"]
     
-    def _generate_cryptographic_proof(self, record: Dict[str, An] -> str:
+    def _generate_cryptographic_proof(self, record: Dict[str, Any]) -> str:
         """Generate cryptographic proof of registration"""
         record_string = json.dumps(record, sort_keys=True)
         return hashlib.sha256(record_string.encode()).hexdigest()
@@ -565,7 +565,7 @@ class LegalAnalyticsEngine:
         
         return features
     
-    def _analyze_content_sensitivity(self, content_data: Dict[str, An] -> float:
+    def _analyze_content_sensitivity(self, content_data: Dict[str, Any]) -> float:
         """Analyze content sensitivity for risk assessment"""
         
         sensitivity_score = 0.0
@@ -587,7 +587,7 @@ class LegalAnalyticsEngine:
         
         return min(sensitivity_score, 1.0)
     
-    def _analyze_user_risk(self, user_context: Dict[str, An] -> float:
+    def _analyze_user_risk(self, user_context: Dict[str, Any]) -> float:
         """Analyze user risk profile"""
         
         risk_score = 0.1  # Base risk
@@ -650,7 +650,7 @@ class LegalAnalyticsEngine:
         else:
             return 0.1
     
-    async def _calculate_ml_risk_score(self, features: Dict[str, floa] -> float:
+    async def _calculate_ml_risk_score(self, features: Dict[str, float]) -> float:
         """Calculate ML-based risk score"""
         
         # Weighted ensemble calculation
@@ -827,7 +827,7 @@ class LegalComplianceMonitor:
             if await self._evaluate_rule_condition(rule):
                 await self._trigger_alert(rule)
     
-    async def _evaluate_rule_condition(self, rule: Dict[str, An] -> bool:
+    async def _evaluate_rule_condition(self, rule: Dict[str, Any]) -> bool:
         """Evaluate if alert rule condition is met"""
         
         # Simplified rule evaluation (would be more sophisticated in production)
@@ -841,7 +841,7 @@ class LegalComplianceMonitor:
         
         return False
     
-    async def _trigger_alert(self, rule: Dict[str, An]:
+    async def _trigger_alert(self, rule: Dict[str, Any]):
         """Trigger alert for rule violation"""
         
         alert = {
@@ -861,7 +861,7 @@ class LegalComplianceMonitor:
         
         logger.warning(f"Legal compliance alert triggered: {alert['alert_id']}")
     
-    async def _send_alert_notifications(self, alert: Dict[str, An]:
+    async def _send_alert_notifications(self, alert: Dict[str, Any]):
         """Send alert notifications to relevant teams"""
         
         # Simulate notification sending
@@ -912,14 +912,14 @@ class LegalComplianceMonitor:
         # Get recent alerts
         recent_alerts = [
             alert for alert in self.incident_history 
-            if datetime.fromisoformat(alert["triggered_at] > datetime.utcnow() - timedelta(hours=24)
+            if datetime.fromisoformat(alert["triggered_at"]) > datetime.utcnow() - timedelta(hours=24)
         ]
         
         dashboard = {
             "current_status": "OPERATIONAL",
             "last_updated": datetime.utcnow().isoformat(),
             "metrics": latest_metrics,
-            "active_alerts": len([a for a in recent_alerts if a["status"] == "ACTIVE],
+            "active_alerts": len([a for a in recent_alerts if a["status"] == "ACTIVE"]),
             "recent_incidents": len(recent_alerts),
             "compliance_score": 96.5,
             "system_health": {
@@ -1058,7 +1058,7 @@ class AudioLegalComplianceEngine:
         
         return copyright_status
     
-    async def _verify_music_licensing(self, metadata: Dict[str, An] -> Dict[str, Any]:
+    async def _verify_music_licensing(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
         """Verify music licensing status"""
         
         licensing_status = {
@@ -1124,7 +1124,7 @@ class AudioLegalComplianceEngine:
         
         return royalty_info
     
-    async def _verify_performance_rights(self, metadata: Dict[str, An] -> Dict[str, Any]:
+    async def _verify_performance_rights(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
         """Verify performance rights with PROs"""
         
         performance_rights = {
@@ -1148,7 +1148,7 @@ class AudioLegalComplianceEngine:
         
         return performance_rights
     
-    async def _check_pro_clearance(self, pro_name: str, metadata: Dict[str, An] -> Dict[str, Any]:
+    async def _check_pro_clearance(self, pro_name: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
         """Check clearance status with specific PRO"""
         
         # Simulate PRO API call
@@ -1327,4 +1327,4 @@ __all__ = [
     'analyze_legal_compliance_ml',
     'analyze_audio_legal_compliance',
     'get_legal_monitoring_dashboard'
-])
+]
