@@ -21,6 +21,9 @@ import uuid
 from datetime import datetime
 from typing import Dict, Any
 
+# Setup logging
+logger = logging.getLogger(__name__)
+
 try:
     import sentry_sdk
     SENTRY_AVAILABLE = True
