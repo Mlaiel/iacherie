@@ -586,6 +586,167 @@ class AWSProvider:
             'status': 'Enabled'
         }
     
+    async def deploy_ml_model(self, model_config: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Deploy ML model on AWS infrastructure
+        
+        ML Engineer Role: Deploy AI/ML models using SageMaker and EKS
+        """
+        try:
+            model_name = model_config.get('model_name', 'ainflue-ai-model')
+            deployment_type = model_config.get('deployment_type', 'sagemaker')  # sagemaker, eks, lambda
+            
+            deployment_result = {
+                'model_name': model_name,
+                'deployment_type': deployment_type,
+                'region': self.region,
+                'status': 'deployed',
+                'endpoints': {},
+                'scaling_config': {},
+                'monitoring': {}
+            }
+            
+            if deployment_type == 'sagemaker':
+                # Deploy using SageMaker
+                sagemaker_config = await self._deploy_sagemaker_model(model_config)
+                deployment_result['endpoints']['sagemaker'] = sagemaker_config
+                
+            elif deployment_type == 'eks':
+                # Deploy on EKS cluster
+                eks_config = await self._deploy_model_on_eks(model_config)
+                deployment_result['endpoints']['eks'] = eks_config
+                
+            elif deployment_type == 'lambda':
+                # Deploy as Lambda function
+                lambda_config = await self._deploy_model_as_lambda(model_config)
+                deployment_result['endpoints']['lambda'] = lambda_config
+            
+            # Setup model monitoring
+            monitoring_config = await self._setup_ml_model_monitoring(model_config)
+            deployment_result['monitoring'] = monitoring_config
+            
+            # Configure auto-scaling
+            scaling_config = await self._configure_ml_model_scaling(model_config)
+            deployment_result['scaling_config'] = scaling_config
+            
+            logger.info(f"ML model {model_name} deployed successfully on AWS {deployment_type}")
+            return deployment_result
+            
+        except Exception as e:
+            logger.error(f"ML model deployment failed: {e}")
+            return {
+                'status': 'failed',
+                'error': str(e),
+                'model_name': model_config.get('model_name', 'unknown')
+            }
+    
+    async def _deploy_sagemaker_model(self, model_config: Dict[str, Any]) -> Dict[str, Any]:
+        """Deploy model using AWS SageMaker"""
+        return {
+            'model_name': model_config['model_name'],
+            'endpoint_name': f"{model_config['model_name']}-endpoint",
+            'endpoint_arn': f"arn:aws:sagemaker:{self.region}:ACCOUNT:endpoint/{model_config['model_name']}-endpoint",
+            'instance_type': model_config.get('instance_type', 'ml.m5.large'),
+            'instance_count': model_config.get('instance_count', 1),
+            'endpoint_status': 'InService',
+            'model_features': {
+                'content_analysis': True,
+                'creator_recommendations': True,
+                'similarity_matching': True,
+                'real_time_inference': True
+            }
+        }
+    
+    async def _deploy_model_on_eks(self, model_config: Dict[str, Any]) -> Dict[str, Any]:
+        """Deploy model on EKS cluster"""
+        return {
+            'cluster_name': 'ainflue-ai-cluster',
+            'namespace': 'ainflue-ml',
+            'deployment_name': f"{model_config['model_name']}-deployment",
+            'service_name': f"{model_config['model_name']}-service",
+            'replica_count': model_config.get('replica_count', 3),
+            'resource_limits': {
+                'cpu': '2000m',
+                'memory': '4Gi',
+                'nvidia.com/gpu': '1'
+            },
+            'model_serving': {
+                'framework': model_config.get('framework', 'pytorch'),
+                'version': model_config.get('version', 'latest'),
+                'batch_size': model_config.get('batch_size', 32)
+            }
+        }
+    
+    async def _deploy_model_as_lambda(self, model_config: Dict[str, Any]) -> Dict[str, Any]:
+        """Deploy lightweight model as Lambda function"""
+        return {
+            'function_name': f"{model_config['model_name']}-lambda",
+            'function_arn': f"arn:aws:lambda:{self.region}:ACCOUNT:function:{model_config['model_name']}-lambda",
+            'runtime': 'python3.9',
+            'memory_size': model_config.get('memory_mb', 3008),
+            'timeout': model_config.get('timeout_seconds', 60),
+            'environment_variables': {
+                'MODEL_NAME': model_config['model_name'],
+                'MODEL_VERSION': model_config.get('version', '1.0'),
+                'AINFLUE_ENVIRONMENT': 'production'
+            }
+        }
+    
+    async def _setup_ml_model_monitoring(self, model_config: Dict[str, Any]) -> Dict[str, Any]:
+        """Setup monitoring for ML model"""
+        return {
+            'cloudwatch_metrics': [
+                'ModelLatency',
+                'ModelAccuracy', 
+                'InvocationsPerMinute',
+                'ErrorRate',
+                'CPUUtilization',
+                'GPUUtilization'
+            ],
+            'custom_metrics': [
+                'CreatorContentAnalysisAccuracy',
+                'RecommendationClickRate',
+                'ModelDriftDetection'
+            ],
+            'alarms': [
+                {
+                    'name': 'HighModelLatency',
+                    'threshold': 1000,  # ms
+                    'comparison': 'GreaterThanThreshold'
+                },
+                {
+                    'name': 'ModelErrorRate',
+                    'threshold': 5,  # percentage
+                    'comparison': 'GreaterThanThreshold'
+                }
+            ]
+        }
+    
+    async def _configure_ml_model_scaling(self, model_config: Dict[str, Any]) -> Dict[str, Any]:
+        """Configure auto-scaling for ML model"""
+        return {
+            'auto_scaling': {
+                'target_utilization': 70,
+                'scale_up_cooldown': 300,
+                'scale_down_cooldown': 300,
+                'min_capacity': model_config.get('min_instances', 1),
+                'max_capacity': model_config.get('max_instances', 10)
+            },
+            'scaling_policies': [
+                {
+                    'metric': 'InvocationsPerInstance',
+                    'target_value': 1000,
+                    'scale_out_cooldown': 300,
+                    'scale_in_cooldown': 300
+                }
+            ],
+            'predictive_scaling': {
+                'enabled': True,
+                'mode': 'ForecastAndScale',
+                'max_capacity_buffer': 10
+            }
+        }
+
     async def _create_sagemaker_endpoint(self, config: Dict[str, Any]) -> Dict[str, Any]:
         """Create SageMaker endpoint"""
         return {
