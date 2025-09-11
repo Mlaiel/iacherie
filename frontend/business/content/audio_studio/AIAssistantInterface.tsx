@@ -72,7 +72,7 @@ const AIAssistantInterface: React.FC<AIAssistantInterfaceProps> = ({
     const mockAnalysis: AnalysisResult = {
       key: ['C', 'D', 'E', 'F', 'G', 'A', 'B'][Math.floor(Math.random() * 7)] + 
            ['', 'm', '#', 'b'][Math.floor(Math.random() * 4)],
-      tempo: Math.round(studioState.tempo + (Math.random() - 0.5) * 20),
+      tempo: Math.round(studioState.bpm + (Math.random() - 0.5) * 20),
       timeSignature: studioState.timeSignature,
       genre: ['Pop', 'Rock', 'Electronic', 'Hip-Hop', 'Jazz', 'Classical'][Math.floor(Math.random() * 6)],
       mood: ['Energetic', 'Melancholic', 'Uplifting', 'Dramatic', 'Peaceful', 'Intense'][Math.floor(Math.random() * 6)],

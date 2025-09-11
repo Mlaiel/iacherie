@@ -12,9 +12,9 @@
 
 import React from 'react';
 import { RealTimeAnalytics } from '@/components/dashboard_analytics/RealTimeAnalytics';
-import { LiveMetricsGrid } from './components/LiveMetricsGrid';
-import { ActivityStream } from './components/ActivityStream';
-import { PerformanceChart } from './components/PerformanceChart';
+import { LiveMetricsGrid } from './LiveMetricsGrid';
+import { ActivityStream } from './ActivityStream';
+import { PerformanceChart } from './PerformanceChart';
 
 export default function RealTimePage() {
   return (
