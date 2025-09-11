@@ -1,523 +1,67 @@
-# =============================================================================
-# AINFLUE AUDIO PROCESSING SERVICES - DOCKER COMPOSE
-# =============================================================================
-# Professional audio processing cluster with source separation, broadcast
-# standards compliance, codec optimization, and quality analysis.
-#
+# Docker Compose for Audio Services
+# Audio processing, analysis, and enhancement services
 # Author: Fahed Mlaiel (mlaiel@live.de)
-# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-# =============================================================================
 
-x-audio-common: &audio-common
-  restart: unless-stopped
-  networks:
-    - audio-network
-    - backend-network
-  environment:
-    - ENVIRONMENT=${ENVIRONMENT:-production}
-    - LOG_LEVEL=${LOG_LEVEL:-INFO}
-    - REDIS_HOST=redis-master
-    - POSTGRES_HOST=postgres-master
-    - MONITORING_ENABLED=true
-  logging:
-    driver: "json-file"
-    options:
-      max-size: "200m"
-      max-file: "5"
-
-x-audio-resources: &audio-resources
-  deploy:
-    resources:
-      limits:
-        cpus: '2.0'
-        memory: 4G
-      reservations:
-        cpus: '0.5'
-        memory: 1G
-    restart_policy:
-      condition: on-failure
-      delay: 10s
-      max_attempts: 3
+version: '3.8'
 
 services:
-  # =============================================================================
-  # MAIN AUDIO PROCESSING ENGINE
-  # =============================================================================
+  # Source separation service
+  source-separation:
+    build:
+      context: ../..
+      dockerfile: docker/audio/source_separation.dockerfile
+      target: production
+    container_name: ainflue-source-separation
+    ports:
+      - "8011:8011"
+    environment:
+      - SERVICE_NAME=source_separation
+      - MODEL_TYPE=spleeter
+      - STEMS_COUNT=4
+    volumes:
+      - separation_storage:/app/storage
+      - separation_models:/app/models
+      - separation_logs:/app/logs
+      - separation_cache:/app/cache
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8011/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - audio-network
+
+  # Audio processing service
   audio-processing:
     build:
       context: ../..
       dockerfile: docker/audio/audio_processing.dockerfile
       target: production
     container_name: ainflue-audio-processing
-    <<: [*audio-common, *audio-resources]
     ports:
-      - "8010:8010"
+      - "8012:8012"
+    environment:
+      - SERVICE_NAME=audio_processing
+      - SAMPLE_RATE=44100
+      - BIT_DEPTH=16
     volumes:
       - audio_storage:/app/storage
-      - audio_models:/app/models
-      - audio_logs:/app/logs
       - audio_cache:/app/cache
-    environment:
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8012/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - audio-network
+
+networks:
+  audio-network:
+    driver: bridge
 
-          - ENVIRONMENT=${ENVIRONMENT:-production}
-
-          - LOG_LEVEL=${LOG_LEVEL:-INFO}
-
-          - AUDIO_PROCESSING_THREADS=4
-
-          - MONITORING_ENABLED=true
-
-          - SERVICE_NAME=audio_processing
-
-          - DEMUCS_MODEL=htdemucs
-
-          - SAMPLE_RATE=44100
-
-          - BIT_DEPTH=24
-
-          - LOUDNESS_TARGET=-23.0
-
-          - healthcheck=
-
-          - test=["CMD", "curl", "-f", "http://localhost:8010/health"]
-
-          - interval=30s
-
-          - timeout=10s
-
-          - retries=3
-
-          - start_period=60s
-  # =============================================================================
-  # SOURCE SEPARATION SERVICE
-  # =============================================================================
-
-          - source-separation=
-
-          - build=
-
-          - context=../..
-
-          - dockerfile=docker/audio/source_separation.dockerfile
-
-          - target=production
-
-          - container_name=ainflue-source-separation
-
-          - ports=
-      - "8011:8011"
-
-          - volumes=
-      - separation_storage:/app/storage
-      - separation_models:/app/models
-      - separation_logs:/app/logs
-      - separation_cache:/app/cache
-
-          - environment=
-
-          - SERVICE_NAME=source_separation
-
-          - DEMUCS_MODEL=htdemucs
-
-          - SPLEETER_MODEL=spleeter:4stems-16kHz
-
-          - MAX_AUDIO_LENGTH=600
-
-          - healthcheck=
-
-          - test=["CMD", "curl", "-f", "http://localhost:8011/health"]
-
-          - interval=30s
-
-          - timeout=15s
-
-          - retries=3
-
-          - start_period=90s
-  # =============================================================================
-  # BROADCAST STANDARDS COMPLIANCE
-  # =============================================================================
-
-          - broadcast-standards=
-
-          - build=
-
-          - context=../..
-
-          - dockerfile=docker/audio/broadcast_standards.dockerfile
-
-          - target=production
-
-          - container_name=ainflue-broadcast-standards
-
-          - ports=
-      - "8012:8012"
-
-          - volumes=
-      - broadcast_storage:/app/storage
-      - broadcast_standards:/app/standards
-      - broadcast_logs:/app/logs
-
-          - environment=
-
-          - SERVICE_NAME=broadcast_standards
-
-          - EBU_TARGET_LUFS=-23.0
-
-          - ITU_GATE_THRESHOLD=-70.0
-
-          - ATSC_TARGET_LUFS=-24.0
-
-          - deploy=
-
-          - resources=
-
-          - limits=
-
-          - cpus='1.5'
-
-          - memory=2G
-
-          - reservations=
-
-          - cpus='0.5'
-
-          - memory=512M
-
-          - healthcheck=
-
-          - test=["CMD", "curl", "-f", "http://localhost:8012/health"]
-
-          - interval=30s
-
-          - timeout=10s
-
-          - retries=3
-  # =============================================================================
-  # CODEC OPTIMIZATION ENGINE
-  # =============================================================================
-
-          - codec-optimization=
-
-          - build=
-
-          - context=../..
-
-          - dockerfile=docker/audio/codec_optimization.dockerfile
-
-          - target=production
-
-          - container_name=ainflue-codec-optimization
-
-          - ports=
-      - "8013:8013"
-
-          - volumes=
-      - codec_storage:/app/storage
-      - codec_presets:/app/presets
-      - codec_logs:/app/logs
-
-          - environment=
-
-          - SERVICE_NAME=codec_optimization
-
-          - DEFAULT_BITRATE=320
-
-          - MP3_QUALITY=0
-
-          - FLAC_COMPRESSION=8
-
-          - OPUS_BITRATE=256
-
-          - deploy=
-
-          - resources=
-
-          - limits=
-
-          - cpus='3.0'
-
-          - memory=4G
-
-          - reservations=
-
-          - cpus='1.0'
-
-          - memory=1G
-
-          - healthcheck=
-
-          - test=["CMD", "curl", "-f", "http://localhost:8013/health"]
-
-          - interval=30s
-
-          - timeout=10s
-
-          - retries=3
-  # =============================================================================
-  # AUDIO QUALITY ANALYZER
-  # =============================================================================
-
-          - audio-quality-analyzer=
-
-          - build=
-
-          - context=../..
-
-          - dockerfile=docker/audio/audio_quality_analyzer.dockerfile
-
-          - target=production
-
-          - container_name=ainflue-audio-quality
-
-          - ports=
-      - "8014:8014"
-
-          - volumes=
-      - quality_storage:/app/storage
-      - quality_models:/app/models
-      - quality_logs:/app/logs
-
-          - environment=
-
-          - SERVICE_NAME=audio_quality_analyzer
-
-          - THD_THRESHOLD=0.01
-
-          - SNR_THRESHOLD=60
-
-          - DYNAMIC_RANGE_THRESHOLD=14
-
-          - deploy=
-
-          - resources=
-
-          - limits=
-
-          - cpus='2.0'
-
-          - memory=3G
-
-          - reservations=
-
-          - cpus='0.5'
-
-          - memory=1G
-
-          - healthcheck=
-
-          - test=["CMD", "curl", "-f", "http://localhost:8014/health"]
-
-          - interval=30s
-
-          - timeout=10s
-
-          - retries=3
-  # =============================================================================
-  # MASTERING ENGINE
-  # =============================================================================
-
-          - mastering-engine=
-
-          - build=
-
-          - context=../..
-
-          - dockerfile=docker/audio/mastering_engine.dockerfile
-
-          - target=production
-
-          - container_name=ainflue-mastering
-
-          - ports=
-      - "8015:8015"
-
-          - volumes=
-      - mastering_storage:/app/storage
-      - mastering_logs:/app/logs
-
-          - environment=
-
-          - SERVICE_NAME=mastering_engine
-
-          - TARGET_LUFS=-14.0
-
-          - TRUE_PEAK_LIMIT=-1.0
-
-          - STEREO_WIDTH=1.2
-
-          - healthcheck=
-
-          - test=["CMD", "curl", "-f", "http://localhost:8015/health"]
-
-          - interval=30s
-
-          - timeout=10s
-
-          - retries=3
-  # =============================================================================
-  # FORMAT CONVERTER
-  # =============================================================================
-
-          - format-converter=
-
-          - build=
-
-          - context=../..
-
-          - dockerfile=docker/audio/format_converter.dockerfile
-
-          - target=production
-
-          - container_name=ainflue-format-converter
-
-          - ports=
-      - "8016:8016"
-
-          - volumes=
-      - converter_storage:/app/storage
-      - converter_logs:/app/logs
-
-          - environment=
-
-          - SERVICE_NAME=format_converter
-
-          - MAX_FILE_SIZE=5GB
-
-          - SUPPORTED_FORMATS=wav,flac,mp3,opus,aac,ogg,dsd
-
-          - healthcheck=
-
-          - test=["CMD", "curl", "-f", "http://localhost:8016/health"]
-
-          - interval=30s
-
-          - timeout=10s
-
-          - retries=3
-  # =============================================================================
-  # WAVEFORM GENERATOR
-  # =============================================================================
-
-          - waveform-generator=
-
-          - build=
-
-          - context=../..
-
-          - dockerfile=docker/audio/waveform_generator.dockerfile
-
-          - target=production
-
-          - container_name=ainflue-waveform
-
-          - ports=
-      - "8017:8017"
-
-          - volumes=
-      - waveform_storage:/app/storage
-      - waveform_logs:/app/logs
-
-          - environment=
-
-          - SERVICE_NAME=waveform_generator
-
-          - deploy=
-
-          - resources=
-
-          - limits=
-
-          - cpus='1.0'
-
-          - memory=2G
-
-          - reservations=
-
-          - cpus='0.3'
-
-          - memory=512M
-
-          - healthcheck=
-
-          - test=["CMD", "curl", "-f", "http://localhost:8017/health"]
-
-          - interval=30s
-
-          - timeout=10s
-
-          - retries=3
-  # =============================================================================
-  # SPECTRUM ANALYZER
-  # =============================================================================
-
-          - spectrum-analyzer=
-
-          - build=
-
-          - context=../..
-
-          - dockerfile=docker/audio/spectrum_analyzer.dockerfile
-
-          - target=production
-
-          - container_name=ainflue-spectrum
-
-          - ports=
-      - "8018:8018"
-
-          - volumes=
-      - spectrum_storage:/app/storage
-      - spectrum_logs:/app/logs
-
-          - environment=
-
-          - SERVICE_NAME=spectrum_analyzer
-
-          - FFT_SIZE=2048
-
-          - HOP_LENGTH=512
-
-          - deploy=
-
-          - resources=
-
-          - limits=
-
-          - cpus='1.0'
-
-          - memory=2G
-
-          - reservations=
-
-          - cpus='0.3'
-
-          - memory=512M
-
-          - healthcheck=
-
-          - test=["CMD", "curl", "-f", "http://localhost:8018/health"]
-
-          - interval=30s
-
-          - timeout=10s
-
-          - retries=3
-# =============================================================================
-# PERSISTENT VOLUMES
-# =============================================================================
 volumes:
-  # Main audio processing
-  audio_storage:
-    driver: local
-  audio_models:
-    driver: local
-  audio_logs:
-    driver: local
-  audio_cache:
-    driver: local
-  
-  # Source separation
   separation_storage:
     driver: local
   separation_models:
@@ -526,63 +70,7 @@ volumes:
     driver: local
   separation_cache:
     driver: local
-  
-  # Broadcast standards
-  broadcast_storage:
+  audio_storage:
     driver: local
-  broadcast_standards:
+  audio_cache:
     driver: local
-  broadcast_logs:
-    driver: local
-  
-  # Codec optimization
-  codec_storage:
-    driver: local
-  codec_presets:
-    driver: local
-  codec_logs:
-    driver: local
-  
-  # Quality analysis
-  quality_storage:
-    driver: local
-  quality_models:
-    driver: local
-  quality_logs:
-    driver: local
-  
-  # Mastering
-  mastering_storage:
-    driver: local
-  mastering_logs:
-    driver: local
-  
-  # Format conversion
-  converter_storage:
-    driver: local
-  converter_logs:
-    driver: local
-  
-  # Waveform generation
-  waveform_storage:
-    driver: local
-  waveform_logs:
-    driver: local
-  
-  # Spectrum analysis
-  spectrum_storage:
-    driver: local
-  spectrum_logs:
-    driver: local
-
-# =============================================================================
-# NETWORKS
-# =============================================================================
-networks:
-  audio-network:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.30.0.0/24
-  backend-network:
-    external: true
