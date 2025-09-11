@@ -112,5 +112,20 @@ stripe>=7.0.0                      # Stripe payments
 # decimal>=1.70  # Built-in module                      # Precise financial calculations
 python-dateutil>=2.8.2           # Date handling for financial records
 
+# Cloud Provider Dependencies (Required for integrations module)
+aioboto3>=12.0.0              # AWS async client
+google-cloud-storage>=2.10.0  # Google Cloud Storage
+azure-storage-blob>=12.19.0   # Azure Blob Storage
+boto3==1.29.7                 # AWS standard client
+
+# Testing Dependencies (Required for development)
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+pytest-mock>=3.12.0
+
+# Additional Platform SDKs for integrations
+aiofiles>=23.2.0              # Async file operations
+orjson>=3.9.0                 # Fast JSON serialization
+
 # Extended functionality (optional - loads from config/requirements.txt if available)
 # For full AI features, install: pip install -r config/requirements.txt
