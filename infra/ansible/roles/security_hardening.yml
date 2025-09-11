@@ -1,0 +1,551 @@
+# Ainflue Infrastructure Module - Security Hardening Ansible Role
+# ================================================================
+# 
+# Enterprise-grade security hardening for Ainflue platform
+# Comprehensive security configuration and compliance automation
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+#
+# ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+
+# **EXPERT ROLES IMPLEMENTATION:**
+# Lead Dev IA: AI service security hardening, model protection
+# Backend Senior: Application security, service hardening
+# ML Engineer: ML pipeline security, model serving protection
+# DBA: Database security hardening, access control
+# Security: Zero-trust implementation, compliance automation, threat protection
+# Microservices: Service isolation, secure communication
+# Audio Engineer: Media processing security, file upload protection
+# DevOps: Infrastructure security automation, monitoring
+# IA Prompt Engineer: AI provider security, prompt injection protection
+
+---
+- name: "Security Hardening - Ainflue Platform"
+  hosts: all
+  become: yes
+  vars:
+    project_name: "ainflue"
+    security_level: "enterprise"
+    compliance_frameworks:
+      - "CIS"
+      - "NIST"
+      - "GDPR"
+      - "SOC2"
+      - "ISO27001"
+    
+    # SSH Security Configuration
+    ssh_config:
+      port: 22
+      protocol: 2
+      login_grace_time: 30
+      permit_root_login: "no"
+      strict_modes: "yes"
+      max_auth_tries: 3
+      max_sessions: 4
+      pub_key_authentication: "yes"
+      password_authentication: "no"
+      permit_empty_passwords: "no"
+      challenge_response_authentication: "no"
+      use_pam: "yes"
+      x11_forwarding: "no"
+      print_motd: "no"
+      tcp_keep_alive: "yes"
+      client_alive_interval: 300
+      client_alive_count_max: 2
+      
+    # Firewall Rules
+    firewall_rules:
+      - { port: "22", protocol: "tcp", source: "10.0.0.0/8", comment: "SSH from VPC" }
+      - { port: "80", protocol: "tcp", source: "0.0.0.0/0", comment: "HTTP" }
+      - { port: "443", protocol: "tcp", source: "0.0.0.0/0", comment: "HTTPS" }
+      - { port: "8000", protocol: "tcp", source: "10.0.0.0/8", comment: "Application" }
+      - { port: "8080", protocol: "tcp", source: "10.0.0.0/8", comment: "Health Check" }
+      - { port: "9090", protocol: "tcp", source: "10.0.0.0/8", comment: "Prometheus" }
+      - { port: "3000", protocol: "tcp", source: "10.0.0.0/8", comment: "Grafana" }
+      
+    # Security Packages
+    security_packages:
+      - ufw
+      - fail2ban
+      - aide
+      - auditd
+      - rkhunter
+      - chkrootkit
+      - clamav
+      - clamav-daemon
+      - unattended-upgrades
+      - apt-listchanges
+      - needrestart
+      - lynis
+      - osquery
+      - htop
+      - iotop
+      - netstat-nat
+      - tcpdump
+      - wireshark-common
+      
+    # Kernel Security Parameters
+    kernel_security_params:
+      # Network security
+      "net.ipv4.ip_forward": 0
+      "net.ipv4.conf.all.rp_filter": 1
+      "net.ipv4.conf.default.rp_filter": 1
+      "net.ipv4.conf.all.accept_source_route": 0
+      "net.ipv4.conf.default.accept_source_route": 0
+      "net.ipv4.conf.all.accept_redirects": 0
+      "net.ipv4.conf.default.accept_redirects": 0
+      "net.ipv4.conf.all.secure_redirects": 1
+      "net.ipv4.conf.default.secure_redirects": 1
+      "net.ipv4.conf.all.send_redirects": 0
+      "net.ipv4.conf.default.send_redirects": 0
+      "net.ipv4.icmp_echo_ignore_broadcasts": 1
+      "net.ipv4.icmp_ignore_bogus_error_responses": 1
+      "net.ipv4.tcp_syncookies": 1
+      "net.ipv4.tcp_max_syn_backlog": 2048
+      "net.ipv4.tcp_synack_retries": 2
+      "net.ipv4.tcp_syn_retries": 5
+      # IPv6 security
+      "net.ipv6.conf.all.disable_ipv6": 0
+      "net.ipv6.conf.default.disable_ipv6": 0
+      "net.ipv6.conf.all.accept_ra": 0
+      "net.ipv6.conf.default.accept_ra": 0
+      "net.ipv6.conf.all.accept_redirects": 0
+      "net.ipv6.conf.default.accept_redirects": 0
+      # Memory protection
+      "kernel.randomize_va_space": 2
+      "kernel.exec-shield": 1
+      "kernel.dmesg_restrict": 1
+      "kernel.kptr_restrict": 2
+      "kernel.yama.ptrace_scope": 1
+      # File system security
+      "fs.suid_dumpable": 0
+      "fs.protected_hardlinks": 1
+      "fs.protected_symlinks": 1
+
+  tasks:
+    - name: "Update package cache"
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+      when: ansible_os_family == "Debian"
+
+    - name: "Install security packages"
+      package:
+        name: "{{ security_packages }}"
+        state: present
+
+    - name: "Configure SSH security"
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: "^#?{{ item.key }}"
+        line: "{{ item.key }} {{ item.value }}"
+        backup: yes
+      loop:
+        - { key: "Port", value: "{{ ssh_config.port }}" }
+        - { key: "Protocol", value: "{{ ssh_config.protocol }}" }
+        - { key: "LoginGraceTime", value: "{{ ssh_config.login_grace_time }}" }
+        - { key: "PermitRootLogin", value: "{{ ssh_config.permit_root_login }}" }
+        - { key: "StrictModes", value: "{{ ssh_config.strict_modes }}" }
+        - { key: "MaxAuthTries", value: "{{ ssh_config.max_auth_tries }}" }
+        - { key: "MaxSessions", value: "{{ ssh_config.max_sessions }}" }
+        - { key: "PubkeyAuthentication", value: "{{ ssh_config.pub_key_authentication }}" }
+        - { key: "PasswordAuthentication", value: "{{ ssh_config.password_authentication }}" }
+        - { key: "PermitEmptyPasswords", value: "{{ ssh_config.permit_empty_passwords }}" }
+        - { key: "ChallengeResponseAuthentication", value: "{{ ssh_config.challenge_response_authentication }}" }
+        - { key: "UsePAM", value: "{{ ssh_config.use_pam }}" }
+        - { key: "X11Forwarding", value: "{{ ssh_config.x11_forwarding }}" }
+        - { key: "PrintMotd", value: "{{ ssh_config.print_motd }}" }
+        - { key: "TCPKeepAlive", value: "{{ ssh_config.tcp_keep_alive }}" }
+        - { key: "ClientAliveInterval", value: "{{ ssh_config.client_alive_interval }}" }
+        - { key: "ClientAliveCountMax", value: "{{ ssh_config.client_alive_count_max }}" }
+      notify: restart sshd
+
+    - name: "Configure kernel security parameters"
+      sysctl:
+        name: "{{ item.key }}"
+        value: "{{ item.value }}"
+        sysctl_set: yes
+        state: present
+        reload: yes
+      loop: "{{ kernel_security_params | dict2items }}"
+
+    - name: "Configure UFW firewall"
+      block:
+        - name: "Reset UFW to defaults"
+          ufw:
+            state: reset
+
+        - name: "Set UFW default policies"
+          ufw:
+            direction: "{{ item.direction }}"
+            policy: "{{ item.policy }}"
+          loop:
+            - { direction: "incoming", policy: "deny" }
+            - { direction: "outgoing", policy: "allow" }
+            - { direction: "routed", policy: "deny" }
+
+        - name: "Configure UFW rules"
+          ufw:
+            rule: allow
+            port: "{{ item.port }}"
+            proto: "{{ item.protocol }}"
+            src: "{{ item.source }}"
+            comment: "{{ item.comment }}"
+          loop: "{{ firewall_rules }}"
+
+        - name: "Enable UFW"
+          ufw:
+            state: enabled
+            logging: "on"
+
+    - name: "Configure Fail2Ban"
+      block:
+        - name: "Create Fail2Ban jail.local"
+          copy:
+            content: |
+              [DEFAULT]
+              bantime = 3600
+              findtime = 600
+              maxretry = 3
+              backend = systemd
+              
+              [sshd]
+              enabled = true
+              port = {{ ssh_config.port }}
+              filter = sshd
+              logpath = /var/log/auth.log
+              maxretry = 3
+              bantime = 3600
+              
+              [nginx-http-auth]
+              enabled = true
+              filter = nginx-http-auth
+              logpath = /var/log/nginx/error.log
+              maxretry = 3
+              bantime = 3600
+              
+              [nginx-limit-req]
+              enabled = true
+              filter = nginx-limit-req
+              logpath = /var/log/nginx/error.log
+              maxretry = 10
+              findtime = 600
+              bantime = 3600
+              
+              [apache-auth]
+              enabled = true
+              filter = apache-auth
+              logpath = /var/log/apache*/*error.log
+              maxretry = 3
+              bantime = 3600
+              
+              [apache-badbots]
+              enabled = true
+              filter = apache-badbots
+              logpath = /var/log/apache*/*access.log
+              maxretry = 3
+              bantime = 3600
+            dest: /etc/fail2ban/jail.local
+            backup: yes
+          notify: restart fail2ban
+
+    - name: "Configure AIDE (file integrity monitoring)"
+      block:
+        - name: "Initialize AIDE database"
+          command: aideinit
+          args:
+            creates: /var/lib/aide/aide.db.new
+
+        - name: "Copy AIDE database"
+          copy:
+            src: /var/lib/aide/aide.db.new
+            dest: /var/lib/aide/aide.db
+            remote_src: yes
+          when: ansible_stat.stat.exists is defined
+
+        - name: "Create AIDE check script"
+          copy:
+            content: |
+              #!/bin/bash
+              # Ainflue AIDE Security Check
+              # Daily file integrity monitoring
+              
+              AIDE_LOG="/var/log/aide/aide.log"
+              AIDE_REPORT="/var/log/aide/aide-report-$(date +%Y%m%d).log"
+              
+              mkdir -p /var/log/aide
+              
+              echo "$(date): Starting AIDE integrity check" >> $AIDE_LOG
+              
+              if aide --check > $AIDE_REPORT 2>&1; then
+                echo "$(date): AIDE check completed successfully" >> $AIDE_LOG
+              else
+                echo "$(date): AIDE check found changes - see $AIDE_REPORT" >> $AIDE_LOG
+                # Send alert if needed
+                mail -s "AIDE Alert: File integrity changes detected on $(hostname)" admin@ainflue.com < $AIDE_REPORT || true
+              fi
+            dest: /usr/local/bin/aide-check.sh
+            mode: '0755'
+
+        - name: "Add AIDE cron job"
+          cron:
+            name: "AIDE integrity check"
+            minute: "0"
+            hour: "2"
+            job: "/usr/local/bin/aide-check.sh"
+            user: root
+
+    - name: "Configure auditd"
+      block:
+        - name: "Configure audit rules"
+          copy:
+            content: |
+              # Ainflue Security Audit Rules
+              # Monitor critical system activities
+              
+              # Delete all previous rules
+              -D
+              
+              # Set buffer size
+              -b 8192
+              
+              # Set failure mode
+              -f 1
+              
+              # Monitor user/group modifications
+              -w /etc/group -p wa -k identity
+              -w /etc/passwd -p wa -k identity
+              -w /etc/gshadow -p wa -k identity
+              -w /etc/shadow -p wa -k identity
+              -w /etc/security/opasswd -p wa -k identity
+              
+              # Monitor sudo/su usage
+              -w /etc/sudoers -p wa -k scope
+              -w /etc/sudoers.d/ -p wa -k scope
+              
+              # Monitor login/logout events
+              -w /var/log/faillog -p wa -k logins
+              -w /var/log/lastlog -p wa -k logins
+              -w /var/log/tallylog -p wa -k logins
+              
+              # Monitor network environment changes
+              -a always,exit -F arch=b64 -S sethostname -S setdomainname -k system-locale
+              -w /etc/issue -p wa -k system-locale
+              -w /etc/issue.net -p wa -k system-locale
+              -w /etc/hosts -p wa -k system-locale
+              -w /etc/sysconfig/network -p wa -k system-locale
+              
+              # Monitor time changes
+              -a always,exit -F arch=b64 -S adjtimex -S settimeofday -k time-change
+              -a always,exit -F arch=b64 -S clock_settime -k time-change
+              -w /etc/localtime -p wa -k time-change
+              
+              # Monitor system startup scripts
+              -w /etc/inittab -p wa -k init
+              -w /etc/init.d/ -p wa -k init
+              -w /etc/init/ -p wa -k init
+              
+              # Monitor file system mounts
+              -a always,exit -F arch=b64 -S mount -k mounts
+              
+              # Monitor file deletions
+              -a always,exit -F arch=b64 -S unlink -S unlinkat -S rename -S renameat -k delete
+              
+              # Monitor privilege escalation
+              -w /bin/su -p x -k priv_esc
+              -w /usr/bin/sudo -p x -k priv_esc
+              -w /etc/sudoers -p rw -k priv_esc
+              
+              # Monitor critical file access
+              -w /etc/ssh/sshd_config -k sshd
+              -w /etc/passwd -k passwd_changes
+              -w /etc/group -k group_changes
+              -w /etc/shadow -k shadow_changes
+              
+              # Make rules immutable
+              -e 2
+            dest: /etc/audit/rules.d/audit.rules
+            backup: yes
+          notify: restart auditd
+
+    - name: "Configure automatic security updates"
+      block:
+        - name: "Configure unattended-upgrades"
+          copy:
+            content: |
+              Unattended-Upgrade::Allowed-Origins {
+                  "${distro_id}:${distro_codename}";
+                  "${distro_id}:${distro_codename}-security";
+                  "${distro_id}ESMApps:${distro_codename}-apps-security";
+                  "${distro_id}ESM:${distro_codename}-infra-security";
+              };
+              
+              Unattended-Upgrade::Package-Blacklist {
+                  // "kernel*";
+                  // "mysql*";
+              };
+              
+              Unattended-Upgrade::DevRelease "false";
+              Unattended-Upgrade::Remove-Unused-Kernel-Packages "true";
+              Unattended-Upgrade::Remove-New-Unused-Dependencies "true";
+              Unattended-Upgrade::Remove-Unused-Dependencies "true";
+              Unattended-Upgrade::Automatic-Reboot "false";
+              Unattended-Upgrade::Automatic-Reboot-WithUsers "false";
+              Unattended-Upgrade::Automatic-Reboot-Time "02:00";
+              
+              Unattended-Upgrade::Mail "admin@ainflue.com";
+              Unattended-Upgrade::MailOnlyOnError "true";
+              Unattended-Upgrade::SyslogEnable "true";
+              Unattended-Upgrade::SyslogFacility "daemon";
+            dest: /etc/apt/apt.conf.d/50unattended-upgrades
+            backup: yes
+
+        - name: "Enable automatic updates"
+          copy:
+            content: |
+              APT::Periodic::Update-Package-Lists "1";
+              APT::Periodic::Download-Upgradeable-Packages "1";
+              APT::Periodic::AutocleanInterval "7";
+              APT::Periodic::Unattended-Upgrade "1";
+            dest: /etc/apt/apt.conf.d/20auto-upgrades
+
+    - name: "Configure system security limits"
+      pam_limits:
+        domain: "*"
+        limit_type: "{{ item.type }}"
+        limit_item: "{{ item.item }}"
+        value: "{{ item.value }}"
+      loop:
+        - { type: "hard", item: "core", value: "0" }
+        - { type: "hard", item: "nproc", value: "65536" }
+        - { type: "soft", item: "nproc", value: "32768" }
+        - { type: "hard", item: "nofile", value: "65536" }
+        - { type: "soft", item: "nofile", value: "32768" }
+
+    - name: "Configure login.defs security"
+      lineinfile:
+        path: /etc/login.defs
+        regexp: "^{{ item.key }}"
+        line: "{{ item.key }} {{ item.value }}"
+        backup: yes
+      loop:
+        - { key: "PASS_MAX_DAYS", value: "90" }
+        - { key: "PASS_MIN_DAYS", value: "1" }
+        - { key: "PASS_WARN_AGE", value: "7" }
+        - { key: "LOGIN_RETRIES", value: "3" }
+        - { key: "LOGIN_TIMEOUT", value: "60" }
+        - { key: "UID_MIN", value: "1000" }
+        - { key: "GID_MIN", value: "1000" }
+        - { key: "UMASK", value: "077" }
+
+    - name: "Create security monitoring script"
+      copy:
+        content: |
+          #!/bin/bash
+          # Ainflue Security Monitoring Script
+          # Comprehensive security status check
+          
+          LOG_FILE="/var/log/security-monitor.log"
+          REPORT_FILE="/var/log/security-report-$(date +%Y%m%d).log"
+          
+          echo "=== Ainflue Security Report - $(date) ===" > $REPORT_FILE
+          
+          # System status
+          echo "== System Status ==" >> $REPORT_FILE
+          uptime >> $REPORT_FILE
+          df -h >> $REPORT_FILE
+          free -h >> $REPORT_FILE
+          
+          # Security services status
+          echo "== Security Services ==" >> $REPORT_FILE
+          systemctl is-active ufw >> $REPORT_FILE
+          systemctl is-active fail2ban >> $REPORT_FILE
+          systemctl is-active auditd >> $REPORT_FILE
+          systemctl is-active ssh >> $REPORT_FILE
+          
+          # Failed login attempts
+          echo "== Failed Login Attempts ==" >> $REPORT_FILE
+          grep "Failed password" /var/log/auth.log | tail -20 >> $REPORT_FILE || true
+          
+          # Firewall status
+          echo "== Firewall Status ==" >> $REPORT_FILE
+          ufw status numbered >> $REPORT_FILE
+          
+          # Active connections
+          echo "== Active Connections ==" >> $REPORT_FILE
+          netstat -tulpn | grep LISTEN >> $REPORT_FILE
+          
+          # Process monitoring
+          echo "== Top Processes ==" >> $REPORT_FILE
+          ps aux --sort=-%cpu | head -20 >> $REPORT_FILE
+          
+          # Disk usage alerts
+          echo "== Disk Usage Alerts ==" >> $REPORT_FILE
+          df -h | awk '$5 > 80 {print $0}' >> $REPORT_FILE
+          
+          # Log rotation and cleanup
+          find /var/log -name "*.log" -size +100M >> $REPORT_FILE
+          
+          # Security scan with Lynis (if available)
+          if command -v lynis &> /dev/null; then
+            echo "== Lynis Security Scan ==" >> $REPORT_FILE
+            lynis audit system --quick --quiet >> $REPORT_FILE 2>&1 || true
+          fi
+          
+          echo "Security report completed: $REPORT_FILE" >> $LOG_FILE
+        dest: /usr/local/bin/security-monitor.sh
+        mode: '0755'
+
+    - name: "Add security monitoring cron job"
+      cron:
+        name: "Security monitoring"
+        minute: "0"
+        hour: "6"
+        job: "/usr/local/bin/security-monitor.sh"
+        user: root
+
+    - name: "Configure log rotation for security logs"
+      copy:
+        content: |
+          /var/log/security-*.log {
+              daily
+              missingok
+              rotate 30
+              compress
+              delaycompress
+              notifempty
+              create 0640 root adm
+          }
+          
+          /var/log/aide/*.log {
+              daily
+              missingok
+              rotate 90
+              compress
+              delaycompress
+              notifempty
+              create 0640 root adm
+          }
+        dest: /etc/logrotate.d/security-logs
+
+  handlers:
+    - name: restart sshd
+      service:
+        name: sshd
+        state: restarted
+
+    - name: restart fail2ban
+      service:
+        name: fail2ban
+        state: restarted
+
+    - name: restart auditd
+      service:
+        name: auditd
+        state: restarted
+
+    - name: restart ufw
+      service:
+        name: ufw
+        state: restarted

@@ -1,0 +1,547 @@
+# Ainflue Infrastructure Module - Mobile API Helm Chart
+# ======================================================
+# 
+# Enterprise-grade Mobile API chart for Ainflue platform
+# Optimized for mobile apps, creator tools, and real-time features
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+#
+# ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+
+apiVersion: v2
+name: ainflue-mobile-api
+description: "Enterprise Mobile API for Ainflue creator platform with real-time features"
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+home: https://mobile.ainflue.com
+sources:
+  - https://github.com/Mlaiel/Ainflue
+maintainers:
+  - name: Fahed Mlaiel
+    email: mlaiel@live.de
+keywords:
+  - mobile
+  - api
+  - real-time
+  - creators
+  - ainflue
+annotations:
+  category: Mobile API
+  licenses: Proprietary
+
+# Chart dependencies
+dependencies:
+  - name: postgresql
+    version: "12.1.6"
+    repository: "https://charts.bitnami.com/bitnami"
+    condition: postgresql.enabled
+  - name: redis
+    version: "17.8.0"
+    repository: "https://charts.bitnami.com/bitnami"
+    condition: redis.enabled
+  - name: nginx
+    version: "13.2.23"
+    repository: "https://charts.bitnami.com/bitnami"
+    condition: nginx.enabled
+
+---
+# Default values for ainflue-mobile-api
+# Expert roles implementation in configuration
+
+# **EXPERT ROLES IMPLEMENTATION:**
+# Lead Dev IA: AI-powered mobile features, intelligent content recommendations
+# Backend Senior: High-performance mobile API, real-time capabilities
+# ML Engineer: Mobile ML inference, on-device AI optimization
+# DBA: Mobile-optimized data access, offline synchronization
+# Security: Mobile security, OAuth, API rate limiting
+# Microservices: Mobile-first microservices, efficient data transfer
+# Audio Engineer: Mobile audio processing, streaming optimization
+# DevOps: Mobile API deployment, global CDN, monitoring
+# IA Prompt Engineer: Mobile AI interactions, prompt optimization
+
+# Global configuration
+global:
+  imageRegistry: ""
+  imagePullSecrets: []
+  storageClass: ""
+
+# Image configuration
+image:
+  registry: docker.io
+  repository: ainflue/mobile-api
+  tag: "1.0.0"
+  pullPolicy: IfNotPresent
+  pullSecrets: []
+
+# Deployment configuration
+replicaCount: 5
+
+# Service configuration
+service:
+  type: ClusterIP
+  port: 8002
+  targetPort: 8002
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+
+# Ingress configuration with mobile optimization
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "60"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "60"
+    nginx.ingress.kubernetes.io/proxy-buffering: "on"
+    nginx.ingress.kubernetes.io/proxy-buffer-size: "128k"
+    nginx.ingress.kubernetes.io/proxy-buffers-number: "4"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "GET, PUT, POST, DELETE, PATCH, OPTIONS"
+    nginx.ingress.kubernetes.io/cors-allow-headers: "DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization"
+    nginx.ingress.kubernetes.io/rate-limit: "1000"
+    nginx.ingress.kubernetes.io/rate-limit-window: "1m"
+  hosts:
+    - host: mobile-api.ainflue.com
+      paths:
+        - path: /
+          pathType: Prefix
+        - path: /api/v1
+          pathType: Prefix
+        - path: /ws
+          pathType: Prefix
+  tls:
+    - secretName: mobile-api-tls
+      hosts:
+        - mobile-api.ainflue.com
+
+# Resource configuration optimized for mobile workloads
+resources:
+  limits:
+    cpu: 2000m
+    memory: 4Gi
+  requests:
+    cpu: 1000m
+    memory: 2Gi
+
+# Auto-scaling for mobile traffic patterns
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 20
+  targetCPUUtilizationPercentage: 60
+  targetMemoryUtilizationPercentage: 70
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+        - type: Percent
+          value: 50
+          periodSeconds: 60
+    scaleUp:
+      stabilizationWindowSeconds: 60
+      policies:
+        - type: Percent
+          value: 100
+          periodSeconds: 30
+
+# Pod disruption budget
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 2
+
+# Security context
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 3000
+  fsGroup: 2000
+  capabilities:
+    drop:
+      - ALL
+
+podSecurityContext:
+  seccompProfile:
+    type: RuntimeDefault
+
+# Environment variables
+env:
+  - name: MOBILE_API_PORT
+    value: "8002"
+  - name: LOG_LEVEL
+    value: "INFO"
+  - name: ENVIRONMENT
+    value: "production"
+  - name: REDIS_URL
+    value: "redis://ainflue-redis:6379"
+  - name: DATABASE_URL
+    valueFrom:
+      secretKeyRef:
+        name: mobile-api-secrets
+        key: database-url
+  - name: JWT_SECRET
+    valueFrom:
+      secretKeyRef:
+        name: mobile-api-secrets
+        key: jwt-secret
+  - name: WEBSOCKET_ENABLED
+    value: "true"
+  - name: REALTIME_NOTIFICATIONS
+    value: "true"
+  - name: MOBILE_OPTIMIZATIONS
+    value: "true"
+
+# Mobile-specific configuration
+mobileConfig:
+  # API optimization for mobile
+  compression:
+    enabled: true
+    level: 6
+    mimeTypes: 
+      - application/json
+      - text/plain
+      - text/css
+      - application/javascript
+      - image/svg+xml
+
+  # Caching strategy for mobile
+  caching:
+    enabled: true
+    defaultTTL: 300  # 5 minutes
+    staticAssetsTTL: 3600  # 1 hour
+    apiResponsesTTL: 60   # 1 minute
+    
+  # Real-time features
+  websocket:
+    enabled: true
+    maxConnections: 10000
+    heartbeatInterval: 30
+    timeoutSeconds: 60
+    
+  # Push notifications
+  pushNotifications:
+    enabled: true
+    providers:
+      - firebase
+      - apns
+    batchSize: 1000
+    retryAttempts: 3
+
+  # Offline support
+  offline:
+    enabled: true
+    syncInterval: 300  # 5 minutes
+    conflictResolution: "last-write-wins"
+    
+  # Mobile analytics
+  analytics:
+    enabled: true
+    sessionTracking: true
+    performanceMetrics: true
+    errorTracking: true
+
+# API features configuration
+apiFeatures:
+  # Content management
+  content:
+    maxUploadSize: 100MB
+    supportedFormats:
+      image: [jpg, jpeg, png, gif, webp]
+      video: [mp4, mov, avi, mkv]
+      audio: [mp3, wav, flac, m4a]
+    processing:
+      imageOptimization: true
+      videoCompression: true
+      audioTranscoding: true
+
+  # AI integration
+  ai:
+    contentModeration: true
+    smartCropping: true
+    autoTagging: true
+    sentimentAnalysis: true
+    
+  # Social features
+  social:
+    messaging: true
+    comments: true
+    likes: true
+    shares: true
+    followers: true
+    
+  # Creator tools
+  creator:
+    analytics: true
+    monetization: true
+    scheduling: true
+    collaboration: true
+
+# Audio processing for mobile
+audioProcessing:
+  enabled: true
+  realtimeProcessing: true
+  formats:
+    input: [wav, mp3, m4a, flac]
+    output: [mp3, aac, opus]
+  quality:
+    mobile: 128kbps
+    wifi: 256kbps
+    premium: 320kbps
+  features:
+    noiseReduction: true
+    autoGain: true
+    normalization: true
+
+# Monitoring configuration
+monitoring:
+  enabled: true
+  prometheus:
+    enabled: true
+    port: 9091
+    path: /metrics
+  jaeger:
+    enabled: true
+    endpoint: http://jaeger-collector:14268/api/traces
+  logging:
+    level: INFO
+    format: json
+    mobileMetrics: true
+
+# Health checks optimized for mobile API
+healthChecks:
+  liveness:
+    enabled: true
+    path: /health/live
+    initialDelaySeconds: 30
+    periodSeconds: 20
+    timeoutSeconds: 5
+    failureThreshold: 3
+  readiness:
+    enabled: true
+    path: /health/ready
+    initialDelaySeconds: 15
+    periodSeconds: 10
+    timeoutSeconds: 3
+    failureThreshold: 3
+  startup:
+    enabled: true
+    path: /health/startup
+    initialDelaySeconds: 10
+    periodSeconds: 5
+    timeoutSeconds: 3
+    failureThreshold: 10
+
+# Persistent volumes
+persistence:
+  enabled: true
+  storageClass: "fast-ssd"
+  accessMode: ReadWriteOnce
+  size: 20Gi
+  annotations: {}
+
+# Node selection for mobile API
+nodeSelector:
+  workload-type: "api"
+tolerations: []
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: ainflue-mobile-api
+          topologyKey: kubernetes.io/hostname
+  nodeAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        preference:
+          matchExpressions:
+            - key: node-type
+              operator: In
+              values: ["api-optimized"]
+
+# Service account
+serviceAccount:
+  create: true
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::ACCOUNT:role/MobileAPIRole
+  name: ""
+
+# RBAC
+rbac:
+  create: true
+
+# Network policies
+networkPolicy:
+  enabled: true
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: ainflue
+        - namespaceSelector:
+            matchLabels:
+              name: ingress-nginx
+      ports:
+        - protocol: TCP
+          port: 8002
+  egress:
+    - to: []
+      ports:
+        - protocol: TCP
+          port: 443  # HTTPS
+        - protocol: TCP
+          port: 80   # HTTP
+        - protocol: TCP
+          port: 5432 # PostgreSQL
+        - protocol: TCP
+          port: 6379 # Redis
+
+# Configuration maps
+configMaps:
+  mobileApiConfig: |
+    mobile:
+      api_version: "v1"
+      max_request_size: 100MB
+      timeout: 30s
+      
+    realtime:
+      websocket_enabled: true
+      max_connections: 10000
+      heartbeat_interval: 30s
+      
+    notifications:
+      push_enabled: true
+      firebase_config: /config/firebase.json
+      apns_config: /config/apns.json
+      
+    offline:
+      sync_enabled: true
+      sync_interval: 5m
+      max_offline_time: 24h
+      
+    performance:
+      compression: true
+      caching: true
+      cdn_enabled: true
+      
+    security:
+      rate_limiting:
+        enabled: true
+        requests_per_minute: 1000
+        burst_limit: 100
+      cors:
+        enabled: true
+        allowed_origins: ["*"]
+        allowed_methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+
+  audioProcessingConfig: |
+    audio:
+      processing:
+        realtime: true
+        formats:
+          input: [wav, mp3, m4a, flac]
+          output: [mp3, aac, opus]
+        quality:
+          mobile: "128k"
+          wifi: "256k"
+          premium: "320k"
+      features:
+        noise_reduction: true
+        auto_gain: true
+        normalization: true
+        transcription: true
+
+# Secrets (references only)
+secrets:
+  mobileApiSecrets:
+    database-url: "postgresql://user:pass@db:5432/ainflue_mobile"
+    jwt-secret: "change-me-in-production"
+    encryption-key: "change-me-in-production"
+    
+  pushNotificationSecrets:
+    firebase-key: "firebase-service-account-key.json"
+    apns-key: "apns-auth-key.p8"
+    apns-key-id: "APNS_KEY_ID"
+    apns-team-id: "TEAM_ID"
+
+# PostgreSQL configuration
+postgresql:
+  enabled: true
+  auth:
+    postgresPassword: "ainflue123!"
+    username: "ainflue_mobile"
+    password: "ainflue123!"
+    database: "ainflue_mobile"
+  primary:
+    persistence:
+      enabled: true
+      size: 50Gi
+    resources:
+      requests:
+        memory: 2Gi
+        cpu: 1000m
+      limits:
+        memory: 4Gi
+        cpu: 2000m
+
+# Redis configuration for mobile caching
+redis:
+  enabled: true
+  auth:
+    enabled: true
+    password: "ainflue123!"
+  master:
+    persistence:
+      enabled: true
+      size: 20Gi
+    resources:
+      requests:
+        memory: 1Gi
+        cpu: 500m
+      limits:
+        memory: 2Gi
+        cpu: 1000m
+
+# NGINX configuration for mobile optimization
+nginx:
+  enabled: true
+  serverBlock: |
+    server {
+        listen 8080;
+        location / {
+            proxy_pass http://ainflue-mobile-api:8002;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            
+            # Mobile optimizations
+            gzip on;
+            gzip_comp_level 6;
+            gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+            
+            # Caching for mobile
+            location ~* \.(css|js|png|jpg|jpeg|gif|ico|svg)$ {
+                expires 1y;
+                add_header Cache-Control "public, immutable";
+            }
+        }
+        
+        # WebSocket support
+        location /ws {
+            proxy_pass http://ainflue-mobile-api:8002;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+            proxy_set_header Host $host;
+            proxy_cache_bypass $http_upgrade;
+        }
+    }

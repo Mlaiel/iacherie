@@ -1,0 +1,618 @@
+# Ainflue Infrastructure Module - Database Setup Ansible Role
+# ============================================================
+# 
+# Enterprise-grade database setup for Ainflue platform
+# PostgreSQL, Redis, and analytics database configuration
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+#
+# ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+
+# **EXPERT ROLES IMPLEMENTATION:**
+# Lead Dev IA: AI/ML database schemas, vector storage, model metadata
+# Backend Senior: Database architecture, connection pooling, performance
+# ML Engineer: Feature stores, model training data, experiment tracking
+# DBA: Advanced configuration, optimization, backup strategies, monitoring
+# Security: Database security, encryption, access control, audit logging
+# Microservices: Service-specific databases, data isolation
+# Audio Engineer: Media metadata storage, audio processing queues
+# DevOps: Automated deployment, monitoring, backup automation
+# IA Prompt Engineer: Prompt storage, AI provider configurations
+
+---
+- name: "Database Setup - Ainflue Platform"
+  hosts: database
+  become: yes
+  vars:
+    project_name: "ainflue"
+    environment: "{{ env | default('dev') }}"
+    
+    # PostgreSQL Configuration
+    postgresql_version: "15"
+    postgresql_port: 5432
+    postgresql_max_connections: 200
+    postgresql_shared_buffers: "256MB"
+    postgresql_effective_cache_size: "1GB"
+    postgresql_work_mem: "16MB"
+    postgresql_maintenance_work_mem: "256MB"
+    postgresql_wal_buffers: "16MB"
+    postgresql_checkpoint_completion_target: 0.9
+    postgresql_random_page_cost: 1.1
+    postgresql_effective_io_concurrency: 200
+    
+    # Redis Configuration
+    redis_port: 6379
+    redis_maxmemory: "512mb"
+    redis_maxmemory_policy: "allkeys-lru"
+    redis_timeout: 300
+    redis_tcp_keepalive: 60
+    redis_save_intervals:
+      - "900 1"
+      - "300 10"
+      - "60 10000"
+    
+    # Database Users
+    database_users:
+      - name: "ainflue_app"
+        password: "{{ app_db_password | default('changeme123!') }}"
+        privileges: "ALL"
+        database: "ainflue"
+      - name: "ainflue_readonly"
+        password: "{{ readonly_db_password | default('readonly123!') }}"
+        privileges: "SELECT"
+        database: "ainflue"
+      - name: "ainflue_analytics"
+        password: "{{ analytics_db_password | default('analytics123!') }}"
+        privileges: "ALL"
+        database: "ainflue_analytics"
+      - name: "ainflue_ml"
+        password: "{{ ml_db_password | default('ml123!') }}"
+        privileges: "ALL"
+        database: "ainflue_ml"
+    
+    # Databases to create
+    databases:
+      - name: "ainflue"
+        encoding: "UTF8"
+        lc_collate: "en_US.UTF-8"
+        lc_ctype: "en_US.UTF-8"
+        template: "template0"
+      - name: "ainflue_analytics"
+        encoding: "UTF8"
+        lc_collate: "en_US.UTF-8"
+        lc_ctype: "en_US.UTF-8"
+        template: "template0"
+      - name: "ainflue_ml"
+        encoding: "UTF8"
+        lc_collate: "en_US.UTF-8"
+        lc_ctype: "en_US.UTF-8"
+        template: "template0"
+      - name: "ainflue_cache"
+        encoding: "UTF8"
+        lc_collate: "en_US.UTF-8"
+        lc_ctype: "en_US.UTF-8"
+        template: "template0"
+
+  tasks:
+    - name: "Update package cache"
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+      when: ansible_os_family == "Debian"
+
+    - name: "Install PostgreSQL packages"
+      package:
+        name:
+          - "postgresql-{{ postgresql_version }}"
+          - "postgresql-client-{{ postgresql_version }}"
+          - "postgresql-contrib-{{ postgresql_version }}"
+          - "postgresql-server-dev-{{ postgresql_version }}"
+          - python3-psycopg2
+          - python3-pip
+        state: present
+
+    - name: "Install PostgreSQL extensions packages"
+      package:
+        name:
+          - "postgresql-{{ postgresql_version }}-postgis-3"
+          - "postgresql-{{ postgresql_version }}-postgis-3-scripts"
+          - "postgresql-{{ postgresql_version }}-pgrouting"
+          - "postgresql-{{ postgresql_version }}-pgvector"
+        state: present
+        
+    - name: "Install Redis packages"
+      package:
+        name:
+          - redis-server
+          - redis-tools
+        state: present
+
+    - name: "Install monitoring and backup tools"
+      package:
+        name:
+          - postgresql-client-common
+          - pgbouncer
+          - pg-activity
+          - pgtop
+          - pgbackrest
+          - wal-g
+        state: present
+
+    - name: "Start and enable PostgreSQL service"
+      service:
+        name: "postgresql"
+        state: started
+        enabled: yes
+
+    - name: "Start and enable Redis service"
+      service:
+        name: "redis-server"
+        state: started
+        enabled: yes
+
+    - name: "Configure PostgreSQL authentication"
+      lineinfile:
+        path: "/etc/postgresql/{{ postgresql_version }}/main/pg_hba.conf"
+        regexp: "{{ item.regexp }}"
+        line: "{{ item.line }}"
+        backup: yes
+      loop:
+        - regexp: "^local\\s+all\\s+postgres"
+          line: "local   all             postgres                                peer"
+        - regexp: "^local\\s+all\\s+all"
+          line: "local   all             all                                     md5"
+        - regexp: "^host\\s+all\\s+all\\s+127.0.0.1/32"
+          line: "host    all             all             127.0.0.1/32            md5"
+        - regexp: "^host\\s+all\\s+all\\s+::1/128"
+          line: "host    all             all             ::1/128                 md5"
+      notify: restart postgresql
+
+    - name: "Add VPC network access to pg_hba.conf"
+      lineinfile:
+        path: "/etc/postgresql/{{ postgresql_version }}/main/pg_hba.conf"
+        line: "host    all             all             10.0.0.0/8              md5"
+        backup: yes
+      notify: restart postgresql
+
+    - name: "Configure PostgreSQL main settings"
+      lineinfile:
+        path: "/etc/postgresql/{{ postgresql_version }}/main/postgresql.conf"
+        regexp: "^#?{{ item.key }}"
+        line: "{{ item.key }} = {{ item.value }}"
+        backup: yes
+      loop:
+        - key: "listen_addresses"
+          value: "'*'"
+        - key: "port"
+          value: "{{ postgresql_port }}"
+        - key: "max_connections"
+          value: "{{ postgresql_max_connections }}"
+        - key: "shared_buffers"
+          value: "'{{ postgresql_shared_buffers }}'"
+        - key: "effective_cache_size"
+          value: "'{{ postgresql_effective_cache_size }}'"
+        - key: "work_mem"
+          value: "'{{ postgresql_work_mem }}'"
+        - key: "maintenance_work_mem"
+          value: "'{{ postgresql_maintenance_work_mem }}'"
+        - key: "wal_buffers"
+          value: "'{{ postgresql_wal_buffers }}'"
+        - key: "checkpoint_completion_target"
+          value: "{{ postgresql_checkpoint_completion_target }}"
+        - key: "random_page_cost"
+          value: "{{ postgresql_random_page_cost }}"
+        - key: "effective_io_concurrency"
+          value: "{{ postgresql_effective_io_concurrency }}"
+        - key: "log_destination"
+          value: "'stderr'"
+        - key: "logging_collector"
+          value: "on"
+        - key: "log_directory"
+          value: "'log'"
+        - key: "log_filename"
+          value: "'postgresql-%Y-%m-%d_%H%M%S.log'"
+        - key: "log_rotation_age"
+          value: "1d"
+        - key: "log_rotation_size"
+          value: "100MB"
+        - key: "log_min_duration_statement"
+          value: "1000"
+        - key: "log_statement"
+          value: "'all'"
+        - key: "log_line_prefix"
+          value: "'%t [%p-%l] %q%u@%d '"
+      notify: restart postgresql
+
+    - name: "Configure PostgreSQL performance settings"
+      lineinfile:
+        path: "/etc/postgresql/{{ postgresql_version }}/main/postgresql.conf"
+        regexp: "^#?{{ item.key }}"
+        line: "{{ item.key }} = {{ item.value }}"
+        backup: yes
+      loop:
+        - key: "shared_preload_libraries"
+          value: "'pg_stat_statements,auto_explain,pg_buffercache'"
+        - key: "track_activities"
+          value: "on"
+        - key: "track_counts"
+          value: "on"
+        - key: "track_io_timing"
+          value: "on"
+        - key: "track_functions"
+          value: "all"
+        - key: "auto_explain.log_min_duration"
+          value: "1000"
+        - key: "auto_explain.log_analyze"
+          value: "on"
+        - key: "auto_explain.log_buffers"
+          value: "on"
+        - key: "auto_explain.log_timing"
+          value: "on"
+        - key: "auto_explain.log_triggers"
+          value: "on"
+        - key: "auto_explain.log_verbose"
+          value: "on"
+        - key: "pg_stat_statements.max"
+          value: "10000"
+        - key: "pg_stat_statements.track"
+          value: "all"
+      notify: restart postgresql
+
+    - name: "Configure Redis server"
+      lineinfile:
+        path: /etc/redis/redis.conf
+        regexp: "^#?{{ item.key }}"
+        line: "{{ item.key }} {{ item.value }}"
+        backup: yes
+      loop:
+        - key: "bind"
+          value: "127.0.0.1 10.0.0.0/8"
+        - key: "port"
+          value: "{{ redis_port }}"
+        - key: "timeout"
+          value: "{{ redis_timeout }}"
+        - key: "tcp-keepalive"
+          value: "{{ redis_tcp_keepalive }}"
+        - key: "maxmemory"
+          value: "{{ redis_maxmemory }}"
+        - key: "maxmemory-policy"
+          value: "{{ redis_maxmemory_policy }}"
+        - key: "appendonly"
+          value: "yes"
+        - key: "appendfsync"
+          value: "everysec"
+        - key: "auto-aof-rewrite-percentage"
+          value: "100"
+        - key: "auto-aof-rewrite-min-size"
+          value: "64mb"
+        - key: "save"
+          value: "{{ redis_save_intervals | join(' ') }}"
+      notify: restart redis
+
+    - name: "Configure Redis security"
+      lineinfile:
+        path: /etc/redis/redis.conf
+        regexp: "^#?{{ item.key }}"
+        line: "{{ item.key }} {{ item.value }}"
+        backup: yes
+      loop:
+        - key: "requirepass"
+          value: "{{ redis_password | default('redis123!') }}"
+        - key: "rename-command FLUSHDB"
+          value: "FLUSHDB_DISABLED"
+        - key: "rename-command FLUSHALL"
+          value: "FLUSHALL_DISABLED"
+        - key: "rename-command DEBUG"
+          value: "DEBUG_DISABLED"
+        - key: "rename-command CONFIG"
+          value: "CONFIG_AINFLUE"
+      notify: restart redis
+
+    - name: "Create PostgreSQL databases"
+      postgresql_db:
+        name: "{{ item.name }}"
+        encoding: "{{ item.encoding }}"
+        lc_collate: "{{ item.lc_collate }}"
+        lc_ctype: "{{ item.lc_ctype }}"
+        template: "{{ item.template }}"
+        state: present
+      loop: "{{ databases }}"
+      become_user: postgres
+
+    - name: "Create PostgreSQL users"
+      postgresql_user:
+        name: "{{ item.name }}"
+        password: "{{ item.password }}"
+        db: "{{ item.database }}"
+        priv: "{{ item.privileges }}"
+        state: present
+        encrypted: yes
+      loop: "{{ database_users }}"
+      become_user: postgres
+
+    - name: "Install PostgreSQL extensions"
+      postgresql_ext:
+        name: "{{ item.extension }}"
+        db: "{{ item.database }}"
+        state: present
+      loop:
+        - { extension: "uuid-ossp", database: "ainflue" }
+        - { extension: "pgcrypto", database: "ainflue" }
+        - { extension: "hstore", database: "ainflue" }
+        - { extension: "pg_trgm", database: "ainflue" }
+        - { extension: "btree_gin", database: "ainflue" }
+        - { extension: "btree_gist", database: "ainflue" }
+        - { extension: "pg_stat_statements", database: "ainflue" }
+        - { extension: "vector", database: "ainflue_ml" }
+        - { extension: "postgis", database: "ainflue" }
+        - { extension: "postgis_topology", database: "ainflue" }
+      become_user: postgres
+
+    - name: "Create database schemas for AI/ML"
+      postgresql_query:
+        db: "{{ item.database }}"
+        query: "{{ item.query }}"
+      loop:
+        - database: "ainflue_ml"
+          query: |
+            CREATE SCHEMA IF NOT EXISTS models;
+            CREATE SCHEMA IF NOT EXISTS features;
+            CREATE SCHEMA IF NOT EXISTS experiments;
+            CREATE SCHEMA IF NOT EXISTS training;
+            GRANT USAGE ON SCHEMA models TO ainflue_ml;
+            GRANT USAGE ON SCHEMA features TO ainflue_ml;
+            GRANT USAGE ON SCHEMA experiments TO ainflue_ml;
+            GRANT USAGE ON SCHEMA training TO ainflue_ml;
+        - database: "ainflue_analytics"
+          query: |
+            CREATE SCHEMA IF NOT EXISTS metrics;
+            CREATE SCHEMA IF NOT EXISTS events;
+            CREATE SCHEMA IF NOT EXISTS reports;
+            GRANT USAGE ON SCHEMA metrics TO ainflue_analytics;
+            GRANT USAGE ON SCHEMA events TO ainflue_analytics;
+            GRANT USAGE ON SCHEMA reports TO ainflue_analytics;
+      become_user: postgres
+
+    - name: "Configure pgBouncer connection pooler"
+      copy:
+        content: |
+          [databases]
+          ainflue = host=127.0.0.1 port={{ postgresql_port }} dbname=ainflue
+          ainflue_analytics = host=127.0.0.1 port={{ postgresql_port }} dbname=ainflue_analytics
+          ainflue_ml = host=127.0.0.1 port={{ postgresql_port }} dbname=ainflue_ml
+          
+          [pgbouncer]
+          listen_addr = *
+          listen_port = 6432
+          auth_type = md5
+          auth_file = /etc/pgbouncer/userlist.txt
+          admin_users = postgres
+          pool_mode = transaction
+          server_reset_query = DISCARD ALL
+          max_client_conn = 1000
+          default_pool_size = 25
+          min_pool_size = 5
+          reserve_pool_size = 5
+          reserve_pool_timeout = 5
+          max_db_connections = 50
+          max_user_connections = 50
+          server_round_robin = 1
+          ignore_startup_parameters = extra_float_digits
+          
+          # Log settings
+          log_connections = 1
+          log_disconnections = 1
+          log_pooler_errors = 1
+          
+          # Console access
+          unix_socket_dir = /var/run/postgresql
+          unix_socket_mode = 0777
+          unix_socket_group = postgres
+        dest: /etc/pgbouncer/pgbouncer.ini
+        backup: yes
+        owner: postgres
+        group: postgres
+        mode: '0640'
+
+    - name: "Create pgBouncer user list"
+      copy:
+        content: |
+          "ainflue_app" "{{ app_db_password | default('changeme123!') | password_hash('md5', 'ainflue_app') }}"
+          "ainflue_readonly" "{{ readonly_db_password | default('readonly123!') | password_hash('md5', 'ainflue_readonly') }}"
+          "ainflue_analytics" "{{ analytics_db_password | default('analytics123!') | password_hash('md5', 'ainflue_analytics') }}"
+          "ainflue_ml" "{{ ml_db_password | default('ml123!') | password_hash('md5', 'ainflue_ml') }}"
+        dest: /etc/pgbouncer/userlist.txt
+        owner: postgres
+        group: postgres
+        mode: '0640'
+
+    - name: "Create database backup script"
+      copy:
+        content: |
+          #!/bin/bash
+          # Ainflue Database Backup Script
+          # Automated PostgreSQL and Redis backups
+          
+          BACKUP_DIR="/var/backups/ainflue"
+          TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+          RETENTION_DAYS=30
+          
+          # Create backup directory
+          mkdir -p $BACKUP_DIR/postgresql
+          mkdir -p $BACKUP_DIR/redis
+          
+          # PostgreSQL backups
+          echo "Starting PostgreSQL backups..."
+          
+          for db in ainflue ainflue_analytics ainflue_ml ainflue_cache; do
+            echo "Backing up database: $db"
+            pg_dump -h localhost -U postgres $db | gzip > $BACKUP_DIR/postgresql/${db}_${TIMESTAMP}.sql.gz
+            
+            if [ $? -eq 0 ]; then
+              echo "Successfully backed up $db"
+            else
+              echo "Failed to backup $db"
+              exit 1
+            fi
+          done
+          
+          # Global PostgreSQL backup (users, roles, etc.)
+          pg_dumpall -h localhost -U postgres --globals-only | gzip > $BACKUP_DIR/postgresql/globals_${TIMESTAMP}.sql.gz
+          
+          # Redis backup
+          echo "Starting Redis backup..."
+          redis-cli --rdb $BACKUP_DIR/redis/redis_${TIMESTAMP}.rdb
+          gzip $BACKUP_DIR/redis/redis_${TIMESTAMP}.rdb
+          
+          # Cleanup old backups
+          echo "Cleaning up old backups..."
+          find $BACKUP_DIR -name "*.gz" -type f -mtime +$RETENTION_DAYS -delete
+          
+          # Create backup report
+          BACKUP_REPORT="$BACKUP_DIR/backup_report_${TIMESTAMP}.txt"
+          echo "=== Ainflue Database Backup Report - $(date) ===" > $BACKUP_REPORT
+          echo "PostgreSQL Backups:" >> $BACKUP_REPORT
+          ls -lh $BACKUP_DIR/postgresql/*${TIMESTAMP}* >> $BACKUP_REPORT
+          echo "Redis Backups:" >> $BACKUP_REPORT
+          ls -lh $BACKUP_DIR/redis/*${TIMESTAMP}* >> $BACKUP_REPORT
+          echo "Total Backup Size: $(du -sh $BACKUP_DIR | cut -f1)" >> $BACKUP_REPORT
+          
+          echo "Backup completed successfully!"
+        dest: /usr/local/bin/ainflue-db-backup.sh
+        mode: '0755'
+
+    - name: "Create database monitoring script"
+      copy:
+        content: |
+          #!/bin/bash
+          # Ainflue Database Monitoring Script
+          # Monitor PostgreSQL and Redis performance
+          
+          MONITOR_LOG="/var/log/ainflue-db-monitor.log"
+          ALERT_THRESHOLD_CONNECTIONS=80  # Percentage
+          ALERT_THRESHOLD_DISK=85         # Percentage
+          
+          echo "=== Database Monitor Report - $(date) ===" >> $MONITOR_LOG
+          
+          # PostgreSQL monitoring
+          echo "== PostgreSQL Status ==" >> $MONITOR_LOG
+          
+          # Connection count
+          CONNECTIONS=$(psql -h localhost -U postgres -t -c "SELECT count(*) FROM pg_stat_activity;")
+          MAX_CONNECTIONS=$(psql -h localhost -U postgres -t -c "SHOW max_connections;")
+          CONNECTION_PERCENT=$((CONNECTIONS * 100 / MAX_CONNECTIONS))
+          
+          echo "Connections: $CONNECTIONS/$MAX_CONNECTIONS ($CONNECTION_PERCENT%)" >> $MONITOR_LOG
+          
+          if [ $CONNECTION_PERCENT -gt $ALERT_THRESHOLD_CONNECTIONS ]; then
+            echo "ALERT: High connection usage: $CONNECTION_PERCENT%" >> $MONITOR_LOG
+          fi
+          
+          # Database sizes
+          echo "== Database Sizes ==" >> $MONITOR_LOG
+          psql -h localhost -U postgres -c "
+            SELECT 
+              datname as database,
+              pg_size_pretty(pg_database_size(datname)) as size
+            FROM pg_database 
+            WHERE datname LIKE 'ainflue%'
+            ORDER BY pg_database_size(datname) DESC;
+          " >> $MONITOR_LOG
+          
+          # Slow queries
+          echo "== Slow Queries (>1s) ==" >> $MONITOR_LOG
+          psql -h localhost -U postgres -d ainflue -c "
+            SELECT 
+              query,
+              calls,
+              total_time,
+              mean_time,
+              rows
+            FROM pg_stat_statements 
+            WHERE mean_time > 1000
+            ORDER BY mean_time DESC 
+            LIMIT 10;
+          " >> $MONITOR_LOG 2>/dev/null || echo "pg_stat_statements not available" >> $MONITOR_LOG
+          
+          # Redis monitoring
+          echo "== Redis Status ==" >> $MONITOR_LOG
+          redis-cli info memory | grep -E "used_memory_human|used_memory_peak_human|maxmemory_human" >> $MONITOR_LOG
+          redis-cli info stats | grep -E "total_connections_received|total_commands_processed|keyspace_hits|keyspace_misses" >> $MONITOR_LOG
+          
+          # Disk usage
+          echo "== Disk Usage ==" >> $MONITOR_LOG
+          df -h /var/lib/postgresql >> $MONITOR_LOG
+          
+          DISK_USAGE=$(df /var/lib/postgresql | tail -1 | awk '{print $5}' | sed 's/%//')
+          if [ $DISK_USAGE -gt $ALERT_THRESHOLD_DISK ]; then
+            echo "ALERT: High disk usage: $DISK_USAGE%" >> $MONITOR_LOG
+          fi
+          
+          echo "Monitor check completed" >> $MONITOR_LOG
+        dest: /usr/local/bin/ainflue-db-monitor.sh
+        mode: '0755'
+
+    - name: "Add database backup cron job"
+      cron:
+        name: "Ainflue database backup"
+        minute: "0"
+        hour: "2"
+        job: "/usr/local/bin/ainflue-db-backup.sh"
+        user: postgres
+
+    - name: "Add database monitoring cron job"
+      cron:
+        name: "Ainflue database monitoring"
+        minute: "*/15"
+        job: "/usr/local/bin/ainflue-db-monitor.sh"
+        user: postgres
+
+    - name: "Configure log rotation for database logs"
+      copy:
+        content: |
+          /var/log/postgresql/*.log {
+              daily
+              missingok
+              rotate 14
+              compress
+              delaycompress
+              notifempty
+              create 0640 postgres postgres
+              postrotate
+                  /etc/init.d/postgresql reload >/dev/null 2>&1 || true
+              endscript
+          }
+          
+          /var/log/ainflue-db-*.log {
+              daily
+              missingok
+              rotate 30
+              compress
+              delaycompress
+              notifempty
+              create 0640 postgres adm
+          }
+        dest: /etc/logrotate.d/ainflue-database
+
+    - name: "Start and enable pgBouncer"
+      service:
+        name: pgbouncer
+        state: started
+        enabled: yes
+
+  handlers:
+    - name: restart postgresql
+      service:
+        name: postgresql
+        state: restarted
+
+    - name: restart redis
+      service:
+        name: redis-server
+        state: restarted
+
+    - name: restart pgbouncer
+      service:
+        name: pgbouncer
+        state: restarted
