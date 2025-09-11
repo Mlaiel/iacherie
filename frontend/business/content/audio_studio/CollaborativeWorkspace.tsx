@@ -48,7 +48,9 @@ const CollaborativeWorkspace: React.FC<CollaborativeWorkspaceProps> = ({
       email: 'john@example.com',
       avatar: '',
       role: 'owner',
-      isOnline: true
+      isOnline: true,
+      lastSeen: Date.now(),
+      permissions: ['edit', 'delete', 'share', 'manage_users']
     },
     {
       id: '2', 
@@ -56,7 +58,9 @@ const CollaborativeWorkspace: React.FC<CollaborativeWorkspaceProps> = ({
       email: 'sarah@example.com',
       avatar: '',
       role: 'collaborator',
-      isOnline: true
+      isOnline: true,
+      lastSeen: Date.now() - 5 * 60 * 1000, // 5 minutes ago
+      permissions: ['edit', 'share']
     }
   ]);
 
@@ -66,7 +70,7 @@ const CollaborativeWorkspace: React.FC<CollaborativeWorkspaceProps> = ({
   ]);
 
   return (
-    <div className={studioUtils.getClassName('collaborative-workspace bg-gray-900 border-l border-gray-700 w-80 p-4', className)}>
+    <div className={`collaborative-workspace bg-gray-900 border-l border-gray-700 w-80 p-4 ${className}`}>
       <div className="flex items-center space-x-2 mb-4">
         <UserGroupIcon className="h-5 w-5 text-blue-400" />
         <h3 className="text-lg font-semibold text-white">Collaboration</h3>

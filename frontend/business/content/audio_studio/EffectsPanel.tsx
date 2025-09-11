@@ -338,13 +338,13 @@ const EffectControl: React.FC<EffectControlProps> = ({
   
   const getEffectColor = (type: AudioEffect['type']) => {
     const colors = {
-      reverb: studioColors.tracks.track1,
-      delay: studioColors.tracks.track2,
-      compressor: studioColors.tracks.track3,
-      eq: studioColors.tracks.track4,
-      distortion: studioColors.tracks.track5,
-      chorus: studioColors.tracks.track6,
-      filter: studioColors.tracks.track7
+      reverb: studioColors.track.audio,
+      delay: studioColors.track.midi,
+      compressor: studioColors.track.instrument,
+      eq: studioColors.studio.primary,
+      distortion: studioColors.studio.secondary,
+      chorus: studioColors.studio.success,
+      filter: studioColors.studio.warning
     };
     return colors[type] || studioColors.studio.accent;
   };

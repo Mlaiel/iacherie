@@ -112,17 +112,21 @@ export interface ProjectSettings {
 }
 
 export interface AIAssistantSuggestion {
+  id: string;
   type: 'harmony' | 'rhythm' | 'structure' | 'effects' | 'mixing' | 'mastering';
   title: string;
   description: string;
   confidence: number;
   parameters: Record<string, any>;
   preview?: string;
+  canApply?: boolean;
+  previewUrl?: string;
 }
 
 export interface CollaborationUser {
   id: string;
   name: string;
+  email: string;
   avatar: string;
   role: 'owner' | 'collaborator' | 'viewer';
   isOnline: boolean;
@@ -594,6 +598,7 @@ export class RemixStudioEngine {
   public getAISuggestions(): AIAssistantSuggestion[] {
     const suggestions: AIAssistantSuggestion[] = [
       {
+        id: 'suggestion-harmony-1',
         type: 'harmony',
         title: 'Add Harmonic Layer',
         description: 'Consider adding a pad layer in the relative minor key to create emotional depth',
@@ -601,6 +606,7 @@ export class RemixStudioEngine {
         parameters: { key: 'Am', instrument: 'pad', volume: 0.6 }
       },
       {
+        id: 'suggestion-rhythm-1',
         type: 'rhythm',
         title: 'Enhance Rhythm Section',
         description: 'Add a subtle hi-hat pattern to increase groove and momentum',
@@ -608,6 +614,7 @@ export class RemixStudioEngine {
         parameters: { pattern: 'sixteenth', velocity: 0.4, swing: 5 }
       },
       {
+        id: 'suggestion-effects-1',
         type: 'effects',
         title: 'Apply Creative Reverb',
         description: 'Use a large hall reverb on the lead to create spatial depth',
@@ -615,6 +622,7 @@ export class RemixStudioEngine {
         parameters: { effectType: 'reverb', roomSize: 0.8, decay: 0.6 }
       },
       {
+        id: 'suggestion-mixing-1',
         type: 'mixing',
         title: 'EQ Optimization',
         description: 'Boost the high frequencies slightly to add brightness and clarity',

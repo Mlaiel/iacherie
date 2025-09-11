@@ -73,7 +73,7 @@ const AIAssistantInterface: React.FC<AIAssistantInterfaceProps> = ({
       key: ['C', 'D', 'E', 'F', 'G', 'A', 'B'][Math.floor(Math.random() * 7)] + 
            ['', 'm', '#', 'b'][Math.floor(Math.random() * 4)],
       tempo: Math.round(studioState.bpm + (Math.random() - 0.5) * 20),
-      timeSignature: studioState.timeSignature,
+      timeSignature: studioState.timeSignature.split('/').map(Number) as [number, number] || [4, 4],
       genre: ['Pop', 'Rock', 'Electronic', 'Hip-Hop', 'Jazz', 'Classical'][Math.floor(Math.random() * 6)],
       mood: ['Energetic', 'Melancholic', 'Uplifting', 'Dramatic', 'Peaceful', 'Intense'][Math.floor(Math.random() * 6)],
       complexity: ['simple', 'moderate', 'complex'][Math.floor(Math.random() * 3)] as any,
@@ -227,18 +227,18 @@ const AIAssistantInterface: React.FC<AIAssistantInterfaceProps> = ({
 
   const getSuggestionTypeColor = (type: AIAssistantSuggestion['type']) => {
     const colors = {
-      harmony: studioColors.tracks.track3,
-      rhythm: studioColors.tracks.track5,
-      structure: studioColors.tracks.track2,
-      effects: studioColors.tracks.track6,
-      mixing: studioColors.tracks.track7,
-      mastering: studioColors.tracks.track8
+      harmony: studioColors.track.midi,
+      rhythm: studioColors.track.audio,
+      structure: studioColors.track.instrument,
+      effects: studioColors.studio.secondary,
+      mixing: studioColors.studio.primary,
+      mastering: studioColors.studio.success
     };
     return colors[type] || studioColors.studio.accent;
   };
 
   return (
-    <div className={studioUtils.getClassName('ai-assistant bg-gray-900 p-4 flex flex-col h-full', className)}>
+    <div className={`ai-assistant bg-gray-900 p-4 flex flex-col h-full ${className}`}>
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center space-x-2">
@@ -303,12 +303,11 @@ const AIAssistantInterface: React.FC<AIAssistantInterfaceProps> = ({
           <button
             key={key}
             onClick={() => setSelectedCategory(key)}
-            className={studioUtils.getClassName(
-              'flex items-center space-x-1 px-3 py-1 rounded text-sm transition-colors whitespace-nowrap',
+            className={`flex items-center space-x-1 px-3 py-1 rounded text-sm transition-colors whitespace-nowrap ${
               selectedCategory === key
                 ? 'bg-blue-600 text-white'
                 : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-            )}
+            }`}
           >
             {icon}
             <span>{label}</span>
