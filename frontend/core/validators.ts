@@ -82,7 +82,7 @@ export interface SanitizationRule {
 export interface CustomValidationRule {
   name: string;
   description: string;
-  validator: (value: any, context: any) => ValidationResult;
+  validator: (value: any, context: any) => ValidationResult | Promise<ValidationResult>;
   async?: boolean;
 }
 
@@ -465,9 +465,11 @@ export class ValidationEngine {
           ? await rule.validator(data, { schema })
           : rule.validator(data, { schema });
         
-        errors.push(...ruleResult.errors);
-        warnings.push(...ruleResult.warnings);
-        totalScore += ruleResult.score;
+        // Handle both sync and async results
+        const resolvedResult = await Promise.resolve(ruleResult);
+        errors.push(...resolvedResult.errors);
+        warnings.push(...resolvedResult.warnings);
+        totalScore += resolvedResult.score;
         fieldCount++;
       } catch (error) {
         errors.push({

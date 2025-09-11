@@ -120,9 +120,9 @@ export class PerformanceOptimizer {
       ttfb: navigation.responseStart - navigation.requestStart,
       
       // Custom metrics
-      loadTime: navigation.loadEventEnd - navigation.navigationStart,
-      renderTime: navigation.domContentLoadedEventEnd - navigation.navigationStart,
-      interactiveTime: navigation.domInteractive - navigation.navigationStart,
+      loadTime: navigation.loadEventEnd - navigation.fetchStart,
+      renderTime: navigation.domContentLoadedEventEnd - navigation.fetchStart,
+      interactiveTime: navigation.domInteractive - navigation.fetchStart,
       memoryUsage: this.getMemoryUsage(),
       cpuUsage: this.getCPUUsage(),
       networkLatency: navigation.responseStart - navigation.requestStart,
@@ -429,7 +429,11 @@ export class PerformanceOptimizer {
   private getFID(): number {
     // Get FID from performance entries
     const fidEntries = performance.getEntriesByType('first-input');
-    return fidEntries.length > 0 ? fidEntries[0].processingStart - fidEntries[0].startTime : 0;
+    if (fidEntries.length > 0) {
+      const fidEntry = fidEntries[0] as any; // Cast to PerformanceEventTiming when available
+      return fidEntry.processingStart ? fidEntry.processingStart - fidEntry.startTime : 0;
+    }
+    return 0;
   }
 
   private getCLS(): number {

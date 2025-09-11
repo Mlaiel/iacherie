@@ -11,8 +11,8 @@ import {
   ChartBarIcon,
   UsersIcon,
   CurrencyDollarIcon,
-  TrendingUpIcon,
-  TrendingDownIcon,
+  ArrowTrendingUpIcon,
+  ArrowTrendingDownIcon,
   EyeIcon,
   HeartIcon,
   ShareIcon,
@@ -339,7 +339,7 @@ const DashboardInterface: React.FC<DashboardInterfaceProps> = ({
           <p className="text-3xl font-bold text-gray-900">{value}</p>
           {trend !== undefined && (
             <div className={`flex items-center mt-2 text-sm ${trend >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-              {trend >= 0 ? <TrendingUpIcon className="w-4 h-4 mr-1" /> : <TrendingDownIcon className="w-4 h-4 mr-1" />}
+              {trend >= 0 ? <ArrowTrendingUpIcon className="w-4 h-4 mr-1" /> : <ArrowTrendingDownIcon className="w-4 h-4 mr-1" />}
               {Math.abs(trend)}%
             </div>
           )}

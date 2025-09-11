@@ -307,7 +307,8 @@ export const UserOnboardingFlow: FlowDefinition = {
  * Flow Step Components
  */
 
-const ContentUploadStep: React.FC<FlowStepProps> = ({ step, execution, onNext }) => {
+// Step Components (function declarations for hoisting)
+function ContentUploadStep({ step, execution, onNext }: FlowStepProps) {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -379,7 +380,7 @@ const ContentUploadStep: React.FC<FlowStepProps> = ({ step, execution, onNext })
   );
 };
 
-const AIGenerationStep: React.FC<FlowStepProps> = ({ step, onNext }) => {
+function AIGenerationStep({ step, onNext }: FlowStepProps) {
   const [prompt, setPrompt] = useState('');
   const [contentType, setContentType] = useState('audio');
   const [generating, setGenerating] = useState(false);
@@ -458,7 +459,7 @@ const AIGenerationStep: React.FC<FlowStepProps> = ({ step, onNext }) => {
   );
 };
 
-const MetadataInputStep: React.FC<FlowStepProps> = ({ step, execution, onNext }) => {
+function MetadataInputStep({ step, execution, onNext }: FlowStepProps) {
   const [metadata, setMetadata] = useState({
     title: '',
     description: '',
@@ -583,7 +584,8 @@ const MetadataInputStep: React.FC<FlowStepProps> = ({ step, execution, onNext })
 };
 
 // Placeholder components for other steps
-const AIEnhancementStep: React.FC<FlowStepProps> = ({ step, onNext }) => (
+function AIEnhancementStep({ step, onNext }: FlowStepProps) {
+  return (
   <div className="p-6 bg-white rounded-lg shadow-lg">
     <h3 className="text-xl font-semibold mb-4">{step.title}</h3>
     <p className="text-gray-600 mb-6">{step.description}</p>
@@ -591,9 +593,11 @@ const AIEnhancementStep: React.FC<FlowStepProps> = ({ step, onNext }) => (
       Apply AI Enhancement
     </button>
   </div>
-);
+  );
+}
 
-const PreviewReviewStep: React.FC<FlowStepProps> = ({ step, onNext }) => (
+function PreviewReviewStep({ step, onNext }: FlowStepProps) {
+  return (
   <div className="p-6 bg-white rounded-lg shadow-lg">
     <h3 className="text-xl font-semibold mb-4">{step.title}</h3>
     <p className="text-gray-600 mb-6">{step.description}</p>
@@ -601,9 +605,11 @@ const PreviewReviewStep: React.FC<FlowStepProps> = ({ step, onNext }) => (
       Approve & Continue
     </button>
   </div>
-);
+  );
+}
 
-const PublishOptionsStep: React.FC<FlowStepProps> = ({ step, onNext }) => (
+function PublishOptionsStep({ step, onNext }: FlowStepProps) {
+  return (
   <div className="p-6 bg-white rounded-lg shadow-lg">
     <h3 className="text-xl font-semibold mb-4">{step.title}</h3>
     <p className="text-gray-600 mb-6">{step.description}</p>
@@ -611,9 +617,11 @@ const PublishOptionsStep: React.FC<FlowStepProps> = ({ step, onNext }) => (
       Publish Now
     </button>
   </div>
-);
+  );
+}
 
-const CompletionStep: React.FC<FlowStepProps> = ({ step, onComplete }) => (
+function CompletionStep({ step, onComplete }: FlowStepProps) {
+  return (
   <div className="p-6 bg-white rounded-lg shadow-lg text-center">
     <CheckCircleIcon className="h-16 w-16 text-green-500 mx-auto mb-4" />
     <h3 className="text-xl font-semibold mb-4">{step.title}</h3>
@@ -622,30 +630,36 @@ const CompletionStep: React.FC<FlowStepProps> = ({ step, onComplete }) => (
       Complete
     </button>
   </div>
-);
+  );
+}
 
 // Onboarding step components (placeholders)
-const WelcomeStep: React.FC<FlowStepProps> = ({ step, onNext }) => (
+function WelcomeStep({ step, onNext }: FlowStepProps) {
+  return (
   <div className="p-6 bg-white rounded-lg shadow-lg text-center">
     <h3 className="text-2xl font-bold mb-4">Welcome to Ainflue! 🎉</h3>
     <p className="text-gray-600 mb-6">Let's get you set up as a creator</p>
-    <button onClick={() => onNext()} className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+    <button onClick={() => onNext?.()} className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
       Get Started
     </button>
   </div>
-);
+  );
+}
 
-const ProfileSetupStep: React.FC<FlowStepProps> = ({ step, onNext }) => (
+function ProfileSetupStep({ step, onNext }: FlowStepProps) {
+  return (
   <div className="p-6 bg-white rounded-lg shadow-lg">
     <h3 className="text-xl font-semibold mb-4">{step.title}</h3>
     <p className="text-gray-600 mb-6">{step.description}</p>
-    <button onClick={() => onNext()} className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+    <button onClick={() => onNext?.()} className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
       Complete Profile
     </button>
   </div>
-);
+  );
+}
 
-const PreferencesStep: React.FC<FlowStepProps> = ({ step, onNext }) => (
+function PreferencesStep({ step, onNext }: FlowStepProps) {
+  return (
   <div className="p-6 bg-white rounded-lg shadow-lg">
     <h3 className="text-xl font-semibold mb-4">{step.title}</h3>
     <p className="text-gray-600 mb-6">{step.description}</p>
@@ -653,19 +667,23 @@ const PreferencesStep: React.FC<FlowStepProps> = ({ step, onNext }) => (
       Save Preferences
     </button>
   </div>
-);
+  );
+}
 
-const AIRecommendationsStep: React.FC<FlowStepProps> = ({ step, onNext }) => (
+function AIRecommendationsStep({ step, onNext }: FlowStepProps) {
+  return (
   <div className="p-6 bg-white rounded-lg shadow-lg">
     <h3 className="text-xl font-semibold mb-4">{step.title}</h3>
     <p className="text-gray-600 mb-6">{step.description}</p>
-    <button onClick={() => onNext()} className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700">
+    <button onClick={() => onNext?.()} className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700">
       View Recommendations
     </button>
   </div>
-);
+  );
+}
 
-const FirstContentStep: React.FC<FlowStepProps> = ({ step, onNext }) => (
+function FirstContentStep({ step, onNext }: FlowStepProps) {
+  return (
   <div className="p-6 bg-white rounded-lg shadow-lg">
     <h3 className="text-xl font-semibold mb-4">{step.title}</h3>
     <p className="text-gray-600 mb-6">{step.description}</p>
@@ -673,9 +691,11 @@ const FirstContentStep: React.FC<FlowStepProps> = ({ step, onNext }) => (
       Create Content
     </button>
   </div>
-);
+  );
+}
 
-const CommunityIntroStep: React.FC<FlowStepProps> = ({ step, onNext }) => (
+function CommunityIntroStep({ step, onNext }: FlowStepProps) {
+  return (
   <div className="p-6 bg-white rounded-lg shadow-lg">
     <h3 className="text-xl font-semibold mb-4">{step.title}</h3>
     <p className="text-gray-600 mb-6">{step.description}</p>
@@ -683,18 +703,21 @@ const CommunityIntroStep: React.FC<FlowStepProps> = ({ step, onNext }) => (
       Join Community
     </button>
   </div>
-);
+  );
+}
 
-const OnboardingCompleteStep: React.FC<FlowStepProps> = ({ step, onComplete }) => (
+function OnboardingCompleteStep({ step, onComplete }: FlowStepProps) {
+  return (
   <div className="p-6 bg-white rounded-lg shadow-lg text-center">
     <CheckCircleIcon className="h-16 w-16 text-green-500 mx-auto mb-4" />
     <h3 className="text-2xl font-bold mb-4">{step.title}</h3>
     <p className="text-gray-600 mb-6">{step.description}</p>
-    <button onClick={() => onComplete()} className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700">
+    <button onClick={() => onComplete?.()} className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700">
       Start Creating!
     </button>
   </div>
-);
+  );
+}
 
 /**
  * Main Flow Manager Component

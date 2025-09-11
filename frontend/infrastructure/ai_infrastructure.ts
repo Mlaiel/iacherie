@@ -68,6 +68,7 @@ export interface AIMetrics {
   p95Latency: number;
   p99Latency: number;
   throughput: number;
+  healthStatus: 'healthy' | 'degraded' | 'critical';
   cost: CostMetrics;
 }
 
@@ -455,6 +456,7 @@ export class AIInfrastructure {
       p95Latency: 0,
       p99Latency: 0,
       throughput: 0,
+      healthStatus: 'healthy',
       cost: {
         totalCost: 0,
         costPerRequest: 0,

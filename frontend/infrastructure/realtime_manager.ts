@@ -428,8 +428,8 @@ export class RealtimeManager {
 
     if (this.isConnected()) {
       this.send({
-        type: 'message',
-        ...message
+        ...message,
+        messageType: 'message'  // Use different property name to avoid conflict
       });
     } else {
       this.messageQueue.push(queuedMessage);

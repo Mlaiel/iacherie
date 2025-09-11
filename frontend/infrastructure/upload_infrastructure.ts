@@ -178,6 +178,10 @@ export class UploadInfrastructure {
         url: uploadUrl,
         thumbnailUrl: options.generateThumbnail ? await this.generateThumbnail(fileId, processedFile) : undefined,
         metadata: {
+          originalName: metadata.originalName || file.name,
+          mimeType: metadata.mimeType || file.type,
+          size: metadata.size || file.size,
+          checksum: metadata.checksum || '',
           ...metadata,
           tags: options.tags || [],
           uploadedAt: Date.now(),
@@ -369,7 +373,7 @@ export class UploadInfrastructure {
       progress.remainingTime = (file.size - progress.uploadedBytes) / progress.speed;
 
       // Check if upload was paused or cancelled
-      if (progress.status === 'paused' || progress.status === 'cancelled') {
+      if (['paused', 'cancelled'].includes(progress.status)) {
         throw new Error(`Upload ${progress.status}`);
       }
     }

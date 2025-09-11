@@ -6,7 +6,7 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
-import { api } from '@/lib/api';
+import { api } from '../../infrastructure/utils/lib/api';
 
 interface DashboardMetrics {
   totalContent: number;
