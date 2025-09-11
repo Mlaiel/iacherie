@@ -1,0 +1,645 @@
+# Ainflue Infrastructure Module - Worker Service Helm Chart
+# ==========================================================
+# 
+# Enterprise-grade Worker service chart for Ainflue platform
+# Background job processing, media encoding, AI tasks, and analytics
+#
+# Author: Fahed Mlaiel <mlaiel@live.de>
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+#
+# ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+
+apiVersion: v2
+name: ainflue-worker
+description: "Enterprise Worker service for Ainflue platform with multi-queue processing"
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+home: https://workers.ainflue.com
+sources:
+  - https://github.com/Mlaiel/Ainflue
+maintainers:
+  - name: Fahed Mlaiel
+    email: mlaiel@live.de
+keywords:
+  - workers
+  - background-jobs
+  - queue
+  - processing
+  - ainflue
+annotations:
+  category: Background Processing
+  licenses: Proprietary
+
+# Chart dependencies
+dependencies:
+  - name: redis
+    version: "17.8.0"
+    repository: "https://charts.bitnami.com/bitnami"
+    condition: redis.enabled
+  - name: postgresql
+    version: "12.1.6"
+    repository: "https://charts.bitnami.com/bitnami"
+    condition: postgresql.enabled
+  - name: rabbitmq
+    version: "11.9.0"
+    repository: "https://charts.bitnami.com/bitnami"
+    condition: rabbitmq.enabled
+
+---
+# Default values for ainflue-worker
+# Expert roles implementation in configuration
+
+# **EXPERT ROLES IMPLEMENTATION:**
+# Lead Dev IA: AI job processing, model training orchestration
+# Backend Senior: Scalable background processing, job distribution
+# ML Engineer: ML pipeline execution, batch inference, model training
+# DBA: Database maintenance jobs, analytics processing
+# Security: Security scanning jobs, compliance reporting
+# Microservices: Inter-service job coordination, event processing
+# Audio Engineer: Audio/video processing jobs, transcoding pipelines
+# DevOps: Infrastructure maintenance jobs, monitoring tasks
+# IA Prompt Engineer: AI prompt processing, batch optimization
+
+# Global configuration
+global:
+  imageRegistry: ""
+  imagePullSecrets: []
+  storageClass: ""
+
+# Image configuration
+image:
+  registry: docker.io
+  repository: ainflue/worker
+  tag: "1.0.0"
+  pullPolicy: IfNotPresent
+  pullSecrets: []
+
+# Worker types configuration
+workers:
+  # General purpose workers
+  general:
+    enabled: true
+    replicaCount: 3
+    queues: ["default", "low", "mailers"]
+    concurrency: 10
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 4Gi
+      requests:
+        cpu: 1000m
+        memory: 2Gi
+
+  # AI/ML processing workers
+  ai:
+    enabled: true
+    replicaCount: 2
+    queues: ["ai_inference", "ml_training", "model_optimization"]
+    concurrency: 5
+    resources:
+      limits:
+        cpu: 4000m
+        memory: 8Gi
+        nvidia.com/gpu: 1
+      requests:
+        cpu: 2000m
+        memory: 4Gi
+        nvidia.com/gpu: 1
+
+  # Media processing workers
+  media:
+    enabled: true
+    replicaCount: 4
+    queues: ["video_processing", "audio_processing", "image_optimization"]
+    concurrency: 2  # CPU intensive
+    resources:
+      limits:
+        cpu: 6000m
+        memory: 12Gi
+      requests:
+        cpu: 3000m
+        memory: 6Gi
+
+  # Analytics workers
+  analytics:
+    enabled: true
+    replicaCount: 2
+    queues: ["analytics", "reporting", "metrics"]
+    concurrency: 8
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 6Gi
+      requests:
+        cpu: 1000m
+        memory: 3Gi
+
+  # Critical jobs workers
+  critical:
+    enabled: true
+    replicaCount: 2
+    queues: ["critical", "urgent", "notifications"]
+    concurrency: 15
+    resources:
+      limits:
+        cpu: 3000m
+        memory: 6Gi
+      requests:
+        cpu: 1500m
+        memory: 3Gi
+
+# Service configuration
+service:
+  type: ClusterIP
+  ports:
+    metrics: 9393
+    health: 8080
+  annotations: {}
+
+# Auto-scaling configuration per worker type
+autoscaling:
+  general:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 70
+    targetMemoryUtilizationPercentage: 80
+
+  ai:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 85
+
+  media:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 8
+    targetCPUUtilizationPercentage: 75
+    targetMemoryUtilizationPercentage: 80
+
+  analytics:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 70
+
+  critical:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 6
+    targetCPUUtilizationPercentage: 60
+
+# Pod disruption budgets
+podDisruptionBudget:
+  general:
+    enabled: true
+    minAvailable: 1
+  ai:
+    enabled: true
+    minAvailable: 1
+  media:
+    enabled: true
+    minAvailable: 1
+  analytics:
+    enabled: true
+    minAvailable: 1
+  critical:
+    enabled: true
+    minAvailable: 1
+
+# Security context
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 3000
+  fsGroup: 2000
+  capabilities:
+    drop:
+      - ALL
+
+podSecurityContext:
+  seccompProfile:
+    type: RuntimeDefault
+
+# Environment variables
+env:
+  - name: WORKER_ENV
+    value: "production"
+  - name: LOG_LEVEL
+    value: "INFO"
+  - name: REDIS_URL
+    value: "redis://ainflue-redis:6379"
+  - name: DATABASE_URL
+    valueFrom:
+      secretKeyRef:
+        name: worker-secrets
+        key: database-url
+  - name: RABBITMQ_URL
+    valueFrom:
+      secretKeyRef:
+        name: worker-secrets
+        key: rabbitmq-url
+  - name: WORKER_TIMEOUT
+    value: "3600"  # 1 hour
+  - name: WORKER_MAX_RETRIES
+    value: "3"
+  - name: WORKER_RETRY_DELAY
+    value: "60"
+
+# Queue configuration
+queueConfig:
+  # Redis-based queues (Sidekiq/Resque)
+  redis:
+    enabled: true
+    queues:
+      default:
+        priority: 1
+        maxJobs: 1000
+        timeout: 300
+      low:
+        priority: 0
+        maxJobs: 500
+        timeout: 600
+      critical:
+        priority: 10
+        maxJobs: 100
+        timeout: 60
+      ai_inference:
+        priority: 5
+        maxJobs: 50
+        timeout: 1800  # 30 minutes
+      ml_training:
+        priority: 3
+        maxJobs: 10
+        timeout: 7200   # 2 hours
+      video_processing:
+        priority: 4
+        maxJobs: 20
+        timeout: 3600   # 1 hour
+      audio_processing:
+        priority: 4
+        maxJobs: 50
+        timeout: 1800   # 30 minutes
+      analytics:
+        priority: 2
+        maxJobs: 100
+        timeout: 900    # 15 minutes
+
+  # RabbitMQ-based queues (Celery)
+  rabbitmq:
+    enabled: true
+    exchanges:
+      - name: "ainflue.direct"
+        type: "direct"
+        durable: true
+      - name: "ainflue.topic"
+        type: "topic"
+        durable: true
+      - name: "ainflue.fanout"
+        type: "fanout"
+        durable: true
+    queues:
+      - name: "media.processing"
+        exchange: "ainflue.direct"
+        routingKey: "media.process"
+        durable: true
+        autoDelete: false
+      - name: "ai.inference"
+        exchange: "ainflue.direct"
+        routingKey: "ai.infer"
+        durable: true
+        autoDelete: false
+      - name: "notifications"
+        exchange: "ainflue.fanout"
+        durable: true
+        autoDelete: false
+
+# Job types configuration
+jobTypes:
+  # AI/ML jobs
+  aiJobs:
+    enabled: true
+    types:
+      - name: "ContentClassification"
+        queue: "ai_inference"
+        timeout: 300
+        retries: 2
+      - name: "SentimentAnalysis"
+        queue: "ai_inference"
+        timeout: 180
+        retries: 3
+      - name: "ModelTraining"
+        queue: "ml_training"
+        timeout: 7200
+        retries: 1
+      - name: "ModelOptimization"
+        queue: "ml_training"
+        timeout: 3600
+        retries: 2
+
+  # Media processing jobs
+  mediaJobs:
+    enabled: true
+    types:
+      - name: "VideoTranscoding"
+        queue: "video_processing"
+        timeout: 3600
+        retries: 2
+        resources:
+          cpu: "4000m"
+          memory: "8Gi"
+      - name: "AudioProcessing"
+        queue: "audio_processing"
+        timeout: 1800
+        retries: 3
+      - name: "ImageOptimization"
+        queue: "image_optimization"
+        timeout: 300
+        retries: 2
+      - name: "ThumbnailGeneration"
+        queue: "video_processing"
+        timeout: 600
+        retries: 3
+
+  # Analytics jobs
+  analyticsJobs:
+    enabled: true
+    types:
+      - name: "UserAnalytics"
+        queue: "analytics"
+        timeout: 900
+        retries: 2
+      - name: "ContentMetrics"
+        queue: "analytics"
+        timeout: 600
+        retries: 3
+      - name: "RevenueReporting"
+        queue: "reporting"
+        timeout: 1800
+        retries: 1
+      - name: "PerformanceMetrics"
+        queue: "metrics"
+        timeout: 300
+        retries: 2
+
+  # System jobs
+  systemJobs:
+    enabled: true
+    types:
+      - name: "DatabaseMaintenance"
+        queue: "default"
+        timeout: 3600
+        retries: 1
+        schedule: "0 2 * * *"  # Daily at 2 AM
+      - name: "LogRotation"
+        queue: "default"
+        timeout: 600
+        retries: 2
+        schedule: "0 1 * * *"  # Daily at 1 AM
+      - name: "CacheWarmup"
+        queue: "default"
+        timeout: 1800
+        retries: 3
+        schedule: "*/30 * * * *"  # Every 30 minutes
+
+# Monitoring configuration
+monitoring:
+  enabled: true
+  prometheus:
+    enabled: true
+    port: 9393
+    path: /metrics
+  jaeger:
+    enabled: true
+    endpoint: http://jaeger-collector:14268/api/traces
+  logging:
+    level: INFO
+    format: json
+    structured: true
+
+# Health checks
+healthChecks:
+  liveness:
+    enabled: true
+    path: /health/live
+    initialDelaySeconds: 60
+    periodSeconds: 30
+    timeoutSeconds: 10
+    failureThreshold: 3
+  readiness:
+    enabled: true
+    path: /health/ready
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+
+# Persistent volumes for temporary files
+persistence:
+  enabled: true
+  storageClass: ""
+  accessMode: ReadWriteOnce
+  size: 100Gi  # For large media files
+  annotations: {}
+  mountPath: "/tmp/worker-storage"
+
+# Node selection and affinity
+nodeSelector: {}
+tolerations: []
+affinity:
+  # AI workers prefer GPU nodes
+  ai:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          preference:
+            matchExpressions:
+              - key: accelerator
+                operator: In
+                values: ["nvidia-tesla-k80", "nvidia-tesla-p100", "nvidia-tesla-v100"]
+  
+  # Media workers prefer CPU-optimized nodes
+  media:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          preference:
+            matchExpressions:
+              - key: instance-type
+                operator: In
+                values: ["c5.2xlarge", "c5.4xlarge", "c5.9xlarge"]
+
+  # General anti-affinity
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: ainflue-worker
+          topologyKey: kubernetes.io/hostname
+
+# Service account
+serviceAccount:
+  create: true
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::ACCOUNT:role/WorkerServiceRole
+  name: ""
+
+# RBAC
+rbac:
+  create: true
+
+# Network policies
+networkPolicy:
+  enabled: true
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: ainflue
+      ports:
+        - protocol: TCP
+          port: 9393  # Metrics
+        - protocol: TCP
+          port: 8080  # Health
+  egress:
+    - to: []
+      ports:
+        - protocol: TCP
+          port: 443   # HTTPS
+        - protocol: TCP
+          port: 80    # HTTP
+        - protocol: TCP
+          port: 5432  # PostgreSQL
+        - protocol: TCP
+          port: 6379  # Redis
+        - protocol: TCP
+          port: 5672  # RabbitMQ
+
+# Configuration maps
+configMaps:
+  workerConfig: |
+    worker:
+      timeout: 3600
+      max_retries: 3
+      retry_delay: 60
+      log_level: INFO
+      
+    queues:
+      redis:
+        url: redis://ainflue-redis:6379
+        db: 0
+        pool_size: 25
+        
+      rabbitmq:
+        url: amqp://guest:guest@ainflue-rabbitmq:5672/
+        connection_pool_size: 10
+        channel_pool_size: 25
+        
+    processing:
+      ai:
+        model_cache_size: 1000
+        inference_timeout: 300
+        batch_size: 32
+        
+      media:
+        temp_dir: /tmp/worker-storage
+        max_file_size: 2GB
+        ffmpeg_threads: 4
+        
+      analytics:
+        batch_size: 1000
+        aggregation_window: 3600
+        
+    monitoring:
+      metrics_enabled: true
+      tracing_enabled: true
+      health_check_interval: 30
+
+  mediaProcessingConfig: |
+    media:
+      video:
+        codecs: [h264, h265, vp9, av1]
+        formats: [mp4, webm, mkv]
+        resolutions:
+          - "3840x2160"  # 4K
+          - "1920x1080"  # FHD
+          - "1280x720"   # HD
+          - "854x480"    # SD
+        bitrates:
+          4k: "25000k"
+          fhd: "8000k"
+          hd: "5000k"
+          sd: "2500k"
+          
+      audio:
+        codecs: [aac, opus, mp3]
+        sample_rates: [44100, 48000]
+        bitrates: [128k, 192k, 256k, 320k]
+        
+      processing:
+        parallel_jobs: 4
+        temp_cleanup: true
+        thumbnail_count: 10
+
+# Secrets (references only)
+secrets:
+  workerSecrets:
+    database-url: "postgresql://user:pass@db:5432/ainflue_workers"
+    rabbitmq-url: "amqp://user:pass@rabbitmq:5672/"
+    redis-password: "redis123!"
+    jwt-secret: "change-me-in-production"
+    
+  externalSecrets:
+    aws-access-key: "AWS_ACCESS_KEY_ID"
+    aws-secret-key: "AWS_SECRET_ACCESS_KEY"
+    gcp-service-account: "gcp-service-account.json"
+
+# Redis configuration
+redis:
+  enabled: true
+  auth:
+    enabled: true
+    password: "ainflue123!"
+  master:
+    persistence:
+      enabled: true
+      size: 10Gi
+    resources:
+      requests:
+        memory: 2Gi
+        cpu: 1000m
+      limits:
+        memory: 4Gi
+        cpu: 2000m
+
+# PostgreSQL configuration
+postgresql:
+  enabled: true
+  auth:
+    postgresPassword: "ainflue123!"
+    username: "ainflue_worker"
+    password: "ainflue123!"
+    database: "ainflue_workers"
+  primary:
+    persistence:
+      enabled: true
+      size: 20Gi
+
+# RabbitMQ configuration
+rabbitmq:
+  enabled: true
+  auth:
+    username: "ainflue"
+    password: "ainflue123!"
+  persistence:
+    enabled: true
+    size: 8Gi
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
