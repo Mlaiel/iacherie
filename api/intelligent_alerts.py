@@ -716,6 +716,8 @@ class TechnicalMetricsRequest(BaseModel):
 
 class ModelMetricsRequest(BaseModel):
     """Legacy AI model metrics request model for backward compatibility"""
+    model_config = {"protected_namespaces": ()}
+    
     model_id: str
     model_name: str
     model_type: str

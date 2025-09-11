@@ -50,6 +50,8 @@ class Platform(BaseModel):
 
 class AttributionModel(BaseModel):
     """Attribution model for revenue tracking"""
+    model_config = {"protected_namespaces": ()}
+    
     model_id: str = Field(..., description="Attribution model ID")
     name: str = Field(..., description="Model name")
     weight: float = Field(..., description="Attribution weight")

@@ -552,6 +552,8 @@ class PredictionRequest(BaseModel):
     options: Optional[Dict[str, Any]] = None
 
 class PredictionResponse(BaseModel):
+    model_config = {"protected_namespaces": ()}
+    
     predictions: List[Any]
     model_id: str
     model_version: str
