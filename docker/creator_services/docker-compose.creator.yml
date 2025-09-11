@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # Musician Tools Service
   musician-tools:

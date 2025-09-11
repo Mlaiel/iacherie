@@ -2,8 +2,6 @@
 # Staging environment configuration for Ainflue Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
-version: '3.8'
-
 services:
   # Staging API Gateway
   api_gateway:

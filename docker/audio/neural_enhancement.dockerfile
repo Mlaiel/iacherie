@@ -62,13 +62,7 @@ RUN mkdir -p /app/storage/neural/input \
     chown -R neuralaudio:neuralaudio /app
 
 # Download pre-trained models
-RUN python -c "
-import torch
-import torchaudio
-from transformers import AutoModel
-# Download pre-trained models
-print('Downloading neural enhancement models...')
-" || echo "Models will be downloaded at runtime"
+RUN python -c "import torch;  import torchaudio;  from transformers import AutoModel;  # Download pre-trained models;  print('Downloading neural enhancement models...')" || echo "Models will be downloaded at runtime"
 
 # Switch to non-root user
 USER neuralaudio

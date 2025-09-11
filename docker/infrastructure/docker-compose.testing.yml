@@ -2,8 +2,6 @@
 # Links testing infrastructure with main platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
-version: '3.8'
-
 services:
   # Test Orchestrator
   test_orchestrator:
@@ -133,8 +131,6 @@ services:
       POSTGRES_DB: ainflue_test
       POSTGRES_USER: test_user
       POSTGRES_PASSWORD: test_password
-    volumes:
-      - test_db_data:/var/lib/postgresql/data
     networks:
       - platform_network
     tmpfs:

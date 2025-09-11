@@ -151,32 +151,17 @@ RUN mkdir -p /models
 # Pre-download common models (optional, controlled by build arg)
 ARG PRELOAD_MODELS=false
 RUN if [ "$PRELOAD_MODELS" = "true" ]; then \
-        python -c "
-import transformers
-import torch
-
-# Download common models
-models = [
-    'distilbert-base-uncased',
-    'microsoft/DialoGPT-medium',
-    'facebook/wav2vec2-base-960h'
-]
-
-for model in models:
-    try:
-        print(f'Downloading {model}...')
-        if 'wav2vec' in model:
-            from transformers import Wav2Vec2Model, Wav2Vec2Processor
-            processor = Wav2Vec2Processor.from_pretrained(model)
-            model_obj = Wav2Vec2Model.from_pretrained(model)
-        else:
-            from transformers import AutoModel, AutoTokenizer
-            tokenizer = AutoTokenizer.from_pretrained(model)
-            model_obj = AutoModel.from_pretrained(model)
-        print(f'Successfully downloaded {model}')
-    except Exception as e:
-        print(f'Failed to download {model}: {e}')
-"; \
+        python -c "\
+import transformers; \
+import torch; \
+models = ['distilbert-base-uncased', 'microsoft/DialoGPT-medium', 'facebook/wav2vec2-base-960h']; \
+[print(f'Downloading {model}...') or ( \
+    __import__('transformers').Wav2Vec2Processor.from_pretrained(model) and \
+    __import__('transformers').Wav2Vec2Model.from_pretrained(model) \
+    if 'wav2vec' in model else \
+    __import__('transformers').AutoTokenizer.from_pretrained(model) and \
+    __import__('transformers').AutoModel.from_pretrained(model) \
+) and print(f'Successfully downloaded {model}') for model in models]"; \
     fi
 
 # =============================================================================
@@ -279,15 +264,7 @@ HEALTHCHECK --interval=45s \
             --start-period=120s \
             --retries=3 \
             CMD curl -f http://localhost:8004/health \
-                && python -c "
-import torch
-import sys
-print(f'CUDA Available: {torch.cuda.is_available()}')
-if torch.cuda.is_available():
-    print(f'GPU Memory: {torch.cuda.get_device_properties(0).total_memory / 1024**3:.1f}GB')
-    print(f'GPU Memory Used: {torch.cuda.memory_allocated(0) / 1024**3:.1f}GB')
-sys.exit(0)
-" || exit 1
+                && python -c "import torch; import sys; print(f'CUDA Available: {torch.cuda.is_available()}'); [print(f'GPU Memory: {torch.cuda.get_device_properties(0).total_memory / 1024**3:.1f}GB') and print(f'GPU Memory Used: {torch.cuda.memory_allocated(0) / 1024**3:.1f}GB') if torch.cuda.is_available() else None]; sys.exit(0)" || exit 1
 
 # Start AI service
 CMD ["/app/start-ai.sh"]

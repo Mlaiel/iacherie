@@ -2,8 +2,6 @@
 # ML inference engines and content generation services
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
-version: '3.8'
-
 services:
   # ML Inference Engine
   ml-inference-engine:

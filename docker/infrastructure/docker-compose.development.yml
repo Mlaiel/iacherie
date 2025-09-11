@@ -2,8 +2,6 @@
 # Development-optimized configuration for Ainflue Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
-version: '3.8'
-
 services:
   # Development API Gateway
   api_gateway:

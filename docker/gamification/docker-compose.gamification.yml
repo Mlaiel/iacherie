@@ -12,8 +12,6 @@
 # Security: Production-ready with resource limits and health checks
 # =============================================
 
-version: '3.8'
-
 networks:
   gamification_network:
     driver: bridge

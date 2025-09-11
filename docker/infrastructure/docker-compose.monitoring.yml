@@ -1,8 +1,6 @@
 # Monitoring Stack - Prometheus, Grafana, ELK
 # ============================================
 
-version: '3.8'
-
 services:
   # Prometheus - Metrics collection and alerting
   prometheus:
