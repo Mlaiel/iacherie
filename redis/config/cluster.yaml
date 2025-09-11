@@ -1,0 +1,73 @@
+cluster_nodes:
+  - host: "redis-node-1"
+    port: 6379
+    role: "master"
+    slots: "0-5460"
+    
+  - host: "redis-node-2"
+    port: 6379
+    role: "master"
+    slots: "5461-10922"
+    
+  - host: "redis-node-3"
+    port: 6379
+    role: "master"
+    slots: "10923-16383"
+    
+  - host: "redis-replica-1"
+    port: 6379
+    role: "replica"
+    master: "redis-node-1"
+    
+  - host: "redis-replica-2"
+    port: 6379
+    role: "replica"
+    master: "redis-node-2"
+    
+  - host: "redis-replica-3"
+    port: 6379
+    role: "replica"
+    master: "redis-node-3"
+
+cluster_settings:
+  health_check_interval: 30
+  failover_timeout: 10000
+  monitoring_enabled: true
+  auto_scaling: true
+  memory_threshold: 0.85
+  cpu_threshold: 0.80
+  latency_threshold: 10.0
+  connection_threshold: 1000
+
+sentinel_config:
+  quorum: 2
+  down_after_milliseconds: 5000
+  parallel_syncs: 1
+  failover_timeout: 10000
+
+thresholds:
+  memory:
+    warning: 0.80
+    critical: 0.90
+    fragmentation_warning: 1.5
+    fragmentation_critical: 2.0
+  performance:
+    ops_warning: 10000
+    ops_critical: 50000
+    latency_warning: 10.0
+    latency_critical: 50.0
+  connections:
+    warning: 8000
+    critical: 9000
+    blocked_warning: 100
+    blocked_critical: 500
+  network:
+    input_warning: 10240
+    input_critical: 51200
+    output_warning: 10240
+    output_critical: 51200
+  system:
+    cpu_warning: 0.80
+    cpu_critical: 0.95
+    disk_warning: 0.85
+    disk_critical: 0.95
