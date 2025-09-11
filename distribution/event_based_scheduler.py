@@ -16,7 +16,7 @@ from enum import Enum
 import uuid
 
 import numpy as np
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -97,7 +97,8 @@ class EventData(BaseModel):
     detected_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     expires_at: Optional[datetime] = Field(None, description="Event expiration")
     
-    @validator('expires_at')
+    @field_validator('expires_at')
+    @classmethod
     def validate_expires_at(cls, v):
         if isinstance(v, str):
             return datetime.fromisoformat(v.replace('Z', '+00:00'))
@@ -117,7 +118,8 @@ class ScheduledTask(BaseModel):
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     executed_at: Optional[datetime] = Field(None, description="Execution time")
     
-    @validator('scheduled_time', 'new_scheduled_time')
+    @field_validator('scheduled_time', 'new_scheduled_time')
+    @classmethod
     def validate_times(cls, v):
         if isinstance(v, str):
             return datetime.fromisoformat(v.replace('Z', '+00:00'))

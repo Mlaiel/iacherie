@@ -16,7 +16,7 @@ from enum import Enum
 
 import aiohttp
 import numpy as np
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -64,7 +64,8 @@ class ClubhouseRoom(BaseModel):
     max_participants: int = Field(default=8000, description="Maximum participants")
     status: ClubhouseRoomStatus = Field(default=ClubhouseRoomStatus.SCHEDULED)
     
-    @validator('start_time')
+    @field_validator('start_time')
+    @classmethod
     def validate_start_time(cls, v):
         if isinstance(v, str):
             return datetime.fromisoformat(v.replace('Z', '+00:00'))

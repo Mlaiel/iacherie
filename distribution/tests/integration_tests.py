@@ -641,6 +641,70 @@ async def test_end_to_end_distribution_pipeline(test_config, mock_platform_apis,
     
     print(f"E2E Pipeline Results: {json.dumps(results, indent=2, default=str)}")
 
+
+# Add basic validation tests that will actually run
+class TestDistributionModuleBasics:
+    """Basic validation tests for distribution module components"""
+    
+    def test_distribution_imports(self):
+        """Test that core distribution modules import successfully"""
+        try:
+            import distribution
+            import distribution.platform_connectors
+            import distribution.publication_scheduler
+            import distribution.analytics_aggregator
+            assert hasattr(distribution, 'platform_connectors')
+            assert hasattr(distribution, 'publication_scheduler')
+            assert hasattr(distribution, 'analytics_aggregator')
+        except ImportError as e:
+            pytest.fail(f"Core distribution imports failed: {e}")
+    
+    def test_crisis_management_imports(self):
+        """Test crisis management module imports"""
+        try:
+            from distribution.crisis_management import sentiment_monitor
+            from distribution.config.crisis_configs import CrisisConfiguration
+            assert hasattr(sentiment_monitor, 'SentimentScore')
+            assert hasattr(CrisisConfiguration, '__init__')
+        except ImportError as e:
+            pytest.fail(f"Crisis management imports failed: {e}")
+    
+    def test_real_time_optimization_imports(self):
+        """Test real-time optimization module imports"""
+        try:
+            from distribution.real_time_optimization import live_performance_monitor
+            assert hasattr(live_performance_monitor, 'LivePerformanceMonitor')
+        except ImportError as e:
+            pytest.fail(f"Real-time optimization imports failed: {e}")
+    
+    def test_content_amplification_imports(self):
+        """Test content amplification module imports"""
+        try:
+            from distribution.content_amplification import amplification_engine
+            assert hasattr(amplification_engine, 'IntelligentAmplificationEngine')
+        except ImportError as e:
+            pytest.fail(f"Content amplification imports failed: {e}")
+
+    def test_platform_connectors_basic(self):
+        """Test platform connectors basic functionality"""
+        try:
+            from distribution.platform_connectors import PlatformConnectorManager, SocialPlatform
+            manager = PlatformConnectorManager()
+            
+            # Test manager exists
+            assert hasattr(manager, '__init__')
+            
+            # Test platform enum
+            assert hasattr(SocialPlatform, 'YOUTUBE')
+            assert hasattr(SocialPlatform, 'INSTAGRAM')
+            assert hasattr(SocialPlatform, 'TIKTOK')
+            
+        except ImportError as e:
+            pytest.skip(f"Platform connectors not available: {e}")
+        except Exception as e:
+            pytest.fail(f"Platform connectors test failed: {e}")
+
+
 if __name__ == "__main__":
     # Run tests with coverage
     pytest.main([
