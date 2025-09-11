@@ -673,6 +673,86 @@ class AlgorithmTracker:
             'consistency_score': 0.8,
             'volatility_index': 0.3
         }
+    
+    async def track_algorithm_changes(self, platform: str, timeframe: str = "30d") -> List[AlgorithmChange]:
+        """
+        Track and detect algorithm changes for a specific platform
+        
+        Args:
+            platform: Platform to track (e.g., 'youtube', 'instagram', 'tiktok')
+            timeframe: Time period to analyze (e.g., '7d', '30d', '90d')
+            
+        Returns:
+            List of detected algorithm changes
+        """
+        try:
+            self.logger.info(f"Starting algorithm change tracking for {platform} over {timeframe}")
+            
+            # Get recent algorithm changes
+            recent_changes = await self._get_recent_algorithm_changes(platform, timeframe)
+            
+            # Analyze performance trends to detect potential changes
+            performance_trends = await self._analyze_performance_trends(platform, timeframe)
+            
+            # Calculate stability score
+            stability_score = await self._calculate_stability_score(platform, recent_changes)
+            
+            # Detect new potential changes based on performance anomalies
+            detected_changes = []
+            
+            # Check for engagement anomalies
+            if performance_trends.get('volatility_index', 0) > 0.7:
+                detected_changes.append(AlgorithmChange(
+                    change_id=f"detected_{platform}_{int(datetime.now().timestamp())}",
+                    platform=platform,
+                    change_type=AlgorithmChangeType.RANKING_FACTOR_UPDATE,
+                    severity=AlgorithmSeverity.MEDIUM if performance_trends['volatility_index'] < 0.9 else AlgorithmSeverity.HIGH,
+                    detected_timestamp=datetime.now(),
+                    confirmed_timestamp=None,
+                    description=f"High volatility detected in {platform} performance metrics",
+                    affected_metrics=['engagement_rate', 'reach', 'impressions'],
+                    impact_score=performance_trends['volatility_index'],
+                    confidence_level=0.75,
+                    adaptation_strategies=[
+                        "Monitor content performance closely",
+                        "Test different content formats",
+                        "Adjust posting frequency"
+                    ]
+                ))
+            
+            # Check for consistency drops
+            if performance_trends.get('consistency_score', 1.0) < 0.6:
+                detected_changes.append(AlgorithmChange(
+                    change_id=f"consistency_{platform}_{int(datetime.now().timestamp())}",
+                    platform=platform,
+                    change_type=AlgorithmChangeType.CONTENT_TYPE_PRIORITIZATION,
+                    severity=AlgorithmSeverity.MEDIUM,
+                    detected_timestamp=datetime.now(),
+                    confirmed_timestamp=None,
+                    description=f"Decreased consistency in {platform} content performance",
+                    affected_metrics=['consistency_score', 'reach_predictability'],
+                    impact_score=1.0 - performance_trends['consistency_score'],
+                    confidence_level=0.65,
+                    adaptation_strategies=[
+                        "Diversify content types",
+                        "Test posting times",
+                        "Review content quality standards"
+                    ]
+                ))
+            
+            # Combine with recent confirmed changes
+            all_changes = recent_changes + detected_changes
+            
+            # Sort by impact and recency
+            all_changes.sort(key=lambda x: (x.impact_score, x.detected_timestamp), reverse=True)
+            
+            self.logger.info(f"Algorithm tracking complete for {platform}: {len(all_changes)} changes detected")
+            
+            return all_changes
+            
+        except Exception as e:
+            self.logger.error(f"Algorithm change tracking failed for {platform}: {e}")
+            raise
 
 
 __all__ = [

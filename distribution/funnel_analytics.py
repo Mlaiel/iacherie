@@ -670,6 +670,109 @@ class FunnelAnalytics:
             )
             
         return comparison
+    
+    async def analyze_conversion_funnel(self, funnel_id: str, timeframe_days: int = 30) -> Dict[str, Any]:
+        """
+        Analyze conversion funnel performance and identify optimization opportunities
+        
+        Args:
+            funnel_id: Funnel identifier to analyze
+            timeframe_days: Number of days to analyze (default: 30)
+            
+        Returns:
+            Dict containing conversion analysis results
+        """
+        try:
+            # Analyze the funnel using existing method
+            funnel_result = await self.analyze_funnel(funnel_id)
+            
+            # Calculate conversion rates between steps
+            conversion_rates = []
+            if funnel_result.step_metrics:
+                for i in range(1, len(funnel_result.step_metrics)):
+                    current_step = funnel_result.step_metrics[i]
+                    previous_step = funnel_result.step_metrics[i-1]
+                    
+                    if previous_step.entry_count > 0:
+                        conversion_rate = current_step.entry_count / previous_step.entry_count
+                        conversion_rates.append({
+                            'from_step': previous_step.step_name,
+                            'to_step': current_step.step_name,
+                            'conversion_rate': conversion_rate,
+                            'conversion_percentage': conversion_rate * 100,
+                            'drop_off_count': previous_step.entry_count - current_step.entry_count,
+                            'drop_off_rate': 1 - conversion_rate
+                        })
+            
+            # Identify bottlenecks
+            bottlenecks = []
+            if conversion_rates:
+                avg_conversion = np.mean([cr['conversion_rate'] for cr in conversion_rates])
+                bottlenecks = [
+                    cr for cr in conversion_rates 
+                    if cr['conversion_rate'] < avg_conversion * 0.7  # 30% below average
+                ]
+            
+            # Calculate overall funnel metrics
+            overall_metrics = {
+                'total_entries': funnel_result.step_metrics[0].entry_count if funnel_result.step_metrics else 0,
+                'total_completions': funnel_result.step_metrics[-1].completion_count if funnel_result.step_metrics else 0,
+                'overall_conversion_rate': funnel_result.overall_conversion_rate,
+                'average_time_to_complete': funnel_result.average_completion_time,
+                'total_steps': len(funnel_result.step_metrics) if funnel_result.step_metrics else 0
+            }
+            
+            # Generate optimization recommendations
+            optimization_recommendations = self._generate_conversion_recommendations(
+                conversion_rates, bottlenecks, overall_metrics
+            )
+            
+            return {
+                'funnel_id': funnel_id,
+                'analysis_period_days': timeframe_days,
+                'overall_metrics': overall_metrics,
+                'step_by_step_conversion': conversion_rates,
+                'bottlenecks': bottlenecks,
+                'optimization_recommendations': optimization_recommendations,
+                'performance_insights': funnel_result.insights,
+                'analyzed_at': datetime.now(timezone.utc).isoformat()
+            }
+            
+        except Exception as e:
+            self.logger.error(f"Conversion funnel analysis failed for {funnel_id}: {e}")
+            raise
+    
+    def _generate_conversion_recommendations(self, conversion_rates: List[Dict], 
+                                           bottlenecks: List[Dict], 
+                                           overall_metrics: Dict) -> List[str]:
+        """Generate specific recommendations for conversion optimization"""
+        recommendations = []
+        
+        # Overall conversion rate recommendations
+        if overall_metrics['overall_conversion_rate'] < 0.1:  # Less than 10%
+            recommendations.append("Overall conversion rate is below 10%. Consider simplifying the funnel or improving the value proposition.")
+        
+        # Bottleneck-specific recommendations
+        for bottleneck in bottlenecks:
+            recommendations.append(
+                f"Optimize the transition from '{bottleneck['from_step']}' to '{bottleneck['to_step']}' "
+                f"(current conversion: {bottleneck['conversion_percentage']:.1f}%). Consider A/B testing "
+                f"improvements to this step."
+            )
+        
+        # Step count recommendations
+        if overall_metrics['total_steps'] > 5:
+            recommendations.append("Consider reducing the number of funnel steps. Funnels with fewer steps typically have higher conversion rates.")
+        
+        # Time-based recommendations
+        if overall_metrics.get('average_time_to_complete', 0) > 300:  # More than 5 minutes
+            recommendations.append("Average completion time is high. Consider optimizing the user experience to reduce friction.")
+        
+        # Entry point recommendations
+        if overall_metrics['total_entries'] < 100:
+            recommendations.append("Low traffic volume. Focus on increasing top-of-funnel traffic before optimizing conversion rates.")
+        
+        return recommendations
 
 # Usage example
 async def example_usage():

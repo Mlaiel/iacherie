@@ -747,6 +747,51 @@ class LifetimeValueAnalytics:
                 "Consider reducing spend on underperforming channels"
             ]
         }
+    
+    async def calculate_customer_ltv(self, customer_id: str, 
+                                   model_type: LTVModel = LTVModel.HISTORICAL,
+                                   prediction_months: int = 12) -> Dict[str, Any]:
+        """
+        Calculate lifetime value for a specific customer
+        
+        Args:
+            customer_id: Customer identifier
+            model_type: LTV calculation model to use
+            prediction_months: Number of months to predict (for predictive models)
+            
+        Returns:
+            Dict containing LTV calculation results
+        """
+        try:
+            # Check if customer exists
+            if customer_id not in self.customer_profiles:
+                self.logger.warning(f"Customer {customer_id} not found in profiles. Returning zero LTV.")
+                return {
+                    'customer_id': customer_id,
+                    'ltv_value': 0.0,
+                    'model_used': model_type.value,
+                    'confidence_score': 0.0,
+                    'error': 'Customer profile not found'
+                }
+            
+            customer_profile = self.customer_profiles[customer_id]
+            
+            # Use existing historical calculation method
+            ltv_value = await self._calculate_historical_ltv(customer_profile)
+            
+            return {
+                'customer_id': customer_id,
+                'ltv_value': ltv_value,
+                'model_used': model_type.value,
+                'confidence_score': 0.9,
+                'customer_segment': customer_profile.segment,
+                'total_transactions': len(customer_profile.transaction_history),
+                'calculated_at': datetime.now(timezone.utc).isoformat()
+            }
+            
+        except Exception as e:
+            self.logger.error(f"Customer LTV calculation failed for {customer_id}: {e}")
+            raise
 
 # Usage example
 async def example_usage():

@@ -10,9 +10,9 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 from .platform_analyzer import PlatformAnalyzer, PlatformMetrics
 from .algorithm_tracker import AlgorithmTracker, AlgorithmChange
 from .feature_optimizer import FeatureOptimizer, PlatformFeature
-from .policy_monitor import PolicyMonitor, PolicyUpdates
-from .trending_tracker import TrendingTracker, PlatformTrends
-from .creator_fund_optimizer import CreatorFundOptimizer, FundStrategy
+from .policy_monitor import PolicyMonitor, PolicyUpdate
+from .trending_tracker import TrendingTracker, TrendingItem
+from .creator_fund_optimizer import CreatorFundOptimizer, OptimizationStrategy
 from .monetization_maximizer import MonetizationMaximizer, RevenueStrategy
 from .competition_analyzer import CompetitionAnalyzer, CompetitiveInsights
 
@@ -21,7 +21,7 @@ __author__ = "Fahed Mlaiel"
 
 __all__ = [
     "PlatformAnalyzer", "PlatformMetrics", "AlgorithmTracker", "AlgorithmChange",
-    "FeatureOptimizer", "PlatformFeature", "PolicyMonitor", "PolicyUpdates",
-    "TrendingTracker", "PlatformTrends", "CreatorFundOptimizer", "FundStrategy",
+    "FeatureOptimizer", "PlatformFeature", "PolicyMonitor", "PolicyUpdate",
+    "TrendingTracker", "TrendingItem", "CreatorFundOptimizer", "OptimizationStrategy",
     "MonetizationMaximizer", "RevenueStrategy", "CompetitionAnalyzer", "CompetitiveInsights"
 ]

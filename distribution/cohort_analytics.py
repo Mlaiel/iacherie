@@ -627,6 +627,80 @@ class CohortAnalytics:
         )
         
         return comparison
+    
+    async def analyze_cohorts(self, cohort_ids: List[str] = None, 
+                            period_type: PeriodType = PeriodType.MONTHLY) -> Dict[str, Any]:
+        """
+        Analyze multiple cohorts or all defined cohorts
+        
+        Args:
+            cohort_ids: List of specific cohort IDs to analyze, or None for all
+            period_type: Period type for analysis grouping
+            
+        Returns:
+            Dictionary containing analysis results for all cohorts
+        """
+        try:
+            if cohort_ids is None:
+                # Analyze all defined cohorts
+                cohort_ids = list(self.cohort_definitions.keys())
+            
+            results = {}
+            summary_stats = {
+                'total_cohorts_analyzed': 0,
+                'total_users_analyzed': 0,
+                'average_retention_rate': 0.0,
+                'best_performing_cohort': None,
+                'worst_performing_cohort': None
+            }
+            
+            retention_rates = []
+            
+            for cohort_id in cohort_ids:
+                if cohort_id in self.cohort_definitions:
+                    # Analyze individual cohort
+                    cohort_result = await self.analyze_cohort(cohort_id)
+                    results[cohort_id] = {
+                        'cohort_size': cohort_result.cohort_size,
+                        'retention_rate': cohort_result.summary_stats.get('retention_rate', 0.0),
+                        'periods_analyzed': cohort_result.periods_analyzed,
+                        'summary_stats': cohort_result.summary_stats,
+                        'insights': cohort_result.insights
+                    }
+                    
+                    retention_rates.append(cohort_result.summary_stats.get('retention_rate', 0.0))
+                    summary_stats['total_users_analyzed'] += cohort_result.cohort_size
+                    summary_stats['total_cohorts_analyzed'] += 1
+            
+            # Calculate summary statistics
+            if retention_rates:
+                summary_stats['average_retention_rate'] = np.mean(retention_rates)
+                
+                # Find best and worst performing cohorts
+                if len(retention_rates) > 0:
+                    best_idx = np.argmax(retention_rates)
+                    worst_idx = np.argmin(retention_rates)
+                    
+                    cohort_ids_list = list(results.keys())
+                    summary_stats['best_performing_cohort'] = {
+                        'cohort_id': cohort_ids_list[best_idx],
+                        'retention_rate': retention_rates[best_idx]
+                    }
+                    summary_stats['worst_performing_cohort'] = {
+                        'cohort_id': cohort_ids_list[worst_idx], 
+                        'retention_rate': retention_rates[worst_idx]
+                    }
+            
+            return {
+                'summary_stats': summary_stats,
+                'cohort_results': results,
+                'analyzed_at': datetime.now(timezone.utc).isoformat(),
+                'period_type': period_type.value
+            }
+            
+        except Exception as e:
+            self.logger.error(f"Cohorts analysis failed: {e}")
+            raise
 
 # Usage example
 async def example_usage():
@@ -687,3 +761,4 @@ async def example_usage():
 
 if __name__ == "__main__":
     asyncio.run(example_usage())
+

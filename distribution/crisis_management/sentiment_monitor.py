@@ -384,6 +384,51 @@ class SentimentMonitor:
                 })
         
         return recommendations
+    
+    async def get_sentiment_score(self, text: str, platform: str = None) -> float:
+        """
+        Get numerical sentiment score for given text
+        
+        Args:
+            text: Text to analyze for sentiment
+            platform: Optional platform context for platform-specific analysis
+            
+        Returns:
+            float: Sentiment score between -1.0 (very negative) and 1.0 (very positive)
+        """
+        try:
+            if not text or not text.strip():
+                self.logger.warning("Empty text provided for sentiment analysis")
+                return 0.0
+            
+            # Use TextBlob for basic sentiment analysis
+            blob = TextBlob(text)
+            polarity = blob.sentiment.polarity
+            
+            # Apply platform-specific adjustments if provided
+            if platform:
+                # Platform-specific sentiment adjustments
+                platform_weights = {
+                    'twitter': 1.2,  # Twitter tends to be more emotional
+                    'linkedin': 0.8,  # LinkedIn tends to be more professional/neutral
+                    'instagram': 1.1,  # Instagram slightly more positive
+                    'facebook': 1.0,  # Baseline
+                    'tiktok': 1.3,   # TikTok tends to be more extreme
+                    'youtube': 1.0   # Baseline
+                }
+                
+                weight = platform_weights.get(platform.lower(), 1.0)
+                polarity = polarity * weight
+                
+                # Ensure we stay within bounds
+                polarity = max(-1.0, min(1.0, polarity))
+            
+            self.logger.debug(f"Sentiment score calculated: {polarity} for platform: {platform}")
+            return polarity
+            
+        except Exception as e:
+            self.logger.error(f"Sentiment score calculation failed: {e}")
+            return 0.0
 
 
 # Export classes
