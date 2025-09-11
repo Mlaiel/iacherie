@@ -1,0 +1,59 @@
+# Security Hardening Service Requirements
+# Author: Fahed Mlaiel (mlaiel@live.de) - Security Specialist
+
+# Web framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+
+# Security scanning and analysis
+bandit==1.7.5
+safety==2.3.4
+semgrep==1.45.0
+trivy-python==0.1.0
+
+# Vulnerability assessment
+requests==2.31.0
+urllib3==2.0.7
+cryptography==41.0.7
+
+# Container security
+docker==6.1.3
+python-docker==1.0.0
+
+# Compliance and auditing
+compliance-checker==1.0.0
+audit-python==1.0.0
+
+# Network security
+scapy==2.5.0
+nmap-python==1.5.4
+
+# Authentication and authorization
+pyjwt==2.8.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.6
+
+# Monitoring and logging
+prometheus-client==0.18.0
+structlog==23.2.0
+
+# Configuration management
+pyyaml==6.0.1
+python-dotenv==1.0.0
+
+# Database security
+sqlalchemy==2.0.23
+psycopg2-binary==2.9.9
+
+# Async support
+asyncio==3.4.3
+aiohttp==3.9.0
+aiofiles==23.2.1
+
+# Data validation
+pydantic==2.4.2
+email-validator==2.0.0
+
+# Testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
