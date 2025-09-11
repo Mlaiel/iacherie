@@ -45,6 +45,53 @@ from .distributed_training_manager import (
     TrainingNode
 )
 
+# NEW PHASE 10 & 11 MODULES - Advanced Training Infrastructure
+from .continual_learning_engine import (
+    ContinualLearningEngine, 
+    ContinualLearningConfig,
+    TaskMetadata,
+    create_continual_learning_engine
+)
+from .data_augmentation_engine import (
+    DataAugmentationEngine,
+    AugmentationConfig,
+    CreatorProfile,
+    create_augmentation_engine
+)
+from .loss_function_optimizer import (
+    LossFunctionOptimizer,
+    LossConfig,
+    CreatorObjectives,
+    CreatorSpecificLossFunction,
+    create_loss_optimizer,
+    create_creator_objectives
+)
+from .gradient_optimization_engine import (
+    GradientOptimizationEngine,
+    OptimizationConfig as GradOptConfig,
+    CreatorOptimizationProfile,
+    create_optimization_engine,
+    create_creator_profile
+)
+from .model_compression_toolkit import (
+    ModelCompressionToolkit,
+    CompressionConfig,
+    CompressionResults,
+    create_compression_toolkit
+)
+from .training_metrics_collector import (
+    TrainingMetricsCollector,
+    MetricConfig,
+    MetricData,
+    create_metrics_collector
+)
+from .model_convergence_analyzer import (
+    ModelConvergenceAnalyzer,
+    ConvergenceConfig,
+    ConvergenceAnalysis,
+    create_convergence_analyzer
+)
+
 __all__ = [
     # AutoML Pipeline
     'AutoMLPipeline',
@@ -70,7 +117,40 @@ __all__ = [
     'DistributedTrainingConfig',
     'TrainingStrategy',
     'NodeStatus',
-    'TrainingNode'
+    'TrainingNode',
+    
+    # NEW PHASE 10 & 11 - Advanced Training Infrastructure
+    'ContinualLearningEngine',
+    'ContinualLearningConfig',
+    'TaskMetadata',
+    'create_continual_learning_engine',
+    'DataAugmentationEngine',
+    'AugmentationConfig',
+    'CreatorProfile',
+    'create_augmentation_engine',
+    'LossFunctionOptimizer',
+    'LossConfig',
+    'CreatorObjectives',
+    'CreatorSpecificLossFunction',
+    'create_loss_optimizer',
+    'create_creator_objectives',
+    'GradientOptimizationEngine',
+    'GradOptConfig',
+    'CreatorOptimizationProfile',
+    'create_optimization_engine',
+    'create_creator_profile',
+    'ModelCompressionToolkit',
+    'CompressionConfig',
+    'CompressionResults',
+    'create_compression_toolkit',
+    'TrainingMetricsCollector',
+    'MetricConfig',
+    'MetricData',
+    'create_metrics_collector',
+    'ModelConvergenceAnalyzer',
+    'ConvergenceConfig',
+    'ConvergenceAnalysis',
+    'create_convergence_analyzer'
 ]
 
 # Version du module
