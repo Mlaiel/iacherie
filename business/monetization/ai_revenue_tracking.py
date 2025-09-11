@@ -14,8 +14,46 @@ import logging
 from datetime import datetime, timedelta
 from decimal import Decimal
 import json
+from pydantic import BaseModel, Field
+from enum import Enum
 
 logger = logging.getLogger(__name__)
+
+# ============ PYDANTIC MODELS ============
+
+class RevenueDataPoint(BaseModel):
+    """Data point for revenue tracking"""
+    model_config = {"protected_namespaces": ()}
+    
+    id: str = Field(..., description="Unique revenue data point ID")
+    creator_id: str = Field(..., description="Creator ID")
+    amount: Decimal = Field(..., description="Revenue amount")
+    currency: str = Field(default="USD", description="Currency code")
+    timestamp: datetime = Field(default_factory=datetime.now, description="Timestamp")
+    source: str = Field(..., description="Revenue source (platform, subscription, etc.)")
+    metadata: Dict[str, Any] = Field(default_factory=dict, description="Additional metadata")
+
+class RevenueStream(BaseModel):
+    """Revenue stream definition"""
+    id: str = Field(..., description="Stream ID") 
+    creator_id: str = Field(..., description="Creator ID")
+    platform: str = Field(..., description="Platform name")
+    stream_type: str = Field(..., description="Type of revenue stream")
+    active: bool = Field(default=True, description="Is stream active")
+
+class Platform(BaseModel):
+    """Platform definition"""
+    id: str = Field(..., description="Platform ID")
+    name: str = Field(..., description="Platform name")
+    revenue_share: float = Field(..., description="Revenue share percentage")
+    supported_currencies: List[str] = Field(default_factory=list, description="Supported currencies")
+
+class AttributionModel(BaseModel):
+    """Attribution model for revenue tracking"""
+    model_id: str = Field(..., description="Attribution model ID")
+    name: str = Field(..., description="Model name")
+    weight: float = Field(..., description="Attribution weight")
+    rules: Dict[str, Any] = Field(default_factory=dict, description="Attribution rules")
 
 class AIRevenueTracker:
     """AI-powered revenue tracking and analytics"""
@@ -282,9 +320,15 @@ revenue_forecasting_engine = RevenueForecastingEngine()
 # Export main components
 __all__ = [
     'AIRevenueTracker',
-    'RevenueForecastingEngine',
+    'RevenueForecastingEngine', 
+    'AIRevenueTrackingEngine',
+    'RevenueDataPoint',
+    'RevenueStream',
+    'Platform',
+    'AttributionModel',
     'ai_revenue_tracker',
-    'revenue_forecasting_engine'
+    'revenue_forecasting_engine',
+    'ai_revenue_tracking_engine'
 ]
 
 # Alias for backward compatibility

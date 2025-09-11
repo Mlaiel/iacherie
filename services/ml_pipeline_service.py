@@ -66,6 +66,8 @@ class TrainingStatus(str, Enum):
 
 class MLModel(BaseModel):
     """ML model metadata and configuration"""
+    model_config = {"protected_namespaces": ()}
+    
     model_id: str = Field(..., description="Unique model identifier")
     name: str = Field(..., description="Model name")
     version: str = Field(..., description="Model version")
@@ -100,6 +102,8 @@ class MLModel(BaseModel):
 
 class TrainingJob(BaseModel):
     """ML training job definition"""
+    model_config = {"protected_namespaces": ()}
+    
     job_id: str = Field(..., description="Unique job identifier")
     model_id: str = Field(..., description="Associated model identifier")
     job_name: str = Field(..., description="Training job name")
@@ -131,6 +135,8 @@ class TrainingJob(BaseModel):
 
 class ModelPrediction(BaseModel):
     """Model prediction result"""
+    model_config = {"protected_namespaces": ()}
+    
     prediction_id: str = Field(..., description="Unique prediction identifier")
     model_id: str = Field(..., description="Model used for prediction")
     model_version: str = Field(..., description="Model version used")
@@ -144,6 +150,8 @@ class ModelPrediction(BaseModel):
 
 class DataDriftReport(BaseModel):
     """Data drift detection report"""
+    model_config = {"protected_namespaces": ()}
+    
     report_id: str = Field(..., description="Unique report identifier")
     model_id: str = Field(..., description="Associated model identifier")
     analysis_period: Dict[str, datetime] = Field(..., description="Analysis time period")
@@ -157,6 +165,8 @@ class DataDriftReport(BaseModel):
 
 class ModelPerformanceReport(BaseModel):
     """Model performance monitoring report"""
+    model_config = {"protected_namespaces": ()}
+    
     report_id: str = Field(..., description="Unique report identifier")
     model_id: str = Field(..., description="Associated model identifier")
     monitoring_period: Dict[str, datetime] = Field(..., description="Monitoring time period")
