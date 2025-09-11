@@ -28,6 +28,31 @@ from .performance_monitor import (
     MonitorFactory
 )
 
+# NEW PHASE 15 MODULES - Advanced Monitoring & Explainability
+from .model_explainer import (
+    ModelExplainer,
+    ExplanationRequest,
+    FeatureAttribution,
+    ModelExplanation,
+    ExplanationType,
+    ExplainerMethod,
+    ExplainerConfig,
+    CreatorType as ExplainerCreatorType,
+    create_model_explainer
+)
+
+from .performance_anomaly_detector import (
+    PerformanceAnomalyDetector,
+    PerformanceMetric as AnomalyPerformanceMetric,
+    AnomalyDetection,
+    AnomalyPattern,
+    AnomalyType,
+    AnomalySeverity,
+    DetectionMethod,
+    DetectorConfig,
+    create_anomaly_detector
+)
+
 __all__ = [
     'ModelPerformanceMonitor',
     'MetricPoint',
@@ -37,7 +62,27 @@ __all__ = [
     'AlertSeverity',
     'MetricType',
     'DriftType',
-    'MonitorFactory'
+    'MonitorFactory',
+    
+    # NEW PHASE 15 - Advanced Monitoring & Explainability
+    'ModelExplainer',
+    'ExplanationRequest',
+    'FeatureAttribution',
+    'ModelExplanation',
+    'ExplanationType',
+    'ExplainerMethod',
+    'ExplainerConfig',
+    'ExplainerCreatorType',
+    'create_model_explainer',
+    'PerformanceAnomalyDetector',
+    'AnomalyPerformanceMetric',
+    'AnomalyDetection',
+    'AnomalyPattern',
+    'AnomalyType',
+    'AnomalySeverity',
+    'DetectionMethod',
+    'DetectorConfig',
+    'create_anomaly_detector'
 ]
 
 # Version du module

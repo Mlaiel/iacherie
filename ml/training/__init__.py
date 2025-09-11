@@ -92,6 +92,18 @@ from .model_convergence_analyzer import (
     create_convergence_analyzer
 )
 
+# NEW PHASE 15 MODULES - Advanced Training Infrastructure
+from .learning_rate_scheduler import (
+    LearningRateScheduler,
+    SchedulerConfig,
+    SchedulerType,
+    CreatorType as TrainingCreatorType,
+    SchedulerState,
+    SchedulerMetrics,
+    create_learning_rate_scheduler,
+    create_creator_optimized_scheduler
+)
+
 __all__ = [
     # AutoML Pipeline
     'AutoMLPipeline',
@@ -150,7 +162,17 @@ __all__ = [
     'ModelConvergenceAnalyzer',
     'ConvergenceConfig',
     'ConvergenceAnalysis',
-    'create_convergence_analyzer'
+    'create_convergence_analyzer',
+    
+    # NEW PHASE 15 - Advanced Training Infrastructure
+    'LearningRateScheduler',
+    'SchedulerConfig',
+    'SchedulerType',
+    'TrainingCreatorType',
+    'SchedulerState',
+    'SchedulerMetrics',
+    'create_learning_rate_scheduler',
+    'create_creator_optimized_scheduler'
 ]
 
 # Version du module
