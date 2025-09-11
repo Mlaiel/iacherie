@@ -32,8 +32,8 @@ import {
   Reward,
   ApiResponse,
   PaginatedResponse 
-} from '../gamification/types';
-import { gamificationStyles } from '../gamification/gamification.styles';
+} from '../types';
+import { gamificationStyles } from '../gamification.styles';
 import { 
   TrophyIcon,
   UsersIcon,

@@ -7,4 +7,4 @@
  */
 
 // Re-export styles and utilities from unified engine
-export { studioColors, studioUtils } from '../../remix_studio_engine';
+export { studioColors, studioUtils, studioComponents } from '../../remix_studio_engine';

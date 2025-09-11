@@ -27,8 +27,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ChallengeCreatorData, ChallengeType } from '../gamification/types';
-import { gamificationStyles } from '../gamification/gamification.styles';
+import { ChallengeCreatorData, ChallengeType } from '../types';
+import { gamificationStyles } from '../gamification.styles';
 import { PlusIcon, SparklesIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 
@@ -132,7 +132,7 @@ const ChallengeCreator: React.FC<ChallengeCreatorProps> = ({
               <input
                 type="text"
                 value={formData.title}
-                onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
+                onChange={(e) => setFormData((prev: ChallengeCreatorData) => ({ ...prev, title: e.target.value }))}
                 placeholder="Enter an engaging challenge title"
                 className={gamificationStyles.forms.input}
                 required
@@ -145,7 +145,7 @@ const ChallengeCreator: React.FC<ChallengeCreatorProps> = ({
               </label>
               <textarea
                 value={formData.description}
-                onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+                onChange={(e) => setFormData((prev: ChallengeCreatorData) => ({ ...prev, description: e.target.value }))}
                 placeholder="Describe what participants need to do"
                 rows={4}
                 className={gamificationStyles.forms.textarea}
@@ -160,7 +160,7 @@ const ChallengeCreator: React.FC<ChallengeCreatorProps> = ({
                 </label>
                 <select
                   value={formData.type}
-                  onChange={(e) => setFormData(prev => ({ ...prev, type: e.target.value as ChallengeType }))}
+                  onChange={(e) => setFormData((prev: ChallengeCreatorData) => ({ ...prev, type: e.target.value as ChallengeType }))}
                   className={gamificationStyles.forms.select}
                 >
                   <option value={ChallengeType.DAILY}>Daily</option>
@@ -178,7 +178,7 @@ const ChallengeCreator: React.FC<ChallengeCreatorProps> = ({
                 <input
                   type="number"
                   value={formData.duration}
-                  onChange={(e) => setFormData(prev => ({ ...prev, duration: parseInt(e.target.value) }))}
+                  onChange={(e) => setFormData((prev: ChallengeCreatorData) => ({ ...prev, duration: parseInt(e.target.value) }))}
                   min="1"
                   max="365"
                   className={gamificationStyles.forms.input}
@@ -194,7 +194,7 @@ const ChallengeCreator: React.FC<ChallengeCreatorProps> = ({
                 </label>
                 <select
                   value={formData.category}
-                  onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
+                  onChange={(e) => setFormData((prev: ChallengeCreatorData) => ({ ...prev, category: e.target.value }))}
                   className={gamificationStyles.forms.select}
                 >
                   <option value="content">Content Creation</option>
@@ -211,7 +211,7 @@ const ChallengeCreator: React.FC<ChallengeCreatorProps> = ({
                 </label>
                 <select
                   value={formData.difficulty}
-                  onChange={(e) => setFormData(prev => ({ ...prev, difficulty: parseInt(e.target.value) }))}
+                  onChange={(e) => setFormData((prev: ChallengeCreatorData) => ({ ...prev, difficulty: parseInt(e.target.value) }))}
                   className={gamificationStyles.forms.select}
                 >
                   <option value={1}>Beginner</option>
@@ -230,7 +230,7 @@ const ChallengeCreator: React.FC<ChallengeCreatorProps> = ({
               <input
                 type="number"
                 value={formData.maxParticipants || ''}
-                onChange={(e) => setFormData(prev => ({ 
+                onChange={(e) => setFormData((prev: ChallengeCreatorData) => ({ 
                   ...prev, 
                   maxParticipants: e.target.value ? parseInt(e.target.value) : undefined 
                 }))}

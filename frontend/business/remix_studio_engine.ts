@@ -181,7 +181,8 @@ export const studioColors = {
     surface: '#1E293B',
     border: '#334155',
     text: '#F1F5F9',
-    textSecondary: '#94A3B8'
+    textSecondary: '#94A3B8',
+    highlight: '#A855F7' // Add missing highlight color
   },
   track: {
     audio: '#06B6D4',
@@ -197,6 +198,63 @@ export const studioColors = {
     selection: '#8B5CF6',
     playhead: '#F59E0B',
     grid: '#334155'
+  },
+  audio: {
+    primary: '#06B6D4',
+    secondary: '#0EA5E9',
+    accent: '#38BDF8',
+    background: '#0C4A6E',
+    peak: '#EF4444',
+    rms: '#F59E0B'
+  },
+  controls: {
+    background: '#1E293B',
+    border: '#334155',
+    active: '#8B5CF6',
+    hover: '#64748B'
+  }
+};
+
+// Studio components styling configuration
+export const studioComponents = {
+  timeline: {
+    height: '400px',
+    backgroundColor: studioColors.studio.background,
+    borderColor: studioColors.studio.border,
+    gridColor: '#334155',
+    trackHeight: 60,
+    rulerHeight: 40
+  },
+  track: {
+    height: '60px',
+    backgroundColor: studioColors.studio.surface,
+    borderColor: studioColors.studio.border,
+    trackHeight: 60
+  },
+  mixer: {
+    width: '300px',
+    backgroundColor: studioColors.studio.background,
+    borderColor: studioColors.studio.border,
+    channelWidth: 80,
+    meterWidth: 12,
+    meterHeight: 120,
+    faderHeight: 140
+  },
+  waveform: {
+    backgroundColor: studioColors.waveform.background,
+    waveformColor: studioColors.waveform.waveform,
+    selectionColor: studioColors.waveform.selection,
+    waveColor: '#06B6D4',
+    cursorColor: '#F59E0B',
+    progressColor: '#10B981'
+  },
+  controls: {
+    backgroundColor: studioColors.controls.background,
+    borderColor: studioColors.controls.border,
+    activeColor: studioColors.controls.active,
+    hoverColor: studioColors.controls.hover,
+    knob: '#8B5CF6',
+    knobActive: '#A855F7'
   }
 };
 

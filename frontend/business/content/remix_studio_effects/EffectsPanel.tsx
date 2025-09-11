@@ -66,7 +66,7 @@ const EffectsPanel: React.FC<EffectsPanelProps> = ({
   ];
 
   const renderEffectParameters = (effect: AudioEffect) => {
-    const commonParams: { [key: string]: { min: number; max: number; step: number; unit?: string } } = {
+    const commonParams: { [effectType: string]: { [paramName: string]: { min: number; max: number; step: number; unit?: string } } } = {
       reverb: {
         roomSize: { min: 0, max: 1, step: 0.01 },
         damping: { min: 0, max: 1, step: 0.01 },

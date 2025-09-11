@@ -34,13 +34,13 @@ import {
   FilterOptions,
   ApiResponse,
   PaginatedResponse
-} from '../gamification/types';
+} from '../types';
 import { 
   gamificationStyles, 
   challengeIcons, 
   getDifficultyLabel, 
   difficultyColors 
-} from '../gamification/gamification.styles';
+} from '../gamification.styles';
 import { 
   FunnelIcon,
   MagnifyingGlassIcon,

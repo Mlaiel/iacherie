@@ -223,7 +223,8 @@ const TimelineEditor: React.FC<TimelineEditorProps> = ({
   const handleAddTrack = useCallback(() => {
     const newTrack = {
       name: `Track ${tracks.length + 1}`,
-      color: studioUtils.getTrackColor(tracks.length),
+      type: 'audio' as const,
+      color: studioUtils.getTrackColor(tracks.length.toString()),
       volume: 0.8,
       pan: 0,
       muted: false,
@@ -231,6 +232,7 @@ const TimelineEditor: React.FC<TimelineEditorProps> = ({
       armed: false,
       startTime: 0,
       duration: 120000,
+      length: 120000,
       effects: []
     };
     onAddTrack(newTrack);
@@ -358,7 +360,7 @@ const TimelineEditor: React.FC<TimelineEditorProps> = ({
 
   // Render Track
   const renderTrack = useCallback((track: AudioTrack, index: number) => {
-    const trackY = index * parseInt(studioComponents.timeline.trackHeight);
+    const trackY = index * studioComponents.timeline.trackHeight;
     const trackWidth = timeToPixels(track.duration);
     const trackX = timeToPixels(track.startTime);
     const isSelected = selectedTracks.includes(track.id);
@@ -371,7 +373,7 @@ const TimelineEditor: React.FC<TimelineEditorProps> = ({
           left: trackX,
           top: trackY + 5,
           width: trackWidth,
-          height: parseInt(studioComponents.timeline.trackHeight) - 10,
+          height: studioComponents.timeline.trackHeight - 10,
           backgroundColor: track.color,
           opacity: track.muted ? 0.5 : isSelected ? 0.9 : 0.7,
           borderColor: isSelected ? studioColors.studio.highlight : 'transparent',
@@ -532,7 +534,7 @@ const TimelineEditor: React.FC<TimelineEditorProps> = ({
           ref={timelineRef}
           className="relative bg-gray-900 cursor-crosshair"
           style={{ 
-            height: tracks.length * parseInt(studioComponents.timeline.trackHeight),
+            height: tracks.length * studioComponents.timeline.trackHeight,
             width: timelineWidth,
             minHeight: 400
           }}
@@ -552,7 +554,7 @@ const TimelineEditor: React.FC<TimelineEditorProps> = ({
               key={index}
               className="absolute border-b border-gray-700"
               style={{
-                top: index * parseInt(studioComponents.timeline.trackHeight),
+                top: index * studioComponents.timeline.trackHeight,
                 left: 0,
                 right: 0,
                 height: studioComponents.timeline.trackHeight,

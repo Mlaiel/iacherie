@@ -27,8 +27,8 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { Badge, AchievementTier, ApiResponse } from '../gamification/types';
-import { gamificationStyles, tierIcons } from '../gamification/gamification.styles';
+import { Badge, AchievementTier, ApiResponse } from '../types';
+import { gamificationStyles, tierIcons } from '../gamification.styles';
 import { StarIcon, LockClosedIcon, SparklesIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 

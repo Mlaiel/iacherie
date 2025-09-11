@@ -273,3 +273,5 @@ export function ContentManagement() {
     </div>
   );
 }
+
+export default ContentManagement;
