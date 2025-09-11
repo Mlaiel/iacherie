@@ -62,6 +62,8 @@ class InferenceStatus(str, Enum):
 
 class ModelConfiguration(BaseModel):
     """AI model configuration"""
+    model_config = {"protected_namespaces": ()}
+    
     model_id: str = Field(..., description="Unique model identifier")
     model_name: str = Field(..., description="Human-readable model name")
     model_type: AIModelType = Field(..., description="Type of AI model")
@@ -81,6 +83,8 @@ class ModelConfiguration(BaseModel):
 
 class ModelInstance(BaseModel):
     """AI model instance"""
+    model_config = {"protected_namespaces": ()}
+    
     instance_id: str = Field(..., description="Unique instance identifier")
     model_id: str = Field(..., description="Associated model ID")
     status: ModelStatus = Field(default=ModelStatus.LOADING)
@@ -99,6 +103,8 @@ class ModelInstance(BaseModel):
 
 class InferenceRequest(BaseModel):
     """AI inference request"""
+    model_config = {"protected_namespaces": ()}
+    
     request_id: str = Field(..., description="Unique request identifier")
     model_type: AIModelType = Field(..., description="Required model type")
     model_id: Optional[str] = Field(None, description="Specific model ID (optional)")
@@ -113,6 +119,8 @@ class InferenceRequest(BaseModel):
 
 class InferenceResult(BaseModel):
     """AI inference result"""
+    model_config = {"protected_namespaces": ()}
+    
     request_id: str = Field(..., description="Original request identifier")
     model_id: str = Field(..., description="Model used for inference")
     instance_id: str = Field(..., description="Model instance used")
