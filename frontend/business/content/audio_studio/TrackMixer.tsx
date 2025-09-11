@@ -178,7 +178,7 @@ const Knob: React.FC<KnobProps> = ({
         <div
           className="w-full h-full rounded-full border-2 border-gray-600 relative"
           style={{
-            background: `conic-gradient(from 45deg, ${studioColors.controls.knob} 0deg, ${studioColors.controls.knobActive} ${rotation + 135}deg, ${studioColors.controls.knob} ${rotation + 145}deg, ${studioColors.controls.knob} 360deg)`
+            background: `conic-gradient(from 45deg, ${studioComponents.controls.knob} 0deg, ${studioComponents.controls.knobActive} ${rotation + 135}deg, ${studioComponents.controls.knob} ${rotation + 145}deg, ${studioComponents.controls.knob} 360deg)`
           }}
         >
           <div
@@ -425,8 +425,8 @@ const ChannelStrip: React.FC<ChannelStripProps> = ({
         <VUMeter 
           level={track.muted ? 0 : vuLevel * track.volume}
           peak={track.muted ? 0 : vuPeak * track.volume}
-          width={parseInt(studioComponents.mixer.meterWidth)}
-          height={parseInt(studioComponents.mixer.meterHeight)}
+          width={studioComponents.mixer.meterWidth}
+          height={studioComponents.mixer.meterHeight}
         />
       </div>
       
@@ -436,7 +436,7 @@ const ChannelStrip: React.FC<ChannelStripProps> = ({
           value={track.volume}
           min={0}
           max={1.5}
-          height={parseInt(studioComponents.mixer.faderHeight)}
+          height={studioComponents.mixer.faderHeight}
           onChange={(value) => onUpdate({ volume: value })}
         />
       </div>
@@ -538,8 +538,8 @@ const TrackMixer: React.FC<TrackMixerProps> = ({
             <VUMeter 
               level={masterVULevel.level * masterVolume}
               peak={masterVULevel.peak * masterVolume}
-              width={parseInt(studioComponents.mixer.meterWidth)}
-              height={parseInt(studioComponents.mixer.meterHeight)}
+              width={studioComponents.mixer.meterWidth}
+              height={studioComponents.mixer.meterHeight}
             />
           </div>
           
@@ -549,7 +549,7 @@ const TrackMixer: React.FC<TrackMixerProps> = ({
               value={masterVolume}
               min={0}
               max={2}
-              height={parseInt(studioComponents.mixer.faderHeight)}
+              height={studioComponents.mixer.faderHeight}
               label="Master"
               onChange={onMasterVolumeChange}
             />
