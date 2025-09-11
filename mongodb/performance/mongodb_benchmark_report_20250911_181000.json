@@ -1,0 +1,102 @@
+{
+  "benchmark_summary": {
+    "timestamp": "2025-09-11T18:10:00.550340+00:00",
+    "total_operations": 310,
+    "avg_operations_per_second": 599.1037332977247,
+    "avg_latency_ms": 3.375,
+    "overall_success_rate": 100.0,
+    "mongodb_available": false
+  },
+  "configuration": {
+    "mongodb_url": "mongodb://localhost:27017",
+    "database_name": "benchmark_test",
+    "collection_name": "test_collection",
+    "warmup_operations": 100,
+    "test_operations": 100,
+    "concurrent_clients": 10,
+    "document_size_bytes": 1024,
+    "batch_size": 100,
+    "test_duration_seconds": 60,
+    "cleanup_after_test": true
+  },
+  "results": [
+    {
+      "test_name": "Insert Performance",
+      "operation_type": "INSERT",
+      "duration_seconds": 0.11262830700002269,
+      "operations_per_second": 887.8762600948966,
+      "avg_latency_ms": 1.0,
+      "min_latency_ms": 1.0,
+      "max_latency_ms": 1.0,
+      "p95_latency_ms": 1.0,
+      "p99_latency_ms": 1.0,
+      "cpu_usage_percent": 0.8,
+      "memory_usage_mb": 1124.796875,
+      "success_rate": 100.0,
+      "error_count": 0,
+      "total_operations": 100,
+      "timestamp": "2025-09-11T18:10:00.131904+00:00"
+    },
+    {
+      "test_name": "Query Performance",
+      "operation_type": "QUERY",
+      "duration_seconds": 0.1075695720001022,
+      "operations_per_second": 929.6309183037838,
+      "avg_latency_ms": 0.5,
+      "min_latency_ms": 0.5,
+      "max_latency_ms": 0.5,
+      "p95_latency_ms": 0.5,
+      "p99_latency_ms": 0.5,
+      "cpu_usage_percent": 0.0,
+      "memory_usage_mb": 1124.796875,
+      "success_rate": 100.0,
+      "error_count": 0,
+      "total_operations": 100,
+      "timestamp": "2025-09-11T18:10:00.239742+00:00"
+    },
+    {
+      "test_name": "Update Performance",
+      "operation_type": "UPDATE",
+      "duration_seconds": 0.2082716849999997,
+      "operations_per_second": 480.1420798031194,
+      "avg_latency_ms": 2.0,
+      "min_latency_ms": 2.0,
+      "max_latency_ms": 2.0,
+      "p95_latency_ms": 2.0,
+      "p99_latency_ms": 2.0,
+      "cpu_usage_percent": 0.0,
+      "memory_usage_mb": 1124.796875,
+      "success_rate": 100.0,
+      "error_count": 0,
+      "total_operations": 100,
+      "timestamp": "2025-09-11T18:10:00.448316+00:00"
+    },
+    {
+      "test_name": "Aggregation Performance",
+      "operation_type": "AGGREGATION",
+      "duration_seconds": 0.1012497510000685,
+      "operations_per_second": 98.76567498909932,
+      "avg_latency_ms": 10.0,
+      "min_latency_ms": 10.0,
+      "max_latency_ms": 10.0,
+      "p95_latency_ms": 10.0,
+      "p99_latency_ms": 10.0,
+      "cpu_usage_percent": 0.0,
+      "memory_usage_mb": 1124.796875,
+      "success_rate": 100.0,
+      "error_count": 0,
+      "total_operations": 10,
+      "timestamp": "2025-09-11T18:10:00.549817+00:00"
+    }
+  ],
+  "performance_analysis": {
+    "performance_grade": "A",
+    "bottlenecks": [
+      "AGGREGATION throughput is low (98.77 ops/sec)"
+    ],
+    "recommendations": [
+      "Consider connection pooling for AGGREGATION operations"
+    ],
+    "alerts": []
+  }
+}
