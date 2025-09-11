@@ -55,16 +55,29 @@ class InfrastructureState(Enum):
 
 
 @dataclass
+@dataclass
 class InfrastructureConfig:
     """Master infrastructure configuration"""
     environment: str
     cloud_providers: List[str]
     regions: List[str]
-    instance_types: Dict[str, List[str]]
-    scaling_config: Dict[str, Any]
-    security_config: Dict[str, Any]
-    monitoring_config: Dict[str, Any]
-    business_logic_config: Dict[str, Any]
+    instance_types: Dict[str, List[str]] = None
+    scaling_config: Dict[str, Any] = None
+    security_config: Dict[str, Any] = None
+    monitoring_config: Dict[str, Any] = None
+    business_logic_config: Dict[str, Any] = None
+    
+    def __post_init__(self):
+        if self.instance_types is None:
+            self.instance_types = {}
+        if self.scaling_config is None:
+            self.scaling_config = {}
+        if self.security_config is None:
+            self.security_config = {}
+        if self.monitoring_config is None:
+            self.monitoring_config = {}
+        if self.business_logic_config is None:
+            self.business_logic_config = {}
 
 
 class InfrastructureOrchestrator:
