@@ -32,7 +32,8 @@ from datetime import datetime, timedelta
 from enum import Enum
 from collections import defaultdict, deque
 
-import aioredis
+# Use our compatibility wrapper for aioredis
+from ..utils import aioredis, REDIS_AVAILABLE
 from sqlalchemy.ext.asyncio import AsyncSession
 from pydantic import BaseModel, Field
 from sklearn.ensemble import RandomForestRegressor

@@ -33,7 +33,8 @@ from concurrent.futures import ThreadPoolExecutor
 from contextlib import asynccontextmanager
 
 import websockets
-import aioredis
+# Use our compatibility wrapper for aioredis
+from ..utils import aioredis, REDIS_AVAILABLE
 from pydantic import BaseModel, Field, validator
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -147,7 +148,7 @@ class RealTimeMonitor:
     def __init__(
         self,
         config: Dict[str, Any],
-        redis_client: Optional[aioredis.Redis] = None,
+        redis_client: Optional[Any] = None,
         db_session: Optional[AsyncSession] = None
     ):
         """
@@ -196,12 +197,14 @@ Initialize real-time monitor."""
         try:
             logger.info("Initializing Real-time Monitor...")
             
-            # Initialize Redis connection if not provided
-            if not self.redis_client:
+            # Initialize Redis connection if not provided and available
+            if not self.redis_client and REDIS_AVAILABLE:
                 self.redis_client = await aioredis.from_url(
                     self.config.get('redis_url', 'redis://localhost:6379'),
                     decode_responses=True
                 )
+            elif not REDIS_AVAILABLE:
+                logger.warning("Redis not available - caching features will be disabled")
             
             # Start WebSocket server
             await self._start_websocket_server()
