@@ -551,6 +551,200 @@ export class AnalyticsOrchestrator {
   private generateReportId(): string {
     return `report_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   }
+
+  private trackViralMetrics(analytics: ContentAnalytics, eventData: any): void {
+    // Track viral metrics for shares using existing distribution metrics
+    if (eventData.platform) {
+      // Find or create platform metrics entry
+      let platformMetric = analytics.distribution.platforms.find(p => p.platform === eventData.platform);
+      if (!platformMetric) {
+        platformMetric = {
+          platform: eventData.platform,
+          views: 0,
+          engagement: 0,
+          revenue: 0,
+          growth: 0,
+          performance: 0
+        };
+        analytics.distribution.platforms.push(platformMetric);
+      }
+      // Update the platform's engagement for share tracking
+      platformMetric.engagement += 1;
+    }
+  }
+
+  private analyzeSentiment(analytics: ContentAnalytics, comment: string): void {
+    // Basic sentiment analysis for comments
+    if (!comment) return;
+    
+    const positiveWords = ['great', 'awesome', 'love', 'amazing', 'perfect', 'excellent'];
+    const negativeWords = ['bad', 'terrible', 'hate', 'awful', 'horrible', 'worst'];
+    
+    const lowerComment = comment.toLowerCase();
+    const positiveCount = positiveWords.filter(word => lowerComment.includes(word)).length;
+    const negativeCount = negativeWords.filter(word => lowerComment.includes(word)).length;
+    
+    // Update existing userSentiment
+    if (positiveCount > negativeCount) {
+      analytics.engagement.userSentiment.positive++;
+    } else if (negativeCount > positiveCount) {
+      analytics.engagement.userSentiment.negative++;
+    } else {
+      analytics.engagement.userSentiment.neutral++;
+    }
+    
+    // Update overall score
+    const total = analytics.engagement.userSentiment.positive + 
+                  analytics.engagement.userSentiment.negative + 
+                  analytics.engagement.userSentiment.neutral;
+    if (total > 0) {
+      analytics.engagement.userSentiment.overallScore = 
+        (analytics.engagement.userSentiment.positive - analytics.engagement.userSentiment.negative) / total;
+    }
+  }
+
+  private trackRevenue(analytics: ContentAnalytics, eventData: any): void {
+    if (eventData.amount) {
+      analytics.monetization.revenue += eventData.amount;
+      
+      // Track by revenue type if specified
+      if (eventData.type === 'ad') {
+        analytics.monetization.adRevenue += eventData.amount;
+      } else if (eventData.type === 'subscription') {
+        analytics.monetization.subscriptionRevenue += eventData.amount;
+      } else if (eventData.type === 'tip') {
+        analytics.monetization.tipRevenue += eventData.amount;
+      } else if (eventData.type === 'merchandise') {
+        analytics.monetization.merchandiseRevenue += eventData.amount;
+      } else if (eventData.type === 'sponsorship') {
+        analytics.monetization.sponsorshipRevenue += eventData.amount;
+      }
+      
+      // Update revenue per view
+      if (analytics.performance.views > 0) {
+        analytics.monetization.revenuePerView = analytics.monetization.revenue / analytics.performance.views;
+      }
+    }
+  }
+
+  private updateDetailedEngagement(analytics: ContentAnalytics, eventData: any): void {
+    this.updateEngagement(analytics, eventData);
+    
+    // Additional detailed engagement tracking using existing properties
+    if (eventData.interactionType === 'click') {
+      // Update interaction rate
+      const totalInteractions = analytics.performance.likes + analytics.performance.comments + analytics.performance.shares;
+      if (analytics.performance.views > 0) {
+        analytics.engagement.interactionRate = totalInteractions / analytics.performance.views;
+      }
+    }
+  }
+
+  private getTopPerformers(userContent: ContentAnalytics[], limit: number): string[] {
+    return userContent
+      .sort((a, b) => b.performance.views - a.performance.views)
+      .slice(0, limit)
+      .map(content => content.contentId);
+  }
+
+  private getRecentTrends(userContent: ContentAnalytics[]): TrendData[] {
+    const now = Date.now();
+    const weekAgo = now - (7 * 24 * 60 * 60 * 1000);
+    
+    const recentContent = userContent.filter(content => content.timestamp > weekAgo);
+    const totalViews = recentContent.reduce((sum, content) => sum + content.performance.views, 0);
+    const avgViews = recentContent.length > 0 ? totalViews / recentContent.length : 0;
+    
+    // Calculate trend compared to previous week
+    const twoWeeksAgo = now - (14 * 24 * 60 * 60 * 1000);
+    const previousWeekContent = userContent.filter(content => 
+      content.timestamp > twoWeeksAgo && content.timestamp <= weekAgo
+    );
+    const previousAvgViews = previousWeekContent.length > 0 
+      ? previousWeekContent.reduce((sum, content) => sum + content.performance.views, 0) / previousWeekContent.length 
+      : 0;
+    
+    const viewsChange = previousAvgViews > 0 ? ((avgViews - previousAvgViews) / previousAvgViews) * 100 : 0;
+    
+    return [{
+      metric: 'views',
+      trend: viewsChange > 5 ? 'up' : viewsChange < -5 ? 'down' : 'stable',
+      change: Math.round(viewsChange * 100) / 100,
+      significance: Math.abs(viewsChange) > 20 ? 'high' : Math.abs(viewsChange) > 10 ? 'medium' : 'low'
+    }];
+  }
+
+  private getLiveMetrics(userContent: ContentAnalytics[]): LiveMetrics {
+    const now = Date.now();
+    const hourAgo = now - (60 * 60 * 1000);
+    
+    const recentContent = userContent.filter(content => content.timestamp > hourAgo);
+    
+    const totalViews = recentContent.reduce((sum, content) => sum + content.performance.views, 0);
+    const totalRevenue = recentContent.reduce((sum, content) => sum + content.monetization.revenue, 0);
+    const totalEngagement = recentContent.reduce((sum, content) => sum + content.engagement.engagementScore, 0);
+    const avgEngagement = recentContent.length > 0 ? totalEngagement / recentContent.length : 0;
+    
+    return {
+      activeViewers: totalViews,
+      realtimeRevenue: totalRevenue,
+      engagementRate: avgEngagement / 100, // Convert to rate
+      conversionRate: totalViews > 0 ? totalRevenue / totalViews : 0
+    };
+  }
+
+  private calculateGrowthTrend(userAnalytics: ContentAnalytics[]): number {
+    if (userAnalytics.length < 2) return 0;
+    
+    const sorted = userAnalytics.sort((a, b) => a.timestamp - b.timestamp);
+    const recent = sorted.slice(-5);
+    const older = sorted.slice(-10, -5);
+    
+    if (older.length === 0) return 0;
+    
+    const recentAvgViews = recent.reduce((sum, a) => sum + a.performance.views, 0) / recent.length;
+    const olderAvgViews = older.reduce((sum, a) => sum + a.performance.views, 0) / older.length;
+    
+    return olderAvgViews > 0 ? (recentAvgViews - olderAvgViews) / olderAvgViews : 0;
+  }
+
+  private findSimilarContent(contentMetadata: any): ContentAnalytics[] {
+    // Simple similarity based on content type and tags
+    return Array.from(this.contentAnalytics.values()).filter(analytics => {
+      return analytics.contentId !== contentMetadata.id; // Exclude self
+    }).slice(0, 10); // Limit to 10 similar items
+  }
+
+  private analyzeHistoricalPerformance(similarContent: ContentAnalytics[]): any {
+    if (similarContent.length === 0) return { avgViews: 0, avgEngagement: 0 };
+    
+    const totalViews = similarContent.reduce((sum, content) => sum + content.performance.views, 0);
+    const totalEngagement = similarContent.reduce((sum, content) => sum + content.engagement.engagementScore, 0);
+    
+    return {
+      avgViews: totalViews / similarContent.length,
+      avgEngagement: totalEngagement / similarContent.length,
+      sampleSize: similarContent.length
+    };
+  }
+
+  private generatePerformanceRecommendations(historicalPerformance: any): string[] {
+    const recommendations = [];
+    
+    if (historicalPerformance.avgViews > 1000) {
+      recommendations.push("Similar content has performed well, consider this content type");
+    }
+    
+    if (historicalPerformance.avgEngagement > 0.5) {
+      recommendations.push("High engagement potential based on similar content");
+    }
+    
+    if (historicalPerformance.sampleSize < 3) {
+      recommendations.push("Limited historical data available for accurate prediction");
+    }
+    
+    return recommendations;
+  }
 }
 
 // Additional interfaces

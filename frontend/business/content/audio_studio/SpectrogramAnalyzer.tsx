@@ -82,11 +82,11 @@ const SpectrogramAnalyzer: React.FC<SpectrogramAnalyzerProps> = ({
       let color;
       const freq = (i / frequencies) * 22050;
       if (freq < 250) {
-        color = studioColors.tracks.track1; // Red for bass
+        color = studioColors.track.audio; // Red for bass
       } else if (freq < 4000) {
-        color = studioColors.tracks.track4; // Green for mids
+        color = studioColors.track.midi; // Green for mids
       } else {
-        color = studioColors.tracks.track6; // Blue for highs
+        color = studioColors.track.instrument; // Blue for highs
       }
       
       ctx.fillStyle = color;
