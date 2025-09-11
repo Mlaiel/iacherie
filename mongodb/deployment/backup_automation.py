@@ -17,9 +17,22 @@ from typing import Dict, List, Optional, Any
 from pathlib import Path
 from datetime import datetime, timedelta
 import subprocess
-import boto3
-from azure.storage.blob import BlobServiceClient
-from google.cloud import storage as gcs
+
+# Optional cloud dependencies
+try:
+    import boto3
+except ImportError:
+    boto3 = None
+
+try:
+    from azure.storage.blob import BlobServiceClient
+except ImportError:
+    BlobServiceClient = None
+
+try:
+    from google.cloud import storage as gcs
+except ImportError:
+    gcs = None
 
 logger = logging.getLogger(__name__)
 
@@ -100,10 +113,19 @@ class BackupAutomation:
     def _initialize_storage_client(self):
         """Initialize cloud storage client based on provider."""
         if self.config.storage_provider == "aws":
+            if boto3 is None:
+                self.logger.warning("boto3 not available for AWS storage")
+                return None
             return boto3.client('s3', region_name=self.config.storage_region)
         elif self.config.storage_provider == "azure":
+            if BlobServiceClient is None:
+                self.logger.warning("azure-storage-blob not available for Azure storage")
+                return None
             return BlobServiceClient(account_url="https://account.blob.core.windows.net/")
         elif self.config.storage_provider == "gcp":
+            if gcs is None:
+                self.logger.warning("google-cloud-storage not available for GCP storage")
+                return None
             return gcs.Client()
         else:
             return None  # Local storage
@@ -230,6 +252,10 @@ class BackupAutomation:
     
     async def _setup_aws_storage(self) -> None:
         """Setup AWS S3 storage for backups."""
+        if self.storage_client is None:
+            self.logger.warning("AWS storage client not available, skipping S3 setup")
+            return
+            
         try:
             # Create S3 bucket if it doesn't exist
             self.storage_client.create_bucket(
@@ -810,10 +836,10 @@ mongo --uri="$MONGODB_URI" --eval "
     use $TEST_DB_NAME;
     var collections = db.getCollectionNames();
     print('Restored collections: ' + collections.length);
-    if (collections.length === 0) {
+    if (collections.length === 0) {{
         print('ERROR: No collections found in restored database');
         quit(1);
-    }
+    }}
 "
 
 # Cleanup test database
