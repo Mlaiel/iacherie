@@ -136,6 +136,8 @@ class TestResult:
 
 class ModelValidationRequest(BaseModel):
     """Model validation request."""
+    model_config = {"protected_namespaces": ()}
+    
     model_id: str = Field(..., description="Model identifier")
     model_type: ModelType = Field(..., description="Type of AI model")
     model_version: str = Field(..., description="Model version")
@@ -152,6 +154,8 @@ class ModelValidationRequest(BaseModel):
 
 class ModelValidationReport(BaseModel):
     """Complete model validation report."""
+    model_config = {"protected_namespaces": ()}
+    
     validation_id: str = Field(..., description="Validation session ID")
     model_id: str = Field(..., description="Model identifier")
     model_type: ModelType = Field(..., description="Model type")

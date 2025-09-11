@@ -573,14 +573,6 @@ async def enterprise_swagger_ui():
             "requestSnippetsEnabled": True,
             "syntaxHighlight.activate": True,
             "syntaxHighlight.theme": "arta"
-        },
-        swagger_ui_init_oauth={
-            "usePkceWithAuthorizationCodeGrant": True,
-            "clientId": "ainflue-enterprise-docs",
-            "realm": "ainflue",
-            "appName": "Ainflue Enterprise API",
-            "scopeSeparator": " ",
-            "scopes": "read write admin"
         }
     )
 
