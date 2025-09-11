@@ -924,6 +924,31 @@ async def startup_event():
     
     logger.info("✅ Enterprise Monetization API ready")
 
+# ============ ROUTER EXPORT ============
+# Export router for integration with main API
+from fastapi import APIRouter
+
+# Create router from app for integration
+router = APIRouter(prefix="/api/v1/monetization", tags=["💰 Enterprise Monetization"])
+
+# Copy all routes from app to router
+for route in app.routes:
+    if hasattr(route, 'path') and route.path.startswith('/api/v1/monetization'):
+        # Remove the prefix from the route path since router will add it
+        new_path = route.path.replace('/api/v1/monetization', '')
+        if new_path == '':
+            new_path = '/'
+        
+        # Create new route with the same handler and metadata
+        router.add_api_route(
+            new_path,
+            route.endpoint,
+            methods=route.methods,
+            tags=route.tags,
+            summary=getattr(route, 'summary', None),
+            description=getattr(route, 'description', None)
+        )
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)

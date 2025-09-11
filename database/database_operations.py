@@ -30,6 +30,9 @@ from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
 
+# Setup logging
+logger = logging.getLogger(__name__)
+
 # Optional imports for production features
 try:
     import sqlalchemy
