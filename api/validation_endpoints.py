@@ -30,7 +30,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Create API router with enhanced configuration
-router = APIRouter(prefix="/api/v1/validation", tags=["✅ Data Validation"])
+router = APIRouter(prefix="/validation", tags=["✅ Data Validation"])
 
 # ============ ENHANCED ENUMS ============
 

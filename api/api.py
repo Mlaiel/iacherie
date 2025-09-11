@@ -183,7 +183,6 @@ class EnterpriseAPIManager:
             )
             self.api_router.include_router(
                 validation_router,
-                prefix="/validation", 
                 tags=["✅ Data Validation"],
                 dependencies=[]
             )
