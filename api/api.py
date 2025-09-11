@@ -195,6 +195,20 @@ class EnterpriseAPIManager:
             }
             logger.info("✅ Configured specialized enterprise APIs")
         
+        # ============ ENHANCED FEATURES INTEGRATION ============
+        try:
+            from .enhanced_integration import enhanced_router
+            self.api_router.include_router(
+                enhanced_router,
+                prefix="/enhanced",
+                tags=["🚀 Enhanced Features"],
+                dependencies=[]
+            )
+            self.route_registry["enhanced"] = "/api/v1/enhanced"
+            logger.info("✅ Configured enhanced features integration")
+        except ImportError as e:
+            logger.warning(f"Enhanced features not available: {e}")
+        
         # ============ ENTERPRISE SYSTEM ROUTES ============
         self._configure_system_routes()
         

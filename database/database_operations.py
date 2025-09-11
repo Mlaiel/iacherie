@@ -44,10 +44,24 @@ except ImportError:
 
 try:
     import redis
-    import aioredis
-    REDIS_AVAILABLE = True
+    # Use redis-py async client instead of aioredis to avoid Python 3.12 compatibility issues
+    try:
+        from redis.asyncio import Redis as AsyncRedis
+        ASYNC_REDIS_CLIENT = AsyncRedis
+        REDIS_AVAILABLE = True
+    except ImportError:
+        # Fallback to aioredis with error handling
+        try:
+            import aioredis
+            ASYNC_REDIS_CLIENT = aioredis.Redis
+            REDIS_AVAILABLE = True
+        except (ImportError, TypeError) as e:
+            logger.warning(f"Redis async client not available: {e}")
+            ASYNC_REDIS_CLIENT = None
+            REDIS_AVAILABLE = False
 except ImportError:
     REDIS_AVAILABLE = False
+    ASYNC_REDIS_CLIENT = None
 
 try:
     import motor
