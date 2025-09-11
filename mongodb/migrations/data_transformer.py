@@ -8,7 +8,7 @@ Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 """
 
 import logging
-from typing import Dict, Any, Optional, Callable
+from typing import Dict, Any, Optional, Callable, List
 
 logger = logging.getLogger(__name__)
 
