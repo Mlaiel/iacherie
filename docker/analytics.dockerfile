@@ -260,23 +260,7 @@ HEALTHCHECK --interval=30s \
             --start-period=60s \
             --retries=3 \
             CMD curl -f http://localhost:8003/health \
-                && python -c "
-import psutil
-import sys
-
-# Check memory usage
-memory_percent = psutil.virtual_memory().percent
-print(f'Memory usage: {memory_percent}%')
-
-# Check CPU usage
-cpu_percent = psutil.cpu_percent(interval=1)
-print(f'CPU usage: {cpu_percent}%')
-
-# Exit with error if resource usage is too high
-if memory_percent > 90 or cpu_percent > 95:
-    sys.exit(1)
-sys.exit(0)
-" || exit 1
+                && python -c "import psutil;  import sys;  # Check memory usage;  memory_percent = psutil.virtual_memory().percent;  print(f'Memory usage: {memory_percent}%');  # Check CPU usage;  cpu_percent = psutil.cpu_percent(interval=1);  print(f'CPU usage: {cpu_percent}%');  # Exit with error if resource usage is too high;  if memory_percent > 90 or cpu_percent > 95:;  sys.exit(1);  sys.exit(0)" || exit 1
 
 # Start analytics service
 CMD ["/app/start-analytics.sh"]

@@ -2,8 +2,6 @@
 # Platform optimization and keyword intelligence services
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
-version: '3.8'
-
 services:
   # Platform Optimizer
   platform-optimizer:

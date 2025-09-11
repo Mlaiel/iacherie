@@ -7,8 +7,6 @@
 # Infrastructure for SEO analysis, trending monitoring, performance analytics
 # with Elasticsearch for semantic search and InfluxDB for time series metrics
 
-version: '3.8'
-
 services:
   # SEO Analyzer Service
   seo-analyzer:

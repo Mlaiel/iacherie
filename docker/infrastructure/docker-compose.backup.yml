@@ -2,8 +2,6 @@
 # Automated backup infrastructure for Ainflue Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
-version: '3.8'
-
 services:
   # Database Backup Service
   database_backup:

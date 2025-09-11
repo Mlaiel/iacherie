@@ -7,8 +7,6 @@
 # Infrastructure for DEMUCS separation, EBU R128 normalization, 
 # format conversion and professional audio mastering
 
-version: '3.8'
-
 services:
   # DEMUCS Source Separation Service
   demucs-service:

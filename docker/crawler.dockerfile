@@ -300,24 +300,7 @@ HEALTHCHECK --interval=30s \
             --start-period=60s \
             --retries=3 \
             CMD curl -f http://localhost:8001/health \
-                && python -c "
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-import sys
-
-try:
-    options = Options()
-    options.add_argument('--headless')
-    options.add_argument('--no-sandbox')
-    options.add_argument('--disable-dev-shm-usage')
-    driver = webdriver.Chrome(options=options)
-    driver.quit()
-    print('Browser validation successful')
-    sys.exit(0)
-except Exception as e:
-    print(f'Browser validation failed: {e}')
-    sys.exit(1)
-" || exit 1
+                && python -c "from selenium import webdriver;  from selenium.webdriver.chrome.options import Options;  import sys;  try:;  options = Options();  options.add_argument('--headless');  options.add_argument('--no-sandbox');  options.add_argument('--disable-dev-shm-usage');  driver = webdriver.Chrome(options=options);  driver.quit();  print('Browser validation successful');  sys.exit(0);  except Exception as e:;  print(f'Browser validation failed: {e}');  sys.exit(1)" || exit 1
 
 # Start crawler service
 CMD ["/app/start-crawler.sh"]

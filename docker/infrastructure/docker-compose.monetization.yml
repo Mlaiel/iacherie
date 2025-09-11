@@ -7,8 +7,6 @@
 # Infrastructure for payment processing, licensing management,
 # and automated royalties calculation across multiple platforms
 
-version: '3.8'
-
 services:
   # Payment Processing Service
   payment-processor:

@@ -1,8 +1,6 @@
 # Docker Compose for Ainflue Platform
 # Production-ready multi-service deployment
 
-version: '3.8'
-
 services:
   # Main Application
   ainflue-app:

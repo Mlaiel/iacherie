@@ -2,8 +2,6 @@
 # AI-powered collaboration matching and project orchestration
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
-version: '3.8'
-
 services:
   # AI-powered collaboration matcher
   collaboration-matcher:

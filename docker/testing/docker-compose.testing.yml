@@ -2,8 +2,6 @@
 # Comprehensive testing suite for Ainflue Platform
 # Author: Fahed Mlaiel (mlaiel@live.de)
 
-version: '3.8'
-
 services:
   # Core Test Runner
   test_runner:

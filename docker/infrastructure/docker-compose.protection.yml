@@ -7,8 +7,6 @@
 # Infrastructure for fingerprinting, watermarking, and copyright monitoring
 # Supports multi-format content protection with blockchain verification
 
-version: '3.8'
-
 services:
   # Fingerprinting Multi-Format Service
   fingerprinting-service:

@@ -8,8 +8,6 @@
 # Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 # =============================================================================
 
-version: '3.8'
-
 x-protection-common: &protection-common
   restart: unless-stopped
   networks:
@@ -51,8 +49,7 @@ services:
       dockerfile: docker/protection/protection_service.dockerfile
       target: production
     container_name: ainflue-protection-service
-    <<: *protection-common
-    <<: *protection-resources
+    <<: [*protection-common, *protection-resources]
     ports:
       - "8020:8020"
     volumes:
@@ -83,8 +80,7 @@ services:
       dockerfile: docker/protection/fingerprinting_engine.dockerfile
       target: production
     container_name: ainflue-fingerprinting-engine
-    <<: *protection-common
-    <<: *protection-resources
+    <<: [*protection-common, *protection-resources]
     ports:
       - "8021:8021"
     volumes:

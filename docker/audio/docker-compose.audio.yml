@@ -8,8 +8,6 @@
 # Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 # =============================================================================
 
-version: '3.8'
-
 x-audio-common: &audio-common
   restart: unless-stopped
   networks:
@@ -51,8 +49,7 @@ services:
       dockerfile: docker/audio/audio_processing.dockerfile
       target: production
     container_name: ainflue-audio-processing
-    <<: *audio-common
-    <<: *audio-resources
+    <<: [*audio-common, *audio-resources]
     ports:
       - "8010:8010"
     volumes:
@@ -83,8 +80,7 @@ services:
       dockerfile: docker/audio/source_separation.dockerfile
       target: production
     container_name: ainflue-source-separation
-    <<: *audio-common
-    <<: *audio-resources
+    <<: [*audio-common, *audio-resources]
     ports:
       - "8011:8011"
     volumes:
