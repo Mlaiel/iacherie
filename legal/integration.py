@@ -1315,8 +1315,10 @@ def get_legal_monitoring_dashboard() -> Dict[str, Any]:
     return legal_compliance_monitor.get_monitoring_dashboard()
 
 
-# Add to exports
-__all__.extend([
+# Export key classes and functions
+__all__ = [
+    'LegalBackendBridge',
+    'LegalIntegrationOrchestrator',
     'BlockchainCopyrightRegistry',
     'LegalAnalyticsEngine', 
     'LegalComplianceMonitor',
@@ -1325,4 +1327,4 @@ __all__.extend([
     'analyze_legal_compliance_ml',
     'analyze_audio_legal_compliance',
     'get_legal_monitoring_dashboard'
-])
+]

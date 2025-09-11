@@ -85,24 +85,31 @@ from .content_regulation import (
 # Contract and licensing
 from .contracts import (
     LegalContractGenerator,
-    DigitalSignatureLegal,
-    LicensingAgreementEngine,
-    ContractEnforcementEngine
+    DigitalSignatureManager,
+    ContractComplianceMonitor,
+    AudioContractSpecialist,
+    ContractType,
+    ContractStatus,
+    EnterpriseContract
 )
 
 # Financial and regulatory compliance
 from .financial import (
     AntiMoneyLaunderingCompliance,
-    KnowYourCustomerLegal,
-    TaxComplianceLegal,
-    FinancialAuditLegal
+    KYCProcessor,
+    SanctionsScreener,
+    MLFinancialRiskAnalyzer,
+    AudioFinancialSpecialist,
+    RegulatoryReporter
 )
 
 # International compliance
 from .international import (
     InternationalLegalCompliance,
-    CrossBorderLegalFramework,
-    LegalJurisdictionEngine
+    CrossBorderOperationOrchestrator,
+    InternationalTreatyCompliance,
+    GlobalLegalUpdateMonitor,
+    get_supported_jurisdictions
 )
 
 # Integration and orchestration

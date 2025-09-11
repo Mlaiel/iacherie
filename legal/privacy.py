@@ -287,13 +287,15 @@ class PrivacyImpactAssessment:
     pia_id: str
     project_name: str
     data_controller: str
-    assessment_date: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
-    # Data Processing Details
+    # Data Processing Details (required fields)
     data_categories: List[DataCategory]
     processing_purposes: List[DataProcessingPurpose]
     data_subjects: List[str]  # Categories of data subjects
     data_sources: List[str]
+    
+    # Optional fields with defaults
+    assessment_date: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     # Risk Assessment
     privacy_risks: List[Dict[str, Any]] = field(default_factory=list)
@@ -1831,9 +1833,6 @@ __all__ = [
     'DataSubjectRequest',
     'PrivacyImpactAssessment'
 ]
-    BIOMETRIC = "biometric"
-    HEALTH = "health"
-    SENSITIVE = "sensitive"
 
 
 class PrivacyRequestType(Enum):
