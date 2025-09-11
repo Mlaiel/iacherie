@@ -45,6 +45,35 @@ from .distributed_training_manager import (
     TrainingNode
 )
 
+# NEW PHASE 10 MODULES - Advanced Training Infrastructure
+from .continual_learning_engine import (
+    ContinualLearningEngine, 
+    ContinualLearningConfig,
+    TaskMetadata,
+    create_continual_learning_engine
+)
+from .data_augmentation_engine import (
+    DataAugmentationEngine,
+    AugmentationConfig,
+    CreatorProfile,
+    create_augmentation_engine
+)
+from .loss_function_optimizer import (
+    LossFunctionOptimizer,
+    LossConfig,
+    CreatorObjectives,
+    CreatorSpecificLossFunction,
+    create_loss_optimizer,
+    create_creator_objectives
+)
+from .gradient_optimization_engine import (
+    GradientOptimizationEngine,
+    OptimizationConfig as GradOptConfig,
+    CreatorOptimizationProfile,
+    create_optimization_engine,
+    create_creator_profile
+)
+
 __all__ = [
     # AutoML Pipeline
     'AutoMLPipeline',
@@ -70,7 +99,28 @@ __all__ = [
     'DistributedTrainingConfig',
     'TrainingStrategy',
     'NodeStatus',
-    'TrainingNode'
+    'TrainingNode',
+    
+    # NEW PHASE 10 - Advanced Training Infrastructure
+    'ContinualLearningEngine',
+    'ContinualLearningConfig',
+    'TaskMetadata',
+    'create_continual_learning_engine',
+    'DataAugmentationEngine',
+    'AugmentationConfig',
+    'CreatorProfile',
+    'create_augmentation_engine',
+    'LossFunctionOptimizer',
+    'LossConfig',
+    'CreatorObjectives',
+    'CreatorSpecificLossFunction',
+    'create_loss_optimizer',
+    'create_creator_objectives',
+    'GradientOptimizationEngine',
+    'GradOptConfig',
+    'CreatorOptimizationProfile',
+    'create_optimization_engine',
+    'create_creator_profile'
 ]
 
 # Version du module
