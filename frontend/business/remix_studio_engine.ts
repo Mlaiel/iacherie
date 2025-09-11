@@ -142,8 +142,10 @@ export interface ExportSettings {
   bitDepth: number;
   channels: 'mono' | 'stereo';
   normalization: boolean;
+  normalize: boolean; // Alias for normalization for backward compatibility
   fadeIn: number;
   fadeOut: number;
+  trimSilence: boolean; // Add trim silence functionality
   metadata: AudioMetadata;
 }
 

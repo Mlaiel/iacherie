@@ -32,7 +32,7 @@ import {
   XMarkIcon
 } from '@heroicons/react/24/outline';
 import { useAppContext } from '@/app/providers';
-import { useNotifications } from '@/hooks/useNotifications';
+import { useNotifications } from '../../../presentation/hooks/useNotifications';
 import TimelineEditor from '../remix_studio/TimelineEditor';
 import TrackMixer from '../remix_studio_audio/TrackMixer';
 import EffectsPanel from '../remix_studio_effects/EffectsPanel';
