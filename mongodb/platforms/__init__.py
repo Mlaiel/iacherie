@@ -25,22 +25,25 @@ from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
 
-logger = logging.getLogger(__name__)
+# Import all platform modules
+from .platform_manager import (
+    PlatformManager, PlatformType, PlatformConfig, PlatformCredentials,
+    PlatformLimits, PlatformStatus, create_platform_manager
+)
+from .content_distributor import (
+    ContentDistributor, ContentMetadata, PlatformAdaptation, DistributionJob,
+    DistributionStatus, OptimizationLevel, create_content_distributor
+)
+from .sync_scheduler import (
+    SyncScheduler, ScheduleType, ScheduleStatus, Priority, ScheduleRule,
+    ScheduledTask, OptimalTimeRecommendation, create_sync_scheduler
+)
+from .conflict_handler import (
+    ConflictHandler, ConflictType, ConflictSeverity, ConflictStatus,
+    ResolutionStrategy, Conflict, create_conflict_handler
+)
 
-class PlatformType(Enum):
-    """Supported platform types."""
-    YOUTUBE = "youtube"
-    TIKTOK = "tiktok"
-    INSTAGRAM = "instagram"
-    FACEBOOK = "facebook"
-    TWITTER = "twitter"
-    LINKEDIN = "linkedin"
-    SPOTIFY = "spotify"
-    SOUNDCLOUD = "soundcloud"
-    TWITCH = "twitch"
-    DISCORD = "discord"
-    PATREON = "patreon"
-    ONLYFANS = "onlyfans"
+logger = logging.getLogger(__name__)
 
 class SyncDirection(Enum):
     """Platform sync directions."""
@@ -62,18 +65,6 @@ class ContentFormat(Enum):
     SHORT = "short"
 
 @dataclass
-class PlatformConfig:
-    """Platform configuration."""
-    platform_id: str
-    platform_type: PlatformType
-    api_credentials: Dict[str, str]
-    sync_direction: SyncDirection
-    supported_formats: List[ContentFormat]
-    rate_limits: Dict[str, int]
-    content_rules: Dict[str, Any]
-    enabled: bool = True
-
-@dataclass
 class ContentItem:
     """Content item for platform sync."""
     content_id: str
@@ -88,19 +79,46 @@ class ContentItem:
 
 # Export classes and functions
 __all__ = [
+    # Enums
     'PlatformType',
-    'SyncDirection',
+    'SyncDirection', 
     'ContentFormat',
+    'PlatformStatus',
+    'DistributionStatus',
+    'OptimizationLevel',
+    'ScheduleType',
+    'ScheduleStatus',
+    'Priority',
+    'ConflictType',
+    'ConflictSeverity',
+    'ConflictStatus',
+    'ResolutionStrategy',
+    
+    # Data Classes
     'PlatformConfig',
+    'PlatformCredentials',
+    'PlatformLimits',
     'ContentItem',
+    'ContentMetadata',
+    'PlatformAdaptation',
+    'DistributionJob',
+    'ScheduleRule',
+    'ScheduledTask',
+    'OptimalTimeRecommendation',
+    'Conflict',
+    
+    # Main Classes
     'PlatformManager',
     'ContentDistributor',
     'SyncScheduler',
     'ConflictHandler',
-    'FormatConverter',
-    'APIIntegrator',
-    'DistributionTracker'
+    
+    # Factory Functions
+    'create_platform_manager',
+    'create_content_distributor',
+    'create_sync_scheduler',
+    'create_conflict_handler'
 ]
 
 # Module initialization
-logger.info("MongoDB Platforms module initialized - Multi-platform sync ready")
+logger.info("MongoDB Platforms module initialized - Multi-platform sync ready with all components")
