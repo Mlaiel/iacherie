@@ -11,7 +11,7 @@ import logging
 import json
 import pickle
 import base64
-from typing import Dict, Any, List, Optional, Union
+from typing import Dict, Any, List, Optional, Union, Tuple
 from dataclasses import dataclass, asdict
 from datetime import datetime
 from pymongo import MongoClient
