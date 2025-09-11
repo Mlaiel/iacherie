@@ -47,9 +47,17 @@ const ExportManager: React.FC<ExportManagerProps> = ({
     bitDepth: 24,
     channels: 'stereo',
     normalization: true,
+    normalize: true,
     fadeIn: 0,
     fadeOut: 0,
-    trimSilence: true
+    trimSilence: true,
+    metadata: {
+      title: '',
+      artist: '',
+      album: '',
+      genre: '',
+      year: new Date().getFullYear()
+    }
   });
 
   const [isExporting, setIsExporting] = useState(false);
