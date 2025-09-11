@@ -639,10 +639,14 @@ class CrisisConfig:
 # Create global configuration instance
 crisis_config = CrisisConfig()
 
+# Alias for backward compatibility
+CrisisConfiguration = CrisisConfig
+
 
 # Export main classes and instance
 __all__ = [
     'CrisisConfig',
+    'CrisisConfiguration',  # Alias
     'CrisisDetectionRule',
     'ResponseTemplate',
     'EscalationContact',
