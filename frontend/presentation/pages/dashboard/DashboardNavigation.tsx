@@ -12,7 +12,17 @@ import {
   FolderIcon,
   CogIcon
 } from '@heroicons/react/24/outline';
-import { DASHBOARD_NAVIGATION } from '@/dashboard';
+
+// Dashboard navigation configuration
+const DASHBOARD_NAVIGATION = [
+  { id: 'overview', name: 'Overview', icon: 'HomeIcon', href: '/dashboard', description: 'Dashboard overview' },
+  { id: 'content', name: 'Content', icon: 'FolderIcon', href: '/dashboard/content', description: 'Manage your content' },
+  { id: 'analytics', name: 'Analytics', icon: 'ChartBarIcon', href: '/dashboard/analytics', description: 'View analytics' },
+  { id: 'monetization', name: 'Monetization', icon: 'CurrencyDollarIcon', href: '/dashboard/monetization', description: 'Revenue tracking' },
+  { id: 'protection', name: 'Protection', icon: 'ShieldCheckIcon', href: '/dashboard/protection', description: 'Content protection' },
+  { id: 'upload', name: 'Upload', icon: 'CloudArrowUpIcon', href: '/dashboard/upload', description: 'Upload content' },
+  { id: 'settings', name: 'Settings', icon: 'CogIcon', href: '/dashboard/settings', description: 'Account settings' }
+];
 
 // Map icon names to actual icons
 const iconMap = {
