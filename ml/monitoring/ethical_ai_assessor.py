@@ -1,19 +1,17 @@
-"""🛡️ Ethical AI Assessor - Advanced AI Ethics & Compliance
-======================================================
-Module: ml/monitoring/ethical_ai_assessor.py
-Author: Fahed Mlaiel (mlaiel@live.de)
-======================================================
+"""Ethical AI Assessor - Enhanced Bias Detection & Fairness Validation
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-(c) 2025 Fahed Mlaiel. Tous droits réservés.
-Contact: mlaiel@live.de
+Enterprise-grade ethical AI assessment system with comprehensive bias detection,
+fairness metrics evaluation, and automated ethical compliance validation.
 
-🎯 ETHICAL AI ASSESSMENT & COMPLIANCE
-Advanced AI ethics evaluation with bias detection and fairness metrics
-- Automated bias detection and mitigation
-- Fairness evaluation across demographics
-- Ethical AI compliance monitoring
-- Creator rights protection
+Author: Fahed Mlaiel (mlaiel@live.de)  
+Copyright: © 2025 Fahed Mlaiel. All rights reserved.
+
+🤖 IA PROMPT ENGINEER IMPLEMENTATION:
+- Advanced bias detection algorithms with statistical significance testing
+- Multi-dimensional fairness metrics (demographic, equalized odds, calibration)
+- Creator demographic fairness validation across musician/blogger/photographer categories
+- Automated ethical AI compliance reporting and remediation suggestions
+- Real-time bias monitoring with drift detection and alerting
 """
 
 import asyncio
@@ -21,47 +19,56 @@ import logging
 import json
 import numpy as np
 import pandas as pd
-from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
-from dataclasses import dataclass, field
+from typing import Dict, List, Optional, Any, Tuple, Union
+from dataclasses import dataclass, asdict, field
 from enum import Enum
 from pathlib import Path
-import pickle
-from sklearn.metrics import accuracy_score, precision_score, recall_score, confusion_matrix
-from sklearn.preprocessing import LabelEncoder
+import warnings
+from scipy import stats
+from sklearn.metrics import confusion_matrix, roc_auc_score, accuracy_score
+from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
+import seaborn as sns
 
-logger = logging.getLogger(__name__)
+class ProtectedAttribute(Enum):
+    """Protected attributes for bias assessment."""
+    GENDER = "gender"
+    AGE_GROUP = "age_group"
+    ETHNICITY = "ethnicity"
+    GEOGRAPHY = "geography"
+    CREATOR_TYPE = "creator_type"  # musician, blogger, photographer
+    LANGUAGE = "language"
+    SOCIOECONOMIC_STATUS = "socioeconomic_status"
+    DISABILITY_STATUS = "disability_status"
 
-class BiasType(Enum):
-    """Types of bias that can be detected"""
+class FairnessMetric(Enum):
+    """Fairness metrics for assessment."""
     DEMOGRAPHIC_PARITY = "demographic_parity"
     EQUALIZED_ODDS = "equalized_odds"
     EQUAL_OPPORTUNITY = "equal_opportunity"
     CALIBRATION = "calibration"
-    REPRESENTATION = "representation"
-    ALLOCATION = "allocation"
-    QUALITY_OF_SERVICE = "quality_of_service"
+    INDIVIDUAL_FAIRNESS = "individual_fairness"
+    COUNTERFACTUAL_FAIRNESS = "counterfactual_fairness"
+    CONDITIONAL_STATISTICAL_PARITY = "conditional_statistical_parity"
 
-class ProtectedAttribute(Enum):
-    """Protected attributes for fairness analysis"""
-    GENDER = "gender"
-    RACE = "race"
-    AGE = "age"
-    NATIONALITY = "nationality"
-    RELIGION = "religion"
-    CREATOR_TYPE = "creator_type"
-    FOLLOWER_COUNT = "follower_count"
-    GEOGRAPHIC_REGION = "geographic_region"
+class BiasType(Enum):
+    """Types of bias detected in ML systems."""
+    STATISTICAL_BIAS = "statistical_bias"
+    ALGORITHMIC_BIAS = "algorithmic_bias"
+    REPRESENTATION_BIAS = "representation_bias"
+    MEASUREMENT_BIAS = "measurement_bias"
+    EVALUATION_BIAS = "evaluation_bias"
+    HISTORICAL_BIAS = "historical_bias"
+    AGGREGATION_BIAS = "aggregation_bias"
 
 class EthicalStandard(Enum):
-    """Ethical AI standards and frameworks"""
-    IEEE_ETHICALLY_ALIGNED_DESIGN = "ieee_ethically_aligned_design"
+    """Ethical AI standards and frameworks."""
+    IEEE_ETHICALLY_ALIGNED_DESIGN = "ieee_ead"
     EU_AI_ACT = "eu_ai_act"
-    GDPR_COMPLIANCE = "gdpr_compliance"
-    ALGORITHMIC_ACCOUNTABILITY = "algorithmic_accountability"
-    RESPONSIBLE_AI = "responsible_ai"
-    HUMAN_CENTERED_AI = "human_centered_ai"
+    UNESCO_AI_ETHICS = "unesco_ai_ethics"
+    PARTNERSHIP_AI_TENETS = "partnership_ai_tenets"
+    AIES_PRINCIPLES = "aies_principles"
 
 @dataclass
 class BiasAssessment:
