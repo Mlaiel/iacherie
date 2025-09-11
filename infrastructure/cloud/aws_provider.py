@@ -40,18 +40,18 @@ class AWSProvider:
     - SageMaker for AI/ML workloads
     """
     
-    def __init__(self, credentials: AWSCredentials):
-        self.credentials = credentials
-        self.region = credentials.region
+    def __init__(self, credentials: Optional[AWSCredentials] = None):
+        self.credentials = credentials or AWSCredentials()
+        self.region = self.credentials.region
         
         # Prepare credentials dict for boto3
         creds_dict = {}
-        if credentials.access_key_id:
-            creds_dict['aws_access_key_id'] = credentials.access_key_id
-        if credentials.secret_access_key:
-            creds_dict['aws_secret_access_key'] = credentials.secret_access_key
-        if credentials.session_token:
-            creds_dict['aws_session_token'] = credentials.session_token
+        if self.credentials.access_key_id:
+            creds_dict['aws_access_key_id'] = self.credentials.access_key_id
+        if self.credentials.secret_access_key:
+            creds_dict['aws_secret_access_key'] = self.credentials.secret_access_key
+        if self.credentials.session_token:
+            creds_dict['aws_session_token'] = self.credentials.session_token
         
         # Initialize AWS clients
         try:
