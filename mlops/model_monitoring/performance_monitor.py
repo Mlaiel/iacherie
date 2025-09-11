@@ -73,7 +73,7 @@ else:
     np = MockNumpy()
 
 if PANDAS_AVAILABLE:
-    DataFrame = DataFrame
+    from pandas import DataFrame
 else:
     from typing import Any
     DataFrame = Any  # Fallback when pandas not available

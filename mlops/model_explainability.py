@@ -52,7 +52,7 @@ except ImportError:
 
 # Add mock implementations for missing dependencies
 if NUMPY_AVAILABLE:
-    NDArray = NDArray
+    from numpy.typing import NDArray
 else:
     from typing import Any
     NDArray = Any  # Fallback when numpy not available
