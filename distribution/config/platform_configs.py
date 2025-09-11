@@ -655,3 +655,30 @@ def validate_content_for_platform(
     return platform_config_manager.validate_content_for_platform(
         platform_id, content_format, file_size, **kwargs
     )
+
+
+# Aliases for backward compatibility
+PlatformConfiguration = PlatformConfig
+PlatformSettings = PlatformConfig
+APILimits = PlatformLimits
+ContentSpecs = PlatformLimits
+
+
+# Export all classes
+__all__ = [
+    'PlatformType',
+    'ContentFormat', 
+    'PlatformLimits',
+    'PlatformAuth',
+    'PlatformEndpoints',
+    'PlatformConfig',
+    'PlatformConfigManager',
+    'PlatformConfiguration',  # Alias
+    'PlatformSettings',       # Alias
+    'APILimits',             # Alias
+    'ContentSpecs',          # Alias
+    'platform_config_manager',
+    'get_platform_config',
+    'get_enabled_platforms',
+    'validate_content_for_platform'
+]
