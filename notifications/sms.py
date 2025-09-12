@@ -13,9 +13,9 @@ import hashlib
 import hmac
 from urllib.parse import urlencode
 
-from app.core.config import settings
-from app.core.security.encryption import encrypt_sensitive_data, decrypt_sensitive_data
-from app.utils.metrics import MetricsCollector
+from .config import settings
+from .config import encrypt_sensitive_data, decrypt_sensitive_data
+from .config import MetricsCollector, metrics
 
 
 class SMSProvider(str, Enum):

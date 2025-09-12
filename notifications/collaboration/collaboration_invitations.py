@@ -1,2 +1,3 @@
 # Collaboration Engine: collaboration_invitations.py
-class CollaborationInvitationsEngine: pass
+class CollaborationInvitationsEngine: 
+    def __init__(self, config=None): pass

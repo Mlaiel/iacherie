@@ -12,10 +12,10 @@ import hashlib
 import uuid
 from concurrent.futures import ThreadPoolExecutor
 
-from app.core.config import settings
-from app.utils.metrics import MetricsCollector
-from app.core.database import get_db
-from app.core.cache import get_cache
+from .config import settings
+from .config import MetricsCollector, metrics
+#from .database import get_db  # TODO: Implement
+#from .cache import get_cache  # TODO: Implement
 
 from .email import EmailNotifier
 from .sms import SMSNotifier, SMSMessage

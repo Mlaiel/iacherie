@@ -11,9 +11,9 @@ from dataclasses import dataclass, asdict
 import hashlib
 import uuid
 
-from app.core.config import settings
-from app.core.security.encryption import encrypt_sensitive_data, decrypt_sensitive_data
-from app.utils.metrics import MetricsCollector
+from .config import settings
+from .config import encrypt_sensitive_data, decrypt_sensitive_data
+from .config import MetricsCollector, metrics
 
 
 class InAppNotificationType(str, Enum):

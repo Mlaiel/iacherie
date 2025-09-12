@@ -1,2 +1,3 @@
 # Gamification Engine: social_proof_notifications.py
-class SocialProofNotificationsEngine: pass
+class SocialProofNotificationsEngine: 
+    def __init__(self, config=None): pass
