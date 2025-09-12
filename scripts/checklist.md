@@ -27,8 +27,8 @@ Scripts automatisieren den kompletten Creator-Workflow-Lifecycle:
 ### 1.1 Core Deployment
 - [x] **deploy.sh** - Main Deployment Script (EXISTING)
 - [x] **deployment_orchestrator.py** - Deployment Orchestration Engine ✅ CREATED
-- [ ] **environment_provisioner.py** - Environment Provisioning Script
-- [ ] **infrastructure_validator.py** - Infrastructure Validation Script
+- [x] **🆕 environment_provisioner.py** - Environment Provisioning Script ✅ CREATED (41KB)
+- [x] **🆕 infrastructure_validator.py** - Infrastructure Validation Script ✅ CREATED (48KB)
 - [ ] **rollback_manager.py** - Automated Rollback Management
 - [ ] **blue_green_deployer.py** - Blue-Green Deployment Script
 
