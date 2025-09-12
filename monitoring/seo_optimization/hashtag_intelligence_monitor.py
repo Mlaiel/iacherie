@@ -665,19 +665,194 @@ class HashtagIntelligenceMonitor:
     
     async def _update_platform_trends(self, platform: Platform):
         """Update trends for a specific platform."""
-        pass
+        try:
+            # Fetch trending hashtags for the platform
+            trending_data = await self._fetch_platform_trending_data(platform)
+            
+            # Analyze trend patterns
+            trend_analysis = {
+                'top_trending': trending_data.get('top_hashtags', [])[:20],
+                'emerging_trends': await self._identify_emerging_trends(trending_data, platform),
+                'declining_trends': await self._identify_declining_trends(platform),
+                'seasonal_patterns': await self._analyze_seasonal_patterns(platform),
+                'geo_trends': await self._analyze_geo_specific_trends(platform),
+                'updated_at': datetime.now().isoformat()
+            }
+            
+            # Store trend data
+            await self._store_platform_trends(platform, trend_analysis)
+            
+            # Update hashtag performance scores
+            await self._update_hashtag_scores(platform, trending_data)
+            
+            # Generate platform-specific recommendations
+            recommendations = await self._generate_platform_recommendations(platform, trend_analysis)
+            await self._store_platform_recommendations(platform, recommendations)
+            
+            logger.info(f"Updated trends for {platform.value}: {len(trend_analysis['top_trending'])} trending hashtags")
+            
+        except Exception as e:
+            logger.error(f"Error updating platform trends for {platform.value}: {e}")
+            raise
     
     async def _analyze_engagement_patterns(self):
         """Analyze engagement patterns across hashtags."""
-        pass
+        try:
+            # Get hashtag performance data
+            performance_data = await self._get_hashtag_performance_data()
+            
+            # Analyze engagement patterns
+            patterns = {
+                'time_based_patterns': {
+                    'hourly_peaks': await self._analyze_hourly_engagement_peaks(performance_data),
+                    'daily_patterns': await self._analyze_daily_engagement_patterns(performance_data),
+                    'weekly_cycles': await self._analyze_weekly_engagement_cycles(performance_data)
+                },
+                'content_type_patterns': {
+                    'audio_hashtags': await self._analyze_audio_hashtag_engagement(performance_data),
+                    'video_hashtags': await self._analyze_video_hashtag_engagement(performance_data),
+                    'collaboration_hashtags': await self._analyze_collaboration_hashtag_engagement(performance_data)
+                },
+                'audience_patterns': {
+                    'demographic_preferences': await self._analyze_demographic_hashtag_preferences(performance_data),
+                    'geographic_variations': await self._analyze_geographic_hashtag_variations(performance_data),
+                    'behavior_clusters': await self._analyze_user_behavior_clusters(performance_data)
+                },
+                'viral_patterns': {
+                    'viral_indicators': await self._identify_viral_hashtag_indicators(performance_data),
+                    'cascade_patterns': await self._analyze_hashtag_cascade_patterns(performance_data),
+                    'amplification_factors': await self._analyze_amplification_factors(performance_data)
+                }
+            }
+            
+            # Generate insights from patterns
+            insights = await self._generate_engagement_insights(patterns)
+            
+            # Store pattern analysis
+            await self._store_engagement_patterns(patterns, insights)
+            
+            # Update recommendation algorithms
+            await self._update_recommendation_algorithms(patterns)
+            
+            logger.info(f"Analyzed engagement patterns: {len(insights)} insights generated")
+            
+            return patterns
+            
+        except Exception as e:
+            logger.error(f"Error analyzing engagement patterns: {e}")
+            raise
     
     async def _track_competitor_hashtags(self):
         """Track competitor hashtag usage."""
-        pass
+        try:
+            # Get competitor list
+            competitors = await self._get_competitor_list()
+            
+            competitor_analysis = {}
+            
+            for competitor in competitors:
+                # Analyze competitor hashtag strategy
+                hashtag_data = await self._analyze_competitor_hashtags(competitor)
+                
+                analysis = {
+                    'competitor_id': competitor['id'],
+                    'competitor_name': competitor['name'],
+                    'top_hashtags': hashtag_data['most_used'][:20],
+                    'unique_hashtags': hashtag_data['unique_to_competitor'],
+                    'hashtag_diversity': len(set(hashtag_data['all_hashtags'])),
+                    'trending_adoption': hashtag_data['trending_hashtags_used'],
+                    'performance_metrics': {
+                        'avg_engagement': hashtag_data['avg_engagement_per_hashtag'],
+                        'reach_efficiency': hashtag_data['reach_per_hashtag'],
+                        'virality_score': hashtag_data['viral_hashtag_ratio']
+                    },
+                    'strategy_insights': {
+                        'posting_frequency': hashtag_data['posting_frequency'],
+                        'hashtag_mix': hashtag_data['hashtag_category_distribution'],
+                        'timing_patterns': hashtag_data['optimal_posting_times'],
+                        'content_alignment': hashtag_data['content_hashtag_alignment']
+                    },
+                    'competitive_advantages': await self._identify_competitor_advantages(competitor, hashtag_data),
+                    'gap_opportunities': await self._identify_hashtag_gaps(competitor, hashtag_data),
+                    'analyzed_at': datetime.now().isoformat()
+                }
+                
+                competitor_analysis[competitor['id']] = analysis
+            
+            # Generate competitive intelligence insights
+            competitive_insights = await self._generate_competitive_insights(competitor_analysis)
+            
+            # Store competitor analysis
+            await self._store_competitor_analysis(competitor_analysis, competitive_insights)
+            
+            # Update competitive strategy recommendations
+            await self._update_competitive_recommendations(competitive_insights)
+            
+            logger.info(f"Tracked {len(competitors)} competitors hashtag strategies")
+            
+            return competitor_analysis
+            
+        except Exception as e:
+            logger.error(f"Error tracking competitor hashtags: {e}")
+            raise
     
     async def _detect_viral_hashtags(self):
         """Detect viral hashtags."""
-        pass
+        try:
+            # Collect recent hashtag performance data
+            recent_data = await self._get_recent_hashtag_data(hours=24)
+            
+            viral_candidates = []
+            
+            for hashtag, data in recent_data.items():
+                # Calculate viral indicators
+                viral_score = await self._calculate_viral_score(hashtag, data)
+                
+                # Check viral thresholds
+                if viral_score >= 0.7:  # High viral potential
+                    growth_rate = await self._calculate_growth_rate(hashtag, data)
+                    reach_velocity = await self._calculate_reach_velocity(hashtag, data)
+                    engagement_acceleration = await self._calculate_engagement_acceleration(hashtag, data)
+                    
+                    viral_analysis = {
+                        'hashtag': hashtag,
+                        'viral_score': viral_score,
+                        'growth_rate': growth_rate,
+                        'reach_velocity': reach_velocity,
+                        'engagement_acceleration': engagement_acceleration,
+                        'current_reach': data['current_reach'],
+                        'total_uses': data['use_count'],
+                        'unique_users': data['unique_users'],
+                        'platform_distribution': data['platform_breakdown'],
+                        'first_detected': data['first_seen'],
+                        'detection_time': datetime.now().isoformat(),
+                        'predicted_peak': await self._predict_viral_peak(hashtag, data),
+                        'recommended_action': await self._get_viral_recommendation(viral_score, growth_rate),
+                        'risk_assessment': await self._assess_viral_risk(hashtag, data)
+                    }
+                    
+                    viral_candidates.append(viral_analysis)
+            
+            # Sort by viral potential
+            viral_candidates.sort(key=lambda x: x['viral_score'], reverse=True)
+            
+            # Generate viral alerts for top candidates
+            for candidate in viral_candidates[:5]:  # Top 5 viral candidates
+                await self._send_viral_alert(candidate)
+            
+            # Store viral detection results
+            await self._store_viral_detection_results(viral_candidates)
+            
+            # Update viral tracking models
+            await self._update_viral_prediction_models(viral_candidates)
+            
+            logger.info(f"Detected {len(viral_candidates)} viral hashtag candidates")
+            
+            return viral_candidates
+            
+        except Exception as e:
+            logger.error(f"Error detecting viral hashtags: {e}")
+            raise
 
 # Export the main classes
 __all__ = [

@@ -719,7 +719,41 @@ class AchievementTrackingSystem:
     
     async def _notify_dynamic_achievement_created(self, user_id: str, achievement: Achievement):
         """Notify user about dynamic achievement creation."""
-        pass
+        try:
+            # Create notification for dynamic achievement
+            notification = {
+                'user_id': user_id,
+                'type': 'dynamic_achievement_created',
+                'achievement_id': achievement.id,
+                'title': f"New Challenge Available: {achievement.title}",
+                'message': f"A personalized challenge has been created for you: {achievement.description}",
+                'rewards': {
+                    'points': achievement.points_reward,
+                    'badges': achievement.badge_rewards
+                },
+                'difficulty': achievement.difficulty.value,
+                'estimated_time': achievement.metadata.get('estimated_completion_time', ''),
+                'created_at': datetime.now().isoformat(),
+                'expires_at': achievement.expires_at.isoformat() if achievement.expires_at else None
+            }
+            
+            # Send push notification
+            await self._send_push_notification(user_id, notification)
+            
+            # Send in-app notification
+            await self._send_in_app_notification(user_id, notification)
+            
+            # Track notification for analytics
+            await self._track_notification_event(user_id, 'dynamic_achievement_notification', {
+                'achievement_id': achievement.id,
+                'notification_type': 'creation'
+            })
+            
+            logger.info(f"Notified user {user_id} about dynamic achievement {achievement.id}")
+            
+        except Exception as e:
+            logger.error(f"Error notifying dynamic achievement creation for user {user_id}: {e}")
+            raise
     
     async def _apply_social_amplification_rewards(self, user_id: str, achievement_id: str, platform: str) -> Dict[str, Any]:
         """Apply social amplification rewards."""
@@ -727,7 +761,44 @@ class AchievementTrackingSystem:
     
     async def _update_social_achievement_stats(self, user_id: str, achievement_id: str, platform: str):
         """Update social achievement statistics."""
-        pass
+        try:
+            # Get current social stats
+            current_stats = await self._get_social_achievement_stats(achievement_id)
+            
+            # Update platform-specific stats
+            platform_stats = current_stats.get('platforms', {})
+            if platform not in platform_stats:
+                platform_stats[platform] = {
+                    'shares': 0,
+                    'engagement': 0,
+                    'reach': 0,
+                    'first_shared_at': datetime.now().isoformat()
+                }
+            
+            platform_stats[platform]['shares'] += 1
+            platform_stats[platform]['last_shared_at'] = datetime.now().isoformat()
+            
+            # Update overall stats
+            updated_stats = {
+                'total_shares': current_stats.get('total_shares', 0) + 1,
+                'unique_sharers': len(set(current_stats.get('sharers', []) + [user_id])),
+                'platforms': platform_stats,
+                'viral_coefficient': await self._calculate_viral_coefficient(achievement_id),
+                'social_reach_estimate': await self._estimate_social_reach(achievement_id),
+                'last_updated': datetime.now().isoformat()
+            }
+            
+            # Store updated stats
+            await self._store_social_achievement_stats(achievement_id, updated_stats)
+            
+            # Check for viral achievement milestones
+            await self._check_viral_milestones(achievement_id, updated_stats)
+            
+            logger.info(f"Updated social stats for achievement {achievement_id} on {platform}")
+            
+        except Exception as e:
+            logger.error(f"Error updating social achievement stats: {e}")
+            raise
     
     def _calculate_amplification_bonus(self, share_count: int) -> float:
         """Calculate social amplification bonus."""
