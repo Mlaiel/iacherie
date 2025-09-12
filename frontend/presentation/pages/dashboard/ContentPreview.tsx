@@ -342,11 +342,11 @@ export function ContentPreview({ selectedContent, onClose }: ContentPreviewProps
 
               {/* Metadata Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Basic Information */}
+                {/* Essential Information */}
                 <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
                   <h5 className="text-sm font-semibold text-gray-700 mb-3 flex items-center">
                     <FolderIcon className="w-4 h-4 mr-2" />
-                    Basic Information
+                    Essential Information
                   </h5>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">

@@ -66,7 +66,7 @@ export interface Template {
   rating: number;
   metadata?: {
     estimatedTime?: number; // minutes
-    difficulty?: 'beginner' | 'intermediate' | 'advanced';
+    difficulty?: 'beginner' | 'intermediate' | 'professional';
     industry?: string[];
     language?: string;
   };
@@ -529,7 +529,7 @@ export const TemplateFilter: React.FC<TemplateFilterProps> = ({ className }) => 
             <option value="">All Levels</option>
             <option value="beginner">Beginner</option>
             <option value="intermediate">Intermediate</option>
-            <option value="advanced">Advanced</option>
+            <option value="professional">Professional</option>
           </select>
         </div>
 
@@ -655,7 +655,7 @@ const DEFAULT_TEMPLATES: Template[] = [
       sections: [
         {
           id: 'basic',
-          title: 'Basic Information',
+          title: 'Essential Information',
           fields: ['title', 'content']
         }
       ]

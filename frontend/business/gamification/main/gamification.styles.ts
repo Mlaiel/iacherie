@@ -247,7 +247,7 @@ export const getDifficultyLabel = (difficulty: number): string => {
   const labels = {
     1: "Beginner",
     2: "Intermediate",
-    3: "Advanced",
+    3: "Professional",
     4: "Expert",
     5: "Master"
   };
