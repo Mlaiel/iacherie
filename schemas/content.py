@@ -239,7 +239,7 @@ class ContentTag(UUIDSchema, TimestampSchema):
     related_tags: List[UUID] = Field(default_factory=list)
     
     # Metadata
-    color: Optional[str] = Field(None, regex="^#[0-9A-Fa-f]{6}$")
+    color: Optional[str] = Field(None, pattern="^#[0-9A-Fa-f]{6}$")
     icon: Optional[str] = Field(None, description="Tag icon identifier")
     
     @validator('name')
@@ -286,7 +286,7 @@ Advanced content search schema."""
     
     # Sorting and pagination
     sort_by: str = Field(default="created_at", description="Sort field")
-    sort_order: str = Field(default="desc", regex="^(asc|desc)$")
+    sort_order: str = Field(default="desc", pattern="^(asc|desc)$")
     page: int = Field(default=1, ge=1)
     page_size: int = Field(default=20, ge=1, le=100)
     
