@@ -719,11 +719,110 @@ class SEOIntelligenceOrchestrator:
     
     async def _monitor_all_rankings(self):
         """Monitor rankings for all creators."""
-        pass
+        try:
+            # Get all creator profiles that need ranking monitoring
+            creator_profiles = await self._get_creator_seo_profiles()
+            
+            for profile in creator_profiles:
+                try:
+                    # Monitor rankings across all platforms
+                    for platform in Platform:
+                        # Get current ranking data
+                        current_rankings = await self._get_creator_rankings(profile['creator_id'], platform)
+                        
+                        # Compare with historical data
+                        ranking_changes = await self._analyze_ranking_changes(profile['creator_id'], platform, current_rankings)
+                        
+                        # Track keyword performance
+                        keyword_performance = await self._track_keyword_performance(profile, platform, current_rankings)
+                        
+                        # Monitor content visibility
+                        visibility_metrics = await self._monitor_content_visibility(profile, platform)
+                        
+                        # Store ranking data
+                        ranking_report = {
+                            'creator_id': profile['creator_id'],
+                            'platform': platform.value,
+                            'current_rankings': current_rankings,
+                            'ranking_changes': ranking_changes,
+                            'keyword_performance': keyword_performance,
+                            'visibility_metrics': visibility_metrics,
+                            'monitored_at': datetime.now().isoformat()
+                        }
+                        
+                        await self._store_ranking_report(ranking_report)
+                        
+                        # Generate alerts for significant changes
+                        if ranking_changes.get('significant_changes'):
+                            await self._send_ranking_change_alert(profile['creator_id'], ranking_changes)
+                        
+                        # Update SEO recommendations based on rankings
+                        await self._update_seo_recommendations_from_rankings(profile['creator_id'], ranking_report)
+                    
+                except Exception as e:
+                    logger.error(f"Error monitoring rankings for creator {profile['creator_id']}: {e}")
+            
+            logger.info(f"Monitored rankings for {len(creator_profiles)} creators")
+            
+        except Exception as e:
+            logger.error(f"Error in ranking monitoring: {e}")
+            raise
     
     async def _analyze_global_trends(self):
         """Analyze global SEO trends."""
-        pass
+        try:
+            # Collect global SEO trend data
+            trend_data = await self._collect_global_seo_trend_data()
+            
+            # Analyze search behavior patterns
+            search_patterns = await self._analyze_global_search_patterns(trend_data)
+            
+            # Identify emerging content types
+            emerging_content = await self._identify_emerging_content_types(trend_data)
+            
+            # Track algorithm changes across platforms
+            algorithm_changes = await self._track_algorithm_changes(trend_data)
+            
+            # Analyze seasonal SEO patterns
+            seasonal_patterns = await self._analyze_seasonal_seo_patterns(trend_data)
+            
+            # Identify trending keywords and topics
+            trending_keywords = await self._identify_trending_keywords(trend_data)
+            
+            # Analyze competitive landscape changes
+            competitive_landscape = await self._analyze_competitive_landscape_changes(trend_data)
+            
+            # Generate global insights
+            global_insights = {
+                'search_patterns': search_patterns,
+                'emerging_content': emerging_content,
+                'algorithm_changes': algorithm_changes,
+                'seasonal_patterns': seasonal_patterns,
+                'trending_keywords': trending_keywords,
+                'competitive_landscape': competitive_landscape,
+                'analyzed_at': datetime.now().isoformat()
+            }
+            
+            # Store global trend analysis
+            await self._store_global_trend_analysis(global_insights)
+            
+            # Update SEO strategies based on trends
+            await self._update_seo_strategies_from_trends(global_insights)
+            
+            # Generate trend-based recommendations
+            trend_recommendations = await self._generate_trend_based_recommendations(global_insights)
+            await self._store_trend_recommendations(trend_recommendations)
+            
+            # Send trend alerts for significant changes
+            await self._send_trend_alerts(global_insights)
+            
+            logger.info(f"Analyzed global SEO trends: {len(trending_keywords)} trending keywords identified")
+            
+            return global_insights
+            
+        except Exception as e:
+            logger.error(f"Error analyzing global trends: {e}")
+            raise
     
     async def _monitor_competitor_activities(self):
         """Monitor competitor activities."""

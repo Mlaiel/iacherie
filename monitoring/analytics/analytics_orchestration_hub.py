@@ -781,15 +781,163 @@ class AnalyticsOrchestrationHub:
     
     async def _monitor_competitor_activities(self):
         """Monitor competitor activities across platforms."""
-        pass
+        try:
+            # Get competitor profiles
+            competitors = await self._get_competitor_profiles()
+            
+            for competitor in competitors:
+                # Monitor across all platforms
+                for platform in Platform:
+                    try:
+                        # Collect competitor data
+                        activity_data = await self._collect_competitor_platform_data(competitor, platform)
+                        
+                        # Analyze content strategy
+                        content_analysis = await self._analyze_competitor_content_strategy(activity_data)
+                        
+                        # Track engagement patterns
+                        engagement_analysis = await self._analyze_competitor_engagement(activity_data)
+                        
+                        # Monitor posting frequency and timing
+                        timing_analysis = await self._analyze_competitor_timing_patterns(activity_data)
+                        
+                        # Detect new features or strategies
+                        strategy_changes = await self._detect_competitor_strategy_changes(competitor, activity_data)
+                        
+                        # Calculate competitive positioning
+                        positioning = await self._calculate_competitive_positioning(competitor, activity_data)
+                        
+                        # Store competitor intelligence
+                        intelligence_report = {
+                            'competitor_id': competitor['id'],
+                            'platform': platform.value,
+                            'content_strategy': content_analysis,
+                            'engagement_patterns': engagement_analysis,
+                            'timing_patterns': timing_analysis,
+                            'strategy_changes': strategy_changes,
+                            'competitive_positioning': positioning,
+                            'monitored_at': datetime.now().isoformat(),
+                            'data_freshness': activity_data.get('data_age_hours', 0)
+                        }
+                        
+                        await self._store_competitor_intelligence(intelligence_report)
+                        
+                        # Generate alerts for significant changes
+                        if strategy_changes:
+                            await self._send_competitor_change_alert(competitor, strategy_changes)
+                        
+                    except Exception as e:
+                        logger.error(f"Error monitoring competitor {competitor['id']} on {platform.value}: {e}")
+            
+            logger.info(f"Monitored {len(competitors)} competitors across platforms")
+            
+        except Exception as e:
+            logger.error(f"Error in competitor monitoring: {e}")
+            raise
     
     async def _update_predictive_forecasts(self):
         """Update predictive models and forecasts."""
-        pass
+        try:
+            # Get current analytics data for training
+            training_data = await self._get_training_data()
+            
+            # Update engagement prediction models
+            await self._update_engagement_forecast_models(training_data)
+            
+            # Update revenue prediction models
+            await self._update_revenue_forecast_models(training_data)
+            
+            # Update user growth prediction models
+            await self._update_user_growth_forecast_models(training_data)
+            
+            # Update content performance prediction models
+            await self._update_content_performance_forecast_models(training_data)
+            
+            # Generate forecasts for different time horizons
+            forecasts = {
+                'short_term': await self._generate_short_term_forecasts(),  # 7 days
+                'medium_term': await self._generate_medium_term_forecasts(),  # 30 days
+                'long_term': await self._generate_long_term_forecasts()  # 90 days
+            }
+            
+            # Validate forecast accuracy
+            forecast_accuracy = await self._validate_forecast_accuracy(forecasts)
+            
+            # Store forecasts and accuracy metrics
+            await self._store_predictive_forecasts(forecasts, forecast_accuracy)
+            
+            # Generate forecast-based recommendations
+            recommendations = await self._generate_forecast_recommendations(forecasts)
+            await self._store_forecast_recommendations(recommendations)
+            
+            # Send forecast alerts for significant predictions
+            await self._send_forecast_alerts(forecasts, recommendations)
+            
+            logger.info(f"Updated predictive forecasts with {forecast_accuracy['overall_accuracy']:.2%} accuracy")
+            
+        except Exception as e:
+            logger.error(f"Error updating predictive forecasts: {e}")
+            raise
     
     async def _monitor_system_performance(self):
         """Monitor system performance and health."""
-        pass
+        try:
+            # Monitor analytics processing performance
+            processing_metrics = await self._collect_processing_performance_metrics()
+            
+            # Monitor database performance
+            database_metrics = await self._collect_database_performance_metrics()
+            
+            # Monitor API response times
+            api_metrics = await self._collect_api_performance_metrics()
+            
+            # Monitor memory and CPU usage
+            system_metrics = await self._collect_system_resource_metrics()
+            
+            # Monitor data pipeline health
+            pipeline_metrics = await self._collect_pipeline_health_metrics()
+            
+            # Calculate overall system health score
+            health_score = await self._calculate_system_health_score({
+                'processing': processing_metrics,
+                'database': database_metrics,
+                'api': api_metrics,
+                'system': system_metrics,
+                'pipeline': pipeline_metrics
+            })
+            
+            # Detect performance anomalies
+            anomalies = await self._detect_performance_anomalies(health_score)
+            
+            # Generate performance alerts if needed
+            if health_score['overall_score'] < 0.8:  # Below 80% health
+                await self._send_performance_alert(health_score, anomalies)
+            
+            # Store performance metrics
+            performance_report = {
+                'metrics': {
+                    'processing': processing_metrics,
+                    'database': database_metrics,
+                    'api': api_metrics,
+                    'system': system_metrics,
+                    'pipeline': pipeline_metrics
+                },
+                'health_score': health_score,
+                'anomalies': anomalies,
+                'monitored_at': datetime.now().isoformat()
+            }
+            
+            await self._store_performance_report(performance_report)
+            
+            # Auto-scale if needed
+            if health_score['needs_scaling']:
+                await self._trigger_auto_scaling(health_score)
+            
+            logger.info(f"System performance monitoring completed - Health: {health_score['overall_score']:.2%}")
+            
+        except Exception as e:
+            logger.error(f"Error monitoring system performance: {e}")
+            raise
 
 # Export the main classes
 __all__ = [
