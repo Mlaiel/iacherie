@@ -9,13 +9,19 @@ Enterprise-grade metrics collection for monitoring and observability.
 """
 
 import time
-import psutil
 import asyncio
 import logging
 from typing import Dict, Any, List, Optional, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 import json
+
+# Optional dependency
+try:
+    import psutil
+    PSUTIL_AVAILABLE = True
+except ImportError:
+    PSUTIL_AVAILABLE = False
 
 logger = logging.getLogger(__name__)
 
@@ -67,6 +73,10 @@ class MetricsCollector:
         """Collect system-level metrics"""
         metrics = []
         timestamp = datetime.now()
+        
+        if not PSUTIL_AVAILABLE:
+            logger.warning("psutil not available, skipping system metrics")
+            return metrics
         
         try:
             # CPU metrics
