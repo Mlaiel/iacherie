@@ -51,13 +51,27 @@ export * from './protection';
 export * from './monetization';
 
 // Collaboration exports
-export * from './collaboration';
+export { 
+  CollaborationMatchingEngine,
+  matchingEngine,
+  type CreatorProfile,
+  type CollaborationRequest,
+  type MatchResult,
+  type MatchingAnalytics
+} from './collaboration/matching';
+
+export { 
+  WorkflowEngine,
+  workflowEngine,
+  type CollaborationWorkflow,
+  type WorkflowParticipant,
+  type WorkflowStep,
+  type WorkflowAnalytics,
+  type WorkflowTemplate as CollaborationWorkflowTemplate // Rename to avoid conflict
+} from './collaboration/workflow';
 
 // Gamification exports
 export * from './gamification';
 
 // Distribution exports
 export * from './distribution';
-
-// Business Types
-export * from '../core/business_types';
