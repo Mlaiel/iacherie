@@ -23,6 +23,8 @@ from .orchestration.workflow_engine_core import WorkflowEngineCore, create_workf
 from .orchestration.event_orchestrator import EventOrchestrator, create_event_orchestrator
 from .orchestration.resource_coordinator import ResourceCoordinator, create_resource_coordinator
 from .orchestration.platform_health_monitor import PlatformHealthMonitor, create_platform_health_monitor
+from .orchestration.configuration_orchestrator import ConfigurationOrchestrator, create_configuration_orchestrator
+from .orchestration.security_orchestrator import SecurityOrchestrator, create_security_orchestrator
 
 __all__ = [
     # Orchestration Engine
@@ -37,7 +39,11 @@ __all__ = [
     'ResourceCoordinator',
     'create_resource_coordinator',
     'PlatformHealthMonitor',
-    'create_platform_health_monitor'
+    'create_platform_health_monitor',
+    'ConfigurationOrchestrator',
+    'create_configuration_orchestrator',
+    'SecurityOrchestrator',
+    'create_security_orchestrator'
 ]
 
 __version__ = "1.0.0"
