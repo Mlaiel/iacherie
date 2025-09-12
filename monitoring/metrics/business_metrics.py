@@ -36,8 +36,8 @@ import hashlib
 logger = logging.getLogger(__name__)
 
 
-class EnhancedMetricType(Enum):
-    """Enhanced types of business metrics for Ainflue platform."""
+class MetricType(Enum):
+    """Types of business metrics for Ainflue platform."""
     # Core Metric Types
     COUNTER = "counter"
     GAUGE = "gauge"
@@ -59,6 +59,9 @@ class EnhancedMetricType(Enum):
     SEO_PERFORMANCE = "seo_performance"
     DISTRIBUTION_REACH = "distribution_reach"
     GAMIFICATION_ENGAGEMENT = "gamification_engagement"
+
+# Alias for backward compatibility
+EnhancedMetricType = MetricType
 
 class BusinessDimension(Enum):
     """Business dimensions for metric segmentation."""
@@ -103,7 +106,7 @@ class MetricPeriod(Enum):
 class EnhancedBusinessMetric:
     """Enhanced business metric with AI insights and advanced analytics."""
     name: str
-    metric_type: EnhancedMetricType
+    metric_type: MetricType
     value: Union[float, int, Decimal]
     timestamp: datetime
     dimensions: Dict[str, str] = field(default_factory=dict)
@@ -153,7 +156,7 @@ class EnhancedBusinessMetric:
 class BusinessMetricSeries:
     """Time series of business metrics with advanced analytics."""
     metric_name: str
-    metric_type: EnhancedMetricType
+    metric_type: MetricType
     data_points: List[EnhancedBusinessMetric] = field(default_factory=list)
     aggregation_period: MetricPeriod = MetricPeriod.HOUR
     
@@ -255,15 +258,10 @@ class BusinessMetricSeries:
             return len(set(values))
         else:
             return statistics.mean(values)  # Default to average
-    value: Union[int, float, Decimal]
-    metric_type: MetricType
-    timestamp: datetime
-    labels: Dict[str, str] = field(default_factory=dict)
-    metadata: Dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass
-class MetricAggregation:
+class MetricAggregationData:
     """
 Aggregated metric data"""
     metric_name: str
@@ -299,7 +297,7 @@ Initialize business metrics collector"""
         self.config = config or {}
         
         # Metric storage
-        self.metrics: Dict[str, List[BusinessMetric]] = defaultdict(list)
+        self.metrics: Dict[str, List[EnhancedBusinessMetric]] = defaultdict(list)
         self.aggregations: Dict[str, Dict[str, MetricAggregation]] = defaultdict(dict)
         
         # Real-time metric queues (for fast recent data access)
@@ -463,7 +461,7 @@ Initialize business metrics collector"""
             metric_type = metric_def.get("type", MetricType.GAUGE)
             
             # Create metric
-            metric = BusinessMetric(
+            metric = EnhancedBusinessMetric(
                 name=name,
                 value=float(value),
                 metric_type=metric_type,
@@ -897,7 +895,7 @@ Initialize business metrics collector"""
             logger.error(f"Error calculating trend for {kpi_name}: {e}")
             return None
     
-    async def _check_metric_alerts(self, metric: BusinessMetric) -> None:
+    async def _check_metric_alerts(self, metric: EnhancedBusinessMetric) -> None:
         """Check if metric triggers any alerts"""
         try:
             if not self.alerting_config.get("enabled", True):
@@ -922,7 +920,7 @@ Initialize business metrics collector"""
         except Exception as e:
             logger.error(f"Error checking metric alerts: {e}")
     
-    async def _trigger_alert(self, metric: BusinessMetric, level: str, message: str) -> None:
+    async def _trigger_alert(self, metric: EnhancedBusinessMetric, level: str, message: str) -> None:
         """Trigger alert for metric"""
         try:
             alert = {
@@ -1212,10 +1210,10 @@ class MetricAlertingEngine:
             logger.warning(f"🚨 Metric Alert: {alert['type']} for {alert['metric']}")
 
 # Global instance for enterprise business metrics
-enterprise_business_metrics = EnterpriseBusinessMetricsCollector()
+enterprise_business_metrics = BusinessMetricsCollector()
 
 __all__ = [
-    "EnterpriseBusinessMetricsCollector",
+    "BusinessMetricsCollector",
     "EnhancedBusinessMetric",
     "BusinessMetricSeries",
     "EnhancedMetricType",
