@@ -31,7 +31,6 @@ import uuid
 import time
 from collections import defaultdict, OrderedDict
 import aioredis
-import lru
 
 logger = logging.getLogger(__name__)
 

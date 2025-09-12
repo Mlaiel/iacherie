@@ -31,8 +31,13 @@ import random
 import numpy as np
 from collections import defaultdict, deque
 import aioredis
-import geoip2.database
-import geoip2.errors
+try:
+    import geoip2.database
+    import geoip2.errors
+    GEOIP_AVAILABLE = True
+except ImportError:
+    GEOIP_AVAILABLE = False
+    geoip2 = None
 
 logger = logging.getLogger(__name__)
 
@@ -161,11 +166,14 @@ class GatewayLoadBalancer:
             )
             
             # Initialize GeoIP database
-            try:
-                self.geoip_reader = geoip2.database.Reader(self.geoip_db_path)
-                logger.info("GeoIP database loaded successfully")
-            except Exception as e:
-                logger.warning(f"GeoIP database not available: {e}")
+            if GEOIP_AVAILABLE:
+                try:
+                    self.geoip_reader = geoip2.database.Reader(self.geoip_db_path)
+                    logger.info("GeoIP database loaded successfully")
+                except Exception as e:
+                    logger.warning(f"GeoIP database not available: {e}")
+            else:
+                logger.warning("GeoIP2 library not available - geographic routing disabled")
             
             # Load existing configuration
             await self._load_configuration()
