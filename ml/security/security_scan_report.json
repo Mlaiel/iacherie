@@ -1,0 +1,155 @@
+{
+  "timestamp": "2025-09-12T06:50:15.530126",
+  "scan_duration_ms": 0.4,
+  "security_score": 0.28,
+  "overall_status": "critical",
+  "summary": {
+    "total_vulnerabilities": 9,
+    "critical": 4,
+    "high": 4,
+    "medium": 1,
+    "low": 0
+  },
+  "components_status": {
+    "encryption": {
+      "status": "success",
+      "algorithm": "Base64 (Demo - use AES-256-GCM in production)",
+      "key_length": 44,
+      "test_passed": true,
+      "recommendation": "Encryption test passed - implement AES-256-GCM"
+    },
+    "access_control": {
+      "status": "warning",
+      "configured_roles": [
+        "ml_engineer",
+        "data_scientist"
+      ],
+      "missing_roles": [
+        "security_admin",
+        "ml_ops"
+      ],
+      "rbac_enabled": true,
+      "recommendation": "Configure missing roles: security_admin, ml_ops"
+    },
+    "audit_trails": {
+      "status": "success",
+      "audit_logs_count": 1,
+      "retention_policy": "365 days",
+      "last_log_timestamp": "2025-09-12T06:50:15.530088",
+      "recommendation": "Audit trails functioning correctly"
+    }
+  },
+  "vulnerabilities": [
+    {
+      "id": "DEP-002",
+      "type": "dependency",
+      "severity": "medium",
+      "title": "TensorFlow denial of service vulnerability",
+      "description": "TensorFlow vulnerable to DoS attacks via malformed inputs",
+      "component": "dependency:tensorflow",
+      "recommendation": "Upgrade to TensorFlow >= 2.13.1",
+      "cve_id": "CVE-2023-25659",
+      "cvss_score": 5.5
+    },
+    {
+      "id": "DEP-001",
+      "type": "dependency",
+      "severity": "high",
+      "title": "Pillow arbitrary code execution vulnerability",
+      "description": "Older versions of Pillow vulnerable to arbitrary code execution via crafted images",
+      "component": "dependency:pillow",
+      "recommendation": "Upgrade to Pillow >= 10.0.1",
+      "cve_id": "CVE-2023-44271",
+      "cvss_score": 8.8
+    },
+    {
+      "id": "CONF-001",
+      "type": "configuration",
+      "severity": "high",
+      "title": "Missing security configuration file: config/production.env",
+      "description": "Critical security configuration file config/production.env not found",
+      "component": "config:config/production.env",
+      "recommendation": "Create and configure config/production.env with enterprise security settings",
+      "cve_id": null,
+      "cvss_score": null
+    },
+    {
+      "id": "CONF-002",
+      "type": "configuration",
+      "severity": "high",
+      "title": "Missing security configuration file: config/security.yaml",
+      "description": "Critical security configuration file config/security.yaml not found",
+      "component": "config:config/security.yaml",
+      "recommendation": "Create and configure config/security.yaml with enterprise security settings",
+      "cve_id": null,
+      "cvss_score": null
+    },
+    {
+      "id": "CONF-003",
+      "type": "configuration",
+      "severity": "high",
+      "title": "Missing security configuration file: docker-compose.prod.yml",
+      "description": "Critical security configuration file docker-compose.prod.yml not found",
+      "component": "config:docker-compose.prod.yml",
+      "recommendation": "Create and configure docker-compose.prod.yml with enterprise security settings",
+      "cve_id": null,
+      "cvss_score": null
+    },
+    {
+      "id": "CONF-004",
+      "type": "configuration",
+      "severity": "critical",
+      "title": "Missing sensitive environment variable: JWT_SECRET_KEY",
+      "description": "Critical security variable JWT_SECRET_KEY not configured",
+      "component": "env:JWT_SECRET_KEY",
+      "recommendation": "Set JWT_SECRET_KEY with cryptographically secure random value",
+      "cve_id": null,
+      "cvss_score": null
+    },
+    {
+      "id": "CONF-005",
+      "type": "configuration",
+      "severity": "critical",
+      "title": "Missing sensitive environment variable: DATABASE_PASSWORD",
+      "description": "Critical security variable DATABASE_PASSWORD not configured",
+      "component": "env:DATABASE_PASSWORD",
+      "recommendation": "Set DATABASE_PASSWORD with cryptographically secure random value",
+      "cve_id": null,
+      "cvss_score": null
+    },
+    {
+      "id": "CONF-006",
+      "type": "configuration",
+      "severity": "critical",
+      "title": "Missing sensitive environment variable: REDIS_PASSWORD",
+      "description": "Critical security variable REDIS_PASSWORD not configured",
+      "component": "env:REDIS_PASSWORD",
+      "recommendation": "Set REDIS_PASSWORD with cryptographically secure random value",
+      "cve_id": null,
+      "cvss_score": null
+    },
+    {
+      "id": "CONF-007",
+      "type": "configuration",
+      "severity": "critical",
+      "title": "Missing sensitive environment variable: API_ENCRYPTION_KEY",
+      "description": "Critical security variable API_ENCRYPTION_KEY not configured",
+      "component": "env:API_ENCRYPTION_KEY",
+      "recommendation": "Set API_ENCRYPTION_KEY with cryptographically secure random value",
+      "cve_id": null,
+      "cvss_score": null
+    }
+  ],
+  "recommendations": [
+    "🚨 CRITICAL: Set JWT_SECRET_KEY with cryptographically secure random value",
+    "🚨 CRITICAL: Set DATABASE_PASSWORD with cryptographically secure random value",
+    "🚨 CRITICAL: Set REDIS_PASSWORD with cryptographically secure random value",
+    "⚠️ HIGH: Upgrade to Pillow >= 10.0.1",
+    "⚠️ HIGH: Create and configure config/production.env with enterprise security settings",
+    "⚠️ HIGH: Create and configure config/security.yaml with enterprise security settings",
+    "🔒 Implémenter authentification multi-facteur (MFA)",
+    "🔐 Activer chiffrement at-rest pour tous les modèles ML",
+    "📋 Configurer audit logging pour toutes les opérations ML",
+    "🛡️ Mettre en place monitoring sécurité temps réel"
+  ]
+}
