@@ -1,0 +1,28 @@
+{
+  "run_id": "run_e24d9622",
+  "experiment_id": "exp_e666d63b",
+  "started_at": "2025-09-12T02:03:26.225997",
+  "finished_at": "2025-09-12T02:03:26.326358",
+  "status": "completed",
+  "random_seed": 3777711947,
+  "environment_info": {
+    "python_version": "3.12.3 (main, Aug 14 2025, 17:47:21) [GCC 13.3.0]",
+    "platform": "Linux-6.11.0-1018-azure-x86_64-with-glibc2.39",
+    "numpy_version": "2.3.3",
+    "timestamp": "2025-09-12T02:03:26.226004"
+  },
+  "metrics": {
+    "accuracy": 0.8526367531347403,
+    "f1_score": 0.8320787356174133,
+    "loss": 0.43443091963754965,
+    "balanced_score": 0.8423577443760768
+  },
+  "artifacts": {
+    "config_hash": "4bdc167f96a3151cc22d3f4d5c014b1b",
+    "metrics_file": "metrics_run_e24d9622.json",
+    "log_file": "logs_run_e24d9622.txt"
+  },
+  "logs": [],
+  "error_message": null,
+  "duration_seconds": 0.100361
+}
