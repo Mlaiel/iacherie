@@ -49,6 +49,12 @@ from .data_transformer import DataTransformer, TransformationResult
 from .input_sanitizer import InputSanitizer, SanitizationResult
 from .error_handler import ErrorHandler, ErrorRecord, ErrorSeverity, ErrorCategory
 
+# PHASE 3 IMPLEMENTATION - January 2025 Expert Roles Enhancement
+from .test_utilities import TestUtilities, TestResult, PerformanceMetrics, SecurityTestResult
+from .text_processor import TextProcessor, TextAnalysisResult, ContentSafety, TextSimilarity
+from .security_scanner import SecurityScanner, SecurityVulnerability, SecurityScanResult
+from .backup_utilities import BackupManager, BackupMetadata, BackupJob, RestorePoint
+
 # ADDITIONAL ENTERPRISE UTILITIES - January 2025 Phase 2 Implementation
 from .file_utilities import FileUtilities, FileMetadata, FileOperationResult
 from .file_validator import FileValidator, FileValidationReport, ValidationLevel
