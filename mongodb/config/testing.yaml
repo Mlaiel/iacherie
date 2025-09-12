@@ -1,0 +1,252 @@
+# Testing Configuration
+# MongoDB Module - Ainflue Platform
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
+
+mongodb:
+  # Connection settings (test database)
+  connection:
+    host: "localhost"
+    port: 27017
+    database: "ainflue_test"
+    replica_set: null
+    ssl: false
+    
+  # Authentication (test user)
+  auth:
+    mechanism: "SCRAM-SHA-256"
+    source: "admin"
+    username: "test_user"
+    password: "test_password"
+    
+  # Connection pool (minimal for testing)
+  pool:
+    min_size: 1
+    max_size: 5
+    max_idle_time_ms: 10000
+    wait_queue_timeout_ms: 2000
+    server_selection_timeout_ms: 2000
+    
+  # Performance (fast for testing)
+  performance:
+    read_preference: "primary"
+    read_concern: "local"
+    write_concern:
+      w: 1
+      j: false
+      wtimeout: 1000
+    max_time_ms: 5000
+    
+  # WiredTiger settings (minimal for testing)
+  wired_tiger:
+    cache_size_gb: 0.5
+    journal_compressor: "none"  # Faster for testing
+    collection_block_compressor: "none"
+    
+  # Monitoring (disabled for testing performance)
+  monitoring:
+    enable_command_monitoring: false
+    enable_connection_monitoring: false
+    enable_server_monitoring: false
+    slow_operation_threshold_ms: 1000
+    profiling_level: 0  # Disabled for performance
+    
+  # Security (minimal for testing)
+  security:
+    encrypt_fields: false
+    audit_logging: false
+    compliance_mode: "testing"
+    field_level_encryption: false
+    
+  # Sharding (disabled for testing)
+  sharding:
+    enabled: false
+    
+# Application settings
+application:
+  environment: "testing"
+  debug: true
+  log_level: "ERROR"  # Minimal logging for test performance
+  
+  # Feature flags (testing-specific)
+  features:
+    ai_processing: false
+    real_time_analytics: false
+    advanced_search: false
+    multi_platform_sync: false
+    gamification: false
+    multimedia_processing: false
+    
+  # Rate limiting (disabled for testing)
+  rate_limiting:
+    enabled: false
+    
+  # Caching (in-memory for testing)
+  caching:
+    enabled: false  # Disabled to ensure test isolation
+    
+# Testing configuration
+testing:
+  # Test database management
+  database:
+    auto_cleanup: true
+    cleanup_strategy: "drop_collections"  # or "truncate_collections"
+    test_data_isolation: true
+    
+  # Test execution
+  execution:
+    parallel_tests: true
+    max_workers: 4
+    test_timeout_seconds: 30
+    
+  # Test data
+  test_data:
+    fixtures_directory: "tests/fixtures"
+    generate_test_data: true
+    test_data_size: "small"  # small, medium, large
+    
+  # Coverage
+  coverage:
+    enabled: true
+    minimum_threshold: 95
+    include_patterns: ["mongodb/**/*.py"]
+    exclude_patterns: ["tests/**", "**/__pycache__/**"]
+    
+  # Mocking
+  mocking:
+    mock_external_services: true
+    mock_ai_services: true
+    mock_cloud_services: true
+    
+# Test types configuration
+test_types:
+  # Unit tests
+  unit:
+    enabled: true
+    timeout_seconds: 5
+    markers: ["unit"]
+    
+  # Integration tests
+  integration:
+    enabled: true
+    timeout_seconds: 30
+    markers: ["integration"]
+    requires_mongodb: true
+    
+  # Performance tests
+  performance:
+    enabled: true
+    timeout_seconds: 60
+    markers: ["performance"]
+    benchmark_iterations: 100
+    
+  # Security tests
+  security:
+    enabled: true
+    timeout_seconds: 30
+    markers: ["security"]
+    vulnerability_scanning: true
+    
+  # Load tests
+  load:
+    enabled: false  # Only run when explicitly requested
+    timeout_seconds: 300
+    markers: ["load"]
+    concurrent_users: 100
+    
+# Infrastructure (test environment)
+infrastructure:
+  # Test MongoDB instance
+  mongodb:
+    image: "mongo:7.0"
+    memory_limit: "1Gi"
+    storage_limit: "5Gi"
+    
+  # Test services
+  services:
+    start_required_services: true
+    services_list: ["mongodb"]
+    health_check_timeout: 30
+    
+# Logging (minimal for testing)
+logging:
+  level: "ERROR"
+  format: "simple"
+  output: "stdout"
+  
+  # Test-specific logging
+  test_logging:
+    log_test_results: true
+    log_performance_metrics: true
+    log_coverage_reports: true
+    
+# CI/CD integration
+ci_cd:
+  # GitHub Actions
+  github_actions:
+    upload_coverage: true
+    artifact_retention_days: 30
+    
+  # Test reporting
+  reporting:
+    junit_xml: true
+    coverage_xml: true
+    performance_json: true
+    
+# Mock configurations
+mocks:
+  # External services
+  external_services:
+    ai_service:
+      base_url: "http://mock-ai:8001"
+      timeout: 1
+      
+    analytics_service:
+      base_url: "http://mock-analytics:8002"
+      timeout: 1
+      
+  # Database responses
+  database_responses:
+    simulate_slow_queries: false
+    simulate_connection_failures: false
+    simulate_replication_lag: false
+    
+# Test data management
+test_data:
+  # Fixtures
+  fixtures:
+    users: "tests/fixtures/users.json"
+    content: "tests/fixtures/content.json"
+    analytics: "tests/fixtures/analytics.json"
+    
+  # Factories
+  factories:
+    user_factory: "tests.factories.UserFactory"
+    content_factory: "tests.factories.ContentFactory"
+    
+  # Cleanup
+  cleanup:
+    auto_cleanup_after_test: true
+    auto_cleanup_after_suite: true
+    preserve_test_data: false
+    
+# Performance testing
+performance_testing:
+  # Benchmarks
+  benchmarks:
+    connection_benchmark: true
+    query_benchmark: true
+    aggregation_benchmark: true
+    
+  # Thresholds
+  thresholds:
+    max_connection_time_ms: 100
+    max_query_time_ms: 50
+    max_aggregation_time_ms: 200
+    
+  # Load testing
+  load_testing:
+    enabled: false
+    concurrent_connections: 50
+    operations_per_second: 1000
+    duration_seconds: 60

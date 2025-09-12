@@ -1,0 +1,484 @@
+# MongoDB CI/CD Pipeline
+# Ainflue Platform - Enterprise Grade Testing and Deployment
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
+
+name: MongoDB CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+    paths: ['mongodb/**', '.github/workflows/mongodb-ci.yml']
+  pull_request:
+    branches: [main]
+    paths: ['mongodb/**']
+
+env:
+  DOCKER_REGISTRY: ghcr.io
+  IMAGE_NAME: ainflue/mongodb
+  PYTHON_VERSION: '3.11'
+  MONGODB_VERSION: '7.0'
+
+jobs:
+  # Code Quality and Security Scanning
+  quality-check:
+    name: 🔍 Code Quality & Security
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 🐍 Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        
+    - name: 📦 Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install bandit safety semgrep flake8 black isort mypy
+        
+    - name: 🎨 Code formatting check
+      run: |
+        black --check mongodb/ --diff
+        isort --check-only mongodb/ --diff
+        
+    - name: 🔍 Linting
+      run: |
+        flake8 mongodb/ --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 mongodb/ --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        
+    - name: 🛡️ Security scan with Bandit
+      run: |
+        bandit -r mongodb/ -f json -o bandit-report.json
+        
+    - name: 🔒 Dependency vulnerability check
+      run: |
+        safety check --json --output safety-report.json
+        
+    - name: 📊 Type checking
+      run: |
+        mypy mongodb/ --ignore-missing-imports --no-strict-optional
+        
+    - name: 🧪 Static analysis with Semgrep
+      uses: returntocorp/semgrep-action@v1
+      with:
+        config: >-
+          p/security-audit
+          p/secrets
+          p/python
+          p/django
+          
+    - name: 📤 Upload security reports
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: security-reports
+        path: |
+          bandit-report.json
+          safety-report.json
+
+  # Unit Tests
+  unit-tests:
+    name: 🧪 Unit Tests
+    runs-on: ubuntu-latest
+    needs: quality-check
+    
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
+        
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 🐍 Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+        
+    - name: 📦 Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest pytest-asyncio pytest-cov pytest-mock pytest-xdist
+        
+    - name: 🧪 Run unit tests
+      run: |
+        cd mongodb
+        python -m pytest tests/unit/ -v --cov=. --cov-report=xml --cov-report=html --junitxml=unit-test-results.xml
+        
+    - name: 📊 Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./mongodb/coverage.xml
+        flags: unit-tests
+        name: codecov-umbrella
+        
+    - name: 📤 Upload test results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: unit-test-results-${{ matrix.python-version }}
+        path: |
+          mongodb/coverage.xml
+          mongodb/htmlcov/
+          mongodb/unit-test-results.xml
+
+  # Integration Tests
+  integration-tests:
+    name: 🔗 Integration Tests
+    runs-on: ubuntu-latest
+    needs: unit-tests
+    
+    services:
+      mongodb:
+        image: mongo:7.0
+        env:
+          MONGO_INITDB_ROOT_USERNAME: admin
+          MONGO_INITDB_ROOT_PASSWORD: password
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd "mongo --eval 'db.adminCommand(\"ping\")'"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+          
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+          
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 🐍 Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        
+    - name: 📦 Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest pytest-asyncio pytest-cov pytest-mock
+        
+    - name: ⏳ Wait for MongoDB
+      run: |
+        until mongo --host localhost:27017 --eval "print('MongoDB is ready')"; do
+          echo "Waiting for MongoDB..."
+          sleep 2
+        done
+        
+    - name: 🔗 Run integration tests
+      env:
+        MONGODB_URI: mongodb://admin:password@localhost:27017/test?authSource=admin
+        REDIS_URL: redis://localhost:6379
+      run: |
+        cd mongodb
+        python -m pytest tests/integration/ -v --cov=. --cov-report=xml --junitxml=integration-test-results.xml
+        
+    - name: 📊 Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./mongodb/coverage.xml
+        flags: integration-tests
+        
+    - name: 📤 Upload test results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: integration-test-results
+        path: |
+          mongodb/coverage.xml
+          mongodb/integration-test-results.xml
+
+  # Performance Tests
+  performance-tests:
+    name: ⚡ Performance Tests
+    runs-on: ubuntu-latest
+    needs: integration-tests
+    
+    services:
+      mongodb:
+        image: mongo:7.0
+        env:
+          MONGO_INITDB_ROOT_USERNAME: admin
+          MONGO_INITDB_ROOT_PASSWORD: password
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd "mongo --eval 'db.adminCommand(\"ping\")'"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+          
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 🐍 Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        
+    - name: 📦 Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest pytest-asyncio pytest-benchmark
+        
+    - name: ⚡ Run performance tests
+      env:
+        MONGODB_URI: mongodb://admin:password@localhost:27017/test?authSource=admin
+      run: |
+        cd mongodb
+        python -m pytest tests/performance/ -v --benchmark-json=performance-results.json
+        
+    - name: 📊 Performance regression check
+      run: |
+        # Compare with baseline performance metrics
+        python scripts/check_performance_regression.py mongodb/performance-results.json
+        
+    - name: 📤 Upload performance results
+      uses: actions/upload-artifact@v3
+      with:
+        name: performance-results
+        path: mongodb/performance-results.json
+
+  # Security Tests
+  security-tests:
+    name: 🛡️ Security Tests
+    runs-on: ubuntu-latest
+    needs: integration-tests
+    
+    services:
+      mongodb:
+        image: mongo:7.0
+        env:
+          MONGO_INITDB_ROOT_USERNAME: admin
+          MONGO_INITDB_ROOT_PASSWORD: password
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd "mongo --eval 'db.adminCommand(\"ping\")'"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+          
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 🐍 Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        
+    - name: 📦 Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest pytest-asyncio
+        
+    - name: 🛡️ Run security tests
+      env:
+        MONGODB_URI: mongodb://admin:password@localhost:27017/test?authSource=admin
+      run: |
+        cd mongodb
+        python -m pytest tests/security/ -v --junitxml=security-test-results.xml
+        
+    - name: 🔒 Container security scan
+      uses: aquasecurity/trivy-action@master
+      with:
+        scan-type: 'fs'
+        scan-ref: './mongodb'
+        format: 'sarif'
+        output: 'trivy-results.sarif'
+        
+    - name: 📤 Upload security scan results
+      uses: github/codeql-action/upload-sarif@v2
+      with:
+        sarif_file: 'trivy-results.sarif'
+        
+    - name: 📤 Upload security test results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: security-test-results
+        path: mongodb/security-test-results.xml
+
+  # Build Docker Image
+  build:
+    name: 🐳 Build Docker Image
+    runs-on: ubuntu-latest
+    needs: [unit-tests, integration-tests]
+    if: github.event_name == 'push'
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 🔧 Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+      
+    - name: 🔑 Log in to Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ${{ env.DOCKER_REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: 🏷️ Extract metadata
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: ${{ env.DOCKER_REGISTRY }}/${{ env.IMAGE_NAME }}
+        tags: |
+          type=ref,event=branch
+          type=ref,event=pr
+          type=sha,prefix={{branch}}-
+          type=raw,value=latest,enable={{is_default_branch}}
+          
+    - name: 🔨 Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: ./mongodb
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+        build-args: |
+          PYTHON_VERSION=${{ env.PYTHON_VERSION }}
+          MONGODB_VERSION=${{ env.MONGODB_VERSION }}
+
+  # Deploy to Staging
+  deploy-staging:
+    name: 🚀 Deploy to Staging
+    runs-on: ubuntu-latest
+    needs: [build, performance-tests, security-tests]
+    if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
+    environment: staging
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: ⚙️ Configure kubectl
+      uses: azure/k8s-set-context@v3
+      with:
+        method: kubeconfig
+        kubeconfig: ${{ secrets.KUBE_CONFIG_STAGING }}
+        
+    - name: 🚀 Deploy to staging
+      run: |
+        kubectl apply -f kubernetes/staging/
+        kubectl rollout status deployment/mongodb-deployment -n mongodb-staging --timeout=600s
+        
+    - name: 🧪 Run smoke tests
+      run: |
+        kubectl run smoke-test-${{ github.run_id }} \
+          --image=ainflue/smoke-tests:latest \
+          --env="MONGODB_URI=${{ secrets.MONGODB_URI_STAGING }}" \
+          --env="TEST_SUITE=smoke" \
+          --restart=Never \
+          -n mongodb-staging
+        kubectl wait --for=condition=complete job/smoke-test-${{ github.run_id }} \
+          -n mongodb-staging --timeout=300s
+        
+    - name: 📊 Performance validation
+      run: |
+        kubectl run perf-test-${{ github.run_id }} \
+          --image=ainflue/performance-tests:latest \
+          --env="MONGODB_URI=${{ secrets.MONGODB_URI_STAGING }}" \
+          --env="TEST_DURATION=60" \
+          --restart=Never \
+          -n mongodb-staging
+        kubectl wait --for=condition=complete job/perf-test-${{ github.run_id }} \
+          -n mongodb-staging --timeout=300s
+
+  # Deploy to Production
+  deploy-production:
+    name: 🚀 Deploy to Production
+    runs-on: ubuntu-latest
+    needs: [build, performance-tests, security-tests]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment: production
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: ⚙️ Configure kubectl
+      uses: azure/k8s-set-context@v3
+      with:
+        method: kubeconfig
+        kubeconfig: ${{ secrets.KUBE_CONFIG_PRODUCTION }}
+        
+    - name: 🔄 Blue-Green Deployment
+      run: |
+        # Deploy to green environment
+        kubectl apply -f kubernetes/production/green/
+        kubectl rollout status deployment/mongodb-deployment-green -n mongodb-prod --timeout=900s
+        
+        # Verify green deployment
+        kubectl run health-check-${{ github.run_id }} \
+          --image=ainflue/health-check:latest \
+          --env="MONGODB_URI=${{ secrets.MONGODB_URI_PRODUCTION_GREEN }}" \
+          --restart=Never \
+          -n mongodb-prod
+        kubectl wait --for=condition=complete job/health-check-${{ github.run_id }} \
+          -n mongodb-prod --timeout=300s
+        
+        # Switch traffic to green
+        kubectl patch service mongodb-service -n mongodb-prod \
+          -p '{"spec":{"selector":{"deployment":"green"}}}'
+        
+        # Wait for traffic switch
+        sleep 60
+        
+        # Verify production health
+        kubectl run prod-health-check-${{ github.run_id }} \
+          --image=ainflue/health-check:latest \
+          --env="MONGODB_URI=${{ secrets.MONGODB_URI_PRODUCTION }}" \
+          --restart=Never \
+          -n mongodb-prod
+        kubectl wait --for=condition=complete job/prod-health-check-${{ github.run_id }} \
+          -n mongodb-prod --timeout=300s
+        
+        # Scale down blue environment
+        kubectl scale deployment mongodb-deployment-blue --replicas=0 -n mongodb-prod
+
+  # Notification
+  notify:
+    name: 📢 Notify
+    runs-on: ubuntu-latest
+    needs: [deploy-staging, deploy-production]
+    if: always()
+    
+    steps:
+    - name: 📧 Send notification
+      uses: 8398a7/action-slack@v3
+      with:
+        status: ${{ job.status }}
+        channel: '#ops-notifications'
+        username: 'GitHub Actions'
+        icon_emoji: ':octocat:'
+        fields: repo,message,commit,author,action,eventName,ref,workflow
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        
+    - name: 📊 Update deployment status
+      run: |
+        echo "Deployment completed with status: ${{ job.status }}"
+        # Additional notification logic here
