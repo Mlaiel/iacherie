@@ -1,2 +1,3 @@
 # Analytics Engine: audience_insights_notifications.py
-class AudienceInsightsNotificationsEngine: pass
+class AudienceInsightsEngine: 
+    def __init__(self, config=None): pass

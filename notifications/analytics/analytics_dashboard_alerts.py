@@ -1,2 +1,3 @@
 # Analytics Engine: analytics_dashboard_alerts.py
-class AnalyticsDashboardAlertsEngine: pass
+class AnalyticsDashboardAlertsEngine: 
+    def __init__(self, config=None): pass

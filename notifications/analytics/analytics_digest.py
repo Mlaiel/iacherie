@@ -1,2 +1,3 @@
 # Analytics Engine: analytics_digest.py
-class AnalyticsDigestEngine: pass
+class AnalyticsDigestEngine: 
+    def __init__(self, config=None): pass

@@ -1,2 +1,3 @@
 # Analytics Engine: roi_tracking_notifications.py
-class RoiTrackingNotificationsEngine: pass
+class ROITrackingEngine: 
+    def __init__(self, config=None): pass
