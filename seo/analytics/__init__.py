@@ -5,20 +5,35 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
 
-from .seo_intelligence_engine import SEOIntelligenceEngine
-from .language_validation import LanguageValidator
-from .ranking_monitor import SearchRankingMonitor
+# Core analytics modules with correct imports
+from .seo_intelligence_engine import AdvancedSEOAnalytics as SEOIntelligenceEngine
+from .ranking_monitor import RankingMonitor as SearchRankingMonitor
 from .organic_traffic_analyzer import OrganicTrafficAnalyzer
 from .conversion_tracking_seo import SEOConversionTracker, ConversionReportGenerator
 from .seo_roi_calculator import SEOROICalculator, ROIOptimizer
 
+# New competitive intelligence modules  
+from .market_gap_analyzer import MarketGapAnalyzer
+from .backlink_analyzer import BacklinkAnalyzer
+from .content_gap_identifier import ContentGapIdentifier
+from .serp_feature_tracker import SERPFeatureTracker
+from .competitor_keyword_spy import CompetitorKeywordSpy
+
+# Language validation function
+from .language_validation import validate_644_language_support
+
 __all__ = [
     "SEOIntelligenceEngine",
-    "LanguageValidator", 
     "SearchRankingMonitor",
     "OrganicTrafficAnalyzer",
     "SEOConversionTracker",
     "ConversionReportGenerator",
     "SEOROICalculator",
-    "ROIOptimizer"
+    "ROIOptimizer",
+    "MarketGapAnalyzer",
+    "BacklinkAnalyzer",
+    "ContentGapIdentifier",
+    "SERPFeatureTracker",
+    "CompetitorKeywordSpy",
+    "validate_644_language_support"
 ]
