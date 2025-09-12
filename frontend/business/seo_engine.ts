@@ -61,10 +61,39 @@ export class SEOEngine {
   private config: SEOConfiguration;
   private platforms: Map<string, SEOPlatform>;
 
-  constructor(config: SEOConfiguration) {
-    this.config = config;
+  constructor(config?: SEOConfiguration) {
+    this.config = config || this.getDefaultConfiguration();
     this.platforms = new Map();
     this.initializePlatforms();
+  }
+
+  /**
+   * Get default configuration for testing/development
+   */
+  private getDefaultConfiguration(): SEOConfiguration {
+    return {
+      platforms: ['youtube', 'tiktok', 'instagram', 'twitter'],
+      targetKeywords: ['music', 'content', 'creator'],
+      contentOptimization: true,
+      metaGeneration: true,
+      schemaMarkup: true,
+      sitemap: true,
+      robotsTxt: true,
+      analytics: true
+    };
+  }
+
+  /**
+   * Get current configuration
+   */
+  getConfiguration() {
+    return {
+      aiOptimization: true,
+      multiPlatformTargeting: true,
+      realTimeAnalysis: true,
+      platforms: this.config.platforms,
+      contentOptimization: this.config.contentOptimization
+    };
   }
 
   /**
@@ -257,19 +286,6 @@ export class SEOEngine {
   }
 
   /**
-   * Get current SEO configuration
-   */
-  public getConfiguration() {
-    return {
-      aiOptimization: true,
-      multiPlatformTargeting: true,
-      realTimeAnalysis: true,
-      platformCount: this.platforms.size,
-      supportedPlatforms: Array.from(this.platforms.keys())
-    };
-  }
-
-  /**
    * Generate AI-optimized keywords for content
    */
   public async generateAIKeywords(content: { title: string; description: string; tags: string[] }): Promise<string[]> {
@@ -287,7 +303,7 @@ export class SEOEngine {
       'rhythm'
     ];
     
-    return [...new Set(aiKeywords)];
+    return Array.from(new Set(aiKeywords));
   }
 
   /**
@@ -598,7 +614,7 @@ export interface OptimizationOptions {
   altText?: string;
 }
 
-export const useSEOEngine = (config: SEOConfiguration) => {
+export const useSEOEngine = (config?: SEOConfiguration) => {
   const [state, setState] = useState<SEOEngineState>({
     currentStrategy: null,
     optimization: {} as ContentOptimization,
@@ -661,12 +677,58 @@ export const useSEOEngine = (config: SEOConfiguration) => {
     };
   }, [getPlatformRequirements]);
 
+  const analyzeContent = useCallback(async (content: any) => {
+    setState(prev => ({ ...prev, isAnalyzing: true }));
+    
+    try {
+      // Simulate content analysis
+      const keywords = await engine.generateAIKeywords(content);
+      const analysis: SEOAnalysis = {
+        score: 85,
+        keywords: keywords.map(keyword => ({
+          keyword,
+          density: Math.random() * 0.05,
+          position: Math.floor(Math.random() * 10) + 1,
+          difficulty: Math.random(),
+          searchVolume: Math.floor(Math.random() * 1000),
+          competition: Math.random() > 0.6 ? 'high' : Math.random() > 0.3 ? 'medium' : 'low' as 'low' | 'medium' | 'high'
+        })),
+        recommendations: ['Add more keywords', 'Improve title length', 'Add meta description'],
+        topics: ['music', 'content', 'creator'],
+        wordCount: content.title?.length || 0,
+        readabilityScore: 80
+      };
+      
+      setState(prev => ({
+        ...prev,
+        analysis,
+        isAnalyzing: false
+      }));
+      
+      return analysis;
+    } catch (error) {
+      setState(prev => ({ ...prev, isAnalyzing: false }));
+      throw error;
+    }
+  }, [engine]);
+
+  const generateStrategy = useCallback(async (content: any, platforms: string[]) => {
+    const strategies: Record<string, any> = {};
+    for (const platform of platforms) {
+      strategies[platform] = await engine.optimizeForPlatform(content, platform);
+    }
+    return strategies;
+  }, [engine]);
+
   return {
     state,
     optimizeContent,
     getPlatformRequirements,
     validateContent,
-    engine
+    engine,
+    isAnalyzing: state.isAnalyzing,
+    analyzeContent,
+    generateStrategy
   };
 };
 

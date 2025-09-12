@@ -252,7 +252,7 @@ describe('AI Orchestrator - ML Engineer & IA Prompt Engineer', () => {
         type: 'educational'
       });
 
-      expect(result.metadata.config).toMatchObject(customConfig);
+      expect((result.metadata as any).config).toMatchObject(customConfig);
     });
   });
 });
