@@ -1,0 +1,20 @@
+{
+  "config_id": "config_037f9911",
+  "name": "musician_max_audio_length_seconds",
+  "config_type": "creator_profile",
+  "environment": "production",
+  "value": 300,
+  "description": "Default max_audio_length_seconds for musician",
+  "creator_types": [
+    "musician"
+  ],
+  "is_secret": false,
+  "is_encrypted": false,
+  "version": "1.0.0",
+  "created_at": "2025-09-12T02:03:26.925500",
+  "updated_at": "2025-09-12T02:03:26.925501",
+  "created_by": "system",
+  "tags": [],
+  "dependencies": [],
+  "validation_schema": null
+}
