@@ -28,6 +28,11 @@ class ValidationError(BaseIngestionError):
     pass
 
 
+class PipelineException(BaseIngestionError):
+    """Pipeline execution error"""
+    pass
+
+
 class ProcessingError(BaseIngestionError):
     """Content processing error"""
     pass
