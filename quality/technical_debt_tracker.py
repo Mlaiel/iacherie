@@ -90,11 +90,6 @@ class TechnicalDebtTracker:
         except Exception as e:
             logger.error(f"__init__ failed: {e}")
             raise
-            r"@deprecated",
-            r"deprecat",
-            r"\.warn\(",
-            r"warnings\.warn"
-        ]
 
     async def analyze_technical_debt(self) -> DebtSummary:
         """Analyze technical debt across the project"""
@@ -348,37 +343,11 @@ class TechnicalDebtTracker:
         elif any(word in line_upper for word in ["IMPORTANT", "XXX"]):
             return DebtSeverity.MEDIUM
         else:
-        try:
-            logger.info(f"Executing _determine_todo_severity")
-            
-            # Implementation for _determine_todo_severity
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"_determine_todo_severity completed successfully")
-            return result
-            
-        except Exception as e:
-        try:
-            logger.info(f"Executing _estimate_todo_effort")
-            
-            # Implementation for _estimate_todo_effort
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"_estimate_todo_effort completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"_estimate_todo_effort failed: {e}")
-            raise
-            logger.error(f"_determine_todo_severity failed: {e}")
-            raise
-    def _estimate_todo_effort(self, comment: str) -> int:
+            return DebtSeverity.LOW
+
+    def _estimate_todo_effort(self, line: str) -> int:
         """Estimate effort for TODO items"""
-        comment_lower = comment.lower()
+        comment_lower = line.lower()
         if any(word in comment_lower for word in ["refactor", "rewrite", "redesign"]):
             return 8
         elif any(word in comment_lower for word in ["implement", "add", "create"]):
