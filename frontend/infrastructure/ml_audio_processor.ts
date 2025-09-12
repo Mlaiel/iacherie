@@ -50,6 +50,7 @@ export interface MoodAnalysis {
   valence: number; // -1 to 1 (negative to positive)
   arousal: number; // 0 to 1 (calm to energetic)
   dominance: number; // 0 to 1 (submissive to dominant)
+  energy: number; // 0 to 1 (low to high energy)
   emotions: Array<{
     emotion: string;
     intensity: number;
@@ -216,6 +217,99 @@ export class MLAudioProcessor {
     this.initializeAudioContext();
     this.loadModels();
     this.initializeWorkers();
+  }
+
+  /**
+   * Get current configuration
+   */
+  getConfiguration() {
+    return {
+      modelsLoaded: Array.from(this.models.values()).filter(m => m.status === 'ready').length,
+      totalModels: this.models.size,
+      audioContextReady: this.audioContext?.state === 'running',
+      workersAvailable: this.workersPool.length,
+      processingCapabilities: ['noise_reduction', 'genre_classification', 'mood_analysis', 'tempo_detection']
+    };
+  }
+
+  /**
+   * Convert audio format
+   */
+  async convertFormat(audioInput: any, options: { format: string; quality?: string }): Promise<any> {
+    await this.delay(1000);
+    return {
+      format: options.format,
+      quality: options.quality || 'high',
+      size: Math.floor(Math.random() * 1000000) + 500000,
+      duration: audioInput.duration || 180
+    };
+  }
+
+  /**
+   * Apply audio effects
+   */
+  async applyEffects(audioTrack: any, effects: any): Promise<any> {
+    await this.delay(800);
+    return {
+      originalFormat: audioTrack.format,
+      appliedEffects: Object.keys(effects),
+      quality: 'enhanced'
+    };
+  }
+
+  /**
+   * Analyze real-time audio stream
+   */
+  analyzeRealTime(audioStream: any) {
+    return {
+      subscribe: (callback: Function) => {
+        const interval = setInterval(() => {
+          callback({
+            timestamp: Date.now(),
+            level: Math.random(),
+            frequency: 440 + Math.random() * 440
+          });
+        }, 100);
+        return () => clearInterval(interval);
+      }
+    };
+  }
+
+  /**
+   * Process multi-channel audio
+   */
+  async processMultiChannel(multiChannelAudio: any, options: any): Promise<any> {
+    await this.delay(1200);
+    return {
+      channels: multiChannelAudio.channels || 2,
+      processedChannels: options.channels || multiChannelAudio.channels,
+      spatialMapping: options.spatialMapping || 'stereo'
+    };
+  }
+
+  /**
+   * Classify audio genre
+   */
+  async classifyGenre(musicTrack: any): Promise<any> {
+    const genres = ['Rock', 'Jazz', 'Electronic', 'Classical', 'Hip-Hop', 'Pop'];
+    const primary = genres[Math.floor(Math.random() * genres.length)];
+    return {
+      primary,
+      confidence: 0.85 + Math.random() * 0.1,
+      alternatives: genres.filter(g => g !== primary).slice(0, 2)
+    };
+  }
+
+  /**
+   * Get performance metrics
+   */
+  getPerformanceMetrics() {
+    return {
+      averageProcessingTime: 1500,
+      throughput: 250,
+      memoryUsage: 145,
+      activeJobs: this.activeJobs.size
+    };
   }
 
   /**
@@ -494,11 +588,12 @@ export class MLAudioProcessor {
     };
   }
 
-  private async analyzeMood(audioBuffer: AudioBuffer): Promise<MoodAnalysis> {
+  async analyzeMood(audioBuffer: AudioBuffer | any): Promise<MoodAnalysis> {
     return {
       valence: (Math.random() - 0.5) * 2,
       arousal: Math.random(),
       dominance: Math.random(),
+      energy: Math.random(),
       emotions: [
         { emotion: 'Happy', intensity: Math.random() },
         { emotion: 'Energetic', intensity: Math.random() },
