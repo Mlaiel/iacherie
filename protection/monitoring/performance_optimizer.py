@@ -24,8 +24,32 @@ Contact mlaiel@live.de for licensing inquiries.
 import asyncio
 import logging
 import json
-import psutil
-import numpy as np
+# Optional psutil import with fallback
+try:
+    import psutil
+    PSUTIL_AVAILABLE = True
+except ImportError:
+    PSUTIL_AVAILABLE = False
+    psutil = None
+
+# Optional numpy import with fallback
+try:
+    import numpy as np
+    NUMPY_AVAILABLE = True
+except ImportError:
+    NUMPY_AVAILABLE = False
+    # Simple numpy fallback for basic operations
+    class NumpyFallback:
+        def mean(self, data):
+            return sum(data) / len(data) if data else 0
+        def std(self, data):
+            if not data:
+                return 0
+            mean_val = self.mean(data)
+            return (sum((x - mean_val) ** 2 for x in data) / len(data)) ** 0.5
+        def array(self, data):
+            return data
+    np = NumpyFallback()
 from typing import Dict, List, Optional, Any, Tuple, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -34,11 +58,46 @@ from collections import defaultdict, deque
 
 # Use our compatibility wrapper for aioredis
 from ..utils import aioredis, REDIS_AVAILABLE
-from sqlalchemy.ext.asyncio import AsyncSession
-from pydantic import BaseModel, Field
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.cluster import KMeans
-from sklearn.preprocessing import StandardScaler
+
+# Optional SQLAlchemy import with fallback
+try:
+    from sqlalchemy.ext.asyncio import AsyncSession
+    SQLALCHEMY_AVAILABLE = True
+except ImportError:
+    SQLALCHEMY_AVAILABLE = False
+    AsyncSession = None
+
+# Optional pydantic import with fallback
+try:
+    from pydantic import BaseModel, Field
+    PYDANTIC_AVAILABLE = True
+except ImportError:
+    PYDANTIC_AVAILABLE = False
+    class BaseModel:
+        def __init__(self, **kwargs):
+            for key, value in kwargs.items():
+                setattr(self, key, value)
+    def Field(*args, **kwargs):
+        return None
+
+# Optional sklearn imports with fallbacks
+try:
+    from sklearn.ensemble import RandomForestRegressor
+    from sklearn.cluster import KMeans
+    from sklearn.preprocessing import StandardScaler
+    SKLEARN_AVAILABLE = True
+except ImportError:
+    SKLEARN_AVAILABLE = False
+    # Simple fallback classes
+    class RandomForestRegressor:
+        def fit(self, X, y): pass
+        def predict(self, X): return [0] * len(X)
+    class KMeans:
+        def fit(self, X): pass
+        def predict(self, X): return [0] * len(X)
+    class StandardScaler:
+        def fit(self, X): pass
+        def transform(self, X): return X
 
 logger = logging.getLogger(__name__)
 

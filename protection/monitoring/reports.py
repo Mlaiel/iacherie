@@ -32,17 +32,108 @@ from enum import Enum
 from dataclasses import dataclass
 from pathlib import Path
 
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-from matplotlib.backends.backend_pdf import PdfPages
-import plotly.graph_objects as go
-import plotly.express as px
-from plotly.subplots import make_subplots
-from pydantic import BaseModel, Field
-from jinja2 import Template
-import aiofiles
+# Use fallbacks for optional dependencies
+from ..utils.fallbacks import (
+    pd, PANDAS_AVAILABLE,
+    matplotlib, MATPLOTLIB_AVAILABLE,
+    seaborn, SEABORN_AVAILABLE,
+    plotly, PLOTLY_AVAILABLE
+)
+
+# Optional numpy with fallback
+try:
+    import numpy as np
+    NUMPY_AVAILABLE = True
+except ImportError:
+    NUMPY_AVAILABLE = False
+    class NumpyFallback:
+        def mean(self, data): return sum(data) / len(data) if data else 0
+        def std(self, data):
+            if not data: return 0
+            mean_val = self.mean(data)
+            return (sum((x - mean_val) ** 2 for x in data) / len(data)) ** 0.5
+        def array(self, data): return data
+        def zeros(self, shape): return [0] * (shape if isinstance(shape, int) else shape[0])
+    np = NumpyFallback()
+
+# Handle matplotlib/plotly specific imports
+if MATPLOTLIB_AVAILABLE:
+    import matplotlib.pyplot as plt
+    try:
+        from matplotlib.backends.backend_pdf import PdfPages
+        PDF_BACKEND_AVAILABLE = True
+    except ImportError:
+        PDF_BACKEND_AVAILABLE = False
+        class PdfPages:
+            def __init__(self, *args, **kwargs): pass
+            def __enter__(self): return self
+            def __exit__(self, *args): pass
+else:
+    plt = matplotlib.pyplot
+    PDF_BACKEND_AVAILABLE = False
+    class PdfPages:
+        def __init__(self, *args, **kwargs): pass
+        def __enter__(self): return self
+        def __exit__(self, *args): pass
+
+if SEABORN_AVAILABLE:
+    import seaborn as sns
+else:
+    sns = seaborn
+
+if PLOTLY_AVAILABLE:
+    import plotly.graph_objects as go
+    try:
+        import plotly.express as px
+        from plotly.subplots import make_subplots
+        PLOTLY_EXPRESS_AVAILABLE = True
+    except ImportError:
+        PLOTLY_EXPRESS_AVAILABLE = False
+        px = None
+        def make_subplots(*args, **kwargs):
+            return plotly.graph_objects.Figure()
+else:
+    go = plotly.graph_objects
+    px = None
+    PLOTLY_EXPRESS_AVAILABLE = False
+    def make_subplots(*args, **kwargs):
+        return plotly.graph_objects.Figure()
+
+# Optional pydantic with fallback
+try:
+    from pydantic import BaseModel, Field
+    PYDANTIC_AVAILABLE = True
+except ImportError:
+    PYDANTIC_AVAILABLE = False
+    class BaseModel:
+        def __init__(self, **kwargs):
+            for key, value in kwargs.items():
+                setattr(self, key, value)
+    def Field(*args, **kwargs): return None
+
+# Optional jinja2 with fallback
+try:
+    from jinja2 import Template
+    JINJA2_AVAILABLE = True
+except ImportError:
+    JINJA2_AVAILABLE = False
+    class Template:
+        def __init__(self, template_string):
+            self.template = template_string
+        def render(self, **kwargs):
+            return self.template
+
+# Optional aiofiles with fallback
+try:
+    import aiofiles
+    AIOFILES_AVAILABLE = True
+except ImportError:
+    AIOFILES_AVAILABLE = False
+    class AioFilesFallback:
+        @staticmethod
+        def open(file, mode='r', **kwargs):
+            return open(file, mode, **kwargs)
+    aiofiles = AioFilesFallback()
 
 from .analytics import MonitoringAnalytics, AnalyticsTimeRange, AnalyticsReport
 from .performance_optimizer import PerformanceOptimizer

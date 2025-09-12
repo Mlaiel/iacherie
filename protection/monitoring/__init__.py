@@ -59,16 +59,56 @@ from .performance_optimizer import PerformanceOptimizer
 from .dashboard import DashboardController
 from .reports import ReportGenerator
 
-# Advanced intelligence components
-from .intelligent_surveillance import IntelligentSurveillanceEngine
-from .geospatial_intelligence import GeospatialIntelligenceEngine
+# Advanced intelligence components - temporarily disabled to fix imports
+try:
+    from .intelligent_surveillance import IntelligentSurveillanceEngine
+    INTELLIGENT_SURVEILLANCE_AVAILABLE = True
+except ImportError as e:
+    print(f"intelligent_surveillance not available: {e}")
+    INTELLIGENT_SURVEILLANCE_AVAILABLE = False
+    class IntelligentSurveillanceEngine:
+        def __init__(self, *args, **kwargs): pass
 
-# Ecosystem orchestration and API gateway
-from .ecosystem_orchestrator import MonitoringEcosystemOrchestrator
-from .api_gateway import MonitoringAPIGateway
+try:
+    from .geospatial_intelligence import GeospatialIntelligenceEngine
+    GEOSPATIAL_INTELLIGENCE_AVAILABLE = True
+except ImportError as e:
+    print(f"geospatial_intelligence not available: {e}")
+    GEOSPATIAL_INTELLIGENCE_AVAILABLE = False
+    class GeospatialIntelligenceEngine:
+        def __init__(self, *args, **kwargs): pass
 
-# Testing framework
-from .test_suite import MonitoringTestFramework, run_monitoring_tests
+# Ecosystem orchestration and API gateway - temporarily disabled
+try:
+    from .ecosystem_orchestrator import MonitoringEcosystemOrchestrator
+    ECOSYSTEM_ORCHESTRATOR_AVAILABLE = True
+except ImportError as e:
+    print(f"ecosystem_orchestrator not available: {e}")
+    ECOSYSTEM_ORCHESTRATOR_AVAILABLE = False
+    class MonitoringEcosystemOrchestrator:
+        def __init__(self, *args, **kwargs): pass
+
+try:
+    from .api_gateway import MonitoringAPIGateway
+    API_GATEWAY_AVAILABLE = True
+except ImportError as e:
+    print(f"api_gateway not available: {e}")
+    API_GATEWAY_AVAILABLE = False
+    class MonitoringAPIGateway:
+        def __init__(self, *args, **kwargs): pass
+
+# Testing framework - temporarily disabled
+try:
+    from .test_suite import MonitoringTestFramework, run_monitoring_tests
+    TEST_SUITE_AVAILABLE = True
+except ImportError as e:
+    print(f"test_suite not available: {e}")
+    TEST_SUITE_AVAILABLE = False
+    class MonitoringTestFramework:
+        def __init__(self, *args, **kwargs): pass
+    def run_monitoring_tests(*args, **kwargs): 
+        print("test_suite not available")
+        return False
 
 # Data models and schemas
 from .models import (

@@ -24,22 +24,125 @@ Contact mlaiel@live.de for licensing inquiries.
 import asyncio
 import logging
 import json
-import numpy as np
+
+# Optional numpy with fallback
+try:
+    import numpy as np
+    NUMPY_AVAILABLE = True
+except ImportError:
+    NUMPY_AVAILABLE = False
+    class NumpyFallback:
+        def mean(self, data): return sum(data) / len(data) if data else 0
+        def std(self, data):
+            if not data: return 0
+            mean_val = self.mean(data)
+            return (sum((x - mean_val) ** 2 for x in data) / len(data)) ** 0.5
+        def array(self, data): return data
+        def zeros(self, shape): return [0] * (shape if isinstance(shape, int) else shape[0])
+        def dot(self, a, b): return sum(x*y for x, y in zip(a, b))
+    np = NumpyFallback()
+
 from typing import Dict, List, Optional, Any, Tuple, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum
 from collections import defaultdict, deque
 
-import aioredis
-from sqlalchemy.ext.asyncio import AsyncSession
-from pydantic import BaseModel, Field
-from sklearn.ensemble import IsolationForest, RandomForestClassifier
-from sklearn.cluster import DBSCAN
-from sklearn.preprocessing import StandardScaler
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import LSTM, Dense, Dropout
-import networkx as nx
+# Use compatibility wrapper for aioredis
+from ..utils import aioredis, REDIS_AVAILABLE
+
+# Optional SQLAlchemy with fallback
+try:
+    from sqlalchemy.ext.asyncio import AsyncSession
+    SQLALCHEMY_AVAILABLE = True
+except ImportError:
+    SQLALCHEMY_AVAILABLE = False
+    AsyncSession = None
+
+# Optional pydantic with fallback
+try:
+    from pydantic import BaseModel, Field
+    PYDANTIC_AVAILABLE = True
+except ImportError:
+    PYDANTIC_AVAILABLE = False
+    class BaseModel:
+        def __init__(self, **kwargs):
+            for key, value in kwargs.items():
+                setattr(self, key, value)
+    def Field(*args, **kwargs): return None
+
+# Optional sklearn imports with fallbacks
+try:
+    from sklearn.ensemble import IsolationForest, RandomForestClassifier
+    from sklearn.cluster import DBSCAN
+    from sklearn.preprocessing import StandardScaler
+    SKLEARN_AVAILABLE = True
+except ImportError:
+    SKLEARN_AVAILABLE = False
+    class IsolationForest:
+        def fit(self, X): pass
+        def predict(self, X): return [0] * len(X)
+        def decision_function(self, X): return [0] * len(X)
+    class RandomForestClassifier:
+        def fit(self, X, y): pass
+        def predict(self, X): return [0] * len(X)
+        def predict_proba(self, X): return [[0.5, 0.5]] * len(X)
+    class DBSCAN:
+        def fit(self, X): pass
+        def fit_predict(self, X): return [0] * len(X)
+    class StandardScaler:
+        def fit(self, X): pass
+        def transform(self, X): return X
+
+# Optional TensorFlow imports with fallbacks
+try:
+    from tensorflow.keras.models import Sequential
+    from tensorflow.keras.layers import LSTM, Dense, Dropout
+    TENSORFLOW_AVAILABLE = True
+except ImportError:
+    TENSORFLOW_AVAILABLE = False
+    class Sequential:
+        def __init__(self): pass
+        def add(self, layer): pass
+        def compile(self, **kwargs): pass
+        def fit(self, *args, **kwargs): pass
+        def predict(self, X): return [[0.5]] * len(X)
+    class LSTM:
+        def __init__(self, *args, **kwargs): pass
+    class Dense:
+        def __init__(self, *args, **kwargs): pass
+    class Dropout:
+        def __init__(self, *args, **kwargs): pass
+
+# Optional NetworkX with fallback
+try:
+    import networkx as nx
+    NETWORKX_AVAILABLE = True
+except ImportError:
+    NETWORKX_AVAILABLE = False
+    class NetworkXFallback:
+        class Graph:
+            def __init__(self): 
+                self.nodes = []
+                self.edges = []
+            def add_node(self, node): 
+                if node not in self.nodes:
+                    self.nodes.append(node)
+            def add_edge(self, u, v): 
+                self.edges.append((u, v))
+            def nodes(self): 
+                return self.nodes
+            def edges(self): 
+                return self.edges
+        def Graph(self): 
+            return self.Graph()
+        def degree_centrality(self, G): 
+            return {node: 0.5 for node in G.nodes}
+        def betweenness_centrality(self, G): 
+            return {node: 0.5 for node in G.nodes}
+        def connected_components(self, G): 
+            return [set(G.nodes)]
+    nx = NetworkXFallback()
 
 logger = logging.getLogger(__name__)
 

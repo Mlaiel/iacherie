@@ -26,16 +26,90 @@ from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
 from enum import Enum as PyEnum
 
-from sqlalchemy import (
-    Column, Integer, String, Text, Float, Boolean, DateTime, 
-    JSON, ForeignKey, Index, UniqueConstraint, CheckConstraint,
-    BigInteger, DECIMAL, LargeBinary, Enum
-)
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship, Session
-from sqlalchemy.dialects.postgresql import UUID, JSONB, ARRAY
-from sqlalchemy.sql import func
-from pydantic import BaseModel, Field, validator
+# Optional SQLAlchemy imports with comprehensive fallbacks
+try:
+    from sqlalchemy import (
+        Column, Integer, String, Text, Float, Boolean, DateTime, 
+        JSON, ForeignKey, Index, UniqueConstraint, CheckConstraint,
+        BigInteger, DECIMAL, LargeBinary, Enum
+    )
+    from sqlalchemy.ext.declarative import declarative_base
+    from sqlalchemy.orm import relationship, Session
+    from sqlalchemy.dialects.postgresql import UUID, JSONB, ARRAY
+    from sqlalchemy.sql import func
+    SQLALCHEMY_AVAILABLE = True
+except ImportError:
+    SQLALCHEMY_AVAILABLE = False
+    # Comprehensive SQLAlchemy fallbacks
+    class Column:
+        def __init__(self, *args, **kwargs): 
+            self.type = args[0] if args else None
+    class Integer: pass
+    class String: 
+        def __init__(self, length=None): self.length = length
+    class Text: pass
+    class Float: pass
+    class Boolean: pass
+    class DateTime: pass
+    class JSON: pass
+    class ForeignKey:
+        def __init__(self, column): self.column = column
+    class Index:
+        def __init__(self, *args, **kwargs): pass
+    class UniqueConstraint:
+        def __init__(self, *args, **kwargs): pass
+    class CheckConstraint:
+        def __init__(self, *args, **kwargs): pass
+    class BigInteger: pass
+    class DECIMAL:
+        def __init__(self, *args, **kwargs): pass
+    class LargeBinary: pass
+    class Enum:
+        def __init__(self, enum_class): self.enum_class = enum_class
+    
+    def declarative_base():
+        class Base:
+            def __init__(self, **kwargs):
+                for key, value in kwargs.items():
+                    setattr(self, key, value)
+        return Base
+    
+    def relationship(*args, **kwargs):
+        return None
+    
+    class Session:
+        def __init__(self, *args, **kwargs): pass
+    
+    class UUID: pass
+    class JSONB: pass
+    class ARRAY:
+        def __init__(self, item_type): self.item_type = item_type
+    
+    class FuncFallback:
+        def now(self): return datetime.utcnow()
+        def md5(self, value): return f"md5({value})"
+        def count(self, value): return f"count({value})"
+        def max(self, value): return f"max({value})"
+        def min(self, value): return f"min({value})"
+        def avg(self, value): return f"avg({value})"
+        def sum(self, value): return f"sum({value})"
+    func = FuncFallback()
+
+# Optional pydantic with fallback
+try:
+    from pydantic import BaseModel, Field, validator
+    PYDANTIC_AVAILABLE = True
+except ImportError:
+    PYDANTIC_AVAILABLE = False
+    class BaseModel:
+        def __init__(self, **kwargs):
+            for key, value in kwargs.items():
+                setattr(self, key, value)
+    def Field(*args, **kwargs): return None
+    def validator(*args, **kwargs):
+        def decorator(func): return func
+        return decorator
+
 import uuid
 
 Base = declarative_base()
