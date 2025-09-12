@@ -28,9 +28,9 @@ from .mlflow_registry import (
 
 from .model_version_controller import (
     ModelVersionController,
-    VersionInfo,
-    VersionControlConfig,
-    VersionOperation
+    ModelVersion,
+    VersionType,
+    ModelStatus
 )
 
 from .model_encryption_manager import (

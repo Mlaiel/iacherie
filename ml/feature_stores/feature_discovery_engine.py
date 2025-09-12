@@ -98,6 +98,147 @@ class FeatureSet:
     selection_method: SelectionMethod
     performance_score: float
     created_at: datetime
+
+@dataclass
+class DiscoveryConfig:
+    """Configuration for feature discovery"""
+    # ✅ IMPLEMENTED: Missing DiscoveryConfig class
+    # Expert: ML Engineer + DBA
+    
+    max_features: int = 100
+    min_importance_threshold: float = 0.01
+    correlation_threshold: float = 0.95
+    missing_value_threshold: float = 0.8
+    variance_threshold: float = 0.01
+    selection_methods: List[SelectionMethod] = field(default_factory=lambda: [
+        SelectionMethod.MUTUAL_INFORMATION,
+        SelectionMethod.CORRELATION,
+        SelectionMethod.VARIANCE_THRESHOLD
+    ])
+    creator_specific_features: bool = True
+    temporal_features: bool = True
+    polynomial_features: bool = False
+    interaction_features: bool = True
+    statistical_features: bool = True
+    domain_specific_features: bool = True
+    auto_feature_engineering: bool = True
+    
+    # Performance settings
+    parallel_processing: bool = True
+    max_workers: int = 4
+    batch_size: int = 1000
+    memory_limit_gb: float = 8.0
+    
+    # Creator-specific settings
+    musician_features: bool = True
+    blogger_features: bool = True
+    photographer_features: bool = True
+    influencer_features: bool = True
+    comedian_features: bool = True
+
+@dataclass
+class FeatureCandidate:
+    """Candidate feature for discovery"""
+    # ✅ IMPLEMENTED: Missing FeatureCandidate class
+    # Expert: ML Engineer
+    
+    name: str
+    expression: str
+    feature_type: FeatureType
+    estimated_importance: float
+    computation_cost: float
+    dependencies: List[str] = field(default_factory=list)
+    creator_types: List[CreatorType] = field(default_factory=list)
+    description: Optional[str] = None
+
+@dataclass  
+class FeatureImportance:
+    """Feature importance metrics"""
+    # ✅ IMPLEMENTED: Missing FeatureImportance class
+    # Expert: ML Engineer
+    
+    feature_name: str
+    importance_score: float
+    method: str
+    confidence_interval: Tuple[float, float]
+    rank: int
+    statistical_significance: float
+    business_impact: Optional[float] = None
+
+@dataclass
+class DiscoveryResult:
+    """Result of feature discovery process"""
+    # ✅ IMPLEMENTED: Missing DiscoveryResult class
+    # Expert: ML Engineer + DBA
+    
+    discovered_features: List[Feature]
+    feature_importance_ranking: List[FeatureImportance]
+    selected_features: List[str]
+    performance_metrics: Dict[str, float]
+    discovery_config: DiscoveryConfig
+    execution_time_seconds: float
+    memory_usage_mb: float
+    total_candidates_evaluated: int
+    success_rate: float
+    created_at: datetime = field(default_factory=datetime.now)
+
+@dataclass
+class AutoFeatureGeneration:
+    """Auto feature generation configuration"""
+    # ✅ IMPLEMENTED: Missing AutoFeatureGeneration class
+    # Expert: ML Engineer + IA Prompt Engineer
+    
+    enable_polynomial: bool = True
+    polynomial_degree: int = 2
+    enable_interactions: bool = True
+    max_interaction_depth: int = 2
+    enable_statistical: bool = True
+    statistical_windows: List[int] = field(default_factory=lambda: [7, 14, 30])
+    enable_temporal: bool = True
+    temporal_lags: List[int] = field(default_factory=lambda: [1, 3, 7, 14])
+    enable_text_features: bool = True
+    text_vectorization_methods: List[str] = field(default_factory=lambda: ['tfidf', 'word2vec'])
+    enable_image_features: bool = True
+    image_feature_extractors: List[str] = field(default_factory=lambda: ['edge_detection', 'color_histogram'])
+
+@dataclass
+class CreatorSpecificFeatures:
+    """Creator-specific feature definitions"""
+    # ✅ IMPLEMENTED: Missing CreatorSpecificFeatures class
+    # Expert: Audio Engineer + ML Engineer + IA Prompt Engineer
+    
+    creator_type: CreatorType
+    specialized_features: List[str]
+    domain_knowledge_features: List[str]
+    engagement_predictors: List[str]
+    quality_indicators: List[str]
+    performance_metrics: List[str]
+    
+    # Creator-type specific configurations
+    musician_features: List[str] = field(default_factory=lambda: [
+        'audio_spectral_centroid', 'tempo_bpm', 'key_signature', 'genre_classification',
+        'vocal_presence', 'instrumental_complexity', 'dynamic_range', 'harmonic_richness'
+    ])
+    
+    blogger_features: List[str] = field(default_factory=lambda: [
+        'readability_score', 'keyword_density', 'sentiment_polarity', 'topic_coherence',
+        'writing_style_complexity', 'seo_optimization_score', 'content_freshness', 'engagement_hooks'
+    ])
+    
+    photographer_features: List[str] = field(default_factory=lambda: [
+        'composition_rule_of_thirds', 'color_harmony_score', 'lighting_quality', 'depth_of_field',
+        'visual_balance', 'aesthetic_appeal', 'technical_quality', 'artistic_creativity'
+    ])
+    
+    influencer_features: List[str] = field(default_factory=lambda: [
+        'follower_growth_velocity', 'engagement_authenticity', 'brand_alignment_score', 'viral_potential',
+        'audience_demographics_match', 'content_consistency', 'platform_optimization', 'trend_adoption_speed'
+    ])
+    
+    comedian_features: List[str] = field(default_factory=lambda: [
+        'humor_timing_score', 'punchline_effectiveness', 'audience_reaction_intensity', 'joke_originality',
+        'delivery_confidence', 'comedic_rhythm', 'crowd_interaction', 'material_freshness'
+    ])
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 @dataclass
