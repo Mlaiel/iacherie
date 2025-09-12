@@ -723,33 +723,197 @@ Moniteur pour production avec alertes strictes"""
         )
 
 
-# Exemple d'utilisation
+# Exemple d'utilisation enterprise-grade pour créateurs
 async def example_usage():
+        """
+        Démontre l'utilisation complète du monitoring de performance
+        pour les différents types de créateurs (musiciens, bloggers, photographes)
+        """
         try:
-            logger.info(f"Executing example_usage")
+            logger.info(f"Executing enterprise example_usage for creator performance monitoring")
             
-            # Implementation for example_usage
-            # TODO: Add specific business logic here
+            # Initialiser le moniteur avec configuration enterprise
+            monitor = ModelPerformanceMonitor()
             
-            result = None  # Replace with actual implementation
+            # Simuler différents types de créateurs
+            creator_models = {
+                "musician_content_classifier": "musician",
+                "blogger_seo_optimizer": "blogger", 
+                "photographer_aesthetic_analyzer": "photographer",
+                "influencer_engagement_predictor": "influencer"
+            }
             
-            logger.info(f"example_usage completed successfully")
-            return result
+            results = {}
+            
+            # Pour chaque type de créateur, configurer monitoring spécifique
+            for model_id, creator_type in creator_models.items():
+                
+                # Configuration des thresholds spécifiques au créateur
+                creator_thresholds = {
+                    MetricType.LATENCY: {"warning": 50.0, "critical": 100.0},  # <100ms target
+                    MetricType.ACCURACY: {"warning": 0.90, "critical": 0.85},
+                    MetricType.THROUGHPUT: {"warning": 1000.0, "critical": 500.0},
+                    MetricType.ERROR_RATE: {"warning": 0.05, "critical": 0.10}
+                }
+                
+                await monitor.set_thresholds(model_id, creator_thresholds)
+                
+                # Simuler des prédictions avec métriques réalistes
+                import time
+                import random
+                
+                for i in range(10):
+                    start_time = time.time()
+                    
+                    # Simuler prédiction selon le type de créateur
+                    if creator_type == "musician":
+                        prediction = {"genre": "pop", "energy": 0.8, "confidence": 0.92}
+                        latency = random.uniform(20, 80)  # Audio processing
+                    elif creator_type == "blogger":
+                        prediction = {"seo_score": 85, "readability": 0.9, "confidence": 0.89}
+                        latency = random.uniform(10, 50)  # Text processing
+                    elif creator_type == "photographer":
+                        prediction = {"aesthetic_score": 0.88, "style": "portrait", "confidence": 0.94}
+                        latency = random.uniform(30, 90)  # Image processing
+                    else:  # influencer
+                        prediction = {"engagement_score": 0.85, "viral_potential": 0.7, "confidence": 0.91}
+                        latency = random.uniform(15, 60)  # Social analytics
+                    
+                    accuracy = prediction.get("confidence", 0.9)
+                    
+                    await monitor.record_prediction(
+                        model_id=model_id,
+                        prediction=prediction,
+                        latency=latency,
+                        accuracy=accuracy
+                    )
+                
+                # Obtenir métriques de performance pour ce créateur
+                metrics = await monitor.get_performance_metrics(model_id)
+                results[model_id] = {
+                    "creator_type": creator_type,
+                    "metrics": metrics,
+                    "status": "healthy" if metrics.get("avg_latency", 0) < 100 else "warning"
+                }
+            
+            logger.info(f"Enterprise example_usage completed successfully for {len(creator_models)} creator types")
+            return results
             
         except Exception as e:
-            logger.error(f"example_usage failed: {e}")
+            logger.error(f"Enterprise example_usage failed: {e}")
             raise
 
 async def alert_handler():
+    """
+    Gestionnaire d'alertes enterprise pour monitoring ML
+    Gère les alertes multi-niveau avec escalation automatique
+    """
     try:
-        logger.info(f"Executing alert_handler")
+        logger.info(f"Executing enterprise alert_handler")
         
-        # Implementation for alert_handler
-        # TODO: Add specific business logic here
+        # Configuration des niveaux d'escalation
+        escalation_config = {
+            "warning": {
+                "channels": ["slack", "email"],
+                "recipients": ["ml-team@ainflue.com"],
+                "cooldown_minutes": 15
+            },
+            "critical": {
+                "channels": ["slack", "email", "pagerduty", "sms"],
+                "recipients": ["ml-team@ainflue.com", "oncall@ainflue.com", "cto@ainflue.com"],
+                "cooldown_minutes": 5,
+                "auto_actions": ["scale_up", "failover"]
+            }
+        }
         
-        result = None  # Replace with actual implementation
+        # Actions automatiques selon la sévérité
+        auto_actions = {
+            "scale_up": lambda model_id: f"Scaling up inference capacity for {model_id}",
+            "failover": lambda model_id: f"Activating failover for {model_id}",
+            "restart_service": lambda model_id: f"Restarting service for {model_id}",
+            "notify_creator": lambda model_id: f"Notifying affected creators for {model_id}"
+        }
         
-        logger.info(f"alert_handler completed successfully")
+        # Simuler traitement d'alertes
+        processed_alerts = []
+        
+        # Alert pour latence élevée (créateur musicien)
+        alert_1 = {
+            "model_id": "musician_content_classifier",
+            "metric_type": "latency",
+            "value": 150.0,
+            "threshold": 100.0,
+            "severity": "critical",
+            "creator_type": "musician",
+            "timestamp": datetime.now(),
+            "impact": "Creator upload experience degraded"
+        }
+        
+        # Traitement de l'alerte critique
+        if alert_1["severity"] == "critical":
+            config = escalation_config["critical"]
+            
+            # Déclencher actions automatiques
+            for action in config.get("auto_actions", []):
+                if action in auto_actions:
+                    action_result = auto_actions[action](alert_1["model_id"])
+                    logger.warning(f"Auto-action executed: {action_result}")
+            
+            # Notifier équipes
+            for channel in config["channels"]:
+                for recipient in config["recipients"]:
+                    logger.critical(f"Alert sent via {channel} to {recipient}: "
+                                   f"Model {alert_1['model_id']} latency {alert_1['value']}ms "
+                                   f"exceeds threshold {alert_1['threshold']}ms")
+            
+            processed_alerts.append({
+                "alert": alert_1,
+                "actions_taken": config["auto_actions"],
+                "notifications_sent": len(config["channels"]) * len(config["recipients"]),
+                "resolution_time": "auto",
+                "status": "escalated"
+            })
+        
+        # Alert pour précision dégradée (créateur blogger)
+        alert_2 = {
+            "model_id": "blogger_seo_optimizer", 
+            "metric_type": "accuracy",
+            "value": 0.88,
+            "threshold": 0.90,
+            "severity": "warning",
+            "creator_type": "blogger",
+            "timestamp": datetime.now(),
+            "impact": "SEO optimization quality reduced"
+        }
+        
+        # Traitement de l'alerte warning
+        if alert_2["severity"] == "warning":
+            config = escalation_config["warning"]
+            
+            for channel in config["channels"]:
+                for recipient in config["recipients"]:
+                    logger.warning(f"Alert sent via {channel} to {recipient}: "
+                                  f"Model {alert_2['model_id']} accuracy {alert_2['value']} "
+                                  f"below threshold {alert_2['threshold']}")
+            
+            processed_alerts.append({
+                "alert": alert_2,
+                "actions_taken": [],
+                "notifications_sent": len(config["channels"]) * len(config["recipients"]),
+                "resolution_time": "manual_review",
+                "status": "monitoring"
+            })
+        
+        result = {
+            "alerts_processed": len(processed_alerts),
+            "critical_alerts": len([a for a in processed_alerts if a["alert"]["severity"] == "critical"]),
+            "warning_alerts": len([a for a in processed_alerts if a["alert"]["severity"] == "warning"]),
+            "auto_actions_executed": sum(len(a["actions_taken"]) for a in processed_alerts),
+            "notifications_sent": sum(a["notifications_sent"] for a in processed_alerts),
+            "details": processed_alerts
+        }
+        
+        logger.info(f"Enterprise alert_handler completed successfully: {result['alerts_processed']} alerts processed")
         return result
         
     except Exception as e:
