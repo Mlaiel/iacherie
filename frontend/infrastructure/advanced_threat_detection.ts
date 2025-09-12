@@ -222,6 +222,7 @@ export interface SecurityMetrics {
   vulnerability_count: number;
   compliance_score: number;
   incident_count: number;
+  riskLevel: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
 }
 
 export interface ThreatIntelligence {
@@ -311,7 +312,8 @@ export class AdvancedThreatDetectionSystem {
     security_score: 85,
     vulnerability_count: 12,
     compliance_score: 94,
-    incident_count: 3
+    incident_count: 3,
+    riskLevel: 'MEDIUM'
   };
   private isMonitoring: boolean = false;
 
@@ -620,14 +622,6 @@ export class AdvancedThreatDetectionSystem {
   }
 
   /**
-   * Escalate critical threat
-   */
-  private escalateThreat(threat: ThreatDetectionResult): void {
-    console.warn(`[CRITICAL THREAT] ${threat.threatType} detected from ${threat.source}`);
-    // In production, would send notifications to security team
-  }
-
-  /**
    * Update security metrics
    */
   private updateMetrics(): void {
@@ -648,12 +642,292 @@ export class AdvancedThreatDetectionSystem {
   }
 
   /**
-   * Get recent threats
+   * Get system configuration - Security Specialist role
    */
-  getRecentThreats(limit: number = 10): ThreatDetectionResult[] {
-    return this.alertQueue
-      .sort((a, b) => b.timestamp - a.timestamp)
-      .slice(0, limit);
+  getConfiguration(): any {
+    return {
+      detectionRules: this.detectionRules.size,
+      mlModels: this.mlModels.size,
+      threatIntelligence: this.threatIntelligence.feeds.length,
+      monitoring: this.isMonitoring,
+      metrics: this.metrics
+    };
+  }
+
+  /**
+   * Analyze upload for threats - Security Specialist role
+   */
+  async analyzeUpload(upload: any): Promise<ThreatDetectionResult> {
+    // Simulate upload analysis
+    const isThreat = upload.content?.includes('malicious') || 
+                    upload.filename?.includes('suspicious') ||
+                    Math.random() < 0.15; // 15% threat detection rate
+
+    if (isThreat) {
+      const threat: ThreatDetectionResult = {
+        id: `upload-threat-${Date.now()}`,
+        timestamp: Date.now(),
+        source: upload.source || 'upload',
+        threatType: 'malware',
+        severity: 'high',
+        confidence: 85 + Math.random() * 15,
+        status: 'detected',
+        indicators: [
+          {
+            type: 'pattern',
+            value: upload.filename || 'suspicious_file',
+            description: 'Suspicious upload pattern detected',
+            confidence: 85,
+            firstSeen: Date.now(),
+            lastSeen: Date.now(),
+            frequency: 1,
+            reputation: 'malicious'
+          }
+        ],
+        mitigation: [
+          {
+            id: `mitigation-${Date.now()}`,
+            type: 'quarantine',
+            description: 'Quarantine suspicious file',
+            status: 'pending',
+            automated: true,
+            effectiveness: 90,
+            timestamp: Date.now()
+          }
+        ],
+        forensics: {
+          artifacts: [],
+          timeline: [],
+          attribution: {
+            actor_group: 'Unknown',
+            ttps: [],
+            geolocation: {
+              country: 'Unknown',
+              region: 'Unknown',
+              city: 'Unknown',
+              coordinates: { lat: 0, lng: 0 },
+              isp: 'Unknown',
+              asn: 0,
+              vpn_detected: false,
+              tor_exit_node: false
+            },
+            infrastructure: {
+              domains: [],
+              ip_addresses: [],
+              certificates: [],
+              hosting_providers: [],
+              registration_dates: [],
+              name_servers: []
+            },
+            motivation: [],
+            confidence: 50
+          },
+          evidence: [],
+          reconstructedAttack: []
+        },
+        impact: {
+          scope: 'contained',
+          affected_systems: 1,
+          affected_users: 0,
+          data_compromised: false,
+          financial_impact: 1000,
+          reputational_impact: 'medium',
+          operational_impact: 'moderate',
+          estimated_recovery_time: 30
+        }
+      };
+
+      this.alertQueue.push(threat);
+      this.metrics.threats_detected++;
+      return threat;
+    }
+
+    throw new Error('No threats detected in upload');
+  }
+
+  /**
+   * Analyze login patterns for threats - Security Specialist role
+   */
+  async analyzeLoginPatterns(loginAttempts: any[]): Promise<ThreatDetectionResult> {
+    // Analyze for suspicious patterns
+    const suspiciousActivity = loginAttempts.length > 10 || 
+                              loginAttempts.some(attempt => attempt.failed) ||
+                              Math.random() < 0.2; // 20% detection rate
+
+    if (suspiciousActivity) {
+      const threat: ThreatDetectionResult = {
+        id: `login-threat-${Date.now()}`,
+        timestamp: Date.now(),
+        source: loginAttempts[0]?.ip || 'unknown_ip',
+        threatType: 'brute_force',
+        severity: 'medium',
+        confidence: 75 + Math.random() * 20,
+        status: 'detected',
+        indicators: [
+          {
+            type: 'behavior',
+            value: `${loginAttempts.length} login attempts`,
+            description: 'Suspicious login pattern detected',
+            confidence: 75,
+            firstSeen: Date.now(),
+            lastSeen: Date.now(),
+            frequency: loginAttempts.length,
+            reputation: 'suspicious'
+          }
+        ],
+        mitigation: [
+          {
+            id: `mitigation-${Date.now()}`,
+            type: 'block',
+            description: 'Rate limit suspicious IP',
+            status: 'pending',
+            automated: true,
+            effectiveness: 80,
+            timestamp: Date.now(),
+            duration: 300
+          }
+        ],
+        forensics: {
+          artifacts: [],
+          timeline: [],
+          attribution: {
+            actor_group: 'Unknown',
+            ttps: [],
+            geolocation: {
+              country: 'Unknown',
+              region: 'Unknown',
+              city: 'Unknown',
+              coordinates: { lat: 0, lng: 0 },
+              isp: 'Unknown',
+              asn: 0,
+              vpn_detected: false,
+              tor_exit_node: false
+            },
+            infrastructure: {
+              domains: [],
+              ip_addresses: [],
+              certificates: [],
+              hosting_providers: [],
+              registration_dates: [],
+              name_servers: []
+            },
+            motivation: [],
+            confidence: 50
+          },
+          evidence: [],
+          reconstructedAttack: []
+        },
+        impact: {
+          scope: 'isolated',
+          affected_systems: 1,
+          affected_users: 1,
+          data_compromised: false,
+          financial_impact: 500,
+          reputational_impact: 'low',
+          operational_impact: 'minimal',
+          estimated_recovery_time: 15
+        }
+      };
+
+      this.alertQueue.push(threat);
+      this.metrics.threats_detected++;
+      return threat;
+    }
+
+    throw new Error('No suspicious login patterns detected');
+  }
+
+  /**
+   * Analyze content for threats - Security Specialist role
+   */
+  async analyzeContent(content: any): Promise<ThreatDetectionResult> {
+    // Analyze content for malicious patterns
+    const isMalicious = content.text?.includes('script') ||
+                       content.text?.includes('malicious') ||
+                       content.type === 'suspicious' ||
+                       Math.random() < 0.1; // 10% detection rate
+
+    if (isMalicious) {
+      const threat: ThreatDetectionResult = {
+        id: `content-threat-${Date.now()}`,
+        timestamp: Date.now(),
+        source: content.source || 'content_analysis',
+        threatType: 'content_manipulation',
+        severity: 'medium',
+        confidence: 70 + Math.random() * 25,
+        status: 'detected',
+        indicators: [
+          {
+            type: 'pattern',
+            value: content.text?.substring(0, 50) || 'malicious_content',
+            description: 'Malicious content pattern detected',
+            confidence: 70,
+            firstSeen: Date.now(),
+            lastSeen: Date.now(),
+            frequency: 1,
+            reputation: 'malicious'
+          }
+        ],
+        mitigation: [
+          {
+            id: `mitigation-${Date.now()}`,
+            type: 'quarantine',
+            description: 'Flag malicious content',
+            status: 'pending',
+            automated: true,
+            effectiveness: 75,
+            timestamp: Date.now(),
+            duration: 60
+          }
+        ],
+        forensics: {
+          artifacts: [],
+          timeline: [],
+          attribution: {
+            actor_group: 'Unknown',
+            ttps: [],
+            geolocation: {
+              country: 'Unknown',
+              region: 'Unknown',
+              city: 'Unknown',
+              coordinates: { lat: 0, lng: 0 },
+              isp: 'Unknown',
+              asn: 0,
+              vpn_detected: false,
+              tor_exit_node: false
+            },
+            infrastructure: {
+              domains: [],
+              ip_addresses: [],
+              certificates: [],
+              hosting_providers: [],
+              registration_dates: [],
+              name_servers: []
+            },
+            motivation: [],
+            confidence: 50
+          },
+          evidence: [],
+          reconstructedAttack: []
+        },
+        impact: {
+          scope: 'isolated',
+          affected_systems: 1,
+          affected_users: 0,
+          data_compromised: false,
+          financial_impact: 250,
+          reputational_impact: 'low',
+          operational_impact: 'minimal',
+          estimated_recovery_time: 10
+        }
+      };
+
+      this.alertQueue.push(threat);
+      this.metrics.threats_detected++;
+      return threat;
+    }
+
+    throw new Error('No malicious content detected');
   }
 
   /**
@@ -945,6 +1219,29 @@ export class AdvancedThreatDetectionSystem {
    */
   private delay(ms: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  /**
+   * Public escalate threat method for critical threats - Security Specialist role
+   */
+  async escalateThreat(threat: ThreatDetectionResult): Promise<any> {
+    console.warn(`[CRITICAL THREAT ESCALATION] ${threat.threatType} detected from ${threat.source}`);
+    
+    // Simulate escalation process
+    const escalationResult = {
+      notified: ['security-team', 'incident-response', 'management'],
+      actions: ['IMMEDIATE_RESPONSE', 'ISOLATION', 'FORENSIC_ANALYSIS'],
+      priority: 'P0',
+      escalation_time: Date.now(),
+      estimated_response_time: 300, // 5 minutes
+      escalation_id: `escalation-${Date.now()}`
+    };
+
+    // Update metrics
+    this.metrics.incident_count++;
+    this.metrics.riskLevel = 'CRITICAL';
+
+    return escalationResult;
   }
 }
 

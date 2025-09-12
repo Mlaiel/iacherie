@@ -263,21 +263,20 @@ export class MLAudioProcessor {
   }
 
   /**
-   * Analyze real-time audio stream
+   * Analyze real-time audio stream - ML Engineer expertise
    */
-  analyzeRealTime(audioStream: any) {
-    return {
-      subscribe: (callback: Function) => {
-        const interval = setInterval(() => {
-          callback({
-            timestamp: Date.now(),
-            level: Math.random(),
-            frequency: 440 + Math.random() * 440
-          });
-        }, 100);
-        return () => clearInterval(interval);
-      }
-    };
+  async* analyzeRealTime(audioStream: any): AsyncGenerator<any, void, unknown> {
+    // Simulate real-time analysis for 5 iterations
+    for (let i = 0; i < 5; i++) {
+      await this.delay(100);
+      yield {
+        timestamp: Date.now(),
+        level: Math.random(),
+        frequency: 440 + Math.random() * 440,
+        channels: Math.floor(Math.random() * 2) + 1,
+        bitrate: 192 + Math.random() * 128
+      };
+    }
   }
 
   /**
@@ -883,15 +882,24 @@ export class MLAudioProcessor {
   }
 
   /**
-   * Apply audio plugin
+   * Apply audio plugin - ML Engineer expertise
    */
-  async applyPlugin(pluginName: string, audioBuffer: any, options: any): Promise<any> {
+  async applyPlugin(audioInput: any, pluginName: string, options: any): Promise<any> {
     await this.delay(500);
+    
+    // Handle different input formats
+    let audioBuffer = audioInput;
+    if (typeof audioInput === 'object' && audioInput.buffer) {
+      audioBuffer = audioInput.buffer;
+    }
+    
     return {
-      ...audioBuffer, // Return processed buffer with metadata
+      ...audioInput, // Return processed buffer with metadata
+      buffer: audioBuffer, // Ensure buffer is preserved
       metadata: {
         pluginApplied: pluginName,
-        processedAt: Date.now()
+        processedAt: Date.now(),
+        originalFormat: audioInput.format || 'unknown'
       }
     };
   }
