@@ -8,7 +8,7 @@ interface User {
   id: string;
   email: string;
   name: string;
-  plan: 'free' | 'pro' | 'enterprise';
+  plan: 'essential' | 'professional' | 'enterprise';
   subscription_status: 'active' | 'inactive' | 'expired';
 }
 
@@ -18,7 +18,7 @@ interface ContentItem {
   type: 'audio' | 'video' | 'image' | 'text';
   status: 'uploading' | 'processing' | 'protected' | 'failed';
   fingerprint_id?: string;
-  protection_level: 'standard' | 'professional' | 'enterprise';
+  protection_level: 'essential' | 'professional' | 'enterprise';
   created_at: string;
   size: number;
 }
@@ -185,7 +185,7 @@ export function Providers({ children }: { children: ReactNode }) {
         id: '1',
         email,
         name: email.split('@')[0],
-        plan: 'pro',
+        plan: 'professional',
         subscription_status: 'active',
       };
       
@@ -219,7 +219,7 @@ export function Providers({ children }: { children: ReactNode }) {
                 file.type.startsWith('video/') ? 'video' :
                 file.type.startsWith('image/') ? 'image' : 'text',
           status: 'uploading',
-          protection_level: 'standard',
+          protection_level: 'essential',
           created_at: new Date().toISOString(),
           size: file.size,
         };
