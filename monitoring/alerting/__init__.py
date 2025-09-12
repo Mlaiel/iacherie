@@ -49,6 +49,724 @@ class AlertSeverity(Enum):
     INFO = "info"            # General status updates
 
 class AlertCategory(Enum):
+    """Alert categories for better organization."""
+    PERFORMANCE = "performance"
+    SECURITY = "security"
+    BUSINESS = "business"
+    INFRASTRUCTURE = "infrastructure"
+    CONTENT = "content"
+    USER_EXPERIENCE = "user_experience"
+    REVENUE = "revenue"
+    COMPLIANCE = "compliance"
+
+class NotificationChannel(Enum):
+    """Available notification channels."""
+    EMAIL = "email"
+    SLACK = "slack"
+    TELEGRAM = "telegram"
+    WEBHOOK = "webhook"
+    SMS = "sms"
+    PUSH = "push"
+    DASHBOARD = "dashboard"
+
+@dataclass
+class MLAlertCorrelation:
+    """ML-powered alert correlation and noise reduction."""
+    correlation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    related_alerts: List[str] = field(default_factory=list)
+    correlation_score: float = 0.0
+    root_cause_probability: float = 0.0
+    noise_reduction_applied: bool = False
+    
+    # ML Features
+    temporal_correlation: float = 0.0
+    spatial_correlation: float = 0.0
+    causal_correlation: float = 0.0
+    pattern_similarity: float = 0.0
+    
+    # Business Context
+    business_impact_score: float = 0.0
+    affected_revenue_estimate: float = 0.0
+    affected_users_estimate: int = 0
+    sla_impact: bool = False
+
+@dataclass
+class IntelligentAlert:
+    """Enhanced alert with ML intelligence and business context."""
+    alert_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    title: str = ""
+    message: str = ""
+    severity: AlertSeverity = AlertSeverity.MEDIUM
+    category: AlertCategory = AlertCategory.PERFORMANCE
+    
+    # Source and context
+    source_service: str = ""
+    source_metric: str = ""
+    current_value: float = 0.0
+    threshold_value: float = 0.0
+    
+    # ML Enhancement
+    ml_correlation: Optional[MLAlertCorrelation] = None
+    confidence_score: float = 0.0
+    false_positive_probability: float = 0.0
+    
+    # Business Context
+    business_impact: str = ""
+    affected_features: List[str] = field(default_factory=list)
+    revenue_impact_estimate: float = 0.0
+    user_impact_estimate: int = 0
+    
+    # Automation
+    auto_resolution_attempted: bool = False
+    escalation_level: int = 0
+    acknowledgment_required: bool = True
+    
+    # Timing
+    triggered_at: datetime = field(default_factory=datetime.now)
+    acknowledged_at: Optional[datetime] = None
+    resolved_at: Optional[datetime] = None
+    
+    # Tracking
+    notification_channels: List[NotificationChannel] = field(default_factory=list)
+    escalation_history: List[Dict[str, Any]] = field(default_factory=list)
+    
+class EnterpriseAlertingSystem:
+    """Main enterprise alerting system with ML intelligence."""
+    
+    def __init__(self):
+        self.alerts: Dict[str, IntelligentAlert] = {}
+        self.alert_history: deque = deque(maxlen=10000)
+        self.correlation_engine = AlertCorrelationEngine()
+        self.notification_router = NotificationRouter()
+        self.escalation_manager = EscalationManager()
+        
+        # ML Models
+        self.noise_reduction_model = NoiseReductionModel()
+        self.business_impact_predictor = BusinessImpactPredictor()
+        self.root_cause_analyzer = RootCauseAnalyzer()
+        
+        # Configuration
+        self.auto_correlation_enabled = True
+        self.noise_reduction_enabled = True
+        self.predictive_alerting_enabled = True
+        
+    async def create_alert(self, 
+                          title: str,
+                          message: str,
+                          severity: AlertSeverity,
+                          category: AlertCategory,
+                          source_service: str,
+                          source_metric: str,
+                          current_value: float,
+                          threshold_value: float,
+                          context: Dict[str, Any] = None) -> IntelligentAlert:
+        """Create an intelligent alert with ML enhancements."""
+        
+        alert = IntelligentAlert(
+            title=title,
+            message=message,
+            severity=severity,
+            category=category,
+            source_service=source_service,
+            source_metric=source_metric,
+            current_value=current_value,
+            threshold_value=threshold_value
+        )
+        
+        # Apply ML enhancements
+        if self.auto_correlation_enabled:
+            alert.ml_correlation = await self.correlation_engine.correlate_alert(alert)
+            
+        if self.noise_reduction_enabled:
+            alert.confidence_score = await self.noise_reduction_model.calculate_confidence(alert)
+            alert.false_positive_probability = await self.noise_reduction_model.predict_false_positive(alert)
+            
+        # Predict business impact
+        business_impact = await self.business_impact_predictor.predict_impact(alert)
+        alert.business_impact = business_impact["description"]
+        alert.revenue_impact_estimate = business_impact["revenue_impact"]
+        alert.user_impact_estimate = business_impact["user_impact"]
+        alert.affected_features = business_impact["affected_features"]
+        
+        # Store alert
+        self.alerts[alert.alert_id] = alert
+        self.alert_history.append(alert)
+        
+        # Route notifications
+        await self.notification_router.route_alert(alert)
+        
+        # Start escalation if needed
+        if alert.severity in [AlertSeverity.CRITICAL, AlertSeverity.HIGH]:
+            await self.escalation_manager.start_escalation(alert)
+            
+        logger.info(f"Created intelligent alert: {alert.alert_id} - {title}")
+        return alert
+
+class AlertCorrelationEngine:
+    """ML-powered alert correlation engine."""
+    
+    def __init__(self):
+        self.correlation_window_minutes = 15
+        self.correlation_threshold = 0.7
+        
+    async def correlate_alert(self, alert: IntelligentAlert) -> MLAlertCorrelation:
+        """Correlate alert with recent alerts using ML."""
+        
+        # Get recent alerts within correlation window
+        recent_alerts = await self._get_recent_alerts(alert)
+        
+        correlation = MLAlertCorrelation()
+        
+        for recent_alert in recent_alerts:
+            # Calculate various correlation scores
+            temporal_score = self._calculate_temporal_correlation(alert, recent_alert)
+            spatial_score = self._calculate_spatial_correlation(alert, recent_alert)
+            causal_score = self._calculate_causal_correlation(alert, recent_alert)
+            pattern_score = self._calculate_pattern_similarity(alert, recent_alert)
+            
+            # Combined correlation score
+            combined_score = (
+                temporal_score * 0.3 +
+                spatial_score * 0.2 +
+                causal_score * 0.3 +
+                pattern_score * 0.2
+            )
+            
+            if combined_score > self.correlation_threshold:
+                correlation.related_alerts.append(recent_alert.alert_id)
+                correlation.correlation_score = max(correlation.correlation_score, combined_score)
+                
+        # Determine if this might be a root cause
+        correlation.root_cause_probability = await self._calculate_root_cause_probability(alert, correlation)
+        
+        return correlation
+        
+    async def _get_recent_alerts(self, alert: IntelligentAlert) -> List[IntelligentAlert]:
+        """Get recent alerts for correlation analysis."""
+        cutoff_time = alert.triggered_at - timedelta(minutes=self.correlation_window_minutes)
+        
+        # In a real implementation, this would query from a proper alert store
+        # For now, simulate with recent alerts
+        return []
+        
+    def _calculate_temporal_correlation(self, alert1: IntelligentAlert, alert2: IntelligentAlert) -> float:
+        """Calculate temporal correlation between alerts."""
+        time_diff = abs((alert1.triggered_at - alert2.triggered_at).total_seconds())
+        max_correlation_seconds = 300  # 5 minutes
+        
+        if time_diff > max_correlation_seconds:
+            return 0.0
+            
+        return 1.0 - (time_diff / max_correlation_seconds)
+        
+    def _calculate_spatial_correlation(self, alert1: IntelligentAlert, alert2: IntelligentAlert) -> float:
+        """Calculate spatial/service correlation between alerts."""
+        if alert1.source_service == alert2.source_service:
+            return 1.0
+        elif alert1.category == alert2.category:
+            return 0.7
+        else:
+            return 0.0
+            
+    def _calculate_causal_correlation(self, alert1: IntelligentAlert, alert2: IntelligentAlert) -> float:
+        """Calculate causal correlation between alerts."""
+        # Simplified causal analysis
+        causal_patterns = {
+            ("infrastructure", "performance"): 0.8,
+            ("security", "performance"): 0.6,
+            ("performance", "business"): 0.7,
+            ("infrastructure", "user_experience"): 0.8
+        }
+        
+        pattern = (alert1.category.value, alert2.category.value)
+        return causal_patterns.get(pattern, 0.2)
+        
+    def _calculate_pattern_similarity(self, alert1: IntelligentAlert, alert2: IntelligentAlert) -> float:
+        """Calculate pattern similarity between alerts."""
+        # Compare alert patterns (simplified)
+        if alert1.source_metric == alert2.source_metric:
+            return 0.9
+        elif abs(alert1.current_value - alert2.current_value) / max(alert1.current_value, alert2.current_value) < 0.1:
+            return 0.6
+        else:
+            return 0.1
+            
+    async def _calculate_root_cause_probability(self, alert: IntelligentAlert, correlation: MLAlertCorrelation) -> float:
+        """Calculate probability that this alert is a root cause."""
+        # Simplified root cause analysis
+        base_probability = 0.5
+        
+        # Infrastructure alerts are more likely to be root causes
+        if alert.category == AlertCategory.INFRASTRUCTURE:
+            base_probability += 0.3
+            
+        # Critical alerts are more likely to be root causes
+        if alert.severity == AlertSeverity.CRITICAL:
+            base_probability += 0.2
+            
+        # Fewer correlations might indicate root cause
+        if len(correlation.related_alerts) < 2:
+            base_probability += 0.2
+            
+        return min(1.0, base_probability)
+
+class NoiseReductionModel:
+    """ML model for alert noise reduction."""
+    
+    async def calculate_confidence(self, alert: IntelligentAlert) -> float:
+        """Calculate confidence score for alert reliability."""
+        # Simplified confidence calculation
+        base_confidence = 0.8
+        
+        # Historical accuracy for this metric
+        historical_accuracy = await self._get_historical_accuracy(alert.source_metric)
+        
+        # Deviation magnitude
+        if alert.threshold_value > 0:
+            deviation_ratio = abs(alert.current_value - alert.threshold_value) / alert.threshold_value
+            deviation_confidence = min(1.0, deviation_ratio)
+        else:
+            deviation_confidence = 0.5
+            
+        # Time-based factors
+        time_factor = self._calculate_time_factor(alert.triggered_at)
+        
+        confidence = (
+            historical_accuracy * 0.4 +
+            deviation_confidence * 0.4 +
+            time_factor * 0.2
+        )
+        
+        return min(1.0, max(0.0, confidence))
+        
+    async def predict_false_positive(self, alert: IntelligentAlert) -> float:
+        """Predict probability of false positive."""
+        # Simplified false positive prediction
+        
+        # Check for common false positive patterns
+        false_positive_indicators = 0.0
+        
+        # Very small deviations might be noise
+        if alert.threshold_value > 0:
+            deviation_ratio = abs(alert.current_value - alert.threshold_value) / alert.threshold_value
+            if deviation_ratio < 0.05:  # Less than 5% deviation
+                false_positive_indicators += 0.3
+                
+        # Frequent alerts from same source
+        recent_alert_count = await self._count_recent_alerts(alert.source_service, alert.source_metric)
+        if recent_alert_count > 10:
+            false_positive_indicators += 0.2
+            
+        # Time-based patterns (e.g., scheduled maintenance)
+        if self._is_maintenance_window(alert.triggered_at):
+            false_positive_indicators += 0.4
+            
+        return min(1.0, false_positive_indicators)
+        
+    async def _get_historical_accuracy(self, metric: str) -> float:
+        """Get historical accuracy for metric."""
+        # Simplified - in reality would analyze historical alert resolutions
+        metric_accuracy = {
+            "cpu_usage": 0.85,
+            "memory_usage": 0.80,
+            "disk_usage": 0.90,
+            "response_time": 0.75,
+            "error_rate": 0.88
+        }
+        
+        return metric_accuracy.get(metric, 0.80)
+        
+    def _calculate_time_factor(self, alert_time: datetime) -> float:
+        """Calculate time-based confidence factor."""
+        hour = alert_time.hour
+        
+        # Lower confidence during typical maintenance windows
+        if 2 <= hour <= 4:  # 2-4 AM
+            return 0.6
+        elif 9 <= hour <= 17:  # Business hours
+            return 1.0
+        else:
+            return 0.8
+            
+    async def _count_recent_alerts(self, service: str, metric: str) -> int:
+        """Count recent alerts from same source."""
+        # Simplified - would query actual alert history
+        import random
+        return random.randint(0, 15)
+        
+    def _is_maintenance_window(self, alert_time: datetime) -> bool:
+        """Check if alert time falls in maintenance window."""
+        hour = alert_time.hour
+        # Assume maintenance windows are 2-4 AM
+        return 2 <= hour <= 4
+
+class BusinessImpactPredictor:
+    """Predict business impact of alerts."""
+    
+    async def predict_impact(self, alert: IntelligentAlert) -> Dict[str, Any]:
+        """Predict business impact of alert."""
+        
+        impact = {
+            "description": "",
+            "revenue_impact": 0.0,
+            "user_impact": 0,
+            "affected_features": []
+        }
+        
+        # Base impact calculation by category and severity
+        base_impacts = {
+            AlertCategory.INFRASTRUCTURE: {
+                AlertSeverity.CRITICAL: {"revenue": 10000, "users": 50000, "features": ["core_platform"]},
+                AlertSeverity.HIGH: {"revenue": 2000, "users": 10000, "features": ["secondary_features"]},
+                AlertSeverity.MEDIUM: {"revenue": 500, "users": 1000, "features": ["minor_features"]}
+            },
+            AlertCategory.PERFORMANCE: {
+                AlertSeverity.CRITICAL: {"revenue": 5000, "users": 25000, "features": ["user_experience"]},
+                AlertSeverity.HIGH: {"revenue": 1000, "users": 5000, "features": ["performance_features"]},
+                AlertSeverity.MEDIUM: {"revenue": 200, "users": 500, "features": ["optimization_features"]}
+            },
+            AlertCategory.SECURITY: {
+                AlertSeverity.CRITICAL: {"revenue": 50000, "users": 100000, "features": ["all_features"]},
+                AlertSeverity.HIGH: {"revenue": 5000, "users": 10000, "features": ["user_data", "authentication"]},
+                AlertSeverity.MEDIUM: {"revenue": 500, "users": 1000, "features": ["security_features"]}
+            }
+        }
+        
+        category_impacts = base_impacts.get(alert.category, {})
+        severity_impact = category_impacts.get(alert.severity, {"revenue": 100, "users": 100, "features": ["minor"]})
+        
+        # Apply time-based multipliers
+        time_multiplier = self._calculate_time_multiplier(alert.triggered_at)
+        
+        impact["revenue_impact"] = severity_impact["revenue"] * time_multiplier
+        impact["user_impact"] = int(severity_impact["users"] * time_multiplier)
+        impact["affected_features"] = severity_impact["features"]
+        
+        # Generate description
+        impact["description"] = self._generate_impact_description(alert, impact)
+        
+        return impact
+        
+    def _calculate_time_multiplier(self, alert_time: datetime) -> float:
+        """Calculate time-based impact multiplier."""
+        hour = alert_time.hour
+        day_of_week = alert_time.weekday()
+        
+        # Higher impact during business hours and weekdays
+        if day_of_week < 5:  # Weekday
+            if 9 <= hour <= 17:  # Business hours
+                return 1.5
+            elif 18 <= hour <= 22:  # Evening peak
+                return 1.3
+            else:
+                return 0.8
+        else:  # Weekend
+            return 0.6
+            
+    def _generate_impact_description(self, alert: IntelligentAlert, impact: Dict[str, Any]) -> str:
+        """Generate human-readable impact description."""
+        
+        if impact["revenue_impact"] > 10000:
+            revenue_desc = "significant revenue impact"
+        elif impact["revenue_impact"] > 1000:
+            revenue_desc = "moderate revenue impact"
+        else:
+            revenue_desc = "minor revenue impact"
+            
+        if impact["user_impact"] > 10000:
+            user_desc = "affecting many users"
+        elif impact["user_impact"] > 1000:
+            user_desc = "affecting moderate number of users"
+        else:
+            user_desc = "affecting few users"
+            
+        return f"{alert.category.value.title()} issue with {revenue_desc}, {user_desc}"
+
+class RootCauseAnalyzer:
+    """Analyze potential root causes of alerts."""
+    
+    async def analyze_root_cause(self, alert: IntelligentAlert) -> Dict[str, Any]:
+        """Analyze potential root causes."""
+        
+        potential_causes = []
+        
+        # Category-specific root cause analysis
+        if alert.category == AlertCategory.PERFORMANCE:
+            potential_causes.extend([
+                "High CPU utilization",
+                "Memory pressure", 
+                "Database performance",
+                "Network latency",
+                "Third-party service issues"
+            ])
+        elif alert.category == AlertCategory.INFRASTRUCTURE:
+            potential_causes.extend([
+                "Hardware failure",
+                "Network connectivity",
+                "Storage issues",
+                "Resource exhaustion",
+                "Configuration changes"
+            ])
+        elif alert.category == AlertCategory.SECURITY:
+            potential_causes.extend([
+                "Malicious activity",
+                "Authentication failures",
+                "Data breach attempt",
+                "DDoS attack",
+                "Insider threat"
+            ])
+            
+        # Rank causes by likelihood
+        ranked_causes = []
+        for cause in potential_causes:
+            likelihood = await self._calculate_cause_likelihood(alert, cause)
+            ranked_causes.append({"cause": cause, "likelihood": likelihood})
+            
+        ranked_causes.sort(key=lambda x: x["likelihood"], reverse=True)
+        
+        return {
+            "top_causes": ranked_causes[:3],
+            "recommended_actions": await self._generate_recommended_actions(alert, ranked_causes[:3])
+        }
+        
+    async def _calculate_cause_likelihood(self, alert: IntelligentAlert, cause: str) -> float:
+        """Calculate likelihood of specific root cause."""
+        # Simplified likelihood calculation
+        import random
+        
+        # Base likelihood varies by cause type
+        base_likelihoods = {
+            "High CPU utilization": 0.7,
+            "Memory pressure": 0.6,
+            "Database performance": 0.5,
+            "Network latency": 0.4,
+            "Hardware failure": 0.2,
+            "Malicious activity": 0.3
+        }
+        
+        base_likelihood = base_likelihoods.get(cause, 0.4)
+        
+        # Add some variation based on alert characteristics
+        if alert.severity == AlertSeverity.CRITICAL:
+            base_likelihood *= 1.2
+            
+        return min(1.0, base_likelihood * random.uniform(0.8, 1.2))
+        
+    async def _generate_recommended_actions(self, alert: IntelligentAlert, top_causes: List[Dict[str, Any]]) -> List[str]:
+        """Generate recommended actions based on top causes."""
+        
+        actions = []
+        
+        for cause_info in top_causes:
+            cause = cause_info["cause"]
+            
+            if "CPU" in cause:
+                actions.append("Check CPU usage across instances")
+                actions.append("Review recent deployments")
+            elif "Memory" in cause:
+                actions.append("Analyze memory usage patterns")
+                actions.append("Check for memory leaks")
+            elif "Database" in cause:
+                actions.append("Review database performance metrics")
+                actions.append("Check slow query logs")
+            elif "Network" in cause:
+                actions.append("Perform network connectivity tests")
+                actions.append("Check bandwidth utilization")
+                
+        return list(set(actions))  # Remove duplicates
+
+class NotificationRouter:
+    """Route alerts to appropriate notification channels."""
+    
+    def __init__(self):
+        self.channel_handlers = {
+            NotificationChannel.EMAIL: self._send_email,
+            NotificationChannel.SLACK: self._send_slack,
+            NotificationChannel.TELEGRAM: self._send_telegram,
+            NotificationChannel.WEBHOOK: self._send_webhook,
+            NotificationChannel.SMS: self._send_sms
+        }
+        
+    async def route_alert(self, alert: IntelligentAlert):
+        """Route alert to appropriate channels based on severity and category."""
+        
+        # Determine channels based on alert characteristics
+        channels = self._determine_channels(alert)
+        
+        # Send to each channel
+        for channel in channels:
+            try:
+                handler = self.channel_handlers.get(channel)
+                if handler:
+                    await handler(alert)
+                    alert.notification_channels.append(channel)
+            except Exception as e:
+                logger.error(f"Failed to send alert to {channel}: {e}")
+                
+    def _determine_channels(self, alert: IntelligentAlert) -> List[NotificationChannel]:
+        """Determine appropriate notification channels."""
+        
+        channels = [NotificationChannel.DASHBOARD]  # Always send to dashboard
+        
+        # Add channels based on severity
+        if alert.severity == AlertSeverity.CRITICAL:
+            channels.extend([
+                NotificationChannel.EMAIL,
+                NotificationChannel.SLACK,
+                NotificationChannel.SMS
+            ])
+        elif alert.severity == AlertSeverity.HIGH:
+            channels.extend([
+                NotificationChannel.EMAIL,
+                NotificationChannel.SLACK
+            ])
+        elif alert.severity == AlertSeverity.MEDIUM:
+            channels.append(NotificationChannel.SLACK)
+            
+        # Add channels based on category
+        if alert.category == AlertCategory.SECURITY:
+            channels.extend([
+                NotificationChannel.EMAIL,
+                NotificationChannel.TELEGRAM  # Security team uses Telegram
+            ])
+            
+        return list(set(channels))  # Remove duplicates
+        
+    async def _send_email(self, alert: IntelligentAlert):
+        """Send email notification."""
+        logger.info(f"Sending email notification for alert: {alert.alert_id}")
+        # Implementation would use email service
+        
+    async def _send_slack(self, alert: IntelligentAlert):
+        """Send Slack notification.""" 
+        logger.info(f"Sending Slack notification for alert: {alert.alert_id}")
+        # Implementation would use Slack API
+        
+    async def _send_telegram(self, alert: IntelligentAlert):
+        """Send Telegram notification."""
+        logger.info(f"Sending Telegram notification for alert: {alert.alert_id}")
+        # Implementation would use Telegram Bot API
+        
+    async def _send_webhook(self, alert: IntelligentAlert):
+        """Send webhook notification."""
+        logger.info(f"Sending webhook notification for alert: {alert.alert_id}")
+        # Implementation would POST to webhook URL
+        
+    async def _send_sms(self, alert: IntelligentAlert):
+        """Send SMS notification."""
+        logger.info(f"Sending SMS notification for alert: {alert.alert_id}")
+        # Implementation would use SMS service
+
+class EscalationManager:
+    """Manage alert escalation policies."""
+    
+    def __init__(self):
+        self.escalation_policies = self._initialize_escalation_policies()
+        
+    def _initialize_escalation_policies(self) -> Dict[AlertSeverity, Dict[str, Any]]:
+        """Initialize escalation policies by severity."""
+        return {
+            AlertSeverity.CRITICAL: {
+                "immediate": [NotificationChannel.SMS, NotificationChannel.SLACK],
+                "15_minutes": [NotificationChannel.EMAIL],
+                "30_minutes": ["manager_notification"],
+                "60_minutes": ["executive_notification"]
+            },
+            AlertSeverity.HIGH: {
+                "immediate": [NotificationChannel.SLACK],
+                "30_minutes": [NotificationChannel.EMAIL],
+                "2_hours": ["manager_notification"]
+            },
+            AlertSeverity.MEDIUM: {
+                "immediate": [NotificationChannel.DASHBOARD],
+                "4_hours": [NotificationChannel.EMAIL]
+            }
+        }
+        
+    async def start_escalation(self, alert: IntelligentAlert):
+        """Start escalation process for alert."""
+        
+        policy = self.escalation_policies.get(alert.severity, {})
+        
+        if not policy:
+            return
+            
+        # Schedule escalation steps
+        for timing, actions in policy.items():
+            if timing == "immediate":
+                await self._execute_escalation_step(alert, actions, 0)
+            else:
+                # Parse timing and schedule
+                delay_minutes = self._parse_timing(timing)
+                asyncio.create_task(
+                    self._schedule_escalation_step(alert, actions, delay_minutes)
+                )
+                
+    def _parse_timing(self, timing: str) -> int:
+        """Parse timing string to minutes."""
+        timing_map = {
+            "15_minutes": 15,
+            "30_minutes": 30,
+            "60_minutes": 60,
+            "2_hours": 120,
+            "4_hours": 240
+        }
+        return timing_map.get(timing, 60)
+        
+    async def _schedule_escalation_step(self, alert: IntelligentAlert, actions: List[str], delay_minutes: int):
+        """Schedule escalation step with delay."""
+        await asyncio.sleep(delay_minutes * 60)
+        
+        # Check if alert is still active
+        if alert.resolved_at is None:
+            await self._execute_escalation_step(alert, actions, delay_minutes)
+            
+    async def _execute_escalation_step(self, alert: IntelligentAlert, actions: List[str], delay_minutes: int):
+        """Execute escalation step."""
+        
+        alert.escalation_level += 1
+        alert.escalation_history.append({
+            "level": alert.escalation_level,
+            "actions": actions,
+            "executed_at": datetime.now().isoformat(),
+            "delay_minutes": delay_minutes
+        })
+        
+        logger.info(f"Executing escalation level {alert.escalation_level} for alert {alert.alert_id}")
+        
+        # Execute actions
+        for action in actions:
+            if isinstance(action, NotificationChannel):
+                # Re-notify via channel
+                pass
+            elif action == "manager_notification":
+                await self._notify_manager(alert)
+            elif action == "executive_notification":
+                await self._notify_executive(alert)
+                
+    async def _notify_manager(self, alert: IntelligentAlert):
+        """Notify manager of escalated alert."""
+        logger.info(f"Notifying manager of escalated alert: {alert.alert_id}")
+        
+    async def _notify_executive(self, alert: IntelligentAlert):
+        """Notify executive of critically escalated alert."""
+        logger.info(f"Notifying executive of critically escalated alert: {alert.alert_id}")
+
+# Initialize the enterprise alerting system
+enterprise_alerting = EnterpriseAlertingSystem()
+
+# Export main components
+__all__ = [
+    'EnterpriseAlertingSystem',
+    'IntelligentAlert', 
+    'AlertSeverity',
+    'AlertCategory',
+    'NotificationChannel',
+    'MLAlertCorrelation',
+    'enterprise_alerting'
+]
+
+class AlertCategory(Enum):
     """Alert categories for business context and routing."""
     AUDIO_PROCESSING = "audio_processing"      # Audio quality, separation, processing issues
     CONTENT_PROTECTION = "content_protection"  # Copyright violations, fingerprinting failures
