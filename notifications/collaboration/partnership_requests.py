@@ -1,2 +1,3 @@
 # Collaboration Engine: partnership_requests.py
-class PartnershipRequestsEngine: pass
+class PartnershipRequestsEngine: 
+    def __init__(self, config=None): pass

@@ -21,9 +21,9 @@ import uuid
 from jinja2 import Template, Environment, BaseLoader
 import re
 
-from app.core.config import settings
-from app.utils.metrics import MetricsCollector
-from app.core.ai.content_generator import ContentGenerator
+from .config import settings
+from .config import MetricsCollector, metrics
+#from .ai import ContentGenerator  # TODO: Implement
 
 
 class TemplateType(str, Enum):

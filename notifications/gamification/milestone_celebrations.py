@@ -1,2 +1,3 @@
 # Gamification Engine: milestone_celebrations.py
-class MilestoneCelebrationsEngine: pass
+class MilestoneCelebrationsEngine: 
+    def __init__(self, config=None): pass

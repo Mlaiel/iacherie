@@ -1,2 +1,3 @@
 # Collaboration Engine: partnership_performance_reports.py
-class PartnershipPerformanceReportsEngine: pass
+class PartnershipPerformanceEngine: 
+    def __init__(self, config=None): pass

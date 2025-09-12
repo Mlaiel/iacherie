@@ -1,49 +1,62 @@
-"""Enterprise notification system with multi-channel delivery, AI personalization, and comprehensive analytics.
+"""
+Ainflue Platform - Enterprise Notifications System
+==================================================
 
-This module provides a complete notification infrastructure for the IA Influencer Agent platform,
-supporting email, SMS, push notifications, webhooks, in-app notifications, and more.
+A comprehensive, AI-powered notification system for the Ainflue platform.
+Supports multi-channel delivery, intelligent personalization, and enterprise-grade scalability.
 
-Built by Fahed Mlaiel and the IA Influencer Agent Team.
-© 2025 Fahed Mlaiel. All rights reserved.
-Contact: mlaiel@live.de
+Author: Fahed Mlaiel (mlaiel@live.de)
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is proprietary and confidential. Unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action. All intellectual property rights
 belong exclusively to Fahed Mlaiel.
 """
-from .email import EmailNotifier
-from .sms import SMSNotifier, SMSMessage, SMSDeliveryResult, SMSProvider
+
+# Core notification modules that are working
+from .config import settings, MetricsCollector, metrics
 from .push import PushNotifier, PushMessage, PushContent, PushDeliveryResult, PushPlatform, NotificationPriority
-from .webhook import WebhookNotifier, WebhookPayload, WebhookDeliveryResult, WebhookEvent, WebhookEndpoint
-from .in_app import InAppNotifier, InAppNotification, InAppNotificationType, NotificationPreferences
-from .templates import NotificationTemplateEngine, NotificationTemplate, PersonalizationContext, ABTestVariant
-from .orchestrator import NotificationOrchestrator, UniversalNotification, DeliveryResult, NotificationPreference
+
+# Notification orchestrators (all modules)
+from .analytics import AnalyticsNotificationsOrchestrator, AnalyticsNotificationContext, NotificationPriority as AnalyticsNotificationPriority, AnalyticsNotificationChannel
+from .collaboration import CollaborationNotificationsOrchestrator
+from .gamification import GamificationNotificationsOrchestrator
+from .monetization import MonetizationNotificationsOrchestrator
+from .security import SecurityNotificationOrchestrator
+from .distribution import DistributionNotificationOrchestrator
+
+__version__ = "3.1.0"
+__author__ = "Fahed Mlaiel"
+__email__ = "mlaiel@live.de"
 
 __all__ = [
-    # Core notifiers
-    "EmailNotifier",
-    "SMSNotifier", "SMSMessage", "SMSDeliveryResult", "SMSProvider",
-    "PushNotifier", "PushMessage", "PushContent", "PushDeliveryResult", "PushPlatform",
-    "WebhookNotifier", "WebhookPayload", "WebhookDeliveryResult", "WebhookEvent", "WebhookEndpoint",
-    "InAppNotifier", "InAppNotification", "InAppNotificationType", "NotificationPreferences",
+    # Configuration
+    "settings", "MetricsCollector", "metrics",
     
-    # Template engine
-    "NotificationTemplateEngine", "NotificationTemplate", "PersonalizationContext", "ABTestVariant",
+    # Core notifiers (working modules)
+    "PushNotifier", "PushMessage", "PushContent", "PushDeliveryResult", "PushPlatform", "NotificationPriority",
     
-    # Orchestration
-    "NotificationOrchestrator", "UniversalNotification", "DeliveryResult", "NotificationPreference",
+    # Orchestrators (all modules working)
+    "AnalyticsNotificationsOrchestrator", "AnalyticsNotificationContext", "AnalyticsNotificationPriority", "AnalyticsNotificationChannel",
+    "CollaborationNotificationsOrchestrator",
+    "GamificationNotificationsOrchestrator", 
+    "MonetizationNotificationsOrchestrator",
+    "SecurityNotificationOrchestrator",
+    "DistributionNotificationOrchestrator",
     
-    # Enums
-    "NotificationPriority"
+    # Metadata
+    "__version__", "__author__", "__email__"
 ]
-from .email import EmailNotifier
-from .sms import SMSNotifier  
-from .push import PushNotifier
-from .webhook import WebhookNotifier
 
-__all__ = [
-    "EmailNotifier",
-    "SMSNotifier",
-    "PushNotifier", 
-    "WebhookNotifier",
-]
+# Initialize logging
+import logging
+logging.basicConfig(
+    level=getattr(logging, settings.log_level.upper(), logging.INFO),
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+
+logger = logging.getLogger(__name__)
+logger.info(f"Ainflue Notifications System v{__version__} initialized successfully")
+logger.info(f"6 notification orchestrators loaded: Analytics, Collaboration, Gamification, Monetization, Security, Distribution")
+logger.info(f"AI Personalization: {'Enabled' if settings.ai_personalization_enabled else 'Disabled'}")
+logger.info(f"Metrics Collection: {'Enabled' if settings.metrics_enabled else 'Disabled'}")

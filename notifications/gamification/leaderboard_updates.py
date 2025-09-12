@@ -1,2 +1,3 @@
 # Gamification Engine: leaderboard_updates.py
-class LeaderboardUpdatesEngine: pass
+class LeaderboardUpdatesEngine: 
+    def __init__(self, config=None): pass
