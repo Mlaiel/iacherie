@@ -15,11 +15,11 @@ import logging
 from collections import deque, defaultdict
 from dataclasses import dataclass, field
 
-from ..core.exceptions import PipelineException
-from ..models.content import ContentItem
-from ..services.ai.content_analyzer import ContentAnalyzer
-from ..utils.metrics import MetricsCollector
-from ..utils.caching import CacheManager
+from .exceptions import PipelineException
+from models.content import ContentItem
+from services.ai_content_analyzer import ContentAnalyzer
+from utils.metrics_collector import MetricsCollector
+from utils.caching import CacheManager
 
 
 class PipelineStatus(Enum):
