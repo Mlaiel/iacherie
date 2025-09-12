@@ -31,7 +31,7 @@ from pathlib import Path
 import hashlib
 import hmac
 from cryptography.fernet import Fernet
-import aioredis
+import redis.asyncio as redis
 
 logger = logging.getLogger(__name__)
 
