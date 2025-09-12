@@ -67,6 +67,19 @@ from .audio_inference_engine import (
     StreamingAudioBuffer
 )
 
+# NEW - Performance Monitoring & Resource Tracking
+from .inference_performance_monitor import (
+    InferencePerformanceMonitor,
+    InferenceMetrics,
+    PerformanceAlert
+)
+
+from .resource_usage_tracker import (
+    ResourceUsageTracker,
+    ResourceSnapshot,
+    CostMetrics
+)
+
 __all__ = [
     # Real-Time Inference (Existing)
     'RealTimeInferenceEngine',
@@ -110,7 +123,15 @@ __all__ = [
     'MusicGenre',
     'AudioMood',
     'InstrumentType',
-    'StreamingAudioBuffer'
+    'StreamingAudioBuffer',
+    
+    # Performance Monitoring & Resource Tracking (NEW - PHASE 23)
+    'InferencePerformanceMonitor',
+    'InferenceMetrics',
+    'PerformanceAlert',
+    'ResourceUsageTracker',
+    'ResourceSnapshot',
+    'CostMetrics'
 ]
 
 # Version du module

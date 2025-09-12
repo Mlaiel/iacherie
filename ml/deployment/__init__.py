@@ -68,6 +68,15 @@ from .cloud_deployment_orchestrator import (
     DeploymentStatus as CloudDeploymentStatus
 )
 
+# NEW - Deployment Rollback (PHASE 23)
+from .deployment_rollback_manager import (
+    DeploymentRollbackManager,
+    DeploymentSnapshot,
+    RollbackPlan,
+    RollbackReason,
+    DeploymentStatus as RollbackDeploymentStatus
+)
+
 __all__ = [
     # Core Deployment (Existing)
     'ModelDeploymentManager',
@@ -114,7 +123,14 @@ __all__ = [
     "CloudProvider",
     "DeploymentRegion",
     "InstanceType",
-    "CloudDeploymentStatus"
+    "CloudDeploymentStatus",
+    
+    # Deployment Rollback (NEW - PHASE 23)
+    "DeploymentRollbackManager",
+    "DeploymentSnapshot",
+    "RollbackPlan",
+    "RollbackReason",
+    "RollbackDeploymentStatus"
 ]
 
 # Version du module

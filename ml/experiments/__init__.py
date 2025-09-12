@@ -36,6 +36,15 @@ from .hypothesis_validation_framework import (
     ExperimentValidation
 )
 
+# NEW - Performance Regression Detection (PHASE 23)
+from .performance_regression_detector import (
+    PerformanceRegressionDetector,
+    PerformanceMetrics,
+    RegressionAlert,
+    RegressionSeverity,
+    RegressionType
+)
+
 __all__ = [
     # Experiment Tracking (Existing)
     'ExperimentTrackingSystem',
@@ -53,7 +62,14 @@ __all__ = [
     'MultipleComparisonMethod',
     'HypothesisTestResult',
     'BayesianAnalysisResult',
-    'ExperimentValidation'
+    'ExperimentValidation',
+    
+    # Performance Regression Detection (NEW - PHASE 23)
+    'PerformanceRegressionDetector',
+    'PerformanceMetrics',
+    'RegressionAlert',
+    'RegressionSeverity',
+    'RegressionType'
 ]
 
 # Version du module
