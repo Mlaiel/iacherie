@@ -59,13 +59,13 @@ export function ContentManagement() {
 
   const getProtectionBadge = (level: string) => {
     const colors = {
-      basic: 'bg-blue-100 text-blue-800',
-      advanced: 'bg-purple-100 text-purple-800',
+      essential: 'bg-blue-100 text-blue-800',
+      professional: 'bg-purple-100 text-purple-800',
       enterprise: 'bg-green-100 text-green-800',
     };
     
     return (
-      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${colors[level as keyof typeof colors] || colors.basic}`}>
+      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${colors[level as keyof typeof colors] || colors.essential}`}>
         {level.charAt(0).toUpperCase() + level.slice(1)}
       </span>
     );

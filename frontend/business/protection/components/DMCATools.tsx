@@ -194,7 +194,7 @@ const DMCATools: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="border border-gray-200 rounded-lg p-4">
             <h4 className="font-medium text-gray-900 mb-2">Standard Takedown</h4>
-            <p className="text-sm text-gray-600 mb-3">For basic copyright infringement cases</p>
+            <p className="text-sm text-gray-600 mb-3">For essential copyright infringement cases</p>
             <button className="w-full bg-blue-100 text-blue-800 py-2 px-3 rounded-md text-sm font-medium hover:bg-blue-200 transition-colors">
               Use Template
             </button>

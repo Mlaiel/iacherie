@@ -303,7 +303,7 @@ export const fetchProjects = createAsyncThunk(
             id: 'owner1',
             name: 'John Doe',
             email: 'john@example.com',
-            avatar: 'https://via.placeholder.com/40',
+            avatar: '/api/avatar/default-user.svg',
             role: 'Music Producer',
             specialties: ['Music Production', 'Audio Engineering'],
             location: 'Los Angeles, CA',
