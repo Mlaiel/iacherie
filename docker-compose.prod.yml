@@ -1,0 +1,290 @@
+# 🐳 Production Docker Compose - Enterprise ML Platform
+# Author: Fahed Mlaiel (mlaiel@live.de) - DevOps Expert  
+# Multi-Expert Implementation: 🔒 Security + 🛡️ Backend + ⚙️ DevOps + 🌐 Microservices
+# ===================================================================================
+
+version: '3.8'
+
+networks:
+  ainflue_ml_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  model_registry:
+    driver: local
+  feature_store:
+    driver: local
+  logs:
+    driver: local
+
+services:
+  # 🗄️ PostgreSQL Database (DBA Expert)
+  postgres:
+    image: postgres:15-alpine
+    container_name: ainflue_postgres_prod
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ainflue_production
+      POSTGRES_USER: ainflue_user
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./config/postgres/postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./config/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - ainflue_ml_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ainflue_user -d ainflue_production"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # 📊 Redis Cache (Backend Senior Expert)
+  redis:
+    image: redis:7-alpine
+    container_name: ainflue_redis_prod
+    restart: unless-stopped
+    command: redis-server --requirepass ${REDIS_PASSWORD} --maxmemory 512mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_data:/data
+      - ./config/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    ports:
+      - "6379:6379"
+    networks:
+      - ainflue_ml_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # 🚀 ML API Service (Lead Dev IA + ML Engineer)
+  ml_api:
+    build:
+      context: .
+      dockerfile: docker/ml/Dockerfile.production
+    container_name: ainflue_ml_api_prod
+    restart: unless-stopped
+    environment:
+      - ENVIRONMENT=production
+      - DATABASE_URL=postgresql://ainflue_user:${DATABASE_PASSWORD}@postgres:5432/ainflue_production
+      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379/0
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+      - API_ENCRYPTION_KEY=${API_ENCRYPTION_KEY}
+    volumes:
+      - model_registry:/app/models
+      - feature_store:/app/features
+      - logs:/app/logs
+    ports:
+      - "8000:8000"
+    networks:
+      - ainflue_ml_network
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # 🔄 ML Inference Service (ML Engineer + Backend Senior)
+  ml_inference:
+    build:
+      context: .
+      dockerfile: docker/ml/Dockerfile.inference
+    container_name: ainflue_ml_inference_prod
+    restart: unless-stopped
+    environment:
+      - ENVIRONMENT=production
+      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379/1
+      - MODEL_CACHE_SIZE=1000
+      - INFERENCE_TIMEOUT=100
+    volumes:
+      - model_registry:/app/models
+      - logs:/app/logs
+    ports:
+      - "8001:8001"
+    networks:
+      - ainflue_ml_network
+    depends_on:
+      redis:
+        condition: service_healthy
+    deploy:
+      replicas: 3
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+        reservations:
+          cpus: '1.0'
+          memory: 2G
+
+  # 🎵 Audio Processing Service (Audio Engineer)
+  audio_processor:
+    build:
+      context: .
+      dockerfile: docker/audio/Dockerfile.production
+    container_name: ainflue_audio_prod
+    restart: unless-stopped
+    environment:
+      - ENVIRONMENT=production
+      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379/2
+      - AUDIO_SAMPLE_RATE=44100
+      - AUDIO_BUFFER_SIZE=1024
+    volumes:
+      - ./audio_models:/app/models
+      - logs:/app/logs
+    ports:
+      - "8002:8002"
+    networks:
+      - ainflue_ml_network
+    depends_on:
+      redis:
+        condition: service_healthy
+
+  # 📊 Feature Store Service (DBA + ML Engineer)
+  feature_store:
+    build:
+      context: .
+      dockerfile: docker/features/Dockerfile.production
+    container_name: ainflue_features_prod
+    restart: unless-stopped
+    environment:
+      - ENVIRONMENT=production
+      - DATABASE_URL=postgresql://ainflue_user:${DATABASE_PASSWORD}@postgres:5432/ainflue_production
+      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379/3
+    volumes:
+      - feature_store:/app/features
+      - logs:/app/logs
+    ports:
+      - "8003:8003"
+    networks:
+      - ainflue_ml_network
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # 📈 Monitoring & Metrics (DevOps Expert)
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: ainflue_prometheus_prod
+    restart: unless-stopped
+    volumes:
+      - ./config/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - ainflue_ml_network
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+
+  # 📊 Grafana Dashboard (DevOps Expert)
+  grafana:
+    image: grafana/grafana:latest
+    container_name: ainflue_grafana_prod
+    restart: unless-stopped
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - ./grafana_data:/var/lib/grafana
+      - ./config/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./config/grafana/datasources:/etc/grafana/provisioning/datasources
+    ports:
+      - "3000:3000"
+    networks:
+      - ainflue_ml_network
+    depends_on:
+      - prometheus
+
+  # 🔒 Security Scanner (Sécurité Expert)
+  security_scanner:
+    build:
+      context: .
+      dockerfile: docker/security/Dockerfile.scanner
+    container_name: ainflue_security_prod
+    restart: unless-stopped
+    environment:
+      - ENVIRONMENT=production
+      - SCAN_FREQUENCY=3600  # Every hour
+    volumes:
+      - logs:/app/logs
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - ainflue_ml_network
+
+  # 🌐 Load Balancer (Microservices Expert)
+  nginx:
+    image: nginx:alpine
+    container_name: ainflue_nginx_prod
+    restart: unless-stopped
+    volumes:
+      - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./config/nginx/ssl:/etc/nginx/ssl
+      - logs:/var/log/nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - ainflue_ml_network
+    depends_on:
+      - ml_api
+      - ml_inference
+      - audio_processor
+      - feature_store
+
+  # 📋 Log Aggregation (DevOps Expert)
+  fluentd:
+    build:
+      context: ./config/fluentd
+      dockerfile: Dockerfile
+    container_name: ainflue_fluentd_prod
+    restart: unless-stopped
+    volumes:
+      - logs:/fluentd/log
+      - ./config/fluentd/fluent.conf:/fluentd/etc/fluent.conf
+    ports:
+      - "24224:24224"
+    networks:
+      - ainflue_ml_network
+
+  # 🔍 Health Checker (Backend Senior Expert)
+  health_monitor:
+    build:
+      context: .
+      dockerfile: docker/monitoring/Dockerfile.health
+    container_name: ainflue_health_prod
+    restart: unless-stopped
+    environment:
+      - ENVIRONMENT=production
+      - CHECK_INTERVAL=30
+    volumes:
+      - logs:/app/logs
+    networks:
+      - ainflue_ml_network
+    depends_on:
+      - ml_api
+      - ml_inference
+      - postgres
+      - redis
