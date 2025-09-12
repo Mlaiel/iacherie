@@ -1,0 +1,138 @@
+{
+  "summary": {
+    "total_tests": 9,
+    "passed_tests": 0,
+    "failed_tests": 0,
+    "error_tests": 9,
+    "success_rate": 0.0,
+    "total_duration": 0.022138118743896484,
+    "languages_tested": [
+      "javascript",
+      "java",
+      "python"
+    ]
+  },
+  "results": [
+    {
+      "name": "Python SDK Integration Tests",
+      "language": "SDKLanguage.PYTHON",
+      "status": "TestStatus.ERROR",
+      "duration": 0.001016855239868164,
+      "output": "",
+      "error": "[Errno 2] No such file or directory: 'sdk/python'",
+      "coverage": null,
+      "performance_metrics": null,
+      "security_findings": null
+    },
+    {
+      "name": "Python SDK Unit Tests",
+      "language": "SDKLanguage.PYTHON",
+      "status": "TestStatus.ERROR",
+      "duration": 0.003888845443725586,
+      "output": "",
+      "error": "[Errno 2] No such file or directory: 'sdk/python'",
+      "coverage": null,
+      "performance_metrics": null,
+      "security_findings": null
+    },
+    {
+      "name": "Python SDK Security Tests",
+      "language": "SDKLanguage.PYTHON",
+      "status": "TestStatus.ERROR",
+      "duration": 0.002961397171020508,
+      "output": "",
+      "error": "[Errno 2] No such file or directory: 'sdk/python'",
+      "coverage": null,
+      "performance_metrics": null,
+      "security_findings": null
+    },
+    {
+      "name": "JavaScript SDK TypeScript Compilation",
+      "language": "SDKLanguage.JAVASCRIPT",
+      "status": "TestStatus.ERROR",
+      "duration": 0.0025565624237060547,
+      "output": "",
+      "error": "[Errno 2] No such file or directory: 'sdk/javascript'",
+      "coverage": null,
+      "performance_metrics": null,
+      "security_findings": null
+    },
+    {
+      "name": "JavaScript SDK Unit Tests",
+      "language": "SDKLanguage.JAVASCRIPT",
+      "status": "TestStatus.ERROR",
+      "duration": 0.0031235218048095703,
+      "output": "",
+      "error": "[Errno 2] No such file or directory: 'sdk/javascript'",
+      "coverage": null,
+      "performance_metrics": null,
+      "security_findings": null
+    },
+    {
+      "name": "JavaScript SDK ESLint",
+      "language": "SDKLanguage.JAVASCRIPT",
+      "status": "TestStatus.ERROR",
+      "duration": 0.001977205276489258,
+      "output": "",
+      "error": "[Errno 2] No such file or directory: 'sdk/javascript'",
+      "coverage": null,
+      "performance_metrics": null,
+      "security_findings": null
+    },
+    {
+      "name": "Java SDK Integration Tests",
+      "language": "SDKLanguage.JAVA",
+      "status": "TestStatus.ERROR",
+      "duration": 0.0023522377014160156,
+      "output": "",
+      "error": "[Errno 2] No such file or directory: 'sdk/java'",
+      "coverage": null,
+      "performance_metrics": null,
+      "security_findings": null
+    },
+    {
+      "name": "Java SDK Unit Tests",
+      "language": "SDKLanguage.JAVA",
+      "status": "TestStatus.ERROR",
+      "duration": 0.0023980140686035156,
+      "output": "",
+      "error": "[Errno 2] No such file or directory: 'sdk/java'",
+      "coverage": null,
+      "performance_metrics": null,
+      "security_findings": null
+    },
+    {
+      "name": "Java SDK Security Scan",
+      "language": "SDKLanguage.JAVA",
+      "status": "TestStatus.ERROR",
+      "duration": 0.0018634796142578125,
+      "output": "",
+      "error": "[Errno 2] No such file or directory: 'sdk/java'",
+      "coverage": null,
+      "performance_metrics": null,
+      "security_findings": null
+    }
+  ],
+  "coverage_analysis": {
+    "average_coverage": 0,
+    "by_language": {}
+  },
+  "performance_analysis": {
+    "average_execution_time": 0,
+    "slow_tests": []
+  },
+  "security_analysis": {
+    "total_security_findings": 0,
+    "findings_by_severity": {
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    "tests_with_findings": 0
+  },
+  "recommendations": [
+    "Address 9 failing tests to improve overall stability",
+    "Improve code coverage from 0.0% to at least 80%"
+  ],
+  "timestamp": 1757671489.9479685
+}
