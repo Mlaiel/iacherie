@@ -259,20 +259,10 @@ Password reset request schema."""
     
 
 class PasswordResetConfirm(BaseSchema):
-        try:
-            logger.info(f"Executing passwords_match")
-            
-            # Implementation for passwords_match
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"passwords_match completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"passwords_match failed: {e}")
-            raise
+    """Password reset confirmation schema."""
+    
+    token: str = Field(description="Password reset token")
+    new_password: str = Field(description="New password")
     confirm_password: str = Field(description="Password confirmation")
     
     @validator('confirm_password')

@@ -24,7 +24,9 @@ Architecture Overview:
 ├── AI & Machine Learning
 ├── Blockchain & NFT Integration
 └── Admin & System Management
-"""# Foundation schemas
+"""
+
+# Foundation schemas
 from .base import (
     BaseSchema, TimestampSchema, UUIDSchema, AuditSchema,
     PaginatedResponse, ApiResponse, ValidationError
@@ -32,65 +34,56 @@ from .base import (
 
 # Core business schemas
 from .user import (
-    UserCreate, UserUpdate, UserOut, UserProfile, UserPreferences,
-    UserSettings, UserSubscription, UserSession, TwoFactorAuth,
-    UserVerification, UserStatistics, LoginRequest, PasswordReset
+    UserCreate, UserUpdate, UserOut, UserProfile, 
+    UserSettings, UserSession, UserAuthentication,
+    UserVerification, PasswordReset, PasswordChange, PasswordResetConfirm,
+    TwoFactorSetup, TwoFactorVerify
 )
 
 from .creator import (
     CreatorCreate, CreatorUpdate, CreatorOut, CreatorProfile,
     CreatorVerification, CreatorStatistics, CreatorSubscription,
-    CreatorPortfolio, CreatorCollaboration, CreatorEarnings,
-    VerificationRequest, BrandPartnership
+    CollaborationPreferences, MonetizationPreferences
 )
 
 from .content import (
     ContentUpload, ContentUpdate, ContentOut, ContentMetadata,
-    ContentSearch, ContentFilter, ContentAnalysis, ContentOptimization,
-    ContentSchedule, ContentTemplate, ContentSeries, ContentCategory,
-    ContentTags, ContentEngagement
+    ContentSearch, ContentAnalysis, ContentVersion, ContentTag,
+    ContentBulkOperation, ContentExport
 )
 
 from .media import (
-    MediaFileUpload, MediaFileOut, MediaProcessing, MediaTransformation,
-    AudioProcessing, VideoProcessing, ImageProcessing, MediaOptimization,
-    MediaMetadata, MediaStorage, ThumbnailGeneration, MediaCompression,
-    StreamingConfiguration, MediaDelivery
+    MediaFileUpload, MediaFileOut, MediaProcessing, MediaTransform,
+    AudioProcessing, VideoProcessing, ImageProcessing, MediaAnalysis,
+    MediaStreamingConfig, MediaBackup
 )
 
 from .protection import (
     ProtectionRequest, ProtectionOut, FingerprintCreate, FingerprintOut,
     WatermarkRequest, WatermarkOut, ViolationReport, TakedownRequest,
-    CopyrightClaim, ProtectionAlert, ProtectionStatistics,
-    AntiPiracyConfiguration, ContentAuthenticity, RightsManagement
+    LegalAction, SecurityScan, ThreatAnalysis
 )
 
 from .collaboration import (
-    CollaborationRequest, CollaborationUpdate, CollaborationOut,
-    CollaborationAgreement, PartnerSearch, PartnerMatching,
-    CollaborationRevenue, ProjectManagement, TeamManagement,
-    CollaborationContract, NegotiationTerms, CollaborationAnalytics
+    CollaborationRequest, CollaborationOut, CollaborationAgreement,
+    CollaborationRevenue, PartnerMatching, CollaborationMessage,
+    ProjectCollaboration, CollaborationFeedback, CollaborationAnalytics
 )
 
 from .copyright import (
-    CopyrightCreate, CopyrightUpdate, CopyrightOut, LicenseAgreement,
-    CopyrightTransfer, RoyaltyStructure, IntellectualProperty,
-    LegalDocumentation, CopyrightDispute, FairUse,
-    RightsManagement, LicensingTerms
+    CopyrightCreate, CopyrightOut, CopyrightClaim, CopyrightTransfer,
+    LicenseAgreement, LicenseUsage, RightsManagement, IntellectualProperty
 )
 
 from .revenue import (
-    RevenueCreate, RevenueUpdate, RevenueOut, RevenueStream,
-    PaymentRecord, PaymentMethod, MonetizationReport,
-    FinancialAnalytics, TaxInformation, PayoutSchedule,
-    RevenueSharing, SubscriptionTier, PricingModel
+    RevenueCreate, RevenueOut, RevenueStream, RevenueShare,
+    PaymentRecord, RoyaltyCalculation, MonetizationReport, FinancialAnalytics
 )
 
 from .distribution import (
-    DistributionRequest, DistributionUpdate, DistributionOut,
-    PlatformIntegration, ContentDelivery, MultiPlatformSync,
-    DistributionSchedule, DistributionMetrics, PlatformConfiguration,
-    ContentOptimization, AudienceTargeting, DistributionCampaign
+    DistributionRequest, DistributionOut, PlatformIntegration,
+    ContentDelivery, DistributionMetrics, PlatformAnalytics,
+    MultiPlatformSync, DistributionCampaign
 )
 
 # Advanced business intelligence schemas
@@ -133,57 +126,48 @@ __all__ = [
     "PaginatedResponse", "ApiResponse", "ValidationError",
     
     # User Management
-    "UserCreate", "UserUpdate", "UserOut", "UserProfile", "UserPreferences",
-    "UserSettings", "UserSubscription", "UserSession", "TwoFactorAuth",
-    "UserVerification", "UserStatistics", "LoginRequest", "PasswordReset",
+    "UserCreate", "UserUpdate", "UserOut", "UserProfile", 
+    "UserSettings", "UserSession", "UserAuthentication",
+    "UserVerification", "PasswordReset", "PasswordChange", "PasswordResetConfirm",
+    "TwoFactorSetup", "TwoFactorVerify",
     
     # Creator Management
     "CreatorCreate", "CreatorUpdate", "CreatorOut", "CreatorProfile",
     "CreatorVerification", "CreatorStatistics", "CreatorSubscription",
-    "CreatorPortfolio", "CreatorCollaboration", "CreatorEarnings",
-    "VerificationRequest", "BrandPartnership",
+    "CollaborationPreferences", "MonetizationPreferences",
     
     # Content Management
     "ContentUpload", "ContentUpdate", "ContentOut", "ContentMetadata",
-    "ContentSearch", "ContentFilter", "ContentAnalysis", "ContentOptimization",
-    "ContentSchedule", "ContentTemplate", "ContentSeries", "ContentCategory",
-    "ContentTags", "ContentEngagement",
+    "ContentSearch", "ContentAnalysis", "ContentVersion", "ContentTag",
+    "ContentBulkOperation", "ContentExport",
     
     # Media Processing
-    "MediaFileUpload", "MediaFileOut", "MediaProcessing", "MediaTransformation",
-    "AudioProcessing", "VideoProcessing", "ImageProcessing", "MediaOptimization",
-    "MediaMetadata", "MediaStorage", "ThumbnailGeneration", "MediaCompression",
-    "StreamingConfiguration", "MediaDelivery",
+    "MediaFileUpload", "MediaFileOut", "MediaProcessing", "MediaTransform",
+    "AudioProcessing", "VideoProcessing", "ImageProcessing", "MediaAnalysis",
+    "MediaStreamingConfig", "MediaBackup",
     
     # Protection & Fingerprinting
     "ProtectionRequest", "ProtectionOut", "FingerprintCreate", "FingerprintOut",
     "WatermarkRequest", "WatermarkOut", "ViolationReport", "TakedownRequest",
-    "CopyrightClaim", "ProtectionAlert", "ProtectionStatistics",
-    "AntiPiracyConfiguration", "ContentAuthenticity", "RightsManagement",
+    "LegalAction", "SecurityScan", "ThreatAnalysis",
     
     # Collaboration
-    "CollaborationRequest", "CollaborationUpdate", "CollaborationOut",
-    "CollaborationAgreement", "PartnerSearch", "PartnerMatching",
-    "CollaborationRevenue", "ProjectManagement", "TeamManagement",
-    "CollaborationContract", "NegotiationTerms", "CollaborationAnalytics",
+    "CollaborationRequest", "CollaborationOut", "CollaborationAgreement",
+    "CollaborationRevenue", "PartnerMatching", "CollaborationMessage",
+    "ProjectCollaboration", "CollaborationFeedback", "CollaborationAnalytics",
     
     # Copyright & Licensing
-    "CopyrightCreate", "CopyrightUpdate", "CopyrightOut", "LicenseAgreement",
-    "CopyrightTransfer", "RoyaltyStructure", "IntellectualProperty",
-    "LegalDocumentation", "CopyrightDispute", "FairUse",
-    "RightsManagement", "LicensingTerms",
+    "CopyrightCreate", "CopyrightOut", "CopyrightClaim", "CopyrightTransfer",
+    "LicenseAgreement", "LicenseUsage", "RightsManagement", "IntellectualProperty",
     
     # Revenue & Monetization
-    "RevenueCreate", "RevenueUpdate", "RevenueOut", "RevenueStream",
-    "PaymentRecord", "PaymentMethod", "MonetizationReport",
-    "FinancialAnalytics", "TaxInformation", "PayoutSchedule",
-    "RevenueSharing", "SubscriptionTier", "PricingModel",
+    "RevenueCreate", "RevenueOut", "RevenueStream", "RevenueShare",
+    "PaymentRecord", "RoyaltyCalculation", "MonetizationReport", "FinancialAnalytics",
     
     # Distribution & Platforms
-    "DistributionRequest", "DistributionUpdate", "DistributionOut",
-    "PlatformIntegration", "ContentDelivery", "MultiPlatformSync",
-    "DistributionSchedule", "DistributionMetrics", "PlatformConfiguration",
-    "ContentOptimization", "AudienceTargeting", "DistributionCampaign",
+    "DistributionRequest", "DistributionOut", "PlatformIntegration",
+    "ContentDelivery", "DistributionMetrics", "PlatformAnalytics",
+    "MultiPlatformSync", "DistributionCampaign",
     
     # SEO & Marketing
     "SEOAnalysis", "SEOOptimization", "KeywordResearch", "ContentOptimization",
