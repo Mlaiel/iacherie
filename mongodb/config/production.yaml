@@ -1,0 +1,230 @@
+# Production Configuration
+# MongoDB Module - Ainflue Platform
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
+
+mongodb:
+  # Connection settings
+  connection:
+    host: "mongodb-cluster.ainflue.com"
+    port: 27017
+    database: "ainflue_prod"
+    replica_set: "rs0"
+    ssl: true
+    ssl_cert_reqs: "CERT_REQUIRED"
+    ssl_ca_certs: "/etc/ssl/mongodb/ca.pem"
+    ssl_certfile: "/etc/ssl/mongodb/client.pem"
+    ssl_keyfile: "/etc/ssl/mongodb/client-key.pem"
+    
+  # Authentication
+  auth:
+    mechanism: "SCRAM-SHA-256"
+    source: "admin"
+    username: "${MONGODB_USERNAME}"
+    password: "${MONGODB_PASSWORD}"
+    
+  # Connection pool
+  pool:
+    min_size: 20
+    max_size: 200
+    max_idle_time_ms: 30000
+    wait_queue_timeout_ms: 10000
+    server_selection_timeout_ms: 5000
+    connect_timeout_ms: 10000
+    socket_timeout_ms: 30000
+    heartbeat_frequency_ms: 10000
+    
+  # Performance
+  performance:
+    read_preference: "secondaryPreferred"
+    read_concern: "majority"
+    write_concern:
+      w: "majority"
+      j: true
+      wtimeout: 10000
+    max_time_ms: 30000
+    
+  # WiredTiger settings
+  wired_tiger:
+    cache_size_gb: 8
+    journal_compressor: "snappy"
+    collection_block_compressor: "snappy"
+    index_prefix_compression: true
+    
+  # Monitoring
+  monitoring:
+    enable_command_monitoring: true
+    enable_connection_monitoring: true
+    enable_server_monitoring: true
+    slow_operation_threshold_ms: 100
+    profiling_level: 1
+    profiling_slow_ms: 100
+    
+  # Security
+  security:
+    encrypt_fields: true
+    encryption_key_source: "vault"  # AWS KMS, Azure Key Vault, etc.
+    audit_logging: true
+    compliance_mode: "strict"
+    field_level_encryption: true
+    
+  # Sharding
+  sharding:
+    enabled: true
+    shard_key_patterns:
+      content: {"user_id": 1, "created_at": 1}
+      analytics: {"date": 1, "platform": 1}
+      users: {"_id": "hashed"}
+    chunk_size_mb: 64
+    
+# Application settings
+application:
+  environment: "production"
+  debug: false
+  log_level: "INFO"
+  
+  # Feature flags
+  features:
+    ai_processing: true
+    real_time_analytics: true
+    advanced_search: true
+    multi_platform_sync: true
+    gamification: true
+    multimedia_processing: true
+    
+  # Rate limiting
+  rate_limiting:
+    enabled: true
+    requests_per_minute: 10000
+    burst_size: 1000
+    
+  # Caching
+  caching:
+    enabled: true
+    redis_url: "${REDIS_URL}"
+    default_ttl: 3600
+    max_memory_mb: 2048
+    
+# Infrastructure
+infrastructure:
+  kubernetes:
+    namespace: "mongodb-prod"
+    storage_class: "fast-ssd"
+    replica_count: 3
+    resource_limits:
+      cpu: "4000m"
+      memory: "8Gi"
+      storage: "500Gi"
+    resource_requests:
+      cpu: "2000m"
+      memory: "4Gi"
+      storage: "100Gi"
+    anti_affinity: true
+    node_selector:
+      workload: "mongodb"
+      
+  # Load balancing
+  load_balancer:
+    type: "nginx"
+    health_check_path: "/health"
+    timeout: 30
+    retries: 3
+    
+  # Monitoring
+  monitoring:
+    prometheus_endpoint: "https://prometheus.ainflue.com"
+    grafana_dashboard: "https://grafana.ainflue.com"
+    alert_manager: "https://alerts.ainflue.com"
+    metrics_retention_days: 30
+    
+  # Backup
+  backup:
+    enabled: true
+    schedule: "0 2 * * *"  # Daily at 2 AM
+    retention_days: 30
+    cloud_storage: "s3://ainflue-backups/mongodb"
+    encryption: true
+    compression: true
+    verification: true
+    
+  # Disaster recovery
+  disaster_recovery:
+    enabled: true
+    rto_minutes: 60  # Recovery Time Objective
+    rpo_minutes: 15  # Recovery Point Objective
+    cross_region_backup: true
+    automated_failover: true
+    
+# Security
+security:
+  # TLS/SSL
+  tls:
+    version: "1.3"
+    cipher_suites: "HIGH:!aNULL:!MD5"
+    certificate_rotation_days: 90
+    
+  # Access control
+  access_control:
+    enable_rbac: true
+    enable_abac: true
+    session_timeout_minutes: 60
+    max_failed_attempts: 5
+    lockout_duration_minutes: 30
+    
+  # Encryption
+  encryption:
+    algorithm: "AES-256-GCM"
+    key_rotation_days: 30
+    master_key_source: "kms"
+    
+  # Compliance
+  compliance:
+    gdpr_enabled: true
+    ccpa_enabled: true
+    hipaa_enabled: false
+    pci_enabled: false
+    audit_retention_years: 7
+    
+# Logging
+logging:
+  level: "INFO"
+  format: "json"
+  output: "stdout"
+  
+  # Log retention
+  retention:
+    audit_logs: "7 years"
+    error_logs: "1 year"
+    access_logs: "6 months"
+    performance_logs: "3 months"
+    
+  # External logging
+  external_logging:
+    enabled: true
+    endpoint: "${LOG_AGGREGATOR_URL}"
+    format: "json"
+    
+# Alerts
+alerts:
+  enabled: true
+  
+  # Performance alerts
+  performance:
+    high_latency_ms: 500
+    high_connection_usage_percent: 80
+    high_memory_usage_percent: 85
+    high_cpu_usage_percent: 80
+    low_disk_space_percent: 10
+    
+  # Security alerts
+  security:
+    failed_authentication_threshold: 10
+    suspicious_query_patterns: true
+    unauthorized_access_attempts: true
+    data_export_volume_mb: 1000
+    
+  # Notification channels
+  notifications:
+    email: ["ops-team@ainflue.com", "security@ainflue.com"]
+    slack_webhook: "${SLACK_WEBHOOK_URL}"
+    pagerduty_key: "${PAGERDUTY_INTEGRATION_KEY}"

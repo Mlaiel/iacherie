@@ -1,0 +1,143 @@
+# Prometheus Configuration for MongoDB Monitoring
+# Ainflue Platform - Enterprise Monitoring
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: 'ainflue-mongodb'
+    environment: '${ENVIRONMENT}'
+
+rule_files:
+  - "mongodb_alerts.yml"
+  - "performance_alerts.yml"
+  - "security_alerts.yml"
+
+scrape_configs:
+  # MongoDB Exporter
+  - job_name: 'mongodb-exporter'
+    static_configs:
+      - targets: ['mongodb-exporter:9216']
+    scrape_interval: 30s
+    scrape_timeout: 10s
+    metrics_path: /metrics
+    
+  # Application Metrics
+  - job_name: 'mongodb-application'
+    static_configs:
+      - targets: ['mongodb-app:8080']
+    scrape_interval: 15s
+    scrape_timeout: 10s
+    metrics_path: /metrics
+    
+  # System Metrics
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+    scrape_interval: 30s
+    
+  # Container Metrics
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['cadvisor:8080']
+    scrape_interval: 30s
+    
+  # Kubernetes Metrics
+  - job_name: 'kubernetes-apiservers'
+    kubernetes_sd_configs:
+      - role: endpoints
+    scheme: https
+    tls_config:
+      ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+    bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+    relabel_configs:
+      - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
+        action: keep
+        regex: default;kubernetes;https
+        
+  # MongoDB Cluster Monitoring
+  - job_name: 'mongodb-cluster'
+    kubernetes_sd_configs:
+      - role: pod
+        namespaces:
+          names:
+            - mongodb-prod
+            - mongodb-staging
+    relabel_configs:
+      - source_labels: [__meta_kubernetes_pod_label_app]
+        action: keep
+        regex: mongodb
+      - source_labels: [__meta_kubernetes_pod_name]
+        target_label: instance
+      - source_labels: [__meta_kubernetes_namespace]
+        target_label: namespace
+        
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - alertmanager:9093
+      scheme: http
+      timeout: 10s
+      api_version: v2
+
+# Recording rules for performance optimization
+recording_rules:
+  - name: mongodb_performance
+    rules:
+    - record: mongodb:operation_rate
+      expr: rate(mongodb_op_counters_total[5m])
+      
+    - record: mongodb:connection_utilization
+      expr: (mongodb_connections_current / mongodb_connections_available) * 100
+      
+    - record: mongodb:memory_utilization
+      expr: (mongodb_memory_resident / mongodb_memory_virtual) * 100
+      
+    - record: mongodb:replication_lag_seconds
+      expr: |
+        max by (set) (
+          mongodb_replset_member_optime_date{state="PRIMARY"} - ignoring(state) group_right
+          mongodb_replset_member_optime_date{state="SECONDARY"}
+        )
+        
+    - record: mongodb:query_efficiency
+      expr: |
+        rate(mongodb_metrics_operation_total{type="query"}[5m]) /
+        rate(mongodb_metrics_document_total{state="returned"}[5m])
+
+# Storage rules
+storage:
+  tsdb:
+    retention.time: 30d
+    retention.size: 100GB
+    path: /prometheus/data
+    
+# Remote write configuration for long-term storage
+remote_write:
+  - url: "https://prometheus-remote.ainflue.com/api/v1/write"
+    basic_auth:
+      username: ${REMOTE_WRITE_USERNAME}
+      password: ${REMOTE_WRITE_PASSWORD}
+    queue_config:
+      capacity: 10000
+      max_samples_per_send: 5000
+      batch_send_deadline: 30s
+      min_backoff: 100ms
+      max_backoff: 10s
+      
+# Federation configuration
+federation:
+  - job_name: 'federate'
+    scrape_interval: 15s
+    honor_labels: true
+    metrics_path: '/federate'
+    params:
+      'match[]':
+        - '{job=~"mongodb.*"}'
+        - '{__name__=~"job:.*"}'
+    static_configs:
+      - targets:
+        - 'prometheus-master:9090'

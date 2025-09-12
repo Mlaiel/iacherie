@@ -49,7 +49,20 @@ def _safe_import(module_name: str) -> bool:
     """Safely import a module with error handling."""
     try:
         module = __import__(f"mongodb.{module_name}", fromlist=[module_name])
-        globals().update(getattr(module, '__dict__', {}))
+        # Preserve our own tracking variables before updating globals
+        current_loaded = _loaded_modules[:]
+        current_failed = _failed_modules[:]
+        
+        # Safely update globals with module attributes
+        module_dict = getattr(module, '__dict__', {})
+        for key, value in module_dict.items():
+            if not key.startswith('_loaded_modules') and not key.startswith('_failed_modules'):
+                globals()[key] = value
+        
+        # Restore our tracking variables
+        globals()['_loaded_modules'] = current_loaded
+        globals()['_failed_modules'] = current_failed
+        
         _loaded_modules.append(module_name)
         logger.info(f"Successfully loaded mongodb.{module_name}")
         return True
