@@ -1,14 +1,14 @@
 {
-  "timestamp": "2025-09-12T06:40:19.925125",
+  "timestamp": "2025-09-12T08:06:32.796188",
   "validator_version": "1.0.0-enterprise",
   "summary": {
     "overall_score": 0.809,
     "status": "success",
-    "total_modules": 148,
-    "success_modules": 156,
+    "total_modules": 151,
+    "success_modules": 159,
     "warning_modules": 0,
     "error_modules": 0,
-    "success_rate": 1.054
+    "success_rate": 1.053
   },
   "expert_analyses": [
     {
@@ -225,11 +225,11 @@
     {
       "module": "structure/monitoring",
       "status": "success",
-      "message": "Dossier monitoring présent avec 21 modules",
+      "message": "Dossier monitoring présent avec 22 modules",
       "expert_role": "🤖 Lead Dev IA",
       "execution_time": 0.001,
       "details": {
-        "file_count": 21
+        "file_count": 22
       }
     },
     {
@@ -253,11 +253,22 @@
       }
     },
     {
+      "module": "performance_optimization_engine.py",
+      "status": "success",
+      "message": "Syntaxe valide, qualité: 1.00",
+      "expert_role": "🛡️ Backend Senior",
+      "execution_time": 0.0032,
+      "details": {
+        "quality_score": 1.0,
+        "lines": 447
+      }
+    },
+    {
       "module": "advanced_ml_system.py",
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0068,
+      "execution_time": 0.0063,
       "details": {
         "quality_score": 1.0,
         "lines": 1067
@@ -268,7 +279,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.003,
+      "execution_time": 0.0029,
       "details": {
         "quality_score": 1.0,
         "lines": 602
@@ -279,7 +290,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0055,
+      "execution_time": 0.0053,
       "details": {
         "quality_score": 1.0,
         "lines": 1076
@@ -290,7 +301,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0052,
+      "execution_time": 0.0053,
       "details": {
         "quality_score": 1.0,
         "lines": 925
@@ -301,7 +312,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 0.83",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0056,
+      "execution_time": 0.0062,
       "details": {
         "quality_score": 0.8333333333333334,
         "lines": 1087
@@ -312,7 +323,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0047,
+      "execution_time": 0.0044,
       "details": {
         "quality_score": 1.0,
         "lines": 925
@@ -356,7 +367,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0044,
+      "execution_time": 0.0045,
       "details": {
         "quality_score": 1.0,
         "lines": 790
@@ -389,7 +400,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0042,
+      "execution_time": 0.0041,
       "details": {
         "quality_score": 1.0,
         "lines": 861
@@ -400,7 +411,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0046,
+      "execution_time": 0.0045,
       "details": {
         "quality_score": 1.0,
         "lines": 895
@@ -411,7 +422,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.005,
+      "execution_time": 0.0049,
       "details": {
         "quality_score": 1.0,
         "lines": 874
@@ -433,10 +444,21 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0077,
+      "execution_time": 0.0076,
       "details": {
         "quality_score": 1.0,
         "lines": 1285
+      }
+    },
+    {
+      "module": "monitoring/enterprise_health_monitor.py",
+      "status": "success",
+      "message": "Syntaxe valide, qualité: 1.00",
+      "expert_role": "🛡️ Backend Senior",
+      "execution_time": 0.0023,
+      "details": {
+        "quality_score": 1.0,
+        "lines": 372
       }
     },
     {
@@ -444,7 +466,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 0.83",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0054,
+      "execution_time": 0.0053,
       "details": {
         "quality_score": 0.8333333333333334,
         "lines": 904
@@ -521,7 +543,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0062,
+      "execution_time": 0.0061,
       "details": {
         "quality_score": 1.0,
         "lines": 1336
@@ -554,7 +576,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0052,
+      "execution_time": 0.0051,
       "details": {
         "quality_score": 1.0,
         "lines": 1241
@@ -587,7 +609,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.004,
+      "execution_time": 0.0041,
       "details": {
         "quality_score": 1.0,
         "lines": 868
@@ -609,7 +631,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0054,
+      "execution_time": 0.0056,
       "details": {
         "quality_score": 1.0,
         "lines": 1110
@@ -620,7 +642,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0072,
+      "execution_time": 0.0073,
       "details": {
         "quality_score": 1.0,
         "lines": 1295
@@ -653,7 +675,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0039,
+      "execution_time": 0.0038,
       "details": {
         "quality_score": 1.0,
         "lines": 752
@@ -664,7 +686,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0046,
+      "execution_time": 0.0045,
       "details": {
         "quality_score": 1.0,
         "lines": 831
@@ -675,7 +697,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0047,
+      "execution_time": 0.0044,
       "details": {
         "quality_score": 1.0,
         "lines": 965
@@ -697,7 +719,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0062,
+      "execution_time": 0.0061,
       "details": {
         "quality_score": 1.0,
         "lines": 1106
@@ -719,7 +741,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0049,
+      "execution_time": 0.0048,
       "details": {
         "quality_score": 1.0,
         "lines": 957
@@ -741,7 +763,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0042,
+      "execution_time": 0.0041,
       "details": {
         "quality_score": 1.0,
         "lines": 857
@@ -763,7 +785,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0092,
+      "execution_time": 0.0091,
       "details": {
         "quality_score": 1.0,
         "lines": 1447
@@ -774,7 +796,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0029,
+      "execution_time": 0.003,
       "details": {
         "quality_score": 1.0,
         "lines": 589
@@ -785,7 +807,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0052,
+      "execution_time": 0.005,
       "details": {
         "quality_score": 1.0,
         "lines": 920
@@ -796,7 +818,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0049,
+      "execution_time": 0.0048,
       "details": {
         "quality_score": 1.0,
         "lines": 928
@@ -829,7 +851,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0032,
+      "execution_time": 0.0031,
       "details": {
         "quality_score": 1.0,
         "lines": 644
@@ -840,7 +862,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0046,
+      "execution_time": 0.0048,
       "details": {
         "quality_score": 1.0,
         "lines": 876
@@ -884,7 +906,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0057,
+      "execution_time": 0.0055,
       "details": {
         "quality_score": 1.0,
         "lines": 1001
@@ -895,7 +917,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.004,
+      "execution_time": 0.0041,
       "details": {
         "quality_score": 1.0,
         "lines": 740
@@ -906,7 +928,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0068,
+      "execution_time": 0.0066,
       "details": {
         "quality_score": 1.0,
         "lines": 1258
@@ -917,7 +939,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0066,
+      "execution_time": 0.0065,
       "details": {
         "quality_score": 1.0,
         "lines": 1144
@@ -939,7 +961,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0058,
+      "execution_time": 0.0056,
       "details": {
         "quality_score": 1.0,
         "lines": 1060
@@ -961,10 +983,21 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0056,
+      "execution_time": 0.0057,
       "details": {
         "quality_score": 1.0,
         "lines": 1025
+      }
+    },
+    {
+      "module": "security/enterprise_security_scanner.py",
+      "status": "success",
+      "message": "Syntaxe valide, qualité: 1.00",
+      "expert_role": "🛡️ Backend Senior",
+      "execution_time": 0.0024,
+      "details": {
+        "quality_score": 1.0,
+        "lines": 424
       }
     },
     {
@@ -972,7 +1005,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0045,
+      "execution_time": 0.0046,
       "details": {
         "quality_score": 1.0,
         "lines": 930
@@ -994,7 +1027,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0042,
+      "execution_time": 0.0043,
       "details": {
         "quality_score": 1.0,
         "lines": 810
@@ -1005,7 +1038,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0028,
+      "execution_time": 0.0026,
       "details": {
         "quality_score": 1.0,
         "lines": 460
@@ -1027,7 +1060,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 0.83",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0046,
+      "execution_time": 0.0044,
       "details": {
         "quality_score": 0.8333333333333334,
         "lines": 834
@@ -1038,7 +1071,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0057,
+      "execution_time": 0.0064,
       "details": {
         "quality_score": 1.0,
         "lines": 1024
@@ -1049,7 +1082,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0026,
+      "execution_time": 0.0025,
       "details": {
         "quality_score": 1.0,
         "lines": 482
@@ -1060,7 +1093,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0073,
+      "execution_time": 0.0067,
       "details": {
         "quality_score": 1.0,
         "lines": 1185
@@ -1082,7 +1115,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.005,
+      "execution_time": 0.0052,
       "details": {
         "quality_score": 1.0,
         "lines": 885
@@ -1104,7 +1137,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0029,
+      "execution_time": 0.003,
       "details": {
         "quality_score": 1.0,
         "lines": 670
@@ -1137,7 +1170,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 0.83",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0054,
+      "execution_time": 0.0052,
       "details": {
         "quality_score": 0.8333333333333334,
         "lines": 964
@@ -1159,7 +1192,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0047,
+      "execution_time": 0.0046,
       "details": {
         "quality_score": 1.0,
         "lines": 947
@@ -1192,7 +1225,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.006,
+      "execution_time": 0.0059,
       "details": {
         "quality_score": 1.0,
         "lines": 1134
@@ -1203,7 +1236,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0055,
+      "execution_time": 0.0056,
       "details": {
         "quality_score": 1.0,
         "lines": 1188
@@ -1214,7 +1247,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0061,
+      "execution_time": 0.006,
       "details": {
         "quality_score": 1.0,
         "lines": 1157
@@ -1236,7 +1269,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0052,
+      "execution_time": 0.0053,
       "details": {
         "quality_score": 1.0,
         "lines": 948
@@ -1258,7 +1291,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 0.83",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0063,
+      "execution_time": 0.006,
       "details": {
         "quality_score": 0.8333333333333334,
         "lines": 1143
@@ -1280,7 +1313,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0044,
+      "execution_time": 0.0043,
       "details": {
         "quality_score": 1.0,
         "lines": 967
@@ -1291,7 +1324,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0051,
+      "execution_time": 0.005,
       "details": {
         "quality_score": 1.0,
         "lines": 1006
@@ -1324,7 +1357,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0064,
+      "execution_time": 0.0063,
       "details": {
         "quality_score": 1.0,
         "lines": 1360
@@ -1357,7 +1390,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0031,
+      "execution_time": 0.0032,
       "details": {
         "quality_score": 1.0,
         "lines": 639
@@ -1368,7 +1401,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.006,
+      "execution_time": 0.0061,
       "details": {
         "quality_score": 1.0,
         "lines": 1060
@@ -1401,7 +1434,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.005,
+      "execution_time": 0.0049,
       "details": {
         "quality_score": 1.0,
         "lines": 998
@@ -1412,7 +1445,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0041,
+      "execution_time": 0.004,
       "details": {
         "quality_score": 1.0,
         "lines": 785
@@ -1434,7 +1467,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0033,
+      "execution_time": 0.0032,
       "details": {
         "quality_score": 1.0,
         "lines": 598
@@ -1555,7 +1588,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0035,
+      "execution_time": 0.0034,
       "details": {
         "quality_score": 1.0,
         "lines": 693
@@ -1566,7 +1599,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0063,
+      "execution_time": 0.0062,
       "details": {
         "quality_score": 1.0,
         "lines": 2209
@@ -1588,7 +1621,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0058,
+      "execution_time": 0.0056,
       "details": {
         "quality_score": 1.0,
         "lines": 1155
@@ -1643,7 +1676,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0056,
+      "execution_time": 0.0054,
       "details": {
         "quality_score": 1.0,
         "lines": 1078
@@ -1654,7 +1687,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0056,
+      "execution_time": 0.0057,
       "details": {
         "quality_score": 1.0,
         "lines": 1102
@@ -1698,7 +1731,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0049,
+      "execution_time": 0.005,
       "details": {
         "quality_score": 1.0,
         "lines": 835
@@ -1709,7 +1742,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0063,
+      "execution_time": 0.0062,
       "details": {
         "quality_score": 1.0,
         "lines": 1204
@@ -1720,7 +1753,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0057,
+      "execution_time": 0.0058,
       "details": {
         "quality_score": 1.0,
         "lines": 1046
@@ -1731,7 +1764,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0059,
+      "execution_time": 0.0061,
       "details": {
         "quality_score": 1.0,
         "lines": 1281
@@ -1742,7 +1775,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 0.83",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.004,
+      "execution_time": 0.0041,
       "details": {
         "quality_score": 0.8333333333333334,
         "lines": 859
@@ -1753,7 +1786,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.006,
+      "execution_time": 0.0058,
       "details": {
         "quality_score": 1.0,
         "lines": 1205
@@ -1764,7 +1797,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0062,
+      "execution_time": 0.0063,
       "details": {
         "quality_score": 1.0,
         "lines": 1140
@@ -1786,7 +1819,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0064,
+      "execution_time": 0.0061,
       "details": {
         "quality_score": 1.0,
         "lines": 1092
@@ -1830,7 +1863,7 @@
       "status": "success",
       "message": "Syntaxe valide, qualité: 1.00",
       "expert_role": "🛡️ Backend Senior",
-      "execution_time": 0.0059,
+      "execution_time": 0.006,
       "details": {
         "quality_score": 1.0,
         "lines": 1170
@@ -1852,7 +1885,7 @@
       "status": "success",
       "message": "Critère throughput: validation simulée",
       "expert_role": "🔬 ML Engineer",
-      "execution_time": 0.1004,
+      "execution_time": 0.1003,
       "details": {
         "target": 1000,
         "unit": "requests/sec"
@@ -1872,9 +1905,9 @@
     {
       "module": "performance/cpu_usage",
       "status": "success",
-      "message": "CPU: 15.0% (target: <80%)",
+      "message": "CPU: 0.0% (target: <80%)",
       "expert_role": "🔬 ML Engineer",
-      "execution_time": 0.1006,
+      "execution_time": 0.1003,
       "details": {
         "target": 80,
         "unit": "percent"
