@@ -1,0 +1,15 @@
+{
+  "node_id": "feature_ca50288d",
+  "name": "user_engagement_score",
+  "type": "feature",
+  "source": "database",
+  "created_at": "2025-09-12T01:58:00.735622",
+  "metadata": {
+    "description": "Score d'engagement utilisateur",
+    "version": "1.0"
+  },
+  "creator_types": [
+    "musician",
+    "blogger"
+  ]
+}

@@ -18,22 +18,27 @@ Systèmes avancés de gestion des features
 
 from .feature_store import (
     FeatureStore,
-    FeatureConfig,
-    FeatureDefinition,
+    FeatureType,
+    FeatureStatus,
+    FeatureSchema,
     FeatureValue,
     FeatureGroup,
-    FeatureRegistry,
-    FeatureMetadata
+    SQLiteFeatureStore,
+    FeatureTransformation,
+    FeatureValidator,
+    FeatureLineage
 )
 
 from .feature_pipeline_orchestrator import (
     FeaturePipelineOrchestrator,
     PipelineConfig,
-    PipelineStage,
-    PipelineExecution,
+    PipelineRun,
+    PipelineStatus,
     TransformationStep,
-    ValidationRule,
-    DataSource
+    FeatureDefinition,
+    FeatureLineage,
+    TransformationType,
+    ExecutionMode
 )
 
 from .feature_discovery_engine import (
@@ -73,21 +78,26 @@ from .temporal_feature_generator import (
 __all__ = [
     # Feature Store (Existing)
     'FeatureStore',
-    'FeatureConfig',
-    'FeatureDefinition',
+    'FeatureType',
+    'FeatureStatus',
+    'FeatureSchema',
     'FeatureValue',
     'FeatureGroup',
-    'FeatureRegistry',
-    'FeatureMetadata',
+    'SQLiteFeatureStore',
+    'FeatureTransformation',
+    'FeatureValidator',
+    'FeatureLineage',
     
     # Pipeline Orchestrator (Existing)
     'FeaturePipelineOrchestrator',
     'PipelineConfig',
-    'PipelineStage',
-    'PipelineExecution',
+    'PipelineRun',
+    'PipelineStatus',
     'TransformationStep',
-    'ValidationRule',
-    'DataSource',
+    'FeatureDefinition',
+    'FeatureLineage',
+    'TransformationType',
+    'ExecutionMode',
     
     # Discovery Engine (Existing)
     'FeatureDiscoveryEngine',
