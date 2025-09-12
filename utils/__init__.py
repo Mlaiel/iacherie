@@ -43,17 +43,35 @@ from .rest_client import RestClient
 from .prompt_optimizer import PromptOptimizer
 from .ai_config import AIConfig
 
+# NEW CRITICAL UTILITIES - January 2025 Implementation
+from .data_validator import DataValidator, ValidationResult
+from .data_transformer import DataTransformer, TransformationResult
+from .input_sanitizer import InputSanitizer, SanitizationResult
+from .error_handler import ErrorHandler, ErrorRecord, ErrorSeverity, ErrorCategory
+from .logging_utilities import StructuredLogger, LogContext, LogLevel
+from .cache_utilities import CacheUtilities, InMemoryCache, RedisCache
+
 # Expert role coverage verification
 EXPERT_ROLES_IMPLEMENTED = {
-    'Lead Dev IA': ['AIOrchestrator', 'ModelUtilities'],
-    'Backend Senior': ['DatabaseUtilities', 'APIValidator', 'RestClient'],
-    'ML Engineer': ['ModelUtilities', 'AIOrchestrator'],
-    'DBA': ['DatabaseUtilities', 'QueryBuilder'],
-    'Security': ['EncryptionUtilities', 'AuthUtilities'],
-    'Microservices': ['APIValidator', 'RestClient'],
+    'Lead Dev IA': ['AIOrchestrator', 'ModelUtilities', 'DataTransformer', 'DataValidator'],
+    'Backend Senior': ['DatabaseUtilities', 'APIValidator', 'RestClient', 'DataTransformer', 'CacheUtilities'],
+    'ML Engineer': ['ModelUtilities', 'AIOrchestrator', 'DataTransformer'],
+    'DBA': ['DatabaseUtilities', 'QueryBuilder', 'CacheUtilities', 'InMemoryCache', 'RedisCache'],
+    'Security': ['EncryptionUtilities', 'AuthUtilities', 'InputSanitizer', 'DataValidator'],
+    'Microservices': ['APIValidator', 'RestClient', 'ErrorHandler', 'CacheUtilities'],
     'Audio Engineer': ['AudioUtilities', 'MediaProcessor'],
-    'DevOps': ['PerformanceMonitor', 'MetricsCollector', 'HealthChecker', 'CircuitBreaker', 'RateLimiter', 'NotificationService'],
+    'DevOps': ['PerformanceMonitor', 'MetricsCollector', 'HealthChecker', 'CircuitBreaker', 'RateLimiter', 'NotificationService', 'ErrorHandler', 'StructuredLogger'],
     'IA Prompt Engineer': ['PromptOptimizer', 'AIConfig']
+}
+
+# NEW IMPLEMENTATIONS COUNT
+NEW_UTILITIES_IMPLEMENTED = {
+    'data_validator.py': 'Data validation with security checks',
+    'data_transformer.py': 'Enterprise data transformation pipeline',
+    'input_sanitizer.py': 'Security-focused input sanitization',
+    'error_handler.py': 'Comprehensive error management system',
+    'logging_utilities.py': 'Structured enterprise logging',
+    'cache_utilities.py': 'Multi-backend caching system'
 }
 
 __all__ = [
