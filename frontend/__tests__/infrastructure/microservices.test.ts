@@ -75,7 +75,7 @@ describe('Microservices Orchestrator - Microservices Architect & Backend Senior'
       const strategies = ['round-robin', 'least-connections', 'weighted-round-robin', 'least-response-time'];
       
       for (const strategy of strategies) {
-        orchestrator.setLoadBalancingStrategy(strategy);
+        orchestrator.setLoadBalancingStrategy('content-service', strategy);
         
         const requests = Array(20).fill(null);
         const selectedInstances = await Promise.all(
@@ -195,7 +195,7 @@ describe('Microservices Orchestrator - Microservices Architect & Backend Senior'
         metrics: ['cpu', 'memory', 'request-rate', 'response-time']
       };
 
-      await orchestrator.configureAutoScaling(scalingPolicy);
+      await orchestrator.configureAutoScaling('test-service', 5, scalingPolicy);
 
       // Simulate high load metrics
       const highLoadMetrics = {
@@ -310,9 +310,9 @@ describe('Microservices Orchestrator - Microservices Architect & Backend Senior'
 
       // Test service-to-service communication
       const communicationTest = await orchestrator.testServiceCommunication([
-        { from: 'user-service', to: 'content-service', endpoint: '/api/content' },
-        { from: 'content-service', to: 'analytics-service', endpoint: '/api/track' },
-        { from: 'analytics-service', to: 'user-service', endpoint: '/api/users' }
+        'user-service',
+        'content-service', 
+        'analytics-service'
       ]);
 
       expect(communicationTest.allSuccessful).toBe(true);

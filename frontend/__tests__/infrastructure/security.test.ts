@@ -241,11 +241,62 @@ describe('Advanced Threat Detection - Security Specialist & ML Engineer', () => 
 
     test('should handle security alert escalation', async () => {
       const criticalThreat = {
-        type: 'ZERO_DAY_EXPLOIT',
-        severity: 'CRITICAL',
-        confidence: 0.95,
-        affectedSystems: ['all'],
-        immediateDanger: true
+        id: 'threat-12345',
+        timestamp: Date.now(),
+        source: 'security-scanner',
+        threatType: 'zero_day' as const,
+        severity: 'critical' as const,
+        confidence: 95,
+        status: 'detected' as const,
+        indicators: [],
+        mitigation: [],
+        forensics: {
+          artifacts: [],
+          timeline: [],
+          attribution: {
+            actor_group: 'APT-Unknown',
+            campaign: 'Zero-Day-Campaign-2025',
+            ttps: [{
+              tactic: 'Initial Access',
+              technique: 'Exploit Public-Facing Application',
+              procedure: 'Zero-day vulnerability exploitation',
+              mitre_id: 'T1190',
+              confidence: 95
+            }],
+            geolocation: {
+              country: 'Unknown',
+              region: 'Unknown',
+              city: 'Unknown',
+              coordinates: { lat: 0, lng: 0 },
+              isp: 'Unknown',
+              asn: 0,
+              vpn_detected: true,
+              tor_exit_node: true
+            },
+            infrastructure: {
+              domains: ['malicious-domain.com'],
+              ip_addresses: ['192.168.1.100'],
+              certificates: [],
+              hosting_providers: ['Unknown'],
+              registration_dates: [Date.now()],
+              name_servers: ['ns1.malicious.com']
+            },
+            motivation: ['financial', 'espionage'],
+            confidence: 85
+          },
+          evidence: [],
+          reconstructedAttack: []
+        },
+        impact: {
+          scope: 'organization_wide' as const,
+          affected_systems: 50,
+          affected_users: 10000,
+          data_compromised: true,
+          financial_impact: 1000000,
+          reputational_impact: 'high' as const,
+          operational_impact: 'severe' as const,
+          estimated_recovery_time: 72
+        }
       };
 
       const escalation = await threatDetector.escalateThreat(criticalThreat);
