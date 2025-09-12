@@ -16,7 +16,8 @@ from typing import Dict, Any
 from .conftest import MongoDBTestCase, MONGODB_MODULES_AVAILABLE
 
 if MONGODB_MODULES_AVAILABLE:
-    from mongodb.connection import MongoDBConnection, MongoDBConfig, ConnectionPool
+    from mongodb.connection import MongoDBConnection, MongoDBConfig
+    from mongodb.performance.connection_pooling import ConnectionPool
 else:
     # Create mock classes for testing when modules not available
     class MongoDBConnection:

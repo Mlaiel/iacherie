@@ -112,7 +112,7 @@ class PointInTimeRecovery:
         if databases:
             ns_conditions = []
             for db in databases:
-                ns_conditions.append({'ns': {'$regex': f'^{db}\.'}})
+                ns_conditions.append({'ns': {'$regex': f'^{db}\\.'}})
             query['$or'] = ns_conditions
         
         # Replay oplog entries

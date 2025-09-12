@@ -232,7 +232,7 @@ class IncrementalBackup:
                 
                 if databases:
                     for db in databases:
-                        ns_conditions.append({'ns': {'$regex': f'^{db}\.'}})
+                        ns_conditions.append({'ns': {'$regex': f'^{db}\\.'}})
                 
                 if collections:
                     for collection in collections:
