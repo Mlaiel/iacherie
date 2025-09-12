@@ -269,11 +269,11 @@ export const Monetization: React.FC<MonetizationProps> = ({
   const defaultTiers: SubscriptionTier[] = [
     {
       id: '1',
-      name: 'Basic',
+      name: 'Essential',
       price: 9.99,
       currency: 'USD',
       period: 'month',
-      features: ['Ad-free content', 'Early access', 'Basic support'],
+      features: ['Ad-free content', 'Early access', 'Standard support'],
       subscribers: 1250,
       revenue: 12487.50
     },
@@ -283,7 +283,7 @@ export const Monetization: React.FC<MonetizationProps> = ({
       price: 19.99,
       currency: 'USD',
       period: 'month',
-      features: ['All Basic features', 'Exclusive content', 'Priority support', '1-on-1 sessions'],
+      features: ['All Essential features', 'Exclusive content', 'Priority support', '1-on-1 sessions'],
       subscribers: 680,
       revenue: 13592.32,
       isPopular: true
