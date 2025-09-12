@@ -16,7 +16,7 @@ This module provides comprehensive event orchestration capabilities including:
 
 import asyncio
 import logging
-from typing import Dict, List, Optional, Any, Callable, Awaitable, Set
+from typing import Dict, List, Optional, Any, Callable, Awaitable, Set, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 from datetime import datetime, timedelta
