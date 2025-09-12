@@ -289,12 +289,12 @@ export class SEOEngine {
    * Generate AI-optimized keywords for content
    */
   public async generateAIKeywords(content: { title: string; description: string; tags: string[] }): Promise<string[]> {
-    const allText = `${content.title} ${content.description} ${content.tags.join(' ')}`;
+    const allText = `${content.title} ${content.description} ${(content.tags || []).join(' ')}`;
     const words = allText.toLowerCase().split(/\s+/);
     
     // AI-enhanced keyword extraction
     const aiKeywords = [
-      ...content.tags,
+      ...(content.tags || []),
       'electronic dance music',
       'edm',
       'music production',
