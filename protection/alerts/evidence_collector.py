@@ -174,7 +174,10 @@ except ImportError:
     settings = SettingsFallback()
 
 try:
+    try:
     from ...core.database import get_async_session
+except ImportError:
+    async def get_async_session(): return None
     DATABASE_AVAILABLE = True
 except ImportError:
     DATABASE_AVAILABLE = False

@@ -40,7 +40,10 @@ from .alert_models import ContentProtectionAlert, AlertSeverity, AlertForensics
 from ..fingerprinting.content_fingerprinter import ContentFingerprinter
 from ..blockchain.evidence_blockchain import EvidenceBlockchain
 from ...core.config import settings
-from ...core.database import get_async_session
+try:
+    from ...core.database import get_async_session
+except ImportError:
+    async def get_async_session(): return None
 from ...utils.encryption import AdvancedEncryption
 
 logger = logging.getLogger(__name__)

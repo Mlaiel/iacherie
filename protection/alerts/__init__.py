@@ -81,9 +81,7 @@ try:
         NotificationEngine,
         NotificationChannel,
         NotificationTemplate,
-        DeliveryResult,
-        NotificationBatch,
-        ChannelConfig
+        DeliveryResult
     )
     NOTIFICATION_ENGINE_AVAILABLE = True
 except (ImportError, SyntaxError) as e:
@@ -97,10 +95,6 @@ except (ImportError, SyntaxError) as e:
     class NotificationTemplate:
         def __init__(self, *args, **kwargs): pass
     class DeliveryResult:
-        def __init__(self, *args, **kwargs): pass
-    class NotificationBatch:
-        def __init__(self, *args, **kwargs): pass
-    class ChannelConfig:
         def __init__(self, *args, **kwargs): pass
 
 from .escalation_engine import (
@@ -195,8 +189,6 @@ __all__ = [
     "NotificationChannel",
     "NotificationTemplate",
     "DeliveryResult",
-    "NotificationBatch",
-    "ChannelConfig",
     
     # Escalation system
     "EscalationEngine",

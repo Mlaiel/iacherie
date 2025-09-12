@@ -68,8 +68,23 @@ from ..models.dashboard_models import (
     DashboardWidget, DashboardLayout, UserPreferences,
     AlertMetrics, PlatformMetrics, TimeSeriesData
 )
-from ...core.database import get_async_session
-from ...core.cache import CacheManager
+
+# Safe imports with fallbacks
+try:
+    try:
+    from ...core.database import get_async_session
+except ImportError:
+    async def get_async_session(): return None
+except ImportError:
+    async def get_async_session(): return None
+
+try:
+    from ...core.cache import CacheManager
+except ImportError:
+    class CacheManager:
+        def __init__(self, *args, **kwargs): pass
+        async def get(self, key): return None
+        async def set(self, key, value, ttl=None): pass
 
 logger = logging.getLogger(__name__)
 

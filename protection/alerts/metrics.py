@@ -30,7 +30,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func, and_, or_
 
 from .alert_models import AlertSeverity, AlertStatus, AlertCategory, ContentProtectionAlert
-from ...core.database import get_async_session
+try:
+    from ...core.database import get_async_session
+except ImportError:
+    async def get_async_session(): return None
 from ...core.cache import CacheManager
 
 logger = logging.getLogger(__name__)

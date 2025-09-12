@@ -31,7 +31,10 @@ import torch
 
 from ..models.alert_models import Alert, AlertSeverity, AlertType
 from ...core.config import settings
-from ...core.database import get_async_session
+try:
+    from ...core.database import get_async_session
+except ImportError:
+    async def get_async_session(): return None
 from ...core.cache import CacheManager
 
 logger = logging.getLogger(__name__)

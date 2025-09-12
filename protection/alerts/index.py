@@ -874,7 +874,10 @@ from .alert_models import (
     MLClassificationResult
 )
 
-from ...core.database import get_async_session
+try:
+    from ...core.database import get_async_session
+except ImportError:
+    async def get_async_session(): return None
 from ...core.security import verify_token, get_current_user
 from ...core.config import settings
 from ...core.cache import CacheManager

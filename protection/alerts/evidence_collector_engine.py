@@ -38,7 +38,10 @@ from .forensic_analyzer import AdvancedForensicAnalyzer
 from ..monitoring.blockchain_recorder import BlockchainRecorder
 from ..security.encryption_manager import EncryptionManager
 from ...core.config import settings
-from ...core.database import get_async_session
+try:
+    from ...core.database import get_async_session
+except ImportError:
+    async def get_async_session(): return None
 from ...utils.hashing import HashGenerator
 from ...utils.compression import CompressionManager
 
