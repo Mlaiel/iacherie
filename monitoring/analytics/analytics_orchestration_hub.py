@@ -685,11 +685,99 @@ class AnalyticsOrchestrationHub:
     
     async def _process_analytics_queue(self):
         """Process the analytics data queue."""
-        pass
+        try:
+            while True:
+                # Get queued analytics data
+                queued_items = await self._get_queued_analytics_data()
+                
+                for item in queued_items:
+                    try:
+                        # Process based on data type
+                        if item['type'] == 'engagement_data':
+                            await self._process_engagement_analytics(item['data'])
+                        elif item['type'] == 'content_performance':
+                            await self._process_content_analytics(item['data'])
+                        elif item['type'] == 'user_behavior':
+                            await self._process_user_behavior_analytics(item['data'])
+                        elif item['type'] == 'cross_platform_sync':
+                            await self._process_cross_platform_analytics(item['data'])
+                        elif item['type'] == 'real_time_metrics':
+                            await self._process_real_time_analytics(item['data'])
+                        
+                        # Update aggregated metrics
+                        await self._update_aggregated_metrics(item)
+                        
+                        # Mark item as processed
+                        await self._mark_analytics_item_processed(item['id'])
+                        
+                        logger.info(f"Processed analytics item: {item['type']} - {item['id']}")
+                        
+                    except Exception as e:
+                        logger.error(f"Error processing analytics item {item['id']}: {e}")
+                        await self._mark_analytics_item_failed(item['id'], str(e))
+                
+                # Wait before next processing cycle
+                await asyncio.sleep(5)
+                
+        except Exception as e:
+            logger.error(f"Critical error in analytics queue processing: {e}")
+            raise
     
     async def _generate_automated_insights(self):
         """Generate automated insights from processed data."""
-        pass
+        try:
+            # Get current analytics data
+            current_data = await self._get_current_analytics_data()
+            
+            # Generate insights using ML models
+            insights = []
+            
+            # Content performance insights
+            content_insights = await self._analyze_content_performance_patterns(current_data)
+            insights.extend(content_insights)
+            
+            # User engagement insights
+            engagement_insights = await self._analyze_engagement_patterns(current_data)
+            insights.extend(engagement_insights)
+            
+            # Revenue optimization insights
+            revenue_insights = await self._analyze_revenue_patterns(current_data)
+            insights.extend(revenue_insights)
+            
+            # Cross-platform performance insights
+            platform_insights = await self._analyze_cross_platform_performance(current_data)
+            insights.extend(platform_insights)
+            
+            # Anomaly detection insights
+            anomaly_insights = await self._detect_performance_anomalies(current_data)
+            insights.extend(anomaly_insights)
+            
+            # Competitive positioning insights
+            competitive_insights = await self._analyze_competitive_positioning(current_data)
+            insights.extend(competitive_insights)
+            
+            # Prioritize insights by business impact
+            prioritized_insights = await self._prioritize_insights(insights)
+            
+            # Generate actionable recommendations
+            for insight in prioritized_insights:
+                recommendations = await self._generate_insight_recommendations(insight)
+                insight['recommendations'] = recommendations
+                insight['generated_at'] = datetime.now().isoformat()
+            
+            # Store insights
+            await self._store_automated_insights(prioritized_insights)
+            
+            # Send high-priority insights as notifications
+            await self._send_insight_notifications(prioritized_insights)
+            
+            logger.info(f"Generated {len(prioritized_insights)} automated insights")
+            
+            return prioritized_insights
+            
+        except Exception as e:
+            logger.error(f"Error generating automated insights: {e}")
+            raise
     
     async def _monitor_competitor_activities(self):
         """Monitor competitor activities across platforms."""
