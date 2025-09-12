@@ -1,0 +1,933 @@
+"""
+🐳 Docker Compose Template - Enterprise Multi-Service Container Orchestration
+=============================================================================
+
+🔧 DEVOPS ENGINEER - Advanced Docker Compose Template
+- Multi-service application orchestration
+- Production-ready container configurations
+- Service mesh and networking setup
+- Volume management and data persistence  
+- Health checks and monitoring integration
+- Environment-specific overrides and scaling
+
+Author: DevOps Engineer Expert  
+Version: 1.0.0
+"""
+
+import json
+import logging
+from typing import Dict, List, Any, Optional, Union
+from dataclasses import dataclass, field
+from enum import Enum
+from datetime import datetime
+import yaml
+import os
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+class Environment(Enum):
+    """Deployment environments"""
+    DEVELOPMENT = "development"
+    STAGING = "staging" 
+    PRODUCTION = "production"
+    TESTING = "testing"
+
+class ServiceType(Enum):
+    """Service types for containerization"""
+    WEB_API = "web_api"
+    FRONTEND = "frontend"
+    DATABASE = "database"
+    CACHE = "cache"
+    MESSAGE_QUEUE = "message_queue"
+    WORKER = "worker"
+    MONITORING = "monitoring"
+    PROXY = "proxy"
+
+class HealthCheckType(Enum):
+    """Health check types"""
+    HTTP = "http"
+    TCP = "tcp"
+    COMMAND = "command"
+    NONE = "none"
+
+@dataclass
+class PortMapping:
+    """Port mapping configuration"""
+    host_port: int
+    container_port: int
+    protocol: str = "tcp"
+    description: str = ""
+
+@dataclass
+class VolumeMount:
+    """Volume mount configuration"""
+    host_path: str
+    container_path: str
+    access_mode: str = "rw"  # rw, ro
+    volume_type: str = "bind"  # bind, volume, tmpfs
+    description: str = ""
+
+@dataclass
+class EnvironmentVariable:
+    """Environment variable configuration"""
+    name: str
+    value: Optional[str] = None
+    from_file: Optional[str] = None
+    from_secret: Optional[str] = None
+    required: bool = False
+    description: str = ""
+
+@dataclass
+class HealthCheck:
+    """Health check configuration"""
+    type: HealthCheckType
+    endpoint: Optional[str] = None
+    command: Optional[List[str]] = None
+    interval: str = "30s"
+    timeout: str = "10s"
+    retries: int = 3
+    start_period: str = "60s"
+
+@dataclass
+class ResourceLimits:
+    """Resource limits configuration"""
+    cpu_limit: Optional[str] = None  # e.g., "2.0"
+    memory_limit: Optional[str] = None  # e.g., "512m"
+    cpu_reservation: Optional[str] = None
+    memory_reservation: Optional[str] = None
+
+@dataclass
+class LoggingConfig:
+    """Logging configuration"""
+    driver: str = "json-file"
+    options: Dict[str, str] = field(default_factory=lambda: {
+        "max-size": "10m",
+        "max-file": "3"
+    })
+
+@dataclass
+class ServiceConfig:
+    """Docker service configuration"""
+    name: str
+    service_type: ServiceType
+    image: str
+    build_context: Optional[str] = None
+    dockerfile: Optional[str] = None
+    ports: List[PortMapping] = field(default_factory=list)
+    volumes: List[VolumeMount] = field(default_factory=list)
+    environment: List[EnvironmentVariable] = field(default_factory=list)
+    depends_on: List[str] = field(default_factory=list)
+    health_check: Optional[HealthCheck] = None
+    resource_limits: Optional[ResourceLimits] = None
+    logging: Optional[LoggingConfig] = None
+    networks: List[str] = field(default_factory=list)
+    labels: Dict[str, str] = field(default_factory=dict)
+    restart_policy: str = "unless-stopped"
+    replicas: int = 1
+    command: Optional[List[str]] = None
+    working_dir: Optional[str] = None
+    user: Optional[str] = None
+
+@dataclass
+class NetworkConfig:
+    """Docker network configuration"""
+    name: str
+    driver: str = "bridge"
+    ipam_config: Optional[Dict[str, Any]] = None
+    options: Dict[str, str] = field(default_factory=dict)
+    external: bool = False
+
+@dataclass
+class VolumeConfig:
+    """Docker volume configuration"""
+    name: str
+    driver: str = "local"
+    driver_opts: Dict[str, str] = field(default_factory=dict)
+    external: bool = False
+    labels: Dict[str, str] = field(default_factory=dict)
+
+class DockerComposeGenerator:
+    """🐳 Enterprise Docker Compose Template Generator"""
+    
+    def __init__(self, environment: Environment = Environment.DEVELOPMENT):
+        """Initialize Docker Compose Generator"""
+        self.environment = environment
+        self.compose_version = "3.8"
+        self.services = {}
+        self.networks = {}
+        self.volumes = {}
+        self.secrets = {}
+        
+        logger.info(f"🐳 Docker Compose Generator initialized for {environment.value}")
+    
+    def add_service(self, service: ServiceConfig) -> None:
+        """Add service to compose configuration"""
+        self.services[service.name] = service
+        logger.info(f"Added service: {service.name} ({service.service_type.value})")
+    
+    def add_network(self, network: NetworkConfig) -> None:
+        """Add network to compose configuration"""
+        self.networks[network.name] = network
+        logger.info(f"Added network: {network.name}")
+    
+    def add_volume(self, volume: VolumeConfig) -> None:
+        """Add volume to compose configuration"""
+        self.volumes[volume.name] = volume
+        logger.info(f"Added volume: {volume.name}")
+    
+    def create_ainflue_platform_stack(self) -> Dict[str, Any]:
+        """Create complete Ainflue platform Docker Compose stack"""
+        
+        # Add platform networks
+        self._add_platform_networks()
+        
+        # Add platform volumes
+        self._add_platform_volumes()
+        
+        # Add core services
+        self._add_api_gateway()
+        self._add_frontend_service()
+        self._add_backend_api()
+        self._add_ai_services()
+        self._add_database_services()
+        self._add_cache_services()
+        self._add_message_queue()
+        self._add_monitoring_stack()
+        
+        return self.generate_compose_file()
+    
+    def _add_platform_networks(self):
+        """Add platform-specific networks"""
+        
+        # Frontend network
+        frontend_network = NetworkConfig(
+            name="frontend_network",
+            driver="bridge",
+            options={"com.docker.network.bridge.name": "ainflue_frontend"}
+        )
+        self.add_network(frontend_network)
+        
+        # Backend network
+        backend_network = NetworkConfig(
+            name="backend_network", 
+            driver="bridge",
+            options={"com.docker.network.bridge.name": "ainflue_backend"}
+        )
+        self.add_network(backend_network)
+        
+        # Database network
+        db_network = NetworkConfig(
+            name="database_network",
+            driver="bridge",
+            options={"com.docker.network.bridge.name": "ainflue_db"}
+        )
+        self.add_network(db_network)
+        
+        # Monitoring network
+        monitoring_network = NetworkConfig(
+            name="monitoring_network",
+            driver="bridge",
+            options={"com.docker.network.bridge.name": "ainflue_monitoring"}
+        )
+        self.add_network(monitoring_network)
+    
+    def _add_platform_volumes(self):
+        """Add platform-specific volumes"""
+        
+        volumes = [
+            VolumeConfig(name="postgres_data", labels={"backup": "daily"}),
+            VolumeConfig(name="redis_data", labels={"backup": "hourly"}),
+            VolumeConfig(name="mongodb_data", labels={"backup": "daily"}),
+            VolumeConfig(name="elasticsearch_data", labels={"backup": "daily"}),
+            VolumeConfig(name="prometheus_data", labels={"backup": "weekly"}),
+            VolumeConfig(name="grafana_data", labels={"backup": "weekly"}),
+            VolumeConfig(name="user_uploads", labels={"backup": "realtime"}),
+            VolumeConfig(name="ai_models", labels={"backup": "weekly"}),
+            VolumeConfig(name="logs", labels={"backup": "monthly"})
+        ]
+        
+        for volume in volumes:
+            self.add_volume(volume)
+    
+    def _add_api_gateway(self):
+        """Add API Gateway service"""
+        
+        api_gateway = ServiceConfig(
+            name="api_gateway",
+            service_type=ServiceType.PROXY,
+            image="nginx:1.21-alpine",
+            ports=[
+                PortMapping(80, 80, description="HTTP traffic"),
+                PortMapping(443, 443, description="HTTPS traffic")
+            ],
+            volumes=[
+                VolumeMount("./nginx/nginx.conf", "/etc/nginx/nginx.conf", "ro"),
+                VolumeMount("./nginx/ssl", "/etc/nginx/ssl", "ro"),
+                VolumeMount("logs", "/var/log/nginx")
+            ],
+            environment=[
+                EnvironmentVariable("NGINX_WORKER_PROCESSES", "auto"),
+                EnvironmentVariable("NGINX_WORKER_CONNECTIONS", "1024")
+            ],
+            health_check=HealthCheck(
+                type=HealthCheckType.HTTP,
+                endpoint="http://localhost/health"
+            ),
+            networks=["frontend_network", "backend_network"],
+            labels={
+                "traefik.enable": "true",
+                "traefik.http.routers.api.rule": "Host(`api.ainflue.com`)"
+            }
+        )
+        
+        self.add_service(api_gateway)
+    
+    def _add_frontend_service(self):
+        """Add Frontend service"""
+        
+        frontend = ServiceConfig(
+            name="frontend",
+            service_type=ServiceType.FRONTEND,
+            image="node:18-alpine",
+            build_context="./frontend",
+            dockerfile="Dockerfile.prod" if self.environment == Environment.PRODUCTION else "Dockerfile",
+            ports=[
+                PortMapping(3000, 3000, description="React development server"),
+                PortMapping(3001, 3001, description="React development tools")
+            ] if self.environment == Environment.DEVELOPMENT else [],
+            volumes=[
+                VolumeMount("./frontend", "/app", "rw") if self.environment == Environment.DEVELOPMENT else
+                VolumeMount("user_uploads", "/app/public/uploads", "rw")
+            ],
+            environment=[
+                EnvironmentVariable("NODE_ENV", self.environment.value),
+                EnvironmentVariable("REACT_APP_API_URL", "http://api_gateway"),
+                EnvironmentVariable("REACT_APP_WS_URL", "ws://api_gateway/ws"),
+                EnvironmentVariable("GENERATE_SOURCEMAP", "false" if self.environment == Environment.PRODUCTION else "true")
+            ],
+            command=["npm", "start"] if self.environment == Environment.DEVELOPMENT else ["npm", "run", "serve"],
+            working_dir="/app",
+            health_check=HealthCheck(
+                type=HealthCheckType.HTTP,
+                endpoint="http://localhost:3000/health"
+            ),
+            resource_limits=ResourceLimits(
+                cpu_limit="1.0",
+                memory_limit="512m"
+            ),
+            networks=["frontend_network"],
+            depends_on=["api_gateway"]
+        )
+        
+        self.add_service(frontend)
+    
+    def _add_backend_api(self):
+        """Add Backend API service"""
+        
+        backend_api = ServiceConfig(
+            name="backend_api",
+            service_type=ServiceType.WEB_API,
+            image="python:3.11-slim",
+            build_context="./backend",
+            dockerfile="Dockerfile",
+            ports=[
+                PortMapping(8000, 8000, description="FastAPI server")
+            ],
+            volumes=[
+                VolumeMount("./backend", "/app", "rw") if self.environment == Environment.DEVELOPMENT else
+                VolumeMount("user_uploads", "/app/uploads", "rw"),
+                VolumeMount("logs", "/app/logs")
+            ],
+            environment=[
+                EnvironmentVariable("ENVIRONMENT", self.environment.value),
+                EnvironmentVariable("DATABASE_URL", "postgresql://ainflue:password@postgres:5432/ainflue"),
+                EnvironmentVariable("REDIS_URL", "redis://redis:6379/0"),
+                EnvironmentVariable("MONGODB_URL", "mongodb://mongodb:27017/ainflue"),
+                EnvironmentVariable("JWT_SECRET", from_secret="jwt_secret"),
+                EnvironmentVariable("AI_API_KEY", from_secret="ai_api_key"),
+                EnvironmentVariable("LOG_LEVEL", "INFO" if self.environment == Environment.PRODUCTION else "DEBUG")
+            ],
+            command=["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", 
+                    "--reload" if self.environment == Environment.DEVELOPMENT else "--workers", "4"],
+            working_dir="/app",
+            health_check=HealthCheck(
+                type=HealthCheckType.HTTP,
+                endpoint="http://localhost:8000/health"
+            ),
+            resource_limits=ResourceLimits(
+                cpu_limit="2.0",
+                memory_limit="1g"
+            ),
+            networks=["backend_network", "database_network"],
+            depends_on=["postgres", "redis", "mongodb"]
+        )
+        
+        self.add_service(backend_api)
+    
+    def _add_ai_services(self):
+        """Add AI/ML services"""
+        
+        # AI Content Analysis Service
+        ai_content = ServiceConfig(
+            name="ai_content_analysis",
+            service_type=ServiceType.WORKER,
+            image="python:3.11-slim",
+            build_context="./ai_services",
+            dockerfile="Dockerfile.content",
+            volumes=[
+                VolumeMount("ai_models", "/app/models"),
+                VolumeMount("logs", "/app/logs")
+            ],
+            environment=[
+                EnvironmentVariable("SERVICE_TYPE", "content_analysis"),
+                EnvironmentVariable("MODEL_PATH", "/app/models"),
+                EnvironmentVariable("REDIS_URL", "redis://redis:6379/1"),
+                EnvironmentVariable("GPU_ENABLED", "false")  # Set to true for GPU instances
+            ],
+            command=["python", "content_analysis_worker.py"],
+            health_check=HealthCheck(
+                type=HealthCheckType.COMMAND,
+                command=["python", "health_check.py"]
+            ),
+            resource_limits=ResourceLimits(
+                cpu_limit="4.0",
+                memory_limit="2g"
+            ),
+            networks=["backend_network"],
+            depends_on=["redis"],
+            replicas=2 if self.environment == Environment.PRODUCTION else 1
+        )
+        
+        # AI Recommendation Service
+        ai_recommendation = ServiceConfig(
+            name="ai_recommendation",
+            service_type=ServiceType.WORKER,
+            image="python:3.11-slim",
+            build_context="./ai_services",
+            dockerfile="Dockerfile.recommendation",
+            volumes=[
+                VolumeMount("ai_models", "/app/models"),
+                VolumeMount("logs", "/app/logs")
+            ],
+            environment=[
+                EnvironmentVariable("SERVICE_TYPE", "recommendation"),
+                EnvironmentVariable("MODEL_PATH", "/app/models"),
+                EnvironmentVariable("REDIS_URL", "redis://redis:6379/2"),
+                EnvironmentVariable("BATCH_SIZE", "32")
+            ],
+            command=["python", "recommendation_worker.py"],
+            health_check=HealthCheck(
+                type=HealthCheckType.COMMAND,
+                command=["python", "health_check.py"]
+            ),
+            resource_limits=ResourceLimits(
+                cpu_limit="3.0",
+                memory_limit="1.5g"
+            ),
+            networks=["backend_network"],
+            depends_on=["redis"]
+        )
+        
+        self.add_service(ai_content)
+        self.add_service(ai_recommendation)
+    
+    def _add_database_services(self):
+        """Add database services"""
+        
+        # PostgreSQL - Primary database
+        postgres = ServiceConfig(
+            name="postgres",
+            service_type=ServiceType.DATABASE,
+            image="postgres:15-alpine",
+            ports=[
+                PortMapping(5432, 5432, description="PostgreSQL port")
+            ] if self.environment == Environment.DEVELOPMENT else [],
+            volumes=[
+                VolumeMount("postgres_data", "/var/lib/postgresql/data"),
+                VolumeMount("./database/init", "/docker-entrypoint-initdb.d", "ro")
+            ],
+            environment=[
+                EnvironmentVariable("POSTGRES_DB", "ainflue"),
+                EnvironmentVariable("POSTGRES_USER", "ainflue"),
+                EnvironmentVariable("POSTGRES_PASSWORD", from_secret="postgres_password"),
+                EnvironmentVariable("POSTGRES_INITDB_ARGS", "--auth-host=scram-sha-256")
+            ],
+            health_check=HealthCheck(
+                type=HealthCheckType.COMMAND,
+                command=["pg_isready", "-U", "ainflue", "-d", "ainflue"]
+            ),
+            resource_limits=ResourceLimits(
+                cpu_limit="2.0",
+                memory_limit="1g"
+            ),
+            networks=["database_network"],
+            labels={"backup.enable": "true", "backup.schedule": "0 2 * * *"}
+        )
+        
+        # MongoDB - Document database
+        mongodb = ServiceConfig(
+            name="mongodb",
+            service_type=ServiceType.DATABASE,
+            image="mongo:6.0",
+            ports=[
+                PortMapping(27017, 27017, description="MongoDB port")
+            ] if self.environment == Environment.DEVELOPMENT else [],
+            volumes=[
+                VolumeMount("mongodb_data", "/data/db"),
+                VolumeMount("./database/mongo-init", "/docker-entrypoint-initdb.d", "ro")
+            ],
+            environment=[
+                EnvironmentVariable("MONGO_INITDB_ROOT_USERNAME", "admin"),
+                EnvironmentVariable("MONGO_INITDB_ROOT_PASSWORD", from_secret="mongodb_password"),
+                EnvironmentVariable("MONGO_INITDB_DATABASE", "ainflue")
+            ],
+            health_check=HealthCheck(
+                type=HealthCheckType.COMMAND,
+                command=["mongo", "--eval", "db.adminCommand('ping')"]
+            ),
+            resource_limits=ResourceLimits(
+                cpu_limit="1.5",
+                memory_limit="1g"
+            ),
+            networks=["database_network"],
+            labels={"backup.enable": "true", "backup.schedule": "0 3 * * *"}
+        )
+        
+        self.add_service(postgres)
+        self.add_service(mongodb)
+    
+    def _add_cache_services(self):
+        """Add caching services"""
+        
+        # Redis - Primary cache
+        redis = ServiceConfig(
+            name="redis",
+            service_type=ServiceType.CACHE,
+            image="redis:7-alpine",
+            ports=[
+                PortMapping(6379, 6379, description="Redis port")
+            ] if self.environment == Environment.DEVELOPMENT else [],
+            volumes=[
+                VolumeMount("redis_data", "/data"),
+                VolumeMount("./redis/redis.conf", "/usr/local/etc/redis/redis.conf", "ro")
+            ],
+            command=["redis-server", "/usr/local/etc/redis/redis.conf"],
+            health_check=HealthCheck(
+                type=HealthCheckType.COMMAND,
+                command=["redis-cli", "ping"]
+            ),
+            resource_limits=ResourceLimits(
+                cpu_limit="1.0",
+                memory_limit="512m"
+            ),
+            networks=["backend_network", "database_network"],
+            labels={"backup.enable": "true", "backup.schedule": "0 */6 * * *"}
+        )
+        
+        self.add_service(redis)
+    
+    def _add_message_queue(self):
+        """Add message queue services"""
+        
+        # RabbitMQ - Message broker
+        rabbitmq = ServiceConfig(
+            name="rabbitmq",
+            service_type=ServiceType.MESSAGE_QUEUE,
+            image="rabbitmq:3.11-management-alpine",
+            ports=[
+                PortMapping(5672, 5672, description="AMQP port"),
+                PortMapping(15672, 15672, description="Management UI")
+            ] if self.environment != Environment.PRODUCTION else [
+                PortMapping(5672, 5672, description="AMQP port")
+            ],
+            volumes=[
+                VolumeMount("./rabbitmq/rabbitmq.conf", "/etc/rabbitmq/rabbitmq.conf", "ro"),
+                VolumeMount("./rabbitmq/definitions.json", "/etc/rabbitmq/definitions.json", "ro")
+            ],
+            environment=[
+                EnvironmentVariable("RABBITMQ_DEFAULT_USER", "ainflue"),
+                EnvironmentVariable("RABBITMQ_DEFAULT_PASS", from_secret="rabbitmq_password"),
+                EnvironmentVariable("RABBITMQ_MANAGEMENT_LOAD_DEFINITIONS", "/etc/rabbitmq/definitions.json")
+            ],
+            health_check=HealthCheck(
+                type=HealthCheckType.COMMAND,
+                command=["rabbitmq-diagnostics", "ping"]
+            ),
+            resource_limits=ResourceLimits(
+                cpu_limit="1.0",
+                memory_limit="512m"
+            ),
+            networks=["backend_network"]
+        )
+        
+        self.add_service(rabbitmq)
+    
+    def _add_monitoring_stack(self):
+        """Add monitoring and observability stack"""
+        
+        # Prometheus - Metrics collection
+        prometheus = ServiceConfig(
+            name="prometheus",
+            service_type=ServiceType.MONITORING,
+            image="prom/prometheus:latest",
+            ports=[
+                PortMapping(9090, 9090, description="Prometheus UI")
+            ] if self.environment != Environment.PRODUCTION else [],
+            volumes=[
+                VolumeMount("./monitoring/prometheus.yml", "/etc/prometheus/prometheus.yml", "ro"),
+                VolumeMount("prometheus_data", "/prometheus")
+            ],
+            command=[
+                "--config.file=/etc/prometheus/prometheus.yml",
+                "--storage.tsdb.path=/prometheus",
+                "--web.console.libraries=/etc/prometheus/console_libraries",
+                "--web.console.templates=/etc/prometheus/consoles",
+                "--storage.tsdb.retention.time=15d"
+            ],
+            networks=["monitoring_network", "backend_network"],
+            depends_on=["backend_api"]
+        )
+        
+        # Grafana - Visualization
+        grafana = ServiceConfig(
+            name="grafana",
+            service_type=ServiceType.MONITORING,
+            image="grafana/grafana:latest",
+            ports=[
+                PortMapping(3000, 3000, description="Grafana UI")
+            ] if self.environment != Environment.PRODUCTION else [],
+            volumes=[
+                VolumeMount("grafana_data", "/var/lib/grafana"),
+                VolumeMount("./monitoring/grafana/dashboards", "/etc/grafana/provisioning/dashboards", "ro")
+            ],
+            environment=[
+                EnvironmentVariable("GF_SECURITY_ADMIN_PASSWORD", from_secret="grafana_password"),
+                EnvironmentVariable("GF_USERS_ALLOW_SIGN_UP", "false"),
+                EnvironmentVariable("GF_ANALYTICS_REPORTING_ENABLED", "false")
+            ],
+            networks=["monitoring_network"],
+            depends_on=["prometheus"]
+        )
+        
+        # Elasticsearch - Log aggregation
+        elasticsearch = ServiceConfig(
+            name="elasticsearch", 
+            service_type=ServiceType.MONITORING,
+            image="docker.elastic.co/elasticsearch/elasticsearch:8.5.0",
+            ports=[
+                PortMapping(9200, 9200, description="Elasticsearch HTTP"),
+                PortMapping(9300, 9300, description="Elasticsearch transport")
+            ] if self.environment == Environment.DEVELOPMENT else [],
+            volumes=[
+                VolumeMount("elasticsearch_data", "/usr/share/elasticsearch/data")
+            ],
+            environment=[
+                EnvironmentVariable("discovery.type", "single-node"),
+                EnvironmentVariable("ES_JAVA_OPTS", "-Xms512m -Xmx512m"),
+                EnvironmentVariable("xpack.security.enabled", "false")
+            ],
+            resource_limits=ResourceLimits(
+                cpu_limit="2.0",
+                memory_limit="1g"
+            ),
+            networks=["monitoring_network"]
+        )
+        
+        self.add_service(prometheus)
+        self.add_service(grafana)
+        self.add_service(elasticsearch)
+    
+    def generate_compose_file(self) -> Dict[str, Any]:
+        """Generate Docker Compose YAML structure"""
+        
+        compose = {
+            "version": self.compose_version,
+            "services": {},
+            "networks": {},
+            "volumes": {},
+            "secrets": {} if self.environment == Environment.PRODUCTION else None
+        }
+        
+        # Generate services
+        for service_name, service in self.services.items():
+            compose["services"][service_name] = self._service_to_dict(service)
+        
+        # Generate networks
+        for network_name, network in self.networks.items():
+            compose["networks"][network_name] = self._network_to_dict(network)
+        
+        # Generate volumes
+        for volume_name, volume in self.volumes.items():
+            compose["volumes"][volume_name] = self._volume_to_dict(volume)
+        
+        # Remove None values
+        return {k: v for k, v in compose.items() if v is not None}
+    
+    def _service_to_dict(self, service: ServiceConfig) -> Dict[str, Any]:
+        """Convert service config to dictionary"""
+        
+        service_dict = {}
+        
+        # Image or build
+        if service.build_context:
+            build_config = {"context": service.build_context}
+            if service.dockerfile:
+                build_config["dockerfile"] = service.dockerfile
+            service_dict["build"] = build_config
+        else:
+            service_dict["image"] = service.image
+        
+        # Ports
+        if service.ports:
+            service_dict["ports"] = [
+                f"{port.host_port}:{port.container_port}/{port.protocol}"
+                for port in service.ports
+            ]
+        
+        # Volumes
+        if service.volumes:
+            service_dict["volumes"] = []
+            for volume in service.volumes:
+                if volume.volume_type == "bind":
+                    volume_str = f"{volume.host_path}:{volume.container_path}"
+                    if volume.access_mode == "ro":
+                        volume_str += ":ro"
+                    service_dict["volumes"].append(volume_str)
+                else:
+                    service_dict["volumes"].append(f"{volume.host_path}:{volume.container_path}")
+        
+        # Environment variables
+        if service.environment:
+            service_dict["environment"] = {}
+            for env_var in service.environment:
+                if env_var.value:
+                    service_dict["environment"][env_var.name] = env_var.value
+                elif env_var.from_secret:
+                    service_dict["environment"][env_var.name] = f"$${env_var.from_secret}"
+                elif env_var.from_file:
+                    service_dict["environment"][env_var.name] = f"$${env_var.from_file}"
+        
+        # Dependencies
+        if service.depends_on:
+            service_dict["depends_on"] = service.depends_on
+        
+        # Health check
+        if service.health_check:
+            healthcheck = {
+                "interval": service.health_check.interval,
+                "timeout": service.health_check.timeout,
+                "retries": service.health_check.retries,
+                "start_period": service.health_check.start_period
+            }
+            
+            if service.health_check.type == HealthCheckType.HTTP:
+                healthcheck["test"] = ["CMD", "curl", "-f", service.health_check.endpoint or "http://localhost/health"]
+            elif service.health_check.type == HealthCheckType.COMMAND:
+                healthcheck["test"] = ["CMD"] + (service.health_check.command or ["echo", "healthy"])
+            elif service.health_check.type == HealthCheckType.TCP:
+                healthcheck["test"] = ["CMD", "nc", "-z", "localhost", "8080"]
+            
+            service_dict["healthcheck"] = healthcheck
+        
+        # Resource limits
+        if service.resource_limits:
+            deploy = {}
+            resources = {}
+            
+            if service.resource_limits.cpu_limit or service.resource_limits.memory_limit:
+                limits = {}
+                if service.resource_limits.cpu_limit:
+                    limits["cpus"] = service.resource_limits.cpu_limit
+                if service.resource_limits.memory_limit:
+                    limits["memory"] = service.resource_limits.memory_limit
+                resources["limits"] = limits
+            
+            if service.resource_limits.cpu_reservation or service.resource_limits.memory_reservation:
+                reservations = {}
+                if service.resource_limits.cpu_reservation:
+                    reservations["cpus"] = service.resource_limits.cpu_reservation
+                if service.resource_limits.memory_reservation:
+                    reservations["memory"] = service.resource_limits.memory_reservation
+                resources["reservations"] = reservations
+            
+            if resources:
+                deploy["resources"] = resources
+            
+            if service.replicas > 1:
+                deploy["replicas"] = service.replicas
+            
+            if deploy:
+                service_dict["deploy"] = deploy
+        
+        # Networks
+        if service.networks:
+            service_dict["networks"] = service.networks
+        
+        # Labels
+        if service.labels:
+            service_dict["labels"] = service.labels
+        
+        # Other configurations
+        if service.restart_policy:
+            service_dict["restart"] = service.restart_policy
+        
+        if service.command:
+            service_dict["command"] = service.command
+        
+        if service.working_dir:
+            service_dict["working_dir"] = service.working_dir
+        
+        if service.user:
+            service_dict["user"] = service.user
+        
+        # Logging
+        if service.logging:
+            service_dict["logging"] = {
+                "driver": service.logging.driver,
+                "options": service.logging.options
+            }
+        
+        return service_dict
+    
+    def _network_to_dict(self, network: NetworkConfig) -> Dict[str, Any]:
+        """Convert network config to dictionary"""
+        
+        network_dict = {"driver": network.driver}
+        
+        if network.external:
+            network_dict["external"] = True
+        
+        if network.ipam_config:
+            network_dict["ipam"] = network.ipam_config
+        
+        if network.options:
+            network_dict["driver_opts"] = network.options
+        
+        return network_dict
+    
+    def _volume_to_dict(self, volume: VolumeConfig) -> Dict[str, Any]:
+        """Convert volume config to dictionary"""
+        
+        if volume.external:
+            return {"external": True}
+        
+        volume_dict = {"driver": volume.driver}
+        
+        if volume.driver_opts:
+            volume_dict["driver_opts"] = volume.driver_opts
+        
+        if volume.labels:
+            volume_dict["labels"] = volume.labels
+        
+        return volume_dict
+    
+    def save_compose_file(self, filename: str = "docker-compose.yml") -> str:
+        """Save Docker Compose file to disk"""
+        
+        compose_config = self.generate_compose_file()
+        
+        # Add environment-specific override filename
+        if self.environment != Environment.DEVELOPMENT:
+            base_name = filename.replace(".yml", "")
+            filename = f"{base_name}.{self.environment.value}.yml"
+        
+        with open(filename, 'w') as f:
+            yaml.dump(compose_config, f, default_flow_style=False, sort_keys=False, indent=2)
+        
+        logger.info(f"Docker Compose file saved: {filename}")
+        return filename
+    
+    def generate_env_file(self) -> str:
+        """Generate environment file for Docker Compose"""
+        
+        env_vars = {
+            "COMPOSE_PROJECT_NAME": "ainflue",
+            "ENVIRONMENT": self.environment.value,
+            
+            # Database configurations
+            "POSTGRES_PASSWORD": "your_postgres_password_here",
+            "MONGODB_PASSWORD": "your_mongodb_password_here",
+            "REDIS_PASSWORD": "your_redis_password_here",
+            
+            # Application secrets
+            "JWT_SECRET": "your_jwt_secret_here",
+            "AI_API_KEY": "your_ai_api_key_here",
+            
+            # External service credentials
+            "RABBITMQ_PASSWORD": "your_rabbitmq_password_here", 
+            "GRAFANA_PASSWORD": "your_grafana_password_here",
+            
+            # SSL/TLS certificates
+            "SSL_CERT_PATH": "./ssl/cert.pem",
+            "SSL_KEY_PATH": "./ssl/key.pem"
+        }
+        
+        env_content = "\n".join([f"{key}={value}" for key, value in env_vars.items()])
+        
+        env_filename = f".env.{self.environment.value}"
+        with open(env_filename, 'w') as f:
+            f.write(env_content)
+        
+        logger.info(f"Environment file generated: {env_filename}")
+        return env_content
+
+# Usage Example and Template Testing
+def main():
+    """Example usage of Docker Compose Template"""
+    
+    try:
+        # Generate for different environments
+        environments = [Environment.DEVELOPMENT, Environment.STAGING, Environment.PRODUCTION]
+        
+        for env in environments:
+            print(f"\n🐳 Generating Docker Compose for {env.value} environment...")
+            
+            # Initialize generator
+            generator = DockerComposeGenerator(env)
+            
+            # Create complete Ainflue platform stack
+            compose_config = generator.create_ainflue_platform_stack()
+            
+            # Save compose file
+            filename = generator.save_compose_file()
+            
+            # Generate environment file
+            env_content = generator.generate_env_file()
+            
+            print(f"✅ Generated {env.value} configuration:")
+            print(f"  - Services: {len(compose_config['services'])}")
+            print(f"  - Networks: {len(compose_config['networks'])}")
+            print(f"  - Volumes: {len(compose_config['volumes'])}")
+            print(f"  - Compose file: {filename}")
+            
+            # Show service breakdown
+            service_types = {}
+            for service_name, service in generator.services.items():
+                service_type = service.service_type.value
+                if service_type not in service_types:
+                    service_types[service_type] = []
+                service_types[service_type].append(service_name)
+            
+            print(f"  - Service breakdown:")
+            for service_type, services in service_types.items():
+                print(f"    * {service_type}: {', '.join(services)}")
+        
+        print(f"\n📋 Docker Compose Template Features:")
+        print(f"  ✅ Multi-environment support (dev/staging/prod)")
+        print(f"  ✅ Complete Ainflue platform stack")
+        print(f"  ✅ Health checks and monitoring integration")
+        print(f"  ✅ Resource limits and scaling configuration")
+        print(f"  ✅ Network segmentation and security")
+        print(f"  ✅ Volume management and data persistence")
+        print(f"  ✅ Environment-specific optimizations")
+        
+        print(f"\n✅ Docker Compose Template demonstration completed!")
+        
+    except Exception as e:
+        logger.error(f"Error in Docker Compose demo: {str(e)}")
+
+if __name__ == "__main__":
+    main()
+    print("🐳 Docker Compose Template demonstration completed!")
