@@ -428,6 +428,32 @@ class PerformanceOptimizationEngine:
             "overall_report": report,
             "status": "success"
         }
+    
+    def run_comprehensive_benchmark(self) -> List[PerformanceMetric]:
+        """🛡️ Backend Senior - Enterprise Performance Benchmark
+        Synchronous version for enterprise deployment automation
+        """
+        import asyncio
+        
+        async def async_benchmark():
+            return await self.example_usage()
+        
+        # Run async benchmark in sync context
+        try:
+            loop = asyncio.get_event_loop()
+        except RuntimeError:
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+        
+        try:
+            results = loop.run_until_complete(async_benchmark())
+            return results.get("performance_results", [])
+        except Exception as e:
+            logger.error(f"❌ Benchmark failed: {e}")
+            return []
+        finally:
+            if not loop.is_running():
+                loop.close()
 
 # Global performance optimizer instance
 performance_optimizer = PerformanceOptimizationEngine()
