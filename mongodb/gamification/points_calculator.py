@@ -450,10 +450,40 @@ class PointsCalculator:
             logger.error(f"Error calculating user streak: {e}")
             return 0
     
-    def _is_premium_user(self, user_id: str) -> bool:
+    async def _is_premium_user(self, user_id: str) -> bool:
         """Check if user has premium status."""
-        # This would integrate with user subscription system
-        # For now, return False as placeholder
+        try:
+            # Check user subscription status
+            subscription = await self.database.user_subscriptions.find_one(
+                {
+                    "user_id": user_id,
+                    "status": "active",
+                    "expires_at": {"$gt": datetime.utcnow()}
+                }
+            )
+            
+            if subscription:
+                return subscription.get("tier", "").lower() in ["premium", "pro", "elite"]
+            
+            # Also check user profile for premium status
+            user_profile = await self.database.users.find_one(
+                {"user_id": user_id},
+                {"subscription": 1, "premium": 1}
+            )
+            
+            if user_profile:
+                # Check direct premium flag
+                if user_profile.get("premium", False):
+                    return True
+                
+                # Check subscription object
+                subscription_info = user_profile.get("subscription", {})
+                if subscription_info.get("active", False) and subscription_info.get("tier", "").lower() in ["premium", "pro", "elite"]:
+                    return True
+            
+        except Exception as e:
+            logger.warning(f"Failed to check premium status for user {user_id}: {e}")
+        
         return False
     
     def _get_active_event_multiplier(self, category: PointsCategory) -> float:

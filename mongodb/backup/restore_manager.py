@@ -188,10 +188,60 @@ class RestoreManager:
         """Create backup before restore operation."""
         logger.info("Creating pre-restore backup")
         
-        # This would integrate with the backup scheduler
-        # For now, just log the intent
-        # TODO: Implement pre-restore backup creation
-        pass
+        # Create pre-restore backup if enabled
+        if self._backup_before_restore:
+            logger.info("Creating pre-restore backup for safety")
+            try:
+                from .backup_scheduler import BackupScheduler
+                backup_scheduler = BackupScheduler(self.client)
+                
+                # Create emergency backup job
+                emergency_backup_id = f"pre_restore_{operation_id}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
+                backup_path = self._create_emergency_backup(operation.target_databases, emergency_backup_id)
+                
+                operation.emergency_backup_path = backup_path
+                logger.info(f"Pre-restore backup created: {backup_path}")
+                
+            except Exception as e:
+                logger.warning(f"Failed to create pre-restore backup: {e}")
+                if self.config.get('require_pre_restore_backup', False):
+                    raise RuntimeError(f"Pre-restore backup required but failed: {e}")
+    
+    def _create_emergency_backup(self, databases: List[str], backup_id: str) -> str:
+        """Create emergency backup before restore operation.
+        
+        Args:
+            databases: List of databases to backup
+            backup_id: Backup identifier
+            
+        Returns:
+            Path to backup file
+        """
+        import tempfile
+        import subprocess
+        
+        backup_dir = tempfile.mkdtemp(prefix=f"emergency_backup_{backup_id}_")
+        
+        try:
+            # Build mongodump command
+            cmd = ['mongodump', '--out', backup_dir]
+            
+            # Add specific databases if provided
+            if databases:
+                for db_name in databases:
+                    subprocess.run(cmd + ['--db', db_name], check=True, capture_output=True)
+            else:
+                subprocess.run(cmd, check=True, capture_output=True)
+            
+            logger.info(f"Emergency backup created in: {backup_dir}")
+            return backup_dir
+            
+        except subprocess.CalledProcessError as e:
+            logger.error(f"Emergency backup failed: {e}")
+            # Clean up failed backup
+            if os.path.exists(backup_dir):
+                shutil.rmtree(backup_dir)
+            raise
     
     def _validate_restore_operation(self, operation: RestoreOperation) -> None:
         """Validate restore operation without executing."""

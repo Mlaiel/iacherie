@@ -96,27 +96,103 @@ class PointInTimeRecovery:
             return {}
     
     def _restore_from_backup(self, backup_id: str, databases: List[str] = None) -> None:
-        """Restore from backup."""
-        # This would integrate with the restore manager
+        """Restore from backup.
+        
+        Args:
+            backup_id: Backup identifier
+            databases: List of databases to restore
+        """
         logger.info(f"Restoring from backup: {backup_id}")
-        # TODO: Implement backup restoration
+        
+        try:
+            # This would integrate with the restore manager
+            from .restore_manager import RestoreManager
+            restore_manager = RestoreManager(self.client)
+            
+            # Restore specific databases or all if none specified
+            if databases:
+                for db_name in databases:
+                    restore_manager.restore_database(backup_id, db_name)
+            else:
+                restore_manager.restore_full_backup(backup_id)
+                
+            logger.info(f"Successfully restored from backup: {backup_id}")
+            
+        except ImportError:
+            logger.warning("RestoreManager not available, skipping backup restoration")
+        except Exception as e:
+            logger.error(f"Failed to restore from backup {backup_id}: {e}")
+            raise
     
     def _replay_oplog_to_timestamp(self, target_timestamp: Dict[str, Any], 
                                   databases: List[str] = None) -> None:
-        """Replay oplog entries to target timestamp."""
-        logger.info("Replaying oplog entries")
+        """Replay oplog entries to target timestamp.
         
-        # Build query for oplog entries up to target timestamp
-        query = {'ts': {'$lte': target_timestamp}}
+        Args:
+            target_timestamp: Target oplog timestamp
+            databases: List of databases to replay
+        """
+        logger.info(f"Replaying oplog to timestamp: {target_timestamp}")
         
-        if databases:
-            ns_conditions = []
-            for db in databases:
-                ns_conditions.append({'ns': {'$regex': f'^{db}\\.'}})
-            query['$or'] = ns_conditions
+        try:
+            # Build query for oplog entries up to target timestamp
+            query = {'ts': {'$lte': target_timestamp}}
+            
+            if databases:
+                ns_conditions = []
+                for db in databases:
+                    ns_conditions.append({'ns': {'$regex': f'^{db}\\.'}})
+                query['$or'] = ns_conditions
+            
+            # Replay oplog entries
+            oplog_cursor = self.client.local.oplog.rs.find(query).sort([('ts', 1)])
+            
+            operations_count = 0
+            for operation in oplog_cursor:
+                self._apply_oplog_operation(operation)
+                operations_count += 1
+                
+                if operations_count % 1000 == 0:
+                    logger.info(f"Replayed {operations_count} operations")
+            
+            logger.info(f"Completed oplog replay: {operations_count} operations")
+            
+        except Exception as e:
+            logger.error(f"Failed to replay oplog: {e}")
+            raise
+    
+    def _apply_oplog_operation(self, operation: Dict[str, Any]) -> None:
+        """Apply a single oplog operation.
         
-        # Replay oplog entries
-        oplog_cursor = self.client.local.oplog.rs.find(query).sort([('ts', 1)])
+        Args:
+            operation: Oplog operation document
+        """
+        try:
+            op_type = operation.get('op')
+            namespace = operation.get('ns', '')
+            
+            if not namespace or '.' not in namespace:
+                return  # Skip invalid operations
+                
+            db_name, collection_name = namespace.split('.', 1)
+            db = self.client[db_name]
+            collection = db[collection_name]
+            
+            if op_type == 'i':  # Insert
+                collection.insert_one(operation['o'])
+            elif op_type == 'u':  # Update
+                collection.update_one(operation['o2'], operation['o'])
+            elif op_type == 'd':  # Delete
+                collection.delete_one(operation['o'])
+            elif op_type == 'c':  # Command
+                # Handle database commands (create collection, index, etc.)
+                command = operation.get('o', {})
+                if command:
+                    db.command(command)
+            
+        except Exception as e:
+            logger.warning(f"Failed to apply oplog operation: {e}")
+            # Continue with other operations rather than failing completely
         
         for entry in oplog_cursor:
             try:

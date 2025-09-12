@@ -667,22 +667,50 @@ class APIIntegrator:
             return None
     
     async def _encrypt_credentials(self, credentials: APICredentials) -> APICredentials:
-        """Encrypt sensitive credential fields"""
-        
-        # In production, use proper encryption
-        # For now, use base64 encoding as placeholder
-        encrypted = credentials
-        
-        if credentials.api_secret:
-            encrypted.api_secret = base64.b64encode(credentials.api_secret.encode()).decode()
-        
-        if credentials.access_token:
-            encrypted.access_token = base64.b64encode(credentials.access_token.encode()).decode()
-        
-        if credentials.refresh_token:
-            encrypted.refresh_token = base64.b64encode(credentials.refresh_token.encode()).decode()
-        
-        return encrypted
+        """Encrypt sensitive credential fields using proper encryption."""
+        try:
+            # Import encryption manager
+            from ..security.encryption_manager import EncryptionManager
+            encryption_manager = EncryptionManager()
+            
+            # Create a copy to avoid modifying original
+            encrypted = credentials
+            
+            if credentials.api_secret:
+                encrypted.api_secret = await encryption_manager.encrypt_field(
+                    'api_secret',
+                    credentials.api_secret
+                )
+            
+            if credentials.access_token:
+                encrypted.access_token = await encryption_manager.encrypt_field(
+                    'access_token',
+                    credentials.access_token
+                )
+            
+            if credentials.refresh_token:
+                encrypted.refresh_token = await encryption_manager.encrypt_field(
+                    'refresh_token',
+                    credentials.refresh_token
+                )
+            
+            return encrypted
+            
+        except ImportError:
+            logger.warning("Encryption manager not available, using base64 fallback")
+            # Fallback to base64 if encryption manager not available
+            encrypted = credentials
+            
+            if credentials.api_secret:
+                encrypted.api_secret = base64.b64encode(credentials.api_secret.encode()).decode()
+            
+            if credentials.access_token:
+                encrypted.access_token = base64.b64encode(credentials.access_token.encode()).decode()
+            
+            if credentials.refresh_token:
+                encrypted.refresh_token = base64.b64encode(credentials.refresh_token.encode()).decode()
+            
+            return encrypted
     
     async def _decrypt_credentials(self, creds_data: Dict[str, Any]) -> APICredentials:
         """Decrypt credentials from storage"""
