@@ -1,11 +1,11 @@
 # ML Pipeline Orchestrator Requirements
 # Author: Fahed Mlaiel (mlaiel@live.de) - ML Engineer
 
-# Core ML frameworks
+# Core ML frameworks - SECURITY UPDATED (🔒 Sécurité Expert)
 torch==2.1.0
 torchvision==0.16.0
 torchaudio==2.1.0
-tensorflow==2.14.0
+tensorflow>=2.13.1  # Security fix for DoS vulnerability
 scikit-learn==1.3.2
 
 # Data processing
