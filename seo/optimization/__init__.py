@@ -86,3 +86,6 @@ __all__ = [
     "SitemapEntry",
     "SitemapResult"
 ]
+# Additional platform optimizers
+from .twitter_seo_engine import TwitterSEOEngine
+from .spotify_seo_optimizer import SpotifySEOOptimizer
