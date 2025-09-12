@@ -64,6 +64,7 @@ _safe_import('collections')
 _safe_import('indexing')
 _safe_import('monitoring')
 _safe_import('models')
+_safe_import('multimedia')  # NEW: Audio/Video processing integration
 
 # Export public interface
 __all__ = [

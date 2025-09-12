@@ -77,6 +77,7 @@ class TestMongoDBConfig:
 class TestMongoDBConnection(MongoDBTestCase):
     """Test MongoDB connection class."""
     
+    @pytest.mark.asyncio
     async def test_connection_initialization(self, mock_mongodb_config):
         """Test connection initialization."""
         if not MONGODB_MODULES_AVAILABLE:
@@ -86,6 +87,7 @@ class TestMongoDBConnection(MongoDBTestCase):
         assert connection.config == mock_mongodb_config
         assert connection.is_connected is False
     
+    @pytest.mark.asyncio
     async def test_connection_string_generation(self, mock_mongodb_config):
         """Test MongoDB connection string generation."""
         if not MONGODB_MODULES_AVAILABLE:
@@ -102,6 +104,7 @@ class TestMongoDBConnection(MongoDBTestCase):
         assert connection.config.username == "user"
         assert connection.config.password == "pass"
     
+    @pytest.mark.asyncio
     async def test_connect_success(self, mock_mongodb_connection):
         """Test successful connection."""
         if not MONGODB_MODULES_AVAILABLE:
@@ -114,6 +117,7 @@ class TestMongoDBConnection(MongoDBTestCase):
             assert result is True
             assert mock_mongodb_connection.is_connected is True
     
+    @pytest.mark.asyncio
     async def test_connect_failure(self, mock_mongodb_config):
         """Test connection failure."""
         if not MONGODB_MODULES_AVAILABLE:
@@ -128,6 +132,7 @@ class TestMongoDBConnection(MongoDBTestCase):
             assert result is False
             assert connection.is_connected is False
     
+    @pytest.mark.asyncio
     async def test_disconnect(self, mock_mongodb_connection):
         """Test disconnection."""
         if not MONGODB_MODULES_AVAILABLE:
@@ -136,6 +141,7 @@ class TestMongoDBConnection(MongoDBTestCase):
         await mock_mongodb_connection.disconnect()
         assert mock_mongodb_connection.is_connected is False
     
+    @pytest.mark.asyncio
     async def test_health_check_healthy(self, mock_mongodb_connection):
         """Test health check when database is healthy."""
         if not MONGODB_MODULES_AVAILABLE:
@@ -147,6 +153,7 @@ class TestMongoDBConnection(MongoDBTestCase):
         assert health["status"] == "healthy"
         assert health["response_time"] > 0
     
+    @pytest.mark.asyncio
     async def test_health_check_unhealthy(self, mock_mongodb_connection):
         """Test health check when database is unhealthy."""
         if not MONGODB_MODULES_AVAILABLE:
@@ -174,6 +181,7 @@ class TestConnectionPool:
         assert pool.size == 10
         assert pool.max_size == 100
     
+    @pytest.mark.asyncio
     async def test_pool_get_connection(self):
         """Test getting connection from pool."""
         if not MONGODB_MODULES_AVAILABLE:
@@ -187,6 +195,7 @@ class TestConnectionPool:
         result = await pool.get_connection()
         assert result == connection
     
+    @pytest.mark.asyncio
     async def test_pool_return_connection(self):
         """Test returning connection to pool."""
         if not MONGODB_MODULES_AVAILABLE:
@@ -204,6 +213,7 @@ class TestMongoDBConnectionIntegration:
     """Integration tests for MongoDB connection."""
     
     @pytest.mark.skip(reason="Requires running MongoDB instance")
+    @pytest.mark.asyncio
     async def test_real_connection(self):
         """Test real MongoDB connection (requires MongoDB running)."""
         config = MongoDBConfig(
@@ -225,6 +235,7 @@ class TestMongoDBConnectionIntegration:
             await connection.disconnect()
     
     @pytest.mark.skip(reason="Requires running MongoDB instance with authentication")
+    @pytest.mark.asyncio
     async def test_authenticated_connection(self):
         """Test MongoDB connection with authentication."""
         config = MongoDBConfig(
@@ -248,6 +259,7 @@ class TestMongoDBConnectionIntegration:
 class TestConnectionPerformance:
     """Performance tests for MongoDB connection."""
     
+    @pytest.mark.asyncio
     async def test_connection_time(self, mock_mongodb_connection):
         """Test connection establishment time."""
         if not MONGODB_MODULES_AVAILABLE:
@@ -264,6 +276,7 @@ class TestConnectionPerformance:
         # Connection should be fast (mocked)
         assert connection_time < 1.0
     
+    @pytest.mark.asyncio
     async def test_multiple_connections(self, mock_mongodb_config):
         """Test handling multiple connections."""
         if not MONGODB_MODULES_AVAILABLE:
