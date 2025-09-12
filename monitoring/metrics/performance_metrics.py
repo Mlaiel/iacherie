@@ -39,869 +39,448 @@ except ImportError:
             return MemInfo()
         
         def cpu_percent(self):
-        try:
-            logger.info(f"Executing cpu_percent")
-            
-            # Implementation for cpu_percent
-            # TODO: Add specific business logic here
-        try:
-        try:
-            logger.info(f"Executing open_files")
-            
-            # Implementation for open_files
-            # TODO: Add specific business logic here
-        try:
-            logger.info(f"Executing connections")
-            
-            # Implementation for connections
-            # TODO: Add specific business logic here
-        try:
-            logger.info(f"Executing cpu_percent")
-            
-            # Implementation for cpu_percent
-            # TODO: Add specific business logic here
-        try:
-            logger.info(f"Executing cpu_count")
-            
-            # Implementation for cpu_count
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"cpu_count completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"cpu_count failed: {e}")
-            raise
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"cpu_percent completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"cpu_percent failed: {e}")
-            raise
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"connections completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"connections failed: {e}")
-            raise
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"open_files completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"open_files failed: {e}")
-            raise
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"num_threads completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"num_threads failed: {e}")
-            raise
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"cpu_percent completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"cpu_percent failed: {e}")
-            raise
-        def num_threads(self):
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle_getloadavg_request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler getloadavg failed: {e}")
-                    return {"status": "error", "message": str(e)}
-            return 10
+            return 15.5  # Mock CPU usage
         
-        def open_files(self):
-            return []
+        def memory_percent(self):
+            return 45.2  # Mock memory usage
         
         def connections(self):
-            return []
+            return []  # Mock connections list
+        
+        def open_files(self):
+            return []  # Mock open files list
+        
+        def num_threads(self):
+            return 10  # Mock thread count
     
+    def cpu_count():
+        return 4  # Mock CPU count
+    
+    def virtual_memory():
+        class VirtMem:
+            total = 8 * 1024 * 1024 * 1024  # 8GB
+            available = 4 * 1024 * 1024 * 1024  # 4GB
+            percent = 50.0
+            used = 4 * 1024 * 1024 * 1024  # 4GB
+        return VirtMem()
+    
+    def disk_usage(path):
+        class DiskUsage:
+            total = 100 * 1024 * 1024 * 1024  # 100GB
+            used = 50 * 1024 * 1024 * 1024   # 50GB
+            free = 50 * 1024 * 1024 * 1024   # 50GB
+        return DiskUsage()
+    
+    def boot_time():
+        return time.time() - 86400  # Boot time 24 hours ago
+        
+    def Process(pid=None):
+        return MockProcess()
+    
+    # Create mock psutil module
     class MockPsutil:
+        Process = Process
+        cpu_count = staticmethod(cpu_count)
+        virtual_memory = staticmethod(virtual_memory)
+        disk_usage = staticmethod(disk_usage)
+        boot_time = staticmethod(boot_time)
+        
         @staticmethod
         def cpu_percent(interval=1):
-            return 35.5
-        
-        @staticmethod
-        def cpu_count():
-            return 4
-        
-        @staticmethod
-        def virtual_memory():
-            class VMem:
-                total = 8 * 1024 * 1024 * 1024  # 8GB
-                available = 4 * 1024 * 1024 * 1024  # 4GB
-                percent = 50.0
-                used = 4 * 1024 * 1024 * 1024
-                free = 4 * 1024 * 1024 * 1024
-            return VMem()
-        
-        @staticmethod
-        def swap_memory():
-            class SwapMem:
-                total = 2 * 1024 * 1024 * 1024  # 2GB
-                used = 512 * 1024 * 1024  # 512MB
-                percent = 25.0
-            return SwapMem()
-        
-        @staticmethod
-        def disk_usage(path):
-            class DiskUsage:
-                total = 100 * 1024 * 1024 * 1024  # 100GB
-                used = 60 * 1024 * 1024 * 1024  # 60GB
-                free = 40 * 1024 * 1024 * 1024  # 40GB
-                percent = 60.0
-            return DiskUsage()
-        
-        @staticmethod
-        def disk_io_counters():
-            class DiskIO:
-                read_count = 1000
-                write_count = 500
-                read_bytes = 1024 * 1024 * 100  # 100MB
-                write_bytes = 1024 * 1024 * 50  # 50MB
-            return DiskIO()
-        
-        @staticmethod
-        def net_io_counters():
-            class NetIO:
-                bytes_sent = 1024 * 1024 * 10  # 10MB
-                bytes_recv = 1024 * 1024 * 20  # 20MB
-                packets_sent = 1000
-                packets_recv = 2000
-                errin = 0
-                errout = 0
-                dropin = 0
-                dropout = 0
-            return NetIO()
-        
-        @staticmethod
-        def Process():
-            return MockProcess()
-        
-        @staticmethod
-        def getloadavg():
-            return (0.5, 0.7, 0.9)
+            return 25.5  # Mock system CPU usage
     
     psutil = MockPsutil()
 
 logger = logging.getLogger(__name__)
 
 
-class PerformanceLevel(Enum):
-    """
-Performance levels for classification"""
+class PerformanceMetricType(Enum):
+    """Performance metric types for comprehensive monitoring."""
+    CPU_USAGE = "cpu_usage"
+    MEMORY_USAGE = "memory_usage"
+    DISK_USAGE = "disk_usage"
+    NETWORK_IO = "network_io"
+    DATABASE_PERFORMANCE = "database_performance"
+    API_RESPONSE_TIME = "api_response_time"
+    AUDIO_PROCESSING_LATENCY = "audio_processing_latency"
+    CONTENT_PROTECTION_SPEED = "content_protection_speed"
+    MONETIZATION_TRANSACTION_TIME = "monetization_transaction_time"
+    COLLABORATION_MATCHING_TIME = "collaboration_matching_time"
 
-    EXCELLENT = "excellent"
-    GOOD = "good"
-    FAIR = "fair"
-    POOR = "poor"
+
+class AlertLevel(Enum):
+    """Performance alert levels."""
+    NORMAL = "normal"
+    WARNING = "warning"
     CRITICAL = "critical"
+    EMERGENCY = "emergency"
 
 
 @dataclass
 class PerformanceMetric:
-    """Individual performance metric"""
+    """Performance metric data structure."""
     name: str
+    metric_type: PerformanceMetricType
     value: float
     unit: str
-    timestamp: datetime
-    source: str
-    labels: Dict[str, str] = field(default_factory=dict)
-    metadata: Dict[str, Any] = field(default_factory=dict)
+    timestamp: datetime = field(default_factory=datetime.now)
+    labels: Dict[str, Any] = field(default_factory=dict)
+    threshold_warning: Optional[float] = None
+    threshold_critical: Optional[float] = None
 
 
 @dataclass
-class PerformanceAlert:
-    """
-Performance alert definition"""
-    metric_name: str
-    threshold: float
-    condition: str  # 'greater_than', 'less_than', 'equals'
-    severity: str
-    message: str
-    enabled: bool = True
+class SystemResources:
+    """System resource utilization snapshot."""
+    cpu_percent: float
+    memory_percent: float
+    disk_percent: float
+    network_connections: int
+    open_files: int
+    timestamp: datetime = field(default_factory=datetime.now)
 
 
-class PerformanceProfiler:
-    """
-    Performance profiler for function and method execution tracking
-    """
+class PerformanceMonitor:
+    """Advanced performance monitoring system for Ainflue platform."""
     
-    def __init__(self):
-        self.profiles = defaultdict(list)
-        self.active_profiles = {}
+    def __init__(self, collection_interval: int = 30):
+        """Initialize performance monitor.
         
-    def start_profile(self, operation_name: str) -> str:
+        Args:
+            collection_interval: Metrics collection interval in seconds
         """
-Start profiling an operation"""
-        profile_id = f"{operation_name}_{time.time()}"
-        self.active_profiles[profile_id] = {
-            "name": operation_name,
-            "start_time": time.time(),
-            "start_memory": psutil.Process().memory_info().rss,
-            "thread_id": threading.get_ident()
+        self.collection_interval = collection_interval
+        self.metrics_storage = defaultdict(deque)
+        self.alert_handlers: List[Callable] = []
+        self.running = False
+        self._monitor_task: Optional[asyncio.Task] = None
+        
+        # Performance thresholds
+        self.thresholds = {
+            PerformanceMetricType.CPU_USAGE: {"warning": 70, "critical": 90},
+            PerformanceMetricType.MEMORY_USAGE: {"warning": 80, "critical": 95},
+            PerformanceMetricType.DISK_USAGE: {"warning": 85, "critical": 95},
+            PerformanceMetricType.API_RESPONSE_TIME: {"warning": 1000, "critical": 5000},  # ms
+            PerformanceMetricType.AUDIO_PROCESSING_LATENCY: {"warning": 500, "critical": 2000},  # ms
         }
-        return profile_id
+        
+        logger.info("Performance monitor initialized")
     
-    def end_profile(self, profile_id: str) -> Optional[Dict[str, Any]]:
-        """End profiling and return results"""
-        if profile_id not in self.active_profiles:
-            return None
+    async def start_monitoring(self):
+        """Start continuous performance monitoring."""
+        if self.running:
+            logger.warning("Performance monitoring already running")
+            return
         
-        profile = self.active_profiles.pop(profile_id)
-        end_time = time.time()
-        end_memory = psutil.Process().memory_info().rss
+        self.running = True
+        self._monitor_task = asyncio.create_task(self._monitoring_loop())
+        logger.info("Performance monitoring started")
+    
+    async def stop_monitoring(self):
+        """Stop performance monitoring."""
+        self.running = False
+        if self._monitor_task:
+            self._monitor_task.cancel()
+            try:
+                await self._monitor_task
+            except asyncio.CancelledError:
+                pass
+        logger.info("Performance monitoring stopped")
+    
+    async def _monitoring_loop(self):
+        """Main monitoring loop."""
+        try:
+            while self.running:
+                await self.collect_system_metrics()
+                await self.collect_application_metrics()
+                await asyncio.sleep(self.collection_interval)
+        except asyncio.CancelledError:
+            logger.info("Monitoring loop cancelled")
+        except Exception as e:
+            logger.error(f"Error in monitoring loop: {e}")
+            raise
+    
+    async def collect_system_metrics(self):
+        """Collect system-level performance metrics."""
+        try:
+            # CPU metrics
+            cpu_percent = psutil.cpu_percent(interval=1)
+            await self.record_metric(PerformanceMetric(
+                name="system_cpu_usage",
+                metric_type=PerformanceMetricType.CPU_USAGE,
+                value=cpu_percent,
+                unit="percent",
+                threshold_warning=self.thresholds[PerformanceMetricType.CPU_USAGE]["warning"],
+                threshold_critical=self.thresholds[PerformanceMetricType.CPU_USAGE]["critical"]
+            ))
+            
+            # Memory metrics
+            memory = psutil.virtual_memory()
+            await self.record_metric(PerformanceMetric(
+                name="system_memory_usage",
+                metric_type=PerformanceMetricType.MEMORY_USAGE,
+                value=memory.percent,
+                unit="percent",
+                labels={"total_gb": round(memory.total / (1024**3), 2)},
+                threshold_warning=self.thresholds[PerformanceMetricType.MEMORY_USAGE]["warning"],
+                threshold_critical=self.thresholds[PerformanceMetricType.MEMORY_USAGE]["critical"]
+            ))
+            
+            # Disk metrics
+            disk = psutil.disk_usage("/")
+            disk_percent = (disk.used / disk.total) * 100
+            await self.record_metric(PerformanceMetric(
+                name="system_disk_usage",
+                metric_type=PerformanceMetricType.DISK_USAGE,
+                value=disk_percent,
+                unit="percent",
+                labels={"total_gb": round(disk.total / (1024**3), 2)},
+                threshold_warning=self.thresholds[PerformanceMetricType.DISK_USAGE]["warning"],
+                threshold_critical=self.thresholds[PerformanceMetricType.DISK_USAGE]["critical"]
+            ))
+            
+        except Exception as e:
+            logger.error(f"Error collecting system metrics: {e}")
+    
+    async def collect_application_metrics(self):
+        """Collect application-specific performance metrics."""
+        try:
+            # Process-specific metrics
+            process = psutil.Process()
+            
+            # Application CPU usage
+            app_cpu = process.cpu_percent()
+            await self.record_metric(PerformanceMetric(
+                name="application_cpu_usage",
+                metric_type=PerformanceMetricType.CPU_USAGE,
+                value=app_cpu,
+                unit="percent",
+                labels={"process_id": process.pid}
+            ))
+            
+            # Application memory usage
+            memory_info = process.memory_info()
+            app_memory_mb = memory_info.rss / (1024 * 1024)
+            await self.record_metric(PerformanceMetric(
+                name="application_memory_usage",
+                metric_type=PerformanceMetricType.MEMORY_USAGE,
+                value=app_memory_mb,
+                unit="mb",
+                labels={"process_id": process.pid}
+            ))
+            
+            # Thread count
+            thread_count = process.num_threads()
+            await self.record_metric(PerformanceMetric(
+                name="application_thread_count",
+                metric_type=PerformanceMetricType.CPU_USAGE,
+                value=thread_count,
+                unit="count",
+                labels={"process_id": process.pid}
+            ))
+            
+        except Exception as e:
+            logger.error(f"Error collecting application metrics: {e}")
+    
+    async def record_metric(self, metric: PerformanceMetric):
+        """Record a performance metric and check thresholds."""
+        # Store metric
+        self.metrics_storage[metric.name].append(metric)
         
-        result = {
-            "operation": profile["name"],
-            "duration_ms": (end_time - profile["start_time"]) * 1000,
-            "memory_delta_mb": (end_memory - profile["start_memory"]) / (1024 * 1024),
-            "start_time": profile["start_time"],
-            "end_time": end_time,
-            "thread_id": profile["thread_id"]
+        # Keep only last 1000 metrics per type to manage memory
+        if len(self.metrics_storage[metric.name]) > 1000:
+            self.metrics_storage[metric.name].popleft()
+        
+        # Check thresholds and trigger alerts
+        await self._check_thresholds(metric)
+        
+        logger.debug(f"Recorded metric: {metric.name} = {metric.value} {metric.unit}")
+    
+    async def _check_thresholds(self, metric: PerformanceMetric):
+        """Check metric thresholds and trigger alerts."""
+        alert_level = None
+        
+        if metric.threshold_critical and metric.value >= metric.threshold_critical:
+            alert_level = AlertLevel.CRITICAL
+        elif metric.threshold_warning and metric.value >= metric.threshold_warning:
+            alert_level = AlertLevel.WARNING
+        
+        if alert_level:
+            await self._trigger_alert(metric, alert_level)
+    
+    async def _trigger_alert(self, metric: PerformanceMetric, level: AlertLevel):
+        """Trigger performance alert."""
+        alert_data = {
+            "metric_name": metric.name,
+            "value": metric.value,
+            "unit": metric.unit,
+            "level": level.value,
+            "timestamp": metric.timestamp.isoformat(),
+            "labels": metric.labels
         }
         
-        self.profiles[profile["name"]].append(result)
-        return result
+        logger.warning(f"Performance alert triggered: {metric.name} = {metric.value} {metric.unit} (Level: {level.value})")
+        
+        # Notify alert handlers
+        for handler in self.alert_handlers:
+            try:
+                if asyncio.iscoroutinefunction(handler):
+                    await handler(alert_data)
+                else:
+                    handler(alert_data)
+            except Exception as e:
+                logger.error(f"Error in alert handler: {e}")
+    
+    def add_alert_handler(self, handler: Callable):
+        """Add alert handler for performance notifications."""
+        self.alert_handlers.append(handler)
+        logger.info(f"Added performance alert handler: {handler.__name__}")
+    
+    def get_metrics_summary(self, metric_name: str, duration_minutes: int = 60) -> Dict[str, Any]:
+        """Get summary statistics for a metric over specified duration."""
+        cutoff_time = datetime.now() - timedelta(minutes=duration_minutes)
+        
+        if metric_name not in self.metrics_storage:
+            return {"error": f"Metric {metric_name} not found"}
+        
+        recent_metrics = [
+            m for m in self.metrics_storage[metric_name]
+            if m.timestamp >= cutoff_time
+        ]
+        
+        if not recent_metrics:
+            return {"error": f"No recent data for {metric_name}"}
+        
+        values = [m.value for m in recent_metrics]
+        
+        return {
+            "metric_name": metric_name,
+            "duration_minutes": duration_minutes,
+            "sample_count": len(values),
+            "current_value": values[-1] if values else None,
+            "average": statistics.mean(values),
+            "min": min(values),
+            "max": max(values),
+            "median": statistics.median(values),
+            "std_dev": statistics.stdev(values) if len(values) > 1 else 0,
+            "unit": recent_metrics[-1].unit if recent_metrics else None
+        }
+    
+    def get_system_health_score(self) -> Dict[str, Any]:
+        """Calculate overall system health score based on key metrics."""
+        health_score = 100.0
+        health_details = {}
+        
+        key_metrics = [
+            "system_cpu_usage",
+            "system_memory_usage", 
+            "system_disk_usage"
+        ]
+        
+        for metric_name in key_metrics:
+            if metric_name in self.metrics_storage:
+                recent_metrics = list(self.metrics_storage[metric_name])[-10:]  # Last 10 samples
+                if recent_metrics:
+                    avg_value = statistics.mean([m.value for m in recent_metrics])
+                    
+                    # Calculate health impact
+                    if metric_name.endswith("_usage"):
+                        if avg_value > 90:
+                            health_score -= 30
+                            health_details[metric_name] = "critical"
+                        elif avg_value > 70:
+                            health_score -= 15
+                            health_details[metric_name] = "warning"
+                        else:
+                            health_details[metric_name] = "healthy"
+        
+        health_score = max(0, health_score)  # Ensure non-negative
+        
+        if health_score >= 80:
+            overall_status = "healthy"
+        elif health_score >= 60:
+            overall_status = "warning"
+        else:
+            overall_status = "critical"
+        
+        return {
+            "health_score": health_score,
+            "overall_status": overall_status,
+            "details": health_details,
+            "timestamp": datetime.now().isoformat()
+        }
 
 
-def performance_monitor(operation_name: str = None):
-    """Decorator for automatic performance monitoring"""
+# Performance monitoring decorators
+def monitor_execution_time(metric_name: str, monitor: PerformanceMonitor):
+    """Decorator to monitor function execution time."""
     def decorator(func):
         @wraps(func)
         async def async_wrapper(*args, **kwargs):
-            name = operation_name or f"{func.__module__}.{func.__name__}"
-            profiler = PerformanceProfiler()
-            profile_id = profiler.start_profile(name)
-            
+            start_time = time.time()
             try:
                 result = await func(*args, **kwargs)
-                profile_result = profiler.end_profile(profile_id)
+                execution_time = (time.time() - start_time) * 1000  # Convert to ms
                 
-                if profile_result:
-                    logger.debug(f"⚡ {name}: {profile_result['duration_ms']:.2f}ms")
+                await monitor.record_metric(PerformanceMetric(
+                    name=f"{metric_name}_execution_time",
+                    metric_type=PerformanceMetricType.API_RESPONSE_TIME,
+                    value=execution_time,
+                    unit="ms",
+                    labels={"function": func.__name__}
+                ))
                 
                 return result
             except Exception as e:
-                profiler.end_profile(profile_id)
-                logger.error(f"❌ {name} failed: {str(e)}")
+                execution_time = (time.time() - start_time) * 1000
+                await monitor.record_metric(PerformanceMetric(
+                    name=f"{metric_name}_execution_time_error",
+                    metric_type=PerformanceMetricType.API_RESPONSE_TIME,
+                    value=execution_time,
+                    unit="ms",
+                    labels={"function": func.__name__, "error": str(e)}
+                ))
                 raise
         
         @wraps(func)
         def sync_wrapper(*args, **kwargs):
-            name = operation_name or f"{func.__module__}.{func.__name__}"
-            profiler = PerformanceProfiler()
-            profile_id = profiler.start_profile(name)
-            
+            start_time = time.time()
             try:
                 result = func(*args, **kwargs)
-                profile_result = profiler.end_profile(profile_id)
+                execution_time = (time.time() - start_time) * 1000
                 
-                if profile_result:
-                    logger.debug(f"⚡ {name}: {profile_result['duration_ms']:.2f}ms")
-                
+                # For sync functions, we'll log the metric for now
+                logger.info(f"Performance metric: {metric_name}_execution_time = {execution_time:.2f}ms")
                 return result
             except Exception as e:
-                profiler.end_profile(profile_id)
-                logger.error(f"❌ {name} failed: {str(e)}")
+                execution_time = (time.time() - start_time) * 1000
+                logger.warning(f"Performance metric (error): {metric_name}_execution_time = {execution_time:.2f}ms, error: {str(e)}")
                 raise
         
         return async_wrapper if asyncio.iscoroutinefunction(func) else sync_wrapper
     return decorator
 
 
-class PerformanceMetricsCollector:
-    """
-    Advanced performance metrics collection and analysis system
-    
-    Features:
-    - Real-time performance monitoring
-    - System resource tracking
-    - Application performance metrics
-    - Custom metric collection
-    - Performance profiling
-    - Alert management
-    - Historical analysis
-    - Performance benchmarking
-    """
-    
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-Initialize performance metrics collector"""
-        self.config = config or {}
-        
-        # Metrics storage
-        self.metrics: Dict[str, List[PerformanceMetric]] = defaultdict(list)
-        self.recent_metrics: Dict[str, deque] = defaultdict(lambda: deque(maxlen=1000))
-        
-        # Performance tracking
-        self.profiler = PerformanceProfiler()
-        self.request_metrics = deque(maxlen=10000)  # Track recent requests
-        
-        # Alerts
-        self.alerts: List[PerformanceAlert] = []
-        self.triggered_alerts: List[Dict[str, Any]] = []
-        
-        # System monitoring
-        self.system_monitor_enabled = True
-        self.monitoring_interval = 30  # seconds
-        self.monitoring_task = None
-        
-        # Performance baselines
-        self.baselines = {
-            "api_response_time": 200.0,  # ms - <200ms P95
-            "database_query_time": 50.0,  # ms
-            "cpu_usage": 70.0,  # percent
-            "memory_usage": 80.0,  # percent
-            "disk_io_latency": 10.0,  # ms
-            "network_latency": 100.0,  # ms
-            "error_rate": 0.1,  # percent - <0.1% error rate
-            "uptime_sla": 99.9,  # percent - 99.9% uptime
-            "mttr": 15.0,  # minutes - <15 minutes MTTR
-            "security_score": 95.0,  # percent - A+ (95%+)
-            "code_coverage": 90.0,  # percent - >90% code coverage
-            "technical_debt_ratio": 5.0,  # percent - <5% technical debt
-            "deployment_frequency": 10.0  # per day - >10/jour
-        }
-        
-        # Initialize default alerts
-        self._initialize_alerts()
-        
-        logger.info("PerformanceMetricsCollector initialized successfully")
-    
-    async def start_monitoring(self) -> bool:
-        """Start performance monitoring"""
-        try:
-            if self.system_monitor_enabled:
-                self.monitoring_task = asyncio.create_task(self._monitoring_loop())
-            
-            logger.info("🚀 Performance monitoring started")
-            return True
-            
-        except Exception as e:
-            logger.error(f"Failed to start performance monitoring: {e}")
-            return False
-    
-    async def stop_monitoring(self) -> bool:
-        """Stop performance monitoring"""
-        try:
-            if self.monitoring_task:
-                self.monitoring_task.cancel()
-                try:
-                    await self.monitoring_task
-                except asyncio.CancelledError:
-                    pass
-            
-            logger.info("⏹️ Performance monitoring stopped")
-            return True
-            
-        except Exception as e:
-            logger.error(f"Failed to stop performance monitoring: {e}")
-            return False
-    
-    async def record_metric(
-        self,
-        name: str,
-        value: float,
-        unit: str = "",
-        source: str = "system",
-        labels: Optional[Dict[str, str]] = None,
-        metadata: Optional[Dict[str, Any]] = None
-    ) -> None:
-        """Record a performance metric"""
-        try:
-            metric = PerformanceMetric(
-                name=name,
-                value=value,
-                unit=unit,
-                timestamp=datetime.utcnow(),
-                source=source,
-                labels=labels or {},
-                metadata=metadata or {}
-            )
-            
-            self.metrics[name].append(metric)
-            self.recent_metrics[name].append(metric)
-            
-            # Check alerts
-            await self._check_alerts(metric)
-            
-        except Exception as e:
-            logger.error(f"Error recording metric {name}: {e}")
-    
-    async def record_request_metrics(
-        self,
-        endpoint: str,
-        method: str,
-        response_time: float,
-        status_code: int,
-        user_id: Optional[int] = None
-    ) -> None:
-        """Record request performance metrics"""
-        try:
-            request_data = {
-                "endpoint": endpoint,
-                "method": method,
-                "response_time": response_time,
-                "status_code": status_code,
-                "timestamp": datetime.utcnow(),
-                "user_id": user_id
-            }
-            
-            self.request_metrics.append(request_data)
-            
-            # Record as performance metric
-            await self.record_metric(
-                "api_response_time",
-                response_time,
-                "ms",
-                "api",
-                {"endpoint": endpoint, "method": method}
-            )
-            
-            # Record error rate if error
-            if status_code >= 400:
-                await self.record_metric(
-                    "api_error_rate",
-                    1,
-                    "count",
-                    "api",
-                    {"endpoint": endpoint, "status": str(status_code)}
-                )
-            
-        except Exception as e:
-            logger.error(f"Error recording request metrics: {e}")
-    
-    async def record_database_metrics(
-        self,
-        query_type: str,
-        execution_time: float,
-        rows_affected: int = 0,
-        table: str = "",
-        success: bool = True
-    ) -> None:
-        """Record database performance metrics"""
-        try:
-            labels = {
-                "query_type": query_type,
-                "table": table,
-                "success": str(success)
-            }
-            
-            metadata = {
-                "rows_affected": rows_affected,
-                "success": success
-            }
-            
-            await self.record_metric(
-                "database_query_time",
-                execution_time,
-                "ms",
-                "database",
-                labels,
-                metadata
-            )
-            
-        except Exception as e:
-            logger.error(f"Error recording database metrics: {e}")
-    
-    async def get_system_performance(self) -> Dict[str, Any]:
-        """Get current system performance metrics"""
-        try:
-            # CPU metrics
-            cpu_percent = psutil.cpu_percent(interval=1)
-            cpu_count = psutil.cpu_count()
-            load_avg = psutil.getloadavg() if hasattr(psutil, 'getloadavg') else (0, 0, 0)
-            
-            # Memory metrics
-            memory = psutil.virtual_memory()
-            swap = psutil.swap_memory()
-            
-            # Disk metrics
-            disk_usage = psutil.disk_usage('/')
-            disk_io = psutil.disk_io_counters()
-            
-            # Network metrics
-            network_io = psutil.net_io_counters()
-            
-            # Process metrics
-            process = psutil.Process()
-            process_memory = process.memory_info()
-            
-            return {
-                "timestamp": datetime.utcnow().isoformat(),
-                "cpu": {
-                    "percent": cpu_percent,
-                    "count": cpu_count,
-                    "load_avg": list(load_avg),
-                    "performance_level": self._classify_performance(cpu_percent, "cpu")
-                },
-                "memory": {
-                    "total": memory.total,
-                    "available": memory.available,
-                    "percent": memory.percent,
-                    "used": memory.used,
-                    "free": memory.free,
-                    "swap_total": swap.total,
-                    "swap_used": swap.used,
-                    "swap_percent": swap.percent,
-                    "performance_level": self._classify_performance(memory.percent, "memory")
-                },
-                "disk": {
-                    "total": disk_usage.total,
-                    "used": disk_usage.used,
-                    "free": disk_usage.free,
-                    "percent": disk_usage.percent,
-                    "read_count": disk_io.read_count if disk_io else 0,
-                    "write_count": disk_io.write_count if disk_io else 0,
-                    "read_bytes": disk_io.read_bytes if disk_io else 0,
-                    "write_bytes": disk_io.write_bytes if disk_io else 0,
-                    "performance_level": self._classify_performance(disk_usage.percent, "disk")
-                },
-                "network": {
-                    "bytes_sent": network_io.bytes_sent,
-                    "bytes_recv": network_io.bytes_recv,
-                    "packets_sent": network_io.packets_sent,
-                    "packets_recv": network_io.packets_recv,
-                    "errin": network_io.errin,
-                    "errout": network_io.errout,
-                    "dropin": network_io.dropin,
-                    "dropout": network_io.dropout
-                },
-                "process": {
-                    "pid": process.pid,
-                    "memory_rss": process_memory.rss,
-                    "memory_vms": process_memory.vms,
-                    "cpu_percent": process.cpu_percent(),
-                    "num_threads": process.num_threads(),
-                    "open_files": len(process.open_files()),
-                    "connections": len(process.connections())
-                }
-            }
-            
-        except Exception as e:
-            logger.error(f"Error getting system performance: {e}")
-            return {"error": str(e)}
-    
-    async def get_application_performance(self) -> Dict[str, Any]:
-        """Get application performance metrics"""
-        try:
-            current_time = datetime.utcnow()
-            last_hour = current_time - timedelta(hours=1)
-            
-            # Recent request metrics
-            recent_requests = [
-                req for req in self.request_metrics
-                if req["timestamp"] >= last_hour
-            ]
-            
-            if recent_requests:
-                response_times = [req["response_time"] for req in recent_requests]
-                status_codes = [req["status_code"] for req in recent_requests]
-                
-                avg_response_time = statistics.mean(response_times)
-                p95_response_time = statistics.quantiles(response_times, n=20)[18] if len(response_times) >= 20 else max(response_times)
-                error_count = len([sc for sc in status_codes if sc >= 400])
-                error_rate = (error_count / len(recent_requests)) * 100
-                
-                # Get endpoint performance
-                endpoint_stats = defaultdict(list)
-                for req in recent_requests:
-                    endpoint_stats[req["endpoint"]].append(req["response_time"])
-                
-                slowest_endpoints = []
-                for endpoint, times in endpoint_stats.items():
-                    avg_time = statistics.mean(times)
-                    slowest_endpoints.append({
-                        "endpoint": endpoint,
-                        "avg_response_time": avg_time,
-                        "request_count": len(times)
-                    })
-                
-                slowest_endpoints.sort(key=lambda x: x["avg_response_time"], reverse=True)
-                
-            else:
-                avg_response_time = 0
-                p95_response_time = 0
-                error_rate = 0
-                slowest_endpoints = []
-            
-            return {
-                "timestamp": current_time.isoformat(),
-                "requests": {
-                    "total_count": len(recent_requests),
-                    "avg_response_time": round(avg_response_time, 2),
-                    "p95_response_time": round(p95_response_time, 2),
-                    "error_rate": round(error_rate, 2),
-                    "performance_level": self._classify_performance(avg_response_time, "response_time")
-                },
-                "slowest_endpoints": slowest_endpoints[:10],
-                "profiler_stats": {
-                    "active_profiles": len(self.profiler.active_profiles),
-                    "completed_profiles": sum(len(profiles) for profiles in self.profiler.profiles.values())
-                }
-            }
-            
-        except Exception as e:
-            logger.error(f"Error getting application performance: {e}")
-            return {"error": str(e)}
-    
-    async def get_performance_summary(self, period_hours: int = 24) -> Dict[str, Any]:
-        """Get performance summary for a time period"""
-        try:
-            current_time = datetime.utcnow()
-            start_time = current_time - timedelta(hours=period_hours)
-            
-            summary = {
-                "period": {
-                    "start": start_time.isoformat(),
-                    "end": current_time.isoformat(),
-                    "hours": period_hours
-                },
-                "metrics_summary": {},
-                "alerts_summary": {
-                    "total_alerts": len(self.triggered_alerts),
-                    "critical_alerts": len([a for a in self.triggered_alerts if a.get("severity") == "critical"]),
-                    "recent_alerts": [
-                        a for a in self.triggered_alerts 
-                        if datetime.fromisoformat(a["timestamp"]) >= start_time
-                    ]
-                },
-                "top_performance_issues": []
-            }
-            
-            # Summarize metrics for the period
-            for metric_name, metric_list in self.metrics.items():
-                period_metrics = [
-                    m for m in metric_list
-                    if start_time <= m.timestamp <= current_time
-                ]
-                
-                if period_metrics:
-                    values = [m.value for m in period_metrics]
-                    summary["metrics_summary"][metric_name] = {
-                        "count": len(values),
-                        "avg": round(statistics.mean(values), 2),
-                        "min": round(min(values), 2),
-                        "max": round(max(values), 2),
-                        "p95": round(statistics.quantiles(values, n=20)[18] if len(values) >= 20 else max(values), 2)
-                    }
-            
-            return summary
-            
-        except Exception as e:
-            logger.error(f"Error getting performance summary: {e}")
-            return {"error": str(e)}
-    
-    def _classify_performance(self, value: float, metric_type: str) -> str:
-        """Classify performance level based on value and type"""
-        try:
-            if metric_type == "cpu":
-                if value <= 50:
-                    return PerformanceLevel.EXCELLENT.value
-                elif value <= 70:
-                    return PerformanceLevel.GOOD.value
-                elif value <= 85:
-                    return PerformanceLevel.FAIR.value
-                elif value <= 95:
-                    return PerformanceLevel.POOR.value
-                else:
-                    return PerformanceLevel.CRITICAL.value
-            
-            elif metric_type in ["memory", "disk"]:
-                if value <= 60:
-                    return PerformanceLevel.EXCELLENT.value
-                elif value <= 75:
-                    return PerformanceLevel.GOOD.value
-                elif value <= 85:
-                    return PerformanceLevel.FAIR.value
-                elif value <= 95:
-                    return PerformanceLevel.POOR.value
-                else:
-                    return PerformanceLevel.CRITICAL.value
-            
-            elif metric_type == "response_time":
-                if value <= 100:
-                    return PerformanceLevel.EXCELLENT.value
-                elif value <= 200:
-                    return PerformanceLevel.GOOD.value
-                elif value <= 500:
-                    return PerformanceLevel.FAIR.value
-                elif value <= 1000:
-                    return PerformanceLevel.POOR.value
-                else:
-                    return PerformanceLevel.CRITICAL.value
-            
-            else:
-                return PerformanceLevel.GOOD.value
-                
-        except Exception:
-            return PerformanceLevel.GOOD.value
-    
-    def _initialize_alerts(self):
-        """Initialize default performance alerts"""
-        try:
-            default_alerts = [
-                PerformanceAlert(
-                    "api_response_time",
-                    200.0,  # Warning at 200ms (target threshold)
-                    "greater_than",
-                    "warning",
-                    "API response time exceeds 200ms P95 target"
-                ),
-                PerformanceAlert(
-                    "api_response_time",
-                    500.0,  # Critical at 500ms
-                    "greater_than",
-                    "critical",
-                    "API response time is critically high (>500ms)"
-                ),
-                PerformanceAlert(
-                    "database_query_time",
-                    500.0,
-                    "greater_than",
-                    "warning",
-                    "Database queries are slow"
-                ),
-                PerformanceAlert(
-                    "api_error_rate",
-                    0.1,  # Warning at 0.1% error rate (target threshold)
-                    "greater_than",
-                    "warning",
-                    "API error rate exceeds 0.1% target"
-                ),
-                PerformanceAlert(
-                    "api_error_rate",
-                    1.0,  # Critical at 1% error rate
-                    "greater_than",
-                    "critical",
-                    "API error rate is critically high (>1%)"
-                )
-            ]
-            
-            self.alerts.extend(default_alerts)
-            
-        except Exception as e:
-            logger.error(f"Error initializing alerts: {e}")
-    
-    async def _check_alerts(self, metric: PerformanceMetric):
-        """Check if metric triggers any alerts"""
-        try:
-            for alert in self.alerts:
-                if not alert.enabled or alert.metric_name != metric.name:
-                    continue
-                
-                triggered = False
-                
-                if alert.condition == "greater_than" and metric.value > alert.threshold:
-                    triggered = True
-                elif alert.condition == "less_than" and metric.value < alert.threshold:
-                    triggered = True
-                elif alert.condition == "equals" and metric.value == alert.threshold:
-                    triggered = True
-                
-                if triggered:
-                    await self._trigger_alert(alert, metric)
-                    
-        except Exception as e:
-            logger.error(f"Error checking alerts: {e}")
-    
-    async def _trigger_alert(self, alert: PerformanceAlert, metric: PerformanceMetric):
-        """Trigger performance alert"""
-        try:
-            alert_data = {
-                "alert_name": f"{alert.metric_name}_{alert.condition}_{alert.threshold}",
-                "metric_name": alert.metric_name,
-                "metric_value": metric.value,
-                "threshold": alert.threshold,
-                "condition": alert.condition,
-                "severity": alert.severity,
-                "message": alert.message,
-                "timestamp": metric.timestamp.isoformat(),
-                "source": metric.source,
-                "labels": metric.labels
-            }
-            
-            self.triggered_alerts.append(alert_data)
-            
-            # Log alert
-            if alert.severity == "critical":
-                logger.critical(f"🚨 CRITICAL PERFORMANCE ALERT: {alert.message} (value: {metric.value}, threshold: {alert.threshold})")
-            else:
-                logger.warning(f"⚠️ PERFORMANCE ALERT: {alert.message} (value: {metric.value}, threshold: {alert.threshold})")
-                
-        except Exception as e:
-            logger.error(f"Error triggering alert: {e}")
-    
-    async def _monitoring_loop(self):
-        """Continuous system monitoring loop"""
-        while True:
-            try:
-                # Get system performance
-                system_perf = await self.get_system_performance()
-                
-                # Record system metrics
-                if "cpu" in system_perf:
-                    await self.record_metric("cpu_usage", system_perf["cpu"]["percent"], "percent", "system")
-                
-                if "memory" in system_perf:
-                    await self.record_metric("memory_usage", system_perf["memory"]["percent"], "percent", "system")
-                
-                if "disk" in system_perf:
-                    await self.record_metric("disk_usage", system_perf["disk"]["percent"], "percent", "system")
-                
-                # Wait for next monitoring cycle
-                await asyncio.sleep(self.monitoring_interval)
-                
-            except asyncio.CancelledError:
-                break
-            except Exception as e:
-                logger.error(f"Error in monitoring loop: {e}")
-                await asyncio.sleep(5)
-    
-    def get_collector_stats(self) -> Dict[str, Any]:
-        """Get performance collector statistics"""
-        return {
-            "version": "1.0.0",
-            "total_metrics": sum(len(metrics) for metrics in self.metrics.values()),
-            "unique_metric_types": len(self.metrics),
-            "total_requests_tracked": len(self.request_metrics),
-            "active_profiles": len(self.profiler.active_profiles),
-            "completed_profiles": sum(len(profiles) for profiles in self.profiler.profiles.values()),
-            "total_alerts": len(self.alerts),
-            "triggered_alerts": len(self.triggered_alerts),
-            "monitoring_enabled": self.system_monitor_enabled,
-            "monitoring_interval": self.monitoring_interval
-        }
+# Global performance monitor instance
+performance_monitor = PerformanceMonitor()
 
 
-# Export classes
-__all__ = [
-    "PerformanceMetricsCollector",
-    "PerformanceMetric",
-    "PerformanceAlert",
-    "PerformanceProfiler",
-    "PerformanceLevel",
-    "performance_monitor"
-]
+# Convenience functions
+async def start_performance_monitoring():
+    """Start global performance monitoring."""
+    await performance_monitor.start_monitoring()
+
+
+async def stop_performance_monitoring():
+    """Stop global performance monitoring."""
+    await performance_monitor.stop_monitoring()
+
+
+def get_performance_summary(metric_name: str, duration_minutes: int = 60) -> Dict[str, Any]:
+    """Get performance summary for a specific metric."""
+    return performance_monitor.get_metrics_summary(metric_name, duration_minutes)
+
+
+def get_system_health() -> Dict[str, Any]:
+    """Get current system health status."""
+    return performance_monitor.get_system_health_score()
