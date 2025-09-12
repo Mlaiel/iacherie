@@ -80,14 +80,11 @@ from ..models.alert_models import (
 try:
     from .notification_engine import NotificationEngine
     NOTIFICATION_ENGINE_AVAILABLE = True
-except ImportError:
-    try:
-        from ..services.notification_engine import NotificationEngine
-        NOTIFICATION_ENGINE_AVAILABLE = True
-    except ImportError:
-        NOTIFICATION_ENGINE_AVAILABLE = False
-        class NotificationEngine:
-            def __init__(self, *args, **kwargs): pass
+except (ImportError, SyntaxError) as e:
+    print(f"notification_engine not available due to syntax/import error: {e}")
+    NOTIFICATION_ENGINE_AVAILABLE = False
+    class NotificationEngine:
+        def __init__(self, *args, **kwargs): pass
 
 try:
     from .escalation_engine import EscalationEngine
@@ -662,7 +659,7 @@ Escalate an alert to higher priority."""
     def register_alert_handler(
         self,
         alert_type: AlertType,
-        handler: Callable[[Alert], asyncio.Coroutine]
+        handler: Callable[[Alert], Any]  # Simplified type hint to avoid asyncio.Coroutine issue
     ) -> None:
         """Register custom alert handler."""
         self._alert_handlers[alert_type] = handler

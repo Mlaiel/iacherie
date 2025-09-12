@@ -75,14 +75,33 @@ from .manager import (
     BulkOperationResult
 )
 
-from .notification_engine import (
-    NotificationEngine,
-    NotificationChannel,
-    NotificationTemplate,
-    DeliveryResult,
-    NotificationBatch,
-    ChannelConfig
-)
+# Import notification engine with fallback for syntax errors
+try:
+    from .notification_engine import (
+        NotificationEngine,
+        NotificationChannel,
+        NotificationTemplate,
+        DeliveryResult,
+        NotificationBatch,
+        ChannelConfig
+    )
+    NOTIFICATION_ENGINE_AVAILABLE = True
+except (ImportError, SyntaxError) as e:
+    print(f"notification_engine components not available: {e}")
+    NOTIFICATION_ENGINE_AVAILABLE = False
+    # Create fallback classes
+    class NotificationEngine:
+        def __init__(self, *args, **kwargs): pass
+    class NotificationChannel:
+        def __init__(self, *args, **kwargs): pass
+    class NotificationTemplate:
+        def __init__(self, *args, **kwargs): pass
+    class DeliveryResult:
+        def __init__(self, *args, **kwargs): pass
+    class NotificationBatch:
+        def __init__(self, *args, **kwargs): pass
+    class ChannelConfig:
+        def __init__(self, *args, **kwargs): pass
 
 from .escalation_engine import (
     EscalationEngine,

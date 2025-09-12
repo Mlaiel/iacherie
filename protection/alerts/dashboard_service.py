@@ -17,12 +17,51 @@ from datetime import datetime, timedelta
 from enum import Enum
 from uuid import uuid4
 
-import redis.asyncio as redis
-from fastapi import WebSocket, WebSocketDisconnect
-from pydantic import BaseModel, Field
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, func, and_, or_
-import pandas as pd
+# Use our compatibility wrapper for redis
+from ..utils import aioredis as redis, REDIS_AVAILABLE
+
+# Optional FastAPI with fallback
+try:
+    from fastapi import WebSocket, WebSocketDisconnect
+    FASTAPI_AVAILABLE = True
+except ImportError:
+    FASTAPI_AVAILABLE = False
+    class WebSocket:
+        def __init__(self, *args, **kwargs): pass
+    class WebSocketDisconnect(Exception):
+        pass
+
+# Optional pydantic with fallback
+try:
+    from pydantic import BaseModel, Field
+    PYDANTIC_AVAILABLE = True
+except ImportError:
+    PYDANTIC_AVAILABLE = False
+    class BaseModel:
+        def __init__(self, **kwargs):
+            for key, value in kwargs.items():
+                setattr(self, key, value)
+    def Field(*args, **kwargs): return None
+
+# Optional SQLAlchemy with fallback
+try:
+    from sqlalchemy.ext.asyncio import AsyncSession
+    from sqlalchemy import select, func, and_, or_
+    SQLALCHEMY_AVAILABLE = True
+except ImportError:
+    SQLALCHEMY_AVAILABLE = False
+    AsyncSession = None
+    def select(*args): return None
+    class FuncFallback:
+        def count(self, *args): return 0
+        def sum(self, *args): return 0
+        def avg(self, *args): return 0
+    func = FuncFallback()
+    def and_(*args): return None
+    def or_(*args): return None
+
+# Use our pandas fallback
+from ..utils.fallbacks import pd, PANDAS_AVAILABLE
 
 from ..models.alert_models import Alert, AlertSeverity, AlertType, AlertStatus
 from ..models.dashboard_models import (
