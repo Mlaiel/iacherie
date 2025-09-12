@@ -14,7 +14,22 @@ from datetime import datetime, timezone
 from enum import Enum
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
-from pydantic import BaseModel, Field, validator
+
+# Optional pydantic with fallback
+try:
+    from pydantic import BaseModel, Field, validator
+    PYDANTIC_AVAILABLE = True
+except ImportError:
+    PYDANTIC_AVAILABLE = False
+    class BaseModel:
+        def __init__(self, **kwargs):
+            for key, value in kwargs.items():
+                setattr(self, key, value)
+    def Field(*args, **kwargs): return None
+    def validator(*args, **kwargs):
+        def decorator(func): return func
+        return decorator
+
 import uuid
 
 

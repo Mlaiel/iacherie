@@ -32,11 +32,44 @@ from enum import Enum
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import asynccontextmanager
 
-import websockets
+# Optional websockets import with fallback
+try:
+    import websockets
+    WEBSOCKETS_AVAILABLE = True
+except ImportError:
+    WEBSOCKETS_AVAILABLE = False
+    websockets = None
+
 # Use our compatibility wrapper for aioredis
 from ..utils import aioredis, REDIS_AVAILABLE
-from pydantic import BaseModel, Field, validator
-from sqlalchemy.ext.asyncio import AsyncSession
+
+# Optional pydantic import with fallback
+try:
+    from pydantic import BaseModel, Field, validator
+    PYDANTIC_AVAILABLE = True
+except ImportError:
+    PYDANTIC_AVAILABLE = False
+    # Create simple fallback for BaseModel
+    class BaseModel:
+        def __init__(self, **kwargs):
+            for key, value in kwargs.items():
+                setattr(self, key, value)
+    
+    def Field(*args, **kwargs):
+        return None
+    
+    def validator(*args, **kwargs):
+        def decorator(func):
+            return func
+        return decorator
+
+# Optional SQLAlchemy import with fallback  
+try:
+    from sqlalchemy.ext.asyncio import AsyncSession
+    SQLALCHEMY_AVAILABLE = True
+except ImportError:
+    SQLALCHEMY_AVAILABLE = False
+    AsyncSession = None
 
 logger = logging.getLogger(__name__)
 
@@ -179,7 +212,10 @@ Initialize real-time monitor."""
             )
         
         # WebSocket connections
-        self._websocket_clients: Set[websockets.WebSocketServerProtocol] = set()
+        if WEBSOCKETS_AVAILABLE:
+            self._websocket_clients: Set[websockets.WebSocketServerProtocol] = set()
+        else:
+            self._websocket_clients: Set = set()
         
         # Thread pool for CPU-intensive tasks
         self._thread_pool = ThreadPoolExecutor(
@@ -590,9 +626,12 @@ Queue an event for processing."""
 
     async def _start_websocket_server(self) -> None:
         """Start WebSocket server for real-time notifications."""
+        if not WEBSOCKETS_AVAILABLE:
+            logger.warning("WebSocket functionality not available - websockets module not installed")
+            return
+            
         async def handle_websocket(websocket, path):
-            """
-Handle WebSocket connections."""
+            """Handle WebSocket connections."""
             self._websocket_clients.add(websocket)
             logger.info(f"WebSocket client connected: {websocket.remote_address}")
             
@@ -613,7 +652,7 @@ Handle WebSocket connections."""
 
     async def _broadcast_event_to_websockets(self, event: RealTimeEvent) -> None:
         """Broadcast event to all connected WebSocket clients."""
-        if not self._websocket_clients:
+        if not WEBSOCKETS_AVAILABLE or not self._websocket_clients:
             return
         
         message = {
@@ -634,11 +673,12 @@ Handle WebSocket connections."""
         for client in self._websocket_clients:
             try:
                 await client.send(message_json)
-            except websockets.exceptions.ConnectionClosed:
-                disconnected_clients.add(client)
-            except Exception as e:
-                logger.error(f"Error sending WebSocket message: {e}")
-                disconnected_clients.add(client)
+            except Exception as e:  # Catch all exceptions as websockets may not be available
+                if WEBSOCKETS_AVAILABLE and hasattr(e, '__class__') and 'ConnectionClosed' in str(e.__class__):
+                    disconnected_clients.add(client)
+                else:
+                    logger.error(f"Error sending message to WebSocket client: {e}")
+                    disconnected_clients.add(client)
         
         # Remove disconnected clients
         self._websocket_clients -= disconnected_clients

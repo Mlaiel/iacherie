@@ -28,11 +28,69 @@ from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
 from enum import Enum
 
-import websockets
-from fastapi import APIRouter, HTTPException, WebSocket, WebSocketDisconnect, Depends
-from fastapi.responses import StreamingResponse
-from pydantic import BaseModel, Field
-from sqlalchemy.ext.asyncio import AsyncSession
+# Optional websockets import with fallback
+try:
+    import websockets
+    WEBSOCKETS_AVAILABLE = True
+except ImportError:
+    WEBSOCKETS_AVAILABLE = False
+    websockets = None
+
+# Optional FastAPI imports with fallbacks
+try:
+    from fastapi import APIRouter, HTTPException, WebSocket, WebSocketDisconnect, Depends
+    from fastapi.responses import StreamingResponse
+    FASTAPI_AVAILABLE = True
+except ImportError:
+    FASTAPI_AVAILABLE = False
+    # Simple fallback classes
+    class APIRouter:
+        def __init__(self, *args, **kwargs):
+            self.prefix = kwargs.get('prefix', '')
+            self.tags = kwargs.get('tags', [])
+        def get(self, path): 
+            def decorator(func): return func
+            return decorator
+        def post(self, path):
+            def decorator(func): return func
+            return decorator
+        def put(self, path):
+            def decorator(func): return func
+            return decorator
+        def delete(self, path):
+            def decorator(func): return func
+            return decorator
+        def websocket(self, path):
+            def decorator(func): return func
+            return decorator
+    class HTTPException(Exception): 
+        def __init__(self, *args, **kwargs):
+            super().__init__()
+    class WebSocket: pass
+    class WebSocketDisconnect(Exception): pass
+    def Depends(*args, **kwargs): return None
+    class StreamingResponse: pass
+
+# Optional pydantic import with fallback
+try:
+    from pydantic import BaseModel, Field
+    PYDANTIC_AVAILABLE = True
+except ImportError:
+    PYDANTIC_AVAILABLE = False
+    class BaseModel:
+        def __init__(self, **kwargs):
+            for key, value in kwargs.items():
+                setattr(self, key, value)
+    def Field(*args, **kwargs):
+        return None
+
+# Optional SQLAlchemy import with fallback
+try:
+    from sqlalchemy.ext.asyncio import AsyncSession
+    SQLALCHEMY_AVAILABLE = True
+except ImportError:
+    SQLALCHEMY_AVAILABLE = False
+    AsyncSession = None
 
 from .realtime_monitor import RealTimeMonitor, MonitoringPriority, ThreatLevel
 from .analytics import MonitoringAnalytics, AnalyticsTimeRange, AnalyticsReport

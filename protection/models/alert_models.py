@@ -13,7 +13,19 @@ from datetime import datetime
 from typing import Dict, List, Optional, Any, Union
 from enum import Enum
 from dataclasses import dataclass, field
-from pydantic import BaseModel, Field
+
+# Optional pydantic with fallback
+try:
+    from pydantic import BaseModel, Field
+    PYDANTIC_AVAILABLE = True
+except ImportError:
+    PYDANTIC_AVAILABLE = False
+    class BaseModel:
+        def __init__(self, **kwargs):
+            for key, value in kwargs.items():
+                setattr(self, key, value)
+    def Field(*args, **kwargs): return None
+
 import uuid
 
 class AlertPriority(Enum):
