@@ -26,7 +26,7 @@ export interface SecurityThreat {
 export interface ContentProtection {
   contentId: string;
   fingerprint: string;
-  protectionLevel: 'basic' | 'standard' | 'premium' | 'enterprise';
+  protectionLevel: 'essential' | 'standard' | 'premium' | 'enterprise';
   watermark: boolean;
   encryption: boolean;
   accessControls: AccessControl[];
@@ -49,7 +49,7 @@ export interface Permission {
 export interface UserAuthentication {
   userId: string;
   sessionId: string;
-  authLevel: 'basic' | 'two_factor' | 'biometric' | 'enterprise';
+  authLevel: 'essential' | 'two_factor' | 'biometric' | 'enterprise';
   verifiedAt: number;
   deviceFingerprint: string;
   ipAddress: string;
@@ -314,10 +314,10 @@ export class SecuritySystem {
     return Math.min(100, score);
   }
 
-  private determineAuthLevel(riskScore: number): 'basic' | 'two_factor' | 'biometric' | 'enterprise' {
+  private determineAuthLevel(riskScore: number): 'essential' | 'two_factor' | 'biometric' | 'enterprise' {
     if (riskScore >= 70) return 'two_factor';
-    if (riskScore >= 50) return 'basic';
-    return 'basic';
+    if (riskScore >= 50) return 'essential';
+    return 'essential';
   }
 
   private isHighRiskIP(ip: string): boolean {

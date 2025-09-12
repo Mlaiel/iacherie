@@ -24,7 +24,7 @@ interface CopyrightRegistration {
   registrationDate: string;
   expiryDate: string;
   registrationNumber?: string;
-  protectionLevel: 'basic' | 'standard' | 'premium';
+  protectionLevel: 'essential' | 'standard' | 'premium';
   jurisdiction: string;
 }
 
@@ -59,7 +59,7 @@ const CopyrightManager: React.FC = () => {
       status: 'pending',
       registrationDate: '2025-01-05',
       expiryDate: '2095-01-05',
-      protectionLevel: 'basic',
+      protectionLevel: 'essential',
       jurisdiction: 'US'
     }
   ]);
@@ -95,7 +95,7 @@ const CopyrightManager: React.FC = () => {
     switch (level) {
       case 'premium': return 'bg-purple-100 text-purple-800';
       case 'standard': return 'bg-blue-100 text-blue-800';
-      case 'basic': return 'bg-gray-100 text-gray-800';
+      case 'essential': return 'bg-gray-100 text-gray-800';
       default: return 'bg-gray-100 text-gray-800';
     }
   };

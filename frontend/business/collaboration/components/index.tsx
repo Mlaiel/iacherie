@@ -654,7 +654,7 @@ export const CollaborationHub: React.FC<CollaborationHubProps> = ({
                   <div className="flex items-center space-x-3">
                     <div className="relative">
                       <img
-                        src="https://via.placeholder.com/40"
+                        src="/api/avatar/default-chat.svg"
                         alt="Chat"
                         className="w-10 h-10 rounded-full"
                       />
@@ -671,7 +671,7 @@ export const CollaborationHub: React.FC<CollaborationHubProps> = ({
                   {messages.slice(0, 5).map((message) => (
                     <div key={message.id} className="flex items-start space-x-3">
                       <img
-                        src="https://via.placeholder.com/32"
+                        src="/api/avatar/default-user.svg"
                         alt="User"
                         className="w-8 h-8 rounded-full"
                       />

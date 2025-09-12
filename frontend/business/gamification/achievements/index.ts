@@ -543,7 +543,7 @@ export class GamificationAchievementsEngine {
         minPoints: 0,
         maxPoints: 999,
         benefits: [
-          { type: 'feature', name: 'Basic Analytics', description: 'Access to basic content analytics', permanent: true },
+          { type: 'feature', name: 'Essential Analytics', description: 'Access to essential content analytics', permanent: true },
         ],
         icon: '🌱',
         color: '#90EE90',
