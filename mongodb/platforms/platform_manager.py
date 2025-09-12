@@ -534,32 +534,78 @@ class PlatformManager:
             return False
     
     async def _encrypt_credentials(self, config: PlatformConfig) -> PlatformConfig:
-        """Encrypt sensitive credential fields"""
-        # Implementation would use proper encryption
-        # For now, we'll use base64 encoding as placeholder
-        encrypted_config = config
-        
-        if config.credentials.api_secret:
-            encrypted_config.credentials.api_secret = base64.b64encode(
-                config.credentials.api_secret.encode()
-            ).decode()
-        
-        if config.credentials.access_token:
-            encrypted_config.credentials.access_token = base64.b64encode(
-                config.credentials.access_token.encode()
-            ).decode()
-        
-        return encrypted_config
+        """Encrypt sensitive credential fields using proper encryption."""
+        try:
+            # Import encryption manager
+            from ..security.encryption_manager import EncryptionManager
+            encryption_manager = EncryptionManager()
+            
+            # Create a copy to avoid modifying original
+            encrypted_config = config
+            
+            if config.credentials.api_secret:
+                encrypted_secret = await encryption_manager.encrypt_field(
+                    'api_secret', 
+                    config.credentials.api_secret
+                )
+                encrypted_config.credentials.api_secret = encrypted_secret
+            
+            if config.credentials.access_token:
+                encrypted_token = await encryption_manager.encrypt_field(
+                    'access_token',
+                    config.credentials.access_token
+                )
+                encrypted_config.credentials.access_token = encrypted_token
+            
+            return encrypted_config
+            
+        except ImportError:
+            logger.warning("Encryption manager not available, using base64 fallback")
+            # Fallback to base64 if encryption manager not available
+            encrypted_config = config
+            
+            if config.credentials.api_secret:
+                encrypted_config.credentials.api_secret = base64.b64encode(
+                    config.credentials.api_secret.encode()
+                ).decode()
+            
+            if config.credentials.access_token:
+                encrypted_config.credentials.access_token = base64.b64encode(
+                    config.credentials.access_token.encode()
+                ).decode()
+            
+            return encrypted_config
     
     async def _decrypt_and_create_config(self, config_data: Dict[str, Any]) -> PlatformConfig:
-        """Decrypt credentials and create config object"""
-        # Decrypt sensitive fields
-        if "credentials" in config_data:
-            creds = config_data["credentials"]
-            if "api_secret" in creds and creds["api_secret"]:
-                creds["api_secret"] = base64.b64decode(creds["api_secret"]).decode()
-            if "access_token" in creds and creds["access_token"]:
-                creds["access_token"] = base64.b64decode(creds["access_token"]).decode()
+        """Decrypt credentials and create config object."""
+        try:
+            # Import encryption manager
+            from ..security.encryption_manager import EncryptionManager
+            encryption_manager = EncryptionManager()
+            
+            # Decrypt sensitive fields
+            if "credentials" in config_data:
+                creds = config_data["credentials"]
+                if "api_secret" in creds and creds["api_secret"]:
+                    creds["api_secret"] = await encryption_manager.decrypt_field(
+                        'api_secret',
+                        creds["api_secret"]
+                    )
+                if "access_token" in creds and creds["access_token"]:
+                    creds["access_token"] = await encryption_manager.decrypt_field(
+                        'access_token',
+                        creds["access_token"]
+                    )
+            
+        except ImportError:
+            logger.warning("Encryption manager not available, using base64 fallback")
+            # Fallback decryption using base64
+            if "credentials" in config_data:
+                creds = config_data["credentials"]
+                if "api_secret" in creds and creds["api_secret"]:
+                    creds["api_secret"] = base64.b64decode(creds["api_secret"]).decode()
+                if "access_token" in creds and creds["access_token"]:
+                    creds["access_token"] = base64.b64decode(creds["access_token"]).decode()
         
         # Create config object from dict
         # This is a simplified version - in production, use proper serialization

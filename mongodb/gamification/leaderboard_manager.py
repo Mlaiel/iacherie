@@ -596,13 +596,62 @@ class LeaderboardManager:
         
         return entries
     
-    def _get_user_info(self, user_id: str) -> Dict[str, Any]:
-        """Get user information (placeholder - would integrate with user service)."""
-        # This would integrate with the user management system
+    async def _get_user_info(self, user_id: str) -> Dict[str, Any]:
+        """Get user information with integration to user service."""
+        try:
+            # First try to get from user database/collection
+            user_info = await self.database.users.find_one(
+                {"user_id": user_id},
+                {"username": 1, "display_name": 1, "avatar_url": 1, "profile": 1}
+            )
+            
+            if user_info:
+                return {
+                    "username": user_info.get("username", f"user_{user_id[:8]}"),
+                    "display_name": user_info.get("display_name", user_info.get("username", f"User {user_id[:8]}")),
+                    "avatar_url": user_info.get("avatar_url", f"/avatars/{user_id}.jpg"),
+                    "profile": user_info.get("profile", {})
+                }
+            
+            # Fallback: Try to get from profiles collection
+            profile_info = await self.database.user_profiles.find_one(
+                {"user_id": user_id},
+                {"name": 1, "display_name": 1, "avatar": 1, "public_profile": 1}
+            )
+            
+            if profile_info:
+                return {
+                    "username": profile_info.get("name", f"user_{user_id[:8]}"),
+                    "display_name": profile_info.get("display_name", profile_info.get("name", f"User {user_id[:8]}")),
+                    "avatar_url": profile_info.get("avatar", f"/avatars/{user_id}.jpg"),
+                    "profile": profile_info.get("public_profile", {})
+                }
+            
+            # Last resort: check if user exists in any collection
+            user_exists = await self.database.user_accounts.find_one(
+                {"_id": user_id},
+                {"email": 1, "created_at": 1}
+            )
+            
+            if user_exists:
+                # Create minimal profile for existing user
+                username = user_exists.get("email", "").split("@")[0] if user_exists.get("email") else f"user_{user_id[:8]}"
+                return {
+                    "username": username,
+                    "display_name": username.title(),
+                    "avatar_url": f"/avatars/{user_id}.jpg",
+                    "profile": {"created_at": user_exists.get("created_at")}
+                }
+                
+        except Exception as e:
+            logger.warning(f"Failed to get user info for {user_id}: {e}")
+        
+        # Ultimate fallback for unknown users
         return {
             "username": f"user_{user_id[:8]}",
             "display_name": f"User {user_id[:8]}",
-            "avatar_url": f"/avatars/{user_id}.jpg"
+            "avatar_url": f"/avatars/default.jpg",
+            "profile": {"status": "unknown_user"}
         }
     
     def _get_current_entries(self, leaderboard_id: str) -> List[Dict[str, Any]]:

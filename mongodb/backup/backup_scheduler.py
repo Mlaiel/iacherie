@@ -618,9 +618,122 @@ class BackupScheduler:
         # In practice, incremental backups would use oplog entries
         # or filesystem-level techniques
         
-        # For now, perform a full backup
-        # TODO: Implement proper incremental backup logic
-        self._execute_full_backup(job, execution, output_file)
+        # Implement proper incremental backup logic
+        logger.info("Executing incremental backup")
+        
+        try:
+            # Get the last full backup timestamp
+            last_full_backup = self._get_last_full_backup_timestamp(job.job_id)
+            
+            if not last_full_backup:
+                logger.warning("No previous full backup found, performing full backup instead")
+                self._execute_full_backup(job, execution, output_file)
+                return
+            
+            # Create incremental backup using oplog
+            oplog_output = os.path.join(output_file, 'oplog_incremental')
+            os.makedirs(oplog_output, exist_ok=True)
+            
+            # Build mongodump command for oplog since last backup
+            cmd = [
+                self._mongodump_path,
+                '--db', 'local',
+                '--collection', 'oplog.rs',
+                '--query', f'{{"ts": {{"$gte": {last_full_backup}}}}}',
+                '--out', oplog_output
+            ]
+            
+            if job.compression_enabled:
+                cmd.append('--gzip')
+            
+            # Execute incremental backup
+            result = subprocess.run(cmd, capture_output=True, text=True)
+            
+            if result.returncode == 0:
+                execution.status = BackupStatus.COMPLETED
+                execution.file_path = oplog_output
+                execution.file_size_bytes = self._calculate_directory_size(oplog_output)
+                logger.info(f"Incremental backup completed: {oplog_output}")
+            else:
+                execution.status = BackupStatus.FAILED
+                execution.error_message = result.stderr
+                logger.error(f"Incremental backup failed: {result.stderr}")
+                
+        except Exception as e:
+            execution.status = BackupStatus.FAILED
+            execution.error_message = str(e)
+            logger.error(f"Incremental backup failed: {e}")
+    
+    def _get_last_full_backup_timestamp(self, job_id: str) -> Optional[dict]:
+        """Get timestamp of last full backup for incremental backup.
+        
+        Args:
+            job_id: Job identifier
+            
+        Returns:
+            Oplog timestamp of last full backup
+        """
+        try:
+            # Find the most recent successful full backup
+            for execution in reversed(self._execution_history):
+                if (execution.job_id == job_id and 
+                    execution.backup_type == BackupType.FULL and 
+                    execution.status == BackupStatus.COMPLETED):
+                    
+                    # Return the oplog timestamp from when the backup started
+                    return self._get_oplog_timestamp_for_time(execution.start_time)
+            
+            return None
+            
+        except Exception as e:
+            logger.error(f"Failed to get last backup timestamp: {e}")
+            return None
+    
+    def _get_oplog_timestamp_for_time(self, backup_time: datetime) -> Optional[dict]:
+        """Get oplog timestamp for a specific time.
+        
+        Args:
+            backup_time: Backup start time
+            
+        Returns:
+            Oplog timestamp
+        """
+        try:
+            # Query oplog for entries around the backup time
+            oplog = self.client.local.oplog.rs
+            
+            # Find the first oplog entry at or after the backup time
+            query = {"ts": {"$gte": backup_time}}
+            entry = oplog.find(query).sort([('ts', 1)]).limit(1)
+            
+            if entry:
+                return list(entry)[0]['ts']
+            
+            return None
+            
+        except Exception as e:
+            logger.error(f"Failed to get oplog timestamp: {e}")
+            return None
+    
+    def _calculate_directory_size(self, directory: str) -> int:
+        """Calculate total size of directory.
+        
+        Args:
+            directory: Directory path
+            
+        Returns:
+            Size in bytes
+        """
+        total_size = 0
+        try:
+            for dirpath, dirnames, filenames in os.walk(directory):
+                for filename in filenames:
+                    filepath = os.path.join(dirpath, filename)
+                    total_size += os.path.getsize(filepath)
+        except Exception as e:
+            logger.error(f"Failed to calculate directory size: {e}")
+        
+        return total_size
     
     def _execute_oplog_backup(self, job: BackupJob, execution: BackupExecution, output_file: str) -> None:
         """Execute oplog backup."""

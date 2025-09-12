@@ -990,22 +990,157 @@ class ConflictHandler:
         return False
     
     async def _ai_suggest_strategy(self, conflict: Conflict) -> Optional[ResolutionStrategy]:
-        """AI-driven strategy suggestion (placeholder)"""
+        """AI-driven strategy suggestion using ML models and heuristics."""
         
-        # In production, this would use actual AI/ML models
-        # For now, return basic heuristics
+        try:
+            # Import AI analytics for intelligent strategy suggestion
+            from ..ai.ai_analytics import AIAnalytics
+            ai_analytics = AIAnalytics(self.database)
+            
+            # Prepare conflict features for AI analysis
+            conflict_features = {
+                'conflict_type': conflict.conflict_type.value,
+                'severity': conflict.severity.value,
+                'platforms_involved': len(conflict.platforms_involved),
+                'content_type': getattr(conflict, 'content_type', 'unknown'),
+                'user_history': await self._get_user_conflict_history(conflict.user_id),
+                'platform_policies': await self._get_platform_policies(conflict.platforms_involved),
+                'success_rates': await self._get_strategy_success_rates()
+            }
+            
+            # Use AI to predict best strategy
+            suggested_strategy = await ai_analytics.predict_resolution_strategy(conflict_features)
+            
+            if suggested_strategy:
+                logger.info(f"AI suggested strategy: {suggested_strategy} for conflict {conflict.conflict_id}")
+                return ResolutionStrategy(suggested_strategy)
+                
+        except ImportError:
+            logger.info("AI analytics not available, using rule-based strategy")
+        except Exception as e:
+            logger.warning(f"AI strategy suggestion failed: {e}, falling back to heuristics")
         
-        if conflict.conflict_type == ConflictType.CONTENT_MISMATCH:
-            if conflict.severity in [ConflictSeverity.LOW, ConflictSeverity.MEDIUM]:
-                return ResolutionStrategy.AUTO_MERGE
+        # Fallback to enhanced heuristics-based strategy
+        return await self._heuristics_based_strategy(conflict)
+    
+    async def _heuristics_based_strategy(self, conflict: Conflict) -> Optional[ResolutionStrategy]:
+        """Enhanced heuristics-based strategy suggestion."""
         
-        elif conflict.conflict_type == ConflictType.FORMAT_INCOMPATIBILITY:
-            return ResolutionStrategy.CREATE_VARIANT
+        # Multi-factor decision making
+        strategy_scores = {
+            ResolutionStrategy.AUTO_MERGE: 0,
+            ResolutionStrategy.CREATE_VARIANT: 0,
+            ResolutionStrategy.SKIP_PLATFORM: 0,
+            ResolutionStrategy.MANUAL_REVIEW: 0
+        }
         
-        elif conflict.conflict_type == ConflictType.DUPLICATE_CONTENT:
-            return ResolutionStrategy.SKIP_PLATFORM
+        # Factor 1: Conflict type preferences
+        type_preferences = {
+            ConflictType.CONTENT_MISMATCH: {
+                ResolutionStrategy.AUTO_MERGE: 30,
+                ResolutionStrategy.CREATE_VARIANT: 20,
+                ResolutionStrategy.MANUAL_REVIEW: 10
+            },
+            ConflictType.FORMAT_INCOMPATIBILITY: {
+                ResolutionStrategy.CREATE_VARIANT: 40,
+                ResolutionStrategy.AUTO_MERGE: 10,
+                ResolutionStrategy.SKIP_PLATFORM: 5
+            },
+            ConflictType.DUPLICATE_CONTENT: {
+                ResolutionStrategy.SKIP_PLATFORM: 35,
+                ResolutionStrategy.MANUAL_REVIEW: 15,
+                ResolutionStrategy.AUTO_MERGE: 5
+            },
+            ConflictType.PLATFORM_POLICY_VIOLATION: {
+                ResolutionStrategy.MANUAL_REVIEW: 40,
+                ResolutionStrategy.SKIP_PLATFORM: 20,
+                ResolutionStrategy.CREATE_VARIANT: 10
+            }
+        }
+        
+        for strategy, score in type_preferences.get(conflict.conflict_type, {}).items():
+            strategy_scores[strategy] += score
+        
+        # Factor 2: Severity impact
+        severity_multipliers = {
+            ConflictSeverity.LOW: 1.0,
+            ConflictSeverity.MEDIUM: 1.2,
+            ConflictSeverity.HIGH: 1.5,
+            ConflictSeverity.CRITICAL: 2.0
+        }
+        
+        multiplier = severity_multipliers.get(conflict.severity, 1.0)
+        
+        # Boost manual review for high severity
+        if conflict.severity in [ConflictSeverity.HIGH, ConflictSeverity.CRITICAL]:
+            strategy_scores[ResolutionStrategy.MANUAL_REVIEW] *= multiplier
+        
+        # Factor 3: Platform count (more platforms = more complex)
+        if len(conflict.platforms_involved) > 3:
+            strategy_scores[ResolutionStrategy.MANUAL_REVIEW] += 15
+            strategy_scores[ResolutionStrategy.CREATE_VARIANT] += 10
+        
+        # Find best strategy
+        best_strategy = max(strategy_scores.items(), key=lambda x: x[1])
+        
+        # Only suggest if confidence is high enough
+        if best_strategy[1] > 20:
+            return best_strategy[0]
         
         return None
+    
+    async def _get_user_conflict_history(self, user_id: str) -> Dict[str, Any]:
+        """Get user's conflict resolution history for AI learning."""
+        try:
+            history = await self.database.conflicts.find(
+                {"user_id": user_id},
+                {"resolution_strategy": 1, "resolution_success": 1}
+            ).limit(50).to_list(None)
+            
+            return {
+                'total_conflicts': len(history),
+                'successful_resolutions': len([h for h in history if h.get('resolution_success', False)]),
+                'preferred_strategies': {}  # Could add strategy frequency analysis
+            }
+        except Exception:
+            return {'total_conflicts': 0, 'successful_resolutions': 0}
+    
+    async def _get_platform_policies(self, platforms: List[str]) -> Dict[str, Any]:
+        """Get platform-specific policies for strategy consideration."""
+        try:
+            policies = {}
+            for platform in platforms:
+                platform_config = await self.database.platform_configs.find_one(
+                    {"platform_id": platform}
+                )
+                if platform_config:
+                    policies[platform] = platform_config.get('policies', {})
+            return policies
+        except Exception:
+            return {}
+    
+    async def _get_strategy_success_rates(self) -> Dict[str, float]:
+        """Get historical success rates for different strategies."""
+        try:
+            # Aggregate success rates from conflict history
+            pipeline = [
+                {"$match": {"resolution_success": {"$exists": True}}},
+                {"$group": {
+                    "_id": "$resolution_strategy",
+                    "total": {"$sum": 1},
+                    "successful": {"$sum": {"$cond": ["$resolution_success", 1, 0]}}
+                }},
+                {"$project": {
+                    "strategy": "$_id",
+                    "success_rate": {"$divide": ["$successful", "$total"]}
+                }}
+            ]
+            
+            results = await self.database.conflicts.aggregate(pipeline).to_list(None)
+            return {r['strategy']: r['success_rate'] for r in results}
+            
+        except Exception:
+            return {}
     
     def _get_default_strategy(self, conflict: Conflict) -> ResolutionStrategy:
         """Get default resolution strategy based on conflict characteristics"""
