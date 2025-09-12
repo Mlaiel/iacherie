@@ -6,7 +6,7 @@
  * @copyright 2025 Fahed Mlaiel - Propriété Intellectuelle Exclusive
  */
 
-import { AdvancedThreatDetection } from '../../infrastructure/advanced_threat_detection';
+import { AdvancedThreatDetectionSystem as AdvancedThreatDetection } from '../../infrastructure/advanced_threat_detection';
 
 describe('Advanced Threat Detection - Security Specialist & ML Engineer', () => {
   let threatDetector: AdvancedThreatDetection;

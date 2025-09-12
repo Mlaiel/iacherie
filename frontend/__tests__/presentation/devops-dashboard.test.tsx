@@ -7,7 +7,7 @@
  */
 
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { DevOpsMonitoringDashboard } from '../../presentation/devops_monitoring_dashboard';
+import DevOpsMonitoringDashboard from '../../presentation/devops_monitoring_dashboard';
 
 describe('DevOps Monitoring Dashboard - DevOps Engineer & Backend Senior', () => {
   describe('⚡ DevOps Engineer - Infrastructure Monitoring', () => {
