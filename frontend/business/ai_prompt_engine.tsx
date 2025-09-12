@@ -168,7 +168,7 @@ export interface ProviderCapability {
 
 export interface ModelCapability {
   type: 'reasoning' | 'creativity' | 'factual' | 'conversational' | 'technical' | 'multilingual';
-  level: 'basic' | 'intermediate' | 'advanced' | 'expert';
+  level: 'standard' | 'intermediate' | 'professional' | 'expert';
 }
 
 export interface PromptOptimization {
@@ -614,7 +614,7 @@ const DEFAULT_PROVIDERS: AIProvider[] = [
         costPer1kTokens: 0.03,
         capabilities: [
           { type: 'reasoning', level: 'expert' },
-          { type: 'creativity', level: 'advanced' },
+          { type: 'creativity', level: 'professional' },
           { type: 'factual', level: 'expert' }
         ],
         parameters: [
