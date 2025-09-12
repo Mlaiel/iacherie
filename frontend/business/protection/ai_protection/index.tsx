@@ -32,7 +32,7 @@ export interface ProtectionStatus {
   id: string;
   contentId: string;
   contentName: string;
-  protectionLevel: 'basic' | 'advanced' | 'premium';
+  protectionLevel: 'essential' | 'professional' | 'premium';
   status: 'active' | 'monitoring' | 'violation_detected' | 'action_taken' | 'disabled';
   aiConfidence: number;
   threatsDetected: number;
@@ -64,13 +64,13 @@ export interface AIProtectionProps {
 }
 
 const protectionLevels = {
-  basic: {
-    name: 'Basic Protection',
-    features: ['Content fingerprinting', 'Basic monitoring', 'Email alerts'],
+  essential: {
+    name: 'Essential Protection',
+    features: ['Content fingerprinting', 'Standard monitoring', 'Email alerts'],
     color: 'blue'
   },
-  advanced: {
-    name: 'Advanced Protection',
+  professional: {
+    name: 'Professional Protection',
     features: ['AI-powered detection', 'Real-time monitoring', 'Automated takedowns', 'Analytics'],
     color: 'purple'
   },
@@ -110,7 +110,7 @@ export const AIProtection: React.FC<AIProtectionProps> = ({
   className = ''
 }) => {
   const [activeTab, setActiveTab] = useState<'overview' | 'content' | 'alerts' | 'settings'>('overview');
-  const [selectedLevel, setSelectedLevel] = useState<string>('advanced');
+  const [selectedLevel, setSelectedLevel] = useState<string>('professional');
   const [aiScanProgress, setAiScanProgress] = useState(0);
   const [isScanning, setIsScanning] = useState(false);
 
@@ -364,8 +364,8 @@ export const AIProtection: React.FC<AIProtectionProps> = ({
                     className="px-3 py-2 border border-gray-300 rounded-md text-sm"
                   >
                     <option value="">All Levels</option>
-                    <option value="basic">Basic</option>
-                    <option value="advanced">Advanced</option>
+                    <option value="essential">Essential</option>
+                    <option value="professional">Professional</option>
                     <option value="premium">Premium</option>
                   </select>
                 </div>
@@ -407,8 +407,8 @@ export const AIProtection: React.FC<AIProtectionProps> = ({
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full
-                              ${item.protectionLevel === 'basic' ? 'bg-blue-100 text-blue-800' :
-                                item.protectionLevel === 'advanced' ? 'bg-purple-100 text-purple-800' :
+                              ${item.protectionLevel === 'essential' ? 'bg-blue-100 text-blue-800' :
+                                item.protectionLevel === 'professional' ? 'bg-purple-100 text-purple-800' :
                                 'bg-yellow-100 text-yellow-800'}`}>
                               {protectionLevels[item.protectionLevel]?.name}
                             </span>
@@ -519,8 +519,8 @@ export const AIProtection: React.FC<AIProtectionProps> = ({
                     <button
                       onClick={() => onEnableProtection?.('', key)}
                       className={`w-full px-4 py-2 rounded-lg text-white font-medium
-                        ${key === 'basic' ? 'bg-blue-600 hover:bg-blue-700' :
-                          key === 'advanced' ? 'bg-purple-600 hover:bg-purple-700' :
+                        ${key === 'essential' ? 'bg-blue-600 hover:bg-blue-700' :
+                          key === 'professional' ? 'bg-purple-600 hover:bg-purple-700' :
                           'bg-yellow-600 hover:bg-yellow-700'}`}
                     >
                       Select {level.name}

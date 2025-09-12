@@ -290,10 +290,10 @@ const CopyrightManager: React.FC = () => {
         <h4 className="font-medium text-blue-900 mb-3">Copyright Protection Benefits</h4>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-blue-700">
           <div>
-            <h5 className="font-medium mb-1">Basic Protection</h5>
+            <h5 className="font-medium mb-1">Essential Protection</h5>
             <ul className="space-y-1">
               <li>• Automatic detection</li>
-              <li>• Basic legal support</li>
+              <li>• Standard legal support</li>
               <li>• 1-year coverage</li>
             </ul>
           </div>

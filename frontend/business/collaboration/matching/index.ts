@@ -26,7 +26,7 @@ export interface CreatorProfile {
 export interface CreatorSkill {
   category: 'content_creation' | 'editing' | 'marketing' | 'technical' | 'business' | 'artistic';
   skill: string;
-  level: 'beginner' | 'intermediate' | 'advanced' | 'expert';
+  level: 'beginner' | 'intermediate' | 'professional' | 'expert';
   verified: boolean;
   endorsements: number;
   lastUsed: number;
@@ -124,7 +124,7 @@ export interface CollaborationRequest {
 }
 
 export interface MatchingPreferences {
-  experienceLevel: ('beginner' | 'intermediate' | 'advanced' | 'expert')[];
+  experienceLevel: ('beginner' | 'intermediate' | 'professional' | 'expert')[];
   maxDistance: number; // km, 0 for remote only
   responseTimeMax: number; // hours
   minReputation: number;
@@ -258,7 +258,7 @@ export class CollaborationMatchingEngine {
     const skillLevelBonus = creatorSkills
       .filter(skill => matchedSkills.includes(skill.skill))
       .reduce((bonus, skill) => {
-        const levelMultiplier = { beginner: 0.5, intermediate: 0.75, advanced: 1.0, expert: 1.25 };
+        const levelMultiplier = { beginner: 0.5, intermediate: 0.75, professional: 1.0, expert: 1.25 };
         return bonus + levelMultiplier[skill.level];
       }, 0) / Math.max(matchedSkills.length, 1);
 
