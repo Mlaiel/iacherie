@@ -48,6 +48,14 @@ from .data_validator import DataValidator, ValidationResult
 from .data_transformer import DataTransformer, TransformationResult
 from .input_sanitizer import InputSanitizer, SanitizationResult
 from .error_handler import ErrorHandler, ErrorRecord, ErrorSeverity, ErrorCategory
+
+# ADDITIONAL ENTERPRISE UTILITIES - January 2025 Phase 2 Implementation
+from .file_utilities import FileUtilities, FileMetadata, FileOperationResult
+from .file_validator import FileValidator, FileValidationReport, ValidationLevel
+from .test_utilities import TestUtilities, TestResult, TestSuite, PerformanceBenchmark
+from .datetime_utilities import DateTimeUtilities, DateTimeRange, BusinessHours
+from .video_utilities import VideoUtilities, VideoMetadata, VideoProcessingResult
+from .password_utilities import PasswordUtilities, PasswordAnalysis, PasswordPolicy
 from .logging_utilities import StructuredLogger, LogContext, LogLevel
 from .cache_utilities import CacheUtilities, InMemoryCache, RedisCache
 
