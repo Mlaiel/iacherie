@@ -72,9 +72,21 @@ try:
 except ImportError:
     pass
 
-# Vulnerability scanner
+# GDPR compliance
 try:
-    from .vulnerability_scanner import *
+    from .gdpr_compliance import *
+except ImportError:
+    pass
+
+# CCPA compliance
+try:
+    from .ccpa_compliance import *
+except ImportError:
+    pass
+
+# DMCA compliance
+try:
+    from .dmca_compliance import *
 except ImportError:
     pass
 
