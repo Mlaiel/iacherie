@@ -10580,7 +10580,7 @@ except ImportError:
     import sys
     sys.path.append(str(Path(__file__).parent))
     from auth_manager import get_auth_manager, UserRole, AuthenticationRequest, AuthenticationMethod
-    from advanced_security_policies import get_policy_engine, SecurityPolicy, PolicyType, RiskLevel
+    from security_policies import get_policy_engine, SecurityPolicy, PolicyType, RiskLevel
     from threat_intelligence import get_threat_engine
     from security_config import get_config_manager, create_default_configs
 

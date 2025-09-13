@@ -167,6 +167,12 @@ from .monitoring import (
     ProcessingStats
 )
 
+# Audio Engineer System (from audio migration)
+from .audio_engine import (
+    AudioEngineer,
+    audio_system
+)
+
 __version__ = "3.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
@@ -345,5 +351,9 @@ __all__ = [
     
     # Audio Intelligence System
     'AudioIntelligenceSystem',
-    'audio_intelligence'
+    'audio_intelligence',
+    
+    # Audio Engine (from audio migration)
+    'AudioEngineer',
+    'audio_system'
 ]

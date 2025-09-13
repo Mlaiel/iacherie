@@ -10580,7 +10580,7 @@ except ImportError:
     import sys
     sys.path.append(str(Path(__file__).parent))
     from auth_manager import get_auth_manager, UserRole, AuthenticationRequest, AuthenticationMethod
-    from advanced_security_policies import get_policy_engine, SecurityPolicy, PolicyType, RiskLevel
+    from security_policies import get_policy_engine, SecurityPolicy, PolicyType, RiskLevel
     from threat_intelligence import get_threat_engine
     from security_config import get_config_manager, create_default_configs
 
@@ -23592,7 +23592,7 @@ class GeographicFilteringMiddleware(BaseHTTPMiddleware):
         return request.client.host if request.client else "unknown"
 
 
-class UltraAdvancedSecurityMiddleware(BaseHTTPMiddleware):
+class SecurityMiddleware(BaseHTTPMiddleware):
     """
     Ultra-advanced security middleware that orchestrates all security layers.
     
@@ -30103,7 +30103,7 @@ class AuthenticationModuleConfig:
         return errors
 
 
-class UltraAdvancedAuthenticationModule:
+class AuthenticationModule:
     """
     Ultra-advanced authentication module that integrates all security components
     into a cohesive, enterprise-grade authentication system.

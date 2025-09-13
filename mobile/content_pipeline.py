@@ -31,7 +31,7 @@ try:
     from ai_engine.content_processor import ContentProcessor
     from protection.fingerprinting import FingerprintEngine
     from backend.monetization import LicensingManager
-    from business.collaboration.matching_engine import CollaborationMatcher
+    from backend.business.collaboration.matching_engine import CollaborationMatcher
     from core.config import get_settings
     from core.logging import get_logger
     from core.database import get_database_session

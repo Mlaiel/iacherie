@@ -32,6 +32,26 @@ from .analytics import (
     monitor_competitors,
     comprehensive_analytics
 )
+
+# AI Models Management imports
+from .model_orchestrator import (
+    AIOrchestrator,
+    TrendPredictor,
+    ai_orchestrator
+)
+from .model_registry import (
+    ModelRegistry,
+    model_registry
+)
+from .prompt_engine import (
+    AIPromptEngineer,
+    AIProvider,
+    PromptType,
+    OptimizationStrategy,
+    prompt_system
+)
+
+# Note: AIModelManager and related imports from ai_models will be integrated separately
 from .conversational import (
     ConversationalAI,
     AIInteractionEngine,
@@ -483,5 +503,24 @@ __all__ = [
     "create_fashion_expert",
     "create_fitness_coach",
     "create_tech_reviewer",
-    "create_food_critic"
+    "create_food_critic",
+    
+    # AI Models Management (from ai_models migration)
+    "AIOrchestrator",
+    "TrendPredictor", 
+    "SentimentAnalyzer",
+    "ModelRegistry",
+    "AIModelManager",
+    "ModelType",
+    "ModelPrediction",
+    "ai_orchestrator",
+    "model_registry",
+    "ai_model_manager",
+    
+    # AI Prompt Engineering (from ai_prompt migration)
+    "AIPromptEngineer",
+    "AIProvider",
+    "PromptType", 
+    "OptimizationStrategy",
+    "prompt_system"
 ]

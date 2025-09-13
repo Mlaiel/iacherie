@@ -27,7 +27,7 @@ from nlp.sentiment import SentimentAnalyzer
 from nlp.topics import TopicModeling
 from nlp.entities import EntityExtractor
 from cv.analysis import VisualContentAnalyzer
-from audio.analysis import AudioContentAnalyzer
+from backend.audio.analysis import AudioContentAnalyzer
 from core.config import get_settings
 from utils.exceptions import ContentAnalysisException
 from monitoring.content_metrics import ContentMetricsCollector

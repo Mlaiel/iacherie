@@ -28,7 +28,7 @@ from fastapi import HTTPException, Request, status
 from pydantic import BaseModel, Field
 
 # Internal imports
-from .enhanced_jwt import EnhancedJWTManager, TokenSecurityLevel
+from .jwt_handler import JWTManager, TokenSecurityLevel
 from .fido2_webauthn import FIDO2Manager
 from ..enterprise.enterprise_sso import EnterpriseSSO
 from ..crawlers.middleware.authentication import MultiFactorAuthenticator

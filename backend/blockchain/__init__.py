@@ -52,6 +52,14 @@ from .layer2_scaling_manager import (
     Layer2Manager, ScalingOptimizer, PolygonManager
 )
 
+# Basic utilities (from blockchain migration)
+from .basic_utils import (
+    BlockchainManager, CryptocurrencyManager, SmartContractManager,
+    BlockchainNetwork, TokenStandard, ContentNFT, SmartContract,
+    blockchain_manager, crypto_manager, contract_manager,
+    mint_content_nft_simple, process_crypto_payment_simple
+)
+
 __all__ = [
     # Legacy modules (enriched)
     "NFTFactory", "NFTFactoryManager", 
@@ -78,7 +86,13 @@ __all__ = [
     # Additional Enterprise Modules (Phase 2)
     "BridgeManager", "CrossChainValidator", "LiquidityPoolManager",
     "DeFiIntegrator", "YieldFarmManager", "FlashLoanManager",
-    "Layer2Manager", "ScalingOptimizer", "PolygonManager"
+    "Layer2Manager", "ScalingOptimizer", "PolygonManager",
+    
+    # Basic utilities (from blockchain migration)
+    "BlockchainManager", "CryptocurrencyManager", "SmartContractManager",
+    "BlockchainNetwork", "TokenStandard", "ContentNFT", "SmartContract",
+    "blockchain_manager", "crypto_manager", "contract_manager",
+    "mint_content_nft_simple", "process_crypto_payment_simple"
 ]
 
 __version__ = "1.0.0"

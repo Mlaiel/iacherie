@@ -1142,7 +1142,7 @@ Cette architecture frontend, les modèles de conception UI/UX et la logique mét
 - [x] **Test Alignment**: Expectations corrigées pour match réalité
 
 ##### 🎵 **Audio Engineer - Système Audio:**
-- [x] **Advanced Audio System**: advanced_audio_system.py complet
+- [x] **Audio System**: audio_engine.py complet
 - [x] **Processing Pipeline**: Monitoring latence, qualité, formats
 - [x] **ML Integration**: Demucs, Spleeter orchestration
 - [x] **Enterprise Ready**: Multi-format support professionnel

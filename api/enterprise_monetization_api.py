@@ -25,13 +25,13 @@ import logging
 
 # Import our enterprise monetization modules with error handling
 try:
-    from business.monetization.enterprise_crypto_processor import (
+    from backend.business.legacy_crypto_processor import (
         EnterpriseCryptoProcessor, CryptoCurrency, CryptoNetwork
     )
-    from business.monetization.ai_revenue_tracking import (
+    from backend.business.legacy_revenue_tracking import (
         AIRevenueTrackingEngine, RevenueDataPoint, RevenueStream, Platform, AttributionModel
     )
-    from business.monetization.intelligent_payment_router import (
+    from backend.business.legacy_payment_router import (
         IntelligentPaymentRouter, PaymentRequest, RoutingStrategy, PaymentProvider
     )
     MONETIZATION_MODULES_AVAILABLE = True

@@ -971,8 +971,44 @@ __all__ = [
     "GatewayConfig",
     "SecurityRequest",
     "SecureStreamingGatewayRecord",
-    "create_secure_streaming_gateway"
+    "create_secure_streaming_gateway",
+    
+    # Basic API Router (from streaming migration)
+    "streaming_router",
+    "streaming_service"
 ]
+
+# Basic streaming router for API compatibility
+from fastapi import APIRouter, WebSocket
+from typing import Dict, Any
+
+# Simple router for basic WebSocket endpoints
+streaming_router = APIRouter(prefix="/streaming", tags=["streaming"])
+
+@streaming_router.get("/stats")
+async def get_streaming_stats() -> Dict[str, Any]:
+    """Get basic streaming statistics"""
+    return {
+        "status": "active",
+        "services": len(STREAMING_SERVICES),
+        "version": __version__
+    }
+
+# Basic streaming service for compatibility
+class BasicStreamingService:
+    """Basic streaming service for API compatibility"""
+    
+    def __init__(self):
+        self.status = "active"
+    
+    async def get_stats(self) -> Dict[str, Any]:
+        """Get service statistics"""
+        return {
+            "status": self.status,
+            "services_count": len(STREAMING_SERVICES)
+        }
+
+streaming_service = BasicStreamingService()
 
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"

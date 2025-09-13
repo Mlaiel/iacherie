@@ -196,9 +196,9 @@ class EnterpriseAPIManager:
         
         # ============ ENHANCED FEATURES INTEGRATION ============
         try:
-            from .enhanced_integration import enhanced_router
+            from .integration_api import api_router
             self.api_router.include_router(
-                enhanced_router,
+                api_router,
                 prefix="/enhanced",
                 tags=["🚀 Enhanced Features"],
                 dependencies=[]

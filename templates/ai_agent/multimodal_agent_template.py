@@ -39,7 +39,7 @@ from ai.models import MultiModalModelManager
 from ai.fusion import ModalityFusionEngine
 from ai.alignment import CrossModalAlignmentEngine
 from cv.processors import ImageProcessor, VideoProcessor
-from audio.processors import AudioProcessor, SpeechProcessor
+from backend.audio.processors import AudioProcessor, SpeechProcessor
 from nlp.processors import TextProcessor, LanguageProcessor
 from core.config import get_settings
 from utils.exceptions import MultiModalException

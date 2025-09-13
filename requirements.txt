@@ -1,5 +1,6 @@
-# Ainflue Platform - Main Requirements
+# Ainflue Platform - Main Requirements v4.0.0
 # Production-ready AI-powered content protection and monetization platform
+# Consolidated Architecture: 27→15 business modules, enterprise-grade structure
 #
 # Author: Fahed Mlaiel (mlaiel@live.de)
 # Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.

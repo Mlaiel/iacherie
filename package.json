@@ -1,7 +1,7 @@
 {
   "name": "ainflue-enterprise-api-gateway",
-  "version": "1.0.0",
-  "description": "Enterprise API Gateway for Ainflue Platform",
+  "version": "4.0.0",
+  "description": "Enterprise API Gateway for Ainflue Platform - Consolidated Architecture v4.0.0",
   "author": "Fahed Mlaiel <mlaiel@live.de>",
   "license": "Proprietary",
   "main": "src/server.js",
