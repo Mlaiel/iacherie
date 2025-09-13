@@ -290,5 +290,6 @@ async def quick_recovery(recovery_type, affected_services, target_point=None):
     else:
         raise RuntimeError("RecoveryOrchestrator not available")
 
-# Module initialization message
-print(f"Infrastructure Core v{__version__} loaded - {len([c for c in __all__ if globals().get(c) is not None])}/{len(__all__)} components available")
+# Module initialization logging
+logger = logging.getLogger(__name__)
+logger.info(f"Infrastructure Core v{__version__} loaded - {len([c for c in __all__ if globals().get(c) is not None])}/{len(__all__)} components available")
