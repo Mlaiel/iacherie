@@ -26,69 +26,58 @@ This module consolidates all infrastructure components into a unified interface:
 - Custom operators and CRDs
 """
 
-# Import all consolidated infrastructure modules
-from .kubernetes import (
-    KubernetesManager, ClusterOrchestrator, KubernetesDeploymentManager,
-    PodManager, ServiceManager, ConfigMapManager, SecretManager, NamespaceManager,
-    kubernetes_manager, cluster_orchestrator
-)
+# Import all consolidated infrastructure modules  
+try:
+    from .container import *
+except ImportError:
+    pass
 
-from .docker import (
-    DockerManager, ContainerManager, ImageBuilder, RegistryManager, DockerComposeManager,
-    docker_manager, container_manager, image_builder, registry_manager, compose_manager
-)
+try:
+    from .deployment import *
+except ImportError:
+    pass
 
-from .terraform import (
-    TerraformManager, InfrastructureProvisioner, CloudResourceManager, StateManager,
-    terraform_manager, infrastructure_provisioner, cloud_resource_manager, state_manager
-)
+try:
+    from .terraform import *
+except ImportError:
+    pass
 
-from .ansible import (
-    AnsibleManager, PlaybookRunner, ConfigurationManager, InventoryManager,
-    ansible_manager, playbook_runner, configuration_manager, inventory_manager
-)
+try:
+    from .ansible import *
+except ImportError:
+    pass
 
-from .monitoring import (
+from .observability import (
     MonitoringManager, PrometheusManager, GrafanaManager, AlertManager, 
     MetricsCollector, LogAggregator,
     monitoring_manager, prometheus_manager, grafana_manager, alert_manager,
     metrics_collector, log_aggregator
 )
 
-from .networking import (
-    NetworkingManager, LoadBalancerManager, IngressManager, DNSManager, ServiceMeshManager,
-    networking_manager, load_balancer_manager, ingress_manager, dns_manager, service_mesh_manager
-)
 
-from .security import (
+
+from .security_modules import (
     SecurityManager, CertificateManager, VaultManager, PolicyManager, ComplianceManager,
     security_manager, certificate_manager, vault_manager, policy_manager, compliance_manager
 )
 
-from .storage import (
+from .storage_modules import (
     StorageManager, PersistentVolumeManager, BackupManager, ObjectStorageManager,
     storage_manager, pv_manager, backup_manager, object_storage_manager
 )
 
-from .autoscaling import (
+from .scaling import (
     AutoscalingManager, HPAManager, VPAManager, ClusterAutoscaler,
     autoscaling_manager, hpa_manager, vpa_manager, cluster_autoscaler
 )
 
 from .deployment import (
+    DeploymentManager, CICDManager, PipelineManager,
     BlueGreenDeployer, CanaryDeployer, RollingUpdater, FeatureFlagManager,
     PipelineOrchestrator, EnvironmentManager, RollbackManager, ValidationEngine, ReleaseManager
 )
 
-from .helm import (
-    HelmManager, ChartManager, HelmReleaseManager, RepositoryManager,
-    helm_manager, chart_manager, helm_release_manager, repository_manager
-)
 
-from .operators import (
-    OperatorManager, CRDManager, CustomControllerManager, OperatorLifecycleManager,
-    operator_manager, crd_manager, custom_controller_manager, operator_lifecycle_manager
-)
 
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"

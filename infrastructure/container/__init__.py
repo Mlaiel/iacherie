@@ -1,21 +1,68 @@
 """
-Container Infrastructure Management
+Container Infrastructure Management - Complete Module
+====================================================
 Enterprise container orchestration for Ainflue platform
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
 
-# Container management modules
+# Core container functionality (from root files)
 try:
-    from .cluster_manager import ClusterManager
+    from .docker import (
+        DockerManager, ImageBuilder, ContainerOrchestrator,
+        docker_manager, image_builder, container_orchestrator
+    )
 except ImportError:
-    ClusterManager = None
+    DockerManager = ImageBuilder = ContainerOrchestrator = None
+    docker_manager = image_builder = container_orchestrator = None
 
 try:
-    from .service_mesh_manager import ServiceMeshManager
+    from .kubernetes import (
+        KubernetesManager, ClusterManager, DeploymentManager, ServiceManager,
+        kubernetes_manager, cluster_manager, deployment_manager, service_manager
+    )
 except ImportError:
-    ServiceMeshManager = None
+    KubernetesManager = ClusterManager = DeploymentManager = ServiceManager = None
+    kubernetes_manager = cluster_manager = deployment_manager = service_manager = None
+
+try:
+    from .helm import (
+        HelmManager, ChartManager, HelmReleaseManager, RepositoryManager,
+        helm_manager, chart_manager, helm_release_manager, repository_manager
+    )
+except ImportError:
+    HelmManager = ChartManager = HelmReleaseManager = RepositoryManager = None
+    helm_manager = chart_manager = helm_release_manager = repository_manager = None
+
+try:
+    from .operators import (
+        OperatorManager, CustomResourceManager, ControllerManager,
+        operator_manager, custom_resource_manager, controller_manager
+    )
+except ImportError:
+    OperatorManager = CustomResourceManager = ControllerManager = None
+    operator_manager = custom_resource_manager = controller_manager = None
+
+try:
+    from .networking import (
+        NetworkingManager, LoadBalancerManager, IngressManager, DNSManager, ServiceMeshManager,
+        networking_manager, load_balancer_manager, ingress_manager, dns_manager, service_mesh_manager
+    )
+except ImportError:
+    NetworkingManager = LoadBalancerManager = IngressManager = DNSManager = ServiceMeshManager = None
+    networking_manager = load_balancer_manager = ingress_manager = dns_manager = service_mesh_manager = None
+
+# Specialized container modules
+try:
+    from .cluster_manager import ClusterManager as AdvancedClusterManager
+except ImportError:
+    AdvancedClusterManager = None
+
+try:
+    from .service_mesh_manager import ServiceMeshManager as AdvancedServiceMeshManager
+except ImportError:
+    AdvancedServiceMeshManager = None
 
 try:
     from .ingress_controller import IngressController
@@ -53,13 +100,14 @@ except ImportError:
     LoadBalancer = None
 
 __all__ = [
-    'ClusterManager',
-    'ServiceMeshManager', 
-    'IngressController',
-    'PodScheduler',
-    'VolumeManager',
-    'NetworkPolicyManager',
-    'SecretManager',
-    'RegistryManager',
-    'LoadBalancer'
+    # Core container functionality
+    'DockerManager', 'ImageBuilder', 'ContainerOrchestrator',
+    'KubernetesManager', 'ClusterManager', 'DeploymentManager', 'ServiceManager',
+    'HelmManager', 'ChartManager', 'HelmReleaseManager', 'RepositoryManager',
+    'OperatorManager', 'CustomResourceManager', 'ControllerManager',
+    'NetworkingManager', 'LoadBalancerManager', 'IngressManager', 'DNSManager', 'ServiceMeshManager',
+    # Specialized modules
+    'AdvancedClusterManager', 'AdvancedServiceMeshManager', 'IngressController',
+    'PodScheduler', 'VolumeManager', 'NetworkPolicyManager', 
+    'SecretManager', 'RegistryManager', 'LoadBalancer'
 ]
