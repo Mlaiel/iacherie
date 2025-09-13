@@ -1,4 +1,23 @@
-"""Deployment Infrastructure Management"""
+"""Deployment Infrastructure Management - Complete Module
+=========================================================
+Consolidated deployment functionality with core deployment integration
+
+Author: Fahed Mlaiel <mlaiel@live.de>
+Project: Ainflue Infrastructure Enterprise
+License: Proprietary - All rights reserved
+"""
+
+# Core deployment functionality (from root deployment.py)
+try:
+    from .core_deployment import (
+        DeploymentManager, CICDManager, PipelineManager, 
+        DeploymentStrategy, PipelineStatus, PipelineConfig
+    )
+except ImportError:
+    DeploymentManager = CICDManager = PipelineManager = None
+    DeploymentStrategy = PipelineStatus = PipelineConfig = None
+
+# Specialized deployment modules
 try:
     from .blue_green_deployer import BlueGreenDeployer
 except ImportError:
@@ -44,5 +63,12 @@ try:
 except ImportError:
     ReleaseManager = None
 
-__all__ = ['BlueGreenDeployer', 'CanaryDeployer', 'RollingUpdater', 'FeatureFlagManager',
-           'PipelineOrchestrator', 'EnvironmentManager', 'RollbackManager', 'ValidationEngine', 'ReleaseManager']
+__all__ = [
+    # Core deployment
+    'DeploymentManager', 'CICDManager', 'PipelineManager',
+    'DeploymentStrategy', 'PipelineStatus', 'PipelineConfig',
+    # Specialized deployers
+    'BlueGreenDeployer', 'CanaryDeployer', 'RollingUpdater', 
+    'FeatureFlagManager', 'PipelineOrchestrator', 'EnvironmentManager', 
+    'RollbackManager', 'ValidationEngine', 'ReleaseManager'
+]

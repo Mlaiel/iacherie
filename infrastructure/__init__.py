@@ -48,7 +48,7 @@ from .ansible import (
     ansible_manager, playbook_runner, configuration_manager, inventory_manager
 )
 
-from .monitoring import (
+from .observability import (
     MonitoringManager, PrometheusManager, GrafanaManager, AlertManager, 
     MetricsCollector, LogAggregator,
     monitoring_manager, prometheus_manager, grafana_manager, alert_manager,
@@ -60,22 +60,23 @@ from .networking import (
     networking_manager, load_balancer_manager, ingress_manager, dns_manager, service_mesh_manager
 )
 
-from .security import (
+from .security_modules import (
     SecurityManager, CertificateManager, VaultManager, PolicyManager, ComplianceManager,
     security_manager, certificate_manager, vault_manager, policy_manager, compliance_manager
 )
 
-from .storage import (
+from .storage_modules import (
     StorageManager, PersistentVolumeManager, BackupManager, ObjectStorageManager,
     storage_manager, pv_manager, backup_manager, object_storage_manager
 )
 
-from .autoscaling import (
+from .scaling import (
     AutoscalingManager, HPAManager, VPAManager, ClusterAutoscaler,
     autoscaling_manager, hpa_manager, vpa_manager, cluster_autoscaler
 )
 
 from .deployment import (
+    DeploymentManager, CICDManager, PipelineManager,
     BlueGreenDeployer, CanaryDeployer, RollingUpdater, FeatureFlagManager,
     PipelineOrchestrator, EnvironmentManager, RollbackManager, ValidationEngine, ReleaseManager
 )
