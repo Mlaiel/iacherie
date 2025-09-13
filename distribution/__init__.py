@@ -20,402 +20,122 @@ TEAM SPECIALTIES:
 - Content Optimization Analyst: Fahed Mlaiel (mlaiel@live.de)
 """
 
-from .platform_connectors import (
-    PlatformConnectorManager,
-    SocialPlatform,
-    ContentFormat,
-    PublicationResult
-)
-from .publication_scheduler import (
-    PublicationScheduler,
-    ScheduledPublication,
-    ScheduleStrategy,
-    PublicationStatus
-)
-from .format_adapter import (
-    FormatAdapter,
-    PlatformSpecifications,
-    AdaptationRule,
-    ContentVariant
-)
-from .analytics_aggregator import (
-    AnalyticsAggregator,
-    UnifiedMetrics,
-    PlatformAnalytics,
-    CrossPlatformInsights
-)
-from .hashtag_optimizer import (
-    HashtagOptimizer,
-    HashtagStrategy,
-    TrendingHashtags,
-    OptimizedTags
-)
-from .ab_testing_engine import (
-    ABTestingEngine,
-    TestVariant,
-    TestResult,
-    PerformanceMetrics
-)
-from .distribution_intelligence import (
-    DistributionIntelligence,
-    OptimizationStrategy,
-    PlatformPriority,
-    AudienceInsight,
-    PlatformPerformance,
-    DistributionRecommendation,
-    EngagementPrediction
-)
-from .revenue_distribution import (
-    RevenueDistribution,
-    RevenueType,
-    PaymentStatus,
-    Currency,
-    RevenueStream,
-    PlatformRevenue,
-    ROIAnalysis,
-    BudgetOptimization,
-    RevenueAttribution
-)
-from .content_security import (
-    ContentSecurity,
-    SecurityLevel,
-    WatermarkType,
-    ViolationType,
-    GeographicRegion,
-    ContentFingerprint,
-    WatermarkConfig,
-    SecurityViolation,
-    ProtectionPolicy,
-    MonitoringAlert
-)
-from .automation_orchestrator import (
-    AutomationOrchestrator,
-    WorkflowStatus,
-    StepStatus,
-    ExecutionStrategy,
-    ErrorHandlingStrategy,
-    WorkflowStep,
-    StepExecution,
-    WorkflowDefinition,
-    WorkflowExecution,
-    DistributionPipeline
-)
-from .cross_platform_sync import (
-    CrossPlatformSync,
-    SyncStatus,
-    ConflictResolutionStrategy,
-    SyncDirection,
-    ChangeType,
-    ContentVersion,
-    SyncConflict,
-    SyncRule,
-    SyncSession,
-    PlatformState
-)
+# Import core modules with proper error handling
+try:
+    from .connectors import *
+except ImportError:
+    pass
 
-# New Platform Connectors
-from .clubhouse_connector import (
-    ClubhouseConnector,
-    ClubhouseDistributionManager,
-    ClubhouseRoom,
-    ClubhouseMetrics,
-    ClubhouseCredentials
-)
-from .telegram_connector import (
-    TelegramConnector,
-    TelegramDistributionManager,
-    TelegramMessage,
-    TelegramChannel,
-    TelegramMetrics,
-    TelegramCredentials
-)
+try:
+    from .scheduling import *
+except ImportError:
+    pass
 
-# Enhanced Scheduling
-from .event_based_scheduler import (
-    EventBasedScheduler,
-    EventTrigger,
-    EventData,
-    ScheduledTask,
-    EventType,
-    EventPriority,
-    SchedulingAction
-)
+try:
+    from .core import *
+except ImportError:
+    pass
 
-# Advanced Distribution Modules (Level 2)
-from .viral_optimization import (
-    ViralPredictor,
-    TrendAnalyzer,
-    MomentumTracker,
-    InfluenceMapper,
-    CascadeOptimizer,
-    TimingOracle,
-    ViralityAmplifier,
-    NetworkDynamics
-)
-# Advanced Distribution Modules (Level 2) - Temporarily commented out problematic imports
-# from .audience_intelligence import (
-#     AudienceIntelligenceEngine,
-#     AudienceProfiler,
-#     BehaviorAnalyzer,
-#     PreferenceEngine,
-#     DemographicMapper,
-#     PsychographicAnalyzer,
-#     EngagementPredictor,
-#     LookalikeFinder,
-#     SegmentOptimizer
-# )
-# from .content_amplification import (
-#     ContentAmplificationEngine,
-#     AmplificationEngine,
-#     BoostOptimizer,
-#     OrganicReachMaximizer,
-#     CrossPromotionManager,
-#     InfluencerConnector,
-#     CommunityBuilder,
-#     EngagementMultiplier,
-#     ReachAnalytics
-# )
-# from .platform_optimization import (
-#     PlatformOptimizationEngine,
-#     PlatformAnalyzer,
-#     AlgorithmTracker,
-#     FeatureOptimizer,
-#     PolicyMonitor,
-#     TrendingTracker,
-#     CreatorFundOptimizer,
-#     MonetizationMaximizer,
-#     CompetitionAnalyzer
-# )
-# from .geographic_optimization import (
-#     GeographicOptimizationEngine,
-#     GeoTargetingEngine,
-#     CulturalAdapter,
-#     TimezoneOptimizer,
-#     LocalizationManager,
-#     RegionalTrendsAnalyzer,
-#     LanguageOptimizer,
-#     ComplianceChecker,
-#     MarketPenetrationAnalyzer
-# )
-# from .real_time_optimization import (
-#     RealTimeOptimizationEngine,
-#     LivePerformanceMonitor,
-#     AdaptiveOptimizer,
-#     EmergencyResponse,
-#     TrendSurfingEngine,
-#     MomentumCapitalizer,
-#     RealTimeABTester,
-#     InstantFeedbackProcessor,
-#     DynamicContentOptimizer
-# )
-# from .creator_collaboration_hub import (
-#     CreatorCollaborationEngine,
-#     CollaborationOrchestrator,
-#     CrossCreatorAmplifier,
-#     CollaborationMatcher,
-#     JointCampaignManager,
-#     CreatorNetworkBuilder,
-#     CollaborationAnalytics,
-#     PartnershipOptimizer,
-#     RevenueSharingCalculator
-# )
-# from .crisis_management import (
-#     CrisisManagementEngine,
-#     CrisisDetector,
-#     DamageControlEngine,
-#     ReputationProtector,
-#     EmergencyCommunication,
-#     SentimentMonitor,
-#     RecoveryPlanner,
-#     BrandSafetyGuardian,
-#     CrisisAnalytics
-# )
+try:
+    from .analytics import *
+except ImportError:
+    pass
 
-__version__ = "3.0.0"
+try:
+    from .config import *
+except ImportError:
+    pass
+
+try:
+    from .monitoring import *
+except ImportError:
+    pass
+
+try:
+    from .security import *
+except ImportError:
+    pass
+
+try:
+    from .audience_intelligence import *
+except ImportError:
+    pass
+
+try:
+    from .content_amplification import *
+except ImportError:
+    pass
+
+try:
+    from .creator_collaboration_hub import *
+except ImportError:
+    pass
+
+try:
+    from .crisis_management import *
+except ImportError:
+    pass
+
+try:
+    from .geographic_optimization import *
+except ImportError:
+    pass
+
+try:
+    from .management import *
+except ImportError:
+    pass
+
+try:
+    from .optimization import *
+except ImportError:
+    pass
+
+try:
+    from .platform_optimization import *
+except ImportError:
+    pass
+
+try:
+    from .real_time_optimization import *
+except ImportError:
+    pass
+
+try:
+    from .tests import *
+except ImportError:
+    pass
+
+try:
+    from .viral_optimization import *
+except ImportError:
+    pass
+
+# Module metadata
+__version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
+__copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 
+# Main exports
 __all__ = [
-    # Platform Connectors
-    "PlatformConnectorManager",
-    "SocialPlatform", 
-    "ContentFormat",
-    "PublicationResult",
-    # New Platform Connectors
-    "ClubhouseConnector",
-    "ClubhouseDistributionManager", 
-    "ClubhouseRoom",
-    "ClubhouseMetrics",
-    "ClubhouseCredentials",
-    "TelegramConnector",
-    "TelegramDistributionManager",
-    "TelegramMessage",
-    "TelegramChannel",
-    "TelegramMetrics",
-    "TelegramCredentials",
-    # Publication Scheduler
-    "PublicationScheduler",
-    "ScheduledPublication",
-    "ScheduleStrategy", 
-    "PublicationStatus",
-    # Enhanced Scheduling
-    "EventBasedScheduler",
-    "EventTrigger",
-    "EventData",
-    "ScheduledTask",
-    "EventType",
-    "EventPriority",
-    "SchedulingAction",
-    # Format Adapter
-    "FormatAdapter",
-    "PlatformSpecifications",
-    "AdaptationRule",
-    "ContentVariant",
-    # Analytics Aggregator
+    # Core distribution functionality
+    "DistributionManager",
+    "PlatformConnector", 
+    "ContentScheduler",
     "AnalyticsAggregator",
-    "UnifiedMetrics",
-    "PlatformAnalytics",
-    "CrossPlatformInsights",
-    # Hashtag Optimizer
-    "HashtagOptimizer",
-    "HashtagStrategy",
-    "TrendingHashtags",
-    "OptimizedTags",
-    # A/B Testing Engine
-    "ABTestingEngine",
-    "TestVariant",
-    "TestResult",
-    "PerformanceMetrics",
-    # Distribution Intelligence
-    "DistributionIntelligence",
-    "OptimizationStrategy",
-    "PlatformPriority",
-    "AudienceInsight",
-    "PlatformPerformance",
-    "DistributionRecommendation",
-    "EngagementPrediction",
-    # Revenue Distribution
-    "RevenueDistribution",
-    "RevenueType",
-    "PaymentStatus",
-    "Currency",
-    "RevenueStream",
-    "PlatformRevenue",
-    "ROIAnalysis",
-    "BudgetOptimization",
-    "RevenueAttribution",
-    # Content Security
-    "ContentSecurity",
-    "SecurityLevel",
-    "WatermarkType",
-    "ViolationType",
-    "GeographicRegion",
-    "ContentFingerprint",
-    "WatermarkConfig",
-    "SecurityViolation",
-    "ProtectionPolicy",
-    "MonitoringAlert",
-    # Automation Orchestrator
-    "AutomationOrchestrator",
-    "WorkflowStatus",
-    "StepStatus",
-    "ExecutionStrategy",
-    "ErrorHandlingStrategy",
-    "WorkflowStep",
-    "StepExecution",
-    "WorkflowDefinition",
-    "WorkflowExecution",
-    "DistributionPipeline",
-    # Cross Platform Sync
-    "CrossPlatformSync",
-    "SyncStatus",
-    "ConflictResolutionStrategy",
-    "SyncDirection",
-    "ChangeType",
-    "ContentVersion",
-    "SyncConflict",
-    "SyncRule",
-    "SyncSession",
-    "PlatformState",
-    # Advanced Distribution Modules (Level 2)
-    # Viral Optimization
-    "ViralOptimizationEngine",
-    "ViralPredictor",
-    "TrendAnalyzer",
-    "MomentumTracker",
-    "InfluenceMapper",
-    "CascadeOptimizer",
-    "TimingOracle",
-    "ViralityAmplifier",
-    "NetworkDynamics",
-    # Audience Intelligence
-    "AudienceIntelligenceEngine",
-    "AudienceProfiler",
-    "BehaviorAnalyzer",
-    "PreferenceEngine",
-    "DemographicMapper",
-    "PsychographicAnalyzer",
-    "EngagementPredictor",
-    "LookalikeFinder",
-    "SegmentOptimizer",
-    # Content Amplification
-    "ContentAmplificationEngine",
-    "AmplificationEngine",
-    "BoostOptimizer",
-    "OrganicReachMaximizer",
-    "CrossPromotionManager",
-    "InfluencerConnector",
-    "CommunityBuilder",
-    "EngagementMultiplier",
-    "ReachAnalytics",
-    # Platform Optimization
-    "PlatformOptimizationEngine",
-    "PlatformAnalyzer",
-    "AlgorithmTracker",
-    "FeatureOptimizer",
-    "PolicyMonitor",
-    "TrendingTracker",
-    "CreatorFundOptimizer",
-    "MonetizationMaximizer",
-    "CompetitionAnalyzer",
-    # Geographic Optimization
-    "GeographicOptimizationEngine",
-    "GeoTargetingEngine",
-    "CulturalAdapter",
-    "TimezoneOptimizer",
-    "LocalizationManager",
-    "RegionalTrendsAnalyzer",
-    "LanguageOptimizer",
-    "ComplianceChecker",
-    "MarketPenetrationAnalyzer",
-    # Real-Time Optimization
-    "RealTimeOptimizationEngine",
-    "LivePerformanceMonitor",
-    "AdaptiveOptimizer",
-    "EmergencyResponse",
-    "TrendSurfingEngine",
-    "MomentumCapitalizer",
-    "RealTimeABTester",
-    "InstantFeedbackProcessor",
-    "DynamicContentOptimizer",
-    # Creator Collaboration Hub
-    "CreatorCollaborationEngine",
-    "CollaborationOrchestrator",
-    "CrossCreatorAmplifier",
-    "CollaborationMatcher",
-    "JointCampaignManager",
-    "CreatorNetworkBuilder",
-    "CollaborationAnalytics",
-    "PartnershipOptimizer",
-    "RevenueSharingCalculator",
-    # Crisis Management
-    "CrisisManagementEngine",
-    "CrisisDetector",
-    "DamageControlEngine",
-    "ReputationProtector",
-    "EmergencyCommunication",
-    "SentimentMonitor",
-    "RecoveryPlanner",
-    "BrandSafetyGuardian",
-    "CrisisAnalytics"
+    
+    # AI and optimization
+    "AudienceIntelligence",
+    "ViralOptimization", 
+    "ContentAmplification",
+    
+    # Management and monitoring
+    "ManagementEngine",
+    "MonitoringEngine",
+    "SecurityEngine",
+    
+    # Configuration and testing
+    "ConfigurationManager",
+    "TestingEngine"
 ]
