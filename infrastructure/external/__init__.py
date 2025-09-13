@@ -1,17 +1,30 @@
-"""Infrastructure External Integrations - IA-Influencer-Agent Platform
+"""Infrastructure External Integrations - Ainflue Enterprise Platform
 =====================================================================
 External service integrations for the infrastructure module
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-Project: IA Influencer Agent + Content Protection Platform
+Project: Ainflue Infrastructure Enterprise
 License: Proprietary - All rights reserved
 
 This module provides integrations with external services:
+- AI Prompt Optimization (from root)
 - AI Services (OpenAI, Anthropic, etc.)
 - Blockchain Networks (Ethereum, Polygon, etc.)
 - Payment Gateways (Stripe, PayPal, etc.)
-- Social Media APIs (Twitter, Instagram, etc.)
+- Social Media APIs (65+ platforms)
 """
+
+# AI Prompt Optimization (from root ai_prompt_optimizer.py)
+try:
+    from .ai_prompt_optimizer import (
+        AIPromptOptimizer, PromptEngineering, PromptTemplateManager,
+        LanguageOptimizer, ContextualPromptBuilder, PromptAnalyzer,
+        ai_prompt_optimizer, prompt_engineering, prompt_template_manager
+    )
+except ImportError:
+    AIPromptOptimizer = PromptEngineering = PromptTemplateManager = None
+    LanguageOptimizer = ContextualPromptBuilder = PromptAnalyzer = None
+    ai_prompt_optimizer = prompt_engineering = prompt_template_manager = None
 
 # Import all external integration modules
 try:
@@ -42,31 +55,19 @@ __status__ = "Production"
 # Collect all exports from submodules
 __all__ = []
 
+# Add AI prompt optimization exports
+try:
+    from . import ai_prompt_optimizer
+    if hasattr(ai_prompt_optimizer, '__all__'):
+        __all__.extend(ai_prompt_optimizer.__all__)
+except ImportError:
+    pass
+
 # Add exports from each submodule if they exist
-try:
-    from . import ai_services
-    if hasattr(ai_services, '__all__'):
-        __all__.extend(ai_services.__all__)
-except ImportError:
-    pass
-
-try:
-    from . import blockchain_networks
-    if hasattr(blockchain_networks, '__all__'):
-        __all__.extend(blockchain_networks.__all__)
-except ImportError:
-    pass
-
-try:
-    from . import payment_gateways
-    if hasattr(payment_gateways, '__all__'):
-        __all__.extend(payment_gateways.__all__)
-except ImportError:
-    pass
-
-try:
-    from . import social_media_apis
-    if hasattr(social_media_apis, '__all__'):
-        __all__.extend(social_media_apis.__all__)
-except ImportError:
-    pass
+for module_name in ['ai_services', 'blockchain_networks', 'payment_gateways', 'social_media_apis']:
+    try:
+        module = getattr(__import__(__name__ + '.' + module_name, fromlist=[module_name]), module_name)
+        if hasattr(module, '__all__'):
+            __all__.extend(module.__all__)
+    except (ImportError, AttributeError):
+        pass

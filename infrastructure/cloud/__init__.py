@@ -6,6 +6,26 @@ Multi-cloud provider management and orchestration for Ainflue infrastructure.
 Handles AWS, GCP, and Azure integration with intelligent workload distribution.
 """
 
+# Core cloud functionality (from moved files)
+try:
+    from .cost_management import (
+        CostManager, BudgetManager, CostOptimizer, BillingAnalyzer,
+        cost_manager, budget_manager, cost_optimizer, billing_analyzer
+    )
+except ImportError:
+    CostManager = BudgetManager = CostOptimizer = BillingAnalyzer = None
+    cost_manager = budget_manager = cost_optimizer = billing_analyzer = None
+
+try:
+    from .multi_cloud_manager import (
+        MultiCloudManager, CloudOrchestrator, WorkloadDistributor, CloudSynchronizer,
+        multi_cloud_manager, cloud_orchestrator, workload_distributor, cloud_synchronizer
+    )
+except ImportError:
+    MultiCloudManager = CloudOrchestrator = WorkloadDistributor = CloudSynchronizer = None
+    multi_cloud_manager = cloud_orchestrator = workload_distributor = cloud_synchronizer = None
+
+# Cloud provider modules
 try:
     from .aws_provider import AWSProvider
 except ImportError:
@@ -26,23 +46,41 @@ try:
 except ImportError:
     MultiCloudOrchestrator = None
 
-# Other modules to be implemented
-HybridCloudManager = None
-CloudCostOptimizer = None
-CloudSecurityManager = None
-CloudMigrationTool = None
-ResourceProvisioner = None
+# Other cloud modules
+try:
+    from .hybrid_cloud_manager import HybridCloudManager
+except ImportError:
+    HybridCloudManager = None
+
+try:
+    from .cloud_cost_optimizer import CloudCostOptimizer
+except ImportError:
+    CloudCostOptimizer = None
+
+try:
+    from .cloud_security_manager import CloudSecurityManager
+except ImportError:
+    CloudSecurityManager = None
+
+try:
+    from .cloud_migration_tool import CloudMigrationTool
+except ImportError:
+    CloudMigrationTool = None
+
+try:
+    from .resource_provisioner import ResourceProvisioner
+except ImportError:
+    ResourceProvisioner = None
 
 __all__ = [
-    'AWSProvider',
-    'GCPProvider', 
-    'AzureProvider',
-    'MultiCloudOrchestrator',
-    'HybridCloudManager',
-    'CloudCostOptimizer',
-    'CloudSecurityManager',
-    'CloudMigrationTool',
-    'ResourceProvisioner'
+    # Core cloud functionality
+    'CostManager', 'BudgetManager', 'CostOptimizer', 'BillingAnalyzer',
+    'MultiCloudManager', 'CloudOrchestrator', 'WorkloadDistributor', 'CloudSynchronizer',
+    # Cloud providers
+    'AWSProvider', 'GCPProvider', 'AzureProvider', 'MultiCloudOrchestrator',
+    # Advanced cloud modules
+    'HybridCloudManager', 'CloudCostOptimizer', 'CloudSecurityManager',
+    'CloudMigrationTool', 'ResourceProvisioner'
 ]
 
 # Cloud provider capabilities

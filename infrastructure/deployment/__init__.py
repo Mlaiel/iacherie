@@ -17,6 +17,25 @@ except ImportError:
     DeploymentManager = CICDManager = PipelineManager = None
     DeploymentStrategy = PipelineStatus = PipelineConfig = None
 
+# Deployment automation tools
+try:
+    from .ansible import (
+        AnsibleManager, PlaybookRunner, ConfigurationManager, InventoryManager,
+        ansible_manager, playbook_runner, configuration_manager, inventory_manager
+    )
+except ImportError:
+    AnsibleManager = PlaybookRunner = ConfigurationManager = InventoryManager = None
+    ansible_manager = playbook_runner = configuration_manager = inventory_manager = None
+
+try:
+    from .terraform import (
+        TerraformManager, InfrastructureProvisioner, CloudResourceManager, StateManager,
+        terraform_manager, infrastructure_provisioner, cloud_resource_manager, state_manager
+    )
+except ImportError:
+    TerraformManager = InfrastructureProvisioner = CloudResourceManager = StateManager = None
+    terraform_manager = infrastructure_provisioner = cloud_resource_manager = state_manager = None
+
 # Specialized deployment modules
 try:
     from .blue_green_deployer import BlueGreenDeployer
@@ -67,6 +86,11 @@ __all__ = [
     # Core deployment
     'DeploymentManager', 'CICDManager', 'PipelineManager',
     'DeploymentStrategy', 'PipelineStatus', 'PipelineConfig',
+    # Automation tools
+    'AnsibleManager', 'PlaybookRunner', 'ConfigurationManager', 'InventoryManager',
+    'ansible_manager', 'playbook_runner', 'configuration_manager', 'inventory_manager',
+    'TerraformManager', 'InfrastructureProvisioner', 'CloudResourceManager', 'StateManager',
+    'terraform_manager', 'infrastructure_provisioner', 'cloud_resource_manager', 'state_manager',
     # Specialized deployers
     'BlueGreenDeployer', 'CanaryDeployer', 'RollingUpdater', 
     'FeatureFlagManager', 'PipelineOrchestrator', 'EnvironmentManager', 
