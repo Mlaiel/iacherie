@@ -892,8 +892,8 @@ TOTAL: Module distribution enterprise complet
 - ✅ `/crisis_management/` - README quadrilingue ✅ + index.py ✅
 - ✅ `/geographic_optimization/` - README quadrilingue ✅ + index.py ✅
 - ✅ `/management/` - README quadrilingue ✅ + index.py ✅ **NOUVEAU COMPLET**
-- ✅ `/monitoring/` - README (EN) ✅ + index.py ✅ **NOUVEAU COMPLET**
-- ✅ `/optimization/` - README (EN) ✅ + index.py ✅ **NOUVEAU COMPLET**
+- ✅ `/monitoring/` - README quadrilingue ✅ + index.py ✅ **NOUVEAU COMPLET**
+- ✅ `/optimization/` - README quadrilingue ✅ + index.py ✅ **NOUVEAU COMPLET**
 - ✅ `/platform_optimization/` - README quadrilingue ✅ + index.py ✅
 - ✅ `/real_time_optimization/` - README quadrilingue ✅ + index.py ✅
 - ✅ `/viral_optimization/` - README quadrilingue ✅ + index.py ✅
