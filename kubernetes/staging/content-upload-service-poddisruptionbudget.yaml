@@ -1,0 +1,13 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  labels:
+    app: content-upload-service
+    service-type: content-service
+  name: content-upload-service-pdb
+  namespace: ainflue-staging
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: content-upload-service

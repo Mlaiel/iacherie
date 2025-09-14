@@ -1,0 +1,31 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  labels:
+    app: api-gateway
+    service-type: api-gateway
+  name: api-gateway-netpol
+  namespace: ainflue-production
+spec:
+  egress:
+  - ports:
+    - port: 53
+      protocol: TCP
+    - port: 53
+      protocol: UDP
+    - port: 443
+      protocol: TCP
+    - port: 80
+      protocol: TCP
+    to: []
+  ingress:
+  - from: []
+    ports:
+    - port: 8080
+      protocol: TCP
+  podSelector:
+    matchLabels:
+      app: api-gateway
+  policyTypes:
+  - Ingress
+  - Egress

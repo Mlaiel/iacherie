@@ -1,0 +1,13 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  labels:
+    app: api-gateway
+    service-type: api-gateway
+  name: api-gateway-pdb
+  namespace: ainflue-production
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: api-gateway

@@ -1,0 +1,34 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  labels:
+    app: platform-sync-service
+    service-type: platform-service
+  name: platform-sync-service-netpol
+  namespace: ainflue-production
+spec:
+  egress:
+  - ports:
+    - port: 53
+      protocol: TCP
+    - port: 53
+      protocol: UDP
+    - port: 443
+      protocol: TCP
+    - port: 80
+      protocol: TCP
+    to: []
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ainflue-production
+    ports:
+    - port: 8008
+      protocol: TCP
+  podSelector:
+    matchLabels:
+      app: platform-sync-service
+  policyTypes:
+  - Ingress
+  - Egress

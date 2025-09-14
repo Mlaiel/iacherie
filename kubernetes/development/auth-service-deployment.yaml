@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: '1'
+    description: security-service microservice
+  labels: &id001
+    app: auth-service
+    environment: development
+    service-type: security-service
+    version: v1
+  name: auth-service
+  namespace: ainflue-development
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: auth-service
+      version: v1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        prometheus.io/path: /metrics
+        prometheus.io/port: '8005'
+        prometheus.io/scrape: 'true'
+        sidecar.istio.io/inject: 'true'
+        sidecar.istio.io/proxyCPU: 10m
+        sidecar.istio.io/proxyMemory: 64Mi
+      labels: *id001
+    spec:
+      containers:
+      - env: []
+        image: ainflue/auth-service:latest
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 8005
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+        name: auth-service
+        ports:
+        - containerPort: 8005
+          name: http
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /ready
+            port: 8005
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          runAsUser: 1001
+      restartPolicy: Always
+      securityContext:
+        fsGroup: 1001
+        runAsGroup: 1001
+      serviceAccountName: auth-service-sa
+      terminationGracePeriodSeconds: 30

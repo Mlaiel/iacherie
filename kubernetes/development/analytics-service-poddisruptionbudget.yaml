@@ -1,0 +1,13 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  labels:
+    app: analytics-service
+    service-type: analytics-service
+  name: analytics-service-pdb
+  namespace: ainflue-development
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: analytics-service

@@ -1,0 +1,25 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  labels:
+    app: auth-service
+    service-type: security-service
+  name: auth-service-vs
+  namespace: ainflue-production
+spec:
+  hosts:
+  - auth-service.ainflue-production.svc.cluster.local
+  http:
+  - match:
+    - uri:
+        prefix: /
+    retries:
+      attempts: 3
+      perTryTimeout: 10s
+      retryOn: gateway-error,connect-failure,refused-stream
+    route:
+    - destination:
+        host: auth-service.ainflue-production.svc.cluster.local
+        port:
+          number: 8005
+    timeout: 30s

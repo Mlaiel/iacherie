@@ -1,0 +1,30 @@
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  labels:
+    app: creator-workflow-service
+    service-type: business-service
+  name: creator-workflow-service-dr
+  namespace: ainflue-production
+spec:
+  host: creator-workflow-service.ainflue-production.svc.cluster.local
+  trafficPolicy:
+    circuitBreaker:
+      baseEjectionTime: 30s
+      consecutive5xxErrors: 5
+      consecutiveGatewayErrors: 5
+      interval: 30s
+      maxEjectionPercent: 50
+    connectionPool:
+      http:
+        connectTimeout: 30s
+        http1MaxPendingRequests: 50
+        http2MaxRequests: 100
+        maxRequestsPerConnection: 10
+        maxRetries: 3
+      tcp:
+        maxConnections: 100
+    loadBalancer:
+      simple: LEAST_CONN
+    tls:
+      mode: ISTIO_MUTUAL

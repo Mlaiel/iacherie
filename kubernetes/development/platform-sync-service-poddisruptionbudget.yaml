@@ -1,0 +1,13 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  labels:
+    app: platform-sync-service
+    service-type: platform-service
+  name: platform-sync-service-pdb
+  namespace: ainflue-development
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: platform-sync-service

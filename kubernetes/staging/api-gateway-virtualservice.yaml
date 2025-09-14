@@ -1,0 +1,25 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  labels:
+    app: api-gateway
+    service-type: api-gateway
+  name: api-gateway-vs
+  namespace: ainflue-staging
+spec:
+  hosts:
+  - api-gateway.ainflue-staging.svc.cluster.local
+  http:
+  - match:
+    - uri:
+        prefix: /
+    retries:
+      attempts: 3
+      perTryTimeout: 10s
+      retryOn: gateway-error,connect-failure,refused-stream
+    route:
+    - destination:
+        host: api-gateway.ainflue-staging.svc.cluster.local
+        port:
+          number: 8080
+    timeout: 30s
