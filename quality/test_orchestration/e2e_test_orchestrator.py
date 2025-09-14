@@ -15,7 +15,7 @@ import logging
 import json
 import time
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Any, Callable
+from typing import Dict, List, Optional, Any, Callable, Tuple
 from datetime import datetime, timedelta
 from pathlib import Path
 import yaml
