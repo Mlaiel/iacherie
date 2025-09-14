@@ -954,12 +954,16 @@ class AuthManager:
         self.redis_pool = self._create_mock_redis_pool()
         
         # Initialize underlying auth manager
-        config = {
-            'rbac_enabled': rbac_enabled,
-            'audit_enabled': audit_enabled,
-            'max_failed_attempts': max_failed_attempts
-        }
-        self.auth_manager = RedisAuthManager(self.redis_pool, jwt_secret, config)
+        auth_config = AuthConfig(
+            secret_key=jwt_secret,
+            max_failed_attempts=max_failed_attempts,
+            session_timeout=3600,
+            enable_mfa=True,
+            enable_audit_logging=audit_enabled,
+            encryption_key=self.encryption_key
+        )
+        self.auth_manager = RedisAuthManager(auth_config)
+        self.auth_manager.redis_pool = self.redis_pool  # Set the redis pool
         
         # Audit log for enterprise compliance
         self.audit_log = []

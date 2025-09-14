@@ -40,7 +40,7 @@ class EnterpriseIntegrationValidator:
     @asynccontextmanager
     async def mock_redis_cluster(self):
         """🔧 Mock Redis cluster for integration testing"""
-        with patch('redis.connection.cluster_client.RedisCluster') as mock_cluster, \
+        with patch('redis.connection.cluster_client.RedisClusterClient') as mock_cluster, \
              patch('redis.connection.pool_manager.ConnectionPool') as mock_pool, \
              patch('redis.connection.sentinel_client.Sentinel') as mock_sentinel:
             
