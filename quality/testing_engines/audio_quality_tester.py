@@ -30,12 +30,34 @@ import numpy as np
 import scipy.signal
 from scipy.fftpack import fft, ifft
 from scipy.io import wavfile
-import librosa
-import librosa.display
-import matplotlib.pyplot as plt
-import soundfile as sf
-from pydub import AudioSegment
-from pydub.utils import which
+# librosa imported at top of file with fallback to mock
+try:
+    import matplotlib.pyplot as plt
+except ImportError:
+    # Mock matplotlib if not available
+    class MockPlt:
+        def figure(self, *args, **kwargs): pass
+        def subplot(self, *args, **kwargs): pass
+        def plot(self, *args, **kwargs): pass
+        def title(self, *args, **kwargs): pass
+        def xlabel(self, *args, **kwargs): pass
+        def ylabel(self, *args, **kwargs): pass
+        def show(self, *args, **kwargs): pass
+        def savefig(self, *args, **kwargs): pass
+    plt = MockPlt()
+
+try:
+    import soundfile as sf
+except ImportError:
+    sf = None
+
+try:
+    from pydub import AudioSegment
+    from pydub.utils import which
+except ImportError:
+    AudioSegment = None
+    which = None
+
 import subprocess
 
 # Configure logging
@@ -375,8 +397,16 @@ class AudioAnalyzer:
 class AudioQualityTester:
     """Audio quality testing engine."""
     
-    def __init__(self, test_suite: AudioTestSuite):
-        self.test_suite = test_suite
+    def __init__(self, test_suite: Optional[AudioTestSuite] = None):
+        # Create default test suite if none provided
+        if test_suite is None:
+            self.test_suite = AudioTestSuite(
+                name="default_audio_test_suite",
+                input_directory="/tmp/audio_input",
+                output_directory="/tmp/audio_output"
+            )
+        else:
+            self.test_suite = test_suite
         self.analyzer = AudioAnalyzer()
         self.test_results: List[AudioQualityResult] = []
     
