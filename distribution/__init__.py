@@ -57,6 +57,11 @@ except ImportError:
     pass
 
 try:
+    from .ai_intelligence import *
+except ImportError:
+    pass
+
+try:
     from .audience_intelligence import *
 except ImportError:
     pass
@@ -124,6 +129,22 @@ __all__ = [
     "PlatformConnector", 
     "ContentScheduler",
     "AnalyticsAggregator",
+    
+    # AI Intelligence (53 Agents)
+    "AIOrchestrator",
+    "DistributionAICoordinator",
+    "ContentIntelligenceEngine",
+    "PlatformIntelligenceEngine",
+    "AudienceIntelligenceEngine", 
+    "ViralIntelligenceEngine",
+    "PerformanceIntelligenceEngine",
+    "CrisisIntelligenceEngine",
+    "GeographicIntelligenceEngine",
+    "TemporalIntelligenceEngine",
+    "CollaborationIntelligenceEngine",
+    "MonetizationIntelligenceEngine",
+    "ComplianceIntelligenceEngine",
+    "RealTimeIntelligenceEngine",
     
     # AI and optimization
     "AudienceIntelligence",
