@@ -41,8 +41,6 @@ except ImportError:
 import random
 import statistics
 
-logger = structlog.get_logger(__name__)
-
 class ServiceStatus(str, Enum):
     """Service health status"""
     HEALTHY = "healthy"
