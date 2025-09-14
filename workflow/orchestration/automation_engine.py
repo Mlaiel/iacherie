@@ -953,3 +953,444 @@ class EnterpriseWorkflowAutomation:
             "optimization_level": "highly_optimized",
             "scalability_rating": "enterprise_grade"
         }
+
+
+# ============================================================================
+# 🔥 ENTERPRISE SCHEDULER CORE - INTEGRATED WITH AUTOMATION ENGINE
+# ============================================================================
+
+from enum import Enum
+from collections import defaultdict, deque
+
+
+class SchedulePriority(Enum):
+    """Task execution priority levels."""
+    LOW = 1
+    NORMAL = 2
+    HIGH = 3
+    CRITICAL = 4
+    EMERGENCY = 5
+
+
+class ScheduleConflictResolution(Enum):
+    """Conflict resolution strategies."""
+    QUEUE = "queue"
+    SKIP = "skip"
+    REPLACE = "replace"
+    PARALLEL = "parallel"
+
+
+@dataclass
+class SchedulerConfig:
+    """Enterprise scheduler configuration."""
+    max_concurrent_tasks: int = 50
+    max_queue_size: int = 1000
+    default_timeout_seconds: int = 300
+    priority_adjustment_factor: float = 1.5
+    resource_allocation_ratio: float = 0.8
+    performance_threshold: float = 0.95
+    auto_scaling_enabled: bool = True
+    load_balancing_strategy: str = "weighted_round_robin"
+
+
+class EnterpriseSchedulerCore:
+    """
+    🔥 ENTERPRISE SCHEDULER CORE
+    
+    Ultra-advanced scheduling system with:
+    - Priority-based task execution
+    - Resource-aware scheduling
+    - Performance optimization
+    - Auto-scaling capabilities
+    """
+    
+    def __init__(self, config: SchedulerConfig = None):
+        self.config = config or SchedulerConfig()
+        self.task_registry: Dict[str, Dict[str, Any]] = {}
+        self.priority_queues: Dict[SchedulePriority, deque] = {
+            priority: deque() for priority in SchedulePriority
+        }
+        self.task_queue: deque = deque(maxlen=self.config.max_queue_size)
+        self.active_tasks: Dict[str, asyncio.Task] = {}
+        self.completed_tasks: Dict[str, Dict[str, Any]] = {}
+        self.failed_tasks: Dict[str, Dict[str, Any]] = {}
+        self.scheduler_metrics: Dict[str, Any] = defaultdict(int)
+        self.resource_usage: Dict[str, float] = defaultdict(float)
+        self._scheduler_active = False
+        self._scheduler_task: Optional[asyncio.Task] = None
+        self._resource_monitor_task: Optional[asyncio.Task] = None
+        self.logger = logging.getLogger(__name__)
+    
+    async def start_scheduler(self):
+        """Start the enterprise scheduler system."""
+        if self._scheduler_active:
+            return
+        
+        self._scheduler_active = True
+        self._scheduler_task = asyncio.create_task(self._scheduler_loop())
+        self._resource_monitor_task = asyncio.create_task(self._resource_monitor_loop())
+        
+        self.logger.info("Enterprise scheduler started successfully")
+    
+    async def stop_scheduler(self):
+        """Stop the enterprise scheduler system."""
+        self._scheduler_active = False
+        
+        if self._scheduler_task:
+            self._scheduler_task.cancel()
+            try:
+                await self._scheduler_task
+            except asyncio.CancelledError:
+                pass
+        
+        if self._resource_monitor_task:
+            self._resource_monitor_task.cancel()
+            try:
+                await self._resource_monitor_task
+            except asyncio.CancelledError:
+                pass
+        
+        # Cancel all active tasks
+        for task in self.active_tasks.values():
+            task.cancel()
+        
+        self.logger.info("Enterprise scheduler stopped successfully")
+    
+    async def _scheduler_loop(self):
+        """Main scheduler execution loop."""
+        while self._scheduler_active:
+            try:
+                # Process tasks by priority
+                await self._process_priority_queues()
+                
+                # Clean up completed tasks
+                await self._cleanup_completed_tasks()
+                
+                # Update metrics
+                self._update_scheduler_metrics()
+                
+                # Sleep briefly before next iteration
+                await asyncio.sleep(0.1)
+                
+            except Exception as e:
+                self.logger.error(f"Scheduler loop error: {e}")
+                await asyncio.sleep(1)
+    
+    async def _resource_monitor_loop(self):
+        """Monitor system resources and adjust scheduling."""
+        while self._scheduler_active:
+            try:
+                # Monitor resource usage
+                await self._monitor_resource_usage()
+                
+                # Adjust scheduling based on resources
+                await self._adjust_scheduling()
+                
+                # Sleep for resource monitoring interval
+                await asyncio.sleep(10)
+                
+            except Exception as e:
+                self.logger.error(f"Resource monitor error: {e}")
+                await asyncio.sleep(5)
+    
+    async def schedule_task(
+        self,
+        task_func: Callable,
+        task_id: str = None,
+        priority: SchedulePriority = SchedulePriority.NORMAL,
+        delay_seconds: float = 0,
+        scheduled_at: Optional[datetime] = None,
+        parameters: Dict[str, Any] = None,
+        timeout_seconds: Optional[int] = None,
+        max_retries: int = 3,
+        resource_requirements: Dict[str, float] = None
+    ) -> str:
+        """
+        Schedule a task for execution with enterprise-grade features.
+        
+        Args:
+            task_func: Function to execute
+            task_id: Optional task identifier
+            priority: Task execution priority
+            delay_seconds: Delay before execution
+            scheduled_at: Specific execution time
+            parameters: Task parameters
+            timeout_seconds: Task timeout
+            max_retries: Maximum retry attempts
+            resource_requirements: Required resources
+            
+        Returns:
+            Task ID
+        """
+        if task_id is None:
+            task_id = str(uuid.uuid4())
+        
+        # Calculate execution time
+        if scheduled_at:
+            execution_time = scheduled_at
+        else:
+            execution_time = datetime.utcnow() + timedelta(seconds=delay_seconds)
+        
+        # Create task definition
+        task_def = {
+            'task_id': task_id,
+            'task_func': task_func,
+            'priority': priority,
+            'execution_time': execution_time,
+            'parameters': parameters or {},
+            'timeout_seconds': timeout_seconds or self.config.default_timeout_seconds,
+            'max_retries': max_retries,
+            'retry_count': 0,
+            'resource_requirements': resource_requirements or {},
+            'created_at': datetime.utcnow(),
+            'status': 'scheduled'
+        }
+        
+        # Register task
+        self.task_registry[task_id] = task_def
+        
+        # Add to appropriate queue
+        if execution_time <= datetime.utcnow():
+            # Immediate execution
+            self.priority_queues[priority].append(task_def)
+        else:
+            # Delayed execution - add to time-based queue
+            self.task_queue.append(task_def)
+        
+        self.scheduler_metrics['tasks_scheduled'] += 1
+        self.logger.info(f"Task scheduled: {task_id} with priority {priority.name}")
+        
+        return task_id
+    
+    async def _process_priority_queues(self):
+        """Process tasks from priority queues."""
+        # Process in priority order (highest first)
+        for priority in sorted(SchedulePriority, key=lambda x: x.value, reverse=True):
+            queue = self.priority_queues[priority]
+            
+            while queue and len(self.active_tasks) < self.config.max_concurrent_tasks:
+                task_def = queue.popleft()
+                
+                # Check if it's time to execute
+                if task_def['execution_time'] <= datetime.utcnow():
+                    await self._execute_task(task_def)
+                else:
+                    # Put back in queue if not time yet
+                    queue.appendleft(task_def)
+                    break
+        
+        # Move scheduled tasks to execution queues if ready
+        await self._move_scheduled_tasks()
+    
+    async def _move_scheduled_tasks(self):
+        """Move scheduled tasks to execution queues when ready."""
+        current_time = datetime.utcnow()
+        ready_tasks = []
+        
+        # Find tasks ready for execution
+        while self.task_queue:
+            task_def = self.task_queue.popleft()
+            if task_def['execution_time'] <= current_time:
+                ready_tasks.append(task_def)
+            else:
+                self.task_queue.appendleft(task_def)
+                break
+        
+        # Add ready tasks to priority queues
+        for task_def in ready_tasks:
+            priority = task_def['priority']
+            self.priority_queues[priority].append(task_def)
+    
+    async def _execute_task(self, task_def: Dict[str, Any]):
+        """Execute a task with comprehensive error handling."""
+        task_id = task_def['task_id']
+        
+        try:
+            # Create execution task
+            execution_task = asyncio.create_task(
+                self._run_task_with_timeout(task_def)
+            )
+            
+            self.active_tasks[task_id] = execution_task
+            task_def['status'] = 'running'
+            task_def['started_at'] = datetime.utcnow()
+            
+            self.scheduler_metrics['tasks_started'] += 1
+            
+        except Exception as e:
+            self.logger.error(f"Failed to start task {task_id}: {e}")
+            await self._handle_task_failure(task_def, str(e))
+    
+    async def _run_task_with_timeout(self, task_def: Dict[str, Any]) -> Any:
+        """Run task with timeout and error handling."""
+        task_id = task_def['task_id']
+        
+        try:
+            # Execute with timeout
+            result = await asyncio.wait_for(
+                task_def['task_func'](**task_def['parameters']),
+                timeout=task_def['timeout_seconds']
+            )
+            
+            # Mark as completed
+            task_def['status'] = 'completed'
+            task_def['completed_at'] = datetime.utcnow()
+            task_def['result'] = result
+            
+            self.completed_tasks[task_id] = task_def
+            self.scheduler_metrics['tasks_completed'] += 1
+            
+            return result
+            
+        except asyncio.TimeoutError:
+            await self._handle_task_timeout(task_def)
+        except Exception as e:
+            await self._handle_task_failure(task_def, str(e))
+        finally:
+            # Remove from active tasks
+            if task_id in self.active_tasks:
+                del self.active_tasks[task_id]
+    
+    async def _handle_task_timeout(self, task_def: Dict[str, Any]):
+        """Handle task timeout."""
+        task_id = task_def['task_id']
+        
+        if task_def['retry_count'] < task_def['max_retries']:
+            # Retry task
+            task_def['retry_count'] += 1
+            task_def['status'] = 'retrying'
+            
+            # Add back to queue with delay
+            retry_delay = min(60 * (2 ** task_def['retry_count']), 300)  # Exponential backoff
+            task_def['execution_time'] = datetime.utcnow() + timedelta(seconds=retry_delay)
+            
+            self.priority_queues[task_def['priority']].append(task_def)
+            self.scheduler_metrics['tasks_retried'] += 1
+            
+            self.logger.warning(f"Task {task_id} timed out, retrying ({task_def['retry_count']}/{task_def['max_retries']})")
+        else:
+            # Mark as failed
+            task_def['status'] = 'failed'
+            task_def['failure_reason'] = 'timeout'
+            task_def['failed_at'] = datetime.utcnow()
+            
+            self.failed_tasks[task_id] = task_def
+            self.scheduler_metrics['tasks_failed'] += 1
+            
+            self.logger.error(f"Task {task_id} failed after {task_def['max_retries']} retries (timeout)")
+    
+    async def _handle_task_failure(self, task_def: Dict[str, Any], error_message: str):
+        """Handle task failure."""
+        task_id = task_def['task_id']
+        
+        if task_def['retry_count'] < task_def['max_retries']:
+            # Retry task
+            task_def['retry_count'] += 1
+            task_def['status'] = 'retrying'
+            
+            # Add back to queue with delay
+            retry_delay = min(60 * (2 ** task_def['retry_count']), 300)  # Exponential backoff
+            task_def['execution_time'] = datetime.utcnow() + timedelta(seconds=retry_delay)
+            
+            self.priority_queues[task_def['priority']].append(task_def)
+            self.scheduler_metrics['tasks_retried'] += 1
+            
+            self.logger.warning(f"Task {task_id} failed, retrying ({task_def['retry_count']}/{task_def['max_retries']}): {error_message}")
+        else:
+            # Mark as failed
+            task_def['status'] = 'failed'
+            task_def['failure_reason'] = error_message
+            task_def['failed_at'] = datetime.utcnow()
+            
+            self.failed_tasks[task_id] = task_def
+            self.scheduler_metrics['tasks_failed'] += 1
+            
+            self.logger.error(f"Task {task_id} failed after {task_def['max_retries']} retries: {error_message}")
+    
+    async def _cleanup_completed_tasks(self):
+        """Clean up completed tasks to manage memory."""
+        # Keep only recent completed tasks (last 1000)
+        if len(self.completed_tasks) > 1000:
+            # Remove oldest completed tasks
+            oldest_tasks = sorted(
+                self.completed_tasks.items(),
+                key=lambda x: x[1].get('completed_at', datetime.min)
+            )[:len(self.completed_tasks) - 1000]
+            
+            for task_id, _ in oldest_tasks:
+                del self.completed_tasks[task_id]
+    
+    def _update_scheduler_metrics(self):
+        """Update scheduler performance metrics."""
+        self.scheduler_metrics.update({
+            'active_tasks': len(self.active_tasks),
+            'queued_tasks': sum(len(queue) for queue in self.priority_queues.values()) + len(self.task_queue),
+            'completed_tasks_total': len(self.completed_tasks),
+            'failed_tasks_total': len(self.failed_tasks),
+            'success_rate': (
+                self.scheduler_metrics['tasks_completed'] / 
+                max(1, self.scheduler_metrics['tasks_started'])
+            ) * 100 if self.scheduler_metrics['tasks_started'] > 0 else 0
+        })
+    
+    async def _monitor_resource_usage(self):
+        """Monitor system resource usage."""
+        try:
+            import psutil
+            
+            # Update resource usage metrics
+            self.resource_usage.update({
+                'cpu_percent': psutil.cpu_percent(),
+                'memory_percent': psutil.virtual_memory().percent,
+                'disk_percent': psutil.disk_usage('/').percent,
+                'active_tasks': len(self.active_tasks),
+                'queue_size': sum(len(queue) for queue in self.priority_queues.values())
+            })
+        except ImportError:
+            # Fallback metrics if psutil not available
+            self.resource_usage.update({
+                'cpu_percent': 50.0,
+                'memory_percent': 60.0,
+                'disk_percent': 30.0,
+                'active_tasks': len(self.active_tasks),
+                'queue_size': sum(len(queue) for queue in self.priority_queues.values())
+            })
+    
+    async def _adjust_scheduling(self):
+        """Adjust scheduling based on resource usage."""
+        # Implement auto-scaling logic
+        if self.config.auto_scaling_enabled:
+            cpu_usage = self.resource_usage.get('cpu_percent', 0)
+            memory_usage = self.resource_usage.get('memory_percent', 0)
+            
+            # Reduce concurrent tasks if resources are high
+            if cpu_usage > 80 or memory_usage > 85:
+                self.config.max_concurrent_tasks = max(10, self.config.max_concurrent_tasks - 5)
+                self.logger.warning(f"Reduced max concurrent tasks to {self.config.max_concurrent_tasks} due to high resource usage")
+            
+            # Increase concurrent tasks if resources are low
+            elif cpu_usage < 50 and memory_usage < 60:
+                self.config.max_concurrent_tasks = min(100, self.config.max_concurrent_tasks + 2)
+    
+    def get_scheduler_status(self) -> Dict[str, Any]:
+        """Get comprehensive scheduler status."""
+        return {
+            'active': self._scheduler_active,
+            'metrics': dict(self.scheduler_metrics),
+            'resource_usage': dict(self.resource_usage),
+            'configuration': {
+                'max_concurrent_tasks': self.config.max_concurrent_tasks,
+                'max_queue_size': self.config.max_queue_size,
+                'default_timeout_seconds': self.config.default_timeout_seconds
+            },
+            'queue_status': {
+                priority.name: len(queue) 
+                for priority, queue in self.priority_queues.items()
+            },
+            'task_counts': {
+                'active': len(self.active_tasks),
+                'completed': len(self.completed_tasks),
+                'failed': len(self.failed_tasks),
+                'scheduled': len(self.task_queue)
+            }
+        }

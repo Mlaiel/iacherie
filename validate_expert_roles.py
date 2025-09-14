@@ -40,11 +40,11 @@ class ExpertRolesValidator:
             else:
                 results.append(f"❌ {init_file} missing")
         
-        # Check microservices architecture
+        # Check microservices architecture (post-consolidation)
         microservice_structure = {
-            "orchestration": 6,  # Expected files
-            "execution": 6,
-            "analytics": 5
+            "orchestration": 4,  # Consolidated from 6 to 4 files
+            "execution": 5,      # Consolidated from 6 to 5 files  
+            "analytics": 5       # Remains 5 files
         }
         
         for layer, expected_count in microservice_structure.items():
