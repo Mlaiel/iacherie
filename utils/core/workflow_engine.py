@@ -969,4 +969,3 @@ class AIOrchestrator:
 __all__ = ['WorkflowEngine', 'WorkflowEngineFactory', 'AIOrchestrator', 'WorkflowResult', 
            'WorkflowStep', 'WorkflowDefinition', 'AIProvider', 'AIServiceType', 
            'PromptTemplate', 'ModelMetrics']
-        return await WorkflowEngineFactory.create_engine(config)
