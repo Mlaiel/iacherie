@@ -228,3 +228,9 @@ def list_supported_regions(provider: str) -> list:
     regions = [configs.get('default_region')]
     regions.extend(configs.get('backup_regions', []))
     return [r for r in regions if r]  # Filter out None values
+# Metadata
+__version__ = "1.0.0"
+__author__ = "Fahed Mlaiel"
+__email__ = "mlaiel@live.de"
+__description__ = "Cloud infrastructure module for Ainflue creator platform"
+

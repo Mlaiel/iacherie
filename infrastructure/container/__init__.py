@@ -119,3 +119,9 @@ __all__ = [
     # Advanced orchestration
     'AdvancedOrchestrationManager'
 ]
+# Metadata
+__version__ = "1.0.0"
+__author__ = "Fahed Mlaiel"
+__email__ = "mlaiel@live.de"
+__description__ = "Container infrastructure module for Ainflue creator platform"
+

@@ -22,9 +22,20 @@ from . import inference_optimizer
 from . import ai_workload_scheduler
 
 # Advanced AI optimization components (Expert Implementation)
-from . import creative_ai_optimizer
-from . import ai_quality_assurance
-from . import model_cache_manager
+try:
+    from . import creative_ai_optimizer
+except ImportError:
+    creative_ai_optimizer = None
+
+try:
+    from . import ai_quality_assurance
+except ImportError:
+    ai_quality_assurance = None
+
+try:
+    from . import model_cache_manager
+except ImportError:
+    model_cache_manager = None
 
 # Enterprise AI Agents Orchestrator (53 AI Agents)
 try:

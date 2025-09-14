@@ -10,6 +10,8 @@ Project: Ainflue Infrastructure
 Version: 1.0 Production
 """
 
+import logging
+
 # Import core infrastructure components
 from .backup_manager import BackupManager
 from .failover_manager import FailoverManager, FailoverEvent, FailoverTrigger, FailoverStrategy, FailoverTarget

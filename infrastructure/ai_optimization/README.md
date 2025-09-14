@@ -1,5 +1,7 @@
 # 🤖 AI Optimization - Ainflue Infrastructure
 
+**Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer**
+
 Enterprise-grade AI optimization module for the Ainflue creator economy platform. Manages 53 specialized AI agents with advanced performance optimization, GPU cluster management, and intelligent workload scheduling.
 
 ## 🎯 Module Purpose
