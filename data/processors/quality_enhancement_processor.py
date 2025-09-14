@@ -51,6 +51,14 @@ try:
     MEDIA_LIBS_AVAILABLE = True
 except ImportError:
     MEDIA_LIBS_AVAILABLE = False
+    # Create mock classes for type hints
+    class PILImage:
+        class Image:
+            pass
+    class ImageEnhance:
+        pass
+    class ImageFilter:
+        pass
 
 # Audio processing libraries
 try:
