@@ -29,7 +29,7 @@ import uuid
 
 import numpy as np
 import cv2
-import aioredis
+import redis
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
@@ -563,7 +563,7 @@ class BiometricEngine:
         encryption_key: Optional[bytes] = None
     ):
         self.redis_url = redis_url
-        self.redis: Optional[aioredis.Redis] = None
+        self.redis: Optional[redis.Redis] = None
         self.encryption_key = encryption_key or Fernet.generate_key()
         self.cipher_suite = Fernet(self.encryption_key)
         
@@ -591,7 +591,7 @@ class BiometricEngine:
         """Initialize the biometric engine"""
         try:
             # Initialize Redis connection
-            self.redis = aioredis.from_url(self.redis_url)
+            self.redis = redis.from_url(self.redis_url)
             await self.redis.ping()
             
             # Initialize all analyzers

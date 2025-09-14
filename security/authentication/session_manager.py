@@ -19,12 +19,12 @@ import logging
 import secrets
 import time
 from datetime import datetime, timedelta, timezone
-from typing import Dict, List, Optional, Any, Union, Callable
+from typing import Dict, List, Optional, Any, Union, Callable, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 import uuid
 
-import aioredis
+import redis
 from cryptography.fernet import Fernet
 from fastapi import Request, Response, HTTPException
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
@@ -116,7 +116,7 @@ class SessionManager:
         enable_csrf_protection: bool = True
     ):
         self.redis_url = redis_url
-        self.redis: Optional[aioredis.Redis] = None
+        self.redis: Optional[redis.Redis] = None
         self.encryption_key = encryption_key or Fernet.generate_key()
         self.cipher_suite = Fernet(self.encryption_key)
         self.session_timeout = session_timeout
@@ -143,7 +143,7 @@ class SessionManager:
         """Initialize the session manager"""
         try:
             # Initialize Redis connection
-            self.redis = aioredis.from_url(self.redis_url)
+            self.redis = redis.from_url(self.redis_url)
             await self.redis.ping()
             
             # Start cleanup task

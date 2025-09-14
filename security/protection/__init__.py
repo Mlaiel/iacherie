@@ -16,7 +16,7 @@ from typing import Any, Dict, Optional, List
 
 # Core protection components
 from .encryption_engine import (
-    EncryptionEngine,
+    AdvancedEncryptionEngine as EncryptionEngine,
     CipherSuite,
     KeyManager,
     QuantumSafeEncryption,

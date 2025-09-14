@@ -22,7 +22,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 import uuid
 
-import aioredis
+import redis
 from cryptography.fernet import Fernet
 
 logger = logging.getLogger(__name__)
@@ -187,14 +187,14 @@ class RBACEngine:
     
     def __init__(self, redis_url: str = "redis://localhost:6379"):
         self.redis_url = redis_url
-        self.redis: Optional[aioredis.Redis] = None
+        self.redis: Optional[redis.Redis] = None
         self.role_cache: Dict[str, Role] = {}
         self.permission_cache: Dict[str, Permission] = {}
         
     async def initialize(self) -> None:
         """Initialize RBAC engine"""
         try:
-            self.redis = aioredis.from_url(self.redis_url)
+            self.redis = redis.from_url(self.redis_url)
             await self.redis.ping()
             logger.info("RBAC engine initialized")
         except Exception as e:
@@ -520,13 +520,13 @@ class ABACEngine:
     
     def __init__(self, redis_url: str = "redis://localhost:6379"):
         self.redis_url = redis_url
-        self.redis: Optional[aioredis.Redis] = None
+        self.redis: Optional[redis.Redis] = None
         self.policy_cache: Dict[str, Policy] = {}
         
     async def initialize(self) -> None:
         """Initialize ABAC engine"""
         try:
-            self.redis = aioredis.from_url(self.redis_url)
+            self.redis = redis.from_url(self.redis_url)
             await self.redis.ping()
             logger.info("ABAC engine initialized")
         except Exception as e:
@@ -891,7 +891,7 @@ class AccessControlEngine:
         cache_ttl: int = 300  # 5 minutes
     ):
         self.redis_url = redis_url
-        self.redis: Optional[aioredis.Redis] = None
+        self.redis: Optional[redis.Redis] = None
         self.encryption_key = encryption_key or Fernet.generate_key()
         self.cipher_suite = Fernet(self.encryption_key)
         self.cache_ttl = cache_ttl
@@ -916,7 +916,7 @@ class AccessControlEngine:
         """Initialize access control engine"""
         try:
             # Initialize Redis connection
-            self.redis = aioredis.from_url(self.redis_url)
+            self.redis = redis.from_url(self.redis_url)
             await self.redis.ping()
             
             # Initialize sub-engines

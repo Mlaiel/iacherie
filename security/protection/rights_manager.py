@@ -19,12 +19,12 @@ import logging
 import secrets
 import time
 from datetime import datetime, timedelta, timezone
-from typing import Dict, List, Optional, Set, Any, Union
+from typing import Dict, List, Optional, Set, Any, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 import uuid
 
-import aioredis
+import redis
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
@@ -170,13 +170,13 @@ class LicenseManager:
     
     def __init__(self, redis_url: str = "redis://localhost:6379"):
         self.redis_url = redis_url
-        self.redis: Optional[aioredis.Redis] = None
+        self.redis: Optional[redis.Redis] = None
         self.license_cache: Dict[str, ContentLicense] = {}
         
     async def initialize(self) -> None:
         """Initialize license manager"""
         try:
-            self.redis = aioredis.from_url(self.redis_url)
+            self.redis = redis.from_url(self.redis_url)
             await self.redis.ping()
             logger.info("License manager initialized")
         except Exception as e:
@@ -686,7 +686,7 @@ class RightsManager:
         encryption_key: Optional[bytes] = None
     ):
         self.redis_url = redis_url
-        self.redis: Optional[aioredis.Redis] = None
+        self.redis: Optional[redis.Redis] = None
         self.encryption_key = encryption_key or Fernet.generate_key()
         self.cipher_suite = Fernet(self.encryption_key)
         
@@ -713,7 +713,7 @@ class RightsManager:
         """Initialize rights management system"""
         try:
             # Initialize Redis connection
-            self.redis = aioredis.from_url(self.redis_url)
+            self.redis = redis.from_url(self.redis_url)
             await self.redis.ping()
             
             # Initialize components

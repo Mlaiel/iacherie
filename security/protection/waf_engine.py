@@ -18,13 +18,13 @@ import logging
 import time
 import re
 from datetime import datetime, timedelta, timezone
-from typing import Dict, List, Optional, Set, Any, Callable, Pattern
+from typing import Dict, List, Optional, Set, Any, Callable, Pattern, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 import uuid
 from collections import defaultdict, deque
 
-import aioredis
+import redis
 
 logger = logging.getLogger(__name__)
 
@@ -127,7 +127,7 @@ class RateLimiter:
     
     def __init__(self, redis_url: str = "redis://localhost:6379"):
         self.redis_url = redis_url
-        self.redis: Optional[aioredis.Redis] = None
+        self.redis: Optional[redis.Redis] = None
         
         # Rate limiting rules
         self.rate_limits = {
@@ -141,7 +141,7 @@ class RateLimiter:
     async def initialize(self) -> None:
         """Initialize rate limiter"""
         try:
-            self.redis = aioredis.from_url(self.redis_url)
+            self.redis = redis.from_url(self.redis_url)
             await self.redis.ping()
             logger.info("Rate limiter initialized")
         except Exception as e:
@@ -783,7 +783,7 @@ class WAFEngine:
         redis_url: str = "redis://localhost:6379"
     ):
         self.redis_url = redis_url
-        self.redis: Optional[aioredis.Redis] = None
+        self.redis: Optional[redis.Redis] = None
         
         # Initialize components
         self.rate_limiter = RateLimiter(redis_url)
@@ -823,7 +823,7 @@ class WAFEngine:
         """Initialize WAF engine"""
         try:
             # Initialize Redis connection
-            self.redis = aioredis.from_url(self.redis_url)
+            self.redis = redis.from_url(self.redis_url)
             await self.redis.ping()
             
             # Initialize components

@@ -24,7 +24,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 import uuid
 
-import aioredis
+import redis
 import numpy as np
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes, serialization
@@ -117,7 +117,7 @@ class AdaptiveAuthenticator:
         ml_model_path: Optional[str] = None
     ):
         self.redis_url = redis_url
-        self.redis: Optional[aioredis.Redis] = None
+        self.redis: Optional[redis.Redis] = None
         self.encryption_key = encryption_key or Fernet.generate_key()
         self.cipher_suite = Fernet(self.encryption_key)
         self.ml_model_path = ml_model_path
@@ -151,7 +151,7 @@ class AdaptiveAuthenticator:
         """Initialize the adaptive authenticator"""
         try:
             # Initialize Redis connection
-            self.redis = aioredis.from_url(self.redis_url)
+            self.redis = redis.from_url(self.redis_url)
             await self.redis.ping()
             
             # Initialize ML model for risk assessment

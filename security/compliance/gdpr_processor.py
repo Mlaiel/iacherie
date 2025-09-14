@@ -21,7 +21,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 import uuid
 
-import aioredis
+import redis
 
 logger = logging.getLogger(__name__)
 
@@ -78,12 +78,12 @@ class GDPRProcessor:
     
     def __init__(self, redis_url: str = "redis://localhost:6379"):
         self.redis_url = redis_url
-        self.redis: Optional[aioredis.Redis] = None
+        self.redis: Optional[redis.Redis] = None
         
     async def initialize(self) -> None:
         """Initialize GDPR processor"""
         try:
-            self.redis = aioredis.from_url(self.redis_url)
+            self.redis = redis.from_url(self.redis_url)
             await self.redis.ping()
             logger.info("GDPR processor initialized")
         except Exception as e:

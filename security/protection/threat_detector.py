@@ -23,7 +23,7 @@ from enum import Enum
 import uuid
 from collections import defaultdict, deque
 
-import aioredis
+import redis
 import numpy as np
 from cryptography.fernet import Fernet
 
@@ -140,14 +140,14 @@ class ThreatIntelligence:
     
     def __init__(self, redis_url: str = "redis://localhost:6379"):
         self.redis_url = redis_url
-        self.redis: Optional[aioredis.Redis] = None
+        self.redis: Optional[redis.Redis] = None
         self.intelligence_feeds = {}
         self.indicators_cache = {}
         
     async def initialize(self) -> None:
         """Initialize threat intelligence system"""
         try:
-            self.redis = aioredis.from_url(self.redis_url)
+            self.redis = redis.from_url(self.redis_url)
             await self.redis.ping()
             
             # Load threat intelligence feeds
@@ -720,7 +720,7 @@ class ThreatDetector:
         encryption_key: Optional[bytes] = None
     ):
         self.redis_url = redis_url
-        self.redis: Optional[aioredis.Redis] = None
+        self.redis: Optional[redis.Redis] = None
         self.encryption_key = encryption_key or Fernet.generate_key()
         self.cipher_suite = Fernet(self.encryption_key)
         
@@ -762,7 +762,7 @@ class ThreatDetector:
         """Initialize threat detection system"""
         try:
             # Initialize Redis connection
-            self.redis = aioredis.from_url(self.redis_url)
+            self.redis = redis.from_url(self.redis_url)
             await self.redis.ping()
             
             # Initialize components
