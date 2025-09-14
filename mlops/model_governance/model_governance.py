@@ -199,6 +199,15 @@ class ComplianceChecker:
     def __init__(self):
         self.compliance_rules: Dict[str, Callable] = {}
         self.compliance_policies: List[GovernancePolicy] = []
+        logger.info("📋 ComplianceChecker initialized")
+    
+    def add_policy(self, policy):
+        """Add a compliance policy"""
+        self.compliance_policies.append(policy)
+        logger.info(f"Added compliance policy: {policy.name if hasattr(policy, 'name') else 'Unknown'}")
+    
+    async def check_compliance(self, model_metadata: Dict[str, Any]) -> Dict[str, Any]:
+        """Check enterprise compliance across multiple frameworks"""
         try:
             logger.info(f"🔍 Executing enterprise compliance check")
             
@@ -507,8 +516,14 @@ class ModelGovernanceEngine:
         )
         
         # Check compliance
-        compliance_result = self.compliance_checker.check_compliance(request)
-        if not compliance_result["is_compliant"]:
+        model_metadata = {
+            "model_info": model_info or {},
+            "change_details": change_details or {},
+            "risk_level": risk_level.value,
+            "action_type": action_type.value
+        }
+        compliance_result = await self.compliance_checker.check_compliance(model_metadata)
+        if compliance_result["overall_status"] in ["non_compliant", "error"]:
             raise ValueError(f"Compliance violations: {compliance_result['violations']}")
         
         self.approval_requests[request_id] = request
