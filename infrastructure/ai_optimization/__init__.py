@@ -21,12 +21,20 @@ from . import gpu_cluster_manager
 from . import inference_optimizer
 from . import ai_workload_scheduler
 
+# Advanced AI optimization components (Expert Implementation)
+from . import creative_ai_optimizer
+from . import ai_quality_assurance
+from . import model_cache_manager
+
 __all__ = [
     "ai_prompt_optimizer",
     "model_performance_optimizer", 
     "gpu_cluster_manager",
     "inference_optimizer",
     "ai_workload_scheduler",
+    "creative_ai_optimizer",
+    "ai_quality_assurance", 
+    "model_cache_manager",
 ]
 
 # Module metadata
