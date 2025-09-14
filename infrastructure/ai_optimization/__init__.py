@@ -24,18 +24,21 @@ from . import ai_workload_scheduler
 # Advanced AI optimization components (Expert Implementation)
 try:
     from . import creative_ai_optimizer
-except ImportError:
-    creative_ai_optimizer = None
-
-try:
     from . import ai_quality_assurance
-except ImportError:
-    ai_quality_assurance = None
-
-try:
     from . import model_cache_manager
-except ImportError:
+    from . import prompt_engineering_pipeline
+    from . import model_serving_optimizer
+    from . import ai_performance_monitor
+except ImportError as e:
+    # Log import errors but continue
+    import logging
+    logging.getLogger(__name__).warning(f"Some AI optimization components not available: {e}")
+    creative_ai_optimizer = None
+    ai_quality_assurance = None
     model_cache_manager = None
+    prompt_engineering_pipeline = None
+    model_serving_optimizer = None
+    ai_performance_monitor = None
 
 # Enterprise AI Agents Orchestrator (53 AI Agents)
 try:
@@ -56,6 +59,9 @@ __all__ = [
     "creative_ai_optimizer",
     "ai_quality_assurance", 
     "model_cache_manager",
+    "prompt_engineering_pipeline",
+    "model_serving_optimizer",
+    "ai_performance_monitor",
     "AIAgentsOrchestrator",
     "AIAgent",
     "AITask",
