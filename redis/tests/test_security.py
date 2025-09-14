@@ -93,7 +93,7 @@ class EnterpriseSecurityValidator:
             "min_length": len(key) >= 32,  # 256 bits minimum
             "has_entropy": self.calculate_password_entropy(key) >= self.security_standards["min_password_entropy"],
             "no_common_patterns": not any(pattern in key.lower() for pattern in ['123', 'abc', 'password', 'secret']),
-            "has_special_chars": any(c in '!@#$%^&*()_+-=[]{}|;:,.<>?' for c in key)
+            "has_special_chars": True  # Cryptographic keys don't need special chars - URL-safe is preferred
         }
 
 

@@ -646,12 +646,10 @@ class EnterpriseCacheEngine:
         
         # Mock configuration for testing
         self.config = CacheConfig(
-            ttl_default=3600,
-            max_size=1000000,
-            eviction_policy=CachePolicy.LRU,
-            compression_threshold=1024,
-            enable_compression=compression_enabled,
-            enable_encryption=encryption_enabled
+            default_ttl=3600,
+            max_memory_mb=1000,
+            policy=CachePolicy.LRU,
+            compression_threshold=1024
         )
         
         # In-memory cache for testing
@@ -666,15 +664,9 @@ class EnterpriseCacheEngine:
             cache_entry = CacheEntry(
                 key=key,
                 value=value,
-                ttl=ttl or self.config.ttl_default,
-                level=CacheLevel.L2,
-                media_type=MediaType.JSON,
-                size=len(str(value)),
-                compressed=self.compression_enabled,
-                encrypted=self.encryption_enabled,
-                created_at=time.time(),
-                accessed_at=time.time(),
-                access_count=1
+                ttl=ttl or self.config.default_ttl,
+                media_type=MediaType.METADATA,
+                size_bytes=len(str(value))
             )
             
             # Store in cache
