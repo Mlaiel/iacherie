@@ -18,7 +18,6 @@ from typing import Any, Dict, Optional, List
 from .encryption_engine import (
     AdvancedEncryptionEngine as EncryptionEngine,
     CipherSuite,
-    KeyManager,
     QuantumSafeEncryption,
     EncryptionResult,
     DecryptionResult
@@ -119,7 +118,6 @@ __all__ = [
     "SecurityRisk",
     
     # Managers
-    "KeyManager",
     "ThreatIntelligence",
     "LicenseManager",
     "RateLimiter",

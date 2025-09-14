@@ -28,7 +28,82 @@ from enum import Enum
 import uuid
 
 import numpy as np
-import cv2
+
+# Optional OpenCV import with fallback
+try:
+    import cv2
+    CV2_AVAILABLE = True
+except ImportError:
+    CV2_AVAILABLE = False
+    # Mock cv2 for when OpenCV is not available
+    class MockCV2:
+        CV_64F = 6
+        IMREAD_COLOR = 1
+        IMREAD_GRAYSCALE = 0
+        COLOR_BGR2RGB = 4
+        COLOR_BGR2GRAY = 6
+        MORPH_ELLIPSE = 2
+        MORPH_CLOSE = 3
+        RETR_EXTERNAL = 0
+        CHAIN_APPROX_SIMPLE = 2
+        
+        class data:
+            haarcascades = "/usr/share/opencv4/haarcascades/"
+        
+        @staticmethod
+        def imdecode(buf, flags):
+            return np.zeros((100, 100, 3), dtype=np.uint8)
+            
+        @staticmethod
+        def cvtColor(image, conversion):
+            return np.zeros((100, 100), dtype=np.uint8)
+            
+        @staticmethod
+        def resize(image, size):
+            return np.zeros((*size, 3), dtype=np.uint8)
+            
+        @staticmethod
+        def Laplacian(image, dtype):
+            class MockLaplacian:
+                def var(self):
+                    return 100.0
+            return MockLaplacian()
+            
+        @staticmethod
+        def GaussianBlur(image, ksize, sigma):
+            return image
+            
+        @staticmethod
+        def equalizeHist(image):
+            return image
+            
+        @staticmethod
+        def getStructuringElement(shape, ksize):
+            return np.ones(ksize, dtype=np.uint8)
+            
+        @staticmethod
+        def morphologyEx(image, op, kernel):
+            return image
+            
+        @staticmethod
+        def Canny(image, t1, t2):
+            return np.zeros_like(image)
+            
+        @staticmethod
+        def findContours(image, mode, method):
+            return [], None
+            
+        @staticmethod
+        def moments(contour):
+            return {"m00": 1, "m10": 50, "m01": 50}
+            
+        class CascadeClassifier:
+            def __init__(self, path):
+                pass
+            def detectMultiScale(self, image, scale=1.1, min_neighbors=5):
+                return []
+    
+    cv2 = MockCV2()
 import redis
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes

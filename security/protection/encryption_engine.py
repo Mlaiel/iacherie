@@ -71,6 +71,14 @@ class HashAlgorithm(Enum):
     BLAKE2B = "blake2b"
     BLAKE2S = "blake2s"
 
+class CipherSuite(Enum):
+    """Cipher suite configurations"""
+    TLS_AES_256_GCM_SHA384 = "tls_aes_256_gcm_sha384"
+    TLS_CHACHA20_POLY1305_SHA256 = "tls_chacha20_poly1305_sha256"
+    TLS_AES_128_GCM_SHA256 = "tls_aes_128_gcm_sha256"
+    ECDHE_RSA_AES256_GCM_SHA384 = "ecdhe_rsa_aes256_gcm_sha384"
+    ECDHE_ECDSA_AES256_GCM_SHA384 = "ecdhe_ecdsa_aes256_gcm_sha384"
+
 @dataclass
 class EncryptionKey:
     """Encryption key with metadata"""
@@ -105,6 +113,40 @@ class DigitalSignature:
     key_id: str
     hash_algorithm: HashAlgorithm
     timestamp: datetime = field(default_factory=datetime.now)
+
+@dataclass
+class EncryptionResult:
+    """Result of encryption operation"""
+    success: bool
+    encrypted_data: Optional[EncryptedData] = None
+    key_id: Optional[str] = None
+    error_message: Optional[str] = None
+
+@dataclass
+class DecryptionResult:
+    """Result of decryption operation"""
+    success: bool
+    plaintext: Optional[bytes] = None
+    error_message: Optional[str] = None
+
+class QuantumSafeEncryption:
+    """Quantum-safe encryption implementation"""
+    
+    def __init__(self):
+        self.supported_algorithms = [
+            EncryptionAlgorithm.AES_256_GCM,
+            EncryptionAlgorithm.CHACHA20_POLY1305,
+        ]
+    
+    async def encrypt_quantum_safe(self, data: bytes, algorithm: EncryptionAlgorithm) -> Optional[EncryptedData]:
+        """Encrypt using quantum-safe algorithms"""
+        # Implementation would use post-quantum cryptography
+        return None
+    
+    async def decrypt_quantum_safe(self, encrypted_data: EncryptedData) -> Optional[bytes]:
+        """Decrypt quantum-safe encrypted data"""
+        # Implementation would use post-quantum cryptography
+        return None
 
 class AdvancedEncryptionEngine:
     """

@@ -34,6 +34,27 @@ class SecurityPolicy:
     active: bool = True
 
 @dataclass
+class CompliancePolicy:
+    """Compliance policy definition"""
+    policy_id: str
+    name: str
+    description: str
+    framework: str
+    enforcement_level: EnforcementAction
+    compliance_requirement: str
+    active: bool = True
+
+@dataclass 
+class PolicyTemplate:
+    """Policy template for standardization"""
+    template_id: str
+    name: str
+    description: str
+    framework: str
+    category: str
+    requirements: List[str]
+
+@dataclass
 class PolicyViolation:
     """Policy violation record"""
     violation_id: str

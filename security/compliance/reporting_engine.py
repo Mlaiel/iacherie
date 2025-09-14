@@ -27,6 +27,44 @@ class ComplianceReport:
     violations: List[Dict[str, Any]]
     recommendations: List[str]
 
+@dataclass
+class RegulatoryReport:
+    """Regulatory compliance report"""
+    report_id: str
+    regulatory_framework: str
+    generated_at: datetime
+    compliance_status: str
+    findings: List[Dict[str, Any]]
+    remediation_plan: List[str]
+    next_audit_date: datetime
+
+@dataclass
+class ExecutiveReport:
+    """Executive summary report"""
+    report_id: str
+    generated_at: datetime
+    overall_compliance_score: float
+    key_metrics: Dict[str, Any]
+    risk_summary: List[str]
+    recommendations: List[str]
+
+@dataclass
+class MetricsCollector:
+    """Metrics collection configuration"""
+    collector_id: str
+    metrics_types: List[str]
+    collection_interval: int
+    retention_days: int
+
+@dataclass
+class ReportScheduler:
+    """Report scheduling configuration"""
+    schedule_id: str
+    report_type: str
+    frequency: str
+    recipients: List[str]
+    next_run: datetime
+
 class ReportingEngine:
     """Automated compliance reporting system"""
     
