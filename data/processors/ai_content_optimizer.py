@@ -1044,7 +1044,7 @@ class AIContentOptimizer:
         self.config = config or {}
         
         # Initialize components
-        self.content_analyzer = ContentAnalyzer(config.get('analyzer', {}))
+        self.content_analyzer = ContentAnalyzer(self.config.get('analyzer', {}))
         
         # Optimization statistics
         self.optimization_stats = {

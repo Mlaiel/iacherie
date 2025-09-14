@@ -28,24 +28,107 @@ from typing import Dict, Any, List, Optional, Union
 import asyncio
 import logging
 
-# Core processor imports
-from .audio_processor import AudioProcessor
-from .video_processor import VideoProcessor
-from .image_processor import ImageProcessor
-from .text_processor import TextProcessor
-from .metadata_processor import MetadataProcessor
-from .unified_converter import UnifiedConverter
-from .workflow_orchestrator import WorkflowOrchestrator
+# Core processor imports with graceful fallback
+_available_processors = []
+
+# Try to import full processors first
+try:
+    from .audio_processor import AudioProcessor
+    _available_processors.append('AudioProcessor')
+except ImportError as e:
+    print(f"Full AudioProcessor unavailable: {e}")
+
+try:
+    from .video_processor import VideoProcessor
+    _available_processors.append('VideoProcessor')
+except ImportError as e:
+    print(f"Full VideoProcessor unavailable: {e}")
+
+try:
+    from .image_processor import ImageProcessor
+    _available_processors.append('ImageProcessor')
+except ImportError as e:
+    print(f"Full ImageProcessor unavailable: {e}")
+
+try:
+    from .text_processor import TextProcessor
+    _available_processors.append('TextProcessor')
+except ImportError as e:
+    print(f"Full TextProcessor unavailable: {e}")
+
+try:
+    from .metadata_processor import MetadataProcessor
+    _available_processors.append('MetadataProcessor')
+except ImportError as e:
+    print(f"MetadataProcessor unavailable: {e}")
+
+try:
+    from .unified_converter import UnifiedConverter
+    _available_processors.append('UnifiedConverter')
+except ImportError as e:
+    print(f"UnifiedConverter unavailable: {e}")
+
+try:
+    from .workflow_orchestrator import WorkflowOrchestrator
+    _available_processors.append('WorkflowOrchestrator')
+except ImportError as e:
+    print(f"WorkflowOrchestrator unavailable: {e}")
 
 # AI Enhancement processors
-from .ai_content_optimizer import AIContentOptimizer
-from .quality_enhancement_processor import QualityEnhancementProcessor
-from .semantic_analysis_processor import SemanticAnalysisProcessor
+try:
+    from .ai_content_optimizer import AIContentOptimizer
+    _available_processors.append('AIContentOptimizer')
+except ImportError as e:
+    print(f"AIContentOptimizer unavailable: {e}")
+
+try:
+    from .quality_enhancement_processor import QualityEnhancementProcessor
+    _available_processors.append('QualityEnhancementProcessor')
+except ImportError as e:
+    print(f"QualityEnhancementProcessor unavailable: {e}")
+
+try:
+    from .semantic_analysis_processor import SemanticAnalysisProcessor
+    _available_processors.append('SemanticAnalysisProcessor')
+except ImportError as e:
+    print(f"SemanticAnalysisProcessor unavailable: {e}")
 
 # Enterprise processors
-from .security_content_processor import SecurityContentProcessor
-from .compliance_content_processor import ComplianceContentProcessor
-from .collaboration_content_processor import CollaborationContentProcessor
+try:
+    from .security_content_processor import SecurityContentProcessor
+    _available_processors.append('SecurityContentProcessor')
+except ImportError as e:
+    print(f"SecurityContentProcessor unavailable: {e}")
+
+try:
+    from .compliance_content_processor import ComplianceContentProcessor
+    _available_processors.append('ComplianceContentProcessor')
+except ImportError as e:
+    print(f"ComplianceContentProcessor unavailable: {e}")
+
+try:
+    from .collaboration_content_processor import CollaborationContentProcessor
+    _available_processors.append('CollaborationContentProcessor')
+except ImportError as e:
+    print(f"CollaborationContentProcessor unavailable: {e}")
+
+# Import simplified processors as fallback
+from .simplified_processors import (
+    SimplifiedAudioProcessor,
+    SimplifiedAIOptimizer, 
+    SimplifiedWorkflowOrchestrator,
+    ProcessingResult,
+    ProcessingStatus,
+    ProcessorType
+)
+_available_processors.extend([
+    'SimplifiedAudioProcessor',
+    'SimplifiedAIOptimizer', 
+    'SimplifiedWorkflowOrchestrator'
+])
+
+print(f"Data Processors Module loaded with {len(_available_processors)} available processors")
+print(f"Available processors: {', '.join(_available_processors)}")
 
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
@@ -98,23 +181,56 @@ class ProcessorRegistry:
         self._initialize_processors()
     
     def _initialize_processors(self):
-        """
-Initialize all processor instances"""
-        self._processors = {
-            'audio': AudioProcessor(),
-            'video': VideoProcessor(),
-            'image': ImageProcessor(),
-            'text': TextProcessor(),
-            'metadata': MetadataProcessor(),
-            'unified_converter': UnifiedConverter(),
-            'workflow_orchestrator': WorkflowOrchestrator(),
-            'ai_content_optimizer': AIContentOptimizer(),
-            'quality_enhancement': QualityEnhancementProcessor(),
-            'semantic_analysis': SemanticAnalysisProcessor(),
-            'security_content': SecurityContentProcessor(),
-            'compliance_content': ComplianceContentProcessor(),
-            'collaboration_content': CollaborationContentProcessor()
-        }
+        """Initialize all available processor instances"""
+        self._processors = {}
+        
+        # Initialize only available processors
+        if 'AudioProcessor' in _available_processors:
+            self._processors['audio'] = AudioProcessor()
+        elif 'SimplifiedAudioProcessor' in _available_processors:
+            self._processors['audio'] = SimplifiedAudioProcessor()
+            
+        if 'VideoProcessor' in _available_processors:
+            self._processors['video'] = VideoProcessor()
+            
+        if 'ImageProcessor' in _available_processors:
+            self._processors['image'] = ImageProcessor()
+            
+        if 'TextProcessor' in _available_processors:
+            self._processors['text'] = TextProcessor()
+            
+        if 'MetadataProcessor' in _available_processors:
+            self._processors['metadata'] = MetadataProcessor()
+            
+        if 'UnifiedConverter' in _available_processors:
+            self._processors['unified_converter'] = UnifiedConverter()
+            
+        if 'WorkflowOrchestrator' in _available_processors:
+            self._processors['workflow_orchestrator'] = WorkflowOrchestrator()
+        elif 'SimplifiedWorkflowOrchestrator' in _available_processors:
+            self._processors['workflow_orchestrator'] = SimplifiedWorkflowOrchestrator()
+            
+        if 'AIContentOptimizer' in _available_processors:
+            self._processors['ai_content_optimizer'] = AIContentOptimizer()
+        elif 'SimplifiedAIOptimizer' in _available_processors:
+            self._processors['ai_content_optimizer'] = SimplifiedAIOptimizer()
+            
+        if 'QualityEnhancementProcessor' in _available_processors:
+            self._processors['quality_enhancement'] = QualityEnhancementProcessor()
+            
+        if 'SemanticAnalysisProcessor' in _available_processors:
+            self._processors['semantic_analysis'] = SemanticAnalysisProcessor()
+            
+        if 'SecurityContentProcessor' in _available_processors:
+            self._processors['security_content'] = SecurityContentProcessor()
+            
+        if 'ComplianceContentProcessor' in _available_processors:
+            self._processors['compliance_content'] = ComplianceContentProcessor()
+            
+        if 'CollaborationContentProcessor' in _available_processors:
+            self._processors['collaboration_content'] = CollaborationContentProcessor()
+        
+        logger.info(f"ProcessorRegistry initialized with {len(self._processors)} processors")
         
         logger.info(f"Initialized {len(self._processors)} processors")
     

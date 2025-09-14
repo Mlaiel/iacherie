@@ -86,6 +86,7 @@ class QualityMetric(Enum):
     EDUCATIONAL_VALUE = "educational_value"
     ENTERTAINMENT_VALUE = "entertainment_value"
     COMMERCIAL_APPEAL = "commercial_appeal"
+    TRENDING_POTENTIAL = "trending_potential"
 
 class QualityLevel(Enum):
     """Quality assessment levels."""
