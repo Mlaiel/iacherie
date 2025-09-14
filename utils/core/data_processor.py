@@ -603,3 +603,374 @@ class DataProcessorFactory:
             yield processor
         finally:
             await processor._cleanup_connections()
+
+# === ENHANCED BACKEND UTILITIES ===
+# Consolidated from database_utilities.py, query_builder.py, rest_client.py, data_transformer.py
+
+from enum import Enum
+
+class JoinType(Enum):
+    """SQL join types for query building"""
+    INNER = "INNER JOIN"
+    LEFT = "LEFT JOIN"
+    RIGHT = "RIGHT JOIN"
+    FULL = "FULL OUTER JOIN"
+    CROSS = "CROSS JOIN"
+
+class OrderDirection(Enum):
+    """SQL order directions"""
+    ASC = "ASC"
+    DESC = "DESC"
+
+@dataclass
+class QueryMetrics:
+    """Enhanced query performance metrics from database_utilities.py"""
+    query_hash: str
+    execution_time: float
+    rows_affected: int
+    timestamp: datetime
+    query_type: str
+    table_name: str = ""
+    index_used: bool = False
+    optimization_score: float = 0.0
+
+@dataclass
+class RestResponse:
+    """Enhanced REST response wrapper from rest_client.py"""
+    status_code: int
+    headers: Dict[str, str]
+    body: Union[str, Dict[str, Any]]
+    response_time: float
+    success: bool
+    error: Optional[str] = None
+    retry_count: int = 0
+
+class EnterpriseQueryBuilder:
+    """Enhanced query builder consolidated from query_builder.py
+    
+    DBA Expert: Advanced SQL generation with security and optimization
+    """
+    
+    def __init__(self):
+        self.reset()
+    
+    def reset(self):
+        """Reset query builder state"""
+        self._select_fields = []
+        self._from_table = ""
+        self._joins = []
+        self._where_conditions = []
+        self._group_by = []
+        self._having = []
+        self._order_by = []
+        self._limit = None
+        self._offset = None
+    
+    def select(self, fields: Union[str, List[str]]) -> 'EnterpriseQueryBuilder':
+        """Add SELECT fields with SQL injection protection"""
+        if isinstance(fields, str):
+            fields = [fields]
+        
+        # Sanitize field names
+        sanitized_fields = []
+        for field in fields:
+            if re.match(r'^[a-zA-Z_][a-zA-Z0-9_]*(\.[a-zA-Z_][a-zA-Z0-9_]*)?$', field.strip()):
+                sanitized_fields.append(field.strip())
+            else:
+                raise ValueError(f"Invalid field name: {field}")
+        
+        self._select_fields.extend(sanitized_fields)
+        return self
+    
+    def from_table(self, table: str) -> 'EnterpriseQueryBuilder':
+        """Set FROM table with validation"""
+        if not re.match(r'^[a-zA-Z_][a-zA-Z0-9_]*$', table.strip()):
+            raise ValueError(f"Invalid table name: {table}")
+        self._from_table = table.strip()
+        return self
+    
+    def where(self, condition: str, params: Optional[Dict[str, Any]] = None) -> 'EnterpriseQueryBuilder':
+        """Add WHERE condition with parameterization"""
+        self._where_conditions.append({'condition': condition, 'params': params or {}})
+        return self
+    
+    def build(self) -> Tuple[str, Dict[str, Any]]:
+        """Build final SQL query with parameters"""
+        if not self._from_table:
+            raise ValueError("FROM table is required")
+        
+        query_parts = []
+        all_params = {}
+        
+        # SELECT
+        if not self._select_fields:
+            self._select_fields = ["*"]
+        query_parts.append(f"SELECT {', '.join(self._select_fields)}")
+        
+        # FROM
+        query_parts.append(f"FROM {self._from_table}")
+        
+        # WHERE
+        if self._where_conditions:
+            where_clause = " AND ".join([cond['condition'] for cond in self._where_conditions])
+            query_parts.append(f"WHERE {where_clause}")
+            
+            # Collect parameters
+            for cond in self._where_conditions:
+                all_params.update(cond['params'])
+        
+        # ORDER BY
+        if self._order_by:
+            query_parts.append(f"ORDER BY {', '.join(self._order_by)}")
+        
+        # LIMIT/OFFSET
+        if self._limit:
+            query_parts.append(f"LIMIT {self._limit}")
+            if self._offset:
+                query_parts.append(f"OFFSET {self._offset}")
+        
+        return " ".join(query_parts), all_params
+
+class EnterpriseRestClient:
+    """Enhanced REST client consolidated from rest_client.py
+    
+    Microservices Expert: Advanced HTTP client with resilience patterns
+    """
+    
+    def __init__(self, config: Optional[Dict[str, Any]] = None):
+        self.config = config or {}
+        self.session: Optional[aiohttp.ClientSession] = None
+        self._metrics: Dict[str, Any] = {}
+        self.logger = logging.getLogger(__name__)
+    
+    async def __aenter__(self):
+        """Async context manager entry"""
+        await self._initialize_session()
+        return self
+    
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        """Async context manager exit"""
+        await self._cleanup_session()
+    
+    async def _initialize_session(self):
+        """Initialize HTTP session with connection pooling"""
+        timeout = aiohttp.ClientTimeout(total=self.config.get('timeout', 30))
+        connector = aiohttp.TCPConnector(
+            limit=self.config.get('max_connections', 100),
+            limit_per_host=self.config.get('max_connections_per_host', 30),
+            ttl_dns_cache=300,
+            use_dns_cache=True,
+        )
+        
+        self.session = aiohttp.ClientSession(
+            timeout=timeout,
+            connector=connector,
+            headers=self.config.get('default_headers', {})
+        )
+    
+    async def _cleanup_session(self):
+        """Cleanup HTTP session"""
+        if self.session:
+            await self.session.close()
+            self.session = None
+    
+    async def request(
+        self,
+        method: str,
+        url: str,
+        headers: Optional[Dict[str, str]] = None,
+        data: Optional[Union[str, Dict[str, Any]]] = None,
+        params: Optional[Dict[str, Any]] = None,
+        retries: int = 3
+    ) -> RestResponse:
+        """Enhanced HTTP request with retry logic and metrics"""
+        if not self.session:
+            await self._initialize_session()
+        
+        start_time = time.time()
+        last_error = None
+        
+        for attempt in range(retries + 1):
+            try:
+                async with self.session.request(
+                    method=method,
+                    url=url,
+                    headers=headers,
+                    json=data if isinstance(data, dict) else None,
+                    data=data if isinstance(data, str) else None,
+                    params=params
+                ) as response:
+                    response_time = time.time() - start_time
+                    body = await response.text()
+                    
+                    # Try to parse as JSON
+                    try:
+                        body = json.loads(body)
+                    except (json.JSONDecodeError, ValueError):
+                        pass
+                    
+                    return RestResponse(
+                        status_code=response.status,
+                        headers=dict(response.headers),
+                        body=body,
+                        response_time=response_time,
+                        success=200 <= response.status < 400,
+                        retry_count=attempt
+                    )
+            
+            except Exception as e:
+                last_error = str(e)
+                self.logger.warning(f"Request attempt {attempt + 1} failed: {e}")
+                
+                if attempt < retries:
+                    await asyncio.sleep(2 ** attempt)  # Exponential backoff
+        
+        return RestResponse(
+            status_code=0,
+            headers={},
+            body="",
+            response_time=time.time() - start_time,
+            success=False,
+            error=last_error,
+            retry_count=retries
+        )
+
+class EnhancedDataTransformer:
+    """Enhanced data transformer consolidated from data_transformer.py
+    
+    ML Engineer: Advanced data processing with enterprise patterns
+    """
+    
+    def __init__(self):
+        self.logger = logging.getLogger(__name__)
+        self._thread_pool = ThreadPoolExecutor(max_workers=4)
+    
+    async def transform_data(
+        self,
+        data: Any,
+        transformation_type: str,
+        config: Optional[Dict[str, Any]] = None
+    ) -> 'ProcessingResult':
+        """Enhanced data transformation with async support"""
+        try:
+            config = config or {}
+            start_time = time.time()
+            
+            if transformation_type == "json_normalize":
+                result = await self._normalize_json(data, config)
+            elif transformation_type == "csv_parse":
+                result = await self._parse_csv(data, config)
+            elif transformation_type == "xml_parse":
+                result = await self._parse_xml(data, config)
+            elif transformation_type == "data_validate":
+                result = await self._validate_data(data, config)
+            else:
+                raise ValueError(f"Unknown transformation type: {transformation_type}")
+            
+            execution_time = (time.time() - start_time) * 1000  # Convert to ms
+            
+            return ProcessingResult(
+                success=True,
+                result=result,
+                execution_time_ms=execution_time,
+                metadata={
+                    'operation': f'transform_{transformation_type}',
+                    'input_size': len(str(data)) if data else 0,
+                    'output_size': len(str(result)) if result else 0
+                }
+            )
+        
+        except Exception as e:
+            self.logger.error(f"Data transformation failed: {e}")
+            return ProcessingResult(
+                success=False,
+                errors=[str(e)],
+                metadata={'operation': f'transform_{transformation_type}'}
+            )
+    
+    async def _normalize_json(self, data: Any, config: Dict[str, Any]) -> Dict[str, Any]:
+        """Normalize JSON data structure"""
+        if isinstance(data, str):
+            data = json.loads(data)
+        
+        # Flatten nested dictionaries if requested
+        if config.get('flatten', False):
+            return self._flatten_dict(data)
+        
+        return data
+    
+    async def _parse_csv(self, data: str, config: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """Parse CSV data with configuration"""
+        import io
+        
+        reader = csv.DictReader(
+            io.StringIO(data),
+            delimiter=config.get('delimiter', ','),
+            quotechar=config.get('quotechar', '"')
+        )
+        
+        return list(reader)
+    
+    async def _parse_xml(self, data: str, config: Dict[str, Any]) -> Dict[str, Any]:
+        """Parse XML data to dictionary"""
+        root = ET.fromstring(data)
+        return self._xml_to_dict(root)
+    
+    async def _validate_data(self, data: Any, config: Dict[str, Any]) -> Dict[str, Any]:
+        """Validate data against schema"""
+        validation_rules = config.get('rules', {})
+        errors = []
+        
+        # Basic validation examples
+        if 'required_fields' in validation_rules and isinstance(data, dict):
+            for field in validation_rules['required_fields']:
+                if field not in data:
+                    errors.append(f"Missing required field: {field}")
+        
+        return {
+            'valid': len(errors) == 0,
+            'errors': errors,
+            'data': data
+        }
+    
+    def _flatten_dict(self, d: Dict[str, Any], parent_key: str = '', sep: str = '.') -> Dict[str, Any]:
+        """Flatten nested dictionary"""
+        items = []
+        for k, v in d.items():
+            new_key = f"{parent_key}{sep}{k}" if parent_key else k
+            if isinstance(v, dict):
+                items.extend(self._flatten_dict(v, new_key, sep=sep).items())
+            else:
+                items.append((new_key, v))
+        return dict(items)
+    
+    def _xml_to_dict(self, element) -> Dict[str, Any]:
+        """Convert XML element to dictionary"""
+        result = {}
+        
+        # Add attributes
+        if element.attrib:
+            result.update(element.attrib)
+        
+        # Add text content
+        if element.text and element.text.strip():
+            if len(result) == 0:
+                return element.text.strip()
+            result['text'] = element.text.strip()
+        
+        # Add children
+        for child in element:
+            child_data = self._xml_to_dict(child)
+            if child.tag in result:
+                if not isinstance(result[child.tag], list):
+                    result[child.tag] = [result[child.tag]]
+                result[child.tag].append(child_data)
+            else:
+                result[child.tag] = child_data
+        
+        return result
+
+# Export consolidated backend utilities
+__all__ = ['DataProcessor', 'DataProcessorFactory', 'ProcessingResult', 
+           'EnterpriseQueryBuilder', 'EnterpriseRestClient', 'EnhancedDataTransformer',
+           'QueryMetrics', 'RestResponse', 'JoinType', 'OrderDirection']
