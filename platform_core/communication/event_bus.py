@@ -497,6 +497,10 @@ class EventBus:
                      event_type: str,
                      source: str,
                      data: Dict[str, Any],
+                     metadata: Optional[Dict[str, Any]] = None,
+                     priority: EventPriority = EventPriority.NORMAL,
+                     correlation_id: Optional[str] = None,
+                     aggregate_id: Optional[str] = None) -> bool:
         
         event = Event(
             event_type=event_type,

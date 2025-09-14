@@ -787,7 +787,7 @@ class MobileSEOPerformanceMonitor:
         else:
             return "stable"
     
-    def get_mobile_seo_history(self, url: str, days: int = 30) -> Dict[str, Any]:
+    async def get_mobile_seo_history(self, url: str, days: int = 30) -> Dict[str, Any]:
         """Get mobile SEO history for URL"""
         analyses = self.mobile_analyses.get(url, [])
         
