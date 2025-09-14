@@ -426,6 +426,10 @@ class EncryptionKeyManager:
         return report
 
 
+# Alias for backward compatibility
+KeyManager = EncryptionKeyManager
+
+
 def main():
     """Example usage of the key manager."""
     key_manager = EncryptionKeyManager()

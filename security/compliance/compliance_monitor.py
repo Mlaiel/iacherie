@@ -34,11 +34,43 @@ class ComplianceScore:
     violations: List[str]
     recommendations: List[str]
 
+@dataclass
+class RegulatoryRequirement:
+    """Regulatory requirement definition"""
+    framework: ComplianceFramework
+    requirement_id: str
+    description: str
+    mandatory: bool = True
+
+@dataclass
+class ViolationAlert:
+    """Compliance violation alert"""
+    framework: ComplianceFramework
+    severity: str
+    description: str
+    timestamp: str
+    remediation_required: bool = True
+
+class PolicyEngine:
+    """Policy evaluation and enforcement engine"""
+    
+    def __init__(self):
+        self.policies = {}
+        
+    async def evaluate_policy(self, policy_id: str, context: Dict[str, Any]) -> bool:
+        """Evaluate a policy against given context"""
+        return True
+        
+    async def enforce_policy(self, policy_id: str, action: str) -> bool:
+        """Enforce a policy action"""
+        return True
+
 class ComplianceMonitor:
     """Real-time compliance monitoring system"""
     
     def __init__(self):
         self.monitoring_active = True
+        self.policy_engine = PolicyEngine()
         
     async def monitor_compliance(self, framework: ComplianceFramework) -> ComplianceScore:
         """Monitor compliance for specific framework"""
