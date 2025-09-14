@@ -5,11 +5,12 @@ AI Content Analyzer - Advanced Multi-Provider AI Content Analysis
 **Author**: Fahed Mlaiel (mlaiel@live.de)
 **Role**: Lead Dev IA & IA Prompt Engineer
 **Module**: AI & Machine Learning Services
-**Version**: 1.0.0 Enterprise
+**Version**: 2.0.0 Enterprise Performance Optimized
 **Created**: 2025-01-07
 
 Advanced AI content analysis with multi-provider orchestration,
-intelligent prompt engineering, and comprehensive content insights.
+intelligent prompt engineering, comprehensive content insights,
+ultra-fast performance optimization, and structured logging.
 """
 
 import asyncio
@@ -27,6 +28,20 @@ import openai
 from anthropic import AsyncAnthropic
 import base64
 import tiktoken
+
+# Import performance optimization and structured logging
+try:
+    from ..core.performance_optimizer import performance_optimizer, PerformanceLevel
+    from ..core.structured_logger import get_logger, LogCategory
+    PERFORMANCE_ENABLED = True
+    LOGGING_ENABLED = True
+except ImportError:
+    performance_optimizer = None
+    PerformanceLevel = None
+    get_logger = None
+    LogCategory = None
+    PERFORMANCE_ENABLED = False
+    LOGGING_ENABLED = False
 
 
 class ContentType(Enum):
@@ -117,11 +132,17 @@ class AIContentAnalyzer:
     - Comprehensive content quality assessment
     - SEO and monetization analysis
     - Compliance and safety checking
-    - Real-time performance optimization
+    - Ultra-fast performance optimization (<100ms target)
+    - Enterprise structured logging with correlation IDs
     """
 
     def __init__(self, redis_url: str = "redis://localhost:6379"):
-        self.logger = logging.getLogger(__name__)
+        # Initialize structured logger
+        if LOGGING_ENABLED:
+            self.logger = get_logger("ai_orchestrator", service_name="ainflue-ai")
+        else:
+            self.logger = logging.getLogger(__name__)
+        
         self.redis_url = redis_url
         self.redis_client: Optional[aioredis.Redis] = None
         
@@ -129,7 +150,7 @@ class AIContentAnalyzer:
         self.ai_providers = {}
         self.prompt_templates = {}
         
-        # Analysis cache and optimization
+        # Analysis cache and optimization (now handled by performance optimizer)
         self.analysis_cache: Dict[str, ContentAnalysisReport] = {}
         self.performance_metrics = {
             "total_analyses": 0,
@@ -150,6 +171,8 @@ class AIContentAnalyzer:
         # Initialize AI providers and prompts
         self._initialize_ai_providers()
         self._initialize_prompt_templates()
+        
+        self.logger.info("AI Content Analyzer initialized successfully")
         
         self.logger.info("AI Content Analyzer initialized with multi-provider support")
 
@@ -312,12 +335,46 @@ Provide JSON with scores (0-1), monetization_score, revenue_strategies, and mark
     async def analyze_content(self, content_input: ContentInput) -> ContentAnalysisReport:
         """
         Comprehensive content analysis using multiple AI providers
+        Enhanced with ultra-fast performance optimization and structured logging
         
         Args:
             content_input: Content to analyze with configuration
             
         Returns:
             ContentAnalysisReport with comprehensive analysis
+        """
+        # Use performance optimization if available
+        if PERFORMANCE_ENABLED and performance_optimizer:
+            # Generate cache key for performance optimizer
+            cache_key = self._generate_cache_key(content_input)
+            
+            # Log analysis start with structured logging
+            if LOGGING_ENABLED:
+                self.logger.log_with_context(
+                    "INFO",
+                    f"Starting AI content analysis for content_id: {content_input.content_id}",
+                    category=LogCategory.API,
+                    component="ai_orchestrator",
+                    operation="analyze_content",
+                    content_type=content_input.content_type.value,
+                    analysis_types=[at.value for at in content_input.analysis_types]
+                )
+            
+            return await performance_optimizer.optimize_async_operation(
+                self._analyze_content_core,
+                "ai_content_analysis",
+                content_input,
+                cache_key=cache_key,
+                cache_ttl=300,  # 5 minutes cache
+                performance_level=PerformanceLevel.FAST  # <100ms target
+            )
+        else:
+            # Fallback to original implementation
+            return await self._analyze_content_core(content_input)
+    
+    async def _analyze_content_core(self, content_input: ContentInput) -> ContentAnalysisReport:
+        """
+        Core content analysis implementation
         """
         start_time = time.time()
         

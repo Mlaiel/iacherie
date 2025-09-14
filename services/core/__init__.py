@@ -48,6 +48,21 @@ try:
 except ImportError:
     MetricsCollector = None
 
+try:
+    from .performance_optimizer import PerformanceOptimizer, performance_optimizer
+except ImportError:
+    PerformanceOptimizer = performance_optimizer = None
+
+try:
+    from .structured_logger import StructuredLogger, get_logger, api_logger, service_logger
+except ImportError:
+    StructuredLogger = get_logger = api_logger = service_logger = None
+
+try:
+    from .security_manager import EnterpriseSecurityManager, security_manager
+except ImportError:
+    EnterpriseSecurityManager = security_manager = None
+
 async def initialize_core_services() -> Dict[str, Any]:
     """
     Initialize all core services for enterprise deployment.
@@ -63,7 +78,10 @@ async def initialize_core_services() -> Dict[str, Any]:
         "event_bus": "EventBus available" if EventBus else "Not available",
         "config_manager": "ConfigManager available" if ConfigManager else "Not available",
         "lifecycle_manager": "LifecycleManager available" if LifecycleManager else "Not available",
-        "metrics_collector": "MetricsCollector available" if MetricsCollector else "Not available"
+        "metrics_collector": "MetricsCollector available" if MetricsCollector else "Not available",
+        "performance_optimizer": "PerformanceOptimizer available" if PerformanceOptimizer else "Not available",
+        "structured_logger": "StructuredLogger available" if StructuredLogger else "Not available",
+        "security_manager": "SecurityManager available" if EnterpriseSecurityManager else "Not available"
     }
     
     logger.info("Core services initialization completed")
@@ -82,7 +100,10 @@ async def health_check_core() -> Dict[str, str]:
         "event_bus": "healthy" if EventBus else "unavailable",
         "config_manager": "healthy" if ConfigManager else "unavailable",
         "lifecycle_manager": "healthy" if LifecycleManager else "unavailable",
-        "metrics_collector": "healthy" if MetricsCollector else "unavailable"
+        "metrics_collector": "healthy" if MetricsCollector else "unavailable",
+        "performance_optimizer": "healthy" if PerformanceOptimizer else "unavailable",
+        "structured_logger": "healthy" if StructuredLogger else "unavailable",
+        "security_manager": "healthy" if EnterpriseSecurityManager else "unavailable"
     }
 
 __all__ = [
@@ -95,6 +116,14 @@ __all__ = [
     "ConfigManager",
     "LifecycleManager",
     "MetricsCollector",
+    "PerformanceOptimizer",
+    "performance_optimizer",
+    "StructuredLogger",
+    "get_logger",
+    "api_logger",
+    "service_logger",
+    "EnterpriseSecurityManager",
+    "security_manager",
     
     # Initialization functions
     "initialize_core_services",
