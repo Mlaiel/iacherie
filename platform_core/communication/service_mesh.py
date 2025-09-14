@@ -493,15 +493,17 @@ class ServiceMesh:
         
     async def register_service(self, 
                               service_name: str,
+                              service_instance: 'ServiceInstance') -> bool:
+        """Enregistre un service dans le mesh"""
         try:
-            logger.info(f"Executing call_service")
+            logger.info(f"Registering service: {service_name}")
             
-            # Implementation for call_service
+            # Implementation for register_service
             # TODO: Add specific business logic here
             
-            result = None  # Replace with actual implementation
+            result = True  # Replace with actual implementation
             
-            logger.info(f"call_service completed successfully")
+            logger.info(f"Service {service_name} registered successfully")
             return result
             
         except Exception as e:

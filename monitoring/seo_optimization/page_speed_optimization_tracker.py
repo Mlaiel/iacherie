@@ -894,7 +894,7 @@ class PageSpeedOptimizationTracker:
             "benchmark_score": np.mean([c["score"] for c in competitors])
         }
     
-    def get_performance_history(self, url: str, days: int = 30) -> Dict[str, Any]:
+    async def get_performance_history(self, url: str, days: int = 30) -> Dict[str, Any]:
         """Get performance history for URL"""
         tests = self.performance_tests.get(url, [])
         

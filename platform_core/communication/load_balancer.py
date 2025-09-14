@@ -144,21 +144,25 @@ Definition d'un serveur backend"""
     def load_score(self) -> float:
         """Calcule un score de charge (plus bas = moins charge)"""
         # Facteurs: connexions actives, temps de reponse, taux d'erreur
-        try:
-            logger.info(f"Executing stop")
-            
-            # Implementation for stop
-            # TODO: Add specific business logic here
-            
-            result = None  # Replace with actual implementation
-            
-            logger.info(f"stop completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"stop failed: {e}")
-            raise
-Demarre le health checker"""
+        base_score = self.metrics.active_connections * 100
+        response_penalty = self.metrics.avg_response_time * 50
+        error_penalty = self.metrics.error_rate * 1000
+        
+        return base_score + response_penalty + error_penalty
+
+
+class HealthChecker:
+    """Health checker pour surveiller les serveurs backend"""
+    
+    def __init__(self, check_interval: int = 30):
+        self.check_interval = check_interval
+        self.servers: Dict[str, Server] = {}
+        self.session: Optional[aiohttp.ClientSession] = None
+        self._check_tasks: Dict[str, asyncio.Task] = {}
+        self._own_session = False
+        
+    async def start(self):
+        """Demarre le health checker"""
         if self._own_session:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=10)
@@ -299,8 +303,7 @@ class LoadBalancer:
         self.start_time = datetime.utcnow()
         
     async def start(self):
-        """
-Demarre le load balancer"""
+        """Demarre le load balancer"""
         await self.health_checker.start()
         logger.info(f"LoadBalancer demarre avec algorithme {self.algorithm.value}")
         
@@ -449,14 +452,12 @@ Acquiert une connexion vers un serveur"""
         self._connections_count[server.server_id] += 1
         
     async def release_connection(self, server: Server):
-        """
-Libere une connexion vers un serveur"""
+        """Libere une connexion vers un serveur"""
         server.metrics.active_connections = max(0, server.metrics.active_connections - 1)
         self._connections_count[server.server_id] = max(0, self._connections_count[server.server_id] - 1)
         
     def get_stats(self) -> Dict[str, Any]:
-        """
-Retourne les statistiques du load balancer"""
+        """Retourne les statistiques du load balancer"""
         uptime = (datetime.utcnow() - self.start_time).total_seconds()
         
         return {
