@@ -120,13 +120,40 @@ __email__ = "mlaiel@live.de"
 __status__ = "Production"
 
 # Collect all exports from submodules
-__all__ = []
+__all__ = [
+    # Core external integrations
+    'DistributionManager',
+    'PlatformType', 
+    'ContentItem',
+    'DistributionResult',
+    'get_supported_platforms',
+    'distribute_to_all_platforms',
+    
+    # AI Prompt Optimization (if available)
+    'AIPromptOptimizer',
+    'PromptEngineering', 
+    'PromptTemplateManager',
+    
+    # Business logic components
+    'SocialMediaConnectors',
+    'MusicStreamingConnectors', 
+    'CreatorEconomyConnectors'
+]
 
 # Add AI prompt optimization exports
 try:
     from . import ai_prompt_optimizer
     if hasattr(ai_prompt_optimizer, '__all__'):
         __all__.extend(ai_prompt_optimizer.__all__)
+except ImportError:
+    pass
+
+# Add distribution manager exports
+try:
+    from .distribution_manager import (
+        DistributionManager, PlatformType, ContentItem, DistributionResult,
+        get_supported_platforms, distribute_to_all_platforms
+    )
 except ImportError:
     pass
 

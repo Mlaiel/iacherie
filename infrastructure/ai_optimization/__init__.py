@@ -84,6 +84,9 @@ AINFLUE_WORKFLOW = {
     'seo': 'Professional SEO optimization for 644 languages',
     'distribution': 'Massive distribution across 65+ platforms simultaneously'
 }
+
+# Additional AI Agents Configuration  
+ADDITIONAL_AI_AGENTS = {
     'monetization_optimization_agents': 7,
     'collaboration_matching_agents': 6,
     'seo_optimization_agents': 5,
