@@ -79,3 +79,9 @@ __all__ = [
     'HorizontalScaler', 'VerticalScaler', 'AdvancedClusterAutoscaler', 'PredictiveScaler',
     'LoadBalancer', 'TrafficManager', 'CapacityPlanner', 'ResourceOptimizer', 'CostAwareScaler'
 ]
+# Metadata
+__version__ = "1.0.0"
+__author__ = "Fahed Mlaiel"
+__email__ = "mlaiel@live.de"
+__description__ = "Scaling infrastructure module for Ainflue creator platform"
+

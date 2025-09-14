@@ -70,3 +70,9 @@ __all__ = [
     'PerformanceTuner',
     'DatabasePerformanceOptimizer'
 ]
+# Metadata
+__version__ = "1.0.0"
+__author__ = "Fahed Mlaiel"
+__email__ = "mlaiel@live.de"
+__description__ = "Database infrastructure module for Ainflue creator platform"
+
