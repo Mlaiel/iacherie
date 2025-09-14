@@ -1,0 +1,25 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  labels:
+    app: authz-service
+    service-type: security-service
+  name: authz-service-vs
+  namespace: ainflue-development
+spec:
+  hosts:
+  - authz-service.ainflue-development.svc.cluster.local
+  http:
+  - match:
+    - uri:
+        prefix: /
+    retries:
+      attempts: 3
+      perTryTimeout: 10s
+      retryOn: gateway-error,connect-failure,refused-stream
+    route:
+    - destination:
+        host: authz-service.ainflue-development.svc.cluster.local
+        port:
+          number: 8006
+    timeout: 30s

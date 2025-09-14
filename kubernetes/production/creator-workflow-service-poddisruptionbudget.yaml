@@ -1,0 +1,13 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  labels:
+    app: creator-workflow-service
+    service-type: business-service
+  name: creator-workflow-service-pdb
+  namespace: ainflue-production
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: creator-workflow-service

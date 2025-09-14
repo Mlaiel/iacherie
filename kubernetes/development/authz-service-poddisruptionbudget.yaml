@@ -1,0 +1,13 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  labels:
+    app: authz-service
+    service-type: security-service
+  name: authz-service-pdb
+  namespace: ainflue-development
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: authz-service

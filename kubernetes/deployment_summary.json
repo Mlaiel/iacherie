@@ -1,0 +1,333 @@
+{
+  "deployment_timestamp": "2025-09-14T13:12:37.844220",
+  "environments": [
+    "development",
+    "staging",
+    "production"
+  ],
+  "total_microservices": 10,
+  "deployment_files": {
+    "development": {
+      "namespace": [
+        "kubernetes/development/namespace.yaml"
+      ],
+      "api-gateway": [
+        "kubernetes/development/api-gateway-serviceaccount.yaml",
+        "kubernetes/development/api-gateway-deployment.yaml",
+        "kubernetes/development/api-gateway-service.yaml",
+        "kubernetes/development/api-gateway-horizontalpodautoscaler.yaml",
+        "kubernetes/development/api-gateway-virtualservice.yaml",
+        "kubernetes/development/api-gateway-destinationrule.yaml",
+        "kubernetes/development/api-gateway-networkpolicy.yaml",
+        "kubernetes/development/api-gateway-poddisruptionbudget.yaml"
+      ],
+      "content-upload-service": [
+        "kubernetes/development/content-upload-service-serviceaccount.yaml",
+        "kubernetes/development/content-upload-service-deployment.yaml",
+        "kubernetes/development/content-upload-service-service.yaml",
+        "kubernetes/development/content-upload-service-horizontalpodautoscaler.yaml",
+        "kubernetes/development/content-upload-service-virtualservice.yaml",
+        "kubernetes/development/content-upload-service-destinationrule.yaml",
+        "kubernetes/development/content-upload-service-networkpolicy.yaml",
+        "kubernetes/development/content-upload-service-poddisruptionbudget.yaml"
+      ],
+      "content-processing-service": [
+        "kubernetes/development/content-processing-service-serviceaccount.yaml",
+        "kubernetes/development/content-processing-service-deployment.yaml",
+        "kubernetes/development/content-processing-service-service.yaml",
+        "kubernetes/development/content-processing-service-horizontalpodautoscaler.yaml",
+        "kubernetes/development/content-processing-service-virtualservice.yaml",
+        "kubernetes/development/content-processing-service-destinationrule.yaml",
+        "kubernetes/development/content-processing-service-networkpolicy.yaml",
+        "kubernetes/development/content-processing-service-poddisruptionbudget.yaml"
+      ],
+      "ai-inference-service": [
+        "kubernetes/development/ai-inference-service-serviceaccount.yaml",
+        "kubernetes/development/ai-inference-service-deployment.yaml",
+        "kubernetes/development/ai-inference-service-service.yaml",
+        "kubernetes/development/ai-inference-service-horizontalpodautoscaler.yaml",
+        "kubernetes/development/ai-inference-service-virtualservice.yaml",
+        "kubernetes/development/ai-inference-service-destinationrule.yaml",
+        "kubernetes/development/ai-inference-service-networkpolicy.yaml",
+        "kubernetes/development/ai-inference-service-poddisruptionbudget.yaml"
+      ],
+      "ai-orchestration-service": [
+        "kubernetes/development/ai-orchestration-service-serviceaccount.yaml",
+        "kubernetes/development/ai-orchestration-service-deployment.yaml",
+        "kubernetes/development/ai-orchestration-service-service.yaml",
+        "kubernetes/development/ai-orchestration-service-horizontalpodautoscaler.yaml",
+        "kubernetes/development/ai-orchestration-service-virtualservice.yaml",
+        "kubernetes/development/ai-orchestration-service-destinationrule.yaml",
+        "kubernetes/development/ai-orchestration-service-networkpolicy.yaml",
+        "kubernetes/development/ai-orchestration-service-poddisruptionbudget.yaml"
+      ],
+      "auth-service": [
+        "kubernetes/development/auth-service-serviceaccount.yaml",
+        "kubernetes/development/auth-service-deployment.yaml",
+        "kubernetes/development/auth-service-service.yaml",
+        "kubernetes/development/auth-service-horizontalpodautoscaler.yaml",
+        "kubernetes/development/auth-service-virtualservice.yaml",
+        "kubernetes/development/auth-service-destinationrule.yaml",
+        "kubernetes/development/auth-service-networkpolicy.yaml",
+        "kubernetes/development/auth-service-poddisruptionbudget.yaml"
+      ],
+      "authz-service": [
+        "kubernetes/development/authz-service-serviceaccount.yaml",
+        "kubernetes/development/authz-service-deployment.yaml",
+        "kubernetes/development/authz-service-service.yaml",
+        "kubernetes/development/authz-service-horizontalpodautoscaler.yaml",
+        "kubernetes/development/authz-service-virtualservice.yaml",
+        "kubernetes/development/authz-service-destinationrule.yaml",
+        "kubernetes/development/authz-service-networkpolicy.yaml",
+        "kubernetes/development/authz-service-poddisruptionbudget.yaml"
+      ],
+      "creator-workflow-service": [
+        "kubernetes/development/creator-workflow-service-serviceaccount.yaml",
+        "kubernetes/development/creator-workflow-service-deployment.yaml",
+        "kubernetes/development/creator-workflow-service-service.yaml",
+        "kubernetes/development/creator-workflow-service-horizontalpodautoscaler.yaml",
+        "kubernetes/development/creator-workflow-service-virtualservice.yaml",
+        "kubernetes/development/creator-workflow-service-destinationrule.yaml",
+        "kubernetes/development/creator-workflow-service-networkpolicy.yaml",
+        "kubernetes/development/creator-workflow-service-poddisruptionbudget.yaml"
+      ],
+      "platform-sync-service": [
+        "kubernetes/development/platform-sync-service-serviceaccount.yaml",
+        "kubernetes/development/platform-sync-service-deployment.yaml",
+        "kubernetes/development/platform-sync-service-service.yaml",
+        "kubernetes/development/platform-sync-service-horizontalpodautoscaler.yaml",
+        "kubernetes/development/platform-sync-service-virtualservice.yaml",
+        "kubernetes/development/platform-sync-service-destinationrule.yaml",
+        "kubernetes/development/platform-sync-service-networkpolicy.yaml",
+        "kubernetes/development/platform-sync-service-poddisruptionbudget.yaml"
+      ],
+      "analytics-service": [
+        "kubernetes/development/analytics-service-serviceaccount.yaml",
+        "kubernetes/development/analytics-service-deployment.yaml",
+        "kubernetes/development/analytics-service-service.yaml",
+        "kubernetes/development/analytics-service-horizontalpodautoscaler.yaml",
+        "kubernetes/development/analytics-service-virtualservice.yaml",
+        "kubernetes/development/analytics-service-destinationrule.yaml",
+        "kubernetes/development/analytics-service-networkpolicy.yaml",
+        "kubernetes/development/analytics-service-poddisruptionbudget.yaml"
+      ]
+    },
+    "staging": {
+      "namespace": [
+        "kubernetes/staging/namespace.yaml"
+      ],
+      "api-gateway": [
+        "kubernetes/staging/api-gateway-serviceaccount.yaml",
+        "kubernetes/staging/api-gateway-deployment.yaml",
+        "kubernetes/staging/api-gateway-service.yaml",
+        "kubernetes/staging/api-gateway-horizontalpodautoscaler.yaml",
+        "kubernetes/staging/api-gateway-virtualservice.yaml",
+        "kubernetes/staging/api-gateway-destinationrule.yaml",
+        "kubernetes/staging/api-gateway-networkpolicy.yaml",
+        "kubernetes/staging/api-gateway-poddisruptionbudget.yaml"
+      ],
+      "content-upload-service": [
+        "kubernetes/staging/content-upload-service-serviceaccount.yaml",
+        "kubernetes/staging/content-upload-service-deployment.yaml",
+        "kubernetes/staging/content-upload-service-service.yaml",
+        "kubernetes/staging/content-upload-service-horizontalpodautoscaler.yaml",
+        "kubernetes/staging/content-upload-service-virtualservice.yaml",
+        "kubernetes/staging/content-upload-service-destinationrule.yaml",
+        "kubernetes/staging/content-upload-service-networkpolicy.yaml",
+        "kubernetes/staging/content-upload-service-poddisruptionbudget.yaml"
+      ],
+      "content-processing-service": [
+        "kubernetes/staging/content-processing-service-serviceaccount.yaml",
+        "kubernetes/staging/content-processing-service-deployment.yaml",
+        "kubernetes/staging/content-processing-service-service.yaml",
+        "kubernetes/staging/content-processing-service-horizontalpodautoscaler.yaml",
+        "kubernetes/staging/content-processing-service-virtualservice.yaml",
+        "kubernetes/staging/content-processing-service-destinationrule.yaml",
+        "kubernetes/staging/content-processing-service-networkpolicy.yaml",
+        "kubernetes/staging/content-processing-service-poddisruptionbudget.yaml"
+      ],
+      "ai-inference-service": [
+        "kubernetes/staging/ai-inference-service-serviceaccount.yaml",
+        "kubernetes/staging/ai-inference-service-deployment.yaml",
+        "kubernetes/staging/ai-inference-service-service.yaml",
+        "kubernetes/staging/ai-inference-service-horizontalpodautoscaler.yaml",
+        "kubernetes/staging/ai-inference-service-virtualservice.yaml",
+        "kubernetes/staging/ai-inference-service-destinationrule.yaml",
+        "kubernetes/staging/ai-inference-service-networkpolicy.yaml",
+        "kubernetes/staging/ai-inference-service-poddisruptionbudget.yaml"
+      ],
+      "ai-orchestration-service": [
+        "kubernetes/staging/ai-orchestration-service-serviceaccount.yaml",
+        "kubernetes/staging/ai-orchestration-service-deployment.yaml",
+        "kubernetes/staging/ai-orchestration-service-service.yaml",
+        "kubernetes/staging/ai-orchestration-service-horizontalpodautoscaler.yaml",
+        "kubernetes/staging/ai-orchestration-service-virtualservice.yaml",
+        "kubernetes/staging/ai-orchestration-service-destinationrule.yaml",
+        "kubernetes/staging/ai-orchestration-service-networkpolicy.yaml",
+        "kubernetes/staging/ai-orchestration-service-poddisruptionbudget.yaml"
+      ],
+      "auth-service": [
+        "kubernetes/staging/auth-service-serviceaccount.yaml",
+        "kubernetes/staging/auth-service-deployment.yaml",
+        "kubernetes/staging/auth-service-service.yaml",
+        "kubernetes/staging/auth-service-horizontalpodautoscaler.yaml",
+        "kubernetes/staging/auth-service-virtualservice.yaml",
+        "kubernetes/staging/auth-service-destinationrule.yaml",
+        "kubernetes/staging/auth-service-networkpolicy.yaml",
+        "kubernetes/staging/auth-service-poddisruptionbudget.yaml"
+      ],
+      "authz-service": [
+        "kubernetes/staging/authz-service-serviceaccount.yaml",
+        "kubernetes/staging/authz-service-deployment.yaml",
+        "kubernetes/staging/authz-service-service.yaml",
+        "kubernetes/staging/authz-service-horizontalpodautoscaler.yaml",
+        "kubernetes/staging/authz-service-virtualservice.yaml",
+        "kubernetes/staging/authz-service-destinationrule.yaml",
+        "kubernetes/staging/authz-service-networkpolicy.yaml",
+        "kubernetes/staging/authz-service-poddisruptionbudget.yaml"
+      ],
+      "creator-workflow-service": [
+        "kubernetes/staging/creator-workflow-service-serviceaccount.yaml",
+        "kubernetes/staging/creator-workflow-service-deployment.yaml",
+        "kubernetes/staging/creator-workflow-service-service.yaml",
+        "kubernetes/staging/creator-workflow-service-horizontalpodautoscaler.yaml",
+        "kubernetes/staging/creator-workflow-service-virtualservice.yaml",
+        "kubernetes/staging/creator-workflow-service-destinationrule.yaml",
+        "kubernetes/staging/creator-workflow-service-networkpolicy.yaml",
+        "kubernetes/staging/creator-workflow-service-poddisruptionbudget.yaml"
+      ],
+      "platform-sync-service": [
+        "kubernetes/staging/platform-sync-service-serviceaccount.yaml",
+        "kubernetes/staging/platform-sync-service-deployment.yaml",
+        "kubernetes/staging/platform-sync-service-service.yaml",
+        "kubernetes/staging/platform-sync-service-horizontalpodautoscaler.yaml",
+        "kubernetes/staging/platform-sync-service-virtualservice.yaml",
+        "kubernetes/staging/platform-sync-service-destinationrule.yaml",
+        "kubernetes/staging/platform-sync-service-networkpolicy.yaml",
+        "kubernetes/staging/platform-sync-service-poddisruptionbudget.yaml"
+      ],
+      "analytics-service": [
+        "kubernetes/staging/analytics-service-serviceaccount.yaml",
+        "kubernetes/staging/analytics-service-deployment.yaml",
+        "kubernetes/staging/analytics-service-service.yaml",
+        "kubernetes/staging/analytics-service-horizontalpodautoscaler.yaml",
+        "kubernetes/staging/analytics-service-virtualservice.yaml",
+        "kubernetes/staging/analytics-service-destinationrule.yaml",
+        "kubernetes/staging/analytics-service-networkpolicy.yaml",
+        "kubernetes/staging/analytics-service-poddisruptionbudget.yaml"
+      ]
+    },
+    "production": {
+      "namespace": [
+        "kubernetes/production/namespace.yaml"
+      ],
+      "api-gateway": [
+        "kubernetes/production/api-gateway-serviceaccount.yaml",
+        "kubernetes/production/api-gateway-deployment.yaml",
+        "kubernetes/production/api-gateway-service.yaml",
+        "kubernetes/production/api-gateway-horizontalpodautoscaler.yaml",
+        "kubernetes/production/api-gateway-virtualservice.yaml",
+        "kubernetes/production/api-gateway-destinationrule.yaml",
+        "kubernetes/production/api-gateway-networkpolicy.yaml",
+        "kubernetes/production/api-gateway-poddisruptionbudget.yaml"
+      ],
+      "content-upload-service": [
+        "kubernetes/production/content-upload-service-serviceaccount.yaml",
+        "kubernetes/production/content-upload-service-deployment.yaml",
+        "kubernetes/production/content-upload-service-service.yaml",
+        "kubernetes/production/content-upload-service-horizontalpodautoscaler.yaml",
+        "kubernetes/production/content-upload-service-virtualservice.yaml",
+        "kubernetes/production/content-upload-service-destinationrule.yaml",
+        "kubernetes/production/content-upload-service-networkpolicy.yaml",
+        "kubernetes/production/content-upload-service-poddisruptionbudget.yaml"
+      ],
+      "content-processing-service": [
+        "kubernetes/production/content-processing-service-serviceaccount.yaml",
+        "kubernetes/production/content-processing-service-deployment.yaml",
+        "kubernetes/production/content-processing-service-service.yaml",
+        "kubernetes/production/content-processing-service-horizontalpodautoscaler.yaml",
+        "kubernetes/production/content-processing-service-virtualservice.yaml",
+        "kubernetes/production/content-processing-service-destinationrule.yaml",
+        "kubernetes/production/content-processing-service-networkpolicy.yaml",
+        "kubernetes/production/content-processing-service-poddisruptionbudget.yaml"
+      ],
+      "ai-inference-service": [
+        "kubernetes/production/ai-inference-service-serviceaccount.yaml",
+        "kubernetes/production/ai-inference-service-deployment.yaml",
+        "kubernetes/production/ai-inference-service-service.yaml",
+        "kubernetes/production/ai-inference-service-horizontalpodautoscaler.yaml",
+        "kubernetes/production/ai-inference-service-virtualservice.yaml",
+        "kubernetes/production/ai-inference-service-destinationrule.yaml",
+        "kubernetes/production/ai-inference-service-networkpolicy.yaml",
+        "kubernetes/production/ai-inference-service-poddisruptionbudget.yaml"
+      ],
+      "ai-orchestration-service": [
+        "kubernetes/production/ai-orchestration-service-serviceaccount.yaml",
+        "kubernetes/production/ai-orchestration-service-deployment.yaml",
+        "kubernetes/production/ai-orchestration-service-service.yaml",
+        "kubernetes/production/ai-orchestration-service-horizontalpodautoscaler.yaml",
+        "kubernetes/production/ai-orchestration-service-virtualservice.yaml",
+        "kubernetes/production/ai-orchestration-service-destinationrule.yaml",
+        "kubernetes/production/ai-orchestration-service-networkpolicy.yaml",
+        "kubernetes/production/ai-orchestration-service-poddisruptionbudget.yaml"
+      ],
+      "auth-service": [
+        "kubernetes/production/auth-service-serviceaccount.yaml",
+        "kubernetes/production/auth-service-deployment.yaml",
+        "kubernetes/production/auth-service-service.yaml",
+        "kubernetes/production/auth-service-horizontalpodautoscaler.yaml",
+        "kubernetes/production/auth-service-virtualservice.yaml",
+        "kubernetes/production/auth-service-destinationrule.yaml",
+        "kubernetes/production/auth-service-networkpolicy.yaml",
+        "kubernetes/production/auth-service-poddisruptionbudget.yaml"
+      ],
+      "authz-service": [
+        "kubernetes/production/authz-service-serviceaccount.yaml",
+        "kubernetes/production/authz-service-deployment.yaml",
+        "kubernetes/production/authz-service-service.yaml",
+        "kubernetes/production/authz-service-horizontalpodautoscaler.yaml",
+        "kubernetes/production/authz-service-virtualservice.yaml",
+        "kubernetes/production/authz-service-destinationrule.yaml",
+        "kubernetes/production/authz-service-networkpolicy.yaml",
+        "kubernetes/production/authz-service-poddisruptionbudget.yaml"
+      ],
+      "creator-workflow-service": [
+        "kubernetes/production/creator-workflow-service-serviceaccount.yaml",
+        "kubernetes/production/creator-workflow-service-deployment.yaml",
+        "kubernetes/production/creator-workflow-service-service.yaml",
+        "kubernetes/production/creator-workflow-service-horizontalpodautoscaler.yaml",
+        "kubernetes/production/creator-workflow-service-virtualservice.yaml",
+        "kubernetes/production/creator-workflow-service-destinationrule.yaml",
+        "kubernetes/production/creator-workflow-service-networkpolicy.yaml",
+        "kubernetes/production/creator-workflow-service-poddisruptionbudget.yaml"
+      ],
+      "platform-sync-service": [
+        "kubernetes/production/platform-sync-service-serviceaccount.yaml",
+        "kubernetes/production/platform-sync-service-deployment.yaml",
+        "kubernetes/production/platform-sync-service-service.yaml",
+        "kubernetes/production/platform-sync-service-horizontalpodautoscaler.yaml",
+        "kubernetes/production/platform-sync-service-virtualservice.yaml",
+        "kubernetes/production/platform-sync-service-destinationrule.yaml",
+        "kubernetes/production/platform-sync-service-networkpolicy.yaml",
+        "kubernetes/production/platform-sync-service-poddisruptionbudget.yaml"
+      ],
+      "analytics-service": [
+        "kubernetes/production/analytics-service-serviceaccount.yaml",
+        "kubernetes/production/analytics-service-deployment.yaml",
+        "kubernetes/production/analytics-service-service.yaml",
+        "kubernetes/production/analytics-service-horizontalpodautoscaler.yaml",
+        "kubernetes/production/analytics-service-virtualservice.yaml",
+        "kubernetes/production/analytics-service-destinationrule.yaml",
+        "kubernetes/production/analytics-service-networkpolicy.yaml",
+        "kubernetes/production/analytics-service-poddisruptionbudget.yaml"
+      ]
+    }
+  },
+  "notes": [
+    "All microservices deployed with enterprise security",
+    "Istio service mesh integration enabled",
+    "Auto-scaling configured for all services",
+    "Network policies applied for security",
+    "Monitoring and observability enabled"
+  ]
+}

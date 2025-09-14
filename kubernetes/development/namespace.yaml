@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations:
+    contact: mlaiel@live.de
+    description: Ainflue microservices - development
+  labels:
+    environment: development
+    managed-by: enterprise-orchestrator
+    project: ainflue
+  name: ainflue-development
+spec: {}

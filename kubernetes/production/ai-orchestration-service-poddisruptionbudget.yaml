@@ -1,0 +1,13 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  labels:
+    app: ai-orchestration-service
+    service-type: ai-service
+  name: ai-orchestration-service-pdb
+  namespace: ainflue-production
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: ai-orchestration-service

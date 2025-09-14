@@ -1,0 +1,25 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  labels:
+    app: analytics-service
+    service-type: analytics-service
+  name: analytics-service-vs
+  namespace: ainflue-production
+spec:
+  hosts:
+  - analytics-service.ainflue-production.svc.cluster.local
+  http:
+  - match:
+    - uri:
+        prefix: /
+    retries:
+      attempts: 3
+      perTryTimeout: 10s
+      retryOn: gateway-error,connect-failure,refused-stream
+    route:
+    - destination:
+        host: analytics-service.ainflue-production.svc.cluster.local
+        port:
+          number: 8009
+    timeout: 30s

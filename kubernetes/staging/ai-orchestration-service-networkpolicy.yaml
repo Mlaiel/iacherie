@@ -1,0 +1,34 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  labels:
+    app: ai-orchestration-service
+    service-type: ai-service
+  name: ai-orchestration-service-netpol
+  namespace: ainflue-staging
+spec:
+  egress:
+  - ports:
+    - port: 53
+      protocol: TCP
+    - port: 53
+      protocol: UDP
+    - port: 443
+      protocol: TCP
+    - port: 80
+      protocol: TCP
+    to: []
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ainflue-staging
+    ports:
+    - port: 8004
+      protocol: TCP
+  podSelector:
+    matchLabels:
+      app: ai-orchestration-service
+  policyTypes:
+  - Ingress
+  - Egress

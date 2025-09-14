@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: '1'
+    description: content-service microservice
+  labels: &id001
+    app: content-processing-service
+    environment: staging
+    service-type: content-service
+    version: v1
+  name: content-processing-service
+  namespace: ainflue-staging
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: content-processing-service
+      version: v1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        prometheus.io/path: /metrics
+        prometheus.io/port: '8002'
+        prometheus.io/scrape: 'true'
+        sidecar.istio.io/inject: 'true'
+        sidecar.istio.io/proxyCPU: 10m
+        sidecar.istio.io/proxyMemory: 64Mi
+      labels: *id001
+    spec:
+      containers:
+      - env: []
+        image: ainflue/content-processing:latest
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 8002
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+        name: content-processing-service
+        ports:
+        - containerPort: 8002
+          name: http
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /ready
+            port: 8002
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 2Gi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          runAsUser: 1001
+      restartPolicy: Always
+      securityContext:
+        fsGroup: 1001
+        runAsGroup: 1001
+      serviceAccountName: content-processing-service-sa
+      terminationGracePeriodSeconds: 30

@@ -1,0 +1,25 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  labels:
+    app: creator-workflow-service
+    service-type: business-service
+  name: creator-workflow-service-vs
+  namespace: ainflue-staging
+spec:
+  hosts:
+  - creator-workflow-service.ainflue-staging.svc.cluster.local
+  http:
+  - match:
+    - uri:
+        prefix: /
+    retries:
+      attempts: 3
+      perTryTimeout: 10s
+      retryOn: gateway-error,connect-failure,refused-stream
+    route:
+    - destination:
+        host: creator-workflow-service.ainflue-staging.svc.cluster.local
+        port:
+          number: 8007
+    timeout: 30s

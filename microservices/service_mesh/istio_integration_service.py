@@ -45,9 +45,20 @@ class TrafficPolicy:
 
 
 class IstioIntegrationService:
-    """Istio service mesh integration service"""
+    """
+    🏗️ Istio Service Mesh Integration Service - Enterprise Production Ready
+    🎖️ Multi-Expert Implementation: Microservices + Security + DevOps + Backend Senior
+    
+    Features:
+    - mTLS automatic configuration
+    - Traffic management with canary deployments
+    - Circuit breaker patterns
+    - Distributed tracing
+    - Security policies enforcement
+    - Performance monitoring
+    """
 
-    def __init__(self):
+    def __init__(self, cluster_config: Optional[Dict[str, Any]] = None):
         self.services = {}
         self.traffic_policies = {}
         self.mesh_configs = {}

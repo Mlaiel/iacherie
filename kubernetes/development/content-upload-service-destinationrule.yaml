@@ -1,0 +1,30 @@
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  labels:
+    app: content-upload-service
+    service-type: content-service
+  name: content-upload-service-dr
+  namespace: ainflue-development
+spec:
+  host: content-upload-service.ainflue-development.svc.cluster.local
+  trafficPolicy:
+    circuitBreaker:
+      baseEjectionTime: 30s
+      consecutive5xxErrors: 5
+      consecutiveGatewayErrors: 5
+      interval: 30s
+      maxEjectionPercent: 50
+    connectionPool:
+      http:
+        connectTimeout: 30s
+        http1MaxPendingRequests: 50
+        http2MaxRequests: 100
+        maxRequestsPerConnection: 10
+        maxRetries: 3
+      tcp:
+        maxConnections: 100
+    loadBalancer:
+      simple: LEAST_CONN
+    tls:
+      mode: ISTIO_MUTUAL
