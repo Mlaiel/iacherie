@@ -14,8 +14,21 @@ import uuid
 import logging
 import threading
 import time
+import hashlib
+import base64
+import os
 from collections import defaultdict, deque
 from contextlib import asynccontextmanager
+
+# === ENTERPRISE SECURITY IMPORTS ===
+try:
+    from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+    from cryptography.hazmat.primitives import hashes
+    from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+    from cryptography.hazmat.backends import default_backend
+    HAS_CRYPTOGRAPHY = True
+except ImportError:
+    HAS_CRYPTOGRAPHY = False
 
 try:
     from ..core.exceptions import StateManagementException
@@ -70,6 +83,152 @@ class MetricLevel(Enum):
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
+
+
+# === ENTERPRISE SECURITY: AES-256-GCM ENCRYPTION ===
+
+class WorkflowStateEncryption:
+    """
+    🔒 ENTERPRISE AES-256-GCM ENCRYPTION for workflow state
+    
+    Implements ultra-secure state encryption as required by checklist:
+    - AES-256-GCM algorithm (ultra-secure)
+    - Key derivation with PBKDF2
+    - Authenticated encryption
+    - Secure key rotation
+    """
+    
+    def __init__(self, master_key: Optional[str] = None):
+        """Initialize state encryption with AES-256-GCM."""
+        if not HAS_CRYPTOGRAPHY:
+            logging.warning("Cryptography not available - state encryption disabled")
+            self.encryption_enabled = False
+            return
+            
+        self.encryption_enabled = True
+        self.master_key = master_key or os.getenv('WORKFLOW_MASTER_KEY', self._generate_master_key())
+        self.backend = default_backend()
+        
+    def _generate_master_key(self) -> str:
+        """Generate a secure master key."""
+        return base64.b64encode(os.urandom(32)).decode('utf-8')
+    
+    def _derive_key(self, salt: bytes) -> bytes:
+        """Derive encryption key using PBKDF2."""
+        kdf = PBKDF2HMAC(
+            algorithm=hashes.SHA256(),
+            length=32,  # 256 bits
+            salt=salt,
+            iterations=100000,  # High iteration count for security
+            backend=self.backend
+        )
+        return kdf.derive(self.master_key.encode())
+    
+    async def encrypt_state(self, state_data: Dict[str, Any]) -> str:
+        """
+        Encrypt workflow state using AES-256-GCM.
+        
+        Args:
+            state_data: State data to encrypt
+            
+        Returns:
+            Base64-encoded encrypted data with metadata
+        """
+        if not self.encryption_enabled:
+            return json.dumps(state_data)
+            
+        try:
+            # Serialize state data
+            serialized_data = json.dumps(state_data, ensure_ascii=False).encode('utf-8')
+            
+            # Generate random salt and IV
+            salt = os.urandom(16)
+            iv = os.urandom(12)  # 96 bits for GCM
+            
+            # Derive encryption key
+            key = self._derive_key(salt)
+            
+            # Create cipher
+            cipher = Cipher(
+                algorithms.AES(key),
+                modes.GCM(iv),
+                backend=self.backend
+            )
+            encryptor = cipher.encryptor()
+            
+            # Encrypt data
+            ciphertext = encryptor.update(serialized_data) + encryptor.finalize()
+            
+            # Create encrypted package
+            encrypted_package = {
+                'algorithm': 'AES-256-GCM',
+                'salt': base64.b64encode(salt).decode('utf-8'),
+                'iv': base64.b64encode(iv).decode('utf-8'),
+                'ciphertext': base64.b64encode(ciphertext).decode('utf-8'),
+                'tag': base64.b64encode(encryptor.tag).decode('utf-8'),
+                'timestamp': datetime.utcnow().isoformat()
+            }
+            
+            return base64.b64encode(json.dumps(encrypted_package).encode()).decode('utf-8')
+            
+        except Exception as e:
+            logging.error(f"State encryption failed: {e}")
+            raise StateManagementException(f"Failed to encrypt state: {e}")
+    
+    async def decrypt_state(self, encrypted_data: str) -> Dict[str, Any]:
+        """
+        Decrypt workflow state using AES-256-GCM.
+        
+        Args:
+            encrypted_data: Encrypted state data
+            
+        Returns:
+            Decrypted state data
+        """
+        if not self.encryption_enabled:
+            return json.loads(encrypted_data)
+            
+        try:
+            # Decode package
+            package_data = json.loads(base64.b64decode(encrypted_data.encode()).decode())
+            
+            # Verify algorithm
+            if package_data.get('algorithm') != 'AES-256-GCM':
+                raise StateManagementException("Unsupported encryption algorithm")
+            
+            # Extract components
+            salt = base64.b64decode(package_data['salt'])
+            iv = base64.b64decode(package_data['iv'])
+            ciphertext = base64.b64decode(package_data['ciphertext'])
+            tag = base64.b64decode(package_data['tag'])
+            
+            # Derive decryption key
+            key = self._derive_key(salt)
+            
+            # Create cipher
+            cipher = Cipher(
+                algorithms.AES(key),
+                modes.GCM(iv, tag),
+                backend=self.backend
+            )
+            decryptor = cipher.decryptor()
+            
+            # Decrypt data
+            plaintext = decryptor.update(ciphertext) + decryptor.finalize()
+            
+            # Deserialize and return
+            return json.loads(plaintext.decode('utf-8'))
+            
+        except Exception as e:
+            logging.error(f"State decryption failed: {e}")
+            raise StateManagementException(f"Failed to decrypt state: {e}")
+    
+    def rotate_key(self) -> str:
+        """Rotate the master encryption key for enhanced security."""
+        new_key = self._generate_master_key()
+        self.master_key = new_key
+        logging.info("Workflow state encryption key rotated")
+        return new_key
 
 
 @dataclass

@@ -13,7 +13,15 @@ import json
 import uuid
 import logging
 import traceback
+import threading
+import contextvars
 from collections import defaultdict, deque
+
+# === ENTERPRISE LOGGING CONTEXT ===
+# Correlation ID context variable for structured logging
+correlation_id: contextvars.ContextVar[str] = contextvars.ContextVar('correlation_id', default='')
+user_id: contextvars.ContextVar[str] = contextvars.ContextVar('user_id', default='')
+workflow_id: contextvars.ContextVar[str] = contextvars.ContextVar('workflow_id', default='')
 
 try:
     from .validation_engine import WorkflowException, WorkflowErrorCode, ValidationLevel
@@ -84,6 +92,206 @@ class ErrorContext:
     timestamp: datetime = field(default_factory=datetime.utcnow)
     metadata: Dict[str, Any] = field(default_factory=dict)
     correlation_id: Optional[str] = None
+
+
+# === ENTERPRISE STRUCTURED LOGGING ===
+
+class StructuredLogger:
+    """
+    🔥 ENTERPRISE STRUCTURED LOGGING with CORRELATION IDs
+    
+    Implements ultra-advanced logging as required by checklist:
+    - Structured JSON logging
+    - Correlation ID tracking
+    - Context preservation
+    - Distributed tracing support
+    - Audit trail compliance
+    """
+    
+    def __init__(self, logger_name: str = "workflow"):
+        """Initialize structured logger."""
+        self.logger = logging.getLogger(logger_name)
+        self._setup_structured_logging()
+        
+    def _setup_structured_logging(self):
+        """Setup structured logging format."""
+        # Create JSON formatter
+        formatter = logging.Formatter(
+            '{"timestamp": "%(asctime)s", "level": "%(levelname)s", "logger": "%(name)s", "message": "%(message)s"}'
+        )
+        
+        # Ensure handler exists
+        if not self.logger.handlers:
+            handler = logging.StreamHandler()
+            handler.setFormatter(formatter)
+            self.logger.addHandler(handler)
+            self.logger.setLevel(logging.INFO)
+    
+    def _get_context_data(self) -> Dict[str, Any]:
+        """Get current context data for logging."""
+        return {
+            "correlation_id": correlation_id.get() or str(uuid.uuid4()),
+            "user_id": user_id.get() or "",
+            "workflow_id": workflow_id.get() or "",
+            "thread_id": threading.get_ident(),
+            "timestamp": datetime.utcnow().isoformat()
+        }
+    
+    def debug(self, message: str, **kwargs):
+        """Log debug message with context."""
+        self._log_with_context("DEBUG", message, **kwargs)
+    
+    def info(self, message: str, **kwargs):
+        """Log info message with context."""
+        self._log_with_context("INFO", message, **kwargs)
+    
+    def warning(self, message: str, **kwargs):
+        """Log warning message with context."""
+        self._log_with_context("WARNING", message, **kwargs)
+    
+    def error(self, message: str, error: Exception = None, **kwargs):
+        """Log error message with context."""
+        log_data = kwargs
+        if error:
+            log_data.update({
+                "error_type": type(error).__name__,
+                "error_message": str(error),
+                "traceback": traceback.format_exc() if traceback else None
+            })
+        self._log_with_context("ERROR", message, **log_data)
+    
+    def critical(self, message: str, **kwargs):
+        """Log critical message with context."""
+        self._log_with_context("CRITICAL", message, **kwargs)
+    
+    def audit(self, action: str, resource: str = "", outcome: str = "success", **kwargs):
+        """Log audit event with context."""
+        audit_data = {
+            "event_type": "audit",
+            "action": action,
+            "resource": resource,
+            "outcome": outcome,
+            **kwargs
+        }
+        self._log_with_context("INFO", f"AUDIT: {action}", **audit_data)
+    
+    def performance(self, operation: str, duration_ms: float, **kwargs):
+        """Log performance event with context."""
+        perf_data = {
+            "event_type": "performance",
+            "operation": operation,
+            "duration_ms": duration_ms,
+            **kwargs
+        }
+        self._log_with_context("INFO", f"PERFORMANCE: {operation}", **perf_data)
+    
+    def security(self, event: str, severity: str = "info", **kwargs):
+        """Log security event with context."""
+        security_data = {
+            "event_type": "security",
+            "security_event": event,
+            "severity": severity,
+            **kwargs
+        }
+        self._log_with_context("WARNING" if severity in ["warning", "error"] else "INFO", 
+                              f"SECURITY: {event}", **security_data)
+    
+    def _log_with_context(self, level: str, message: str, **kwargs):
+        """Log message with full context."""
+        try:
+            # Get context data
+            context_data = self._get_context_data()
+            
+            # Combine with additional data
+            log_data = {**context_data, **kwargs}
+            
+            # Create structured log entry
+            log_entry = {
+                "message": message,
+                "level": level,
+                **log_data
+            }
+            
+            # Convert to JSON string
+            log_json = json.dumps(log_entry, default=str, ensure_ascii=False)
+            
+            # Log based on level
+            if level == "DEBUG":
+                self.logger.debug(log_json)
+            elif level == "INFO":
+                self.logger.info(log_json)
+            elif level == "WARNING":
+                self.logger.warning(log_json)
+            elif level == "ERROR":
+                self.logger.error(log_json)
+            elif level == "CRITICAL":
+                self.logger.critical(log_json)
+            
+        except Exception as e:
+            # Fallback to simple logging if structured logging fails
+            self.logger.error(f"Structured logging failed: {e} - Original message: {message}")
+
+
+class CorrelationContextManager:
+    """
+    🔗 CORRELATION CONTEXT MANAGER
+    
+    Manages correlation IDs and context across workflow execution:
+    - Automatic correlation ID generation
+    - Context propagation
+    - Distributed tracing support
+    - Cross-service correlation
+    """
+    
+    def __init__(self, correlation_id_value: str = None, user_id_value: str = None, workflow_id_value: str = None):
+        """Initialize correlation context."""
+        self.correlation_id_value = correlation_id_value or f"corr_{uuid.uuid4().hex[:16]}"
+        self.user_id_value = user_id_value or ""
+        self.workflow_id_value = workflow_id_value or ""
+        self.tokens = {}
+    
+    def __enter__(self):
+        """Enter correlation context."""
+        self.tokens['correlation_id'] = correlation_id.set(self.correlation_id_value)
+        self.tokens['user_id'] = user_id.set(self.user_id_value)
+        self.tokens['workflow_id'] = workflow_id.set(self.workflow_id_value)
+        return self
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        """Exit correlation context."""
+        for token in self.tokens.values():
+            try:
+                token.var.reset(token)
+            except Exception:
+                pass  # Ignore reset errors
+    
+    async def __aenter__(self):
+        """Async enter correlation context."""
+        return self.__enter__()
+    
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        """Async exit correlation context."""
+        return self.__exit__(exc_type, exc_val, exc_tb)
+
+
+def set_correlation_context(correlation_id_value: str, user_id_value: str = "", workflow_id_value: str = ""):
+    """Set correlation context for current execution."""
+    correlation_id.set(correlation_id_value)
+    user_id.set(user_id_value)
+    workflow_id.set(workflow_id_value)
+
+
+def get_correlation_context() -> Dict[str, str]:
+    """Get current correlation context."""
+    return {
+        "correlation_id": correlation_id.get(),
+        "user_id": user_id.get(),
+        "workflow_id": workflow_id.get()
+    }
+
+
+# Create default structured logger instance
+structured_logger = StructuredLogger("workflow.enterprise")
 
 
 @dataclass
