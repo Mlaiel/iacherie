@@ -21,7 +21,7 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Callable
 from dataclasses import dataclass, field, asdict
 from enum import Enum
-import aioredis
+# import aioredis  # Disabled for Python 3.12 compatibility
 import aiofiles
 from pathlib import Path
 import hashlib

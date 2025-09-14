@@ -23,7 +23,7 @@ from typing import Dict, List, Optional, Any, Union, BinaryIO
 from dataclasses import dataclass, field, asdict
 from enum import Enum
 import aiofiles
-import aioredis
+# import aioredis  # Disabled for Python 3.12 compatibility
 from pathlib import Path
 import hashlib
 import uuid
