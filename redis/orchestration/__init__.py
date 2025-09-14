@@ -18,7 +18,8 @@ import logging
 from .cluster_orchestrator import RedisClusterOrchestrator, ClusterOrchestratorConfig
 from .failover_manager import RedisFailoverManager, FailoverConfig
 from .scaling_controller import RedisScalingController, ScalingConfig
-# Backup and Disaster Recovery components integrated in other modules for file limit compliance
+from .backup_automation import RedisBackupAutomation, BackupConfig, BackupType, BackupStatus
+from .disaster_recovery import RedisDisasterRecovery, DisasterRecoveryConfig, DisasterType, RecoveryStatus
 from .performance_optimizer import RedisPerformanceOptimizer, PerformanceConfig
 
 __version__ = "2.0.0-enterprise"
@@ -32,13 +33,19 @@ __all__ = [
     "RedisClusterOrchestrator",
     "RedisFailoverManager",
     "RedisScalingController", 
-
+    "RedisBackupAutomation",
+    "RedisDisasterRecovery",
     "RedisPerformanceOptimizer",
     "ClusterOrchestratorConfig",
     "FailoverConfig",
     "ScalingConfig",
-
+    "BackupConfig",
+    "DisasterRecoveryConfig",
     "PerformanceConfig",
+    "BackupType",
+    "BackupStatus",
+    "DisasterType",
+    "RecoveryStatus",
     "create_enterprise_orchestration"
 ]
 
@@ -99,18 +106,18 @@ async def create_enterprise_orchestration(
             await scaling_controller.initialize()
             components["scaling"] = scaling_controller
             
-        # Backup automation
+        # Backup automation engine
         if enable_backup:
+            from .backup_automation import create_backup_automation
             backup_config = BackupConfig(**config.get("backup", {}))
-            backup_automation = RedisBackupAutomation(backup_config)
-            await backup_automation.initialize()
+            backup_automation = await create_backup_automation(backup_config)
             components["backup"] = backup_automation
             
         # Disaster recovery engine
         if enable_disaster_recovery:
+            from .disaster_recovery import create_disaster_recovery
             dr_config = DisasterRecoveryConfig(**config.get("disaster_recovery", {}))
-            disaster_recovery = RedisDisasterRecovery(dr_config)
-            await disaster_recovery.initialize()
+            disaster_recovery = await create_disaster_recovery(dr_config)
             components["disaster_recovery"] = disaster_recovery
             
         # Performance optimizer
