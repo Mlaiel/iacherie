@@ -1,3 +1,8 @@
+try:
+    import aiohttp
+except ImportError:
+    from . import _mock_aiohttp as aiohttp
+
 #!/usr/bin/env python3
 """
 🔒 ENTERPRISE SECURITY FRAMEWORK - SECURITY ENGINEER IMPLEMENTATION

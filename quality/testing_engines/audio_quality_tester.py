@@ -1,3 +1,8 @@
+try:
+    import librosa
+except ImportError:
+    from ..validation_engines import _mock_librosa as librosa
+
 #!/usr/bin/env python3
 """
 Audio Quality Testing Module - Ainflue Quality Platform

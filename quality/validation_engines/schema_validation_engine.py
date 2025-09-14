@@ -28,6 +28,7 @@ Tous droits réservés. Contact: mlaiel@live.de
 - Schema drift detection
 """
 
+from collections import defaultdict
 import asyncio
 import logging
 import json
