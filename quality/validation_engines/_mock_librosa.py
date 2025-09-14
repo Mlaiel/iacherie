@@ -17,9 +17,20 @@ def stft(audio_data):
     """Mock STFT"""
     return np.random.random((1025, 100)) + 1j * np.random.random((1025, 100))
 
-def feature:
+class feature:
     class mfcc:
         @staticmethod
         def mfcc(audio_data, sr=22050, n_mfcc=13):
             """Mock MFCC extraction"""
             return np.random.random((n_mfcc, 100))
+
+class display:
+    @staticmethod
+    def waveshow(audio_data, sr=22050, **kwargs):
+        """Mock waveform display"""
+        pass
+    
+    @staticmethod
+    def specshow(data, **kwargs):
+        """Mock spectrogram display"""
+        pass

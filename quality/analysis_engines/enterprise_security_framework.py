@@ -204,9 +204,11 @@ class EnterpriseSecurityFramework:
         self.blocked_ips = set()
         self.suspicious_patterns = {}
         
-        # Démarrage monitoring
+        # Démarrage monitoring (will start when event loop is available)
+        self._monitoring_task = None
         if self.monitoring_enabled:
-            asyncio.create_task(self._start_security_monitoring())
+            # Don't start task during init, will be started when needed
+            pass
         
         # Initialisation Ainflue security policies
         self._initialize_ainflue_security()
