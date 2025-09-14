@@ -37,10 +37,10 @@ from transformers import pipeline
 import openai
 from textblob import TextBlob
 import langdetect
-from googletrans import Translator
+# from googletrans import Translator  # Temporarily disabled due to dependency issues
 import html
-import markdown
-import bleach
+# import markdown  # Will install if needed
+# import bleach    # Will install if needed
 
 logger = logging.getLogger(__name__)
 

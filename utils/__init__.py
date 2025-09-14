@@ -85,54 +85,45 @@ from .performance import (
     CircuitBreakerFactory,
     RateLimiterFactory
 )
-from .model_utilities import ModelUtilities
-from .ai_orchestrator import AIOrchestrator
 
-# Media Processing (Audio Engineer)
-from .audio_utilities import AudioUtilities
-from .media_processor import MediaProcessor
+# Consolidated modules - these are now integrated into core modules:
+# ModelUtilities -> integrated into core.workflow_engine
+# AIOrchestrator -> integrated into core.workflow_engine  
+# AudioUtilities -> integrated into core.media_handler
+# MediaProcessor -> integrated into core.media_handler
 
-# API & Network (Microservices Expert)
-from .api_validator import APIValidator
-from .rest_client import RestClient
+# Consolidated modules - these are now integrated:
+# APIValidator -> integrated into security.validation_engine
+# RestClient -> integrated into core.data_processor
+# PromptOptimizer -> integrated into core.text_processor  
+# AIConfig -> integrated into core.workflow_engine
+# DataValidator -> integrated into security.validation_engine
+# DataTransformer -> integrated into core.data_processor
+# InputSanitizer -> integrated into security.validation_engine
+# ErrorHandler -> integrated into performance.circuit_breaker
+# TestUtilities -> will be created in tests/ directory
+# BackupManager -> integrated into core.file_manager
 
-# AI Prompt Engineering (IA Prompt Engineer)
-from .prompt_optimizer import PromptOptimizer
-from .ai_config import AIConfig
+# All additional utilities are now consolidated into the 3-tier architecture:
+# FileUtilities -> integrated into core.file_manager
+# FileValidator -> integrated into security.validation_engine  
+# TestUtilities -> will be created in tests/ directory
+# DateTimeUtilities -> integrated into core.datetime_handler
+# VideoUtilities -> integrated into core.media_handler
+# PasswordUtilities -> integrated into security.password_manager
+# StructuredLogger -> integrated into security.audit_logger
 
-# NEW CRITICAL UTILITIES - January 2025 Implementation
-from .data_validator import DataValidator, ValidationResult
-from .data_transformer import DataTransformer, TransformationResult
-from .input_sanitizer import InputSanitizer, SanitizationResult
-from .error_handler import ErrorHandler, ErrorRecord, ErrorSeverity, ErrorCategory
-
-# PHASE 3 IMPLEMENTATION - January 2025 Expert Roles Enhancement
-from .test_utilities import TestUtilities, TestResult, PerformanceMetrics, SecurityTestResult
-from .text_processor import TextProcessor, TextAnalysisResult, ContentSafety, TextSimilarity
-from .security_scanner import SecurityScanner, SecurityVulnerability, SecurityScanResult
-from .backup_utilities import BackupManager, BackupMetadata, BackupJob, RestorePoint
-
-# ADDITIONAL ENTERPRISE UTILITIES - January 2025 Phase 2 Implementation
-from .file_utilities import FileUtilities, FileMetadata, FileOperationResult
-from .file_validator import FileValidator, FileValidationReport, ValidationLevel
-from .test_utilities import TestUtilities, TestResult, TestSuite, PerformanceBenchmark
-from .datetime_utilities import DateTimeUtilities, DateTimeRange, BusinessHours
-from .video_utilities import VideoUtilities, VideoMetadata, VideoProcessingResult
-from .password_utilities import PasswordUtilities, PasswordAnalysis, PasswordPolicy
-from .logging_utilities import StructuredLogger, LogContext, LogLevel
-from .cache_utilities import CacheUtilities, InMemoryCache, RedisCache
-
-# Expert role coverage verification
+# Expert role coverage verification - Updated for consolidated architecture
 EXPERT_ROLES_IMPLEMENTED = {
-    'Lead Dev IA': ['AIOrchestrator', 'ModelUtilities', 'DataTransformer', 'DataValidator'],
-    'Backend Senior': ['DatabaseUtilities', 'APIValidator', 'RestClient', 'DataTransformer', 'CacheUtilities'],
-    'ML Engineer': ['ModelUtilities', 'AIOrchestrator', 'DataTransformer'],
-    'DBA': ['DatabaseUtilities', 'QueryBuilder', 'CacheUtilities', 'InMemoryCache', 'RedisCache'],
-    'Security': ['EncryptionUtilities', 'AuthUtilities', 'InputSanitizer', 'DataValidator'],
-    'Microservices': ['APIValidator', 'RestClient', 'ErrorHandler', 'CacheUtilities'],
-    'Audio Engineer': ['AudioUtilities', 'MediaProcessor'],
-    'DevOps': ['PerformanceMonitor', 'MetricsCollector', 'HealthChecker', 'CircuitBreaker', 'RateLimiter', 'NotificationService', 'ErrorHandler', 'StructuredLogger'],
-    'IA Prompt Engineer': ['PromptOptimizer', 'AIConfig']
+    'Lead Dev IA': ['WorkflowEngine', 'DataProcessor', 'ValidationEngine'],
+    'Backend Senior': ['DataProcessor', 'FileManager', 'CacheManager'],
+    'ML Engineer': ['WorkflowEngine', 'DataProcessor', 'PerformanceMonitor'],
+    'DBA': ['DataProcessor', 'CacheManager'],
+    'Security': ['EncryptionEngine', 'AuthenticationUtils', 'ValidationEngine', 'PasswordManager'],
+    'Microservices': ['ValidationEngine', 'DataProcessor', 'CircuitBreaker', 'CacheManager'],
+    'Audio Engineer': ['MediaHandler'],
+    'DevOps': ['PerformanceMonitor', 'MetricsCollector', 'CircuitBreaker', 'RateLimiter', 'AuditLogger'],
+    'IA Prompt Engineer': ['TextProcessor', 'WorkflowEngine']
 }
 
 # NEW IMPLEMENTATIONS COUNT
@@ -146,30 +137,25 @@ NEW_UTILITIES_IMPLEMENTED = {
 }
 
 __all__ = [
-    # Core Infrastructure (DevOps)
-    'PerformanceMonitor', 'CircuitBreaker', 'RateLimiter', 'NotificationService',
-    'MetricsCollector', 'HealthChecker',
+    # Core Level 1
+    'DataProcessor', 'FileManager', 'DateTimeHandler', 
+    'TextProcessor', 'MediaHandler', 'WorkflowEngine',
     
-    # Security Expert
-    'EncryptionUtilities', 'AuthUtilities',
+    # Security Level 2  
+    'EncryptionEngine', 'AuthenticationUtils', 'ValidationEngine',
+    'SecurityScanner', 'PasswordManager', 'AuditLogger',
     
-    # Database Expert (DBA)
-    'DatabaseUtilities', 'QueryBuilder',
+    # Performance Level 3
+    'CacheManager', 'MetricsCollector', 'PerformanceMonitor',
+    'CircuitBreaker', 'RateLimiter',
     
-    # AI/ML Expert (Lead Dev IA + ML Engineer)
-    'ModelUtilities', 'AIOrchestrator',
-    
-    # Media Expert (Audio Engineer)
-    'AudioUtilities', 'MediaProcessor',
-    
-    # API/Network Expert (Microservices)
-    'APIValidator', 'RestClient',
-    
-    # AI Prompt Expert (IA Prompt Engineer)
-    'PromptOptimizer', 'AIConfig',
-    
-    # Expert role tracking
-    'EXPERT_ROLES_IMPLEMENTED'
+    # Enterprise Factories
+    'DataProcessorFactory', 'FileManagerFactory', 'DateTimeHandlerFactory',
+    'TextProcessorFactory', 'MediaHandlerFactory', 'WorkflowEngineFactory',
+    'EncryptionEngineFactory', 'AuthenticationUtilsFactory', 'ValidationEngineFactory',
+    'SecurityScannerFactory', 'PasswordManagerFactory', 'AuditLoggerFactory',
+    'CacheManagerFactory', 'MetricsCollectorFactory', 'PerformanceMonitorFactory',
+    'CircuitBreakerFactory', 'RateLimiterFactory'
 ]
 
 __version__ = "1.0.0"

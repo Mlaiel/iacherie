@@ -165,8 +165,8 @@ class CircuitBreakerFactory:
 import traceback
 import uuid
 import smtplib
-from email.mime.text import MimeText
-from email.mime.multipart import MimeMultipart
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 from collections import defaultdict, deque
 import threading
 
@@ -412,12 +412,12 @@ class EnterpriseErrorHandler:
             if not all(k in self.email_config for k in ['smtp_server', 'smtp_port', 'username', 'password', 'to_email']):
                 return
             
-            msg = MimeMultipart()
+            msg = MIMEMultipart()
             msg['From'] = self.email_config['username']
             msg['To'] = self.email_config['to_email']
             msg['Subject'] = f"CRITICAL ERROR: {error_info.category.value}"
             
-            msg.attach(MimeText(message, 'plain'))
+            msg.attach(MIMEText(message, 'plain'))
             
             server = smtplib.SMTP(self.email_config['smtp_server'], self.email_config['smtp_port'])
             server.starttls()

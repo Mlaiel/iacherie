@@ -31,7 +31,7 @@ from typing import (
 from dataclasses import dataclass, field
 from enum import Enum
 from concurrent.futures import ThreadPoolExecutor
-import aioredis
+# import redis  # Temporarily disabled due to conflicts
 import aiofiles
 from pydantic import BaseModel, Field, validator
 
