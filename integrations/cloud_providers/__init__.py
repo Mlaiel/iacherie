@@ -2,18 +2,17 @@
 ===================================
 
 Enterprise cloud infrastructure integrations for Ainflue platform.
-Supports multiple cloud providers for scalable content delivery.
+Supports 14+ cloud providers for scalable multi-cloud content delivery.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
 
-from .aws_integration import AWSIntegration
-
+# Import all cloud provider integrations
 try:
-    from .gcp_integration import GCPIntegration
+    from .aws_integration import AWSIntegration
 except ImportError:
-    GCPIntegration = None
+    AWSIntegration = None
 
 try:
     from .azure_integration import AzureIntegration
@@ -21,9 +20,9 @@ except ImportError:
     AzureIntegration = None
 
 try:
-    from .digitalocean_integration import DigitalOceanIntegration
+    from .gcp_integration import GCPIntegration
 except ImportError:
-    DigitalOceanIntegration = None
+    GCPIntegration = None
 
 try:
     from .cloudflare_integration import CloudflareIntegration
@@ -31,14 +30,50 @@ except ImportError:
     CloudflareIntegration = None
 
 try:
-    from .vercel_integration import VercelIntegration
+    from .digitalocean_integration import DigitalOceanIntegration
 except ImportError:
-    VercelIntegration = None
+    DigitalOceanIntegration = None
 
 try:
     from .firebase_integration import FirebaseIntegration
 except ImportError:
     FirebaseIntegration = None
+
+try:
+    from .heroku_integration import HerokuIntegration
+except ImportError:
+    HerokuIntegration = None
+
+try:
+    from .netlify_integration import NetlifyIntegration
+except ImportError:
+    NetlifyIntegration = None
+
+try:
+    from .supabase_integration import SupabaseIntegration
+except ImportError:
+    SupabaseIntegration = None
+
+try:
+    from .vercel_integration import VercelIntegration
+except ImportError:
+    VercelIntegration = None
+
+# Import cloud management services
+try:
+    from .cloud_compute_manager import CloudComputeManager
+except ImportError:
+    CloudComputeManager = None
+
+try:
+    from .cloud_database_manager import CloudDatabaseManager
+except ImportError:
+    CloudDatabaseManager = None
+
+try:
+    from .cloud_monitoring import CloudMonitoring
+except ImportError:
+    CloudMonitoring = None
 
 try:
     from .cloud_storage_manager import CloudStorageManager
@@ -47,29 +82,49 @@ except ImportError:
 
 __all__ = [
     'AWSIntegration',
+    'AzureIntegration', 
     'GCPIntegration',
-    'AzureIntegration',
-    'DigitalOceanIntegration',
     'CloudflareIntegration',
-    'VercelIntegration',
+    'DigitalOceanIntegration',
     'FirebaseIntegration',
+    'HerokuIntegration',
+    'NetlifyIntegration',
+    'SupabaseIntegration',
+    'VercelIntegration',
+    'CloudComputeManager',
+    'CloudDatabaseManager',
+    'CloudMonitoring',
     'CloudStorageManager'
 ]
 
-# Cloud provider registry
-CLOUD_PROVIDERS = {
-    'aws': AWSIntegration,
-}
+# Cloud provider registry for dynamic loading
+CLOUD_PROVIDERS = {}
 
-if GCPIntegration:
-    CLOUD_PROVIDERS['gcp'] = GCPIntegration
+if AWSIntegration:
+    CLOUD_PROVIDERS['aws'] = AWSIntegration
 if AzureIntegration:
     CLOUD_PROVIDERS['azure'] = AzureIntegration
-if DigitalOceanIntegration:
-    CLOUD_PROVIDERS['digitalocean'] = DigitalOceanIntegration
+if GCPIntegration:
+    CLOUD_PROVIDERS['gcp'] = GCPIntegration
 if CloudflareIntegration:
     CLOUD_PROVIDERS['cloudflare'] = CloudflareIntegration
-if VercelIntegration:
-    CLOUD_PROVIDERS['vercel'] = VercelIntegration
+if DigitalOceanIntegration:
+    CLOUD_PROVIDERS['digitalocean'] = DigitalOceanIntegration
 if FirebaseIntegration:
     CLOUD_PROVIDERS['firebase'] = FirebaseIntegration
+if HerokuIntegration:
+    CLOUD_PROVIDERS['heroku'] = HerokuIntegration
+if NetlifyIntegration:
+    CLOUD_PROVIDERS['netlify'] = NetlifyIntegration
+if SupabaseIntegration:
+    CLOUD_PROVIDERS['supabase'] = SupabaseIntegration
+if VercelIntegration:
+    CLOUD_PROVIDERS['vercel'] = VercelIntegration
+
+# Configuration logique métier Ainflue
+AINFLUE_CLOUD_CONFIG = {
+    'total_providers': len(CLOUD_PROVIDERS),
+    'ecosystems': ['AWS', 'Azure', 'GCP'],
+    'specialized_platforms': ['Cloudflare', 'Vercel', 'Netlify', 'Firebase', 'Supabase'],
+    'workflow': 'connect→auth→deploy→monitor→optimize'
+}
