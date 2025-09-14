@@ -18,11 +18,26 @@ import uuid
 import json
 import time
 from dataclasses import dataclass, field
-import structlog
 from abc import ABC, abstractmethod
 from collections import defaultdict, deque
-import aiohttp
 import weakref
+
+# Optional imports with fallbacks
+try:
+    import structlog
+    logger = structlog.get_logger(__name__)
+    STRUCTLOG_AVAILABLE = True
+except ImportError:
+    import logging
+    logger = logging.getLogger(__name__)
+    STRUCTLOG_AVAILABLE = False
+
+try:
+    import aiohttp
+    HTTP_AVAILABLE = True
+except ImportError:
+    aiohttp = None
+    HTTP_AVAILABLE = False
 import random
 import statistics
 

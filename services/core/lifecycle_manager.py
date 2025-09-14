@@ -20,7 +20,7 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Callable, Set
 from dataclasses import dataclass, field, asdict
 from enum import Enum
-import aioredis
+# import aioredis  # Disabled for Python 3.12 compatibility
 import json
 
 

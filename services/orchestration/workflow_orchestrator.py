@@ -23,7 +23,7 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Callable, Union
 from dataclasses import dataclass, field
 from enum import Enum
-import aioredis
+# import aioredis  # Disabled for Python 3.12 compatibility
 import joblib
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingRegressor
 from sklearn.model_selection import train_test_split, cross_val_score
@@ -114,8 +114,8 @@ class PredictionRequest:
     """ML prediction request"""
     request_id: str
     model_id: str
-    version: Optional[str] = None
     input_data: Union[Dict[str, Any], List[Dict[str, Any]]]
+    version: Optional[str] = None
     preprocessing_required: bool = True
 
 

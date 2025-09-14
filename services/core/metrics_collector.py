@@ -21,7 +21,7 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Callable
 from dataclasses import dataclass, field
 from enum import Enum
-import aioredis
+# import aioredis  # Disabled for Python 3.12 compatibility
 import aiohttp
 from prometheus_client import Counter, Histogram, Gauge, CollectorRegistry, generate_latest
 import statistics

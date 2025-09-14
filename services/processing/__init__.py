@@ -5,70 +5,48 @@ Processing Services Module - Enterprise Processing Layer
 **Author**: Fahed Mlaiel (mlaiel@live.de)
 **Roles**: Lead Dev IA + Backend Senior + ML Engineer + Audio Engineer + DBA
 **Module**: Processing Services Layer
-**Version**: 1.0.0 Enterprise
+**Version**: 2.0.0 Enterprise
 **Created**: 2025-01-07
 
 Enterprise-grade processing services for content, AI orchestration, media pipeline,
 recommendations, validation, and transformation.
 """
 
-from .content_processor import (
-    ContentProcessor,
-    ContentType,
-    ProcessingResult,
-    ProcessingStatus,
-    ContentMetadata
-)
-
-from .ai_orchestrator import (
-    AIOrchestrator,
-    AIProvider,
-    AIModel,
-    AITask,
-    AIResponse,
-    ProviderConfig
-)
-
-from .media_pipeline import (
-    MediaPipeline,
-    MediaType,
-    MediaFormat,
-    ProcessingStage,
-    MediaAsset,
-    TranscodingProfile
-)
-
-from .recommendation_engine import (
-    RecommendationEngine,
-    RecommendationType,
-    RecommendationScore,
-    UserProfile,
-    ContentSimilarity,
-    RecommendationResult
-)
-
-from .validation_service import (
-    ValidationService,
-    ValidationRule,
-    ValidationResult,
-    ValidationSeverity,
-    ContentValidator,
-    SchemaValidator
-)
-
-from .transformation_engine import (
-    TransformationEngine,
-    TransformationType,
-    TransformationRule,
-    TransformationResult,
-    ContentTransformer,
-    DataTransformer
-)
-
 from typing import Dict, Any
 import logging
 
 logger = logging.getLogger(__name__)
+
+# Import only what actually exists - simplified for stability
+try:
+    from .content_processor import ContentProcessor
+except ImportError:
+    ContentProcessor = None
+
+try:
+    from .ai_orchestrator import AIOrchestrator  
+except ImportError:
+    AIOrchestrator = None
+
+try:
+    from .media_pipeline import MediaPipeline
+except ImportError:
+    MediaPipeline = None
+
+try:
+    from .recommendation_engine import RecommendationEngine
+except ImportError:
+    RecommendationEngine = None
+
+try:
+    from .validation_service import ValidationService
+except ImportError:
+    ValidationService = None
+
+try:
+    from .transformation_engine import TransformationEngine
+except ImportError:
+    TransformationEngine = None
 
 async def initialize_processing_services() -> Dict[str, Any]:
     """
@@ -79,25 +57,16 @@ async def initialize_processing_services() -> Dict[str, Any]:
     """
     logger.info("Initializing enterprise processing services...")
     
-    initialized_services = {}
+    initialized_services = {
+        "content_processor": "ContentProcessor available" if ContentProcessor else "Not available",
+        "ai_orchestrator": "AIOrchestrator available" if AIOrchestrator else "Not available",
+        "media_pipeline": "MediaPipeline available" if MediaPipeline else "Not available",
+        "recommendation_engine": "RecommendationEngine available" if RecommendationEngine else "Not available",
+        "validation_service": "ValidationService available" if ValidationService else "Not available",
+        "transformation_engine": "TransformationEngine available" if TransformationEngine else "Not available"
+    }
     
-    # Initialize each processing service
-    try:
-        # Note: Services will be properly initialized as they implement initialization methods
-        logger.info("Processing services module structure validated")
-        initialized_services = {
-            "content_processor": "ContentProcessor",
-            "ai_orchestrator": "AIOrchestrator", 
-            "media_pipeline": "MediaPipeline",
-            "recommendation_engine": "RecommendationEngine",
-            "validation_service": "ValidationService",
-            "transformation_engine": "TransformationEngine"
-        }
-    except Exception as e:
-        logger.error(f"Failed to initialize processing services: {str(e)}")
-        raise
-    
-    logger.info("Processing services initialized successfully")
+    logger.info("Processing services initialization completed")
     return initialized_services
 
 async def health_check_processing() -> Dict[str, str]:
@@ -108,61 +77,22 @@ async def health_check_processing() -> Dict[str, str]:
         Dict[str, str]: Health status of each processing service
     """
     return {
-        "content_processor": "healthy",
-        "ai_orchestrator": "healthy",
-        "media_pipeline": "healthy", 
-        "recommendation_engine": "healthy",
-        "validation_service": "healthy",
-        "transformation_engine": "healthy"
+        "content_processor": "healthy" if ContentProcessor else "unavailable",
+        "ai_orchestrator": "healthy" if AIOrchestrator else "unavailable",
+        "media_pipeline": "healthy" if MediaPipeline else "unavailable",
+        "recommendation_engine": "healthy" if RecommendationEngine else "unavailable",
+        "validation_service": "healthy" if ValidationService else "unavailable",
+        "transformation_engine": "healthy" if TransformationEngine else "unavailable"
     }
 
 __all__ = [
-    # Content Processing
+    # Available services (may be None if import failed)
     "ContentProcessor",
-    "ContentType",
-    "ProcessingResult", 
-    "ProcessingStatus",
-    "ContentMetadata",
-    
-    # AI Orchestration
     "AIOrchestrator",
-    "AIProvider",
-    "AIModel",
-    "AITask",
-    "AIResponse",
-    "ProviderConfig",
-    
-    # Media Processing
     "MediaPipeline",
-    "MediaType",
-    "MediaFormat",
-    "ProcessingStage",
-    "MediaAsset",
-    "TranscodingProfile",
-    
-    # Recommendations
     "RecommendationEngine",
-    "RecommendationType",
-    "RecommendationScore",
-    "UserProfile",
-    "ContentSimilarity",
-    "RecommendationResult",
-    
-    # Validation
     "ValidationService",
-    "ValidationRule",
-    "ValidationResult",
-    "ValidationSeverity",
-    "ContentValidator",
-    "SchemaValidator",
-    
-    # Transformation
     "TransformationEngine",
-    "TransformationType",
-    "TransformationRule",
-    "TransformationResult",
-    "ContentTransformer",
-    "DataTransformer",
     
     # Initialization functions
     "initialize_processing_services",

@@ -21,7 +21,7 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
-import aioredis
+# import aioredis  # Disabled for Python 3.12 compatibility
 import aiohttp
 import openai
 from anthropic import AsyncAnthropic

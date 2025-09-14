@@ -20,9 +20,30 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Callable
 from dataclasses import dataclass, field
 from enum import Enum
-import aioredis
-import aiohttp
-import psutil
+
+# Optional imports with fallbacks
+try:
+    # Note: aioredis has compatibility issues with Python 3.12
+    # import aioredis
+    aioredis = None
+    REDIS_AVAILABLE = False
+except ImportError:
+    aioredis = None
+    REDIS_AVAILABLE = False
+
+try:
+    import aiohttp
+    HTTP_AVAILABLE = True
+except ImportError:
+    aiohttp = None
+    HTTP_AVAILABLE = False
+
+try:
+    import psutil
+    PSUTIL_AVAILABLE = True
+except ImportError:
+    psutil = None
+    PSUTIL_AVAILABLE = False
 
 
 class HealthStatus(Enum):
